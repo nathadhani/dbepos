@@ -107,7 +107,7 @@
 <script type="text/javascript" src="assets/themes/js/plugins/daterangepicker/daterangepicker.js"></script>
 <script src="assets/themes/js/disabled.js" type="text/javascript"></script>
 <script src="assets/libs/js.cookie.js" type="text/javascript"></script>
-<script src="assets/js/webapp2202.js" type="text/javascript"></script>
+<script src="assets/js/webapp.js" type="text/javascript"></script>
 <script src="assets/libs/crypto-js/3.1.9-1/crypto-js.js" type="text/javascript"></script>
 <?php
 if (isset($jsfiles) && is_array($jsfiles)) {

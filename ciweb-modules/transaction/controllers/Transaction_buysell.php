@@ -13,7 +13,7 @@ class Transaction_buysell extends Bks_Controller {
     function index(){
         $this->libauth->check(__METHOD__);
         $this->template->title('New');
-        $this->template->set('tsmall', 'Transaction');
+        $this->template->set('tsmall', 'Buy / Sell - New');
         $this->template->set('icon', 'fa fa-edit');
         $data['auth'] = $this->auth;
         $data['profilusaha'] = $this->Bksmdl->getprofileusaha($this->uri->segment(4), null);
@@ -182,7 +182,7 @@ class Transaction_buysell extends Bks_Controller {
         }
     }
     
-    function tampil_header_temp(){
+    function show_header_temp(){
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
@@ -193,7 +193,7 @@ class Transaction_buysell extends Bks_Controller {
         echo json_encode($query, true);
     }
     
-    function tampil_detail_temp(){
+    function show_detail_temp(){
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
@@ -204,7 +204,7 @@ class Transaction_buysell extends Bks_Controller {
         echo json_encode($query, true);
     }
     
-    function tampil_customer(){
+    function show_customer(){
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
@@ -271,34 +271,8 @@ class Transaction_buysell extends Bks_Controller {
         $ref_id = $postData['ref_id'];
         $query = $this->db->query("SELECT id, tr_id, customer_id FROM tr_header WHERE ref_id = $ref_id")->result();
         echo json_encode($query, true);
-    }
-    
-    function cancel_task(){
-        checkIfNotAjax();
-        $this->libauth->check(__METHOD__);                
-        $postData = $this->input->post();
-
-        $ref_id = json_decode($postData['id']);
-        $tr_id = json_decode($postData['tr_id']);
-
-        $this->db->trans_begin();
-        $this->db->where(array('id' => $ref_id));
-        $this->db->update('log_a', array('status' => 2, 'updated' => date('Y-m-d H:i:s', time()), 'updatedby' => $this->userId) );
-        if ($this->db->trans_status() === FALSE) {
-            $this->db->trans_rollback();
-            $err = $this->db->error();
-            $json['msg'] = $err['code'] . '<br>' . $err['message'];
-            echo json_encode($json);
-        } else {
-            $this->db->where(array('header_id' => $ref_id));
-            $this->db->update('log_b', array('status' => 2, 'updated' => date('Y-m-d H:i:s', time()), 'updatedby' => $this->userId) );
-
-            $this->db->trans_commit();
-            $json['msg'] = '1';
-            echo json_encode($json);
-        }            
-    }
-    
+    }   
+        
     function confirm_task() {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);                
@@ -344,4 +318,30 @@ class Transaction_buysell extends Bks_Controller {
             echo json_encode($json);
         }
     }    
+
+    function cancel_task(){
+        checkIfNotAjax();
+        $this->libauth->check(__METHOD__);                
+        $postData = $this->input->post();
+
+        $ref_id = json_decode($postData['id']);
+        $tr_id = json_decode($postData['tr_id']);
+
+        $this->db->trans_begin();
+        $this->db->where(array('id' => $ref_id));
+        $this->db->update('log_a', array('status' => 2, 'updated' => date('Y-m-d H:i:s', time()), 'updatedby' => $this->userId) );
+        if ($this->db->trans_status() === FALSE) {
+            $this->db->trans_rollback();
+            $err = $this->db->error();
+            $json['msg'] = $err['code'] . '<br>' . $err['message'];
+            echo json_encode($json);
+        } else {
+            $this->db->where(array('header_id' => $ref_id));
+            $this->db->update('log_b', array('status' => 2, 'updated' => date('Y-m-d H:i:s', time()), 'updatedby' => $this->userId) );
+
+            $this->db->trans_commit();
+            $json['msg'] = '1';
+            echo json_encode($json);
+        }            
+    }
 }

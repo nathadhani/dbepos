@@ -2,8 +2,8 @@
  * Page Init
  */
 window.scroll(0,0);
-$("#btn-buy").hide();
-$("#btn-sale").hide();
+// $("#btn-buy").hide();
+// $("#btn-sell").hide();
 reset_form();
 if(text_celluler !== null && text_celluler !== ''){
     var choice = text_celluler;
@@ -56,7 +56,7 @@ $.validate({
     },
     onSuccess: function () {
         if( $("#customer_type_id").val() === '' || $("#customer_type_id").val() === null){
-            bksfn.errMsg("input tipe nasabah **");
+            bksfn.errMsg("input tipe customer **");
         } else if( $("#customer_name").val() === '' || $("#customer_name").val() === null){
             bksfn.errMsg("input nama lengkap **");
         } else if( $("#customer_handphone").val() === '' || $("#customer_handphone").val() === null){
@@ -66,14 +66,14 @@ $.validate({
         } else {           
             if ($('#customer_type_id').val() === '1'){ // Pelanggan Per Orangan
                 if ($("#ftitle").html().substr(0, 4) == "Edit") {
-                    var image_url = baseUrl + "assets/img/foto_nasabah/" + $("#customer_code").val() + ".jpg";
+                    var image_url = baseUrl + "assets/img/customer_form/" + $("#customer_code").val() + ".jpg";
                     $.ajax({
                         url:image_url,
                         type:'HEAD',
                         error: function() {
                             //file not exists                            
                             //--- Edit
-                            $.post('transaksi/nasabah_form/update', $("#mainForm").serialize() + "&id=" + $("body").data("id"), function (obj) {
+                            $.post('transaction/customer_form/update', $("#mainForm").serialize() + "&id=" + $("body").data("id"), function (obj) {
                                 if (obj.msg == 1) {                                
                                     $("body").data("text_search", '');
                                     alertify.success("Edit Data Success");     
@@ -99,7 +99,7 @@ $.validate({
                                 bksfn.errMsg("input warga negara");
                             } else {
                                 //--- Edit
-                                $.post('transaksi/nasabah_form/update', $("#mainForm").serialize() + "&id=" + $("body").data("id"), function (obj) {
+                                $.post('transaction/customer_form/update', $("#mainForm").serialize() + "&id=" + $("body").data("id"), function (obj) {
                                     if (obj.msg == 1) {                                
                                         $("body").data("text_search", '');
                                         alertify.success("Edit Data Success");     
@@ -115,7 +115,7 @@ $.validate({
                     });                          
                 } else {
                     //--- Insert
-                    $.post('transaksi/nasabah_form/insert', $("#mainForm").serialize(), function (obj) {
+                    $.post('transaction/customer_form/insert', $("#mainForm").serialize(), function (obj) {
                         if (obj.msg == 1) {                            
                             $("body").data("id", '');
                             $("body").data("text_search", '');
@@ -132,7 +132,7 @@ $.validate({
             } else { // Selain Pelanggan Per Orangan
                 if ($("#ftitle").html().substr(0, 4) == "Edit") {
                     //--- Edit
-                    $.post('transaksi/nasabah_form/update', $("#mainForm").serialize() + "&id=" + $("body").data("id") , function (obj) {
+                    $.post('transaction/customer_form/update', $("#mainForm").serialize() + "&id=" + $("body").data("id") , function (obj) {
                         if (obj.msg == 1) {                            
                             $("body").data("text_search", '');
                             back_to_page_ini();
@@ -145,7 +145,7 @@ $.validate({
                     });
                 } else {
                     //--- Insert
-                    $.post('transaksi/nasabah_form/insert', $("#mainForm").serialize(), function (obj) {
+                    $.post('transaction/customer_form/insert', $("#mainForm").serialize(), function (obj) {
                         if (obj.msg == 1) {                            
                             $("body").data("id", '');
                             $("body").data("text_search", '');
@@ -190,7 +190,7 @@ $('#upload_foto').on('change',function(e){
 
     if (error == '') {
         $.ajax({
-            url: 'transaksi/nasabah_form/add_foto',
+            url: 'transaction/customer_form/add_foto',
             method: 'POST',
             beforeSend: function(){
                 $(".ajax-loader").height($(document).height());
@@ -227,7 +227,7 @@ $('#upload_foto').on('change',function(e){
         if($("body").data("id") !== null && $("body").data("id") !== '') {
             $("body").data("text_search", '');
             $.ajax({
-                url: baseUrl + 'transaksi/nasabah_form/getByID',
+                url: baseUrl + 'transaction/customer_form/getByID',
                 type: 'POST',
                 data: {'id' : $("body").data("id")},
                 datatype: 'json',
@@ -246,7 +246,7 @@ $('#upload_foto').on('change',function(e){
                             $(".perorangan").show();
                             // $(".cfoto").show();
                             // if ($('#customer_code').val() !== null && $('#customer_code').val() !== ''){                     
-                            //     var image_url = baseUrl + "assets/img/foto_nasabah/" + d.customer_code + ".jpg";
+                            //     var image_url = baseUrl + "assets/img/customer_form/" + d.customer_code + ".jpg";
                             //     $.ajax({
                             //         url:image_url,
                             //         type:'HEAD',
@@ -314,7 +314,6 @@ $('#upload_foto').on('change',function(e){
                     $("#village").val(d.village);
                     $("#sub_district").val(d.sub_district);
                     $("#city").val(d.city);   
-                    $("#kode_densus_dttot").val(d.kode_densus_dttot);
                     $("#customerprofil").val(d.customerprofil);    
                     $("#status").iCheck(d.status == 1 ? 'check' : 'uncheck');                     
 
@@ -324,7 +323,7 @@ $('#upload_foto').on('change',function(e){
                     $("#updated").html(d.updated);                    
                     
                     $("#btn-buy").show();
-                    $("#btn-sale").show();
+                    $("#btn-sell").show();
                     // window.scrollTo({ left: 0, top: document.body.scrollHeight, behavior: "smooth" });
                 },
                 error: function(xhr){
@@ -367,8 +366,7 @@ function reset_form(){
     $("#rt_rw").html('');
     $("#village").html('');
     $("#sub_district").html('');
-    $("#city").html('');    
-    $("#kode_densus_dttot").html('');
+    $("#city").html('');        
     $("#customerprofil").html('');
    
     $("#createdby_name").html('');
@@ -389,7 +387,7 @@ function reset_form(){
  * redirect page
  */
 function back_to_page_ini(){
-    var url = "transaksi/nasabah_form/index/"+$("body").data("id")+"/null";
+    var url = "transaction/customer_form/index/"+$("body").data("id")+"/null";
     $.ajax({
         url: url,
         type: 'POST',
@@ -405,7 +403,7 @@ function back_to_page_ini(){
 $("#btn-buy").click(function (e) {
     e.preventDefault();
     $.ajax({
-        url: baseUrl + 'transaksi/nasabah_form/getByID',
+        url: baseUrl + 'transaction/customer_form/getByID',
         type: 'POST',
         data: {'id' : $("body").data("id")},
         datatype: 'json',
@@ -414,10 +412,8 @@ $("#btn-buy").click(function (e) {
             $("#customer_code").val(d.customer_code);        
             if(d.status === '0'){ // Non Active
                 bksfn.errMsg("status data tidak aktif!");
-            } else if (d.kode_densus_dttot !== '' && d.kode_densus_dttot !== null){ // Lock DTTOT
-                bksfn.errMsg("nasabah terduga teroris!");
             } else {
-                alertify.confirm("Transaction Buy ?", function (x) {    
+                alertify.confirm("Transaction Buy / Beli ?", function (x) {    
                     if (x) {                                   
                         var url = call_page_task_buy($("body").data("id"), null);
                         if(url !== ''){
@@ -440,12 +436,12 @@ $("#btn-buy").click(function (e) {
 });
 
 /**
- * button sale/jual
+ * button sell/jual
  */
-$("#btn-sale").click(function (e) {
+$("#btn-sell").click(function (e) {
     e.preventDefault();
     $.ajax({
-        url: baseUrl + 'transaksi/nasabah_form/getByID',
+        url: baseUrl + 'transaction/customer_form/getByID',
         type: 'POST',
         data: {'id' : $("body").data("id")},
         datatype: 'json',
@@ -454,12 +450,10 @@ $("#btn-sale").click(function (e) {
             $("#customer_code").val(d.customer_code);        
             if(d.status === '0'){ // Non Active
                 bksfn.errMsg("status data tidak aktif!");
-            } else if (d.kode_densus_dttot !== '' && d.kode_densus_dttot !== null){ // Lock DTTOT
-                bksfn.errMsg("nasabah terduga teroris!");
             } else {
-                alertify.confirm("Transaction Sale ?", function (x) {    
+                alertify.confirm("Transaction Sell / Jual ?", function (x) {    
                     if (x) {           
-                        var url = call_page_task_sale($("body").data("id"), null);
+                        var url = call_page_task_sell($("body").data("id"), null);
                         if(url !== ''){
                             $.ajax({
                                 url: url,

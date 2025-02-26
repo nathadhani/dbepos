@@ -14,25 +14,22 @@
             <div class="panel panel-default">
                 <form id="mainForm" class="form-horizontal" autocomplete="off">
                     <div class="panel-heading ui-draggable-handle">
-                        <h3 class="panel-title"><i class="fa fa-user"></i>&nbsp;Customer Profile / <strong id="ftitle"></strong></h3>
+                        <div class="panel-title-box">
+                            <h3>Customer Form / <strong id="ftitle"></strong></h3>
+                        </div>
                         <ul class="panel-controls">
-                            <button id="btn-buy" class="btn" style="width:110px;background-color:blue;color:white;"><i class="fa fa-shopping-cart"></i>Trx. Buy</button>
-                            <button id="btn-sale" class="btn" style="width:110px;background-color:red;color:white;"><i class="fa fa-shopping-cart"></i>Trx. Sell</button>
+                            <button id="btn-buy" class="btn btn-default btn btn-sm" style="width:120px;font-weight:bold;">Buy / Beli</button>
+                            <button id="btn-sell" class="btn btn-default btn-sm" style="width:120px;font-weight:bold;">Sell / Jual</button>
                         </ul>
                     </div>
                     <div class="panel-body">                        
-                        <div class="row">
-                            <div class="col-md-12">
-                                <label for="">tanda <strong style="color:red;font-weight:bodl;font-size:18px;">**</strong> yang wajib diisi terlebih dahulu, jika sudah selesai transaksi. silahkan di update kembali data profil nasabah sesuai identitas.</label>
-                            </div>
-                        </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="form_name" class="control-label col-lg-4">Customer Code</label>
                                     <div class="col-lg-8">
                                         <div class="input-group">
-                                            <input type="text" id="customer_code" name="customer_code" class="form-control" style="width:100px;" readonly>
+                                            <input type="text" id="customer_code" name="customer_code" class="form-control" style="width:120px;" readonly>
                                             <div class="input-group">
                                                 <label class="control-label col-lg-4" style="margin-top:-30px;">Status</label>
                                                 <!-- <div> -->
@@ -46,6 +43,18 @@
                                             </div>
                                         </div>
                                     </div>                                        
+                                </div>                                
+                                <div class="form-group">
+                                    <label for="form_name" class="control-label col-lg-4">Full Name <strong style="color:red;font-weight:bold;font-size:18px;">**</strong></label>
+                                    <div class="col-lg-8">
+                                        <input type="text" id="customer_name" name="customer_name" class="form-control" placeholder="Nama Lengkap..." data-validation="required">
+                                    </div>
+                                </div>                                                                       
+                                <div class="form-group">
+                                    <label for="form_name" class="control-label col-lg-4">Call Name</label>
+                                    <div class="col-lg-8">
+                                        <input type="text" id="customer_nick_name" name="customer_nick_name" class="form-control" placeholder="Nama Panggilan...">
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="customer_type_id" class="control-label col-lg-4">Customer Type <strong style="color:red;font-weight:bold;font-size:18px;">**</strong></label>
@@ -62,73 +71,7 @@
                                         >
                                         </select>
                                     </div>
-                                </div>                                
-                                <div class="form-group">
-                                    <label for="form_name" class="control-label col-lg-4">Full Name <strong style="color:red;font-weight:bold;font-size:18px;">**</strong></label>
-                                    <div class="col-lg-8">
-                                        <input type="text" id="customer_name" name="customer_name" class="form-control" placeholder="Nama Lengkap..." data-validation="required">
-                                    </div>
-                                </div>                                                                                        
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="form_name" class="control-label col-lg-4">Address <strong style="color:red;font-weight:bold;font-size:18px;">**</strong></label>
-                                    <div class="col-lg-8">
-                                        <textarea rows="2" cols="50" id="customer_address" name="customer_address" class="form-control" placeholder="Alamat..." data-validation="required"></textarea>
-                                    </div>
-                                </div>                                   
-                                <div class="form-group">
-                                    <label for="form_name" class="control-label col-lg-4">Celluler <strong style="color:red;font-weight:bold;font-size:18px;">**</strong></label>
-                                    <div class="col-lg-8">
-                                        <input type="text" id="customer_handphone" name="customer_handphone" class="form-control" placeholder="No Handphone..." data-validation="required">
-                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="form_name" class="control-label col-lg-4">Phone</label>
-                                    <div class="col-lg-8">
-                                        <input type="text" id="customer_phone" name="customer_phone" class="form-control" placeholder="No Telpon Rumah / Kantor...">
-                                    </div>
-                                </div>
-                                <div class="form-group cnpwp">
-                                    <label for="form_name" class="control-label col-lg-4">NPWP Number</label>
-                                    <div class="col-lg-8">
-                                        <input type="text" id="npwp_number" name="npwp_number" class="form-control" placeholder="No NPWP...">
-                                    </div>
-                                </div>                                                  
-                            </div>
-                        </div>
-                        <br>
-                        <div class="footer">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <button type="submit" class="btn btn-info" style="width:90px;">Submit</button>
-                                    <button type="reset" class="btn btn-default" style="width:90px;">Reset</button>                            
-                                </div>
-                            </div>                            
-                        </div>
-                        <hr style="border: 1px solid red;" class="perorangan">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group perorangan">
-                                    <div class="col-lg-12">
-                                        <label for="kode_densus_dttot" style="display:block">Daftar Terduga Terorisme dan Organisasi Terorisme / DTTOT Code</label>
-                                        <div class="input-group">
-                                            <input type="text" id="kode_densus_dttot" name="kode_densus_dttot" class="form-control" placeholder="Kode Densus DTTOT...">
-                                            <span class="input-group-addon"><a href="master_data/dttot" target="_blank" title="Cari"><i class="fa fa-search"></i></a></span>       
-                                        </div> 
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <hr style="border: 1px solid red;" class="perorangan">
-                        <div class="row">                   
-                            <div class="col-lg-6">                                                           
-                                <div class="form-group perorangan">
-                                    <label for="form_name" class="control-label col-lg-4">Call Name</label>
-                                    <div class="col-lg-8">
-                                        <input type="text" id="customer_nick_name" name="customer_nick_name" class="form-control" placeholder="Nama Panggilan...">
-                                    </div>
-                                </div>                                                                                                                                                                                  
                                 <div class="form-group perorangan">
                                     <label for="customer_data_id" class="control-label col-lg-4">Identity Type</label>
                                     <div class="col-lg-8">
@@ -190,7 +133,7 @@
                                     </div>
                                 </div>                                
                             </div>
-                            <div class="col-lg-6">                                
+                            <div class="col-md-6">
                                 <div class="form-group perorangan">
                                     <label for="work_id" class="control-label col-lg-4">Work</label>
                                     <div class="col-lg-8">
@@ -206,7 +149,13 @@
                                         >
                                         </select>
                                     </div>
-                                </div>                                                                                                
+                                </div>
+                                <div class="form-group">
+                                    <label for="form_name" class="control-label col-lg-4">Address <strong style="color:red;font-weight:bold;font-size:18px;">**</strong></label>
+                                    <div class="col-lg-8">
+                                        <textarea rows="2" cols="50" id="customer_address" name="customer_address" class="form-control" placeholder="Alamat..." data-validation="required"></textarea>
+                                    </div>
+                                </div>                                                                                                                                                                                                   
                                 <div class="form-group perorangan">
                                     <label for="form_name" class="control-label col-lg-4">RT / RW</label>
                                     <div class="col-lg-8">
@@ -230,15 +179,42 @@
                                     <div class="col-lg-8">
                                         <input type="text" id="city" name="city" class="form-control" placeholder="Kabupaten / Kota...">
                                     </div>
-                                </div>                                                                                                                                                                
+                                </div>                                                                                                                                                                                                
+                                <div class="form-group">
+                                    <label for="form_name" class="control-label col-lg-4">Celluler <strong style="color:red;font-weight:bold;font-size:18px;">**</strong></label>
+                                    <div class="col-lg-8">
+                                        <input type="text" id="customer_handphone" name="customer_handphone" class="form-control" placeholder="No Handphone..." data-validation="required">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="form_name" class="control-label col-lg-4">Phone</label>
+                                    <div class="col-lg-8">
+                                        <input type="text" id="customer_phone" name="customer_phone" class="form-control" placeholder="No Telpon Rumah / Kantor...">
+                                    </div>
+                                </div>
+                                <div class="form-group cnpwp">
+                                    <label for="form_name" class="control-label col-lg-4">NPWP Number</label>
+                                    <div class="col-lg-8">
+                                        <input type="text" id="npwp_number" name="npwp_number" class="form-control" placeholder="No NPWP...">
+                                    </div>
+                                </div>
                                 <div class="form-group perorangan">
                                     <label for="form_name" class="control-label col-lg-4">Customer Nature / Character</label>
                                     <div class="col-lg-8">
                                         <textarea rows="2" cols="50" id="customerprofil" name="customerprofil" class="form-control" placeholder="Sifat Nasabah..."></textarea>
                                     </div>
-                                </div>                                                                                                                                                                                     
+                                </div>
+                            </div>
+                        </div>                        
+                        <hr style="border: 1px solid green;">
+                        <div class="footer">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <button type="reset" class="btn btn-default pull-right" style="width:120px;margin-left:10px;">Reset</button>
+                                    <button type="submit" class="btn btn-default pull-right" style="width:120px;">Submit</button>
+                                </div>
                             </div>                            
-                        </div>                                                                                                       
+                        </div>
                     </div>
                     <!--.end panel-body -->
                                         

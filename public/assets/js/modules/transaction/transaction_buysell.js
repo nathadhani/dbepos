@@ -1,15 +1,7 @@
 var sisa_stock_amount = 0;
 var sisa_stock_sheet = 0;
 var xtr_id = (decrypt(tr_uri_code) === 'buy' ? 1 : decrypt(tr_uri_code) === 'sell' ? 2 : 0);
-$("#xtrxbuy").hide();
-$("#xtrxsale").hide();
-if(xtr_id == 1){
-    $("#xtrxbuy").show();
-} else if(xtr_id == 2){
-    $("#xtrxsale").show();
-}
-
-back_to_page_ini();    
+back_to_page_ini();
 
 function reset_form_header(){    
     $("#customer_name").html('');
@@ -36,12 +28,12 @@ function reset_form_input(){
     $("#btn-add-detail-data").focus();
 }
 
-function tampil_data_nasabah(){
+function show_customer(){
     if ($("#ftitle").html().substr(0, 3) == "Add") {
         if( typeof(customerId) !== 'undefined') {
             if(customerId !== null && customerId !== '') {
                 $.ajax({
-                    url: baseUrl + 'transaction/transaction/tampil_nasabah',
+                    url: baseUrl + 'transaction/transaction_buysell/show_customer',
                     type: 'POST',
                     data: {'customer_id' : customerId},
                     datatype: 'json',
@@ -85,12 +77,12 @@ function getValasTrx(company_id, store_id){
     }    
 }
 
-function tampil_header(){
+function show_header(){
     reset_form_header();    
     if( typeof(id_log_a) != 'undefined' && id_log_a !== null && id_log_a !== '' ) {    
         if( typeof(customerId) !== 'undefined' && customerId !== null && customerId !== '') {
             $.ajax({
-                url: baseUrl + "transaction/transaction/tampil_header_temp",
+                url: baseUrl + "transaction/transaction_buysell/show_header_temp",
                 type: 'POST',
                 data: {'customer_id' : customerId, 'tr_id' : xtr_id, 'id' : id_log_a},
                 datatype: 'json',
@@ -105,12 +97,11 @@ function tampil_header(){
                             $("#cancel_by").html('Canceled by : '+d.updatedby_name +' | '+d.updated);
                         }
 
+                        $("#tr_date").val(bksfn.revDate(d.tr_date));
                         $("#tr_number").html(': '+d.tr_number);
-                        $("#tr_datex").html(': '+bksfn.revDate(d.tr_date));
 
                         $("#customer_name").html(d.customer_name);
-
-                        $("#tr_date").val(bksfn.revDate(d.tr_date));
+                        
                         if (d.store_id != null) {
                             $("#store_id").html('<option value="' + d.store_id + '">' + d.store_name + ' [' + d.store_address + ']' + '</option>').sel2dma();
                             $('#store_id').prop('disabled', false);
@@ -145,7 +136,7 @@ function tampil_header(){
                         }
 
                         $("#ftitle").html(lstatus_name(d.status, d.id));
-                        tampil_detail(d.status);
+                        show_detail(d.status);
                     } else{                        
                         reset_form_header();
                         var url = "transaction/nasabah/index/";
@@ -161,14 +152,14 @@ function tampil_header(){
     }        
 }
 
-function tampil_detail(statusTrx){
+function show_detail(statusTrx){
     reset_form_input();
     $("#pinfo").hide(); 
     if( typeof(customerId) !== 'undefined' && customerId !== null && customerId !== '') {    
         $('#table-detail tbody').empty();
         var counter = document.getElementById('table-detail').rows.length;
         $.ajax({
-            url: baseUrl + 'transaction/transaction/tampil_detail_temp',
+            url: baseUrl + 'transaction/transaction_buysell/show_detail_temp',
             type: 'POST',
             data: {'customer_id' : customerId, 'tr_id' : xtr_id, 'header_id' : id_log_a},
             dataType: 'json',
@@ -265,7 +256,7 @@ function tampil_detail(statusTrx){
 function delete_line_detail($id){
     if( typeof($id) != 'undefined' && $id !== null && $id !== '' ) {
         $.ajax({
-            url : baseUrl +  'transaction/transaction/delete_detail_temp',
+            url : baseUrl +  'transaction/transaction_buysell/delete_detail_temp',
             type: 'POST',
             data: {'id' : $id },
             datatype: 'json',
@@ -282,7 +273,7 @@ function delete_line_detail($id){
 }
 
 function add_item(){    
-    $.post('transaction/transaction/insert_detail_temp', $("#form_detail").serialize() + "&header_id=" + id_log_a + "&tr_id=" + xtr_id + "&user_id=" + $("#user_id").val() , function (obj) {
+    $.post('transaction/transaction_buysell/insert_detail_temp', $("#form_detail").serialize() + "&header_id=" + id_log_a + "&tr_id=" + xtr_id + "&user_id=" + $("#user_id").val() , function (obj) {
         if (obj.msg == 1) {
             reset_form_input();
             back_to_page_ini()
@@ -396,7 +387,7 @@ $("#btn-add-row-detail").on('click', function (e) {
 
 function getstockbyid(){    
     $.ajax({
-        url: baseUrl + 'transaction/transaction/getstockbyid',
+        url: baseUrl + 'transaction/transaction_buysell/getstockbyid',
         type: 'POST',
         data: {'company_id' : companyId, 'store_id' : $("#store_id").val(), 'valas_id' : $("#valas_id").val(), 'nominal' : $("#nominal").val() },
         datatype: 'json',
@@ -481,7 +472,7 @@ function lstatus_name(status_id, id) {
 function back_to_page_ini(){
     const datex = new Date();
     var currentDate = datex.toISOString().slice(0,10);
-    $("#tr_datex").html(': '+bksfn.revDate(currentDate));        
+    $("#tr_date").val(bksfn.revDate(currentDate));        
 
     $("#btn-confirm").hide();
     $("#btn-cancel").hide();  
@@ -501,7 +492,7 @@ function back_to_page_ini(){
             if( xtr_id == 1 ){
                 url = call_page_task_buy(customerId, id_log_a);
             } else {
-                url = call_page_task_sale(customerId, id_log_a);
+                url = call_page_task_sell(customerId, id_log_a);
             }    
             if(url !== ''){
                 $.ajax({
@@ -509,7 +500,7 @@ function back_to_page_ini(){
                     type: 'POST',
                     success: function(data) {            
                         if (data !== '[]') {                        
-                            tampil_header();
+                            show_header();
                         }
                     },
                     error: function(xhr){
@@ -527,14 +518,14 @@ function back_to_page_ini(){
         if( xtr_id == 1 ){
             url = call_page_task_buy(customerId, null);
         } else {
-            url = call_page_task_sale(customerId, null);
+            url = call_page_task_sell(customerId, null);
         }
         if(url !== ''){
             $.ajax({
                 url: url,
                 type: 'POST',
                 success: function() {                
-                    tampil_data_nasabah();
+                    show_customer();
                 },
                 error: function(xhr){
                     alertify.error("error");
@@ -546,7 +537,7 @@ function back_to_page_ini(){
 }
 
 function back_to_page_task(){
-    var url = "transaction/transaction_task/index/";
+    var url = "transaction/transaction_buysell_task/index/";
     if(url){
         $.ajax({
             url: url,
@@ -563,7 +554,7 @@ function back_to_page_task(){
 
 function back_to_page_show($ref_id){
     $.ajax({
-        url: baseUrl + 'transaction/transaction/getshowid',
+        url: baseUrl + 'transaction/transaction_buysell/getshowid',
         type: 'POST',
         data: {'ref_id' : $ref_id},
         datatype: 'json',
@@ -576,7 +567,7 @@ function back_to_page_show($ref_id){
                         if(Number(d.tr_id) == 1){
                             url = call_page_show_buy(d.customer_id, d.id);
                         } else {
-                            url = call_page_show_sale(d.customer_id, d.id);
+                            url = call_page_show_sell(d.customer_id, d.id);
                         }
                         if(url !== ''){
                             $.ajax({
@@ -608,7 +599,7 @@ function back_to_page_show($ref_id){
 
 function getratebyid(){
     $.ajax({
-        url: baseUrl + 'transaction/transaction/getratebyid',
+        url: baseUrl + 'transaction/transaction_buysell/getratebyid',
         type: 'POST',
         data: {'valas_id' : $("#valas_id").val(), 'tr_id' : xtr_id},
         datatype: 'json',
@@ -691,7 +682,7 @@ $('#btn-simpan-header').on('click', function (e) {
         $("#payment_type_id").focus();
     } else {
         if ($("#ftitle").html().substr(0, 3) == "Add") {            
-            $.post('transaction/transaction/insert_header_temp', $("#form_header").serialize() + "&customer_id=" + customerId + "&tr_id=" + xtr_id + "&store_id=" + $("#store_id").val() , function (obj) {
+            $.post('transaction/transaction_buysell/insert_header_temp', $("#form_header").serialize() + "&customer_id=" + customerId + "&tr_id=" + xtr_id + "&store_id=" + $("#store_id").val() , function (obj) {
                 if (obj.msg == 1) {              
                     id_log_a = obj.id;             
                     alertify.success("Insert Data Success");                    
@@ -699,7 +690,7 @@ $('#btn-simpan-header').on('click', function (e) {
                     if( xtr_id == 1 ){
                         url = call_page_task_buy(customerId, id_log_a);
                     } else {
-                        url = call_page_task_sale(customerId, id_log_a);
+                        url = call_page_task_sell(customerId, id_log_a);
                     }
                     if(url !== ''){
                         $.ajax({
@@ -724,7 +715,7 @@ $('#btn-simpan-header').on('click', function (e) {
             });
         }
         if (id_log_a !== null && id_log_a !== '') {
-            $.post('transaction/transaction/update_header_temp', $("#form_header").serialize() + "&id=" + id_log_a + "&user_id=" + $("#user_id").val() + "&store_id=" + $("#store_id").val(), function (obj) {
+            $.post('transaction/transaction_buysell/update_header_temp', $("#form_header").serialize() + "&id=" + id_log_a + "&user_id=" + $("#user_id").val() + "&store_id=" + $("#store_id").val(), function (obj) {
                 if (obj.msg == 1) {
                     back_to_page_ini();
                     alertify.success("Edit Data Success");
@@ -740,12 +731,50 @@ $('#btn-simpan-header').on('click', function (e) {
     }
 });
 
+$("#btn-confirm").on('click', function (e) {
+    e.preventDefault();
+    if( document.getElementById('table-detail').rows.length < 1 ) {
+        bksfn.errMsg("Mata uang belum diinput!");        
+    } else {
+        alertify.confirm("are you sure, CONFIRM transaction ?", function (x) {
+            if (x) {
+                $.ajax({
+                    url: baseUrl + 'transaction/transaction_buysell/confirm_task',
+                    type: 'POST',
+                    data: {'id' : id_log_a, 'tr_id' : xtr_id},
+                    datatype: 'json',
+                    success: function(data) {
+                        if(data.length > 0){
+                            if(Number(Apimethod) == 1){
+                                var d = JSON.parse(data);
+                                if(d.tr_header_id !== null && d.tr_header_id !== ''){
+                                    var storeId = d.store_id;
+                                    var id_tr_header = d.tr_header_id;
+                                    api_ap_input_trx(id_tr_header);
+                                }
+                            }    
+                            // show_header();
+                            alertify.success('confirm transaction success!');
+                        } else {
+                            back_to_page_task();
+                        }                        
+                    },
+                    error: function(xhr){
+                        alertify.error("error");
+                        StringtoFile(xhr.responseText, 'error');
+                    }
+                });
+            }
+        });
+    }        
+});
+
 $("#btn-cancel").on('click', function (e) {
     e.preventDefault();
     alertify.confirm("Are you sure, CANCEL transaction ?", function (x) {
         if (x) {           
             $.ajax({
-                url: baseUrl + 'transaction/transaction/cancel_task',
+                url: baseUrl + 'transaction/transaction_buysell/cancel_task',
                 type: 'POST',
                 data: {'id' : id_log_a, 'tr_id' : xtr_id},
                 datatype: 'json',
@@ -760,42 +789,4 @@ $("#btn-cancel").on('click', function (e) {
             });     
         }    
     });    
-});
-
-$("#btn-confirm").on('click', function (e) {
-    e.preventDefault();
-    if( document.getElementById('table-detail').rows.length < 1 ) {
-        bksfn.errMsg("Mata uang belum diinput!");        
-    } else {
-        alertify.confirm("are you sure, CONFIRM transaction ?", function (x) {
-            if (x) {
-                $.ajax({
-                    url: baseUrl + 'transaction/transaction/confirm_task',
-                    type: 'POST',
-                    data: {'id' : id_log_a, 'tr_id' : xtr_id},
-                    datatype: 'json',
-                    success: function(data) {
-                        if(data.length > 0){
-                            if(Number(Apimethod) == 1){
-                                var d = JSON.parse(data);
-                                if(d.tr_header_id !== null && d.tr_header_id !== ''){
-                                    var storeId = d.store_id;
-                                    var id_tr_header = d.tr_header_id;
-                                    api_ap_input_trx(id_tr_header);
-                                }
-                            }    
-                            // tampil_header();
-                            alertify.success('confirm transaction success!');
-                        } else {
-                            back_to_page_task();
-                        }                        
-                    },
-                    error: function(xhr){
-                        alertify.error("error");
-                        StringtoFile(xhr.responseText, 'error');
-                    }
-                });
-            }
-        });
-    }        
 });

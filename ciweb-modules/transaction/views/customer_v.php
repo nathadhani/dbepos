@@ -8,26 +8,7 @@
         size:100px;
         position: relative;
         z-index: 2;
-    }
-
-    div.picwrapper {
-        width:100%;
-        text-align:center;
-    }
-    div.pic {
-        display:inline-block;
-    }
-    div.pic .imgBI {
-        max-width: 120px;
-        height: 120px;
-        margin: 5px 5px 0 0;
-    }
-
-    div.pic .imgPPATK {
-        max-width: 120px;
-        height: 120px;
-        margin: 5px 5px 0 0;
-    }
+    }    
 </style>
 <div class="page-content-wrap">
     <div class="row">
@@ -44,7 +25,7 @@
                             <div class="col-md-12">                  
                                 <p>Look for data first, before inputting new data. so there's no double data!</p>              
                                 <div class="form-group">
-                                    <div class="col-md-8">
+                                    <div class="col-md-10">
                                         <div class="input-group">
                                             <div class="input-group-addon">
                                                 <span for="text_search" class="fa fa-search"></span>
@@ -52,12 +33,12 @@
                                             <input type="text" id="text_search" name="text_search" class="form-control" placeholder="Ketik kata yang mau di cari" data-validation="required"/>
                                             <span class="fa fa-fw fa-close field-icon toggle-close"></span>
                                             <div class="input-group-btn">
-                                                <button class="btn btn-default" id="btn_search" name="btn_search"><i class="fa fa-search"></i>Search</button>
+                                                <button class="btn btn-default" id="btn_search" name="btn_search" style="margin-left:5px;">Submit</button>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-md-2">
-                                        <button id="btn_add" name="btn_add" class="btn btn-info btn-block" style="width:100px;"><span class="fa fa-plus"></span> New Data</button>
+                                        <button id="btn_add" name="btn_add" class="btn btn-info btn btn-sm btn-block pull-right" style="width:150px;margin-top:-20px;">Add New Data</button>
                                     </div>                        
                                 </div>
                             </div>                                              

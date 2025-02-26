@@ -512,6 +512,65 @@ function StringtoFile(content, filename){
     return URL.revokeObjectURL(link.href);
 }
 
+function call_page_task_buy(customer_id, id_log_a){
+    var url = "transaction/transaction_buysell/index/"+customer_id+"/"+encrypt('buy')+"/"+id_log_a;
+    return url;
+}
+
+function call_page_task_sell(customer_id, id_log_a){
+    var url = "transaction/transaction_buysell/index/"+customer_id+"/"+encrypt('sell')+"/"+id_log_a;
+    return url;
+}
+
+function call_page_show_buy(customer_id, id_tr_header){
+    var url = "transaction/transaction_buysell_show/index/"+customer_id+"/"+encrypt('buy')+"/"+id_tr_header;
+    return url;
+}
+
+function call_page_show_sell(customer_id, id_tr_header){
+    var url = "transaction/transaction_buysell_show/index/"+customer_id+"/"+encrypt('sell')+"/"+id_tr_header;
+    return url;
+}
+
+function back_to_page_show($id){
+    $.ajax({
+        url: baseUrl + 'transaction/transaction_buysell_show/getshowid',
+        type: 'POST',
+        data: {'id' : $id},
+        datatype: 'json',
+        success: function(data){
+            if (data !== undefined) {
+                if (data !== '[]'){   
+                    var d = JSON.parse(data)[0];
+                    if(d.customer_id !== null && d.customer_id !== '' && d.customer_id !== null && d.customer_id !== ''){
+                        var url = '';
+                        if(Number(d.tr_id) == 1){
+                            url = call_page_show_buy(d.customer_id, d.id);
+                        } else {
+                            url = call_page_show_sell(d.customer_id, d.id);
+                        }
+                        if(url !== ''){
+                            $.ajax({
+                                url: url,
+                                type: 'POST',
+                                success: function() {
+                                    window.open(url,'_self'); 
+                                },
+                                error: function(){
+                                    alertify.error("can't open page.!");
+                                }
+                            });    
+                        }                    
+                    }                                
+                }
+            }    
+        },
+        error: function(){
+            alertify.error("can't open page.!");
+        }
+    });    
+}
+
 function api_ap_input_trx(id_tr_header){
     if(id_tr_header !== '' && id_tr_header !== null){
         $.ajax({
@@ -580,63 +639,4 @@ function api_ap_adjustment_trx(id_tr_header){
     } else {
         alertify.error("id header IS NULL");
     }
-}
-
-function call_page_task_buy(customer_id, id_log_a){
-    var url = "transaksi/transaksi/index/"+customer_id+"/"+encrypt('buy')+"/"+id_log_a;
-    return url;
-}
-
-function call_page_task_sale(customer_id, id_log_a){
-    var url = "transaksi/transaksi/index/"+customer_id+"/"+encrypt('sell')+"/"+id_log_a;
-    return url;
-}
-
-function call_page_show_buy(customer_id, id_tr_header){
-    var url = "transaksi/transaksi_show/index/"+customer_id+"/"+encrypt('buy')+"/"+id_tr_header;
-    return url;
-}
-
-function call_page_show_sale(customer_id, id_tr_header){
-    var url = "transaksi/transaksi_show/index/"+customer_id+"/"+encrypt('sell')+"/"+id_tr_header;
-    return url;
-}
-
-function back_to_page_show($id){
-    $.ajax({
-        url: baseUrl + 'transaksi/transaksi_show/getshowid',
-        type: 'POST',
-        data: {'id' : $id},
-        datatype: 'json',
-        success: function(data){
-            if (data !== undefined) {
-                if (data !== '[]'){   
-                    var d = JSON.parse(data)[0];
-                    if(d.customer_id !== null && d.customer_id !== '' && d.customer_id !== null && d.customer_id !== ''){
-                        var url = '';
-                        if(Number(d.tr_id) == 1){
-                            url = call_page_show_buy(d.customer_id, d.id);
-                        } else {
-                            url = call_page_show_sale(d.customer_id, d.id);
-                        }
-                        if(url !== ''){
-                            $.ajax({
-                                url: url,
-                                type: 'POST',
-                                success: function() {
-                                    window.open(url,'_self'); 
-                                },
-                                error: function(){
-                                    alertify.error("can't open page.!");
-                                }
-                            });    
-                        }                    
-                    }                                
-                }
-            }    
-        },
-        error: function(){
-            alertify.error("can't open page.!");
-        }
-    });    
 }

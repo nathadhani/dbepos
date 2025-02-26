@@ -13,7 +13,7 @@ class Customer extends Bks_Controller {
     function index(){
         $this->libauth->check(__METHOD__);
         $this->template->title('New');
-        $this->template->set('tsmall', 'Transaction');
+        $this->template->set('tsmall', 'Buy / Sel - New');
         $this->template->set('icon', 'fa fa-edit');
         $this->template->build('transaction/customer_v');
     }    

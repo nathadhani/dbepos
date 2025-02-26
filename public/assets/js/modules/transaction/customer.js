@@ -50,7 +50,7 @@ $("#btn_search").click(function (e) {
                 scrollCollapse: true,
                 lengthMenu: [[8, 25, 50, 100, -1], [8, 25, 50, 100, "All"]],
                 ajax: {
-                    url: "transaksi/nasabah/getData",
+                    url: "transaction/customer/getData",
                     type: "POST",
                     beforeSend: function(){
                         $(".ajax-loader").height($(document).height());
@@ -130,7 +130,7 @@ $("#btn_add").click(function (e) {
     if( text_search.substring(0,2).trim() === '08' && text_search.length > 10 ){
         text_celluler = $("#text_search").val();
     }
-    var url = "transaksi/nasabah_form/index/null/"+text_celluler;
+    var url = "transaction/customer_form/index/null/"+text_celluler;
     $.ajax({
         url: url,
         type: 'POST',
@@ -143,7 +143,7 @@ $("#btn_add").click(function (e) {
 function edit_data(id) {
     d = arrdata.filter(data => data.id === id.toString())[0];
     var xnama = d.customer_name.trim();      
-    var url = "transaksi/nasabah_form/index/"+d.id+"/null";
+    var url = "transaction/customer_form/index/"+d.id+"/null";
     $.ajax({
         url: url,
         type: 'POST',
@@ -157,7 +157,7 @@ function select_row(){
     t.on('click', 'tbody tr', function (e) {
         e.preventDefault();
         let data = t.row(this).data();
-        alertify.confirm('Cust. Name : ' + data.customer_name +'<br> Cust. Address : ' + data.customer_address, function (x) {    
+        alertify.confirm('Customer Name : ' + data.customer_name +'<br> Customer Address : ' + data.customer_address, function (x) {    
             if (x) {           
                 edit_data(data.id, arrdata.push(data));       
             } else {

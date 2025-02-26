@@ -12,21 +12,23 @@ class Customer_form extends Bks_Controller {
     
     function index() {
         $this->libauth->check(__METHOD__);
-        $this->template->title('Customer Profile');
-        $this->template->set('tsmall', 'Transaction');
+        $this->template->title('Customer Form');
+        $this->template->set('tsmall', 'Customer');
         $this->template->set('icon', 'fa fa-edit');
         $data['auth'] = $this->auth;
         $this->template->build('transaction/customer_form_v', $data);
     }
     
-    function generate_code() {
+    function generate_code($customer_type_id) {
         $Number = 1;
         $thn = SUBSTR(Date('Y-m-d'),0,4);
         $bln = SUBSTR(Date('Y-m-d'),5,2);
         $branchcode = sprintf("%02d", $this->company_id);
+        $type_id = sprintf("%02d", $customer_type_id);
         $sql = $this->db->query("SELECT max(right(customer_code,4)) as id 
                                  FROM m_customer 
                                  WHERE company_id = $this->company_id
+                                 AND customer_type_id = $customer_type_id
                                  AND YEAR(created) = $thn
                                  AND MONTH(created) = $bln")->result();
         if (count($sql) > 0) {
@@ -34,7 +36,7 @@ class Customer_form extends Bks_Controller {
                 $Number = intval($data->id) + 1;
             }
         }
-        return SUBSTR($thn,2,2) . $bln . $branchcode  . sprintf("%04d", $Number);
+        return SUBSTR($thn,2,2) . $bln . $branchcode  . $type_id . sprintf("%04d", $Number);
     } 
 
     function insert() {
@@ -43,7 +45,7 @@ class Customer_form extends Bks_Controller {
         $postData = $this->input->post();
 
         $postData['company_id'] = $this->company_id;
-        $postData['customer_code'] = $this->generate_code();
+        $postData['customer_code'] = $this->generate_code($postData['customer_type_id']);
         $postData['bornday'] = revDate($postData['bornday']);
         $postData['status'] = '1';
 
@@ -120,11 +122,11 @@ class Customer_form extends Bks_Controller {
         }    
     }
     
-    function add_foto(){
+    function add_image(){
         $postData = $this->input->post();
         if (isset ($_FILES ['upload_foto'] ['name']) && !empty($_FILES ['upload_foto'] ['name'])) {
-            $upload_path = base_url().'assets/img/foto_nasabah/';
-            $config['upload_path'] = '../public/assets/img/foto_nasabah/';
+            $upload_path = base_url().'assets/img/customer_form/';
+            $config['upload_path'] = '../public/assets/img/customer_form/';
             $config['file_name'] = $postData['kode'] . '.jpg';
             $config['allowed_types'] = 'jpg|jpeg|png';
             $config['overwrite'] = TRUE;

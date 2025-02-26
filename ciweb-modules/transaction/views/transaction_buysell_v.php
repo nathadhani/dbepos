@@ -15,48 +15,49 @@
 <div class="page-content-wrap">    
     <div class="row">
         <div class="col-md-12">
-            <div class="panel panel-default">                      
-                <div class="panel-body">
-                    <div class="row" style="margin-left:-5px;">      
-                        <div class="col-md-2">
-                            <span>
-                                Trx. Name : 
-                                <?php 
-                                    if($this->uri->segment(5) === '432d21') {
-                                        echo 'Beli / Buy';
-                                    } else if($this->uri->segment(5) === '523d3455') {
-                                        echo 'Jual / Sell';
-                                    }
-                                ?>
-                            </span><br>        
-                            Trx. No <span id="tr_number"></span><br>
-                            Trx. Date <span id="tr_datex"></span><br>
-                            Trx. Status : <span id="ftitle"></span>      
-                        </div>
-                        <div class="col-md-10">                            
-                            Cust. Name : <a href="#" id="customer_name"></a><br>
-                            <span id="created_by"></span><br>
-                            <span id="cancel_by"></span>
-                        </div>
+            <div class="panel panel-default">    
+                <div class="panel-heading ui-draggable-handle">                                
+                    <div class="panel-title-box">
+                        <h3>Buy / Sell - Form</h3>
                     </div>
-                    <br>
-                    
+                </div>                  
+                <div class="panel-body">                                       
                     <form id="form_header" class="form-horizontal" autocomplete="off">
-                        <div class="row">         
-                            <?php 
-                                if(in_array($auth['company_id'],array(1,2))) {
-                            ?> 
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <div class="col-lg-12">
-                                            <label for=tr_date style="display:block">Trx. Date</label>
-                                            <input type="text" id="tr_date" name="tr_date" placeholder="Tanggal..." class="form-control dp" data-date-format="DD MMMM YYYY" value="<?=date('d-m-Y');?>">
-                                        </div>
+                        <div class="row" style="margin-left:-5px;">      
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <div class="col-lg-12">
+                                        <label for=tr_date style="display:block">Trx. Date</label>
+                                        <input type="text" id="tr_date" name="tr_date" placeholder="Tanggal..." class="form-control dp" data-date-format="DD MMMM YYYY" value="<?=date('d-m-Y');?>">
                                     </div>
                                 </div>
-                            <?php 
-                                }
-                            ?>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <div class="col-lg-12">
+                                        <label for=tr_date style="display:block">Trx. Number</label>
+                                        <input type="text" id="tr_number" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                Cust. Name : <a href="#" id="customer_name"></a><br>
+                                <span id="created_by"></span><br>
+                                <span id="cancel_by"></span>
+                                Trx. Status : <span id="ftitle"></span>      
+                            </div>
+                            <div class="col-md2">                                                                
+                                <?php 
+                                    if($this->uri->segment(5) === '432d21') {
+                                        echo '<span style="font-size:24px;font-weight:bold;color:blue">Buy / Beli</span>';
+                                    } else if($this->uri->segment(5) === '523d3455') {
+                                        echo '<span style="font-size:24px;font-weight:bold;color:red">Sell / Jual</span>';
+                                    }
+                                ?>                                
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">         
                             <div class="col-md-5">
                                 <div class="form-group">                                
                                     <div class="col-lg-12">

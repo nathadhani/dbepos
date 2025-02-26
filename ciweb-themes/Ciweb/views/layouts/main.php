@@ -95,7 +95,7 @@
             if( $usergroup_id != 1) {
         ?>
             <span>
-                welcome : <?php echo $auth['fullname'];?>
+                welcome : <?php echo $auth['fullname'] . ' | ' . $auth['company_address'];?>
             </label>
             <span class="pull-right"> 
                 Today : <?php print dayList(). ', ' . date('d F Y'); ?> 
