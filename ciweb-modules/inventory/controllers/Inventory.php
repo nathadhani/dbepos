@@ -218,7 +218,7 @@ class Inventory extends Bks_Controller {
         }            
     }
     
-    function tampil_header(){
+    function show_header(){
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
@@ -228,7 +228,7 @@ class Inventory extends Bks_Controller {
         echo json_encode($query, true);
     }
     
-    function tampil_detail(){
+    function show_detail(){
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();

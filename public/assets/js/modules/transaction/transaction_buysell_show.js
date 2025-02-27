@@ -4,15 +4,15 @@
     back_to_page_show();
 
     function back_to_page_show(){
-        tampil_header(id_tr_header);
-        tampil_detail(id_tr_header);        
+        show_header(id_tr_header);
+        show_detail(id_tr_header);        
     }
 
-    function tampil_header(id){
+    function show_header(id){
         if( typeof(customerId) !== 'undefined') {
             if(customerId !== null && customerId !== '') {
                 $.ajax({
-                    url: baseUrl + "transaction/transaction_show/tampil_header",
+                    url: baseUrl + "transaction/transaction_show/show_header",
                     type: 'POST',
                     data: {'customer_id' : customerId, 'tr_id' : xtr_id, 'id' : id},
                     datatype: 'json',
@@ -39,7 +39,7 @@
 
                             storeId = d.store_id;
                         } else{                        
-                            var url = "transaction/nasabah/index/";
+                            var url = "transaction/customer/index/";
                             window.open(url,'_self');    
                         }               
                     },
@@ -52,13 +52,13 @@
         }        
     }
 
-    function tampil_detail(header_id){
+    function show_detail(header_id){
         if( typeof(customerId) !== 'undefined') {
             if(customerId !== null && customerId !== '') {
                 $('#table-detail tbody').empty();
                 var counter = document.getElementById('table-detail').rows.length;
                 $.ajax({
-                    url: baseUrl + 'transaction/transaction_show/tampil_detail',
+                    url: baseUrl + 'transaction/transaction_show/show_detail',
                     type: 'POST',
                     data: {'customer_id' : customerId, 'tr_id' : xtr_id, 'header_id' : header_id},
                     dataType: 'json',
@@ -103,7 +103,7 @@
                                     </tr>`   
                             $('#table-detail tbody').append(rowsx);     
                         }else{
-                            var url = "transaction/nasabah/index/";
+                            var url = "transaction/customer/index/";
                             window.open(url,'_self');
                         }
                     },
@@ -152,7 +152,7 @@
 
     $("#customer_name").on('click', function (e) {
         e.preventDefault();
-        var url = "transaction/nasabah_form/index/"+customerId;
+        var url = "transaction/customer_form/index/"+customerId;
         $.ajax({
             url: url,
             type: 'POST',

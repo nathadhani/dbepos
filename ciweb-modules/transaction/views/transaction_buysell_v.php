@@ -9,21 +9,40 @@
 
     var customerId = <?php echo $this->uri->segment(4);?>;
     var tr_uri_code = <?php echo "'" . $this->uri->segment(5) ."'";?>;
-    var id_log_a = <?php echo $this->uri->segment(6);?>;
+    var id_header = <?php echo $this->uri->segment(6);?>;
 </script>
-
 <div class="page-content-wrap">    
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">    
                 <div class="panel-heading ui-draggable-handle">                                
                     <div class="panel-title-box">
-                        <h3>Buy / Sell - Form</h3>
+                        <h3>
+                            <?php 
+                                if($this->uri->segment(5) === '432d21') {
+                                    echo '<span style="color:blue;font-weight:800;">Buy / Beli</span>';
+                                } else if($this->uri->segment(5) === '523d3455') {
+                                    echo '<span style="color:red;font-weight:800;">Sell / Jual</span>';
+                                }
+                            ?>                               
+                            - <span id="ftitle">Add</span>
+                        </h3>
                     </div>
+                    <ul class="panel-controls">
+                        CIF : <a href="#" id="customer_name"></a>
+                    </ul>    
                 </div>                  
                 <div class="panel-body">                                       
                     <form id="form_header" class="form-horizontal" autocomplete="off">
-                        <div class="row" style="margin-left:-5px;">      
+                        <div class="row" style="margin-left:-5px;">                                  
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <div class="col-lg-12">
+                                        <label for=tr_number style="display:block">Trx. Number</label>
+                                        <input type="text" id="tr_number" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <div class="col-lg-12">
@@ -32,74 +51,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    <div class="col-lg-12">
-                                        <label for=tr_date style="display:block">Trx. Number</label>
-                                        <input type="text" id="tr_number" class="form-control">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                Cust. Name : <a href="#" id="customer_name"></a><br>
-                                <span id="created_by"></span><br>
-                                <span id="cancel_by"></span>
-                                Trx. Status : <span id="ftitle"></span>      
-                            </div>
-                            <div class="col-md2">                                                                
-                                <?php 
-                                    if($this->uri->segment(5) === '432d21') {
-                                        echo '<span style="font-size:24px;font-weight:bold;color:blue">Buy / Beli</span>';
-                                    } else if($this->uri->segment(5) === '523d3455') {
-                                        echo '<span style="font-size:24px;font-weight:bold;color:red">Sell / Jual</span>';
-                                    }
-                                ?>                                
-                            </div>
-                        </div>
-                        <br>
-                        <div class="row">         
-                            <div class="col-md-5">
-                                <div class="form-group">                                
-                                    <div class="col-lg-12">
-                                        <label for="user_id" style="display:block">Counter</label>
-                                        <select id="user_id"
-                                                name="user_id"
-                                                data-ajax="true" 
-                                                data-placeholder="-- Pilih Konter --"
-                                                data-url="user/user/getCreatedby/"
-                                                data-value=""
-                                                data-limit="100"                                                
-                                                placeholder="Konter"  
-                                                class='form-control select2'
-                                                require
-                                        >
-                                        </select>                                        
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-5">
-                                <div class="form-group">                                
-                                    <div class="col-lg-12">
-                                        <label for="cashier_id" style="display:block">Cashier</label>
-                                        <select id="cashier_id"
-                                                name="cashier_id"
-                                                data-ajax="true" 
-                                                data-placeholder="-- Pilih Kasir --"
-                                                data-url="user/user/getCreatedby/"
-                                                data-value=""
-                                                data-limit="100"                                                
-                                                placeholder="Kasir"  
-                                                class='form-control select2'
-                                                require
-                                        >
-                                        </select>                                        
-                                    </div>
-                                </div>
-                            </div>                            
-                        </div>
-                        <br>
-                        <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-8">
                                 <div class="form-group">                                
                                     <div class="col-lg-12">
                                         <label for="store_id" style="display:block">Store</label>
@@ -107,7 +59,7 @@
                                                 name="store_id"
                                                 data-ajax="true" 
                                                 data-placeholder="-- PIlih Store --"
-                                                data-url="master_data/m_store/getStoryTrx/"
+                                                data-url="master_data/m_store/getStoreTrx/"
                                                 data-value=""
                                                 data-limit="100"                                                
                                                 placeholder="Store"  
@@ -117,35 +69,34 @@
                                         </select>
                                     </div>
                                 </div>
-                            </div>                            
-                            <div class="col-md-6">
+                            </div>
+                        </div>
+                        <div class="row" style="margin-left:-5px;">                                                              
+                            <div class="col-md-5">
                                 <div class="form-group">                                
-                                    <div class="col-lg-8">
-                                        <label for="payment_type_id" style="display:block">Payment Type</label>
-                                        <select id="payment_type_id"
-                                                name="payment_type_id"
-                                                data-ajax="true" 
-                                                data-placeholder="-- Pilih Tipe Pembayaran --"
-                                                data-url="master_data/m_payment_type/getPaymentType/"
-                                                data-value=""
-                                                data-limit="100"                                                
-                                                placeholder="Tipe Pembayaran"  
-                                                class='form-control select2'
-                                                require                                            
-                                        >
-                                        </select>
-                                    </div>
-                                    <div class="col-lg-2">
-                                        <label for="btn-submit" style="display:block"></label><br>
-                                        <button id="btn-simpan-header" class="btn btn-info btn-sm" style="width:60px;display:block;">Save</button>
+                                    <div class="col-lg-12">
+                                        <label for="store_id" style="display:block">Source</label>
+                                        <input type="text" autofocuse="" id="customer_source" name="customer_source" class="form-control" placeholder="Sumber Dana...">
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="form-group">                                
+                                    <div class="col-lg-12">
+                                        <label for="store_id" style="display:block">Purpose</label>
+                                        <input type="text" autofocuse="" id="customer_purpose" name="customer_purpose" class="form-control" placeholder="Tujuan Transaksi...">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <label for="btn-submit" style="display:block"></label><br>
+                                <button id="btn-simpan-header" class="btn btn-default btn btn-sm" style="width:120px;display:block;">Save</button>
                             </div>                            
-                        </div>
+                        </div>                        
                     </form>                    
 
                     <!-- <hr style="margin-left:10px; border-top: 1px dotted #333;"> -->
-                    <br>
+                    <hr style="border: 1px solid green;">
 
                     <div class="row">
                         <div class="col-md-12">
@@ -209,7 +160,7 @@
                                                     <input type="text" autofocuse="" id="subtotal" name="subtotal" class="form-control" style='text-align:right;' value="0" readonly>
                                                 </td>                                                                
                                                 <td width="5%" style='text-align:center'>
-                                                    <button id="btn-add-row-detail" class="btn btn-info btn-sm" style="width:60px;">Add</button>
+                                                    <button id="btn-add-row-detail" class="btn btn-default btn btn-sm" style="width:60px;">Add</button>
                                                 </td>                
                                             </tr>                                         
                                         </tbody>                                       
@@ -235,12 +186,19 @@
                             </div>        
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <a style="width:95px;" id="btn-confirm" class="btn btn-primary" title="Confirm">Confirm</a>
-                            <a style="width:95px;" id="btn-cancel" class="btn btn-primary" title="Cancel">Cancel</a>                            
+                    
+                    <hr style="border: 1px solid green;">
+
+                    <div class="row" style="margin-top:-10px;">
+                        <div class="col-md-6">
+                            <a style="width:120px;" id="btn-confirm" class="btn btn-primary" title="Confirm">Confirm</a>
+                            <a style="width:120px;" id="btn-cancel" class="btn btn-primary" title="Cancel">Cancel</a>                            
                         </div>
-                    </div>
+                        <div class="col-md-6">                            
+                            <span id="created_by" class="pull right;"></span><br>
+                            <span id="cancel_by" class="pull right;"></span>    
+                        </div>
+                    </div>                    
                     <div class="row" id="pinfo">
                         <div class="col-md-12">
                             <br>

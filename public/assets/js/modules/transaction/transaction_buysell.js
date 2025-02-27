@@ -4,12 +4,11 @@ var xtr_id = (decrypt(tr_uri_code) === 'buy' ? 1 : decrypt(tr_uri_code) === 'sel
 back_to_page_ini();
 
 function reset_form_header(){    
+    $('#tr_number').prop('disabled', true);
+    $("#store_id").html('').sel2dma();
     $("#customer_name").html('');
-    $("#store_name").html('');
-    $("#store_address").html('');
-    $("#user_id").html('').sel2dma();
-    $("#cashier_id").html('').sel2dma();
-    $("#payment_type_id").html('').sel2dma();
+    $("#customer_soure").html('');
+    $("#customer_purpose").html('');
 }
 
 function reset_form_input(){
@@ -17,7 +16,7 @@ function reset_form_input(){
     $("#stock_sheet").html('');
     $("#stock_amount").html('');
 
-    $("#valas_id").html('').sel2dma();    
+    $("#valas_id").html('').sel2dma(); 
     $("#valas_code").html('');
 
     $("#nominal").val('');
@@ -40,7 +39,7 @@ function show_customer(){
                     success: function(data){
                         if (data !== '[]'){   
                             var d = JSON.parse(data)[0];
-                            $("#customer_name").html(d.customer_name);
+                            $("#customer_name").html(d.customer_code + ' - ' + d.customer_name);
                         } else {
                             $("#customer_name").html('');
                             customerId = null;
@@ -57,7 +56,7 @@ function show_customer(){
 }    
 
 function getValasTrx(company_id, store_id){
-    if( typeof(id_log_a) != 'undefined' && id_log_a !== null && id_log_a !== '' ) {
+    if( typeof(id_header) != 'undefined' && id_header !== null && id_header !== '' ) {
         // $("#valas_id").html('').sel2dma();
         // $.ajax({
         //     url : baseUrl +  'master_data/m_valas/getValasTrx',
@@ -79,16 +78,16 @@ function getValasTrx(company_id, store_id){
 
 function show_header(){
     reset_form_header();    
-    if( typeof(id_log_a) != 'undefined' && id_log_a !== null && id_log_a !== '' ) {    
+    if( typeof(id_header) != 'undefined' && id_header !== null && id_header !== '' ) {    
         if( typeof(customerId) !== 'undefined' && customerId !== null && customerId !== '') {
             $.ajax({
-                url: baseUrl + "transaction/transaction_buysell/show_header_temp",
+                url: baseUrl + "transaction/transaction_buysell/show_header",
                 type: 'POST',
-                data: {'customer_id' : customerId, 'tr_id' : xtr_id, 'id' : id_log_a},
+                data: {'customer_id' : customerId, 'tr_id' : xtr_id, 'id' : id_header},
                 datatype: 'json',
                 success: function(data){
                     if (data !== '[]' && data.length > 0){
-                        var d = JSON.parse(data)[0];             
+                        var d = JSON.parse(data)[0];
                         $('#btn-simpan-header').prop('disabled', false);                        
                         $('#btn-add-row-detail').prop('disabled', false);                        
 
@@ -98,9 +97,10 @@ function show_header(){
                         }
 
                         $("#tr_date").val(bksfn.revDate(d.tr_date));
-                        $("#tr_number").html(': '+d.tr_number);
+                        $('#tr_date').prop('disabled', true);
+                        $("#tr_number").val(d.tr_number_temp);
 
-                        $("#customer_name").html(d.customer_name);
+                        $("#customer_name").html(d.customer_code + ' - ' + d.customer_name);
                         
                         if (d.store_id != null) {
                             $("#store_id").html('<option value="' + d.store_id + '">' + d.store_name + ' [' + d.store_address + ']' + '</option>').sel2dma();
@@ -111,29 +111,10 @@ function show_header(){
                             $("#store_id").html('').sel2dma();
                             $('#valas_id').prop('disabled', true);                  
                             $("#valas_id").html('').sel2dma();
-                        }
-
-                        if (d.createdby != null) {
-                            $("#user_id").html('<option value="' + d.createdby + '">' + d.createdby_name + '</option>').sel2dma();
-                            $('#user_id').prop('disabled', false);
-                        } else {
-                            $('#user_id').removeAttr('disabled');
-                            $("#user_id").html('').sel2dma();                            
-                        }
-                        if (d.cashier_id != null) {
-                            $("#cashier_id").html('<option value="' + d.cashier_id + '">' + d.cashier_name + '</option>').sel2dma();
-                            $('#cashier_id').prop('disabled', false);
-                        } else {
-                            $('#cashier_id').removeAttr('disabled');
-                            $("#cashier_id").html('').sel2dma();                            
-                        }
-                        if (d.payment_type_id != null) {
-                            $("#payment_type_id").html('<option value="' + d.payment_type_id + '">' + d.payment_type_name + ' [' + d.payment_type_id + ']' + '</option>').sel2dma();
-                            $('#payment_type_id').prop('disabled', false);
-                        } else {
-                            $('#payment_type_id').removeAttr('disabled');
-                            $("#payment_type_id").html('').sel2dma();                            
-                        }
+                        }          
+                        
+                        $("#customer_source").val(d.customer_source);
+                        $("#customer_purpose").val(d.customer_purpose);
 
                         $("#ftitle").html(lstatus_name(d.status, d.id));
                         show_detail(d.status);
@@ -159,9 +140,9 @@ function show_detail(statusTrx){
         $('#table-detail tbody').empty();
         var counter = document.getElementById('table-detail').rows.length;
         $.ajax({
-            url: baseUrl + 'transaction/transaction_buysell/show_detail_temp',
+            url: baseUrl + 'transaction/transaction_buysell/show_detail',
             type: 'POST',
-            data: {'customer_id' : customerId, 'tr_id' : xtr_id, 'header_id' : id_log_a},
+            data: {'customer_id' : customerId, 'tr_id' : xtr_id, 'header_id' : id_header},
             dataType: 'json',
             success: function (data) {                
                 if (data !== '[]' && data.length > 0){
@@ -256,7 +237,7 @@ function show_detail(statusTrx){
 function delete_line_detail($id){
     if( typeof($id) != 'undefined' && $id !== null && $id !== '' ) {
         $.ajax({
-            url : baseUrl +  'transaction/transaction_buysell/delete_detail_temp',
+            url : baseUrl +  'transaction/transaction_buysell/delete_detail',
             type: 'POST',
             data: {'id' : $id },
             datatype: 'json',
@@ -273,7 +254,7 @@ function delete_line_detail($id){
 }
 
 function add_item(){    
-    $.post('transaction/transaction_buysell/insert_detail_temp', $("#form_detail").serialize() + "&header_id=" + id_log_a + "&tr_id=" + xtr_id + "&user_id=" + $("#user_id").val() , function (obj) {
+    $.post('transaction/transaction_buysell/insert_detail', $("#form_detail").serialize() + "&header_id=" + id_header + "&tr_id=" + xtr_id + "&user_id=" + userId , function (obj) {
         if (obj.msg == 1) {
             reset_form_input();
             back_to_page_ini()
@@ -328,11 +309,8 @@ function subtotal_input() {
 
 $("#btn-add-row-detail").on('click', function (e) {
     e.preventDefault();
-    if (id_log_a !== null && id_log_a !== '') {
-        if( $("#user_id").val() === null || $("#user_id").val() === '' ) {
-            bksfn.errMsg("dibuat oleh belum di pilih!");
-            $("#user_id").focus();
-        } else if ( $("#valas_id").val() === null || $("#valas_id").val() === '' ){
+    if (id_header !== null && id_header !== '') {
+        if ( $("#valas_id").val() === null || $("#valas_id").val() === '' ){
             bksfn.errMsg("mata uang belum di pilih!");
             $("#valas_id").focus();
         } else if( $("#nominal").val() === 0 || $("#nominal").val() === '' ) {
@@ -412,87 +390,22 @@ function getstockbyid(){
     });
 }
 
-$("#customer_name").on('click', function (e) {
-    e.preventDefault();
-    var url = "transaction/nasabah_form/index/"+customerId;
-    $.ajax({
-        url: url,
-        type: 'POST',
-        success: function() {            
-            window.open(url,'_blank'); 
-        },
-        error: function(){            
-            alertify.error("can't open page.!");
-        }
-    }); 
-});
-
-function lstatus_name(status_id, id) {
-    var status_Id =  Number(status_id);
-    var lstatus = '';
-    $("#pinfo").hide();
-    switch(status_Id) {
-        case 1:
-            lstatus += 'Task';
-            break;
-        case 2:
-            lstatus += 'Canceled';
-            $("#btn-simpan-header").hide();
-            $(".form_detail_input").hide();
-            $("#btn-confirm").hide();
-            $("#btn-cancel").hide();
-            $("#pinfo").hide();
-
-            $('#user_id').prop('disabled', true);
-            $('#cashier_id').prop('disabled', true);
-            $('#store_id').prop('disabled', true);
-            $('#payment_type_id').prop('disabled', true);        
-            break;
-        case 3:
-            lstatus += 'Confirm';
-            $("#btn-simpan-header").hide();
-            $(".form_detail_input").hide();
-            $("#btn-confirm").hide();
-            $("#btn-cancel").hide();
-            $("#pinfo").hide();
-
-            $('#user_id').prop('disabled', true);
-            $('#cashier_id').prop('disabled', true);
-            $('#store_id').prop('disabled', true);
-            $('#payment_type_id').prop('disabled', true);        
-
-            back_to_page_show(id);
-            break;
-        default:
-            lstatus = '';
-    }
-    return lstatus;
-}
-
 function back_to_page_ini(){
-    const datex = new Date();
-    var currentDate = datex.toISOString().slice(0,10);
-    $("#tr_date").val(bksfn.revDate(currentDate));        
-
     $("#btn-confirm").hide();
     $("#btn-cancel").hide();  
-    $("#pinfo").hide();        
-    
-    $('#cashier_id').prop('disabled', true);
-    $('#store_id').prop('disabled', true);
-    $('#payment_type_id').prop('disabled', true);
+    $("#pinfo").hide();            
 
     $('#btn-simpan-header').prop('disabled', true);
     $('#valas_id').prop('disabled', true);
     $('#btn-add-row-detail').prop('disabled', true);
-    if( typeof(id_log_a) != 'undefined' && id_log_a !== null && id_log_a !== '' ) {
+    if( typeof(id_header) != 'undefined' && id_header !== null && id_header !== '' ) {
         if( typeof(customerId) !== 'undefined' && customerId !== null && customerId !== '') {
             $("#btn-cancel").show();
             let url = '';
             if( xtr_id == 1 ){
-                url = call_page_task_buy(customerId, id_log_a);
+                url = call_page_task_buy(customerId, id_header);
             } else {
-                url = call_page_task_sell(customerId, id_log_a);
+                url = call_page_task_sell(customerId, id_header);
             }    
             if(url !== ''){
                 $.ajax({
@@ -630,37 +543,9 @@ function getratebyid(){
     });
 }
 
-$('#user_id').on('change',function(){
-    if($(this).val() != null && $(this).val() != ''){
-        $('#cashier_id').prop('disabled', false);
-        $('#cashier_id').focus();
-    } else {
-        $('#cashier_id').prop('disabled', true);
-    }
-});
-
-$('#cashier_id').on('change',function(){
-    if($(this).val() != null && $(this).val() != ''){
-        $('#store_id').prop('disabled', false);
-        $('#store_id').focus();
-    } else {
-        $('#store_id').prop('disabled', true);
-    }
-});
-
 $('#store_id').on('change',function(){
     if($(this).val() != null && $(this).val() != ''){
-        $('#payment_type_id').prop('disabled', false);
-        $('#payment_type_id').focus()
-    } else {
-        $('#payment_type_id').prop('disabled', true);
-    }
-});
-
-$('#payment_type_id').on('change',function(){
-    if($(this).val() != null && $(this).val() != ''){
         $('#btn-simpan-header').prop('disabled', false);
-        $('#btn-simpan-header').focus()
     } else {
         $('#btn-simpan-header').prop('disabled', true);
     }
@@ -670,27 +555,18 @@ $('#btn-simpan-header').on('click', function (e) {
     e.preventDefault();
     if( $("#store_id").val() === null || $("#store_id").val() === '' ) {
         bksfn.errMsg("Stor belum di pilih!");
-        $("#user_id").focus();
-    } else if( $("#user_id").val() === null || $("#user_id").val() === '' ) {
-        bksfn.errMsg("Konter belum di pilih!");
-        $("#user_id").focus();
-    } else if( $("#cashier_id").val() === null || $("#cashier_id").val() === '' ) {
-        bksfn.errMsg("Kasir belum di pilih!");
-        $("#cashier_id").focus();
-    } else if( $("#payment_type_id").val() === null || $("#payment_type_id").val() === '' ) {
-        bksfn.errMsg("Tipe Pembayaran belum di pilih!");
-        $("#payment_type_id").focus();
+        $("#store_id").focus();
     } else {
         if ($("#ftitle").html().substr(0, 3) == "Add") {            
-            $.post('transaction/transaction_buysell/insert_header_temp', $("#form_header").serialize() + "&customer_id=" + customerId + "&tr_id=" + xtr_id + "&store_id=" + $("#store_id").val() , function (obj) {
+            $.post('transaction/transaction_buysell/insert_header', $("#form_header").serialize() + "&customer_id=" + customerId + "&tr_id=" + xtr_id + "&store_id=" + $("#store_id").val() + "&user_id=" + userId , function (obj) {
                 if (obj.msg == 1) {              
-                    id_log_a = obj.id;             
+                    id_header = obj.id;      
                     alertify.success("Insert Data Success");                    
                     var url = '';
                     if( xtr_id == 1 ){
-                        url = call_page_task_buy(customerId, id_log_a);
+                        url = call_page_task_buy(customerId, id_header);
                     } else {
-                        url = call_page_task_sell(customerId, id_log_a);
+                        url = call_page_task_sell(customerId, id_header);
                     }
                     if(url !== ''){
                         $.ajax({
@@ -714,8 +590,8 @@ $('#btn-simpan-header').on('click', function (e) {
                 StringtoFile(xhr.responseText, 'error');
             });
         }
-        if (id_log_a !== null && id_log_a !== '') {
-            $.post('transaction/transaction_buysell/update_header_temp', $("#form_header").serialize() + "&id=" + id_log_a + "&user_id=" + $("#user_id").val() + "&store_id=" + $("#store_id").val(), function (obj) {
+        if (id_header !== null && id_header !== '') {
+            $.post('transaction/transaction_buysell/update_header', $("#form_header").serialize() + "&id=" + id_header + "&user_id=" + userId + "&store_id=" + $("#store_id").val(), function (obj) {
                 if (obj.msg == 1) {
                     back_to_page_ini();
                     alertify.success("Edit Data Success");
@@ -741,7 +617,7 @@ $("#btn-confirm").on('click', function (e) {
                 $.ajax({
                     url: baseUrl + 'transaction/transaction_buysell/confirm_task',
                     type: 'POST',
-                    data: {'id' : id_log_a, 'tr_id' : xtr_id},
+                    data: {'id' : id_header, 'tr_id' : xtr_id},
                     datatype: 'json',
                     success: function(data) {
                         if(data.length > 0){
@@ -776,7 +652,7 @@ $("#btn-cancel").on('click', function (e) {
             $.ajax({
                 url: baseUrl + 'transaction/transaction_buysell/cancel_task',
                 type: 'POST',
-                data: {'id' : id_log_a, 'tr_id' : xtr_id},
+                data: {'id' : id_header, 'tr_id' : xtr_id},
                 datatype: 'json',
                 success: function() {
                     alertify.success('CANCEL Transaction Success!');
@@ -790,3 +666,49 @@ $("#btn-cancel").on('click', function (e) {
         }    
     });    
 });
+
+$("#customer_name").on('click', function (e) {
+    e.preventDefault();
+    var url = "transaction/customer_form/index/"+customerId;
+    $.ajax({
+        url: url,
+        type: 'POST',
+        success: function() {            
+            window.open(url,'_blank'); 
+        },
+        error: function(){            
+            alertify.error("can't open page.!");
+        }
+    }); 
+});
+
+function lstatus_name(status_id, id) {
+    var status_Id =  Number(status_id);
+    var lstatus = '';
+    $("#pinfo").hide();
+    switch(status_Id) {
+        case 1:
+            lstatus += 'Task';
+            break;
+        case 2:
+            lstatus += 'Canceled';
+            $("#btn-simpan-header").hide();
+            $(".form_detail_input").hide();
+            $("#btn-confirm").hide();
+            $("#btn-cancel").hide();
+            $("#pinfo").hide();
+            break;
+        case 3:
+            lstatus += 'Confirm';
+            $("#btn-simpan-header").hide();
+            $(".form_detail_input").hide();
+            $("#btn-confirm").hide();
+            $("#btn-cancel").hide();
+            $("#pinfo").hide();
+            back_to_page_show(id);
+            break;
+        default:
+            lstatus = '';
+    }
+    return lstatus;
+}

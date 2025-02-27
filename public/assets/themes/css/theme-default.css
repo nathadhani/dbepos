@@ -3896,11 +3896,14 @@ background: #1caf9a !important;
   float: left;
   width: 100%;
   min-height: 100%;
-  /* background: url("../img/bg.png") left top repeat #1b1e24; */
-  background:url(../../img/bg-login.jpg) no-repeat center center fixed;
+  background-color: #045498;
+  background-image: linear-gradient(132deg,  #045498 10%, #005b96 100%);
+  background-size: cover;
+  /* background: url("../../img/bg-login.jpg") left top repeat #03396c; */
+  /* background: url(../../img/bg-login.jpg) no-repeat center center fixed; */
 }
 .login-container .login-box {
-  width: 250px;
+  width: 280px;
   margin: 10px auto;
   padding-top: 100px;
 }
@@ -3914,7 +3917,7 @@ background: #1caf9a !important;
 .login-container .login-box .login-body {
   width: 100%;
   float: left;    
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.90);
   padding: 20px;
   -moz-border-radius: 0px;
   -webkit-border-radius: 0px;

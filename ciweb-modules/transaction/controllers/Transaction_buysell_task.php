@@ -23,7 +23,7 @@ class Transaction_buysell_task extends Bks_Controller {
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
 
-        $this->Bksmdl->table = 'v_loga';
+        $this->Bksmdl->table = 'v_tr_header';
 
         $where[0]['field'] = 'company_id';
         $where[0]['data']  = $this->company_id;

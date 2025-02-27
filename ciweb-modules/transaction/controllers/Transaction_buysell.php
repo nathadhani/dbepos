@@ -16,19 +16,18 @@ class Transaction_buysell extends Bks_Controller {
         $this->template->set('tsmall', 'Buy / Sell - New');
         $this->template->set('icon', 'fa fa-edit');
         $data['auth'] = $this->auth;
-        $data['profilusaha'] = $this->Bksmdl->getprofileusaha($this->uri->segment(4), null);
         $this->template->build('transaction/transaction_buysell_v', $data);
     }    
     
     function generate_code_temp($company_id, $store_id, $tr_id, $tanggal){
         $Number = 1;
         $thn = SUBSTR($tanggal,0,4);
-        $bln = SUBSTR($tanggal,5,2);
+        $bln = SUBSTR($tanggal,5,2);        
         $branchcode = sprintf("%02d", $company_id);
         $storecode  =sprintf("%02d", $store_id);
         $trcode = sprintf("%02d", $tr_id);
-        $sql = $this->db->query("SELECT max(right(tr_number,4)) as id 
-                                 FROM log_a
+        $sql = $this->db->query("SELECT max(right(tr_number_temp,4)) as id 
+                                 FROM tr_header
                                  WHERE company_id = $company_id
                                  AND store_id = $store_id 
                                  AND tr_id = $tr_id
@@ -39,7 +38,7 @@ class Transaction_buysell extends Bks_Controller {
             foreach ($sql as $data) {
                 $Number = intval($data->id) + 1;
             }
-        }
+        }        
         return SUBSTR($thn,2,2) . $bln . '-' . $branchcode . $storecode . '-' . $trcode . sprintf("%04d", $Number);
     }    
     
@@ -66,25 +65,21 @@ class Transaction_buysell extends Bks_Controller {
         return SUBSTR($thn,2,2) . $bln . '-' . $branchcode . $storecode . '-' . $trcode . sprintf("%04d", $Number);
     }
    
-    function insert_header_temp(){
+    function insert_header(){
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);        
         $postData = $this->input->post();
 
         $tr_id = $postData['tr_id'];
         $postData['company_id'] = $this->company_id;
-        if(isset($postData['tr_date'])){
-            $postData['tr_date'] = revDate($postData['tr_date']);
-        } else {
-            $postData['tr_date'] = Date('Y-m-d');
-        }        
-        $postData['tr_number'] = $this->generate_code_temp($this->company_id, $postData['store_id'], $tr_id, $postData['tr_date']);
+        $postData['tr_date'] = revDate($postData['tr_date']);
+        $postData['tr_number_temp'] = $this->generate_code_temp($this->company_id, $postData['store_id'], $tr_id, $postData['tr_date']);
         $postData['createdby'] = $postData['user_id'];
         $postData['status'] = '1';
         unset($postData['user_id']);       
         
         $this->db->trans_begin();
-        $this->Bksmdl->table = 'log_a';        
+        $this->Bksmdl->table = 'tr_header';        
         $response = $this->Bksmdl->insert($postData);
         $id = $this->db->insert_id();
         if ($this->db->trans_status() === FALSE) {
@@ -100,7 +95,7 @@ class Transaction_buysell extends Bks_Controller {
         }
     }
     
-    function update_header_temp(){
+    function update_header(){
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);        
         $postData = $this->input->post();
@@ -109,10 +104,11 @@ class Transaction_buysell extends Bks_Controller {
         $postData['company_id'] = $this->company_id;
         $postData['updatedby'] = $postData['user_id'];
         $postData['status'] = '1';   
+        unset($postData['tr_date']);   
         unset($postData['user_id']);   
 
         $this->db->trans_begin();
-        $this->Bksmdl->table = 'log_a';
+        $this->Bksmdl->table = 'tr_header';
         $response = $this->Bksmdl->update($postData, 'id=' . $id);
         if ($this->db->trans_status() === FALSE) {
             $this->db->trans_rollback();
@@ -126,7 +122,7 @@ class Transaction_buysell extends Bks_Controller {
         }
     }    
     
-    function insert_detail_temp(){
+    function insert_detail(){
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);                
         $postData = $this->input->post();
@@ -146,7 +142,7 @@ class Transaction_buysell extends Bks_Controller {
         unset($postData['user_id']);
         
         $this->db->trans_begin();
-        $this->Bksmdl->table = 'log_b';
+        $this->Bksmdl->table = 'tr_detail';
         $response = $this->Bksmdl->insert($postData);
         if ($this->db->trans_status() === FALSE) {
             $this->db->trans_rollback();
@@ -160,7 +156,7 @@ class Transaction_buysell extends Bks_Controller {
         }
     }
     
-    function delete_detail_temp(){
+    function delete_detail(){
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);        
         $postData = $this->input->post();
@@ -168,7 +164,7 @@ class Transaction_buysell extends Bks_Controller {
         $id = json_decode($postData['id']);
         
         $this->db->trans_begin();
-        $this->Bksmdl->table = 'log_b';
+        $this->Bksmdl->table = 'tr_detail';
         $status = $this->Bksmdl->delete('id', $id);        
         if ($this->db->trans_status() === FALSE) {
             $this->db->trans_rollback();
@@ -182,25 +178,25 @@ class Transaction_buysell extends Bks_Controller {
         }
     }
     
-    function show_header_temp(){
+    function show_header(){
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
         $customer_id = json_decode($postData['customer_id']);
         $tr_id = json_decode($postData['tr_id']);
         $id = json_decode($postData['id']);
-        $query = $this->db->query("SELECT * FROM v_loga WHERE customer_id = " . $customer_id . " AND tr_id = " . $tr_id . " AND  id= " . $id)->result();
+        $query = $this->db->query("SELECT * FROM v_tr_header WHERE customer_id = " . $customer_id . " AND tr_id = " . $tr_id . " AND  id= " . $id)->result();
         echo json_encode($query, true);
     }
     
-    function show_detail_temp(){
+    function show_detail(){
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
         $customer_id = json_decode($postData['customer_id']);
         $tr_id = json_decode($postData['tr_id']);
         $header_id = json_decode($postData['header_id']);
-        $query = $this->db->query("SELECT * FROM v_logb WHERE customer_id = " . $customer_id . " AND tr_id = " . $tr_id . " AND header_id= " . $header_id ." ORDER BY valas_id, price ASC")->result();
+        $query = $this->db->query("SELECT * FROM v_tr_detail WHERE customer_id = " . $customer_id . " AND tr_id = " . $tr_id . " AND header_id= " . $header_id ." ORDER BY valas_id, price ASC")->result();
         echo json_encode($query, true);
     }
     
@@ -295,10 +291,10 @@ class Transaction_buysell extends Bks_Controller {
             $tr_date = $get_header_id[0]['tr_date'];
 
             $this->db->where(array('id' => $ref_id));
-            $this->db->update('log_a', array('ref_id ' => $tr_header_id ,'status' => 3, 'updated' => date('Y-m-d H:i:s', time()), 'updatedby' => $this->userId) );
+            $this->db->update('tr_header', array('ref_id ' => $tr_header_id ,'status' => 3, 'updated' => date('Y-m-d H:i:s', time()), 'updatedby' => $this->userId) );
 
             $this->db->where(array('header_id' => $ref_id));
-            $this->db->update('log_b', array('status' => 3, 'updated' => date('Y-m-d H:i:s', time()), 'updatedby' => $this->userId) );
+            $this->db->update('tr_detail', array('status' => 3, 'updated' => date('Y-m-d H:i:s', time()), 'updatedby' => $this->userId) );
 
             $select = $this->db->select('valas_id,nominal')->where('header_id',$tr_header_id)->get('tr_detail');
             if($select->num_rows()){
@@ -329,7 +325,7 @@ class Transaction_buysell extends Bks_Controller {
 
         $this->db->trans_begin();
         $this->db->where(array('id' => $ref_id));
-        $this->db->update('log_a', array('status' => 2, 'updated' => date('Y-m-d H:i:s', time()), 'updatedby' => $this->userId) );
+        $this->db->update('tr_header', array('status' => 2, 'updated' => date('Y-m-d H:i:s', time()), 'updatedby' => $this->userId) );
         if ($this->db->trans_status() === FALSE) {
             $this->db->trans_rollback();
             $err = $this->db->error();
@@ -337,7 +333,7 @@ class Transaction_buysell extends Bks_Controller {
             echo json_encode($json);
         } else {
             $this->db->where(array('header_id' => $ref_id));
-            $this->db->update('log_b', array('status' => 2, 'updated' => date('Y-m-d H:i:s', time()), 'updatedby' => $this->userId) );
+            $this->db->update('tr_detail', array('status' => 2, 'updated' => date('Y-m-d H:i:s', time()), 'updatedby' => $this->userId) );
 
             $this->db->trans_commit();
             $json['msg'] = '1';

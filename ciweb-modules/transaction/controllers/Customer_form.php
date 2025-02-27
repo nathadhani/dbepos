@@ -111,7 +111,7 @@ class Customer_form extends Bks_Controller {
         }
     }   
     
-    function getByID() {
+    function getbyid() {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();

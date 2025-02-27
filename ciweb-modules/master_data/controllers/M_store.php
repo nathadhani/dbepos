@@ -106,7 +106,7 @@ class M_store extends Bks_Controller {
         }
     }
     
-    function getStoryTrx() {
+    function getStoreTrx() {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $this->Bksmdl->table = 'm_company_store';

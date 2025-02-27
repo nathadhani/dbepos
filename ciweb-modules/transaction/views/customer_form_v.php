@@ -210,8 +210,8 @@
                         <div class="footer">
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <button type="reset" class="btn btn-default pull-right" style="width:120px;margin-left:10px;">Reset</button>
-                                    <button type="submit" class="btn btn-default pull-right" style="width:120px;">Submit</button>
+                                    <button type="reset" class="btn btn-default btn btn-sm pull-right" style="width:120px;margin-left:10px;">Reset</button>
+                                    <button type="submit" class="btn btn-default btn btn-sm pull-right" style="width:120px;">Submit</button>
                                 </div>
                             </div>                            
                         </div>

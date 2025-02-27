@@ -10,7 +10,7 @@
             lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
             sDom: 'it<"row"lp>',
             ajax: {
-                url: baseUrl + 'transaction/transaction_task/getData',
+                url: baseUrl + 'transaction/transaction_buysell_task/getData',
                 type: 'POST',
                 // beforeSend: function(){
                 //     $(".ajax-loader").height($(document).height());
@@ -23,7 +23,7 @@
             },
             columns: [
                 {data: "#", className: "dt-body-center", width: "5%", orderable: false, searchable: false},   
-                {data: 'tr_number',  width: "10%", render: function (data, type, row, meta) {
+                {data: 'tr_number_temp',  width: "10%", render: function (data, type, row, meta) {
                     if(Number(row.createdby) == Number(userId)){
                         return '<a title="Pilih" href="#">' + data + '</a>';
                     } else {
