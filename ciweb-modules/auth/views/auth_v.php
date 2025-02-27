@@ -29,10 +29,10 @@
                     </div> -->
                     <div class="login-title" style="text-align:left">                        
                         <h2 style="color:green; font-weight:bold; font-size:22px; font-family:'Arial Black';">
-                            INDOCEV
+                            INDOCEV <small>Application</small>
                         </h2> 
                         <p style="color: #33414e; font-size: 14px; font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;margin-top: -15px;">
-                            Login Application
+                            PT. Indonesia Centra Valutamas <br>
                         </p>                        
                     </div>
                     <form class="form-horizontal" id="frmLogin" autocomplete="off">

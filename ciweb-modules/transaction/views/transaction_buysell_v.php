@@ -20,12 +20,12 @@
                         <h3>
                             <?php 
                                 if($this->uri->segment(5) === '432d21') {
-                                    echo '<span style="color:blue;font-weight:800;">Buy / Beli</span>';
+                                    echo '<span style="color:blue;font-weight:800;font-size:20px;">Buy / Beli</span>';
                                 } else if($this->uri->segment(5) === '523d3455') {
                                     echo '<span style="color:red;font-weight:800;">Sell / Jual</span>';
                                 }
                             ?>                               
-                            - <span id="ftitle">Add</span>
+                            - <span id="ftitle" style="color:black;font-weight:600;font-size:16px;">Add</span>
                         </h3>
                     </div>
                     <ul class="panel-controls">
