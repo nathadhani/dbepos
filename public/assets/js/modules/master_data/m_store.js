@@ -10,7 +10,7 @@
         $("#airport_terminal").html('');
         $("#store_name").html('').focus();
         $("#store_address").val('');
-        $("#api_store_reference_id").val('');
+        $("#api_store_id").val('');
         $("#status").iCheck('check');
         $(':submit').removeAttr('disabled');
     });
@@ -76,7 +76,7 @@
         $("#airport_terminal").val(d.airport_terminal);
         $("#store_name").val(d.store_name).focus();
         $("#store_address").val(d.store_address);
-        $("#api_store_reference_id").val(d.api_store_reference_id);
+        $("#api_store_id").val(d.api_store_id);
         $("#status").iCheck(d.status == 1 ? 'check' : 'uncheck');
         $("body").data("id", d.id);
     });    
@@ -102,7 +102,7 @@
                 }
             },
             {data: 'store_address'},
-            {data: 'api_store_reference_id'},
+            {data: 'api_store_id'},
             {data: 'status', className: "dt-body-center", width: "5%", render: function (data, type, row, meta) {
                 var act = (data == '1') ? '<span class="label label-success"><i class="fa fa-check"></i></span>' : '<span class="label label-danger"><i class="fa fa-times"></i></span>';
                 return act;

@@ -111,12 +111,12 @@
                                 <table class="table table-bordered" cellspacing="0" width="100%">
                                     <thead>
                                         <tr>
-                                            <th style='vertical-align:middle;text-align:center;'>Currency</th>
-                                            <th style='vertical-align:middle;text-align:center;'>Nominal</th>
-                                            <th style='vertical-align:middle;text-align:center;'>Sheet</th>
-                                            <th style='vertical-align:middle;text-align:center;'>Amount</th>
-                                            <th style='vertical-align:middle;text-align:center;'>Exchange Rate</th>
-                                            <th style='vertical-align:middle;text-align:center;'>Equivalent</th>
+                                            <th style='vertical-align:middle;text-align:left;'>Currency</th>
+                                            <th style='vertical-align:middle;text-align:left;'>Nominal</th>
+                                            <th style='vertical-align:middle;text-align:left;'>Sheet</th>
+                                            <th style='vertical-align:middle;text-align:left;'>Amount</th>
+                                            <th style='vertical-align:middle;text-align:left;'>Exchange Rate</th>
+                                            <th style='vertical-align:middle;text-align:left;'>Equivalent</th>
                                             <th id="act-title" style='vertical-align:middle;text-align:center;' width="50px">Action</th>
                                         </tr>
                                     </thead>
@@ -172,12 +172,12 @@
                                     <thead>
                                         <tr style="background:#f1f5f9;">
                                             <td style='vertical-align: middle;text-align:center;'>#</td>
-                                            <td style='vertical-align: middle;text-align:center;'>Currency</td>
-                                            <td style='vertical-align: middle;text-align:center;'>Nominal</td>
-                                            <td style='vertical-align: middle;text-align:center;'>Sheet</td>
-                                            <td style='vertical-align: middle;text-align:center;'>Amount</td>
-                                            <td style='vertical-align: middle;text-align:center;'>Exchange Rate</td>
-                                            <td style='vertical-align: middle;text-align:center;'>Equivalent</td>
+                                            <td style='vertical-align: middle;text-align:left;'>Currency</td>
+                                            <td style='vertical-align: middle;text-align:left;'>Nominal</td>
+                                            <td style='vertical-align: middle;text-align:left;'>Sheet</td>
+                                            <td style='vertical-align: middle;text-align:left;'>Amount</td>
+                                            <td style='vertical-align: middle;text-align:left;'>Exchange Rate</td>
+                                            <td style='vertical-align: middle;text-align:left;'>Equivalent</td>
                                         </tr>
                                     </thead>
                                     <tbody>                                                
@@ -187,26 +187,25 @@
                         </div>
                     </div>
                     
-                    <hr style="border: 1px solid green;">
+                    <hr style="border: 1px solid green;margin-top:-10px;">
 
-                    <div class="row" style="margin-top:-10px;">
-                        <div class="col-md-6">
-                            <a style="width:120px;" id="btn-confirm" class="btn btn-primary" title="Confirm">Confirm</a>
-                            <a style="width:120px;" id="btn-cancel" class="btn btn-primary" title="Cancel">Cancel</a>                            
-                        </div>
+                    <div class="row">
                         <div class="col-md-6">                            
-                            <span id="created_by" class="pull right;"></span><br>
-                            <span id="cancel_by" class="pull right;"></span>    
+                            <span id="created_by"></span>
+                            <span id="cancel_by"></span>                                
+                        </div>
+                        <div class="col-md-6">
+                            <ul class="nav navbar-nav pull-right">
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Action<span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li id="btn-confirm"><a href="">Confirm</a></li>
+                                        <li id="btn-cancel"><a href="">Cancel</a></li>
+                                    </ul>
+                                </li>
+                            </ul>               
                         </div>
                     </div>                    
-                    <div class="row" id="pinfo">
-                        <div class="col-md-12">
-                            <br>
-                            Information :          
-                            <span id="pinfo_confirm"><strong style="color:black;font-weight:bolder;"><br>Confirm </strong> : Untuk menyelesaikan transaction jika sudah sesuai</span>                   
-                            <span id="pinfo_cancel"><strong style="color:black;font-weight:bolder;"><br>Cancel </strong> : Untuk membatalkan transaction jika tidak sesuai</span>                   
-                        </div>
-                    </div>
                 </div>
                 <!--.end panel-body -->
             </div>

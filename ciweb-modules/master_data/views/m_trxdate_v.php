@@ -43,7 +43,7 @@
                                         <select name="tr_id"
                                                 data-ajax="true" 
                                                 data-placeholder="Select Transaksi..."
-                                                data-url="master_data/m_transaction/getTransactionId/" 
+                                                data-url="master_data/m_trxlist/getTransactionId/" 
                                                 data-value="" 
                                                 data-limit="100"
                                                 id="tr_id" placeholder="Ketegori"  class='form-control select2'>

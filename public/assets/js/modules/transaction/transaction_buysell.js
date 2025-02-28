@@ -158,19 +158,19 @@ function show_detail(statusTrx){
                                             ` + d.valas_code + ' - ' + d.valas_name +`
                                             <a style="color:red; cursor:pointer" title="hapus" onClick="delete_line_detail(` + d.id + `)"> / <i>remove<i></a>
                                         </td>
-                                        <td width="10%" style='text-align:center;'>
+                                        <td width="10%" style='text-align:left;'>
                                             ` + bksfn.toRp(d.nominal) + `
                                         </td>
-                                        <td width="10%" style='text-align:center;'>
+                                        <td width="10%" style='text-align:left;'>
                                             ` + bksfn.toRp(d.sheet) + `
                                         </td>
-                                        <td width="10%" style='text-align:center;'>
+                                        <td width="10%" style='text-align:left;'>
                                             ` + bksfn.toRp(d.nominal * d.sheet) + `
                                         </td>
-                                        <td width="15%" style='text-align:center;'>
+                                        <td width="15%" style='text-align:left;'>
                                             ` + bksfn.toRp(d.price) + `
                                         </td>
-                                        <td width="15%" style='text-align:right;'>
+                                        <td width="15%" style='text-align:left;'>
                                             ` + bksfn.toRp(d.subtotal) + `
                                         </td>                         
                                     </tr>`
@@ -183,19 +183,19 @@ function show_detail(statusTrx){
                                         <td width="35%" style="vertical-align: middle;color:black">
                                             ` + d.valas_code + ' - ' + d.valas_name +`                                            
                                         </td>
-                                        <td width="10%" style='text-align:center;'>
+                                        <td width="10%" style='text-align:left;'>
                                             ` + bksfn.toRp(d.nominal) + `
                                         </td>
-                                        <td width="10%" style='text-align:center;'>
+                                        <td width="10%" style='text-align:left;'>
                                             ` + bksfn.toRp(d.sheet) + `
                                         </td>
-                                        <td width="10%" style='text-align:center;'>
+                                        <td width="10%" style='text-align:left;'>
                                             ` + bksfn.toRp(d.nominal * d.sheet) + `
                                         </td>
-                                        <td width="15%" style='text-align:center;'>
+                                        <td width="15%" style='text-align:left;'>
                                             ` + bksfn.toRp(d.price) + `
                                         </td>
-                                        <td width="15%" style='text-align:right;'>
+                                        <td width="15%" style='text-align:left;'>
                                             ` + bksfn.toRp(d.subtotal) + `
                                         </td>                         
                                     </tr>`
@@ -207,7 +207,7 @@ function show_detail(statusTrx){
                                     <td colspan="6" style='vertical-align:middle;text-align:center;background-color:#e3e4e6;font-weight:bold;font-size:14px;'>
                                     <i>Say</i> : ` + bksfn.terBilang(totalpricex) + `
                                     </td>
-                                    <td style='text-align:center;background-color:#f1f5f9;font-weight:bold;font-size:15px;'>
+                                    <td style='text-align:left;background-color:#f1f5f9;font-weight:bold;font-size:15px;'>
                                         Rp. ` + bksfn.toRp(totalpricex) + `
                                     </td>                         
                                 </tr>`
@@ -465,11 +465,11 @@ function back_to_page_task(){
     }
 }
 
-function back_to_page_show($ref_id){
+function back_to_page_show($id){
     $.ajax({
         url: baseUrl + 'transaction/transaction_buysell/getshowid',
         type: 'POST',
-        data: {'ref_id' : $ref_id},
+        data: {'id' : $id},
         datatype: 'json',
         success: function(data){
             if (data !== undefined) {
@@ -617,19 +617,25 @@ $("#btn-confirm").on('click', function (e) {
                 $.ajax({
                     url: baseUrl + 'transaction/transaction_buysell/confirm_task',
                     type: 'POST',
-                    data: {'id' : id_header, 'tr_id' : xtr_id},
+                    data: {'id' : id_header},
                     datatype: 'json',
                     success: function(data) {
                         if(data.length > 0){
                             if(Number(Apimethod) == 1){
-                                var d = JSON.parse(data);
-                                if(d.tr_header_id !== null && d.tr_header_id !== ''){
-                                    var storeId = d.store_id;
-                                    var id_tr_header = d.tr_header_id;
-                                    api_ap_input_trx(id_tr_header);
-                                }
+                                try {
+                                    var d = JSON.parse(data);
+                                    if(d.tr_header_id !== null && d.tr_header_id !== ''){
+                                        var storeId = d.store_id;
+                                        var id_tr_header = d.tr_header_id;
+                                        // api_ap_input_trx(id_tr_header);
+                                    }
+                                } catch (e) {
+                                    console.error('Error parsing JSON:', e);
+                                    back_to_page_show(id_header);
+                                }                                
+                            } else {
+                                back_to_page_show(id_header);
                             }    
-                            // show_header();
                             alertify.success('confirm transaction success!');
                         } else {
                             back_to_page_task();
@@ -652,7 +658,7 @@ $("#btn-cancel").on('click', function (e) {
             $.ajax({
                 url: baseUrl + 'transaction/transaction_buysell/cancel_task',
                 type: 'POST',
-                data: {'id' : id_header, 'tr_id' : xtr_id},
+                data: {'id' : id_header},
                 datatype: 'json',
                 success: function() {
                     alertify.success('CANCEL Transaction Success!');

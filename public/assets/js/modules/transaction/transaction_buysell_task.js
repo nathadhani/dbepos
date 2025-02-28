@@ -43,6 +43,9 @@
                     var act = (data == '1') ? '<Stong style="color:blue;">Trx Buy</Stong>' : '<Stong style="color:red;">Trx Sell</Stong>';
                     return act;
                 }},
+                {data: 'total', width: "8%", render: function (data, type, row, meta) {
+                    return bksfn.toRp(data);
+                }},
                 {data: 'status', width: "10%", render: function (data, type, row, meta) {
                     return lstatus_name(data);
                 }},          
@@ -56,7 +59,7 @@
 
         // Setup - add a text input to each header cell
         $('#searchid td').each(function () {
-            if ($(this).index() != 0 && ( $(this).index() <= 5) ) {
+            if ($(this).index() != 0 && $(this).index() != 6 && $(this).index() != 7 ) {
                 $(this).html('<input style="width:100%" type="text" placeholder="Search" data-id="' + $(this).index() + '" />');
             }
             if ($(this).index() == 2) {
@@ -129,6 +132,9 @@ function lstatus_name(status_id) {
             break;
         case 3:
             lstatus += '<strong>Confirm</strong>';
+            break;
+        case 4:
+            lstatus += '<strong>API - inputtrx</strong>';
             break;
         default:
             lstatus = '';

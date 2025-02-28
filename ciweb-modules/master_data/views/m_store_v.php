@@ -46,21 +46,21 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group row">
-                                <label for="menu" class="control-label col-lg-4">Store Name</label>
+                                <label for="menu" class="control-label col-lg-4">Name</label>
                                 <div class="col-lg-8">
                                     <input type="text" id="store_name" name="store_name" placeholder="Store Name..." class="form-control" data-validation="required">
                                 </div>
                             </div><!-- /.form-group -->
                             <div class="form-group row">
-                                <label for="menuorder" class="control-label col-lg-4">Store Address</label>
+                                <label for="menuorder" class="control-label col-lg-4">Address</label>
                                 <div class="col-lg-8">
                                 <input type="text" id="store_address" name="store_address" placeholder="Store Address..." class="form-control" data-validation="required">
                                 </div>
                             </div><!-- /.form-group -->
                             <div class="form-group row">
-                                <label for="menuorder" class="control-label col-lg-4">Store Reference Id</label>
+                                <label for="menuorder" class="control-label col-lg-4">API Id</label>
                                 <div class="col-lg-8">
-                                <input type="text" id="api_store_reference_id" name="api_store_reference_id" placeholder="Store Reference Id..." class="form-control">
+                                <input type="text" id="api_store_id" name="api_store_id" placeholder="Store Reference Id..." class="form-control">
                                 </div>
                             </div><!-- /.form-group -->
                             <div class="form-group row">
@@ -107,9 +107,9 @@
                             <tr>
                                 <th>#</th>
                                 <th>Branch</th>
-                                <th>Store Name</th>
-                                <th>Store Address</th>
-                                <th>Store Reference Id</th>
+                                <th>Name</th>
+                                <th>Address</th>
+                                <th>API Id</th>
                                 <th>Status</th>
                                 <th>Action</th>
                                 <th>Api AP</th>

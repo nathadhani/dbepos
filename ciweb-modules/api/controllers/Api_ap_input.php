@@ -11,7 +11,7 @@ class Api_ap_input extends Bks_Controller {
     
     function index() {
         $this->libauth->check(__METHOD__);
-        $this->template->title('API - Input');
+        $this->template->title('API - buysellInput');
         $this->template->set('tsmall', 'API');
         $this->template->set('icon', 'fa fa-edit');
         $data['auth'] = $this->auth;
@@ -34,7 +34,7 @@ class Api_ap_input extends Bks_Controller {
         $where[1]['sql']   = 'where';
 
         $where[2]['field'] = 'status';
-        $where[2]['data']  = 1;
+        $where[2]['data']  = 3;
         $where[2]['sql']   = 'where';
 
         $cpData = $this->Bksmdl->getDataTable($where);

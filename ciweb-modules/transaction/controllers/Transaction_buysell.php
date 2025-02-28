@@ -19,10 +19,10 @@ class Transaction_buysell extends Bks_Controller {
         $this->template->build('transaction/transaction_buysell_v', $data);
     }    
     
-    function generate_code_temp($company_id, $store_id, $tr_id, $tanggal){
+    function generate_code_temp($company_id, $store_id, $tr_id, $tr_date){
         $Number = 1;
-        $thn = SUBSTR($tanggal,0,4);
-        $bln = SUBSTR($tanggal,5,2);        
+        $thn = SUBSTR($tr_date,0,4);
+        $bln = SUBSTR($tr_date,5,2);        
         $branchcode = sprintf("%02d", $company_id);
         $storecode  =sprintf("%02d", $store_id);
         $trcode = sprintf("%02d", $tr_id);
@@ -42,10 +42,10 @@ class Transaction_buysell extends Bks_Controller {
         return SUBSTR($thn,2,2) . $bln . '-' . $branchcode . $storecode . '-' . $trcode . sprintf("%04d", $Number);
     }    
     
-    function generate_code_confirm($company_id, $store_id, $tr_id, $tanggal) {
+    function generate_code_confirm($company_id, $store_id, $tr_id, $tr_date) {
         $Number = 1;
-        $thn = SUBSTR($tanggal,0,4);
-        $bln = SUBSTR($tanggal,5,2);
+        $thn = SUBSTR($tr_date,0,4);
+        $bln = SUBSTR($tr_date,5,2);
         $branchcode = sprintf("%02d", $company_id);
         $storecode  =sprintf("%02d", $store_id);
         $trcode = sprintf("%02d", $tr_id);
@@ -222,7 +222,7 @@ class Transaction_buysell extends Bks_Controller {
         $query = $this->db->query("SELECT nominal,
                                           last_stock_sheet, 
                                           IF(last_stock_sheet IS NOT NULL, (nominal * last_stock_sheet),0 ) AS last_stock_amount
-                                          FROM v_stock9
+                                          FROM v_stock_tr9
                                    WHERE company_id = $company_id 
                                    AND store_id = $store_id                                   
                                    AND stock_year = $tahun 
@@ -264,8 +264,8 @@ class Transaction_buysell extends Bks_Controller {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
-        $ref_id = $postData['ref_id'];
-        $query = $this->db->query("SELECT id, tr_id, customer_id FROM tr_header WHERE ref_id = $ref_id")->result();
+        $id = $postData['id'];
+        $query = $this->db->query("SELECT id, tr_id, customer_id FROM tr_header WHERE id = $id")->result();
         echo json_encode($query, true);
     }   
         
@@ -273,10 +273,7 @@ class Transaction_buysell extends Bks_Controller {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);                
         $postData = $this->input->post();
-
-        $ref_id = $postData['id'];
-        $tr_id = $postData['tr_id'];
-
+        $header_id = $postData['id'];
         $this->db->trans_begin();
         if ($this->db->trans_status() === FALSE) {
             $this->db->trans_rollback();
@@ -284,55 +281,55 @@ class Transaction_buysell extends Bks_Controller {
             $json['msg'] = $err['code'] . '<br>' . $err['message'];
             echo json_encode($json);
         } else {
-            $get_header_id = $this->db->select('*')->where('ref_id',$ref_id)->get('tr_header')->result_array();
-            $tr_header_id = $get_header_id[0]['id'];
-            $company_id = $get_header_id[0]['company_id'];
-            $store_id = $get_header_id[0]['store_id'];
-            $tr_date = $get_header_id[0]['tr_date'];
+            $get_header = $this->db->query("SELECT id,company_id,store_id,tr_id,tr_date FROM tr_header WHERE id = $header_id")->result();                
+            if(count($get_header > 0)){
+                $company_id = $get_header[0]->company_id;
+                $store_id = $get_header[0]->store_id;
+                $tr_id = $get_header[0]->tr_id;
+                $tr_date = $get_header[0]->tr_date;                
+                $tr_number = $this->generate_code_confirm($company_id, $store_id, $tr_id, $tr_date);
 
-            $this->db->where(array('id' => $ref_id));
-            $this->db->update('tr_header', array('ref_id ' => $tr_header_id ,'status' => 3, 'updated' => date('Y-m-d H:i:s', time()), 'updatedby' => $this->userId) );
+                $this->db->where(array('id' => $header_id));
+                $this->db->update('tr_header', array('tr_number' => $tr_number, 'status' => 3, 'updated' => date('Y-m-d H:i:s', time()), 'updatedby' => $this->userId) );
 
-            $this->db->where(array('header_id' => $ref_id));
-            $this->db->update('tr_detail', array('status' => 3, 'updated' => date('Y-m-d H:i:s', time()), 'updatedby' => $this->userId) );
+                $this->db->where(array('header_id' => $header_id));
+                $this->db->update('tr_detail', array('status' => 3, 'updated' => date('Y-m-d H:i:s', time()), 'updatedby' => $this->userId) );
 
-            $select = $this->db->select('valas_id,nominal')->where('header_id',$tr_header_id)->get('tr_detail');
-            if($select->num_rows()){
-                $tahun = (int) SUBSTR($tr_date,0,4);
-                $bulan = (int) SUBSTR($tr_date,5,2);
-                foreach($select->result_array() as $row) {
-                    $valas_id = $row['valas_id'];
-                    $nominal  = $row['nominal'];
-                    $this->Bksmdl->generate_stock($company_id, $store_id, $tahun, $bulan, $valas_id, $nominal);
+                $select = $this->db->select('valas_id,nominal')->where('header_id',$header_id)->get('tr_detail');
+                if($select->num_rows()){                           
+                    $tahun = (int) SUBSTR($get_header[0]->tr_date,0,4);
+                    $bulan = (int) SUBSTR($get_header[0]->tr_date,5,2);
+                    foreach($select->result_array() as $row) {
+                        $valas_id = $row['valas_id'];
+                        $nominal  = $row['nominal'];
+                        $this->Bksmdl->generate_stock($company_id, $store_id, $tahun, $bulan, $valas_id, $nominal);
+                    }
                 }
-            }
-    
-            $this->db->trans_commit();
-            $json['msg'] = '1';
-            $json['tr_header_id'] = $get_header_id[0]['id'];
-            $json['store_id'] = $get_header_id[0]['store_id'];
-            echo json_encode($json);
+
+                $this->db->trans_commit();
+                $json['msg'] = '1';
+                $json['tr_header_id'] = $header_id;
+                $json['store_id'] = $store_id;
+                echo json_encode($json);
+            }            
         }
-    }    
+    }
 
     function cancel_task(){
         checkIfNotAjax();
-        $this->libauth->check(__METHOD__);                
+        $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
-
-        $ref_id = json_decode($postData['id']);
-        $tr_id = json_decode($postData['tr_id']);
-
+        $header_id = json_decode($postData['id']);
         $this->db->trans_begin();
-        $this->db->where(array('id' => $ref_id));
-        $this->db->update('tr_header', array('status' => 2, 'updated' => date('Y-m-d H:i:s', time()), 'updatedby' => $this->userId) );
+        $this->db->where(array('id' => $header_id));
+        $this->db->update('tr_header', array('status' => 2, 'description' => 'Canceled', 'updated' => date('Y-m-d H:i:s', time()), 'updatedby' => $this->userId) );
         if ($this->db->trans_status() === FALSE) {
             $this->db->trans_rollback();
             $err = $this->db->error();
             $json['msg'] = $err['code'] . '<br>' . $err['message'];
             echo json_encode($json);
         } else {
-            $this->db->where(array('header_id' => $ref_id));
+            $this->db->where(array('header_id' => $header_id));
             $this->db->update('tr_detail', array('status' => 2, 'updated' => date('Y-m-d H:i:s', time()), 'updatedby' => $this->userId) );
 
             $this->db->trans_commit();

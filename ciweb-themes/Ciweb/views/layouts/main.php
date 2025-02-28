@@ -53,13 +53,13 @@
                 ?>        
             </li>
             <li class="xn-icon-button">
-                <a href="api/api_transaction_input" title="API Pending" data-toggle="tooltip" data-placement="bottom"><span class="fa fa-comment"></span></a>
+                <a href="api/api_ap_input" title="API Input Pending" data-toggle="tooltip" data-placement="bottom"><span class="fa fa-comment"></span></a>
                 <?php
                     if($company_id != null){
                         $count = $this->db->query("SELECT COUNT(status) AS jumlah FROM v_tr_header
-                                                WHERE  company_id = $company_id 
+                                                WHERE  company_id = $company_id
                                                 AND api_method = '1'
-                                                AND status = '1'
+                                                AND status = '3'
                                                 LIMIT 1")->result();
                         if(isset($count)) {
                 ?>

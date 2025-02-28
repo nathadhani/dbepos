@@ -10,7 +10,7 @@
             lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
             sDom: 'it<"row"lp>',
             ajax: {
-                url: baseUrl + 'api/api_transaction_input/getData',
+                url: baseUrl + 'api/api_ap_input/getData',
                 type: 'POST'
             },
             columns: [
@@ -35,6 +35,9 @@
                     var act = (data == '1') ? '<Stong style="color:blue;">Trx Buy</Stong>' : '<Stong style="color:red;">Trx Sale</Stong>';
                     return act;
                 }},
+                {data: 'total', width: "8%", render: function (data, type, row, meta) {
+                    return bksfn.toRp(data);
+                }},
                 {data: 'status', width: "10%", render: function (data, type, row, meta) {
                     return lstatus_name(data);
                 }},          
@@ -48,7 +51,7 @@
 
         // Setup - add a text input to each header cell
         $('#searchid td').each(function () {
-            if ($(this).index() != 0 && ( $(this).index() <= 5) ) {
+            if ($(this).index() != 0 && $(this).index() != 6 && $(this).index() != 7 ) {
                 $(this).html('<input style="width:100%" type="text" placeholder="Search" data-id="' + $(this).index() + '" />');
             }
             if ($(this).index() == 2) {
@@ -112,16 +115,16 @@ function lstatus_name(status_id) {
     var lstatus = '';
     switch(status_Id) {
         case 1:
-            lstatus += '<strong>Confirm</strong>';
+            lstatus += '<strong>Task</strong>';
             break;
         case 2:
             lstatus += '<strong style="color:red;">Canceled</strong>';
             break;
         case 3:
-            lstatus += '<strong>Closed</strong>';
+            lstatus += '<strong>Confirm</strong>';
             break;
         case 4:
-            lstatus += '<strong>Available</strong>';
+            lstatus += '<strong>API - Inputtrx</strong>';
             break;             
         default:
             lstatus = '';

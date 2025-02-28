@@ -22,7 +22,7 @@
         onSuccess: function () {
             if ($("#ftitle").html().substr(0, 4) == "Edit") {
                 //--- Edit
-                $.post('master_data/m_transaction/update', $("#mainForm").serialize() + "&id=" + $("body").data("id"), function (obj) {
+                $.post('master_data/m_trxlist/update', $("#mainForm").serialize() + "&id=" + $("body").data("id"), function (obj) {
                     if (obj.msg == 1) {
                         $("#mainForm")[0].reset();
                         $('#mainTable table').DataTable().ajax.reload();
@@ -35,7 +35,7 @@
                 });
             } else {
                 //--- Insert
-                $.post('master_data/m_transaction/insert', $("#mainForm").serialize(), function (obj) {
+                $.post('master_data/m_trxlist/insert', $("#mainForm").serialize(), function (obj) {
                     if (obj.msg == 1) {
                         $("#mainForm")[0].reset();
                         $('#mainTable table').DataTable().ajax.reload();
@@ -74,7 +74,7 @@
         sDom: 'it<"row"lp>',
         lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
         ajax: {
-            url: baseUrl + 'master_data/m_transaction/getData',
+            url: baseUrl + 'master_data/m_trxlist/getData',
             type: 'POST'
         },
         columns: [
@@ -101,7 +101,7 @@
         order: [[1, 'asc']]
     });
     //--- Select Row , Toggle Row & Delete
-    $('#mainTable').selectDTBks(t, 'master_data/m_transaction/delete');
+    $('#mainTable').selectDTBks(t, 'master_data/m_trxlist/delete');
 
     // Setup - add a text input to each header cell
     $('#searchid td').each(function () {
