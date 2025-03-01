@@ -28,7 +28,7 @@
                     <a href="stock/stockcalculate" title="Calculate Stock" data-toggle="tooltip" data-placement="bottom"><span class="fa fa-calculator"></span></a>
                 </li>
                 <li class="xn-icon-button">
-                    <a href="master_data/rate_daily" title="Rate by Date" data-toggle="tooltip" data-placement="bottom"><span class="fa fa-wrench"></span></a>
+                    <a href="master_data/m_exchange_rate" title="Exchange Rate" data-toggle="tooltip" data-placement="bottom"><span class="fa fa-wrench"></span></a>
                 </li>
                 <li class="xn-icon-button">
                     <a href="dashboard/dashboard_buysell" title="Buy / Sell Chart" data-toggle="tooltip" data-placement="bottom"><span class="fa fa-area-chart"></span></a>

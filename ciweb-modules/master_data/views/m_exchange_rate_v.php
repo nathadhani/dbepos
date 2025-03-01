@@ -8,12 +8,16 @@
     <div class="col-md-12">
         <div class="panel panel-default">
             <div class="panel-heading ui-draggable-handle">                                
-                <h3 class="panel-title">Kurs by Date / <strong>Data Table</strong></h3>
+                <div class="panel-title-box">
+                    <h3>
+                        Exchange Rate
+                    </h3>
+                </div>
                 <ul class="panel-controls">
                     <li>
                         <label for="form_name" class="control-label col-lg-5">Date</label>
                         <div class="col-lg-3">
-                            <input type="text" id="rate_date" name="rate_date" placeholder="Tanggal ..." class="form-control dp" data-date-format="DD MMMM YYYY" style="width:100px;" value="<?=date('d-m-Y');?>">
+                            <input type="text" id="tanggal" name="tanggal" placeholder="Tanggal ..." class="form-control dp" data-date-format="DD MMMM YYYY" style="width:100px;" value="<?=date('d-m-Y');?>">
                         </div>
                     </li>
                     <li>
@@ -22,8 +26,8 @@
                         </div>
                     </li>
                     <!-- <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li> -->
-                </ul>                                
-            </div>
+                </ul>    
+            </div>            
             <div class="panel-body">
                 <div class="box-body table-responsive" id="mainTable">
                     <div style="padding: 0 20px 10px 20px" class="row">
@@ -42,12 +46,12 @@
                                 <th>Date</th>
                                 <th>Buy</th>
                                 <th>Def Buy</th>
-                                <th>Sale</th>
-                                <th>Def Sale</th>
+                                <th>Sell</th>
+                                <th>Def Sell</th>
                                 <th>Buy Bottom</th>
                                 <th>Buy Top</th>
-                                <th>Sale Bottom</th>
-                                <th>Sale Top</th>
+                                <th>Sell Bottom</th>
+                                <th>Sell Top</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
@@ -83,7 +87,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Edit Rate</h4>
+                <h4 class="modal-title">Edit</h4>
             </div>
             <div class="modal-body">
                 <div class="row">
@@ -110,7 +114,7 @@
                                             <div class="form-group">
                                                 <label for="form_name" class="control-label col-lg-4">Date</label>
                                                 <div class="col-lg-8">
-                                                    <input type="text" id="rate_date2" name="rate_date2" class="form-control" readonly>
+                                                    <input type="text" id="exchange_rate_date" name="exchange_rate_date" class="form-control" readonly>
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -132,7 +136,7 @@
                                             <div class="form-group">
                                                 <label for="form_name" class="control-label col-lg-6">Buy</label>
                                                 <div class="col-lg-6">
-                                                    <input type="text" id="rate_buy" name="rate_buy" class="form-control">
+                                                    <input type="text" id="exchange_rate_buy" name="exchange_rate_buy" class="form-control">
                                                 </div>
                                             </div> 
                                             <div class="form-group">
@@ -152,19 +156,19 @@
                                             <div class="form-group">
                                                 <label for="form_name" class="control-label col-lg-6">Sale</label>
                                                 <div class="col-lg-6">
-                                                    <input type="text" id="rate_sale" name="rate_sale" class="form-control">
+                                                    <input type="text" id="exchange_rate_sell" name="exchange_rate_sell" class="form-control">
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label for="form_name" class="control-label col-lg-6">Bottom ( < Sale )</label>
                                                 <div class="col-lg-6">
-                                                    <input type="text" id="price_sale_bot" name="price_sale_bot" class="form-control">
+                                                    <input type="text" id="price_sell_bot" name="price_sell_bot" class="form-control">
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label for="form_name" class="control-label col-lg-6">Top ( > Sale )</label>
                                                 <div class="col-lg-6">
-                                                    <input type="text" id="price_sale_top" name="price_sale_top" class="form-control">
+                                                    <input type="text" id="price_sell_top" name="price_sell_top" class="form-control">
                                                 </div>
                                             </div>
                                         </div>                                                        

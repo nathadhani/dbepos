@@ -4,16 +4,16 @@
     //--- Refresh Button  
     $("#btnrefresh").on('click', function (e) {
         e.preventDefault();
-        alertify.confirm("Rate Date " + $("#rate_date").val() + " ?", function (e) {
+        alertify.confirm("Exchange Rate " + $("#tanggal").val() + " ?", function (e) {
             if (e) {
                 $.ajax({
-                    url: 'master_data/Rate_daily/insert',
+                    url: 'master_data/m_exchange_rate/insert',
                     type: 'POST',
                     beforeSend: function(){
                         $(".ajax-loader").height($(document).height());
                         $('.ajax-loader').css("visibility", "visible");
                     },
-                    data: {'periode' :  $('#rate_date').val()},
+                    data: {'periode' :  $('#tanggal').val()},
                     success: function(msg) {   
                         if (msg = '1') {
                             $('#mainTable table').DataTable().ajax.reload();
@@ -41,14 +41,14 @@
         sDom: 'it<"row"lp>',
         lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
         ajax: {
-            url: baseUrl + 'master_data/Rate_daily/getData',
+            url: baseUrl + 'master_data/m_exchange_rate/getData',
             type: 'POST',
             // beforeSend: function(){
             //     $(".ajax-loader").height($(document).height());
             //     $('.ajax-loader').css("visibility", "visible");
             // },
             data: function(d) {
-                d.periode = $('#rate_date').val();    
+                d.periode = $('#tanggal').val();
             },
             // complete: function(){
             //     $('.ajax-loader').css("visibility", "hidden");
@@ -60,19 +60,19 @@
                 return data;
             }},
             {data: 'valas_name'},
-            {data: 'rate_date', render: function (data, type, row, meta) {
+            {data: 'exchange_rate_date', render: function (data, type, row, meta) {
                     return bksfn.revDate(data);
             }},
-            {data: 'rate_buy', render: function (data, type, row, meta) {
+            {data: 'exchange_rate_buy', render: function (data, type, row, meta) {
                     return bksfn.toRp(data);
             }},                
             {data: 'difference_buy', render: function (data, type, row, meta) {
                     return bksfn.toRp(data);
             }},                
-            {data: 'rate_sale', render: function (data, type, row, meta) {
+            {data: 'exchange_rate_sell', render: function (data, type, row, meta) {
                     return bksfn.toRp(data);
             }},                
-            {data: 'difference_sale', render: function (data, type, row, meta) {
+            {data: 'difference_sell', render: function (data, type, row, meta) {
                     return bksfn.toRp(data);
             }},
             {data: 'price_buy_bot', render: function (data, type, row, meta) {
@@ -81,10 +81,10 @@
             {data: 'price_buy_top', render: function (data, type, row, meta) {
                     return bksfn.toRp(data);
             }},
-            {data: 'price_sale_bot', render: function (data, type, row, meta) {
+            {data: 'price_sell_bot', render: function (data, type, row, meta) {
                     return bksfn.toRp(data);
             }},
-            {data: 'price_sale_top', render: function (data, type, row, meta) {
+            {data: 'price_sell_top', render: function (data, type, row, meta) {
                     return bksfn.toRp(data);
             }},
             {data: 'status', className: "dt-body-center", width: "5%", render: function (data, type, row, meta) {
@@ -132,7 +132,7 @@
         order: [[1, 'asc']]
     });
     //--- Select Row , Toggle Row & Delete
-    $('#mainTable').selectDTBks(t, 'master_data/Rate_daily/delete');
+    $('#mainTable').selectDTBks(t, 'master_data/m_exchange_rate/delete');
 
     // Setup - add a text input to each header cell
     $('#searchid td').each(function () {
@@ -171,23 +171,23 @@
 
         $('#valas_code').val(d.valas_code);
         $('#valas_name').val(d.valas_name);
-        $('#rate_date2').val(d.rate_date);
+        $('#exchange_rate_date').val(d.exchange_rate_date);
         $("#status").iCheck(d.status == 1 ? 'check' : 'uncheck');
         
-        $("#rate_buy").val( (d.rate_buy == null || d.rate_buy == '' ? 0 : bksfn.toRp(d.rate_buy)) );
+        $("#exchange_rate_buy").val( (d.exchange_rate_buy == null || d.exchange_rate_buy == '' ? 0 : bksfn.toRp(d.exchange_rate_buy)) );
         $("#difference_buy").val( (d.difference_buy == null || d.difference_buy == '' ? 0 : bksfn.toRp(d.difference_buy)) );
 
-        $("#rate_sale").val( (d.rate_sale == null || d.rate_sale == '' ? 0 : bksfn.toRp(d.rate_sale)) );
-        $("#difference_sale").val( (d.difference_sale == null || d.difference_sale == '' ? 0 : bksfn.toRp(d.difference_sale)) );
+        $("#exchange_rate_sell").val( (d.exchange_rate_sell == null || d.exchange_rate_sell == '' ? 0 : bksfn.toRp(d.exchange_rate_sell)) );
+        $("#difference_sell").val( (d.difference_sell == null || d.difference_sell == '' ? 0 : bksfn.toRp(d.difference_sell)) );
 
         $("#price_buy_bot").val( (d.price_buy_bot == null || d.price_buy_bot == '' ? 0 : bksfn.toRp(d.price_buy_bot)) );
         $("#price_buy_top").val( (d.price_buy_top == null || d.price_buy_top == '' ? 0 : bksfn.toRp(d.price_buy_top)) );
 
-        $("#price_sale_bot").val( (d.price_sale_bot == null || d.price_sale_bot == '' ? 0 : bksfn.toRp(d.price_sale_bot)) );
-        $("#price_sale_top").val( (d.price_sale_top == null || d.price_sale_top == '' ? 0 : bksfn.toRp(d.price_sale_top)) );
+        $("#price_sell_bot").val( (d.price_sell_bot == null || d.price_sell_bot == '' ? 0 : bksfn.toRp(d.price_sell_bot)) );
+        $("#price_sell_top").val( (d.price_sell_top == null || d.price_sell_top == '' ? 0 : bksfn.toRp(d.price_sell_top)) );
 
         // Format Number
-        $("#rate_buy").keyup(function(e) {
+        $("#exchange_rate_buy").keyup(function(e) {
             e.preventDefault();
             $(this).val(formatRupiah($(this).val()));
         });
@@ -200,15 +200,15 @@
             $(this).val(formatRupiah($(this).val()));
         });
 
-        $("#rate_sale").keyup(function(e) {
+        $("#exchange_rate_sell").keyup(function(e) {
             e.preventDefault();
             $(this).val(formatRupiah($(this).val()));
         });
-        $("#price_sale_bot").keyup(function(e) {
+        $("#price_sell_bot").keyup(function(e) {
             e.preventDefault();
             $(this).val(formatRupiah($(this).val()));
         });
-        $("#price_sale_top").keyup(function(e) {
+        $("#price_sell_top").keyup(function(e) {
             e.preventDefault();
             $(this).val(formatRupiah($(this).val()));
         });
@@ -226,10 +226,10 @@
             bksfn.errMsg("Please fill the form");
         },
         onSuccess: function () {
-            alertify.confirm("Yakin Update Kurs " + $("#valas_code").val() + " ?", function (e) {
+            alertify.confirm("Yakin mau di update " + $("#valas_code").val() + " ?", function (e) {
                 if (e) {
                     //--- Edit
-                    $.post('master_data/Rate_daily/update', $("#mainForm").serialize() + "&id=" + $("body").data("id") + "&valas_id=" + $("body").data("valas_id"), function (obj) {
+                    $.post('master_data/m_exchange_rate/update', $("#mainForm").serialize() + "&id=" + $("body").data("id") + "&valas_id=" + $("body").data("valas_id"), function (obj) {
                         if (obj.msg == 1) {
                             $("#mainForm")[0].reset();
                             $("#ModalEdit").modal('hide');
@@ -253,14 +253,14 @@
         e.preventDefault();
         $(':submit', this).attr('disabled', true);
     }).on('reset', function (e) {
-        $("#rate_buy").val( 0 );
+        $("#exchange_rate_buy").val( 0 );
         $("#difference_buy").val( 0 );
-        $("#rate_sale").val( 0 );
-        $("#difference_sale").val( 0 );
+        $("#exchange_rate_sell").val( 0 );
+        $("#difference_sell").val( 0 );
         $("#price_buy_bot").val( 0 );
         $("#price_buy_top").val( 0 );
-        $("#price_sale_bot").val( 0 );
-        $("#price_sale_top").val(  );
+        $("#price_sell_bot").val( 0 );
+        $("#price_sell_top").val( 0 );
         $("#status").iCheck('checked');
         $(':submit').removeAttr('disabled');
     });
@@ -270,9 +270,9 @@
     */
     $(".print-pdf").on('click', function (e) {
         e.preventDefault();
-        alertify.confirm("Print Kurs Tanggal " + $("#rate_date").val() + " ?", function (e) {    
+        alertify.confirm("Print Tanggal " + $("#tanggal").val() + " ?", function (e) {
             if (e) {
-                var url = "master_data/Rate_daily/print_Pdf/" + $("#rate_date").val();
+                var url = "master_data/m_exchange_rate/print_Pdf/" + $("#tanggal").val();
                 $.ajax({
                     url: url,
                     type: 'POST',
