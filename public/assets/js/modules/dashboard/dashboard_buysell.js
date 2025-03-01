@@ -51,7 +51,7 @@ function getdatatable1(){
     $("#table1").tableHeadFixer();
     $("#title-table1").html(title_tahun);
     $.ajax({
-        url: baseUrl + 'dashboard/dashboard/getdatatable1',
+        url: baseUrl + 'dashboard/dashboard_buysell/getdatatable1',
         type: 'POST',
         data: {'company_id' : companyId,
                 'store_id' : storeId,
@@ -61,10 +61,10 @@ function getdatatable1(){
         success: function (data) {
             if (data !== '[]' && data.length > 0){
                 var tot_buy = 0;
-                var tot_sale = 0;
+                var tot_sell = 0;
                 $.each(data, function (i, d) {       
                     tot_buy = tot_buy + Number(d.buy_equivalent);
-                    tot_sale = tot_sale + Number(d.sales_equivalent);  
+                    tot_sell = tot_sell + Number(d.sell_equivalent);  
                     var rows =`<tr>
                                 <td width="10%" style="vertical-align: middle;color:black">
                                     ` + getfullbulan(Number(d.tr_month)) +`                       
@@ -74,7 +74,7 @@ function getdatatable1(){
                                     ` + (Number(d.buy_equivalent) == 0 ? '-' : toRp(d.buy_equivalent)) + `
                                 </td>
                                 <td width="45%" style='color:red;'>
-                                    ` + (Number(d.sales_equivalent) == 0 ? '-' : toRp(d.sales_equivalent)) + `
+                                    ` + (Number(d.sell_equivalent) == 0 ? '-' : toRp(d.sell_equivalent)) + `
                                 </td>                                
                             </tr>`
                     $('#table1 tbody').append(rows);
@@ -88,7 +88,7 @@ function getdatatable1(){
                                 ` + (Number(tot_buy) == 0 ? '-' : toRp(tot_buy)) + `
                             </td>
                             <td width="45%" style='text-align:center;color:red;'>
-                                ` + (Number(tot_sale) == 0 ? '-' : toRp(tot_sale)) + `
+                                ` + (Number(tot_sell) == 0 ? '-' : toRp(tot_sell)) + `
                             </td>                                
                         </tr>`
                 $('#table1 tbody').append(rows);                
@@ -105,7 +105,7 @@ function getdatatable2(){
     $("#table2").tableHeadFixer();
     $("#title-table2").html(title_tahun);
     $.ajax({
-        url: baseUrl + 'dashboard/dashboard/getdatatable2',
+        url: baseUrl + 'dashboard/dashboard_buysell/getdatatable2',
         type: 'POST',
         data: {'company_id' : companyId,
                 'store_id' : storeId,
@@ -115,10 +115,10 @@ function getdatatable2(){
         success: function (data) {
             if (data !== '[]' && data.length > 0){
                 var tot_buy = 0;
-                var tot_sale = 0;
+                var tot_sell = 0;
                 $.each(data, function (i, d) {       
                     tot_buy = tot_buy + Number(d.buy_equivalent);
-                    tot_sale = tot_sale + Number(d.sales_equivalent);  
+                    tot_sell = tot_sell + Number(d.sell_equivalent);  
                     var rows =`<tr>
                                 <td width="10%" style="vertical-align: middle;color:black">
                                     ` + d.valas_code +`                       
@@ -128,7 +128,7 @@ function getdatatable2(){
                                     ` + (Number(d.buy_equivalent) == 0 ? '-' : toRp(d.buy_equivalent)) + `
                                 </td>
                                 <td width="45%" style='color:red;'>
-                                    ` + (Number(d.sales_equivalent) == 0 ? '-' : toRp(d.sales_equivalent)) + `
+                                    ` + (Number(d.sell_equivalent) == 0 ? '-' : toRp(d.sell_equivalent)) + `
                                 </td>                                
                             </tr>`
                     $('#table2 tbody').append(rows);
@@ -142,7 +142,7 @@ function getdatatable2(){
                                 ` + (Number(tot_buy) == 0 ? '-' : toRp(tot_buy)) + `
                             </td>
                             <td width="45%" style='text-align:center;color:red;'>
-                                ` + (Number(tot_sale) == 0 ? '-' : toRp(tot_sale)) + `
+                                ` + (Number(tot_sell) == 0 ? '-' : toRp(tot_sell)) + `
                             </td>                                
                         </tr>`
                 $('#table2 tbody').append(rows);                
@@ -161,7 +161,7 @@ function getchart1(){
             $("#chart1").empty();
             $("#title-chart1").html(title_tahun);
             $.ajax({
-                url: baseUrl + 'dashboard/dashboard/getchart1',
+                url: baseUrl + 'dashboard/dashboard_buysell/getchart1',
                 type: 'POST',
                 data: {'company_id' : companyId,
                        'store_id' : storeId,
@@ -173,13 +173,13 @@ function getchart1(){
                         var d = (data)[0];
                         $.each(data, function (i, d) {
                             var xbuy_equivalent = (d.buy_equivalent === null || isNaN(d.buy_equivalent) ? 0 : Number(d.buy_equivalent));
-                            var xsales_equivalent = (d.sales_equivalent === null ||  isNaN(d.sales_equivalent) ? 0 : Number(d.sales_equivalent));
-                            if(xbuy_equivalent > 0 || xsales_equivalent > 0){
+                            var xsell_equivalent = (d.sell_equivalent === null ||  isNaN(d.sell_equivalent) ? 0 : Number(d.sell_equivalent));
+                            if(xbuy_equivalent > 0 || xsell_equivalent > 0){
                                 var obj = {};
                                 obj["tr_month"] = d.tr_month;
                                 obj["month"] = getsortbulan(Number(d.tr_month));
                                 obj["buy"] = xbuy_equivalent.toFixed(3);
-                                obj["sale"] = xsales_equivalent.toFixed(3);
+                                obj["sell"] = xsell_equivalent.toFixed(3);
                                 datasource.push(obj);
                             }
                         });
@@ -189,8 +189,8 @@ function getchart1(){
                                 element: 'chart1',
                                 data : datasource,
                                 xkey: 'month',
-                                ykeys: ['buy','sale'],
-                                labels: ['Buy','Sale'],
+                                ykeys: ['buy','sell'],
+                                labels: ['Buy','Sell'],
                                 parseTime: false,
                                 hideHover: true,
                                 gridTextSize: '10px',
@@ -215,7 +215,7 @@ function getchart2(){
             $("#chart2").empty();
             $("#title-chart2").html(title_tahun);
             $.ajax({
-                url: baseUrl + 'dashboard/dashboard/getchart2',
+                url: baseUrl + 'dashboard/dashboard_buysell/getchart2',
                 type: 'POST',
                 data: {'company_id' : companyId,
                        'store_id' : storeId,
@@ -228,13 +228,13 @@ function getchart2(){
                         let xurut = 1;
                         $.each(data, function (i, d) {
                             var xbuy_equivalent = (d.buy_equivalent === null || isNaN(d.buy_equivalent) ? 0 : Number(d.buy_equivalent));
-                            var xsales_equivalent = (d.sales_equivalent === null ||  isNaN(d.sales_equivalent) ? 0 : Number(d.sales_equivalent));
-                            if(xbuy_equivalent > 0 || xsales_equivalent > 0){
+                            var xsell_equivalent = (d.sell_equivalent === null ||  isNaN(d.sell_equivalent) ? 0 : Number(d.sell_equivalent));
+                            if(xbuy_equivalent > 0 || xsell_equivalent > 0){
                                 var obj = {};
                                 obj["valas_id"] = d.valas_id;
                                 obj["valas_code"] = xurut.toString()+'. '+d.valas_code.trim();
                                 obj["buy"] = xbuy_equivalent.toFixed(3);
-                                obj["sale"] = xsales_equivalent.toFixed(3);
+                                obj["sell"] = xsell_equivalent.toFixed(3);
                                 datasource.push(obj);
                                 xurut++;
                             }    
@@ -245,8 +245,8 @@ function getchart2(){
                                 element: 'chart2',                                        
                                 data : datasource,
                                 xkey: 'valas_code',
-                                ykeys: ['buy', 'sale'],
-                                labels: ['Buy', 'Sale'],
+                                ykeys: ['buy', 'sell'],
+                                labels: ['Buy', 'Sell'],
                                 barColors: ['#0000FF', '#FF0000'],
                                 gridTextSize: '10px',
                                 hideHover: true,
@@ -268,7 +268,7 @@ function getchart2(){
 function getlastupdated(){
     $("#lastupdated").html('');
     $.ajax({
-        url: baseUrl + 'dashboard/dashboard/getlastupdated',
+        url: baseUrl + 'dashboard/dashboard_buysell/getlastupdated',
         type: 'POST',
         data: {'company_id' : companyId,
                 'store_id' : storeId

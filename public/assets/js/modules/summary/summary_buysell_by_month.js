@@ -45,7 +45,7 @@
         } else {
             alertify.confirm("download trx period " + $("#periode").val() + " ?", function (e) {    
                 if (e) {
-                    var url = "summary/summary_by_month/excel/"+$('#periode').val()+"/"+$('#company_id').val()+"/"+$('#store_id').val();
+                    var url = "summary/summary_buysell_by_month/excel/"+$('#periode').val()+"/"+$('#company_id').val()+"/"+$('#store_id').val();
                     $.ajax({
                         url: url,
                         type: 'POST',
@@ -77,9 +77,9 @@
     function fethdata(){
         $("#ftitle").html($('#periode').val());
         $("#total_buy").html('');
-        $("#total_sales").html('');
+        $("#total_sell").html('');
         $("#count_buy").html('');
-        $("#count_sales").html('');
+        $("#count_sell").html('');
         var t = $('#mainTable table').DataTable({
             retrieve: true,
             serverSide: true,
@@ -88,7 +88,7 @@
             lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
             sDom: 'it<"row"lp>',
             ajax: {
-                url: baseUrl + 'summary/summary_by_month/getData',
+                url: baseUrl + 'summary/summary_buysell_by_month/getData',
                 type: 'POST',
                 // beforeSend: function(){
                 //     $(".ajax-loader").height($(document).height());
@@ -102,7 +102,7 @@
                 complete: function(){
                     // $('.ajax-loader').css("visibility", "hidden");
                     $.ajax({
-                        url: baseUrl + 'summary/summary_by_month/gettotal',
+                        url: baseUrl + 'summary/summary_buysell_by_month/gettotal',
                         type: 'POST',
                         data: {'company_id' : $("#company_id").val(),
                                 'store_id' : $("#store_id").val(),
@@ -114,14 +114,14 @@
                                 if (data !== '[]'){   
                                     var d = JSON.parse(data)[0];
                                     var total_buy = Number(d.buy_equivalent === null ? 0 : d.buy_equivalent);
-                                    var total_sales = Number(d.sales_equivalent === null ? 0 : d.sales_equivalent);
+                                    var total_sell = Number(d.sell_equivalent === null ? 0 : d.sell_equivalent);
                                     if(total_buy > 0){
                                         $("#total_buy").html(bksfn.toRp(total_buy));
                                     }                                
-                                    if(total_sales > 0){
-                                        $("#total_sales").html(bksfn.toRp(total_sales));
+                                    if(total_sell > 0){
+                                        $("#total_sell").html(bksfn.toRp(total_sell));
                                     }
-                                    if(total_buy > 0 || total_sales > 0 ){               
+                                    if(total_buy > 0 || total_sell > 0 ){               
                                         $("#btn-excel").show();
                                     }                        
                                 }
@@ -132,7 +132,7 @@
                         }
                     });
                     $.ajax({
-                        url: baseUrl + 'summary/summary_by_month/getcount',
+                        url: baseUrl + 'summary/summary_buysell_by_month/getcount',
                         type: 'POST',
                         data: {'company_id' : $("#company_id").val(),
                             'store_id' : $("#store_id").val(),
@@ -144,12 +144,12 @@
                                 if (data !== '[]'){   
                                     var d = JSON.parse(data)[0];
                                     var total_buy = Number(d.buy_count === null ? 0 : d.buy_count);
-                                    var total_sales = Number(d.sales_count === null ? 0 : d.sales_count);                                    
+                                    var total_sell = Number(d.sell_count === null ? 0 : d.sell_count);                                    
                                     if(total_buy > 0){
                                         $("#count_buy").html(bksfn.toRp(total_buy));
                                     }                                
-                                    if(total_sales > 0){
-                                        $("#count_sales").html(bksfn.toRp(total_sales));
+                                    if(total_sell > 0){
+                                        $("#count_sell").html(bksfn.toRp(total_sell));
                                     }                                       
                                 }
                             }    
@@ -171,10 +171,10 @@
                 {data: 'buy_equivalent', className: "dt-body-right", width: "15%", render: function (data, type, row, meta) {
                     return bksfn.toRp(data);
                 }},
-                {data: 'sales_nominal', className: "dt-body-right", width: "10%", render: function (data, type, row, meta) {
+                {data: 'sell_nominal', className: "dt-body-right", width: "10%", render: function (data, type, row, meta) {
                     return bksfn.toRp(data);
                 }},
-                {data: 'sales_equivalent', className: "dt-body-right", width: "15%", render: function (data, type, row, meta) {
+                {data: 'sell_equivalent', className: "dt-body-right", width: "15%", render: function (data, type, row, meta) {
                     return bksfn.toRp(data);
                 }},
                 {data: 'company_id', visible: false},

@@ -38,7 +38,7 @@
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <div class="col-lg-12">
-                                        <label for=tr_number style="display:block">Trx. Number</label>
+                                        <label for=tr_number style="display:block">Number</label>
                                         <input type="text" id="tr_number" class="form-control">
                                     </div>
                                 </div>
@@ -46,12 +46,12 @@
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <div class="col-lg-12">
-                                        <label for=tr_date style="display:block">Trx. Date</label>
+                                        <label for=tr_date style="display:block">Date</label>
                                         <input type="text" id="tr_date" name="tr_date" placeholder="Tanggal..." class="form-control dp" data-date-format="DD MMMM YYYY" value="<?=date('d-m-Y');?>">
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-md-6">
                                 <div class="form-group">                                
                                     <div class="col-lg-12">
                                         <label for="store_id" style="display:block">Store</label>
@@ -70,9 +70,21 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-md-2">
+                                <ul class="nav navbar-nav pull-right">
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Action<span class="caret"></span></a>
+                                        <ul class="dropdown-menu">
+                                            <li id="btn-simpan-header"><a href="">Save</a></li>
+                                            <li id="btn-confirm"><a href="">Confirm</a></li>
+                                            <li id="btn-cancel"><a href="">Cancel</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>                            
                         </div>
                         <div class="row" style="margin-left:-5px;">                                                              
-                            <div class="col-md-5">
+                            <div class="col-md-6">
                                 <div class="form-group">                                
                                     <div class="col-lg-12">
                                         <label for="store_id" style="display:block">Source</label>
@@ -80,17 +92,13 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-5">
+                            <div class="col-md-6">
                                 <div class="form-group">                                
                                     <div class="col-lg-12">
                                         <label for="store_id" style="display:block">Purpose</label>
                                         <input type="text" autofocuse="" id="customer_purpose" name="customer_purpose" class="form-control" placeholder="Tujuan Transaksi...">
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-lg-2">
-                                <label for="btn-submit" style="display:block"></label><br>
-                                <button id="btn-simpan-header" class="btn btn-default btn btn-sm" style="width:120px;display:block;">Save</button>
                             </div>                            
                         </div>                        
                     </form>                    
@@ -123,7 +131,7 @@
                                     <form id="form_detail" class="form-horizontal" autocomplete="off">
                                         <tbody>       
                                             <tr style="background:#ffffff;">
-                                                <td width="35%">                                                    
+                                                <td width="30%">                                                    
                                                     <!-- <select class='form-control select2' name="valas_id" id="valas_id" disabled="true">
                                                         <option value="">-- Pilih Mata Uang --</option>
                                                     </select>  -->
@@ -159,8 +167,8 @@
                                                 <td width="15%">
                                                     <input type="text" autofocuse="" id="subtotal" name="subtotal" class="form-control" style='text-align:right;' value="0" readonly>
                                                 </td>                                                                
-                                                <td width="5%" style='text-align:center'>
-                                                    <button id="btn-add-row-detail" class="btn btn-default btn btn-sm" style="width:60px;">Add</button>
+                                                <td width="10%" style='text-align:center'>
+                                                    <button id="btn-add-row-detail" class="btn btn-default btn btn-sm" style="width:90px;">Add</button>
                                                 </td>                
                                             </tr>                                         
                                         </tbody>                                       
@@ -190,20 +198,9 @@
                     <hr style="border: 1px solid green;margin-top:-10px;">
 
                     <div class="row">
-                        <div class="col-md-6">                            
+                        <div class="col-md-12">                            
                             <span id="created_by"></span>
                             <span id="cancel_by"></span>                                
-                        </div>
-                        <div class="col-md-6">
-                            <ul class="nav navbar-nav pull-right">
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Action<span class="caret"></span></a>
-                                    <ul class="dropdown-menu">
-                                        <li id="btn-confirm"><a href="">Confirm</a></li>
-                                        <li id="btn-cancel"><a href="">Cancel</a></li>
-                                    </ul>
-                                </li>
-                            </ul>               
                         </div>
                     </div>                    
                 </div>

@@ -57,10 +57,10 @@
                         <h5>Period  : <strong id="ftitle"></strong></h5>
                     </div>
                     <div class="col-md-4">
-                        <h5>Total Trx. <b style="color:blue;">Buy</b>  : <strong id="total_buy"></strong> ( <strong id="count_buy"></strong> )</h5> 
+                        <h5><b style="color:blue;">Buy</b> Equivalent  : <strong id="total_buy"></strong> ( <strong id="count_buy"></strong> )</h5> 
                     </div>
                     <div class="col-md-4">
-                        <h5>Total Trx. <b style="color:red;">Sell</b> : <strong id="total_sales"></strong> ( <strong id="count_sales"></strong> )</h5>
+                        <h5><b style="color:red;">Sell</b> Equivalent : <strong id="total_sell"></strong> ( <strong id="count_sell"></strong> )</h5>
                     </div>
                 </div>                
                 

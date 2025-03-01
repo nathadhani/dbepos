@@ -10,12 +10,12 @@
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default"> 
-                <!-- <div class="panel-heading ui-draggable-handle">                                
+                <div class="panel-heading ui-draggable-handle">                                
                     <div class="panel-title-box">
-                        <h3>Dashboard</h3>
+                        <h3>Buy / Sell - Dashboard</h3>
                     </div>
                     <span class="pull-right" id="lastupdated"></span>
-                </div>                                -->
+                </div>                               
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-md-4">
@@ -70,7 +70,7 @@
             <div class="panel panel-default"> 
                 <div class="panel-heading ui-draggable-handle">                                
                     <div class="panel-title-box">
-                        <h3>Trx by Month</h3>
+                        <h3>by Month</h3>
                         <span id="title-table1"></span><span> | In Rupiah</span>                   
                     </div>
                     <ul class="panel-controls" style="margin-top: 2px;">
@@ -88,7 +88,7 @@
                                 </tr>    
                                 </tr>
                                     <th style="vertical-align:middle;text-align:center;">Buy</th>
-                                    <th style="vertical-align:middle;text-align:center;">Sale</th>
+                                    <th style="vertical-align:middle;text-align:center;">Sell</th>
                                 <tr>
                             </thead>                            
                             <tbody></tbody>
@@ -101,7 +101,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <div class="panel-title-box">
-                        <h3>Trx by Month</h3>
+                        <h3>by Month</h3>
                         <span id="title-chart1"></span><span> | In Rupiah</span>
                     </div>
                     <ul class="panel-controls" style="margin-top: 2px;">
@@ -120,7 +120,7 @@
             <div class="panel panel-default"> 
                 <div class="panel-heading ui-draggable-handle">                                
                     <div class="panel-title-box">
-                        <h3>Trx by Currency</h3>
+                        <h3>by Currency</h3>
                         <span id="title-table2"></span><span> | In Rupiah</span>                   
                     </div>
                     <ul class="panel-controls" style="margin-top: 2px;">
@@ -138,7 +138,7 @@
                                 </tr>    
                                 </tr>
                                     <th style="vertical-align:middle;text-align:center;">Buy</th>
-                                    <th style="vertical-align:middle;text-align:center;">Sale</th>
+                                    <th style="vertical-align:middle;text-align:center;">Sell</th>
                                 <tr>
                             </thead>                            
                             <tbody></tbody>
@@ -151,7 +151,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <div class="panel-title-box">
-                        <h3>Trx by Currency - TOP 5</h3>
+                        <h3>by Currency - TOP 5</h3>
                         <span id="title-chart2"></span><span> | In Rupiah</span>
                     </div>                                    
                     <ul class="panel-controls" style="margin-top:2px;">

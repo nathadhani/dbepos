@@ -541,27 +541,31 @@ function back_to_page_show($id){
         success: function(data){
             if (data !== undefined) {
                 if (data !== '[]'){   
-                    var d = JSON.parse(data)[0];
-                    if(d.customer_id !== null && d.customer_id !== '' && d.customer_id !== null && d.customer_id !== ''){
-                        var url = '';
-                        if(Number(d.tr_id) == 1){
-                            url = call_page_show_buy(d.customer_id, d.id);
-                        } else {
-                            url = call_page_show_sell(d.customer_id, d.id);
+                    try {
+                        var d = JSON.parse(data)[0];
+                        if(d.customer_id !== null && d.customer_id !== '' && d.customer_id !== null && d.customer_id !== ''){
+                            var url = '';
+                            if(Number(d.tr_id) == 1){
+                                url = call_page_show_buy(d.customer_id, d.id);
+                            } else {
+                                url = call_page_show_sell(d.customer_id, d.id);
+                            }
+                            if(url !== ''){
+                                $.ajax({
+                                    url: url,
+                                    type: 'POST',
+                                    success: function() {
+                                        window.open(url,'_self'); 
+                                    },
+                                    error: function(){
+                                        alertify.error("can't open page.!");
+                                    }
+                                });    
+                            }                    
                         }
-                        if(url !== ''){
-                            $.ajax({
-                                url: url,
-                                type: 'POST',
-                                success: function() {
-                                    window.open(url,'_self'); 
-                                },
-                                error: function(){
-                                    alertify.error("can't open page.!");
-                                }
-                            });    
-                        }                    
-                    }                                
+                    }catch (e) {
+                        console.error('Error parsing JSON:', e);                        
+                    }                        
                 }
             }    
         },

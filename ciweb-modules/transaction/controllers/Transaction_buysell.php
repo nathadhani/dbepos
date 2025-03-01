@@ -281,13 +281,13 @@ class Transaction_buysell extends Bks_Controller {
             $json['msg'] = $err['code'] . '<br>' . $err['message'];
             echo json_encode($json);
         } else {
-            $get_header = $this->db->query("SELECT id,company_id,store_id,tr_id,tr_date FROM tr_header WHERE id = $header_id")->result();                
+            $get_header = $this->db->query("SELECT id,company_id,store_id,tr_id,tr_date,tr_number FROM tr_header WHERE id = $header_id")->result();                
             if(count($get_header > 0)){
                 $company_id = $get_header[0]->company_id;
                 $store_id = $get_header[0]->store_id;
                 $tr_id = $get_header[0]->tr_id;
                 $tr_date = $get_header[0]->tr_date;                
-                $tr_number = $this->generate_code_confirm($company_id, $store_id, $tr_id, $tr_date);
+                $tr_number = ($get_header[0]->tr_number !== '' &&  $get_header[0]->tr_number !== null ? $get_header[0]->tr_number : $this->generate_code_confirm($company_id, $store_id, $tr_id, $tr_date));
 
                 $this->db->where(array('id' => $header_id));
                 $this->db->update('tr_header', array('tr_number' => $tr_number, 'status' => 3, 'updated' => date('Y-m-d H:i:s', time()), 'updatedby' => $this->userId) );
@@ -309,7 +309,6 @@ class Transaction_buysell extends Bks_Controller {
                 $this->db->trans_commit();
                 $json['msg'] = '1';
                 $json['tr_header_id'] = $header_id;
-                $json['store_id'] = $store_id;
                 echo json_encode($json);
             }            
         }

@@ -121,24 +121,28 @@
         var lstatus = '';
         switch(status_Id) {
             case 1:
-                lstatus += 'Confirm';
-                if(Number(Apimethod) == 1){
-                    $("#btn-submit").show();
-                    $("#btn-cancel").show();
-                }                
+                lstatus += 'Task';
+                $("#btn-submit").hide();
                 break;
             case 2:
                 lstatus += 'Canceled';
                 $("#btn-submit").hide();
                 $("#btn-cancel").hide();
                 $("#btn-pdf").hide();
-                $("#btn-dot-matrix").hide();
-                $("#btn-advice").hide();
                 break;
             case 3:
-                lstatus += 'API - inputtrx';
+                lstatus += 'Confirm';
                 $("#btn-submit").hide();                
                 break;
+
+            case 4:
+                lstatus += 'API - inputtrx';
+                if(Number(Apimethod) == 1){
+                    $("#btn-submit").show();
+                    $("#btn-cancel").show();
+                }                
+                $("#btn-submit").hide();                
+                break;    
             default:
                 lstatus = '';
         }
@@ -208,7 +212,7 @@
         e.preventDefault();
         // alertify.confirm("export to Pdf Trx. No " + document.getElementById('tr_number').innerText + " ?", function (e) {    
         //     if (e) {                
-                var url = "transaction/transaction_buysell_show/printpdf/" + id_tr_header + "/" + xtr_id;
+                var url = "transaction/transaction_buysell_show/printnota/" + id_tr_header + "/" + xtr_id;
                 $.ajax({
                     url: url,
                     type: 'POST',

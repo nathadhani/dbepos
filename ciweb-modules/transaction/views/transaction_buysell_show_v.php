@@ -79,7 +79,7 @@
                                 </ul>
                             </div>
                         </div>
-                        
+
                         <br>                        
                         <hr style="border: 1px solid green;margin-top:-10px;">
 
@@ -125,7 +125,7 @@
                                                     $id = $this->uri->segment(6);
                                                     $resp_api = $this->db->query("SELECT * FROM tr_api_log WHERE header_id = $id")->result_array(); 
                                                     // echo $this->db->last_query();exit;
-                                                    //if($resp_api){
+                                                    if($resp_api){
                                             ?>              
                                                         <br>
                                                         <table class="table table-bordered table-condensed table-hover" width="100%">
@@ -157,7 +157,7 @@
                                                             </tbody>
                                                         </table>
                                             <?php
-                                                    //}
+                                                    }
                                                 }
                                             ?>
                                         </div>

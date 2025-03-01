@@ -1,4 +1,4 @@
-(function ($) {
+(function ($) {    
     $('#company_id').on('change',function(e){
         e.preventDefault()
         if($(this).val() != null && $(this).val() != ''){
@@ -21,14 +21,14 @@
             $('#store_id').html('').sel2dma();
             $('#store_id').prop('disabled', true);        
         }
-    });    
-
+    });
+    
     $("#btn-submit").on('click', function (e) {
         e.preventDefault();
         if($('#company_id').val() === null || $('#company_id').val() === ''){
             bksfn.errMsg('Cabang Belum Dipilih!');
         } else if($('#store_id').val() === null || $('#store_id').val() === ''){
-            bksfn.errMsg('Store Belum Dipilih!');            
+            bksfn.errMsg('Store Belum Dipilih!');
         } else {
             $("#btn-excel").hide();
             fethdata();
@@ -39,13 +39,13 @@
     $("#btn-excel").on('click', function (e) {
         e.preventDefault();
         if($('#company_id').val() === null || $('#company_id').val() === ''){
-            bksfn.errMsg('Cabang Belum Dipilih!');        
+            bksfn.errMsg('Cabang Belum Dipilih!');
         } else if($('#store_id').val() === null || $('#store_id').val() === ''){
             bksfn.errMsg('Store Belum Dipilih!');
         } else {
-            alertify.confirm("download trx period " + $("#tr_date").val() + " ?", function (e) {    
+            alertify.confirm("download trx period " + $("#periode").val() + " ?", function (e) {    
                 if (e) {
-                    var url = "summary/summary_by_date/excel/"+$('#tr_date').val()+"/"+$('#company_id').val()+"/"+$('#store_id').val();
+                    var url = "summary/summary_buysell_by_year/excel/"+$('#periode').val()+"/"+$('#company_id').val()+"/"+$('#store_id').val();
                     $.ajax({
                         url: url,
                         type: 'POST',
@@ -70,16 +70,16 @@
                     });                                    
                 }    
             });
-        }              
+        }
     });
 
     //--- Datatables
-    function fethdata(){        
-        $("#ftitle").html($('#tr_date').val());
+    function fethdata(){
+        $("#ftitle").html($('#periode').val());
         $("#total_buy").html('');
-        $("#total_sales").html('');
+        $("#total_sell").html('');
         $("#count_buy").html('');
-        $("#count_sales").html('');
+        $("#count_sell").html('');
         var t = $('#mainTable table').DataTable({
             retrieve: true,
             serverSide: true,
@@ -88,7 +88,7 @@
             lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
             sDom: 'it<"row"lp>',
             ajax: {
-                url: baseUrl + 'summary/summary_by_date/getData',
+                url: baseUrl + 'summary/summary_buysell_by_year/getData',
                 type: 'POST',
                 // beforeSend: function(){
                 //     $(".ajax-loader").height($(document).height());
@@ -97,33 +97,32 @@
                 data: function(d) {
                     d.company_id = $('#company_id').val(),
                     d.store_id = $('#store_id').val(),
-                    d.periode = $('#tr_date').val()
+                    d.periode = $('#periode').val()
                 },
                 complete: function(){
                     // $('.ajax-loader').css("visibility", "hidden");
                     $.ajax({
-                        url: baseUrl + 'summary/summary_by_date/gettotal',
+                        url: baseUrl + 'summary/summary_buysell_by_year/gettotal',
                         type: 'POST',
                         data: {'company_id' : $("#company_id").val(),
                                'store_id' : $("#store_id").val(),
-                               'periode' : $('#tr_date').val()
-                              },
+                               'periode' : $('#periode').val()},
                         datatype: 'json',
                         success: function(data){
                             if (data !== undefined) {
                                 if (data !== '[]'){   
                                     var d = JSON.parse(data)[0];
                                     var total_buy = Number(d.buy_equivalent === null ? 0 : d.buy_equivalent);
-                                    var total_sales = Number(d.sales_equivalent === null ? 0 : d.sales_equivalent);                                    
+                                    var total_sell = Number(d.sell_equivalent === null ? 0 : d.sell_equivalent);
                                     if(total_buy > 0){
                                         $("#total_buy").html(bksfn.toRp(total_buy));
                                     }                                
-                                    if(total_sales > 0){
-                                        $("#total_sales").html(bksfn.toRp(total_sales));
-                                    }                 
-                                    if(total_buy > 0 || total_sales > 0 ){               
+                                    if(total_sell > 0){
+                                        $("#total_sell").html(bksfn.toRp(total_sell));
+                                    }
+                                    if(total_buy > 0 || total_sell > 0 ){               
                                         $("#btn-excel").show();
-                                    }    
+                                    }                           
                                 }
                             }    
                         },
@@ -132,24 +131,23 @@
                         }
                     });
                     $.ajax({
-                        url: baseUrl + 'summary/summary_by_date/getcount',
+                        url: baseUrl + 'summary/summary_buysell_by_year/getcount',
                         type: 'POST',
                         data: {'company_id' : $("#company_id").val(),
                                'store_id' : $("#store_id").val(),
-                               'periode' : $('#tr_date').val()
-                              },
+                               'periode' : $('#periode').val()},
                         datatype: 'json',
                         success: function(data){
                             if (data !== undefined) {
                                 if (data !== '[]'){   
                                     var d = JSON.parse(data)[0];
                                     var total_buy = Number(d.buy_count === null ? 0 : d.buy_count);
-                                    var total_sales = Number(d.sales_count === null ? 0 : d.sales_count);                                    
+                                    var total_sell = Number(d.sell_count === null ? 0 : d.sell_count);                                    
                                     if(total_buy > 0){
                                         $("#count_buy").html(bksfn.toRp(total_buy));
                                     }                                
-                                    if(total_sales > 0){
-                                        $("#count_sales").html(bksfn.toRp(total_sales));
+                                    if(total_sell > 0){
+                                        $("#count_sell").html(bksfn.toRp(total_sell));
                                     }                                       
                                 }
                             }    
@@ -157,7 +155,7 @@
                         error: function(xhr){
                             alertify.error(xhr.responseText);
                         }
-                    });
+                    });                
                 }
             },
             columns: [
@@ -171,15 +169,15 @@
                 {data: 'buy_equivalent', className: "dt-body-right", width: "15%", render: function (data, type, row, meta) {
                     return bksfn.toRp(data);
                 }},
-                {data: 'sales_nominal', className: "dt-body-right", width: "10%", render: function (data, type, row, meta) {
+                {data: 'sell_nominal', className: "dt-body-right", width: "10%", render: function (data, type, row, meta) {
                     return bksfn.toRp(data);
                 }},
-                {data: 'sales_equivalent', className: "dt-body-right", width: "15%", render: function (data, type, row, meta) {
+                {data: 'sell_equivalent', className: "dt-body-right", width: "15%", render: function (data, type, row, meta) {
                     return bksfn.toRp(data);
                 }},
-                {data: 'company_id', visible: false},                
-                {data: 'valas_name', visible: false},
+                {data: 'company_id', visible: false},
                 {data: 'buy_nominal', visible: false},
+                {data: 'valas_name', visible: false},
             ],            
             order: [[2, 'asc']]
         });

@@ -135,7 +135,6 @@ function show_header(){
 
 function show_detail(statusTrx){
     reset_form_input();
-    $("#pinfo").hide(); 
     if( typeof(customerId) !== 'undefined' && customerId !== null && customerId !== '') {    
         $('#table-detail tbody').empty();
         var counter = document.getElementById('table-detail').rows.length;
@@ -215,15 +214,11 @@ function show_detail(statusTrx){
                     if(statusTrx === '1') {
                         $("#btn-confirm").show();
                         $("#btn-cancel").show();
-                        $("#pinfo").show();
-                        $("#pinfo_confirm").show();
                     }
                 }else{
                     reset_form_input();
                     $("#btn-confirm").hide();
                     $("#btn-cancel").show();
-                    $("#pinfo").show();
-                    $("#pinfo_confirm").hide();
                 }
             },
             error: function(xhr){                
@@ -393,7 +388,6 @@ function getstockbyid(){
 function back_to_page_ini(){
     $("#btn-confirm").hide();
     $("#btn-cancel").hide();  
-    $("#pinfo").hide();            
 
     $('#btn-simpan-header').prop('disabled', true);
     $('#valas_id').prop('disabled', true);
@@ -557,53 +551,57 @@ $('#btn-simpan-header').on('click', function (e) {
         bksfn.errMsg("Stor belum di pilih!");
         $("#store_id").focus();
     } else {
-        if ($("#ftitle").html().substr(0, 3) == "Add") {            
-            $.post('transaction/transaction_buysell/insert_header', $("#form_header").serialize() + "&customer_id=" + customerId + "&tr_id=" + xtr_id + "&store_id=" + $("#store_id").val() + "&user_id=" + userId , function (obj) {
-                if (obj.msg == 1) {              
-                    id_header = obj.id;      
-                    alertify.success("Insert Data Success");                    
-                    var url = '';
-                    if( xtr_id == 1 ){
-                        url = call_page_task_buy(customerId, id_header);
-                    } else {
-                        url = call_page_task_sell(customerId, id_header);
-                    }
-                    if(url !== ''){
-                        $.ajax({
-                            url: url,
-                            type: 'POST',
-                            success: function() {
-                                window.open(url,'_self'); 
-                            },
-                            error: function(){
-                                alertify.error("can't open page.!");
+        alertify.confirm("are you sure, SAVE transaction ?", function (x) {
+            if (x) {
+                if ($("#ftitle").html().substr(0, 3) == "Add") {            
+                    $.post('transaction/transaction_buysell/insert_header', $("#form_header").serialize() + "&customer_id=" + customerId + "&tr_id=" + xtr_id + "&store_id=" + $("#store_id").val() + "&user_id=" + userId , function (obj) {
+                        if (obj.msg == 1) {              
+                            id_header = obj.id;      
+                            alertify.success("Insert Data Success");                    
+                            var url = '';
+                            if( xtr_id == 1 ){
+                                url = call_page_task_buy(customerId, id_header);
+                            } else {
+                                url = call_page_task_sell(customerId, id_header);
                             }
-                        });    
-                    }                       
-                } else {
-                    reset_form_header();
-                    reset_form_input();
-                    bksfn.errMsg(obj.msg);
+                            if(url !== ''){
+                                $.ajax({
+                                    url: url,
+                                    type: 'POST',
+                                    success: function() {
+                                        window.open(url,'_self'); 
+                                    },
+                                    error: function(){
+                                        alertify.error("can't open page.!");
+                                    }
+                                });    
+                            }                       
+                        } else {
+                            reset_form_header();
+                            reset_form_input();
+                            bksfn.errMsg(obj.msg);
+                        }
+                    }, "json").fail(function (xhr) {                
+                        alertify.error("error");
+                        StringtoFile(xhr.responseText, 'error');
+                    });
                 }
-            }, "json").fail(function (xhr) {                
-                alertify.error("error");
-                StringtoFile(xhr.responseText, 'error');
-            });
-        }
-        if (id_header !== null && id_header !== '') {
-            $.post('transaction/transaction_buysell/update_header', $("#form_header").serialize() + "&id=" + id_header + "&user_id=" + userId + "&store_id=" + $("#store_id").val(), function (obj) {
-                if (obj.msg == 1) {
-                    back_to_page_ini();
-                    alertify.success("Edit Data Success");
-                } else {
-                    reset_form_input();
-                    bksfn.errMsg(obj.msg);
-                }
-            }, "json").fail(function (xhr) {
-                alertify.error("error");
-                StringtoFile(xhr.responseText, 'error');
-            });
-        }            
+                if (id_header !== null && id_header !== '') {
+                    $.post('transaction/transaction_buysell/update_header', $("#form_header").serialize() + "&id=" + id_header + "&user_id=" + userId + "&store_id=" + $("#store_id").val(), function (obj) {
+                        if (obj.msg == 1) {
+                            back_to_page_ini();
+                            alertify.success("Edit Data Success");
+                        } else {
+                            reset_form_input();
+                            bksfn.errMsg(obj.msg);
+                        }
+                    }, "json").fail(function (xhr) {
+                        alertify.error("error");
+                        StringtoFile(xhr.responseText, 'error');
+                    });
+                }            
+            }
+        });
     }
 });
 
@@ -625,13 +623,16 @@ $("#btn-confirm").on('click', function (e) {
                                 try {
                                     var d = JSON.parse(data);
                                     if(d.tr_header_id !== null && d.tr_header_id !== ''){
-                                        var storeId = d.store_id;
                                         var id_tr_header = d.tr_header_id;
                                         // api_ap_input_trx(id_tr_header);
+                                        back_to_page_show(id_header);
+                                    } else {
+                                        back_to_page_task();
                                     }
                                 } catch (e) {
+                                    alertify.error("Error parsing JSON"+e);
                                     console.error('Error parsing JSON:', e);
-                                    back_to_page_show(id_header);
+                                    back_to_page_task();
                                 }                                
                             } else {
                                 back_to_page_show(id_header);
@@ -691,7 +692,6 @@ $("#customer_name").on('click', function (e) {
 function lstatus_name(status_id, id) {
     var status_Id =  Number(status_id);
     var lstatus = '';
-    $("#pinfo").hide();
     switch(status_Id) {
         case 1:
             lstatus += 'Task';
@@ -702,7 +702,6 @@ function lstatus_name(status_id, id) {
             $(".form_detail_input").hide();
             $("#btn-confirm").hide();
             $("#btn-cancel").hide();
-            $("#pinfo").hide();
             break;
         case 3:
             lstatus += 'Confirm';
@@ -710,7 +709,6 @@ function lstatus_name(status_id, id) {
             $(".form_detail_input").hide();
             $("#btn-confirm").hide();
             $("#btn-cancel").hide();
-            $("#pinfo").hide();
             back_to_page_show(id);
             break;
         default:

@@ -11,7 +11,7 @@ class Summary_buysell_by_year extends Bks_Controller {
     
     function index(){
         $this->libauth->check(__METHOD__);
-        $this->template->title('Transaction by Year');
+        $this->template->title('Buy / Sell by Year');
         $this->template->set('tsmall', 'Summary');
         $this->template->set('icon', 'fa fa-edit');
         $data['auth'] = $this->auth;
@@ -61,7 +61,7 @@ class Summary_buysell_by_year extends Bks_Controller {
         }
 
         $query = $this->db->query("SELECT SUM(buy_equivalent) AS buy_equivalent,
-                                SUM(sales_equivalent) AS sales_equivalent
+                                SUM(sell_equivalent) AS sell_equivalent
                                 FROM v_summary_by_year
                                 WHERE company_id = $company_id
                                 AND store_id = $store_id
@@ -82,13 +82,13 @@ class Summary_buysell_by_year extends Bks_Controller {
             $tahun = intval(SUBSTR($postData['periode'],0,4));
         }
         
-        $query = $this->db->query("SELECT COUNT(CASE WHEN tr_id = 1 AND status IN(1,3,4) THEN 1 END) AS buy_count,
-                                COUNT(CASE WHEN tr_id = 2 AND status IN(1,3,4) THEN 1 END) AS sales_count
+        $query = $this->db->query("SELECT COUNT(CASE WHEN tr_id = 1 AND status IN(3,4) THEN 1 END) AS buy_count,
+                                COUNT(CASE WHEN tr_id = 2 AND status IN(3,4) THEN 1 END) AS sell_count
                                 FROM tr_header
                                 WHERE company_id = $company_id
                                 AND store_id = $store_id
                                 AND YEAR(tr_date) = $tahun
-                                AND status IN(1,3,4)")->result();
+                                AND status IN(3,4)")->result();
         echo json_encode($query, true);
     }
 
@@ -101,11 +101,10 @@ class Summary_buysell_by_year extends Bks_Controller {
         $query = $this->db->query("SELECT
                                     (
                                         SELECT
-                                            ( CASE WHEN ( `tr_header`.`tr_id` = 1 ) THEN 'Trx Buy' WHEN ( `tr_header`.`tr_id` = 2 ) THEN 'Trx Sales' ELSE '' END )
+                                            ( CASE WHEN ( `tr_header`.`tr_id` = 1 ) THEN 'Trx Buy' WHEN ( `tr_header`.`tr_id` = 2 ) THEN 'Trx Sell' ELSE '' END )
                                     ) AS `trx_name`,
                                     tr_header.tr_number,	
                                     tr_header.tr_date AS tr_date,		
-                                    tr_detail.sequence AS sequence,
                                     CONCAT(m_valas.valas_code,' - ',m_valas.valas_name) AS valas_name,
                                     tr_detail.nominal AS nominal,
                                     tr_detail.sheet AS sheet,
@@ -135,6 +134,7 @@ class Summary_buysell_by_year extends Bks_Controller {
                                 WHERE tr_header.company_id = $company_id
                                 AND tr_header.store_id = $store_id
                                 AND year(tr_header.tr_date) = $tahun
+                                AND tr_detail.status IN(3,4)
                                 ORDER BY tr_header.tr_date, tr_header.tr_id, tr_header.tr_number, tr_detail.valas_id, tr_detail.nominal ASC");       
         
         if (!$query)
@@ -149,7 +149,7 @@ class Summary_buysell_by_year extends Bks_Controller {
         $this->load->library('excel');
         $this->excel->getProperties()->setTitle("export")->setDescription("none");
         $this->excel->setActiveSheetIndex(0);
-        $this->excel->getActiveSheet()->setTitle("Trx");
+        $this->excel->getActiveSheet()->setTitle("temp");
 
         $bold = array('font' => array('bold' => true));
         $title = array('font' => array('color' => array('rgb' => 'ffffff'), 'bold' => true), 
@@ -160,7 +160,7 @@ class Summary_buysell_by_year extends Bks_Controller {
         $col = 0;
         
         // title column
-        $this->excel->setActiveSheetIndex(0)->setCellValue('A1', "Transaction Period " . $tahun);
+        $this->excel->setActiveSheetIndex(0)->setCellValue('A1', "Transaction Buy / Sell Period " . $tahun);
         $this->excel->getActiveSheet()->getStyle('A1')->getFont()->setBold(TRUE);
         $this->excel->getActiveSheet()->getStyle('A1')->getFont()->setSize(12);
         $this->excel->getActiveSheet()->mergeCells('A1:U1');
@@ -168,7 +168,6 @@ class Summary_buysell_by_year extends Bks_Controller {
         $judul = array('Trx.Name',
                         'Trx.Number',
                         'Trx.Date',
-                        'Sequence',
                         'Currency',
                         'Nominal',
                         'Sheet',
@@ -201,20 +200,20 @@ class Summary_buysell_by_year extends Bks_Controller {
             $col = 0;
             foreach ($fields as $field) {
                 $this->excel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $data[$field]); // Retreive Data Value                
-                $this->excel->getActiveSheet()->getStyle('F'.$row.':'.'J'.$row)->getNumberFormat()->setFormatCode('#,##0'); // Number Format
+                $this->excel->getActiveSheet()->getStyle('E'.$row.':'.'I'.$row)->getNumberFormat()->setFormatCode('#,##0'); // Number Format
                 $col++;
             }
             $row++;
         }
 
-        foreach (range('A', 'W') as $columnID) {
+        foreach (range('A', 'U') as $columnID) {
             $this->excel->getActiveSheet()->getColumnDimension($columnID)->setAutoSize(true);
         }
         $this->excel->setActiveSheetIndex(0);        
         
 
         // Sending headers to force the user to download the file
-        $filename = 'Trx by Year';
+        $filename = 'Summary Buy-Sell by Year';
         header("Pragma: public");
         header("Expires: 0");
         header("Cache-Control: must-revalidate, post-check=0, pre-check=0");

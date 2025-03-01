@@ -2,6 +2,7 @@
     $auth = $this->session->userdata('auth');
     $usergroup_id = $auth['usergroup_id'];
     $company_id = $auth['company_id']; 
+    $api_method = $auth['api_method'];
     // phpinfo();exit;    
 ?>
 <?php echo $template['partials']['header']; ?>
@@ -23,57 +24,63 @@
         <?php 
             if(!in_array($usergroup_id, array('1','2'))) {
         ?>
-            <li class="xn-icon-button">
-                <a href="stock/stockcalculate" title="Calculate Stock" data-toggle="tooltip" data-placement="bottom"><span class="fa fa-calculator"></span></a>
-            </li>
-            <li class="xn-icon-button">
-                <a href="master_data/rate_daily" title="Rate by Date" data-toggle="tooltip" data-placement="bottom"><span class="fa fa-wrench"></span></a>
-            </li>
-            <li class="xn-icon-button">
-                <a href="dashboard/dashboard" title="Chart" data-toggle="tooltip" data-placement="bottom"><span class="fa fa-area-chart"></span></a>
-            </li>
-            <li class="xn-icon-button">
-                <a href="transaction/transaction_buysell_task" title="Buy / Sell - Task" data-toggle="tooltip" data-placement="bottom"><span class="fa fa-comment"></span></a>
-                <?php 
-                    if($company_id != null){
-                        $count = $this->db->query("SELECT COUNT(status) AS jumlah FROM tr_header
-                                                WHERE company_id = $company_id
-                                                AND status = '1' 
-                                                LIMIT 1")->result();
-                        if(isset($count)) {
-                ?>
-                    <div class="informer informer-warning"><?php echo $count[0]->jumlah; ?></div>
-                <?php
-                     } else {
-                ?>
-                    <div class="informer informer-warning">0</div>
-                <?php 
+                <li class="xn-icon-button">
+                    <a href="stock/stockcalculate" title="Calculate Stock" data-toggle="tooltip" data-placement="bottom"><span class="fa fa-calculator"></span></a>
+                </li>
+                <li class="xn-icon-button">
+                    <a href="master_data/rate_daily" title="Rate by Date" data-toggle="tooltip" data-placement="bottom"><span class="fa fa-wrench"></span></a>
+                </li>
+                <li class="xn-icon-button">
+                    <a href="dashboard/dashboard_buysell" title="Buy / Sell Chart" data-toggle="tooltip" data-placement="bottom"><span class="fa fa-area-chart"></span></a>
+                </li>
+                <li class="xn-icon-button">
+                    <a href="transaction/transaction_buysell_task" title="Buy / Sell - Task" data-toggle="tooltip" data-placement="bottom"><span class="fa fa-comment"></span></a>
+                    <?php 
+                        if($company_id != null){
+                            $count = $this->db->query("SELECT COUNT(status) AS jumlah FROM tr_header
+                                                    WHERE company_id = $company_id
+                                                    AND status = '1' 
+                                                    LIMIT 1")->result();
+                            if(isset($count)) {
+                    ?>
+                        <div class="informer informer-warning"><?php echo $count[0]->jumlah; ?></div>
+                    <?php
+                        } else {
+                    ?>
+                        <div class="informer informer-warning">0</div>
+                    <?php 
+                            } 
                         } 
-                    } 
-                ?>        
-            </li>
-            <li class="xn-icon-button">
-                <a href="api/api_ap_input" title="API Input Pending" data-toggle="tooltip" data-placement="bottom"><span class="fa fa-comment"></span></a>
-                <?php
-                    if($company_id != null){
-                        $count = $this->db->query("SELECT COUNT(status) AS jumlah FROM v_tr_header
-                                                WHERE  company_id = $company_id
-                                                AND api_method = '1'
-                                                AND status = '3'
-                                                LIMIT 1")->result();
-                        if(isset($count)) {
-                ?>
-                    <div class="informer informer-warning"><?php echo $count[0]->jumlah; ?></div>
-                <?php
-                     } else {
-                ?>
-                    <div class="informer informer-warning">0</div>
-                <?php 
-                        } 
-                    } 
-                ?>        
-            </li> 
-        <?php }  ?>
+                    ?>        
+                </li>
+                <?php                    
+                    if($api_method !== '1' && $api_method !== null){                        
+                ?>            
+                    <li class="xn-icon-button">
+                        <a href="api/api_ap_input" title="API Input Pending" data-toggle="tooltip" data-placement="bottom"><span class="fa fa-comment"></span></a>
+                        <?php
+                            if($company_id != null){
+                                $count = $this->db->query("SELECT COUNT(status) AS jumlah FROM v_tr_header
+                                                        WHERE  company_id = $company_id
+                                                        AND api_method = '1'
+                                                        AND status = '3'
+                                                        LIMIT 1")->result();
+                                if(isset($count)) {
+                        ?>
+                            <div class="informer informer-warning"><?php echo $count[0]->jumlah; ?></div>
+                        <?php
+                            } else {
+                        ?>
+                            <div class="informer informer-warning">0</div>
+                        <?php 
+                                } 
+                            } 
+                        ?>        
+                    </li> 
+        <?php 
+                }
+            }  
+        ?>
 
         <li class="xn-icon-button pull-right">
             <a href="auth/logout" title='Sign Out'><span class="fa fa-sign-out" style="font-size:20px;font-weight;bold;"></span></a>

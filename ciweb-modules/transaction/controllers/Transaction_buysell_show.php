@@ -57,6 +57,7 @@ class Transaction_buysell_show extends Bks_Controller {
         $profilusaha = $this->Bksmdl->getprofileusaha($customer_id, null);
         $tr_number = $data_header[0]->tr_number;
         $tr_date = revDate($data_header[0]->tr_date);
+        $CIF = $data_header[0]->customer_code;
         $tr_time =  date('H:i:s',strtotime($data_header[0]->created));
         $pageno = '1';
         $counter_name = $data_header[0]->createdby_name;
@@ -70,14 +71,6 @@ class Transaction_buysell_show extends Bks_Controller {
         $pdf->AddPage('P', 'mm', 'PA5'); // paper size custom in tcpdf_static.php
         // $pdf->AddPage('P', 'mm', array('14','12'), true, 'UTF-8', false);
 
-        // Add Title
-        $pdf->SetFont('', 'B', 9);
-        $pdf->Cell(01, 01, strtoupper($profilusaha[0]->company_name), 0, 1, 'L');
-
-        $pdf->SetFont('', '', 9);
-        $pdf->Cell(01, 01, $profilusaha[0]->company_address . ' ' . $profilusaha[0]->company_city, 0, 1, 'L');
-        $pdf->Cell(01, 01, 'Telpon : ' . $profilusaha[0]->company_phone, 0, 1, 'L');
-
         if($this->uri->segment(5) == 1) { 
             $tr_title = '** BUY SLIP **';
         }
@@ -86,14 +79,22 @@ class Transaction_buysell_show extends Bks_Controller {
         }
         $pdf->Ln(1);
         $pdf->SetFont('', 'B', 9);
-        $pdf->Cell(131, 01, '* CUSTOMER *', 0, 1, 'C');
+        $pdf->Cell(131, 01, $tr_title, 0, 1, 'C');
         $pdf->Ln(1);
-        $pdf->Cell(01, 01, $tr_title, 0, 1, 'L');
+        
+        // Add Title
+        $pdf->SetFont('', 'B', 9);
+        $pdf->Cell(01, 01, strtoupper($profilusaha[0]->company_name), 0, 1, 'L');
+
+        $pdf->SetFont('', '', 9);
+        $pdf->Cell(01, 01, $profilusaha[0]->company_address . ' ' . $profilusaha[0]->company_city, 0, 1, 'L');
+        $pdf->Cell(01, 01, 'Telpon : ' . $profilusaha[0]->company_phone, 0, 1, 'L');
 
         $pdf->Ln(1);
         $pdf->SetFont('', '', 9);
-        $pdf->Cell(01, 01, 'No.Reff : ' . $tr_number, 0, 1, 'L');
-        $pdf->Cell(01, 01, 'Date    : ' . $tr_date . '                             Page : ' . $pdf->getAliasNumPage() . '     (' . $tr_time . ')' , 0, 1, 'L');
+        $pdf->Cell(01, 01, 'No. : ' . $tr_number, 0, 1, 'L');
+        $pdf->Cell(01, 01, 'Date    : ' . $tr_date, 0, 1, 'L');
+        $pdf->Cell(01, 01, 'CIF     : ' . $CIF, 0, 1, 'L');
         
         $pdf->SetAutoPageBreak(true, 0);
  
@@ -143,7 +144,7 @@ class Transaction_buysell_show extends Bks_Controller {
 
             $pdf->SetFont('', '', 9);
             $pdf->Ln(2);
-            $text = '*Saya menyatakan bahwa transaksi ini belum melebihi thresold';
+            $text = '*Saya menyatakan bahwa transaksi ini belum melebihi threshold';
             $pdf->Cell(01, 01, $text, 0, 1, 'L');
             $text = 'USD 25.000 dalam bulan ini dan akan menyertakan Underlying';
             $pdf->Cell(01, 01, $text, 0, 1, 'L');

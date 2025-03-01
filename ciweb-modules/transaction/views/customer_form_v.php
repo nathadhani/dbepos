@@ -18,8 +18,8 @@
                             <h3>Customer Form / <strong id="ftitle"></strong></h3>
                         </div>
                         <ul class="panel-controls">
-                            <button id="btn-buy" class="btn btn-default btn btn-sm" style="width:120px;font-weight:bold;">Buy / Beli</button>
-                            <button id="btn-sell" class="btn btn-default btn-sm" style="width:120px;font-weight:bold;">Sell / Jual</button>
+                            <button id="btn-buy" class="btn btn-default btn btn-sm" style="width:120px;font-weight:bold;color:blue;">Buy / Beli</button>
+                            <button id="btn-sell" class="btn btn-default btn-sm" style="width:120px;font-weight:bold;color:red;">Sell / Jual</button>
                         </ul>
                     </div>
                     <div class="panel-body">                        
@@ -207,18 +207,10 @@
                             </div>
                         </div>                        
                         <hr style="border: 1px solid green;">
-                        <div class="footer">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <button type="reset" class="btn btn-default btn btn-sm pull-right" style="width:120px;margin-left:10px;">Reset</button>
-                                    <button type="submit" class="btn btn-default btn btn-sm pull-right" style="width:120px;">Submit</button>
-                                </div>
-                            </div>                            
-                        </div>
                     </div>
                     <!--.end panel-body -->
-                                        
-                    <div class="panel-body created_updated">
+
+                    <div class="panel-body created_updated" style="margin-top:-25px;">
                         <div class="row">
                             <div class="col-lg-12">
                                 <table style="width:100%" class="table table-bordered table-condensed table-hoverx table-striped">
@@ -237,10 +229,20 @@
                                         <td id="updated"></td>
                                     </tbody>                                    
                                 </table>                                
-                            </div>                                                         
+                            </div>                           
                         </div>                                                
+                        <hr style="border: 1px solid green;">
+                    </div>                    
+                    <!--.end panel-body -->                                                                                     
+
+                    <div class="panel-body" style="margin-top:-25px;">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <button type="reset" class="btn btn-default btn btn-sm pull-right" style="width:120px;margin-left:10px;">Reset</button>
+                                <button type="submit" class="btn btn-default btn btn-sm pull-right" style="width:120px;">Submit</button>
+                            </div>
+                        </div>                            
                     </div>
-                    <!--.end panel-body -->                                       
                 </form>
             </div>
         </div>
