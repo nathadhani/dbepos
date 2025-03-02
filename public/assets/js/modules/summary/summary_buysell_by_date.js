@@ -116,10 +116,10 @@
                                     var total_buy = Number(d.buy_equivalent === null ? 0 : d.buy_equivalent);
                                     var total_sell = Number(d.sell_equivalent === null ? 0 : d.sell_equivalent);                                    
                                     if(total_buy > 0){
-                                        $("#total_buy").html(bksfn.toRp(total_buy));
+                                        $("#total_buy").html(formatRupiah(total_buy));
                                     }                                
                                     if(total_sell > 0){
-                                        $("#total_sell").html(bksfn.toRp(total_sell));
+                                        $("#total_sell").html(formatRupiah(total_sell));
                                     }                 
                                     if(total_buy > 0 || total_sell > 0 ){               
                                         $("#btn-excel").show();
@@ -146,10 +146,10 @@
                                     var total_buy = Number(d.buy_count === null ? 0 : d.buy_count);
                                     var total_sell = Number(d.sell_count === null ? 0 : d.sell_count);                                    
                                     if(total_buy > 0){
-                                        $("#count_buy").html(bksfn.toRp(total_buy));
+                                        $("#count_buy").html(formatRupiah(total_buy));
                                     }                                
                                     if(total_sell > 0){
-                                        $("#count_sell").html(bksfn.toRp(total_sell));
+                                        $("#count_sell").html(formatRupiah(total_sell));
                                     }                                       
                                 }
                             }    
@@ -166,16 +166,16 @@
                     return row.valas_code + ' - ' + row.valas_name;
                 }},
                 {data: 'valas_id', className: "dt-body-right", width: "10%", render: function (data, type, row, meta) {
-                    return bksfn.toRp(row.buy_nominal);
+                    return formatRupiah(row.buy_nominal);
                 }},
                 {data: 'buy_equivalent', className: "dt-body-right", width: "15%", render: function (data, type, row, meta) {
-                    return bksfn.toRp(data);
+                    return formatRupiah(data);
                 }},
                 {data: 'sell_nominal', className: "dt-body-right", width: "10%", render: function (data, type, row, meta) {
-                    return bksfn.toRp(data);
+                    return formatRupiah(data);
                 }},
                 {data: 'sell_equivalent', className: "dt-body-right", width: "15%", render: function (data, type, row, meta) {
-                    return bksfn.toRp(data);
+                    return formatRupiah(data);
                 }},
                 {data: 'company_id', visible: false},                
                 {data: 'valas_name', visible: false},

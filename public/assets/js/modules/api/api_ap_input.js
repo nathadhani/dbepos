@@ -30,7 +30,7 @@
                         return bksfn.revDate(data);
                 }},                
                 {data: 'total', width: "8%", render: function (data, type, row, meta) {
-                    return bksfn.toRp(data);
+                    return formatRupiah(data);
                 }},
                 {data: 'customer_name',  width: "35%", render: function (data, type, row, meta) {
                         return data;

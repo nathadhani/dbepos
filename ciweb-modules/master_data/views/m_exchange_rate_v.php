@@ -14,21 +14,58 @@
                     </h3>
                 </div>
                 <ul class="panel-controls">
-                    <li>
-                        <label for="form_name" class="control-label col-lg-5">Date</label>
-                        <div class="col-lg-3">
-                            <input type="text" id="tanggal" name="tanggal" placeholder="Tanggal ..." class="form-control dp" data-date-format="DD MMMM YYYY" style="width:100px;" value="<?=date('d-m-Y');?>">
-                        </div>
-                    </li>
-                    <li>
-                        <div class="col-lg-3">
-                            <a id="btnrefresh" title="Filter Data" href="#" class="btn btn-info">Submit</a>
-                        </div>
-                    </li>
                     <!-- <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li> -->
                 </ul>    
             </div>            
             <div class="panel-body">
+                <div class="row">                    
+                    <div class="col-md-8">
+                        <div class="form-group">                                
+                            <div class="col-lg-12">
+                                <label for="store_id" style="display:block">Store</label>
+                                <select id="store_id"
+                                        name="store_id"
+                                        data-ajax="true" 
+                                        data-placeholder="-- PIlih Store --"
+                                        data-url="master_data/m_store/getStoreTrx/"
+                                        data-value=""
+                                        data-limit="100"                                                
+                                        placeholder="Store"  
+                                        class='form-control select2'
+                                        require
+                                >
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <div class="col-lg-4">
+                                <label for="periode" style="display:block">Date</label>
+                                <input type="text" id="tanggal" name="tanggal" placeholder="Tanggal ..." class="form-control dp" data-date-format="DD MMMM YYYY" style="width:100px;" value="<?=date('d-m-Y');?>">
+                            </div>                            
+                        </div>                            
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <div class="col-lg-12">
+                                <ul class="nav navbar-nav">
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Action<span class="caret"></span></a>
+                                        <ul class="dropdown-menu">
+                                            <li id="btn-show"><a href="">Show Data</a></li>
+                                            <li id="btn-generate"><a href="">Generate Data</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>                        
+                            </div>
+                        </div>            
+                    </div>
+                </div>                    
+                <hr style="border: 1px solid green;">
+            </div>
+            
+            <div class="panel-body" style="margin-top:-25px;">
                 <div class="box-body table-responsive" id="mainTable">
                     <div style="padding: 0 20px 10px 20px" class="row">
                         <button class="btn btn-default toggle-selected" title="Toggle Selected" data-toggle="tooltip" data-placement="bottom"><i class="fa  fa-align-justify"></i></button>
@@ -41,8 +78,8 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Currency Code</th>
-                                <th>Currency Name</th>
+                                <th>Curr</th>
+                                <th>Description</th>
                                 <th>Date</th>
                                 <th>Buy</th>
                                 <th>Def Buy</th>
@@ -98,13 +135,13 @@
                                     <div class="row">                        
                                         <div class="col-lg-6">
                                             <div class="form-group">
-                                                <label for="form_name" class="control-label col-lg-4">Currency Code</label>
+                                                <label for="form_name" class="control-label col-lg-4">Curr</label>
                                                 <div class="col-lg-8">
                                                     <input type="text" id="valas_code" name="valas_code" class="form-control" readonly>
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label for="form_name" class="control-label col-lg-4">Currency Name</label>
+                                                <label for="form_name" class="control-label col-lg-4">Description</label>
                                                 <div class="col-lg-8">
                                                     <input type="text" id="valas_name" name="valas_name" class="form-control" readonly>
                                                 </div>
@@ -176,7 +213,7 @@
                                 </div>
                                 <div class="panel-footer">
                                     <!-- <button type="reset" class="btn btn-default pull-right" style="width:100px;">Batal</button> -->
-                                    <button type="submit" class="btn btn-info pull-right" style="width:100px;">Submit</button>
+                                    <button type="submit" class="btn btn-default btn btn-sm pull-right" style="width:120px;">Submit</button>
                                 </div>
                             </div>
                         </form>

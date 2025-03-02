@@ -76,6 +76,7 @@
                     <ul class="panel-controls" style="margin-top: 2px;">
                         <!-- <li><a href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li> -->
                         <li><a href="#" class="panel-refresh" onclick="getdatatable1();"><span class="fa fa-refresh"></span></a></li>
+                        <!-- <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li> -->
                     </ul>                                
                 </div>                               
                 <div class="panel-body">

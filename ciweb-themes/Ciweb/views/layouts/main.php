@@ -54,7 +54,7 @@
                     ?>        
                 </li>
                 <?php                    
-                    if($api_method !== '1' && $api_method !== null){                        
+                    if($api_method === '1' && $api_method !== null){                        
                 ?>            
                     <li class="xn-icon-button">
                         <a href="api/api_ap_input" title="API Input Pending" data-toggle="tooltip" data-placement="bottom"><span class="fa fa-comment"></span></a>
@@ -102,7 +102,7 @@
             if( $usergroup_id != 1) {
         ?>
             <span>
-                welcome : <?php echo $auth['fullname'] . ' | ' . $auth['company_address'];?>
+                User login : <?php echo $auth['fullname'] . ' | Location : ' . $auth['company_address'];?>
             </label>
             <span class="pull-right"> 
                 Today : <?php print dayList(). ', ' . date('d F Y'); ?> 

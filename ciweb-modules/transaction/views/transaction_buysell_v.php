@@ -71,7 +71,7 @@
                                 </div>
                             </div>
                             <div class="col-md-2">
-                                <ul class="nav navbar-nav pull-right">
+                                <ul class="nav navbar-nav">
                                     <li class="dropdown">
                                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Action<span class="caret"></span></a>
                                         <ul class="dropdown-menu">
@@ -106,15 +106,36 @@
                     <!-- <hr style="margin-left:10px; border-top: 1px dotted #333;"> -->
                     <hr style="border: 1px solid green;">
 
-                    <div class="row">
-                        <div class="col-md-12">
-                            <label for="">Stock Available : Nominal ( </label> <span id="stock_nominal"></span> )
-                            <label for="">Sheet</label> ( <span id="stock_sheet"></span> )
-                            <label for="">Amount</label> ( <span id="stock_amount"></span> )
-                        </div>
-                    </div>
                     <div class="row">                                                                                
-                        <div class="col-md-12 table-responsive">
+                        <div class="col-md-12 table-responsive">                            
+                            <div class="row">
+                                <table class="table table-bordered table-condensed table-hover" cellspacing="0" width="100%" id="table-detail">
+                                    <thead>
+                                        <tr style="background:#f1f5f9;">
+                                            <td style='vertical-align: middle;text-align:center;'>#</td>
+                                            <td style='vertical-align: middle;text-align:left;'>Currency</td>
+                                            <td style='vertical-align: middle;text-align:left;'>Nominal</td>
+                                            <td style='vertical-align: middle;text-align:left;'>Sheet</td>
+                                            <td style='vertical-align: middle;text-align:left;'>Amount</td>
+                                            <td style='vertical-align: middle;text-align:left;'>Exchange Rate</td>
+                                            <td style='vertical-align: middle;text-align:left;'>Equivalent</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>                                                
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                            <hr style="border: 1px solid green;margin-top:0px;">
+
+                            <div class="row" style="margin-top:-10px;">
+                                <div class="col-md-12">                            
+                                    <span id="created_by"></span>
+                                    <span id="cancel_by"></span>                                
+                                </div>
+                            </div>                    
+                            <br>
+
                             <div class="row form_detail_input">
                                 <table class="table table-bordered" cellspacing="0" width="100%">
                                     <thead>
@@ -175,32 +196,13 @@
                                     </form>    
                                 </table>
                             </div>
-                            <div class="row">
-                                <table class="table table-bordered table-condensed table-hover" cellspacing="0" width="100%" id="table-detail">
-                                    <thead>
-                                        <tr style="background:#f1f5f9;">
-                                            <td style='vertical-align: middle;text-align:center;'>#</td>
-                                            <td style='vertical-align: middle;text-align:left;'>Currency</td>
-                                            <td style='vertical-align: middle;text-align:left;'>Nominal</td>
-                                            <td style='vertical-align: middle;text-align:left;'>Sheet</td>
-                                            <td style='vertical-align: middle;text-align:left;'>Amount</td>
-                                            <td style='vertical-align: middle;text-align:left;'>Exchange Rate</td>
-                                            <td style='vertical-align: middle;text-align:left;'>Equivalent</td>
-                                        </tr>
-                                    </thead>
-                                    <tbody>                                                
-                                    </tbody>
-                                </table>
-                            </div>        
-                        </div>
-                    </div>
-                    
-                    <hr style="border: 1px solid green;margin-top:-10px;">
-
-                    <div class="row">
-                        <div class="col-md-12">                            
-                            <span id="created_by"></span>
-                            <span id="cancel_by"></span>                                
+                            <div class="row form_detail_input" style="margin-top:-10px;">
+                                <div class="col-md-12">
+                                    <label for="">Stock Available : Nominal ( </label> <span id="stock_nominal"></span> )
+                                    <label for="">Sheet</label> ( <span id="stock_sheet"></span> )
+                                    <label for="">Amount</label> ( <span id="stock_amount"></span> )
+                                </div>
+                            </div>
                         </div>
                     </div>                    
                 </div>

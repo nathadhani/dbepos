@@ -158,19 +158,19 @@ function show_detail(statusTrx){
                                             <a style="color:red; cursor:pointer" title="hapus" onClick="delete_line_detail(` + d.id + `)"> / <i>remove<i></a>
                                         </td>
                                         <td width="10%" style='text-align:left;'>
-                                            ` + bksfn.toRp(d.nominal) + `
+                                            ` + formatRupiah(d.nominal) + `
                                         </td>
                                         <td width="10%" style='text-align:left;'>
-                                            ` + bksfn.toRp(d.sheet) + `
+                                            ` + formatRupiah(d.sheet) + `
                                         </td>
                                         <td width="10%" style='text-align:left;'>
-                                            ` + bksfn.toRp(d.nominal * d.sheet) + `
+                                            ` + formatRupiah(d.nominal * d.sheet) + `
                                         </td>
                                         <td width="15%" style='text-align:left;'>
-                                            ` + bksfn.toRp(d.price) + `
+                                            ` + (isDecimal(d.price) ? formatDecimal(d.price,3) : formatRupiah(d.price) ) + `
                                         </td>
                                         <td width="15%" style='text-align:left;'>
-                                            ` + bksfn.toRp(d.subtotal) + `
+                                            ` + formatRupiah(d.subtotal) + `
                                         </td>                         
                                     </tr>`
                             $('#table-detail tbody').append(rows);
@@ -183,19 +183,19 @@ function show_detail(statusTrx){
                                             ` + d.valas_code + ' - ' + d.valas_name +`                                            
                                         </td>
                                         <td width="10%" style='text-align:left;'>
-                                            ` + bksfn.toRp(d.nominal) + `
+                                            ` + formatRupiah(d.nominal) + `
                                         </td>
                                         <td width="10%" style='text-align:left;'>
-                                            ` + bksfn.toRp(d.sheet) + `
+                                            ` + formatRupiah(d.sheet) + `
                                         </td>
                                         <td width="10%" style='text-align:left;'>
-                                            ` + bksfn.toRp(d.nominal * d.sheet) + `
+                                            ` + formatRupiah(d.nominal * d.sheet) + `
                                         </td>
                                         <td width="15%" style='text-align:left;'>
-                                            ` + bksfn.toRp(d.price) + `
+                                            ` + formatRupiah(d.price) + `
                                         </td>
                                         <td width="15%" style='text-align:left;'>
-                                            ` + bksfn.toRp(d.subtotal) + `
+                                            ` + formatRupiah(d.subtotal) + `
                                         </td>                         
                                     </tr>`
                             $('#table-detail tbody').append(rows);
@@ -207,7 +207,7 @@ function show_detail(statusTrx){
                                     <i>Say</i> : ` + bksfn.terBilang(totalpricex) + `
                                     </td>
                                     <td style='text-align:left;background-color:#f1f5f9;font-weight:bold;font-size:15px;'>
-                                        Rp. ` + bksfn.toRp(totalpricex) + `
+                                        Rp. ` + formatRupiah(totalpricex) + `
                                     </td>                         
                                 </tr>`
                     $('#table-detail tbody').append(rowsx);
@@ -279,7 +279,7 @@ $("#nominal").keyup(function(e) {
 
 $("#sheet").keyup(function(e) {
     e.preventDefault();
-    $(this).val(formatRupiah($(this).val()));
+    $(this).val($(this).val());
     subtotal_input();
     getstockbyid();
     getratebyid();
@@ -287,17 +287,17 @@ $("#sheet").keyup(function(e) {
 
 $("#price").keyup(function(e) {
     e.preventDefault();
-    $(this).val(formatRupiah($(this).val()));
-    subtotal_input();    
+    $(this).val($(this).val());
+    subtotal_input();
 });
 
 function subtotal_input() {
-    var xnominal = parseInt(price_to_number($('#nominal').val()));
-    var xsheet = parseInt(price_to_number($('#sheet').val()));
+    var xnominal = parseInt(formatRupiahtoNumber($('#nominal').val()));
+    var xsheet = parseInt(formatRupiahtoNumber($('#sheet').val()));
     var xtotal_amount = ((xnominal * xsheet));
     $('#total_amount').html(formatRupiah(xtotal_amount.toString()));
 
-    var xprice  = parseInt(price_to_number($('#price').val()));
+    var xprice  = parseInt(formatRupiahtoNumber($('#price').val()));
     var xtotal  = (xtotal_amount * xprice);
     $('#subtotal').val(formatRupiah(xtotal.toString()));
 }
@@ -318,17 +318,19 @@ $("#btn-add-row-detail").on('click', function (e) {
             bksfn.errMsg("rate belum di input!");
             $("#price").focus();
         } else {
-            var cek_price = parseInt(price_to_number($('#price').val()));
-            var cek_price_asli = parseInt(price_to_number($('#price_asli').val()));
-            var cek_price_bot = parseInt(price_to_number($('#price_bot').val()));
-            var cek_price_top = parseInt(price_to_number($('#price_top').val()))
+            var cek_price = parseInt(formatRupiahtoNumber($('#price').val()));
+            var cek_price_asli = parseInt(formatRupiahtoNumber($('#price_asli').val()));
+            var cek_price_bot = parseInt(formatRupiahtoNumber($('#price_bot').val()));
+            var cek_price_top = parseInt(formatRupiahtoNumber($('#price_top').val()))
 
             if( cek_price_asli > 0 && (cek_price < (cek_price_asli - cek_price_bot )) ){
                 alertify.alert('Rate tidak boleh kurang dari ' + formatRupiah((cek_price_asli - cek_price_bot).toString()) + ' !');
-                $("#price").val(bksfn.toRp(cek_price_asli));
+                $("#price").val(cek_price_asli);
+                subtotal_input();
             } else if( cek_price_asli > 0 && (cek_price > (cek_price_asli + cek_price_top )) ){
                 alertify.alert('Rate tidak boleh lebih dari ' + formatRupiah((cek_price_asli + cek_price_top).toString()) + ' !');
-                $("#price").val(bksfn.toRp(cek_price_asli));
+                $("#price").val(cek_price_asli);
+                subtotal_input();
             } else {
                 getstockbyid();
                 if(xtr_id == 1){ // Trx Buy                        
@@ -336,7 +338,7 @@ $("#btn-add-row-detail").on('click', function (e) {
                 }
                 if(xtr_id == 2){ // Trx Sell
                     if(sisa_stock_sheet > 0){
-                        var sheet_input = parseInt(rupiah_to_number( ($("#sheet").val() == null || $("#sheet").val() == '' ? 0 : $("#sheet").val()) ));
+                        var sheet_input = parseInt(formatRupiahtoNumber( ($("#sheet").val() == null || $("#sheet").val() == '' ? 0 : $("#sheet").val()) ));
                         if( sisa_stock_sheet < sheet_input ){
                             alertify.alert('Stok kurang, hanya tersedia ' + sisa_stock_sheet + ' lembar !');
                             $("#sheet").val(sisa_stock_sheet);
@@ -371,9 +373,9 @@ function getstockbyid(){
                     sisa_stock_sheet = (d.last_stock_sheet === null ? 0 : d.last_stock_sheet);
                     sisa_stock_amount = (d.last_stock_amount === null ? 0 : d.last_stock_amount);
                     if(sisa_stock_sheet > 0){
-                        $("#stock_nominal").html(bksfn.toRp(d.nominal));
-                        $("#stock_sheet").html(bksfn.toRp(sisa_stock_sheet));
-                        $("#stock_amount").html(bksfn.toRp(sisa_stock_amount));
+                        $("#stock_nominal").html(formatRupiah(d.nominal));
+                        $("#stock_sheet").html(formatRupiah(sisa_stock_sheet));
+                        $("#stock_amount").html(formatRupiah(sisa_stock_amount));
                     }                                                                    
                 }
             }
@@ -505,10 +507,13 @@ function back_to_page_show($id){
 
 
 function getratebyid(){
+    $("#price").val(0);
+    $("#price_asli").val(0);                
+    $("#price_bot").val(0);
     $.ajax({
         url: baseUrl + 'transaction/transaction_buysell/getratebyid',
         type: 'POST',
-        data: {'valas_id' : $("#valas_id").val(), 'tr_id' : xtr_id},
+        data: {'store_id' : $("#store_id").val(), 'valas_id' : $("#valas_id").val(), 'tr_id' : xtr_id},
         datatype: 'json',
         success: function(data){
             if (data !== undefined) {
@@ -518,13 +523,13 @@ function getratebyid(){
                     var xrate_today_bot = (d.rate_today_bot === null ? 0 : d.rate_today_bot);
                     var xrate_today_top = (d.rate_today_top === null ? 0 : d.rate_today_top);
                     if(Number(xrate_today) > 0){
-                        $("#price").val(bksfn.toRp(xrate_today));
-                        $("#price_asli").val(bksfn.toRp(xrate_today));                
+                        $("#price").val(xrate_today);
+                        $("#price_asli").val(xrate_today);           
                         if(Number(xrate_today_bot) > 0){
-                            $("#price_bot").val(bksfn.toRp(xrate_today_bot));
+                            $("#price_bot").val(xrate_today_bot);
                         }
                         if(Number(xrate_today_top) > 0){
-                            $("#price_top").val(bksfn.toRp(xrate_today_top));
+                            $("#price_top").val(xrate_today_top);
                         }
                     }                 
                 }

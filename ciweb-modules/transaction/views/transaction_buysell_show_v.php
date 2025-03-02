@@ -57,7 +57,7 @@
                                 Description : <span id="description_header"></span>
                             </div>
                             <div class="col-md-2">
-                                <ul class="nav navbar-nav pull-right">
+                                <ul class="nav navbar-nav">
                                     <li class="dropdown">
                                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Action<span class="caret"></span></a>
                                         <ul class="dropdown-menu">

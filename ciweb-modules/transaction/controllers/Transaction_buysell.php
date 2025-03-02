@@ -130,16 +130,17 @@ class Transaction_buysell extends Bks_Controller {
         $header_id = $postData['header_id'];
         $tr_id = $postData['tr_id'];
 
-        $postData['nominal'] = str_replace('.','', $postData['nominal']);
-        $postData['sheet'] = str_replace('.','', $postData['sheet']);        
-        $postData['price'] = str_replace('.','', $postData['price']);
-        $postData['subtotal'] = str_replace('.','', $postData['subtotal']);
+        unset($postData['subtotal']);
+        if (strpos($postData['price'], ',') !== false) {
+            $postData['price'] = str_replace(',','.',$postData['price']);
+        }
+        $postData['subtotal'] = ( ($postData['nominal'] * $postData['sheet']) * $postData['price'] );
         $postData['createdby'] = $postData['user_id'];
         $postData['updatedby'] = $postData['user_id'];
-        $postData['status'] = '1';  
-        
+        $postData['status'] = '1';          
+
         unset($postData['tr_id']);
-        unset($postData['user_id']);
+        unset($postData['user_id']);       
         
         $this->db->trans_begin();
         $this->Bksmdl->table = 'tr_detail';
@@ -196,7 +197,7 @@ class Transaction_buysell extends Bks_Controller {
         $customer_id = json_decode($postData['customer_id']);
         $tr_id = json_decode($postData['tr_id']);
         $header_id = json_decode($postData['header_id']);
-        $query = $this->db->query("SELECT * FROM v_tr_detail WHERE customer_id = " . $customer_id . " AND tr_id = " . $tr_id . " AND header_id= " . $header_id ." ORDER BY valas_id, price ASC")->result();
+        $query = $this->db->query("SELECT * FROM v_tr_detail WHERE customer_id = " . $customer_id . " AND tr_id = " . $tr_id . " AND header_id= " . $header_id ." ORDER BY valas_id, nominal, price ASC")->result();
         echo json_encode($query, true);
     }
     
@@ -236,26 +237,29 @@ class Transaction_buysell extends Bks_Controller {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
+        $store_id = $postData['store_id'];
         $valas_id = $postData['valas_id'];
         $tr_date  = Date('Y-m-d');
-        $tr_id = $postData['tr_id'];        
+        $tr_id = $postData['tr_id'];  
         if($tr_id == '1'){
-            $query = $this->db->query("SELECT rate_buy AS rate_today, 
+            $query = $this->db->query("SELECT exchange_rate_buy AS rate_today, 
                                               price_buy_bot AS rate_today_bot, 
                                               price_buy_top AS rate_today_top
-                                              FROM v_rate_daily
-                                    WHERE company_id = $this->company_id
+                                              FROM m_exchange_rate
+                                    WHERE company_id = $this->company_id 
+                                    AND store_id = $store_id
                                     AND valas_id = $valas_id
-                                    AND rate_date = '$tr_date'")->result();
+                                    AND exchange_rate_date = '$tr_date' LIMIT 1")->result();
             echo json_encode($query, true);
         } else {
-            $query = $this->db->query("SELECT rate_sale AS rate_today,
-                                              price_sale_bot AS rate_today_bot,
-                                              price_sale_top AS rate_today_top 
-                                              FROM v_rate_daily
-                                    WHERE company_id = $this->company_id
+            $query = $this->db->query("SELECT exchange_rate_sell AS rate_today,
+                                              price_sell_bot AS rate_today_bot,
+                                              price_sell_top AS rate_today_top 
+                                              FROM m_exchange_rate
+                                    WHERE company_id = $this->company_id 
+                                    AND store_id = $store_id
                                     AND valas_id = $valas_id
-                                    AND rate_date = '$tr_date'")->result();
+                                    AND exchange_rate_date = '$tr_date' LIMIT 1")->result();
             echo json_encode($query, true);
         }        
     }    

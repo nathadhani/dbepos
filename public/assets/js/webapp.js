@@ -394,45 +394,61 @@ var bksfn = ({
 const bulanIndo = ['', 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September' , 'Oktober', 'November', 'Desember'];
 const bulanIndo_sort = ['', 'Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Juni', 'Juli', 'Agust', 'Sept' , 'Okt', 'Nov', 'Des'];
 
+function resetForms() {
+    document.forms['mainForm'].reset();
+}
+
+function isDecimal(value) {
+    // return !Number.isInteger(value);
+    return value % 1 !== 0;
+}
+
+
 function formatDMY(inputFormat) {
     function pad(s) { return (s < 10) ? '0' + s : s; }
     var d = new Date(inputFormat);
     return [pad(d.getDate()), pad(d.getMonth()+1), d.getFullYear()].join('-');
 }
-  
-function resetForms() {
-    document.forms['mainForm'].reset();
+
+function formatDecimal(angka, decimal) {
+    // return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    if(Number(angka) > 0 && Number(decimal) > 0){
+        return Number(angka).toFixed(Number(decimal));
+    } else {
+        return 0;
+    }
+    
 }
 
-function rupiah_to_number(v){
+// function formatRupiah(angka, prefix){
+//     if(angka != null){
+//         var number_string = angka.replace(/[^,\d]/g, '').toString(),
+//         split   		= number_string.split(','),
+//         sisa     		= split[0].length % 3,
+//         rupiah     		= split[0].substr(0, sisa),
+//         ribuan     		= split[0].substr(sisa).match(/\d{3}/gi);
+//         if(ribuan){
+//             separator = sisa ? '.' : '';
+//             rupiah += separator + ribuan.join('.');
+//         }
+//         rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+//         return prefix == undefined ? rupiah : (rupiah ? '' + rupiah : '');
+//     } else {
+//         return 0;
+//     }
+// }
+
+function formatRupiah(angka) {
+    var rupiah = Number(angka).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return rupiah;
+}  
+
+function formatRupiahtoNumber(v){
     if(!v){return 0;}
-    v=v.split('.').join('');
-    v=v.split(',').join('.');
+    // v=v.split('.').join('');
+    // v=v.split(',').join('.');
     return Number(v.replace(/[^0-9.]/g, ""));
-}
-
-function formatRupiah(angka, prefix){
-    if(angka != null){
-        var number_string = angka.replace(/[^,\d]/g, '').toString(),
-        split   		= number_string.split(','),
-        sisa     		= split[0].length % 3,
-        rupiah     		= split[0].substr(0, sisa),
-        ribuan     		= split[0].substr(sisa).match(/\d{3}/gi);
-        if(ribuan){
-            separator = sisa ? '.' : '';
-            rupiah += separator + ribuan.join('.');
-        }
-        rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
-        return prefix == undefined ? rupiah : (rupiah ? '' + rupiah : '');
-    }    
-}
-
- function price_to_number(v){
-    if(!v){return 0;}
-    v=v.split('.').join('');
-    v=v.split(',').join('.');
-    return Number(v.replace(/[^0-9.]/g, ""));
-}
+} 
 
 function number_to_price(v){
     if(v==0){return '0,00';}
@@ -442,9 +458,6 @@ function number_to_price(v){
     return v;
 }
 
-function numberWithCommas(x) {
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
 
 function round(value, exp) {
     if (typeof exp === 'undefined' || +exp === 0)

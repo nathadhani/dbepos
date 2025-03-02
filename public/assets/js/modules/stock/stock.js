@@ -101,32 +101,32 @@
                     return data + ' - ' + row.valas_name;
                 }},
                 {data: 'nominal', className: "dt-body-center" ,  width: "10%", render: function (data, type, row, meta) {
-                    return ( data == 0 || data == null ? '-' : bksfn.toRp(data));
+                    return ( data == 0 || data == null ? '-' : formatRupiah(data));
                 }},
 
                 {data: 'beginning_stock_sheet', className: "dt-body-center" ,  width: "10%", render: function (data, type, row, meta) {
-                    return ( data == 0 || data == null ? '-' : bksfn.toRp(data));
+                    return ( data == 0 || data == null ? '-' : formatRupiah(data));
                 }},
                 {data: 'invin_sheet', className: "dt-body-center" ,  width: "10%", render: function (data, type, row, meta) {
-                    return ( data == 0 || data == null ? '-' : bksfn.toRp(data));
+                    return ( data == 0 || data == null ? '-' : formatRupiah(data));
                 }},
                 {data: 'invout_sheet', className: "dt-body-center" ,  width: "10%", render: function (data, type, row, meta) {
-                    return ( data == 0 || data == null ? '-' : bksfn.toRp(data));
+                    return ( data == 0 || data == null ? '-' : formatRupiah(data));
                 }},
                 {data: 'buy_sheet', className: "dt-body-center" ,  width: "10%", render: function (data, type, row, meta) {
-                    return ( data == 0 || data == null ? '-' : bksfn.toRp(data));
+                    return ( data == 0 || data == null ? '-' : formatRupiah(data));
                 }},
                 {data: 'sales_sheet', className: "dt-body-center" ,  width: "10%", render: function (data, type, row, meta) {
-                    return ( data == 0 || data == null ? '-' : bksfn.toRp(data));
+                    return ( data == 0 || data == null ? '-' : formatRupiah(data));
                 }},
                 {data: 'sales_alocation_sheet', className: "dt-body-center" ,  width: "10%", render: function (data, type, row, meta) {
-                    return ( data == 0 || data == null ? '-' : bksfn.toRp(data));
+                    return ( data == 0 || data == null ? '-' : formatRupiah(data));
                 }},
                 {data: 'last_stock_sheet', className: "dt-body-center" ,  width: "10%", render: function (data, type, row, meta) {
-                    return ( data == 0 || data == null ? '-' : bksfn.toRp(data));
+                    return ( data == 0 || data == null ? '-' : formatRupiah(data));
                 }},                 
                 {data: 'valas_id', className: "dt-body-center" ,  width: "10%", render: function (data, type, row, meta) {
-                    return ( row.last_stock_sheet == 0 || row.last_stock_sheet == null ? '-' : bksfn.toRp(row.last_stock_sheet * row.nominal));
+                    return ( row.last_stock_sheet == 0 || row.last_stock_sheet == null ? '-' : formatRupiah(row.last_stock_sheet * row.nominal));
                 }},
                 {data: 'id', visible: false},
                 {data: 'company_id', visible: false},

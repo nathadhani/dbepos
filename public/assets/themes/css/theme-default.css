@@ -2463,7 +2463,7 @@ label.valid {
 .dropdown-menu > li > a {
   padding: 8px 15px;
   border-bottom: 1px solid #E9E9E9;
-  line-height: 20px;
+  line-height: 18px;
 }
 .dropdown-menu > li:last-child > a {
   border-bottom: 0px;
@@ -3897,15 +3897,14 @@ background: #1caf9a !important;
   width: 100%;
   min-height: 100%;
   background-color: #045498;
-  background-image: linear-gradient(132deg,  #045498 10%, #005b96 100%);
-  background-size: cover;
-  /* background: url("../../img/bg-login.jpg") left top repeat #03396c; */
+  /* background-image: linear-gradient(132deg,  #045498 10%, #005b96 100%); */
+  /* background-size: cover; */
   /* background: url(../../img/bg-login.jpg) no-repeat center center fixed; */
 }
 .login-container .login-box {
-  width: 350px;
+  width: 300px;
   margin: 10px auto;
-  padding-top: 100px;
+  padding-top: 120px;
 }
 .login-container .login-box .login-logo {
   background: url("../img/logo.png") top center no-repeat;

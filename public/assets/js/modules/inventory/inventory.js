@@ -109,19 +109,19 @@ function tampil_detail(statusTrx){
                                             <a style="color:red; cursor:pointer" title="hapus" onClick="delete_line_detail(` + d.id + `)"> / <i>remove<i></a>
                                         </td>
                                         <td width="10%" style='text-align:center;'>
-                                            ` + bksfn.toRp(d.nominal) + `
+                                            ` + formatRupiah(d.nominal) + `
                                         </td>
                                         <td width="10%" style='text-align:center;'>
-                                            ` + bksfn.toRp(d.sheet) + `
+                                            ` + formatRupiah(d.sheet) + `
                                         </td>
                                         <td width="10%" style='text-align:center;'>
-                                            ` + bksfn.toRp(d.nominal * d.sheet) + `
+                                            ` + formatRupiah(d.nominal * d.sheet) + `
                                         </td>
                                         <td width="15%" style='text-align:center;'>
-                                            ` + bksfn.toRp(d.price) + `
+                                            ` + formatRupiah(d.price) + `
                                         </td>
                                         <td width="15%" style='text-align:right;'>
-                                            ` + bksfn.toRp(d.subtotal) + `
+                                            ` + formatRupiah(d.subtotal) + `
                                         </td>                         
                                     </tr>`    
                             $('#table-detail tbody').append(rows);           
@@ -134,19 +134,19 @@ function tampil_detail(statusTrx){
                                             ` + d.valas_code + ' - ' + d.valas_name +`                                            
                                         </td>
                                         <td width="10%" style='text-align:center;'>
-                                            ` + bksfn.toRp(d.nominal) + `
+                                            ` + formatRupiah(d.nominal) + `
                                         </td>
                                         <td width="10%" style='text-align:center;'>
-                                            ` + bksfn.toRp(d.sheet) + `
+                                            ` + formatRupiah(d.sheet) + `
                                         </td>
                                         <td width="10%" style='text-align:center;'>
-                                            ` + bksfn.toRp(d.nominal * d.sheet) + `
+                                            ` + formatRupiah(d.nominal * d.sheet) + `
                                         </td>
                                         <td width="15%" style='text-align:center;'>
-                                            ` + bksfn.toRp(d.price) + `
+                                            ` + formatRupiah(d.price) + `
                                         </td>
                                         <td width="15%" style='text-align:right;'>
-                                            ` + bksfn.toRp(d.subtotal) + `
+                                            ` + formatRupiah(d.subtotal) + `
                                         </td>                         
                                     </tr>`
                             $('#table-detail tbody').append(rows);
@@ -158,7 +158,7 @@ function tampil_detail(statusTrx){
                                     <i>Say</i> : ` + bksfn.terBilang(totalpricex) + `
                                     </td>
                                     <td style='text-align:center;background-color:#f1f5f9;font-weight:bold;font-size:15px;'>
-                                        Rp. ` + bksfn.toRp(totalpricex) + `
+                                        Rp. ` + formatRupiah(totalpricex) + `
                                     </td>                         
                                 </tr>`
                     $('#table-detail tbody').append(rowsx);
@@ -244,12 +244,12 @@ $("#price").keyup(function(e) {
 });
 
 function subtotal_input() {
-    var xnominal = parseInt(price_to_number($('#nominal').val()));
-    var xsheet = parseInt(price_to_number($('#sheet').val()));
+    var xnominal = parseInt(formatRupiahtoNumber($('#nominal').val()));
+    var xsheet = parseInt(formatRupiahtoNumber($('#sheet').val()));
     var xtotal_amount = ((xnominal * xsheet));
     $('#total_amount').html(formatRupiah(xtotal_amount.toString()));
 
-    var xprice  = parseInt(price_to_number($('#price').val()));
+    var xprice  = parseInt(formatRupiahtoNumber($('#price').val()));
     var xtotal  = (xtotal_amount * xprice);
     $('#subtotal').val(formatRupiah(xtotal.toString()));
 }

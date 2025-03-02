@@ -103,7 +103,7 @@ ALTER TABLE stock MODIFY COLUMN id BIGINT NOT NULL AUTO_INCREMENT;
 SET foreign_key_checks = 1;
 
 SET foreign_key_checks = 0;
-ALTER TABLE stock_price_average MODIFY COLUMN id BIGINT NOT NULL AUTO_INCREMENT;
+ALTER TABLE stock_price MODIFY COLUMN id BIGINT NOT NULL AUTO_INCREMENT;
 SET foreign_key_checks = 1;
 
 SET foreign_key_checks = 0;

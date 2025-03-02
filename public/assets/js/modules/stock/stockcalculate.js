@@ -41,7 +41,7 @@
                 datatype: 'json',
                 success: function(data){
                     $.ajax({
-                        url: baseUrl + 'stock/stockcalculate/generate_stock_price_average',
+                        url: baseUrl + 'stock/stockcalculate/generate_stock_price',
                         type: 'POST',
                         beforeSend: function(){
                             $(".ajax-loader").height($(document).height());

@@ -129,40 +129,40 @@
                     return (data == null ? '-' : data.substr(data.length - 4));
                 }},
                 {data: 'buy_amount', className: "dt-body-center" ,  width: "5%", render: function (data, type, row, meta) {
-                    return ( data == 0 ? '-' : bksfn.toRp(data));
+                    return ( data == 0 ? '-' : formatRupiah(data));
                 }},
                 {data: 'buy_price', className: "dt-body-center" ,  width: "5%", render: function (data, type, row, meta) {
-                    return ( data == 0 ? '-' : bksfn.toRp(data));
+                    return ( data == 0 ? '-' : formatRupiah(data));
                 }},
                 {data: 'buy_total', className: "dt-body-center" ,  width: "10%", render: function (data, type, row, meta) {
-                    return ( data == 0 ? '-' : bksfn.toRp(data));
+                    return ( data == 0 ? '-' : formatRupiah(data));
                 }},
 
                 {data: 'sale_tr_number', className: "dt-body-center" ,  width: "5%", render: function (data, type, row, meta) {
                     return (data == null ? '-' : data.substr(data.length - 4));
                 }},
                 {data: 'sale_amount', className: "dt-body-center" ,  width: "5%", render: function (data, type, row, meta) {
-                    return ( data == 0 ? '-' : bksfn.toRp(data));
+                    return ( data == 0 ? '-' : formatRupiah(data));
                 }},
                 {data: 'sale_price', className: "dt-body-center" ,  width: "5%", render: function (data, type, row, meta) {
-                    return ( data == 0 ? '-' : bksfn.toRp(data));
+                    return ( data == 0 ? '-' : formatRupiah(data));
                 }},
                 {data: 'sale_total', className: "dt-body-center" ,  width: "10%", render: function (data, type, row, meta) {
-                    return ( data == 0 ? '-' : bksfn.toRp(data));
+                    return ( data == 0 ? '-' : formatRupiah(data));
                 }},
 
                 {data: 'stock_last_amount', className: "dt-body-center" ,  width: "5%", render: function (data, type, row, meta) {
-                    return ( data == 0 ? '-' : bksfn.toRp(data));
+                    return ( data == 0 ? '-' : formatRupiah(data));
                 }},
                 {data: 'stock_last_price', className: "dt-body-center" ,  width: "5%", render: function (data, type, row, meta) {
-                    return ( data == 0 ? '-' : numberWithCommas(data));
+                    return ( data == 0 ? '-' : formatDecimal(data,3));
                 }},
                 {data: 'stock_last_total', className: "dt-body-center" ,  width: "10%", render: function (data, type, row, meta) {
-                    return ( data == 0 ? '-' : bksfn.toRp(data));
+                    return ( data == 0 ? '-' : formatRupiah(data));
                 }},
 
                 {data: 'profit', className: "dt-body-center" ,  width: "10%", render: function (data, type, row, meta) {
-                    return ( data == 0 ? '-' : bksfn.toRp(data));
+                    return ( data == 0 ? '-' : formatRupiah(data));
                 }},
                            
                 {data: 'id', visible: false},

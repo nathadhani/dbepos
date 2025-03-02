@@ -75,19 +75,19 @@
                                                 ` + d.valas_code + ' - ' + d.valas_name +`                       
                                             </td>
                                             <td width="10%" style='text-align:left;'>
-                                                ` + bksfn.toRp(d.nominal) + `
+                                                ` + formatRupiah(d.nominal) + `
                                             </td>
                                             <td width="10%" style='text-align:left;'>
-                                                ` + bksfn.toRp(d.sheet) + `
+                                                ` + formatRupiah(d.sheet) + `
                                             </td>
                                             <td width="15%" style='text-align:left;'>
-                                                ` + bksfn.toRp(d.nominal * d.sheet) + `
+                                                ` + formatRupiah(d.nominal * d.sheet) + `
                                             </td>
                                             <td width="15%" style='text-align:left;'>
-                                                ` + bksfn.toRp(d.price) + `
+                                                ` + (isDecimal(d.price) ? formatDecimal(d.price,3) : formatRupiah(d.price) ) + `
                                             </td>
                                             <td width="15%" style='text-align:left;'>
-                                                ` + bksfn.toRp(d.subtotal) + `
+                                                ` + formatRupiah(d.subtotal) + `
                                             </td>
                                         </tr>`
                                 $('#table-detail tbody').append(rows);
@@ -98,7 +98,7 @@
                                         <i>Say</i> : ` + bksfn.terBilang(totalpricex) + `
                                         </td>
                                         <td style='text-align:left;background-color:#f1f5f9;font-weight:bold;font-size:15px;'>
-                                            Rp. ` + bksfn.toRp(totalpricex) + `
+                                            Rp. ` + formatRupiah(totalpricex) + `
                                         </td>                         
                                     </tr>`   
                             $('#table-detail tbody').append(rowsx);     

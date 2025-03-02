@@ -6,7 +6,8 @@ class M_exchange_rate extends Bks_Controller {
         $config = array('modules' => 'master_data', 'jsfiles' => array('m_exchange_rate'));
         parent::__construct($config);
         $this->Bksmdl->table = 'm_exchange_rate';
-        $this->auth = $this->session->userdata( 'auth' );        
+        $this->auth = $this->session->userdata( 'auth' );
+        $this->company_id = $this->auth['company_id'];
     }
     
     function index() {
@@ -19,16 +20,24 @@ class M_exchange_rate extends Bks_Controller {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
+        $store_id = $postData['store_id'];
         $tanggal = revDate($postData['periode']);
         $tanggalx = date('Y-m-d', strtotime("-1 day", strtotime($postData['periode'])));        
+
+        $this->db->trans_begin();
+        // $this->db->truncate($this->Bksmdl->table);
+        $this->db->where('exchange_rate_date =', $tanggal);
+        $this->db->delete($this->Bksmdl->table);
 
         $hsl = $this->db->query("SELECT id, valas_code, valas_name
                                  FROM m_valas
                                  WHERE status = 1
                                  AND NOT EXISTS
                                 ( SELECT 1 FROM m_exchange_rate AS p 
-                                  WHERE p.valas_id = m_valas.id
+                                  WHERE p.company_id = $this->company_id
+                                  AND p.store_id = $store_id
                                   AND p.exchange_rate_date = '$tanggal'                                  
+                                  AND p.valas_id = m_valas.id
                                 )
                                 GROUP BY id
                                 ORDER BY id ASC")->result();
@@ -36,6 +45,8 @@ class M_exchange_rate extends Bks_Controller {
         if(count($hsl) > 0){       
             foreach ($hsl as $key => $val) {
                 $data = [
+                    'company_id' => $this->company_id,
+                    'store_id' => $store_id,
                     'valas_id' => $val->id,
                     'exchange_rate_date' => $tanggal,
                     'status' => 1,
@@ -44,53 +55,66 @@ class M_exchange_rate extends Bks_Controller {
                 ];
                 array_push($rows, $data);               
             }             
-        }
-
-        $this->db->trans_begin();
-        // $this->db->truncate($this->Bksmdl->table);
-        // $this->db->where('rate_date =', $tanggal);
-        // $this->db->delete($this->Bksmdl->table);
-        
+        }        
         if(count($rows) > 0){   
             $this->db->insert_batch($this->Bksmdl->table, $rows);
             // echo $this->db->last_query(); exit;            
-            $hslx = $this->db->query("SELECT valas_id, 
-                                            exchange_rate_buy,
-                                            difference_buy,
-                                            exchange_rate_sell,
-                                            difference_sell,
+            $hslx = $this->db->query("SELECT
+                                            company_id,
+                                            store_id,                                 
+                                            valas_id, 
+                                            IFNULL(exchange_rate_buy,0) AS exchange_rate_buy,
+                                            IFNULL(difference_buy,0) AS difference_buy,                                            
+                                            IFNULL(exchange_rate_sell,0) AS exchange_rate_sell,                                                                                        
+                                            IFNULL(difference_sell,0) AS difference_sell,                                                                                                                                    
                                             price_buy_bot,
                                             price_buy_top,
                                             price_sell_bot,
                                             price_sell_top            
                                     FROM m_exchange_rate
-                                    WHERE status = 1 
+                                    WHERE company_id = $this->company_id
+                                    AND store_id = $store_id
                                     AND exchange_rate_date = '$tanggalx'                                    
+                                    AND status = 1
+                                    AND ( exchange_rate_buy > 0 OR  exchange_rate_sell > 0 ) 
                                     AND EXISTS
                                     ( 
-                                        SELECT 1 FROM m_exchange_rate AS p 
-                                        WHERE p.valas_id = m_exchange_rate.valas_id 
+                                        SELECT id FROM m_exchange_rate AS p 
+                                        WHERE p.company_id = $this->company_id
+                                        AND p.store_id = $store_id                                        
                                         AND p.exchange_rate_date = '$tanggal'
+                                        AND p.valas_id = m_exchange_rate.valas_id 
                                     )
                                     GROUP BY id
-                                    ORDER BY id ASC")->result();
-            if(count($hslx) > 0){
+                                    ORDER BY valas_id ASC")->result();
+            // echo $this->db->last_query(); exit;            
+            if(count($hslx) > 0){                                
                 foreach ($hslx as $key => $val) {
+                    $this->db->trans_begin();
                     $data_upd = [
-                        'valas_id' => $val->valas_id,
-                        'exchange_rate_buy' => $val->rate_buy,
-                        'difference_buy' => $val->difference_buy,
-                        'exchange_rate_sell' => $val->rate_sell,
-                        'difference_sell' => $val->difference_sell,
-                        'price_buy_bot' => $val->price_buy_bot,
-                        'price_buy_top' => $val->price_buy_top,
-                        'price_sell_bot' => $val->price_sell_bot,
-                        'price_sell_top' => $val->price_sell_top
+                        'exchange_rate_buy' => ($val->exchange_rate_buy == null ? 0 : $val->exchange_rate_buy),
+                        'difference_buy' => ($val->difference_buy == null ? 0 : $val->difference_buy),
+                        'exchange_rate_sell' => ($val->exchange_rate_sell == null ? 0 : $val->exchange_rate_sell),
+                        'difference_sell' => ($val->difference_sell == null ? 0 : $val->difference_sell),
+                        'price_buy_bot' => ($val->price_buy_bot == null ? 0 : $val->price_buy_bot),
+                        'price_buy_top' => ($val->price_buy_top == null ? 0 : $val->price_buy_top),
+                        'price_sell_bot' => ($val->price_sell_bot == null ? 0 : $val->price_sell_bot),
+                        'price_sell_top' => ($val->price_sell_top == null ? 0 : $val->price_sell_top)
                     ];
-                    $where = array('exchange_rate_date' => $tanggal, 'valas_id' => $val->valas_id);  
+                    $where = array('company_id' => $this->company_id, 'store_id' => $store_id, 'exchange_rate_date' => $tanggal, 'valas_id' => $val->valas_id);  
                     $this->db->where($where);
-                    $this->db->update('m_exchange_rate',$data_upd);             
+                    $this->db->update('m_exchange_rate',$data_upd);                    
                     // echo $this->db->last_query(); exit;
+                    if ($this->db->trans_status() === FALSE) {
+                        $this->db->trans_rollback();
+                        $err = $this->db->error();
+                        $json['msg'] = $err['code'] . '<br>' . $err['message'];
+                        echo json_encode($json);
+                    } else {
+                        $this->db->trans_commit();
+                        $json['msg'] = '1';
+                        echo json_encode($json);
+                    }
                 }                
             }                                                          
         } 
@@ -114,6 +138,8 @@ class M_exchange_rate extends Bks_Controller {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
+
+        $store_id = $postData['store_id'];
         $tanggalx = date('Y-m-d', strtotime("-1 day", strtotime($postData['exchange_rate_date'])));
 
         $postData['status'] = cekStatus($postData);
@@ -129,7 +155,12 @@ class M_exchange_rate extends Bks_Controller {
 
         /*difference_buy*/
         $postData['difference_buy'] = 0;
-        $cek = $this->db->query("select exchange_rate_buy FROM m_exchange_rate WHERE exchange_rate_date = '$tanggalx' AND valas_id = $valas_id")->row();
+        $cek = $this->db->query("SELECT exchange_rate_buy 
+                                 FROM m_exchange_rate 
+                                 WHERE company_id = $this->company_id 
+                                 AND store_id = $store_id 
+                                 AND exchange_rate_date = '$tanggalx' 
+                                 AND valas_id = $valas_id")->row();
         if(isset($cek)){
             if($cek->rate_buy > 0) {
                 if($postData['rate_buy'] > 0) {
@@ -140,7 +171,12 @@ class M_exchange_rate extends Bks_Controller {
                
         /*difference_sell*/
         $postData['difference_sell'] = 0;
-        $cek = $this->db->query("select exchange_rate_sell FROM m_exchange_rate WHERE exchange_rate_date = '$tanggalx' AND valas_id = $valas_id")->row();
+        $cek = $this->db->query("SELECT exchange_rate_sell 
+                                 FROM m_exchange_rate 
+                                 WHERE company_id = $this->company_id 
+                                 AND store_id = $store_id
+                                 AND exchange_rate_date = '$tanggalx' 
+                                 AND valas_id = $valas_id")->row();
         if(isset($cek)){
             if($cek->rate_sell > 0) {
                 if($postData['rate_sell'] > 0) {
@@ -150,6 +186,7 @@ class M_exchange_rate extends Bks_Controller {
         }       
         
         unset($postData['id']);
+        unset($postData['store_id']);
         unset($postData['valas_id']);
         unset($postData['exchange_rate_date']);
         unset($postData['valas_code']);
@@ -193,11 +230,22 @@ class M_exchange_rate extends Bks_Controller {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
+        $store_id = $postData['store_id'];
         $tanggal = revDate($postData['periode']);
         $this->Bksmdl->table = 'v_m_exchange_rate';       
-        $where[0]['field'] = 'exchange_rate_date';
-        $where[0]['data']  = $tanggal;
+        
+        $where[0]['field'] = 'company_id';
+        $where[0]['data']  = $this->company_id;
         $where[0]['sql']   = 'where';
+
+        $where[1]['field'] = 'store_id';
+        $where[1]['data']  = $tanggal;
+        $where[1]['sql']   = 'where';
+
+        $where[1]['field'] = 'exchange_rate_date';
+        $where[1]['data']  = $tanggal;
+        $where[1]['sql']   = 'where';
+
         $cpData = $this->Bksmdl->getDataTable($where);
         $this->Bksmdl->outputToJson($cpData);
     }    
