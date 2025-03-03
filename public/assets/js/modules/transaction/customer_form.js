@@ -227,7 +227,7 @@ $('#upload_foto').on('change',function(e){
         if($("body").data("id") !== null && $("body").data("id") !== '') {
             $("body").data("text_search", '');
             $.ajax({
-                url: baseUrl + 'transaction/customer_form/getByID',
+                url: baseUrl + 'transaction/customer_form/getbyid',
                 type: 'POST',
                 data: {'id' : $("body").data("id")},
                 datatype: 'json',
@@ -241,7 +241,7 @@ $('#upload_foto').on('change',function(e){
                     $('#links').empty();
                     $("#links").hide();
                     if (d.customer_type_id != 0 && d.customer_type_id != null && d.customer_type_id != '') {
-                        $("#customer_type_id").html('<option value="' + d.customer_type_id + '">' + d.customer_type_name + '</option>').sel2dma();
+                        $("#customer_type_id").html('<option value="' + d.customer_type_id + '">' + d.customer_type_name + ' [' + d.customer_type_id + ']'  + '</option>').sel2dma();
                         if(d.customer_type_id === '1'){
                             $(".perorangan").show();
                             $(".cfoto").show();
@@ -250,22 +250,22 @@ $('#upload_foto').on('change',function(e){
                                 $.ajax({
                                     url:image_url,
                                     type:'HEAD',
-                                    error: function() {
-                                        //file not exists
-                                        $("#links").hide();
-                                    },
                                     success: function() {
                                         //file exists
                                         var showfoto = '<a class="gallery-item" href="'+image_url+'" data-gallery>'+
                                                             '<div class="image">'+
                                                                 '<img src="'+image_url+'" alt="" style="height:325px;width:550px;"/>'+
                                                             '</div>'+
-                                                        '</a>'                                                            
+                                                        '</a>'                                                     
                                         $('#links').append(showfoto);
                                         $("#links").show();
+                                    },
+                                    error: function() {
+                                        //file not exists
+                                        $("#links").hide();
                                     }
-                                });                                                     
-                            }                                         
+                                });
+                            }
                         } else {
                             $(".perorangan").hide();
                             $(".cnpwp").show();
@@ -283,7 +283,7 @@ $('#upload_foto').on('change',function(e){
                     $("#customer_address").val(d.customer_address);
 
                     if (d.customer_data_id != 0 && d.customer_data_id != null && d.customer_data_id != '') {
-                        $("#customer_data_id").html('<option value="' + d.customer_data_id + '">' + d.customer_data_name + '</option>').sel2dma();
+                        $("#customer_data_id").html('<option value="' + d.customer_data_id + '">' + d.customer_data_name + ' [' + d.customer_data_id + ']' + '</option>').sel2dma();
                     } else {
                         $("#customer_data_id").html('').sel2dma();
                     }
@@ -305,7 +305,7 @@ $('#upload_foto').on('change',function(e){
                     }
 
                     if (d.nationality_id != 0 && d.nationality_id != null && d.nationality_id != '') {
-                        $("#nationality_id").html('<option value="' + d.nationality_id + '">' + d.nationality_code + '</option>').sel2dma();
+                        $("#nationality_id").html('<option value="' + d.nationality_id + '">' + d.nationality_desc + ' [' + d.nationality_code + ']' + '</option>').sel2dma();
                     } else {
                         $("#nationality_id").html('').sel2dma();
                     }

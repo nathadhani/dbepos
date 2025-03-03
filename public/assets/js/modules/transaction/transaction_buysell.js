@@ -39,7 +39,7 @@ function show_customer(){
                     success: function(data){
                         if (data !== '[]'){   
                             var d = JSON.parse(data)[0];
-                            $("#customer_name").html(d.customer_code + ' - ' + d.customer_name);
+                            $("#customer_name").html(d.customer_name);
                         } else {
                             $("#customer_name").html('');
                             customerId = null;
@@ -100,7 +100,7 @@ function show_header(){
                         $('#tr_date').prop('disabled', true);
                         $("#tr_number").val(d.tr_number_temp);
 
-                        $("#customer_name").html(d.customer_code + ' - ' + d.customer_name);
+                        $("#customer_name").html(d.customer_name);
                         
                         if (d.store_id != null) {
                             $("#store_id").html('<option value="' + d.store_id + '">' + d.store_name + ' [' + d.store_address + ']' + '</option>').sel2dma();

@@ -29,7 +29,7 @@
                                 $("#cancel_by").html('Canceled by : '+d.updatedby_name +' | '+d.updated);
                             }                            
 
-                            $("#customer_name").html(d.customer_code + ' - ' + d.customer_name);
+                            $("#customer_name").html(d.customer_name);
 
                             $("#store_address").html(d.store_address);   
                             

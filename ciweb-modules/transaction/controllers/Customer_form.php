@@ -6,8 +6,7 @@ class Customer_form extends Bks_Controller {
         $config = array('modules' => 'transaction', 'jsfiles' => array('customer_form'));
         parent::__construct($config);
         $this->Bksmdl->table = 'm_customer';
-        $this->auth = $this->session->userdata( 'auth' );
-        $this->company_id = $this->auth['company_id']; 
+        $this->auth = $this->session->userdata( 'auth' );        
     }
     
     function index() {
@@ -19,24 +18,20 @@ class Customer_form extends Bks_Controller {
         $this->template->build('transaction/customer_form_v', $data);
     }
     
-    function generate_code($customer_type_id) {
+    function generate_code() {
         $Number = 1;
         $thn = SUBSTR(Date('Y-m-d'),0,4);
         $bln = SUBSTR(Date('Y-m-d'),5,2);
-        $branchcode = sprintf("%02d", $this->company_id);
-        $type_id = sprintf("%02d", $customer_type_id);
-        $sql = $this->db->query("SELECT max(right(customer_code,4)) as id 
+        $sql = $this->db->query("SELECT max(right(customer_code,6)) as id 
                                  FROM m_customer 
-                                 WHERE company_id = $this->company_id
-                                 AND customer_type_id = $customer_type_id
-                                 AND YEAR(created) = $thn
+                                 WHERE YEAR(created) = $thn
                                  AND MONTH(created) = $bln")->result();
         if (count($sql) > 0) {
             foreach ($sql as $data) {
                 $Number = intval($data->id) + 1;
             }
         }
-        return SUBSTR($thn,2,2) . $bln . $branchcode  . $type_id . sprintf("%04d", $Number);
+        return SUBSTR($thn,2,2) . $bln . sprintf("%06d", $Number);
     } 
 
     function insert() {
@@ -44,8 +39,7 @@ class Customer_form extends Bks_Controller {
         $this->libauth->check(__METHOD__);        
         $postData = $this->input->post();
 
-        $postData['company_id'] = $this->company_id;
-        $postData['customer_code'] = $this->generate_code($postData['customer_type_id']);
+        $postData['customer_code'] = $this->generate_code();
         $postData['bornday'] = revDate($postData['bornday']);
         $postData['status'] = '1';
 
@@ -71,7 +65,6 @@ class Customer_form extends Bks_Controller {
         $postData = $this->input->post();
 
         $id = $postData['id'];             
-        $postData['company_id'] = $this->company_id; 
         $postData['bornday'] = revDate($postData['bornday']);
         $postData['status'] = cekStatus($postData);
         unset($postData['id']);      

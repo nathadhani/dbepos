@@ -35,7 +35,19 @@
                         </h3>
                     </div>
                     <ul class="panel-controls">
-                        Store : <span id="store_address"></span>                                                                                                
+                        <?php
+                            $company_id = $auth['company_id'];
+                            $get_AP = $this->db->query("SELECT api_angkasapura, api_method FROM m_company WHERE id = $company_id ")->result(); 
+                            if($get_AP){                                                                          
+                                if($get_AP[0]->api_method === '1') {              
+                        ?>
+                            <button id="btn-input" class="btn btn-default btn btn-sm" style="width:120px;font-weight:bold;color:blue;">Submit</button>
+                        <?php
+                                }
+                            }
+                        ?>                                                                                                                      
+                        <button id="btn-cancel" class="btn btn-default btn-sm" style="width:120px;font-weight:bold;color:red;">Cancel</button>
+                        <button id="btn-pdf" class="btn btn-default btn-sm" style="width:120px;font-weight:bold;">Print</button>
                     </ul>    
                 </div>
                 <form id="mainForm" class="form-horizontal" autocomplete="off">
@@ -47,36 +59,17 @@
                                 Status : <span id="ftitle"></span>
                             </div>    
                             <div class="col-md-4">                                
-                                CIF : <a href="#" id="customer_name"></a><br>
+                                Customer : <a href="#" id="customer_name"></a><br>
                                 Source : <span id="customer_source"></span><br>
                                 Purpose : <span id="customer_purpose"></span>
                             </div>                            
-                            <div class="col-md-4">   
+                            <div class="col-md-3">   
                                 Payment Type : <span id="payment_name"></span><br>
                                 Cashier Name : <span id="cashier_name"></span><br>
                                 Description : <span id="description_header"></span>
                             </div>
-                            <div class="col-md-2">
-                                <ul class="nav navbar-nav">
-                                    <li class="dropdown">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Action<span class="caret"></span></a>
-                                        <ul class="dropdown-menu">
-                                            <?php
-                                                $company_id = $auth['company_id'];
-                                                $get_AP = $this->db->query("SELECT api_angkasapura, api_method FROM m_company WHERE id = $company_id ")->result(); 
-                                                if($get_AP){                                                                          
-                                                    if($get_AP[0]->api_method === '1') {                     
-                                            ?>
-                                                <li id="btn-input"><a href="">Submit</a></li>                                        
-                                            <?php
-                                                    }
-                                                }
-                                            ?>       
-                                            <li id="btn-cancel"><a href="">Cancel</a></li>
-                                            <li id="btn-pdf"><a href="">Print</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
+                            <div class="col-md-3">
+                                Store : <span id="store_address"></span>                                
                             </div>
                         </div>
 

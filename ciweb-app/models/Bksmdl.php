@@ -370,9 +370,9 @@ class Bksmdl extends Bks_Model {
         }
         $resultfieldarr = SUBSTR($arrOrLike,0,strlen($arrOrLike)-3);
         if($orderby !== null){
-            $sql = "SELECT * FROM $this->table WHERE company_id = " . $auth['company_id'] . " AND (". $resultfieldarr . ") " . $orderby;
+            $sql = "SELECT * FROM $this->table WHERE (". $resultfieldarr . ") " . $orderby;
         }else{
-            $sql = "SELECT * FROM $this->table WHERE company_id = " . $auth['company_id'] . " AND (". $resultfieldarr . ")";
+            $sql = "SELECT * FROM $this->table WHERE (". $resultfieldarr . ")";
         }
         $r = $this->db->query($sql)->result();
         return $r;        

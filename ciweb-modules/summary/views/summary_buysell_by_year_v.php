@@ -5,10 +5,13 @@
                 <div class="panel-title-box">
                     <h3>Summary Buy / Sell - by Year</h3>
                 </div>
+                <ul class="panel-controls">
+                    <button id="btn-submit" class="btn btn-default btn btn-sm" style="width:120px;">Submit</button>
+                </ul>
             </div>
             <div class="panel-body">
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-5">
                         <div class="form-group">                                
                             <div class="col-lg-12">
                                 <label for="company_id" style="display:block">Branch</label>
@@ -25,7 +28,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-5">
                         <div class="form-group">                                
                             <div class="col-lg-12">
                                 <label for="store_id" style="display:block">Store</label>
@@ -37,18 +40,12 @@
                     </div>
                     <div class="col-md-2">
                         <div class="form-group">
-                            <div class="col-lg-8">
-                                <label for="periode" style="display:block">Period</label>
+                            <div class="col-lg-12">
+                                <label for="periode" style="display:block">Year</label>
                                 <input style="width:100px;" type="text" data-inputmask="'mask': '[9999]'" class="form-control dpY" placeholder="Periode" name="periode" id="periode" value="<?=date('Y')?>">
-                            </div>
-                            <div class="col-lg-4">
-                                <label for="btn-submit" style="display:block"></label><br>
-                                <a style="width:100px;display:block" id="btn-submit" title="Filter Data" href="#" class="btn btn-info">Submit</a>                                
                             </div>
                         </div>                            
                     </div>
-                    <div class="col-md-2"></div>
-                    <a id="btn-excel" title="Download" href="#" class="btn btn-default pull-right"><i class="fa fa-download"></i></a>
                 </div>                
 
                 <br>

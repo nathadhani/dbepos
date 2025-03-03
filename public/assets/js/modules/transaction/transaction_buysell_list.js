@@ -1,4 +1,5 @@
 (function ($) {
+    $("#btn-excel").hide();
     $('#company_id').on('change',function(e){
         e.preventDefault()
         if($(this).val() != null && $(this).val() != ''){
@@ -30,8 +31,46 @@
         } else if($('#store_id').val() === null || $('#store_id').val() === ''){
             bksfn.errMsg('Store Belum Dipilih!');
         } else {
+            $("#btn-excel").show();
             fethdata();
         }        
+    });
+    
+    $("#btn-excel").on('click', function (e) {
+        e.preventDefault();
+        if($('#company_id').val() === null || $('#company_id').val() === ''){
+            bksfn.errMsg('Cabang Belum Dipilih!');        
+        } else if($('#store_id').val() === null || $('#store_id').val() === ''){
+            bksfn.errMsg('Store Belum Dipilih!');
+        } else {
+            alertify.confirm("download transaction ?", function (e) {    
+                if (e) {
+                    var url = "transaction/transaction_buysell_list/excel/"+$('#company_id').val()+"/"+$('#store_id').val()+"/"+$('#tr_date1').val()+"/"+$('#tr_date2').val();
+                    $.ajax({
+                        url: url,
+                        type: 'POST',
+                        data: {},
+                        beforeSend: function(){
+                            $(".ajax-loader").height($(document).height());
+                            $('.ajax-loader').css("visibility", "visible");
+                        },
+                        success: function() {
+                            window.open(url,'_self'); 
+                        },
+                        complete: function(){
+                            $('.ajax-loader').css("visibility", "hidden");
+                        }
+                    }).done(function(data){
+                        var $a = $("<a>");
+                            $a.attr("href",data.file);
+                            $("body").append($a);
+                            $a.attr("download","transaction buy sell.xlsx");
+                            $a[0].click();
+                            $a.remove();
+                    });                                    
+                }    
+            });
+        }              
     });
 
     //--- Datatables

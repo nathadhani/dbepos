@@ -1,10 +1,7 @@
 <script type="text/javascript">
+    $("body").data("id", <?php echo $this->uri->segment(4);?>);
     $("body").data("user_id", <?php echo $auth['id'];?>);
     $("body").data("usergroup_id", <?php echo $auth['usergroup_id'];?>);
-    $("body").data("company_id", <?php echo $auth['company_id'];?>);
-    $("body").data("company_address", <?php echo "'" . $auth['company_address'] ."'";?>);
-
-    $("body").data("id", <?php echo $this->uri->segment(4);?>);
     var text_celluler = <?php echo "'" . str_replace('%20',' ',$this->uri->segment(5)) ."'";?>;
 </script>
 
@@ -151,6 +148,18 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <label for="form_name" class="control-label col-lg-4">Celluler <strong style="color:red;font-weight:bold;font-size:18px;">**</strong></label>
+                                    <div class="col-lg-8">
+                                        <input type="text" id="customer_handphone" name="customer_handphone" class="form-control" placeholder="No Handphone..." data-validation="required">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="form_name" class="control-label col-lg-4">Phone</label>
+                                    <div class="col-lg-8">
+                                        <input type="text" id="customer_phone" name="customer_phone" class="form-control" placeholder="No Telpon Rumah / Kantor...">
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     <label for="form_name" class="control-label col-lg-4">Address <strong style="color:red;font-weight:bold;font-size:18px;">**</strong></label>
                                     <div class="col-lg-8">
                                         <textarea rows="2" cols="50" id="customer_address" name="customer_address" class="form-control" placeholder="Alamat..." data-validation="required"></textarea>
@@ -179,18 +188,6 @@
                                     <div class="col-lg-8">
                                         <input type="text" id="city" name="city" class="form-control" placeholder="Kabupaten / Kota...">
                                     </div>
-                                </div>                                                                                                                                                                                                
-                                <div class="form-group">
-                                    <label for="form_name" class="control-label col-lg-4">Celluler <strong style="color:red;font-weight:bold;font-size:18px;">**</strong></label>
-                                    <div class="col-lg-8">
-                                        <input type="text" id="customer_handphone" name="customer_handphone" class="form-control" placeholder="No Handphone..." data-validation="required">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="form_name" class="control-label col-lg-4">Phone</label>
-                                    <div class="col-lg-8">
-                                        <input type="text" id="customer_phone" name="customer_phone" class="form-control" placeholder="No Telpon Rumah / Kantor...">
-                                    </div>
                                 </div>
                                 <div class="form-group cnpwp">
                                     <label for="form_name" class="control-label col-lg-4">NPWP Number</label>
@@ -209,32 +206,7 @@
                         <hr style="border: 1px solid green;">
                     </div>
                     <!--.end panel-body -->
-
-                    <div class="panel-body created_updated" style="margin-top:-25px;">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <table style="width:100%" class="table table-bordered table-condensed table-hoverx table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>Created by</th>
-                                            <th>Created</th>
-                                            <th>Updated by</th>
-                                            <th>Updated</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <td id="createdby_name"></td>
-                                        <td id="created"></td>
-                                        <td id="updatedby_name"></td>
-                                        <td id="updated"></td>
-                                    </tbody>                                    
-                                </table>                                
-                            </div>                           
-                        </div>                                                
-                        <hr style="border: 1px solid green;">
-                    </div>                    
-                    <!--.end panel-body -->                                                                                     
-
+                    
                     <div class="panel-body" style="margin-top:-25px;">
                         <div class="row">
                             <div class="col-lg-12">
@@ -271,7 +243,32 @@
                         <div class="col-md-3">
                         </div>
                     </div>
+                    <hr style="border: 1px solid green;">
                 </div>                    
+
+                <div class="panel-body created_updated" style="margin-top:-25px;">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <table style="width:100%" class="table table-bordered table-condensed table-hoverx table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Created by</th>
+                                        <th>Created</th>
+                                        <th>Updated by</th>
+                                        <th>Updated</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <td id="createdby_name"></td>
+                                    <td id="created"></td>
+                                    <td id="updatedby_name"></td>
+                                    <td id="updated"></td>
+                                </tbody>                                    
+                            </table>                                
+                        </div>                           
+                    </div>                    
+                </div>                    
+                <!--.end panel-body -->                                                                                     
             </div>            
         </div>        
     </div>          

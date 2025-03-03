@@ -14,52 +14,47 @@
                     </h3>
                 </div>
                 <ul class="panel-controls">
-                    <!-- <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li> -->                    
+                    <button id="btn-show" class="btn btn-default btn btn-sm" style="width:120px;">Show Data</button>
+                    <button id="btn-generate" class="btn btn-default btn-sm" style="width:120px;">Generate Data</button>
                 </ul>    
             </div>            
             <div class="panel-body">
-                <div class="row">                    
-                    <div class="col-md-8">
+                <div class="row">       
+                    <div class="col-md-5">
+                        <div class="form-group">                                
+                            <div class="col-lg-12">
+                                <label for="company_id" style="display:block">Branch</label>
+                                <select name="company_id"
+                                        data-ajax="true" 
+                                        data-placeholder="-- Pilih Cabang --"
+                                        data-url="master_data/m_company/getRegion/" 
+                                        data-value="" 
+                                        data-limit="100"                                                
+                                        id="company_id" placeholder="Region"
+                                        class='form-control select2'
+                                        width="100%"
+                                        >
+                                </select>                                
+                            </div>
+                        </div>
+                    </div>             
+                    <div class="col-md-5">
                         <div class="form-group">                                
                             <div class="col-lg-12">
                                 <label for="store_id" style="display:block">Store</label>
-                                <select id="store_id"
-                                        name="store_id"
-                                        data-ajax="true" 
-                                        data-placeholder="-- PIlih Store --"
-                                        data-url="master_data/m_store/getStoreTrx/"
-                                        data-value=""
-                                        data-limit="100"                                                
-                                        placeholder="Store"  
-                                        class='form-control select2'
-                                        require
-                                >
+                                <select class='form-control select2' name="store_id" id="store_id" disabled="true" width="100%">
+                                    <option value=""> -- Pilih Store --</option>
                                 </select>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-2">
                         <div class="form-group">
-                            <div class="col-lg-4">
+                            <div class="col-lg-12">
                                 <label for="periode" style="display:block">Date</label>
-                                <input type="text" id="tanggal" name="tanggal" placeholder="Tanggal ..." class="form-control dp" data-date-format="DD MMMM YYYY" style="width:100px;" value="<?=date('d-m-Y');?>">
+                                <input type="text" id="tanggal" name="tanggal" placeholder="Tanggal ..." class="form-control dp" data-date-format="DD MMMM YYYY" style="width:120px;" value="<?=date('d-m-Y');?>">
                             </div>                            
                         </div>                            
-                    </div>
-                    <div class="col-md-2">
-                        <!-- <div class="form-group"> -->
-                            <div class="col-lg-12">
-                                <ul class="nav navbar-nav">
-                                    <li class="dropdown">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Action<span class="caret"></span></a>
-                                        <ul class="dropdown-menu">
-                                            <li id="btn-show"><a href="">Show Data</a></li>
-                                            <li id="btn-generate"><a href="">Generate Data</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>                        
-                            </div>
-                        <!-- </div>             -->
                     </div>
                 </div>                    
                 <!-- <hr style="border: 1px solid green;"> -->

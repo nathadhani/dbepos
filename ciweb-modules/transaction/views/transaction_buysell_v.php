@@ -29,7 +29,8 @@
                         </h3>
                     </div>
                     <ul class="panel-controls">
-                        CIF : <a href="#" id="customer_name"></a>
+                        <button id="btn-confirm" class="btn btn-default btn btn-sm" style="width:120px;font-weight:bold;color:blue;">Confirm</button>
+                        <button id="btn-cancel" class="btn btn-default btn-sm" style="width:120px;font-weight:bold;color:red;">Cancel</button>
                     </ul>    
                 </div>                  
                 <div class="panel-body">                                       
@@ -51,9 +52,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-8">
                                 <div class="form-group">                                
-                                    <div class="col-lg-12">
+                                    <div class="col-lg-10">
                                         <label for="store_id" style="display:block">Store</label>
                                         <select id="store_id"
                                                 name="store_id"
@@ -68,23 +69,22 @@
                                         >
                                         </select>
                                     </div>
+                                    <div class="col-lg-2">
+                                        <button id="btn-simpan-header" class="btn btn-default btn btn-sm" style="width:110px;font-weight:bold;">Save</button>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-2">
-                                <ul class="nav navbar-nav">
-                                    <li class="dropdown">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Action<span class="caret"></span></a>
-                                        <ul class="dropdown-menu">
-                                            <li id="btn-simpan-header"><a href="">Save</a></li>
-                                            <li id="btn-confirm"><a href="">Confirm</a></li>
-                                            <li id="btn-cancel"><a href="">Cancel</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </div>                            
                         </div>
-                        <div class="row" style="margin-left:-5px;">                                                              
-                            <div class="col-md-6">
+                        <div class="row" style="margin-left:-5px;margin-top:15px;">                                                              
+                            <div class="col-md-4">
+                                <div class="form-group">                                
+                                    <div class="col-lg-12">
+                                        <label for="customer_name" style="display:block">Customer</label>
+                                        <a href="#" id="customer_name"></a>                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
                                 <div class="form-group">                                
                                     <div class="col-lg-12">
                                         <label for="store_id" style="display:block">Source</label>
@@ -92,7 +92,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="form-group">                                
                                     <div class="col-lg-12">
                                         <label for="store_id" style="display:block">Purpose</label>

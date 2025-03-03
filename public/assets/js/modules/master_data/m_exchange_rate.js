@@ -1,6 +1,30 @@
 (function ($) {
     window.scroll(0, 0); 
 
+    $('#company_id').on('change',function(e){
+        e.preventDefault()
+        if($(this).val() != null && $(this).val() != ''){
+            $('#store_id').html('').sel2dma();
+            $('#store_id').prop('disabled', false);
+            $('#store_id').focus()
+            $.ajax({
+                url : baseUrl +  'master_data/m_store/getStore',
+                type: 'POST',
+                data: {'company_id' : $(this).val()},
+                datatype: 'json',
+                success: function(data){
+                    $('#store_id').html(data);
+                },
+                error: function(){
+                    alert("can't get store");  
+                }
+            });
+        } else {    
+            $('#store_id').html('').sel2dma();
+            $('#store_id').prop('disabled', true);        
+        }
+    });
+
     //--- Refresh Button  
     $("#btn-generate").on('click', function (e) {
         e.preventDefault();

@@ -29,49 +29,10 @@
             bksfn.errMsg('Cabang Belum Dipilih!');
         } else if($('#store_id').val() === null || $('#store_id').val() === ''){
             bksfn.errMsg('Store Belum Dipilih!');
-        } else {
-            $("#btn-excel").hide();
+        } else {            
             fethdata();
         }        
-    });
-
-    $("#btn-excel").hide();
-    $("#btn-excel").on('click', function (e) {
-        e.preventDefault();
-        if($('#company_id').val() === null || $('#company_id').val() === ''){
-            bksfn.errMsg('Cabang Belum Dipilih!');
-        } else if($('#store_id').val() === null || $('#store_id').val() === ''){
-            bksfn.errMsg('Store Belum Dipilih!');
-        } else {
-            alertify.confirm("download trx period " + $("#periode").val() + " ?", function (e) {    
-                if (e) {
-                    var url = "summary/summary_buysell_by_year/excel/"+$('#periode').val()+"/"+$('#company_id').val()+"/"+$('#store_id').val();
-                    $.ajax({
-                        url: url,
-                        type: 'POST',
-                        data: {},
-                        beforeSend: function(){
-                            $(".ajax-loader").height($(document).height());
-                            $('.ajax-loader').css("visibility", "visible");
-                        },
-                        success: function() {
-                            window.open(url,'_self'); 
-                        },
-                        complete: function(){
-                            $('.ajax-loader').css("visibility", "hidden");
-                        }
-                    }).done(function(data){
-                        var $a = $("<a>");
-                            $a.attr("href",data.file);
-                            $("body").append($a);
-                            $a.attr("download","trx.xlsx");
-                            $a[0].click();
-                            $a.remove();
-                    });                                    
-                }    
-            });
-        }
-    });
+    });    
 
     //--- Datatables
     function fethdata(){
@@ -88,7 +49,7 @@
             lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
             sDom: 'it<"row"lp>',
             ajax: {
-                url: baseUrl + 'summary/summary_buysell_by_year/getData',
+                url: baseUrl + 'summary/summary_buysell_by_year/getdata',
                 type: 'POST',
                 // beforeSend: function(){
                 //     $(".ajax-loader").height($(document).height());
@@ -119,10 +80,7 @@
                                     }                                
                                     if(total_sell > 0){
                                         $("#total_sell").html(formatRupiah(total_sell));
-                                    }
-                                    if(total_buy > 0 || total_sell > 0 ){               
-                                        $("#btn-excel").show();
-                                    }                           
+                                    }                                                               
                                 }
                             }    
                         },
