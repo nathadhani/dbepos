@@ -45,7 +45,7 @@ class Transaction_buysell_show extends Bks_Controller {
         $customer_id = json_decode($postData['customer_id']);
         $tr_id = json_decode($postData['tr_id']);
         $header_id = json_decode($postData['header_id']);
-        $query = $this->db->query("SELECT * FROM v_tr_detail WHERE customer_id = " . $customer_id . " AND tr_id = " . $tr_id . " AND header_id= " . $header_id ." ORDER BY valas_id, nominal, price ASC")->result();
+        $query = $this->db->query("SELECT * FROM v_tr_detail WHERE customer_id = " . $customer_id . " AND tr_id = " . $tr_id . " AND header_id= " . $header_id ." ORDER BY currency_id, nominal, price ASC")->result();
         echo json_encode($query, true);
     }     
     
@@ -119,18 +119,22 @@ class Transaction_buysell_show extends Bks_Controller {
             foreach($data_content as $r){
                 $no++;
                 
-                $valas_code = $r->valas_code;
+                $currency_code = $r->currency_code;
                 $nominal    = ($r->nominal == 'null' || $r->nominal == '' ? '' : (float) $r->nominal);
                 $sheet      = ($r->sheet == 'null' || $r->sheet == '' ? '' : (float) $r->sheet);                
                 $amount     = ($nominal * $sheet);
-                $price      = ($r->price == 'null' || $r->price == '' ? '' : (float) $r->price);
+                $price      = ($r->price == 'null' || $r->price == '' ? 0 :  floatval($r->price));
                 $subtotal   = ($r->subtotal == 'null' || $r->subtotal == '' ? '' : (float) $r->subtotal);
-                $total      = $total + ($amount * $price);
- 
+                $total      = $total + ($amount * $price); 
+
                 $pdf->Cell(07,01,$no,0,0);
-                $pdf->Cell(17,01,$valas_code,0,0);
+                $pdf->Cell(17,01,$currency_code,0,0);
                 $pdf->Cell(20,01,number_format($amount, "0", ".", ","),0,0);
-                $pdf->Cell(18,01,number_format($price, "0", ".", ","),0,0);   
+                if( $this->Bksmdl->cekdecimalgreaterthenzero($price) > 0){
+                    $pdf->Cell(18,01,number_format($price, "2", ".", ","),0,0);   
+                } else {
+                    $pdf->Cell(18,01,number_format($price, "0", ".", ","),0,0);   
+                }                
                 $pdf->Cell(30,01,number_format($subtotal, "0", ".", ","),0,0);
                 $pdf->Ln(4);
             }

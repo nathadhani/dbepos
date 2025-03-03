@@ -1,11 +1,11 @@
 <?php
 
-class Stockprice extends Bks_Controller {
+class Stock_price extends Bks_Controller {
     
 
     function __construct() 
     {
-        $config = array('modules' => 'stock', 'jsfiles' => array('stockprice'));
+        $config = array('modules' => 'stock', 'jsfiles' => array('stock_price'));
         parent::__construct($config);        
         $this->auth = $this->session->userdata( 'auth' );        
     }
@@ -14,24 +14,24 @@ class Stockprice extends Bks_Controller {
     {
         $this->libauth->check(__METHOD__);
         $this->template->title('Stock in Avg Rate');
-        $this->template->set('tsmall', 'Summary');
+        $this->template->set('tsmall', 'Stock');
         $this->template->set('icon', 'fa fa-list');
         $data['auth'] = $this->auth;
-        $this->template->build('stock/stockprice_v', $data);
+        $this->template->build('stock/stock_price_v', $data);
     }
 
-    function getValasStock() {
+    function getcurrencystock() {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $company_id = $this->input->post('company_id'); 
         $store_id = $this->input->post('store_id');
-        $menus = $this->db->group_by('valas_id')
-                          ->order_by('valas_id,valas_code,valas_name', 'ASC')
+        $menus = $this->db->group_by('currency_id')
+                          ->order_by('currency_id,currency_code,currency_name', 'ASC')
                           ->get_where('v_stock_price', array('company_id' => $company_id, 'store_id' => $store_id))->result();        
         if (count($menus) > 0){
             $option ="<option selected value=''>-- Pilih Mata Uang --</option>";
             foreach($menus as $row){
-                $option.="<option value='".$row->valas_id."'>".$row->valas_code . " - " . $row->valas_name ."</option>";
+                $option.="<option value='".$row->currency_id."'>".$row->currency_code . " - " . $row->currency_name ."</option>";
             }
             echo $option;
         }
@@ -44,7 +44,7 @@ class Stockprice extends Bks_Controller {
 
         $company_id = $postData['company_id'];
         $store_id = $postData['store_id'];
-        $valas_id = $postData['valas_id'];
+        $currency_id = $postData['currency_id'];
 
         $tahun = date('Y');
         $bulan = date('m');
@@ -69,8 +69,8 @@ class Stockprice extends Bks_Controller {
         $where[3]['data']  = $bulan;
         $where[3]['sql']   = 'where';
 
-        $where[4]['field'] = 'valas_id';
-        $where[4]['data']  = $valas_id;
+        $where[4]['field'] = 'currency_id';
+        $where[4]['data']  = $currency_id;
         $where[4]['sql']   = 'where';
 
         $this->Bksmdl->table = 'v_stock_price';
@@ -85,16 +85,16 @@ class Stockprice extends Bks_Controller {
         $tahun = SUBSTR($this->uri->segment(4),3,4);
         $bulan = SUBSTR($this->uri->segment(4),0,2);
         
-        $query = $this->db->query("SELECT CONCAT(valas_code,' - ',valas_name) AS valas_code,
+        $query = $this->db->query("SELECT CONCAT(currency_code,' - ',currency_name) AS currency_code,
                                                 stock_date,                                                
                                                 buy_tr_number,
                                                 buy_amount,
                                                 buy_price,
                                                 buy_total,
-                                                sale_tr_number,
-                                                sale_amount,
-                                                sale_price,
-                                                sale_total,
+                                                sell_tr_number,
+                                                sell_amount,
+                                                sell_price,
+                                                sell_total,
                                                 stock_last_amount,                                                
                                                 stock_last_price,
                                                 stock_last_total,
@@ -109,7 +109,7 @@ class Stockprice extends Bks_Controller {
                                         AND store_id = $store_id
                                         AND stock_year = $tahun
                                         AND stock_month = $bulan
-                                        ORDER BY valas_id, stock_date, id ASC ");
+                                        ORDER BY currency_id, stock_date, id ASC ");
         
 
         if (!$query)
@@ -124,7 +124,7 @@ class Stockprice extends Bks_Controller {
         $this->load->library('excel');
         $this->excel->getProperties()->setTitle("export")->setDescription("none");
         $this->excel->setActiveSheetIndex(0);
-        $this->excel->getActiveSheet()->setTitle("Stock");
+        $this->excel->getActiveSheet()->setTitle("temp");
 
         $bold = array('font' => array('bold' => true));
         $title = array('font' => array('color' => array('rgb' => 'ffffff'), 'bold' => true), 
@@ -135,21 +135,21 @@ class Stockprice extends Bks_Controller {
         $col = 0;
         
         // title column
-        $this->excel->setActiveSheetIndex(0)->setCellValue('A1', "Stock In Avg Rate Period " . $tahun . ' - ' . namabulan($bulan) ); 
+        $this->excel->setActiveSheetIndex(0)->setCellValue('A1', "Stock In Average Rate Period " . namabulan($bulan) . ' - ' . $tahun ); 
         $this->excel->getActiveSheet()->getStyle('A1')->getFont()->setBold(TRUE);
         $this->excel->getActiveSheet()->getStyle('A1')->getFont()->setSize(12);
         $this->excel->getActiveSheet()->mergeCells('A1:R1');
 
         $judul = array('Currency',
                         'Date',                        
-                        'Trx-In Number',
-                        'Trx-In Amount',
-                        'Trx-In Price',                        
-                        'Trx-In Equivalent',
-                        'Trx-Out Number',
-                        'Trx-Out Amount',
-                        'Trx-Out Price',
-                        'Trx-Out Equivalent',                        
+                        'Buy Number',
+                        'Buy Amount',
+                        'Buy Price',                        
+                        'Buy Equivalent',
+                        'Sell Number',
+                        'Sell Amount',
+                        'Sell Price',
+                        'Sell Equivalent',                        
                         'Balance Stock Amount',
                         'Avg Price',
                         'Balance Stock Equivalent',
@@ -186,7 +186,7 @@ class Stockprice extends Bks_Controller {
         
 
         // Sending headers to force the user to download the file
-        $filename = 'Stock in Avg Rate';
+        $filename = 'Stock in Average Rate';
         header("Pragma: public");
         header("Expires: 0");
         header("Cache-Control: must-revalidate, post-check=0, pre-check=0");

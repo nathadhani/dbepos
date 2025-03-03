@@ -107,13 +107,13 @@
                                         <tbody>       
                                             <tr style="background:#ffffff;">
                                                 <td width="35%">                                                    
-                                                    <select name="valas_id"
+                                                    <select name="currency_id"
                                                             data-ajax="true" 
-                                                            data-placeholder="-- Pilih Valas --"
-                                                            data-url="master_data/m_valas/getValas/" 
+                                                            data-placeholder="-- Pilih currency --"
+                                                            data-url="master_data/m_currency/getcurrency/" 
                                                             data-value="" 
                                                             data-limit="100"
-                                                            id="valas_id" placeholder="Valas"  class='form-control select2'>
+                                                            id="currency_id" placeholder="currency"  class='form-control select2'>
                                                     </select>
                                                 </td>                                                                                                
                                                 <td width="10%">

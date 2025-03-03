@@ -72,7 +72,7 @@
                                                 ` + counter + `
                                             </td>
                                             <td width="30%" style="vertical-align: middle;color:black">
-                                                ` + d.valas_code + ' - ' + d.valas_name +`                       
+                                                ` + d.currency_code + ' - ' + d.currency_name +`                       
                                             </td>
                                             <td width="10%" style='text-align:left;'>
                                                 ` + formatRupiah(d.nominal) + `
@@ -84,7 +84,7 @@
                                                 ` + formatRupiah(d.nominal * d.sheet) + `
                                             </td>
                                             <td width="15%" style='text-align:left;'>
-                                                ` + (isDecimal(d.price) ? formatDecimal(d.price,3) : formatRupiah(d.price) ) + `
+                                                ` + (isDecimal(d.price) ? formatDecimal(d.price,2) : formatRupiah(d.price) ) + `
                                             </td>
                                             <td width="15%" style='text-align:left;'>
                                                 ` + formatRupiah(d.subtotal) + `

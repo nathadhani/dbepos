@@ -153,14 +153,14 @@
                                         <tbody>       
                                             <tr style="background:#ffffff;">
                                                 <td width="30%">                                                    
-                                                    <!-- <select class='form-control select2' name="valas_id" id="valas_id" disabled="true">
+                                                    <!-- <select class='form-control select2' name="currency_id" id="currency_id" disabled="true">
                                                         <option value="">-- Pilih Mata Uang --</option>
                                                     </select>  -->
-                                                    <select id="valas_id"
-                                                            name="valas_id"
+                                                    <select id="currency_id"
+                                                            name="currency_id"
                                                             data-ajax="true" 
                                                             data-placeholder="-- Pilih Mata Uang --"
-                                                            data-url="master_data/m_valas/getValas/"
+                                                            data-url="master_data/m_currency/getcurrency/"
                                                             data-value=""
                                                             data-limit="100"                                                
                                                             placeholder="Mata Uang"  
@@ -168,7 +168,7 @@
                                                             require                                            
                                                     >
                                                     </select>
-                                                    <input type="hidden" id="valas_code" class="form-control">                                                                                                                                         
+                                                    <input type="hidden" id="currency_code" class="form-control">                                                                                                                                         
                                                 </td>                                                                                                
                                                 <td width="10%">
                                                     <input type="text" onkeypress="validasiAngka(event)" autofocuse="" id="nominal" name="nominal" class="form-control" style='text-align:right;'>

@@ -122,18 +122,16 @@ class Customer_form extends Bks_Controller {
         }    
     }
     
-    function add_image(){
+    function add_foto(){
         $postData = $this->input->post();
-        if (isset ($_FILES ['upload_foto'] ['name']) && !empty($_FILES ['upload_foto'] ['name'])) {
-            $upload_path = base_url().'assets/img/customer_form/';
-            $config['upload_path'] = '../public/assets/img/customer_form/';
-            $config['file_name'] = $postData['kode'] . '.jpg';
+        if (isset ($_FILES ['upload_foto'] ['name']) && !empty($_FILES ['upload_foto'] ['name'])) {                        
+            $config['upload_path'] = FCPATH . 'assets/img/customer_form/';
+            $config['file_name'] = $postData['CIF'] . '.jpg';
             $config['allowed_types'] = 'jpg|jpeg|png';
             $config['overwrite'] = TRUE;
             $config['max_size'] = '8000';
             $this->load->library('upload',$config);
-            $this->upload->initialize($config);
-            
+            $this->upload->initialize($config);            
             $filex = $config['upload_path'] . $config['file_name'];
             if (!$this->upload->do_upload('upload_foto')) {
                 $error = array('error' => $this->upload->display_errors());
@@ -149,16 +147,6 @@ class Customer_form extends Bks_Controller {
                 $this->image_lib->initialize($res_config);
                 if ($this->image_lib->resize()) {
                     $this->image_lib->clear();
-                    // $data['foto_url'] = $upload_path.''.$config['file_name'];
-                    // $data['foto_filename'] = $config['file_name'];
-                    // $status = $this->Bksmdl->update($data, 'id=' . $id);
-                    // if ($status == 'true') {
-                    //     $json['msg'] = '1';
-                    //     echo json_encode($json);
-                    // } else {
-                    //     $json['msg'] = $status;
-                    //     echo json_encode($json);
-                    // }
                 } else {
                     echo $this->image_lib->display_errors();
                 }

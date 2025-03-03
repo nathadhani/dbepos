@@ -1,6 +1,11 @@
 <div class="row">
     <div class="col-md-12">
         <div class="panel panel-default">
+            <div class="panel-heading ui-draggable-handle">                                
+                <div class="panel-title-box">
+                    <h3>Stock - In Average Rate</h3>
+                </div>
+            </div>
             <div class="panel-body">
                 <div class="row">
                     <div class="col-md-6">
@@ -36,8 +41,8 @@
                     <div class="col-md-8">
                         <div class="form-group">
                             <div class="col-lg-12">
-                                <label for="valas_id" style="display:block">Currency</label>
-                                <select class='form-control select2' name="valas_id" id="valas_id" disabled="true">
+                                <label for="currency_id" style="display:block">Currency</label>
+                                <select class='form-control select2' name="currency_id" id="currency_id" disabled="true">
                                     <option value="">-- Pilih Mata Uang --</option>
                                 </select>
                             </div>
@@ -67,9 +72,9 @@
                                 <tr style="vertical-align:middle;">
                                     <th rowspan="2" style="vertical-align:middle;text-align:center;">#</th>
                                     <th rowspan="2" style="vertical-align:middle;text-align:center;">Date</th>
-                                    <th colspan="4" style="vertical-align:middle;text-align:center;background-color:blue;color:white;">Trx-In</th>
-                                    <th colspan="4" style="vertical-align:middle;text-align:center;background-color:red;color:white;">Trx-Out</th>
-                                    <th colspan="3" style="vertical-align:middle;text-align:center;background-color:yellow;color:black;">Balance Stock</th>
+                                    <th colspan="4" style="vertical-align:middle;text-align:center;">Buy</th>
+                                    <th colspan="4" style="vertical-align:middle;text-align:center;">Sell</th>
+                                    <th colspan="3" style="vertical-align:middle;text-align:center;">Balance Stock</th>
                                     <th rowspan="2" style="vertical-align:middle;text-align:center;">Gross Profit</th>
                                 </tr>
                                 <tr>

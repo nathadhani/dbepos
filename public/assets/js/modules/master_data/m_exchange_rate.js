@@ -56,10 +56,10 @@
             bksfn.errMsg("Please fill the form");
         },
         onSuccess: function () {
-            alertify.confirm("Yakin mau di update " + $("#valas_code").val() + " ?", function (e) {
+            alertify.confirm("Yakin mau di update " + $("#currency_code").val() + " ?", function (e) {
                 if (e) {
                     //--- Edit
-                    $.post('master_data/m_exchange_rate/update', $("#mainForm").serialize() + "&id=" + $("body").data("id") + "&store_id=" + $("body").data("store_id") + "&valas_id=" + $("body").data("valas_id"), function (obj) {
+                    $.post('master_data/m_exchange_rate/update', $("#mainForm").serialize() + "&id=" + $("body").data("id") + "&store_id=" + $("body").data("store_id") + "&currency_id=" + $("body").data("currency_id"), function (obj) {
                         if (obj.msg == 1) {
                             $("#mainForm")[0].reset();
                             $("#ModalEdit").modal('hide');
@@ -85,7 +85,7 @@
     }).on('reset', function (e) {
         $("body").data("id",'');
         $("body").data("store_id",'');
-        $("body").data("valas_id",'');
+        $("body").data("currency_id",'');
         $("#exchange_rate_buy").val( 0 );
         $("#difference_buy").val( 0 );
         $("#exchange_rate_sell").val( 0 );
@@ -153,36 +153,36 @@
             },
             columns: [
                 {data: "#", className: "dt-body-center", width: "5%", orderable: false, searchable: false},
-                {data: 'valas_code',  width: "7%", render: function (data, type, row, meta) {
+                {data: 'currency_code',  width: "7%", render: function (data, type, row, meta) {
                     return data;
                 }},
-                {data: 'valas_name'},
-                {data: 'valas_id', render: function (data, type, row, meta) {
+                {data: 'currency_name'},
+                {data: 'currency_id', render: function (data, type, row, meta) {
                     return bksfn.revDate(row.exchange_rate_date);
                 }},
                 {data: 'exchange_rate_buy', render: function (data, type, row, meta) {
-                    return ( (data === '0.000' || data === null ? '' : formatRupiah(data)) );
+                    return ( (data === '0.00' || data === null ? '' : formatRupiah(data)) );
                 }},                
                 {data: 'difference_buy', render: function (data, type, row, meta) {
-                    return ( (data === '0.000' || data === null ? '' : formatRupiah(data)) );
+                    return ( (data === '0.00' || data === null ? '' : formatRupiah(data)) );
                 }},                
                 {data: 'exchange_rate_sell', render: function (data, type, row, meta) {
-                    return ( (data === '0.000' || data === null ? '' : formatRupiah(data)));
+                    return ( (data === '0.00' || data === null ? '' : formatRupiah(data)));
                 }},                
                 {data: 'difference_sell', render: function (data, type, row, meta) {
-                    return ( (data === '0.000' || data === null ? '' : formatRupiah(data)) );
+                    return ( (data === '0.00' || data === null ? '' : formatRupiah(data)) );
                 }},
                 {data: 'price_buy_bot', render: function (data, type, row, meta) {
-                    return ( (data === '0.000' || data === null ? '' : formatRupiah(data)) );
+                    return ( (data === '0.00' || data === null ? '' : formatRupiah(data)) );
                 }},
                 {data: 'price_buy_top', render: function (data, type, row, meta) {
-                    return ( (data === '0.000' || data === null ? '' : formatRupiah(data)) );
+                    return ( (data === '0.00' || data === null ? '' : formatRupiah(data)) );
                 }},
                 {data: 'price_sell_bot', render: function (data, type, row, meta) {
-                    return ( (data === '0.000' || data === null ? '' : formatRupiah(data)) );
+                    return ( (data === '0.00' || data === null ? '' : formatRupiah(data)) );
                 }},
                 {data: 'price_sell_top', render: function (data, type, row, meta) {
-                    return ( (data === '0.000' || data === null ? '' : formatRupiah(data)) );
+                    return ( (data === '0.00' || data === null ? '' : formatRupiah(data)) );
                 }},
                 {data: 'status', className: "dt-body-center", width: "5%", render: function (data, type, row, meta) {
                     var act = (data == '1') ? '<span class="label label-success"><i class="fa fa-check"></i></span>' : '<span class="label label-danger"><i class="fa fa-times"></i></span>';
@@ -268,50 +268,50 @@
             var d = t.row(elm).data();
             $("body").data("id", d.id);
             $("body").data("store_id", d.store_id);
-            $("body").data("valas_id", d.valas_id);
+            $("body").data("currency_id", d.currency_id);
 
-            $('#valas_code').val(d.valas_code);
-            $('#valas_name').val(d.valas_name);
+            $('#currency_code').val(d.currency_code);
+            $('#currency_name').val(d.currency_name);
             $('#exchange_rate_date').val(d.exchange_rate_date);
             $("#status").iCheck(d.status == 1 ? 'check' : 'uncheck');
             
-            $("#exchange_rate_buy").val( (d.exchange_rate_buy == null || d.exchange_rate_buy == '' ? 0 : formatRupiah(d.exchange_rate_buy)) );
-            $("#difference_buy").val( (d.difference_buy == null || d.difference_buy == '' ? 0 : formatRupiah(d.difference_buy)) );
+            $("#exchange_rate_buy").val( (d.exchange_rate_buy == null || d.exchange_rate_buy == '' ? 0 : d.exchange_rate_buy) );
+            $("#difference_buy").val( (d.difference_buy == null || d.difference_buy == '' ? 0 : d.difference_buy) );
 
-            $("#exchange_rate_sell").val( (d.exchange_rate_sell == null || d.exchange_rate_sell == '' ? 0 : formatRupiah(d.exchange_rate_sell)) );
-            $("#difference_sell").val( (d.difference_sell == null || d.difference_sell == '' ? 0 : formatRupiah(d.difference_sell)) );
+            $("#exchange_rate_sell").val( (d.exchange_rate_sell == null || d.exchange_rate_sell == '' ? 0 : d.exchange_rate_sell) );
+            $("#difference_sell").val( (d.difference_sell == null || d.difference_sell == '' ? 0 : d.difference_sell) );
 
-            $("#price_buy_bot").val( (d.price_buy_bot == null || d.price_buy_bot == '' ? 0 : formatRupiah(d.price_buy_bot)) );
-            $("#price_buy_top").val( (d.price_buy_top == null || d.price_buy_top == '' ? 0 : formatRupiah(d.price_buy_top)) );
+            $("#price_buy_bot").val( (d.price_buy_bot == null || d.price_buy_bot == '' ? 0 : d.price_buy_bot) );
+            $("#price_buy_top").val( (d.price_buy_top == null || d.price_buy_top == '' ? 0 : d.price_buy_top) );
 
-            $("#price_sell_bot").val( (d.price_sell_bot == null || d.price_sell_bot == '' ? 0 : formatRupiah(d.price_sell_bot)) );
-            $("#price_sell_top").val( (d.price_sell_top == null || d.price_sell_top == '' ? 0 : formatRupiah(d.price_sell_top)) );
+            $("#price_sell_bot").val( (d.price_sell_bot == null || d.price_sell_bot == '' ? 0 : d.price_sell_bot) );
+            $("#price_sell_top").val( (d.price_sell_top == null || d.price_sell_top == '' ? 0 : d.price_sell_top) );
 
             // Format Number
             $("#exchange_rate_buy").keyup(function(e) {
                 e.preventDefault();
-                $(this).val(formatRupiah($(this).val()));
+                $(this).val($(this).val());
             });
             $("#price_buy_bot").keyup(function(e) {
                 e.preventDefault();
-                $(this).val(formatRupiah($(this).val()));
+                $(this).val($(this).val());
             });
             $("#price_buy_top").keyup(function(e) {
                 e.preventDefault();
-                $(this).val(formatRupiah($(this).val()));
+                $(this).val($(this).val());
             });
 
             $("#exchange_rate_sell").keyup(function(e) {
                 e.preventDefault();
-                $(this).val(formatRupiah($(this).val()));
+                $(this).val($(this).val());
             });
             $("#price_sell_bot").keyup(function(e) {
                 e.preventDefault();
-                $(this).val(formatRupiah($(this).val()));
+                $(this).val($(this).val());
             });
             $("#price_sell_top").keyup(function(e) {
                 e.preventDefault();
-                $(this).val(formatRupiah($(this).val()));
+                $(this).val($(this).val());
             });
 
             $(".modal-dialog").width('1200px');

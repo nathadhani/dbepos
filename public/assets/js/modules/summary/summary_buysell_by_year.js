@@ -160,10 +160,10 @@
             },
             columns: [
                 {data: "#", className: "dt-body-center", width: "5%", orderable: false, searchable: false},
-                {data: 'valas_code',  width: "45%", render: function (data, type, row, meta) {
-                    return row.valas_code + ' - ' + row.valas_name;
+                {data: 'currency_code',  width: "45%", render: function (data, type, row, meta) {
+                    return row.currency_code + ' - ' + row.currency_name;
                 }},
-                {data: 'valas_id', className: "dt-body-right", width: "10%", render: function (data, type, row, meta) {
+                {data: 'currency_id', className: "dt-body-right", width: "10%", render: function (data, type, row, meta) {
                     return formatRupiah(row.buy_nominal);
                 }},
                 {data: 'buy_equivalent', className: "dt-body-right", width: "15%", render: function (data, type, row, meta) {
@@ -177,7 +177,7 @@
                 }},
                 {data: 'company_id', visible: false},
                 {data: 'buy_nominal', visible: false},
-                {data: 'valas_name', visible: false},
+                {data: 'currency_name', visible: false},
             ],            
             order: [[2, 'asc']]
         });

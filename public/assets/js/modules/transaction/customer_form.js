@@ -2,8 +2,8 @@
  * Page Init
  */
 window.scroll(0,0);
-// $("#btn-buy").hide();
-// $("#btn-sell").hide();
+$("#btn-buy").hide();
+$("#btn-sell").hide();
 reset_form();
 if(text_celluler !== null && text_celluler !== ''){
     var choice = text_celluler;
@@ -93,7 +93,7 @@ $.validate({
                             } else if( $("#customer_data_number").val() === '' || $("#customer_data_number").val() === null){
                                 bksfn.errMsg("input nomor identitas"); 
                                 $("#customer_data_number").focus();
-                            } else if( $("#work_id").val() === '' || $("#work_id").val() === null){
+                            } else if( $("#job_id").val() === '' || $("#job_id").val() === null){
                                 bksfn.errMsg("input pekerjaan");
                             } else if( $("#nationality_id").val() === '' || $("#nationality_id").val() === null){
                                 bksfn.errMsg("input warga negara");
@@ -180,7 +180,7 @@ $('#upload_foto').on('change',function(e){
     var file_exist = files.length > 0 ? 1 : 0;
     var error = '';
     var formData = new FormData(document.getElementById("form_foto"));
-    formData.append('kode', $('#customer_code').val());
+    formData.append('CIF', $('#customer_code').val());
     var name = files[0].name;
     var extension = name.split('.').pop().toLowerCase();    
 
@@ -204,7 +204,7 @@ $('#upload_foto').on('change',function(e){
             success: function (data) {
                 $("#form_foto")[0].reset();
                 alertify.success('File has been uploaded');
-                back_to_page_ini();
+                // back_to_page_ini();
             },
             complete: function(){
                 $('.ajax-loader').css("visibility", "hidden");
@@ -244,28 +244,28 @@ $('#upload_foto').on('change',function(e){
                         $("#customer_type_id").html('<option value="' + d.customer_type_id + '">' + d.customer_type_name + '</option>').sel2dma();
                         if(d.customer_type_id === '1'){
                             $(".perorangan").show();
-                            // $(".cfoto").show();
-                            // if ($('#customer_code').val() !== null && $('#customer_code').val() !== ''){                     
-                            //     var image_url = baseUrl + "assets/img/customer_form/" + d.customer_code + ".jpg";
-                            //     $.ajax({
-                            //         url:image_url,
-                            //         type:'HEAD',
-                            //         error: function() {
-                            //             //file not exists
-                            //             $("#links").hide();
-                            //         },
-                            //         success: function() {
-                            //             //file exists
-                            //             var showfoto = '<a class="gallery-item" href="'+image_url+'" data-gallery>'+
-                            //                                 '<div class="image">'+
-                            //                                     '<img src="'+image_url+'" alt="" style="height:325px;width:550px;"/>'+
-                            //                                 '</div>'+
-                            //                             '</a>'                                                            
-                            //             $('#links').append(showfoto);
-                            //             $("#links").show();
-                            //         }
-                            //     });                                                     
-                            // }                                         
+                            $(".cfoto").show();
+                            if ($('#customer_code').val() !== null && $('#customer_code').val() !== ''){                     
+                                var image_url = baseUrl + "assets/img/customer_form/" + d.customer_code + ".jpg";
+                                $.ajax({
+                                    url:image_url,
+                                    type:'HEAD',
+                                    error: function() {
+                                        //file not exists
+                                        $("#links").hide();
+                                    },
+                                    success: function() {
+                                        //file exists
+                                        var showfoto = '<a class="gallery-item" href="'+image_url+'" data-gallery>'+
+                                                            '<div class="image">'+
+                                                                '<img src="'+image_url+'" alt="" style="height:325px;width:550px;"/>'+
+                                                            '</div>'+
+                                                        '</a>'                                                            
+                                        $('#links').append(showfoto);
+                                        $("#links").show();
+                                    }
+                                });                                                     
+                            }                                         
                         } else {
                             $(".perorangan").hide();
                             $(".cnpwp").show();
@@ -291,10 +291,10 @@ $('#upload_foto').on('change',function(e){
                     $("#customer_data_number").val(d.customer_data_number);
                     $("#npwp_number").val(d.npwp_number);
                     
-                    if (d.work_id != 0 && d.work_id != null && d.work_id != '') {
-                        $("#work_id").html('<option value="' + d.work_id + '">' + d.customer_work_name + '</option>').sel2dma();
+                    if (d.job_id != 0 && d.job_id != null && d.job_id != '') {
+                        $("#job_id").html('<option value="' + d.job_id + '">' + d.customer_job_name + '</option>').sel2dma();
                     } else {
-                        $("#work_id").html('').sel2dma();
+                        $("#job_id").html('').sel2dma();
                     }
                                                            
                     $("#placeofbirth").val(d.placeofbirth);
@@ -357,7 +357,7 @@ function reset_form(){
     $("#customer_data_number").html('');      
     $("#npwp_number").html('');   
     
-    $("#work_id").html('').sel2dma();
+    $("#job_id").html('').sel2dma();
     $("#placeofbirth").html('');
     $("#bornday").html('');    
     $("#gender_id").val('');
@@ -377,6 +377,7 @@ function reset_form(){
     $(':submit').removeAttr('disabled');
 
     $('#links').empty();
+    $('#links').html('');
     $(".perorangan").hide();
     if( $("body").data("id") !== null && $("body").data("id") !== '' ){
         tampil_data();

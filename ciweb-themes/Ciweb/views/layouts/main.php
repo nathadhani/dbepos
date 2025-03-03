@@ -25,7 +25,7 @@
             if(!in_array($usergroup_id, array('1','2'))) {
         ?>
                 <li class="xn-icon-button">
-                    <a href="stock/stockcalculate" title="Calculate Stock" data-toggle="tooltip" data-placement="bottom"><span class="fa fa-calculator"></span></a>
+                    <a href="stock/stock_calculate" title="Calculate Stock" data-toggle="tooltip" data-placement="bottom"><span class="fa fa-calculator"></span></a>
                 </li>
                 <li class="xn-icon-button">
                     <a href="master_data/m_exchange_rate" title="Exchange Rate" data-toggle="tooltip" data-placement="bottom"><span class="fa fa-wrench"></span></a>

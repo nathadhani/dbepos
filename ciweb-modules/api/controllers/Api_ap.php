@@ -110,9 +110,9 @@ class Api_ap extends Bks_Controller {
 
                     // Get trx detail
                     $get_tr_detail = $this->db->select('sequence,
-                                                   valas_id,
-                                                   valas_code,
-                                                   valas_name,
+                                                   currency_id,
+                                                   currency_code,
+                                                   currency_name,
                                                    (nominal * sheet) AS amount,
                                                    price,
                                                    subtotal')
@@ -127,8 +127,8 @@ class Api_ap extends Bks_Controller {
                                         'trans_date' => $get_tr_header[0]['tr_date'],
                                         'trans_time' => $get_tr_header[0]['created'],
                                         'sequence_unique' => $row['sequence'],
-                                        'item_name' => $row['valas_name'],
-                                        'item_code' => $row['valas_id'],
+                                        'item_name' => $row['currency_name'],
+                                        'item_code' => $row['currency_id'],
                                         'item_barcode' => '0',
                                         'item_cat_name' => '0',
                                         'item_cat_code' => '0',
@@ -262,9 +262,9 @@ class Api_ap extends Bks_Controller {
 
                     // Get trx detail
                     $get_tr_detail = $this->db->select('sequence,
-                                                   valas_id,
-                                                   valas_code,
-                                                   valas_name,
+                                                   currency_id,
+                                                   currency_code,
+                                                   currency_name,
                                                    (nominal * sheet) AS amount,
                                                    price,
                                                    subtotal')
@@ -281,8 +281,8 @@ class Api_ap extends Bks_Controller {
                                         'trans_date' => $get_tr_header[0]['tr_date'],
                                         'trans_time' => $get_tr_header[0]['created'],
                                         'sequence_unique' => $row['sequence'],
-                                        'item_name' => $row['valas_name'],
-                                        'item_code' => $row['valas_id'],
+                                        'item_name' => $row['currency_name'],
+                                        'item_code' => $row['currency_id'],
                                         'item_barcode' => '0',
                                         'item_cat_name' => '0',
                                         'item_cat_code' => '0',
@@ -388,11 +388,11 @@ class Api_ap extends Bks_Controller {
                                             $tahun = (int) SUBSTR($tr_date,0,4);
                                             $bulan = (int) SUBSTR($tr_date,5,2);
 
-                                            $select = $this->db->select('valas_id')->where('header_id',$id)->get('tr_detail');
+                                            $select = $this->db->select('currency_id')->where('header_id',$id)->get('tr_detail');
                                             if($select->num_rows()){
                                                 foreach($select->result_array() as $row) {
-                                                    $valas_id = $row['valas_id'];
-                                                    $this->Bksmdl->generate_stock($company_id, $store_id, $valas_id, $tahun, $bulan);
+                                                    $currency_id = $row['currency_id'];
+                                                    $this->Bksmdl->generate_stock($company_id, $store_id, $currency_id, $tahun, $bulan);
                                                 }
                                             }
                                         }    

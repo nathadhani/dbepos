@@ -16,8 +16,8 @@ function reset_form_input(){
     $("#stock_sheet").html('');
     $("#stock_amount").html('');
 
-    $("#valas_id").html('').sel2dma(); 
-    $("#valas_code").html('');
+    $("#currency_id").html('').sel2dma(); 
+    $("#currency_code").html('');
 
     $("#nominal").val('');
     $("#sheet").val('');
@@ -55,24 +55,24 @@ function show_customer(){
     }    
 }    
 
-function getValasTrx(company_id, store_id){
+function getcurrencyTrx(company_id, store_id){
     if( typeof(id_header) != 'undefined' && id_header !== null && id_header !== '' ) {
-        // $("#valas_id").html('').sel2dma();
+        // $("#currency_id").html('').sel2dma();
         // $.ajax({
-        //     url : baseUrl +  'master_data/m_valas/getValasTrx',
+        //     url : baseUrl +  'master_data/m_currency/getcurrencyTrx',
         //     type: 'POST',
         //     data: {'company_id' : company_id , 'store_id' : store_id, 'tr_id' : xtr_id},
         //     datatype: 'json',
         //     success: function(data){
-        //         $('#valas_id').prop('disabled', false);      
-        //         $('#valas_id').html(data);
+        //         $('#currency_id').prop('disabled', false);      
+        //         $('#currency_id').html(data);
         //     },
         //     error: function(xhr){
         //         alertify.error("error");
         //         StringtoFile(xhr.responseText, 'error');
         //     }
         // });
-        $('#valas_id').prop('disabled', false);
+        $('#currency_id').prop('disabled', false);
     }    
 }
 
@@ -105,12 +105,12 @@ function show_header(){
                         if (d.store_id != null) {
                             $("#store_id").html('<option value="' + d.store_id + '">' + d.store_name + ' [' + d.store_address + ']' + '</option>').sel2dma();
                             $('#store_id').prop('disabled', false);
-                            getValasTrx(d.company_id, d.store_id);
+                            getcurrencyTrx(d.company_id, d.store_id);
                         } else {
                             $('#store_id').removeAttr('disabled');
                             $("#store_id").html('').sel2dma();
-                            $('#valas_id').prop('disabled', true);                  
-                            $("#valas_id").html('').sel2dma();
+                            $('#currency_id').prop('disabled', true);                  
+                            $("#currency_id").html('').sel2dma();
                         }          
                         
                         $("#customer_source").val(d.customer_source);
@@ -154,7 +154,7 @@ function show_detail(statusTrx){
                                             ` + counter + `
                                         </td>
                                         <td width="35%" style="vertical-align: middle;color:black">
-                                            ` + d.valas_code + ' - ' + d.valas_name +`
+                                            ` + d.currency_code + ' - ' + d.currency_name +`
                                             <a style="color:red; cursor:pointer" title="hapus" onClick="delete_line_detail(` + d.id + `)"> / <i>remove<i></a>
                                         </td>
                                         <td width="10%" style='text-align:left;'>
@@ -167,7 +167,7 @@ function show_detail(statusTrx){
                                             ` + formatRupiah(d.nominal * d.sheet) + `
                                         </td>
                                         <td width="15%" style='text-align:left;'>
-                                            ` + (isDecimal(d.price) ? formatDecimal(d.price,3) : formatRupiah(d.price) ) + `
+                                            ` + (isDecimal(d.price) ? formatDecimal(d.price,2) : formatRupiah(d.price) ) + `
                                         </td>
                                         <td width="15%" style='text-align:left;'>
                                             ` + formatRupiah(d.subtotal) + `
@@ -180,7 +180,7 @@ function show_detail(statusTrx){
                                             ` + counter + `
                                         </td>
                                         <td width="35%" style="vertical-align: middle;color:black">
-                                            ` + d.valas_code + ' - ' + d.valas_name +`                                            
+                                            ` + d.currency_code + ' - ' + d.currency_name +`                                            
                                         </td>
                                         <td width="10%" style='text-align:left;'>
                                             ` + formatRupiah(d.nominal) + `
@@ -263,7 +263,7 @@ function add_item(){
     });    
 }
 
-$('#valas_id').on('change',function(){
+$('#currency_id').on('change',function(){
     if($(this).val() != null && $(this).val() != ''){
         getratebyid();
     } else {
@@ -273,7 +273,7 @@ $('#valas_id').on('change',function(){
 
 $("#nominal").keyup(function(e) {
     e.preventDefault();
-    $(this).val(formatRupiah($(this).val()));    
+    $(this).val($(this).val());    
     subtotal_input();    
 });
 
@@ -292,22 +292,18 @@ $("#price").keyup(function(e) {
 });
 
 function subtotal_input() {
-    var xnominal = parseInt(formatRupiahtoNumber($('#nominal').val()));
-    var xsheet = parseInt(formatRupiahtoNumber($('#sheet').val()));
-    var xtotal_amount = ((xnominal * xsheet));
+    var xtotal_amount = (($('#nominal').val() * $('#sheet').val()));
+    var xtotal  = Math.round((xtotal_amount * $('#price').val()));
     $('#total_amount').html(formatRupiah(xtotal_amount.toString()));
-
-    var xprice  = parseInt(formatRupiahtoNumber($('#price').val()));
-    var xtotal  = (xtotal_amount * xprice);
     $('#subtotal').val(formatRupiah(xtotal.toString()));
 }
 
 $("#btn-add-row-detail").on('click', function (e) {
     e.preventDefault();
     if (id_header !== null && id_header !== '') {
-        if ( $("#valas_id").val() === null || $("#valas_id").val() === '' ){
+        if ( $("#currency_id").val() === null || $("#currency_id").val() === '' ){
             bksfn.errMsg("mata uang belum di pilih!");
-            $("#valas_id").focus();
+            $("#currency_id").focus();
         } else if( $("#nominal").val() === 0 || $("#nominal").val() === '' ) {
             bksfn.errMsg("jumlah nominal mata uang belum di input!");
             $("#nominal").focus();    
@@ -364,7 +360,7 @@ function getstockbyid(){
     $.ajax({
         url: baseUrl + 'transaction/transaction_buysell/getstockbyid',
         type: 'POST',
-        data: {'company_id' : companyId, 'store_id' : $("#store_id").val(), 'valas_id' : $("#valas_id").val(), 'nominal' : $("#nominal").val() },
+        data: {'company_id' : companyId, 'store_id' : $("#store_id").val(), 'currency_id' : $("#currency_id").val(), 'nominal' : $("#nominal").val() },
         datatype: 'json',
         success: function(data){
             if (data !== undefined) {
@@ -392,7 +388,7 @@ function back_to_page_ini(){
     $("#btn-cancel").hide();  
 
     $('#btn-simpan-header').prop('disabled', true);
-    $('#valas_id').prop('disabled', true);
+    $('#currency_id').prop('disabled', true);
     $('#btn-add-row-detail').prop('disabled', true);
     if( typeof(id_header) != 'undefined' && id_header !== null && id_header !== '' ) {
         if( typeof(customerId) !== 'undefined' && customerId !== null && customerId !== '') {
@@ -513,7 +509,7 @@ function getratebyid(){
     $.ajax({
         url: baseUrl + 'transaction/transaction_buysell/getratebyid',
         type: 'POST',
-        data: {'store_id' : $("#store_id").val(), 'valas_id' : $("#valas_id").val(), 'tr_id' : xtr_id},
+        data: {'store_id' : $("#store_id").val(), 'currency_id' : $("#currency_id").val(), 'tr_id' : xtr_id},
         datatype: 'json',
         success: function(data){
             if (data !== undefined) {

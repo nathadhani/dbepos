@@ -197,7 +197,7 @@ class Transaction_buysell extends Bks_Controller {
         $customer_id = json_decode($postData['customer_id']);
         $tr_id = json_decode($postData['tr_id']);
         $header_id = json_decode($postData['header_id']);
-        $query = $this->db->query("SELECT * FROM v_tr_detail WHERE customer_id = " . $customer_id . " AND tr_id = " . $tr_id . " AND header_id= " . $header_id ." ORDER BY valas_id, nominal, price ASC")->result();
+        $query = $this->db->query("SELECT * FROM v_tr_detail WHERE customer_id = " . $customer_id . " AND tr_id = " . $tr_id . " AND header_id= " . $header_id ." ORDER BY currency_id, nominal, price ASC")->result();
         echo json_encode($query, true);
     }
     
@@ -218,7 +218,7 @@ class Transaction_buysell extends Bks_Controller {
         $store_id = $postData['store_id'];
         $tahun    = (int) Date('Y');
         $bulan    = (int) Date('m');
-        $valas_id = $postData['valas_id'];
+        $currency_id = $postData['currency_id'];
         $nominal = str_replace('.','', $postData['nominal']);
         $query = $this->db->query("SELECT nominal,
                                           last_stock_sheet, 
@@ -228,7 +228,7 @@ class Transaction_buysell extends Bks_Controller {
                                    AND store_id = $store_id                                   
                                    AND stock_year = $tahun 
                                    AND stock_month = $bulan
-                                   AND valas_id = $valas_id 
+                                   AND currency_id = $currency_id 
                                    AND nominal = $nominal")->result();
         echo json_encode($query, true);
     }
@@ -238,7 +238,7 @@ class Transaction_buysell extends Bks_Controller {
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
         $store_id = $postData['store_id'];
-        $valas_id = $postData['valas_id'];
+        $currency_id = $postData['currency_id'];
         $tr_date  = Date('Y-m-d');
         $tr_id = $postData['tr_id'];  
         if($tr_id == '1'){
@@ -248,7 +248,7 @@ class Transaction_buysell extends Bks_Controller {
                                               FROM m_exchange_rate
                                     WHERE company_id = $this->company_id 
                                     AND store_id = $store_id
-                                    AND valas_id = $valas_id
+                                    AND currency_id = $currency_id
                                     AND exchange_rate_date = '$tr_date' LIMIT 1")->result();
             echo json_encode($query, true);
         } else {
@@ -258,7 +258,7 @@ class Transaction_buysell extends Bks_Controller {
                                               FROM m_exchange_rate
                                     WHERE company_id = $this->company_id 
                                     AND store_id = $store_id
-                                    AND valas_id = $valas_id
+                                    AND currency_id = $currency_id
                                     AND exchange_rate_date = '$tr_date' LIMIT 1")->result();
             echo json_encode($query, true);
         }        
@@ -299,14 +299,14 @@ class Transaction_buysell extends Bks_Controller {
                 $this->db->where(array('header_id' => $header_id));
                 $this->db->update('tr_detail', array('status' => 3, 'updated' => date('Y-m-d H:i:s', time()), 'updatedby' => $this->userId) );
 
-                $select = $this->db->select('valas_id,nominal')->where('header_id',$header_id)->get('tr_detail');
+                $select = $this->db->select('currency_id,nominal')->where('header_id',$header_id)->get('tr_detail');
                 if($select->num_rows()){                           
                     $tahun = (int) SUBSTR($get_header[0]->tr_date,0,4);
                     $bulan = (int) SUBSTR($get_header[0]->tr_date,5,2);
                     foreach($select->result_array() as $row) {
-                        $valas_id = $row['valas_id'];
+                        $currency_id = $row['currency_id'];
                         $nominal  = $row['nominal'];
-                        $this->Bksmdl->generate_stock($company_id, $store_id, $tahun, $bulan, $valas_id, $nominal);
+                        $this->Bksmdl->generate_stock($company_id, $store_id, $tahun, $bulan, $currency_id, $nominal);
                     }
                 }
 

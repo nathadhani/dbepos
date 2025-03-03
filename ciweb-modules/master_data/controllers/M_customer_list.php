@@ -50,7 +50,7 @@ class M_customer_list extends Bks_Controller {
                                         placeofbirth,
                                         bornday,
                                         gender_name,
-                                        customer_work_name,
+                                        customer_job_name,
                                         customer_type_name,
                                         customer_data_name,
                                         customer_data_number,
@@ -81,7 +81,7 @@ class M_customer_list extends Bks_Controller {
         $this->load->library('excel');
         $this->excel->getProperties()->setTitle("export")->setDescription("none");
         $this->excel->setActiveSheetIndex(0);
-        $this->excel->getActiveSheet()->setTitle("Customer List");
+        $this->excel->getActiveSheet()->setTitle("temp");
 
         $bold = array('font' => array('bold' => true));
         $title = array('font' => array('color' => array('rgb' => 'ffffff'), 'bold' => true), 
@@ -104,7 +104,7 @@ class M_customer_list extends Bks_Controller {
                     'Place of birth',
                     'Born day',
                     'Gender',
-                    'Work',
+                    'Job',
                     'Type',
                     'Identity Type Name',
                     'Identity Type Number',

@@ -1,18 +1,18 @@
 <?php
 
-class Dttot extends Bks_Controller {
+class Ppatk_dttot extends Bks_Controller {
 
     function __construct() {        
-        $config = array('modules' => 'master_data', 'jsfiles' => array('dttot'));
+        $config = array('modules' => 'ppatk', 'jsfiles' => array('ppatk_dttot'));
         parent::__construct($config);
-        $this->Bksmdl->table = 'dttot';
+        $this->Bksmdl->table = 'ppatk_dttot';
         $this->auth = $this->session->userdata( 'auth' ); 
     }
     
     function index() {
-        $this->template->title('Suspected Terrorist');
-        $this->template->set('tsmall', 'Data');
-        $this->template->build('master_data/dttot_v');
+        $this->template->title('DTTOT');
+        $this->template->set('tsmall', 'Ppatk');
+        $this->template->build('ppatk/ppatk_dttot_v');
     }
     
     function insert() {

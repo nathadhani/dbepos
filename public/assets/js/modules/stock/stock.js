@@ -97,8 +97,8 @@
             },
             columns: [
                 {data: "#", className: "dt-body-center" , width: "5%", orderable: false, searchable: false},            
-                {data: 'valas_code',  width: "25%", render: function (data, type, row, meta) {
-                    return data + ' - ' + row.valas_name;
+                {data: 'currency_code',  width: "25%", render: function (data, type, row, meta) {
+                    return data + ' - ' + row.currency_name;
                 }},
                 {data: 'nominal', className: "dt-body-center" ,  width: "10%", render: function (data, type, row, meta) {
                     return ( data == 0 || data == null ? '-' : formatRupiah(data));
@@ -107,31 +107,25 @@
                 {data: 'beginning_stock_sheet', className: "dt-body-center" ,  width: "10%", render: function (data, type, row, meta) {
                     return ( data == 0 || data == null ? '-' : formatRupiah(data));
                 }},
-                {data: 'invin_sheet', className: "dt-body-center" ,  width: "10%", render: function (data, type, row, meta) {
-                    return ( data == 0 || data == null ? '-' : formatRupiah(data));
-                }},
-                {data: 'invout_sheet', className: "dt-body-center" ,  width: "10%", render: function (data, type, row, meta) {
-                    return ( data == 0 || data == null ? '-' : formatRupiah(data));
-                }},
                 {data: 'buy_sheet', className: "dt-body-center" ,  width: "10%", render: function (data, type, row, meta) {
                     return ( data == 0 || data == null ? '-' : formatRupiah(data));
                 }},
-                {data: 'sales_sheet', className: "dt-body-center" ,  width: "10%", render: function (data, type, row, meta) {
+                {data: 'sell_sheet', className: "dt-body-center" ,  width: "10%", render: function (data, type, row, meta) {
                     return ( data == 0 || data == null ? '-' : formatRupiah(data));
                 }},
-                {data: 'sales_alocation_sheet', className: "dt-body-center" ,  width: "10%", render: function (data, type, row, meta) {
+                {data: 'sell_alocation_sheet', className: "dt-body-center" ,  width: "10%", render: function (data, type, row, meta) {
                     return ( data == 0 || data == null ? '-' : formatRupiah(data));
                 }},
                 {data: 'last_stock_sheet', className: "dt-body-center" ,  width: "10%", render: function (data, type, row, meta) {
                     return ( data == 0 || data == null ? '-' : formatRupiah(data));
                 }},                 
-                {data: 'valas_id', className: "dt-body-center" ,  width: "10%", render: function (data, type, row, meta) {
+                {data: 'currency_id', className: "dt-body-center" ,  width: "10%", render: function (data, type, row, meta) {
                     return ( row.last_stock_sheet == 0 || row.last_stock_sheet == null ? '-' : formatRupiah(row.last_stock_sheet * row.nominal));
                 }},
                 {data: 'id', visible: false},
                 {data: 'company_id', visible: false},
-                {data: 'valas_code', visible: false},
-                {data: 'valas_name', visible: false},
+                {data: 'currency_code', visible: false},
+                {data: 'currency_name', visible: false},
                 {data: 'created', visible: false},
                 {data: 'updated', visible: false},
             ],            
@@ -139,14 +133,14 @@
                 if (Number(aData.buy_sheet) > 0) {
                     $(nRow).find('td:eq(6)').css('color','#0000ff');
                 }
-                if (Number(aData.sales_sheet) > 0) {
+                if (Number(aData.sell_sheet) > 0) {
                     $(nRow).find('td:eq(7)').css('color','#ff0000');
                 }
-                if (Number(aData.sales_alocation_sheet) > 0) {
+                if (Number(aData.sell_alocation_sheet) > 0) {
                     $(nRow).find('td:eq(8)').css('color','#ff0000');
                 }                
             },  
-            order: [[10, 'asc'],[2, 'asc']]
+            order: [[8, 'asc']]
         });
         t.draw();
 

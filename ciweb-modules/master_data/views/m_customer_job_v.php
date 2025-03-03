@@ -12,9 +12,9 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group row">
-                                <label for="customer_work_name" class="control-label col-lg-4">Cust. Work Name</label>
+                                <label for="customer_job_name" class="control-label col-lg-4">Job Name</label>
                                 <div class="col-lg-8">
-                                    <input type="text" id="customer_work_name" name="customer_work_name" placeholder="Pekerjaan Sesuai Identitas..." data-validation="required" class="form-control">
+                                    <input type="text" id="customer_job_name" name="customer_job_name" placeholder="Pekerjaan Sesuai Identitas..." data-validation="required" class="form-control">
                                 </div>
                             </div><!-- /.form-group -->
                         </div>
@@ -61,11 +61,9 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Cust. Work Name</th>
-                                <th>Diinput Oleh</th>
-                                <th>Tgl Input</th>
-                                <th>Diubah Oleh</th>
-                                <th>Tgl Ubah</th>
+                                <th>Job Name</th>
+                                <th>Created</th>
+                                <th>Updated</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
@@ -73,8 +71,6 @@
                         <thead id="searchid">
                             <tr>
                                 <td><button class="clrs btn btn-sm btn-info btn-line">Clear</button></td>
-                                <td></td>
-                                <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>

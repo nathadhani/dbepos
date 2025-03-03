@@ -14,7 +14,7 @@
                     </h3>
                 </div>
                 <ul class="panel-controls">
-                    <!-- <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li> -->
+                    <!-- <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li> -->                    
                 </ul>    
             </div>            
             <div class="panel-body">
@@ -47,7 +47,7 @@
                         </div>                            
                     </div>
                     <div class="col-md-2">
-                        <div class="form-group">
+                        <!-- <div class="form-group"> -->
                             <div class="col-lg-12">
                                 <ul class="nav navbar-nav">
                                     <li class="dropdown">
@@ -59,13 +59,13 @@
                                     </li>
                                 </ul>                        
                             </div>
-                        </div>            
+                        <!-- </div>             -->
                     </div>
                 </div>                    
-                <hr style="border: 1px solid green;">
+                <!-- <hr style="border: 1px solid green;"> -->
             </div>
             
-            <div class="panel-body" style="margin-top:-25px;">
+            <div class="panel-body" style="margin-top:-20px;">
                 <div class="box-body table-responsive" id="mainTable">
                     <div style="padding: 0 20px 10px 20px" class="row">
                         <button class="btn btn-default toggle-selected" title="Toggle Selected" data-toggle="tooltip" data-placement="bottom"><i class="fa  fa-align-justify"></i></button>
@@ -137,13 +137,13 @@
                                             <div class="form-group">
                                                 <label for="form_name" class="control-label col-lg-4">Curr</label>
                                                 <div class="col-lg-8">
-                                                    <input type="text" id="valas_code" name="valas_code" class="form-control" readonly>
+                                                    <input type="text" id="currency_code" name="currency_code" class="form-control" readonly>
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label for="form_name" class="control-label col-lg-4">Description</label>
                                                 <div class="col-lg-8">
-                                                    <input type="text" id="valas_name" name="valas_name" class="form-control" readonly>
+                                                    <input type="text" id="currency_name" name="currency_name" class="form-control" readonly>
                                                 </div>
                                             </div>                                                                                       
                                         </div>

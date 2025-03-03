@@ -135,13 +135,13 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group perorangan">
-                                    <label for="work_id" class="control-label col-lg-4">Work</label>
+                                    <label for="job_id" class="control-label col-lg-4">Job</label>
                                     <div class="col-lg-8">
-                                        <select id="work_id"
-                                                name="work_id"
+                                        <select id="job_id"
+                                                name="job_id"
                                                 data-ajax="true" 
                                                 data-placeholder="Pilih..."
-                                                data-url="master_data/m_customer_work/getWork/"
+                                                data-url="master_data/m_customer_job/getJob/"
                                                 data-value=""
                                                 data-limit="100"                                                
                                                 placeholder="Pekerjaan"  
@@ -247,7 +247,7 @@
             </div>
         </div>
     </div>
-    <!-- <div class="row cfoto">
+    <div class="row cfoto">
         <div class="col-md-12">            
             <div class="panel panel-default">
                 <div class="panel-heading ui-draggable-handle">
@@ -274,5 +274,5 @@
                 </div>                    
             </div>            
         </div>        
-    </div>           -->
+    </div>          
 </div>

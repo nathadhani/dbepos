@@ -18,7 +18,7 @@
             if (x) {
                 var form_data = new FormData(document.getElementById("mainForm"));
                 $.ajax({    
-                    url: 'master_data/Dttot/insert',    
+                    url: 'ppatk/Ppatk_dttot/insert',    
                     method:"POST",
                     beforeSend: function(){
                         $(".ajax-loader").height($(document).height());
@@ -53,7 +53,7 @@
         autoWidth: false,
         sDom: 'it<"row"lp>',
         ajax: {
-            url: baseUrl + 'master_data/Dttot/getData',
+            url: baseUrl + 'ppatk/Ppatk_dttot/getData',
             type: 'POST',
             beforeSend: function(){
                 $(".ajax-loader").height($(document).height());
@@ -86,7 +86,7 @@
         order: [[1, 'asc']]
     });
     //--- Select Row , Toggle Row & Delete
-    $('#mainTable').selectDTBks(t, 'master_data/Dttot/delete');
+    $('#mainTable').selectDTBks(t, 'ppatk/Ppatk_dttot/delete');
 
     // Setup - add a text input to each header cell
     $('#searchid td').each(function () {

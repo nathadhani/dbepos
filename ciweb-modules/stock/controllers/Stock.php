@@ -51,7 +51,7 @@ class Stock extends Bks_Controller {
         $where[3]['data']  = $bulan;
         $where[3]['sql']   = 'where';
 
-        $this->Bksmdl->table = 'v_stock9';
+        $this->Bksmdl->table = 'v_stock_tr9';
         $cpData = $this->Bksmdl->getDataTable($where);
         $this->Bksmdl->outputToJson($cpData);
     }
@@ -63,14 +63,12 @@ class Stock extends Bks_Controller {
         $tahun = SUBSTR($this->uri->segment(4),3,4);
         $bulan = SUBSTR($this->uri->segment(4),0,2);
         
-        $query = $this->db->query("SELECT CONCAT(valas_code,' - ',valas_name) AS valas_code,
+        $query = $this->db->query("SELECT CONCAT(currency_code,' - ',currency_name) AS currency_code,
                                                 nominal,
                                                 beginning_stock_sheet,
-                                                invin_sheet,
-                                                invout_sheet,
                                                 buy_sheet,
-                                                sales_sheet,
-                                                sales_alocation_sheet,
+                                                sell_sheet,
+                                                sell_alocation_sheet,
                                                 last_stock_sheet,
                                                 IF( last_stock_sheet > 0 , (nominal * last_stock_sheet), 0) AS last_stock_amount,
                                                 company_name,
@@ -78,12 +76,12 @@ class Stock extends Bks_Controller {
                                                 store_name,
                                                 store_address,
                                                 IF(updated IS NULL, created, updated) AS updated
-                                        FROM v_stock9
+                                        FROM v_stock_tr9
                                         WHERE company_id = $company_id
                                         AND store_id = $store_id
                                         AND stock_year = $tahun
                                         AND stock_month = $bulan
-                                        ORDER BY valas_id ASC ");        
+                                        ORDER BY currency_id ASC ");        
 
         if (!$query)
         return false;
@@ -97,7 +95,7 @@ class Stock extends Bks_Controller {
         $this->load->library('excel');
         $this->excel->getProperties()->setTitle("export")->setDescription("none");
         $this->excel->setActiveSheetIndex(0);
-        $this->excel->getActiveSheet()->setTitle("Stock");
+        $this->excel->getActiveSheet()->setTitle("temp");
 
         $bold = array('font' => array('bold' => true));
         $title = array('font' => array('color' => array('rgb' => 'ffffff'), 'bold' => true), 
@@ -108,19 +106,17 @@ class Stock extends Bks_Controller {
         $col = 0;
         
         // title column
-        $this->excel->setActiveSheetIndex(0)->setCellValue('A1', "Stock in Nominal Period " . $tahun . ' - ' . namabulan($bulan) ); 
+        $this->excel->setActiveSheetIndex(0)->setCellValue('A1', "Stock in Nominal Period " . namabulan($bulan) . ' - ' . $tahun ); 
         $this->excel->getActiveSheet()->getStyle('A1')->getFont()->setBold(TRUE);
         $this->excel->getActiveSheet()->getStyle('A1')->getFont()->setSize(12);
-        $this->excel->getActiveSheet()->mergeCells('A1:O1');
+        $this->excel->getActiveSheet()->mergeCells('A1:M1');
 
         $judul = array('Currency',
                         'Nominal',
                         'Beginning Sheet',
-                        'Inv.In Sheet',
-                        'Inv.Out Sheet',                        
-                        'Trx.Buy Sheet',
-                        'Trx.Sale Sheet',
-                        'Trx.Task Sheet',
+                        'Buy Sheet',
+                        'Sell Sheet',
+                        'Task Sheet',
                         'Balance Sheet',
                         'Balance Amount',
                         'Branch Name',
@@ -142,13 +138,13 @@ class Stock extends Bks_Controller {
             $col = 0;
             foreach ($fields as $field) {
                 $this->excel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $data[$field]); // Retreive Data Value                
-                $this->excel->getActiveSheet()->getStyle('B'.$row.':'.'J'.$row)->getNumberFormat()->setFormatCode('#,##0'); // Number Format
+                $this->excel->getActiveSheet()->getStyle('B'.$row.':'.'H'.$row)->getNumberFormat()->setFormatCode('#,##0'); // Number Format
                 $col++;
             }
             $row++;
         }
 
-        foreach (range('A', 'P') as $columnID) {
+        foreach (range('A', 'M') as $columnID) {
             $this->excel->getActiveSheet()->getColumnDimension($columnID)->setAutoSize(true);
         }
         $this->excel->setActiveSheetIndex(0);        

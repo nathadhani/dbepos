@@ -382,7 +382,16 @@ class Bksmdl extends Bks_Model {
         return strtoupper("%$string%");
     }
 
-    function generate_stock($company_id, $store_id, $tahun, $bulan, $valas_id, $nominal)
+    function cekdecimalgreaterthenzero($angka){
+        $posisi = strpos($angka, ".");
+        if ($posisi !== false) {
+            return intval(explode('.', $angka)[1]);
+        } else {
+            return 0;
+        }
+    }
+
+    function generate_stock($company_id, $store_id, $tahun, $bulan, $currency_id, $nominal)
     {
         $this->db->trans_begin();
         $auth = $this->session->userdata('auth');        
@@ -405,12 +414,12 @@ class Bksmdl extends Bks_Model {
 
         /******************************************************************************************************/        
         // insert table stock bulan berjalan
-        $qinsert = $this->db->query("SELECT valas_id FROM stock
+        $qinsert = $this->db->query("SELECT currency_id FROM stock
                                     WHERE company_id = $company_id
                                     AND store_id = $store_id
                                     AND stock_year = $tahun
                                     AND stock_month = $bulan
-                                    AND valas_id = $valas_id
+                                    AND currency_id = $currency_id
                                     AND nominal = $nominal")->result();
         // echo $this->db->last_query();exit;
         if(count($qinsert) < 1){
@@ -419,7 +428,7 @@ class Bksmdl extends Bks_Model {
                         'store_id' => $store_id,
                         'stock_year' => $tahun,
                         'stock_month' => $bulan,
-                        'valas_id' => $valas_id,
+                        'currency_id' => $currency_id,
                         'nominal' => $nominal,
                         'beginning_stock_sheet' => 0,
                         'status' => 1,
@@ -437,7 +446,7 @@ class Bksmdl extends Bks_Model {
                                     AND store_id = $store_id
                                     AND stock_year = $tahun1
                                     AND stock_month = $bulan1
-                                    AND valas_id = $valas_id
+                                    AND currency_id = $currency_id
                                     AND nominal = $nominal")->result();
         // echo $this->db->last_query();exit;
         if(count($qlast_stock) > 0){
@@ -453,7 +462,7 @@ class Bksmdl extends Bks_Model {
                         'store_id' => $store_id,
                         'stock_year' => $tahun,
                         'stock_month' => $bulan,
-                        'valas_id' => $valas_id,
+                        'currency_id' => $currency_id,
                         'nominal' => $nominal
                 );
                 $this->db->update('stock', $data, $where);
@@ -461,12 +470,12 @@ class Bksmdl extends Bks_Model {
         }        
 
         /******************************************************************************************************/
-        $qinsert = $this->db->query("SELECT valas_id FROM stock 
+        $qinsert = $this->db->query("SELECT currency_id FROM stock 
                                     WHERE company_id = $company_id
                                     AND store_id = $store_id                                    
                                     AND stock_year = $tahun2
                                     AND stock_month = $bulan2
-                                    AND valas_id = $valas_id
+                                    AND currency_id = $currency_id
                                     AND nominal = $nominal")->result();        
 
         // insert table stock bulan berikutnya
@@ -476,7 +485,7 @@ class Bksmdl extends Bks_Model {
                 'store_id' => $store_id,
                 'stock_year' => $tahun2,
                 'stock_month' => $bulan2,
-                'valas_id' => $valas_id,
+                'currency_id' => $currency_id,
                 'nominal' => $nominal,
                 'beginning_stock_sheet' => 0,
                 'status' => 1,
@@ -494,7 +503,7 @@ class Bksmdl extends Bks_Model {
                                     AND store_id = $store_id                                        
                                     AND stock_year = $tahun
                                     AND stock_month = $bulan
-                                    AND valas_id = $valas_id
+                                    AND currency_id = $currency_id
                                     AND nominal = $nominal")->result();
         if(count($qlast_stock) > 0){
             $data = array(                   
@@ -509,7 +518,7 @@ class Bksmdl extends Bks_Model {
                         'store_id' => $store_id,
                         'stock_year' => $tahun2,
                         'stock_month' => $bulan2,
-                        'valas_id' => $valas_id,
+                        'currency_id' => $currency_id,
                         'nominal' => $nominal
                 );
                 $this->db->update('stock', $data, $where);                
@@ -523,7 +532,7 @@ class Bksmdl extends Bks_Model {
             $error = array(
                 'msg' => $err['code'] . '<br>' . $err['message'],
                 'result' => 'generate stock error',
-                'valas_id' => $valas_id
+                'currency_id' => $currency_id
             );
             // echo "<pre>"; print_r($error); echo "</pre>";
         } else {
@@ -531,7 +540,7 @@ class Bksmdl extends Bks_Model {
             $error = array(
                 'msg' => '1',
                 'result' => 'generate stock success',
-                'valas_id' => $valas_id
+                'currency_id' => $currency_id
             );
             // echo "<pre>"; print_r($error); echo "</pre>";
         }

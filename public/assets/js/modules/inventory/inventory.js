@@ -7,7 +7,7 @@ function reset_form_header(){
 }
 
 function reset_form_input(){
-    $("#valas_id").html('').sel2dma();    
+    $("#currency_id").html('').sel2dma();    
     $("#nominal").val('');
     $("#sheet").val('');
     $('#total_amount').html('');
@@ -105,7 +105,7 @@ function tampil_detail(statusTrx){
                                             ` + counter + `
                                         </td>
                                         <td width="35%" style="vertical-align: middle;color:black">
-                                            ` + d.valas_code + ' - ' + d.valas_name +`
+                                            ` + d.currency_code + ' - ' + d.currency_name +`
                                             <a style="color:red; cursor:pointer" title="hapus" onClick="delete_line_detail(` + d.id + `)"> / <i>remove<i></a>
                                         </td>
                                         <td width="10%" style='text-align:center;'>
@@ -131,7 +131,7 @@ function tampil_detail(statusTrx){
                                             ` + counter + `
                                         </td>
                                         <td width="35%" style="vertical-align: middle;color:black">
-                                            ` + d.valas_code + ' - ' + d.valas_name +`                                            
+                                            ` + d.currency_code + ' - ' + d.currency_name +`                                            
                                         </td>
                                         <td width="10%" style='text-align:center;'>
                                             ` + formatRupiah(d.nominal) + `
@@ -218,7 +218,7 @@ function add_item(){
     });    
 }
 
-$('#valas_id').on('change',function(){
+$('#currency_id').on('change',function(){
     if($(this).val() != null && $(this).val() != ''){
         $('#price').val('');
     }
@@ -257,9 +257,9 @@ function subtotal_input() {
 $("#btn-add-row-detail").on('click', function (e) {
     e.preventDefault();
     if (id_header !== null && id_header !== '') {
-        if ( $("#valas_id").val() === null || $("#valas_id").val() === '' ){
+        if ( $("#currency_id").val() === null || $("#currency_id").val() === '' ){
             bksfn.errMsg("mata uang belum di pilih!");
-            $("#valas_id").focus();
+            $("#currency_id").focus();
         } else if( $("#nominal").val() === 0 || $("#nominal").val() === '' ) {
             bksfn.errMsg("jumlah nominal mata uang belum di input!");
             $("#nominal").focus();    

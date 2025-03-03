@@ -26,16 +26,16 @@
     $('#store_id').on('change',function(e){
         e.preventDefault()
         if($(this).val() != null && $(this).val() != ''){
-            $('#valas_id').html('').sel2dma();
-            $('#valas_id').prop('disabled', false);
-            $('#valas_id').focus()
+            $('#currency_id').html('').sel2dma();
+            $('#currency_id').prop('disabled', false);
+            $('#currency_id').focus()
             $.ajax({
-                url : baseUrl +  'stock/stockprice/getValasStock',
+                url : baseUrl +  'stock/stock_price/getcurrencyStock',
                 type: 'POST',
                 data: {'company_id' : $("#company_id").val(), 'store_id' : $(this).val()},
                 datatype: 'json',
                 success: function(data){
-                    $('#valas_id').html(data);
+                    $('#currency_id').html(data);
                 },
                 error: function(){
                     alert("can't get store");  
@@ -50,7 +50,7 @@
             bksfn.errMsg('Cabang Belum Dipilih!');
         } else if($('#store_id').val() === null || $('#store_id').val() === ''){
             bksfn.errMsg('Store Belum Dipilih!');    
-        } else if($('#valas_id').val() === null || $('#valas_id').val() === ''){
+        } else if($('#currency_id').val() === null || $('#currency_id').val() === ''){
             bksfn.errMsg('Matauang Belum Dipilih!');            
         } else {
             $("#btn-excel").hide();
@@ -68,7 +68,7 @@
         } else {
             alertify.confirm("download stock period " + $("#periode").val() + " ?", function (e) {
                 if (e) {
-                    var url = "stock/stockprice/excel/"+$('#periode').val()+"/"+$('#company_id').val()+"/"+$('#store_id').val();
+                    var url = "stock/stock_price/excel/"+$('#periode').val()+"/"+$('#company_id').val()+"/"+$('#store_id').val();
                     $.ajax({
                         url: url,
                         type: 'POST',
@@ -106,13 +106,13 @@
             lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],            
             sDom: 'it<"row"lp>',
             ajax: {
-                url: baseUrl + 'stock/stockprice/getData',
+                url: baseUrl + 'stock/stock_price/getData',
                 type: 'POST',
                 data: function(d) {
                     d.company_id = $('#company_id').val(),
                     d.tenant_id = $('#tenant_id').val(),
                     d.store_id = $('#store_id').val(),
-                    d.valas_id = $('#valas_id').val(),
+                    d.currency_id = $('#currency_id').val(),
                     d.periode = $('#periode').val()
                 },                
                 complete: function(){
@@ -138,16 +138,16 @@
                     return ( data == 0 ? '-' : formatRupiah(data));
                 }},
 
-                {data: 'sale_tr_number', className: "dt-body-center" ,  width: "5%", render: function (data, type, row, meta) {
+                {data: 'sell_tr_number', className: "dt-body-center" ,  width: "5%", render: function (data, type, row, meta) {
                     return (data == null ? '-' : data.substr(data.length - 4));
                 }},
-                {data: 'sale_amount', className: "dt-body-center" ,  width: "5%", render: function (data, type, row, meta) {
+                {data: 'sell_amount', className: "dt-body-center" ,  width: "5%", render: function (data, type, row, meta) {
                     return ( data == 0 ? '-' : formatRupiah(data));
                 }},
-                {data: 'sale_price', className: "dt-body-center" ,  width: "5%", render: function (data, type, row, meta) {
+                {data: 'sell_price', className: "dt-body-center" ,  width: "5%", render: function (data, type, row, meta) {
                     return ( data == 0 ? '-' : formatRupiah(data));
                 }},
-                {data: 'sale_total', className: "dt-body-center" ,  width: "10%", render: function (data, type, row, meta) {
+                {data: 'sell_total', className: "dt-body-center" ,  width: "10%", render: function (data, type, row, meta) {
                     return ( data == 0 ? '-' : formatRupiah(data));
                 }},
 
@@ -167,15 +167,15 @@
                            
                 {data: 'id', visible: false},
                 {data: 'company_id', visible: false},
-                {data: 'valas_code', visible: false},
-                {data: 'valas_name', visible: false},
+                {data: 'currency_code', visible: false},
+                {data: 'currency_name', visible: false},
                 {data: 'created', visible: false},
             ],            
             fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
                 if (aData.buy_tr_number !== null) {
                     $(nRow).find('td:eq(2)').css('color','#0000ff');
                 }
-                if (aData.sale_tr_number !== null) {
+                if (aData.sell_tr_number !== null) {
                     $(nRow).find('td:eq(6)').css('color','#ff0000');
                 }
                 if (Number(aData.profit) > 0) {

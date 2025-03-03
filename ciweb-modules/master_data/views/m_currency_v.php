@@ -12,15 +12,15 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group row">
-                                <label for="valas_code" class="control-label col-lg-4">Currency Code</label>
+                                <label for="currency_code" class="control-label col-lg-4">Currency Code</label>
                                 <div class="col-lg-8">
-                                    <input type="text" id="valas_code" name="valas_code" placeholder="Kode..." data-validation="required" class="form-control">
+                                    <input type="text" id="currency_code" name="currency_code" placeholder="Kode..." data-validation="required" class="form-control">
                                 </div>
                             </div><!-- /.form-group --> 
                             <div class="form-group row">
-                                <label for="valas_name" class="control-label col-lg-4">Currency Name</label>
+                                <label for="currency_name" class="control-label col-lg-4">Currency Name</label>
                                 <div class="col-lg-8">
-                                    <input type="text" id="valas_name" name="valas_name" placeholder="Nama..." data-validation="required" class="form-control">
+                                    <input type="text" id="currency_name" name="currency_name" placeholder="Nama..." data-validation="required" class="form-control">
                                 </div>
                             </div><!-- /.form-group -->                            
                         </div>
@@ -69,9 +69,7 @@
                                 <th>#</th>
                                 <th>Currency Code</th>
                                 <th>Currency Name</th>
-                                <th>Created by</th>
                                 <th>Created</th>
-                                <th>Updated by</th>
                                 <th>Updated</th>
                                 <th>Status</th>
                                 <th>Action</th>
@@ -80,8 +78,6 @@
                         <thead id="searchid">
                             <tr>
                                 <td><button class="clrs btn btn-sm btn-info btn-line">Clear</button></td>
-                                <td></td>
-                                <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>

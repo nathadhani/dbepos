@@ -88,7 +88,7 @@ class M_company extends Bks_Controller {
     function getData() {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
-        $this->Bksmdl->table = 'v_m_company';
+        $this->Bksmdl->table = 'm_company';
         $cpData = $this->Bksmdl->getDataTable();
         $this->Bksmdl->outputToJson($cpData);
     }

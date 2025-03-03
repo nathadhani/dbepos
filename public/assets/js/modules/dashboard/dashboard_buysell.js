@@ -121,7 +121,7 @@ function getdatatable2(){
                     tot_sell = tot_sell + Number(d.sell_equivalent);  
                     var rows =`<tr>
                                 <td width="10%" style="vertical-align: middle;color:black">
-                                    ` + d.valas_code +`                       
+                                    ` + d.currency_code +`                       
                                 </td>
 
                                 <td width="45%" style='color:blue;'>
@@ -231,8 +231,8 @@ function getchart2(){
                             var xsell_equivalent = (d.sell_equivalent === null ||  isNaN(d.sell_equivalent) ? 0 : Number(d.sell_equivalent));
                             if(xbuy_equivalent > 0 || xsell_equivalent > 0){
                                 var obj = {};
-                                obj["valas_id"] = d.valas_id;
-                                obj["valas_code"] = xurut.toString()+'. '+d.valas_code.trim();
+                                obj["currency_id"] = d.currency_id;
+                                obj["currency_code"] = xurut.toString()+'. '+d.currency_code.trim();
                                 obj["buy"] = xbuy_equivalent.toFixed(3);
                                 obj["sell"] = xsell_equivalent.toFixed(3);
                                 datasource.push(obj);
@@ -244,7 +244,7 @@ function getchart2(){
                             Morris.Bar({
                                 element: 'chart2',                                        
                                 data : datasource,
-                                xkey: 'valas_code',
+                                xkey: 'currency_code',
                                 ykeys: ['buy', 'sell'],
                                 labels: ['Buy', 'Sell'],
                                 barColors: ['#0000FF', '#FF0000'],

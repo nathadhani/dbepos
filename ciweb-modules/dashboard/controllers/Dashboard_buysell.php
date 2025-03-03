@@ -101,33 +101,33 @@ class Dashboard_buysell extends Bks_Controller {
         $tahun = intval($postData['periode']);
 
         $query = $this->db->query("SELECT 
-                                    tr_detail.valas_id,
-                                    m_valas.valas_code,
+                                    tr_detail.currency_id,
+                                    m_currency.currency_code,
                                     SUM(IF((tr_detail.status IN ( 1, 3, 4 ) AND ( tr_header.tr_id = 1 )),((tr_detail.nominal * tr_detail.sheet) * tr_detail.price ),0)) AS buy_equivalent,
                                     SUM(IF((tr_detail.status IN ( 1, 3, 4 ) AND ( tr_header.tr_id = 2 )),((tr_detail.nominal * tr_detail.sheet) * tr_detail.price),0)) AS sell_equivalent,
                                     SUM(IF((tr_detail.status IN ( 1, 3, 4 )),((tr_detail.nominal * tr_detail.sheet) * tr_detail.price),0)) AS total
                                     FROM tr_detail
                                     LEFT JOIN tr_header ON tr_detail.header_id = tr_header.id
-                                    LEFT JOIN m_valas ON tr_detail.valas_id = m_valas.id
+                                    LEFT JOIN m_currency ON tr_detail.currency_id = m_currency.id
                                     WHERE tr_header.company_id = $company_id
                                     AND YEAR(tr_header.tr_date) = $tahun
-                                    GROUP BY tr_detail.valas_id, m_valas.valas_code
+                                    GROUP BY tr_detail.currency_id, m_currency.currency_code
                                     ORDER BY total DESC")->result();
 
         if($store_id !== null && $store_id !== ''){
             $query = $this->db->query("SELECT 
-                                    tr_detail.valas_id,
-                                    m_valas.valas_code,
+                                    tr_detail.currency_id,
+                                    m_currency.currency_code,
                                     SUM(IF((tr_detail.status IN ( 1, 3, 4 ) AND ( tr_header.tr_id = 1 )),((tr_detail.nominal * tr_detail.sheet) * tr_detail.price),0)) AS buy_equivalent,
                                     SUM(IF((tr_detail.status IN ( 1, 3, 4 ) AND ( tr_header.tr_id = 2 )),((tr_detail.nominal * tr_detail.sheet) * tr_detail.price),0)) AS sell_equivalent,
                                     SUM(IF((tr_detail.status IN ( 1, 3, 4 )),((tr_detail.nominal * tr_detail.sheet) * tr_detail.price),0)) AS total
                                     FROM tr_detail
                                     LEFT JOIN tr_header ON tr_detail.header_id = tr_header.id
-                                    LEFT JOIN m_valas ON tr_detail.valas_id = m_valas.id
+                                    LEFT JOIN m_currency ON tr_detail.currency_id = m_currency.id
                                     WHERE tr_header.company_id = $company_id
                                     AND tr_header.store_id = $store_id
                                     AND YEAR(tr_header.tr_date) = $tahun
-                                    GROUP BY tr_detail.valas_id, m_valas.valas_code
+                                    GROUP BY tr_detail.currency_id, m_currency.currency_code
                                     ORDER BY total DESC")->result();
         }
         echo json_encode($query, true);
@@ -142,34 +142,34 @@ class Dashboard_buysell extends Bks_Controller {
         $tahun = intval($postData['periode']);
 
         $query = $this->db->query("SELECT 
-                                    tr_detail.valas_id,
-                                    m_valas.valas_code,
+                                    tr_detail.currency_id,
+                                    m_currency.currency_code,
                                     SUM(IF((tr_detail.status IN ( 1, 3, 4 ) AND ( tr_header.tr_id = 1 )),((tr_detail.nominal * tr_detail.sheet) * tr_detail.price ),0)) AS buy_equivalent,
                                     SUM(IF((tr_detail.status IN ( 1, 3, 4 ) AND ( tr_header.tr_id = 2 )),((tr_detail.nominal * tr_detail.sheet) * tr_detail.price),0)) AS sell_equivalent,
                                     SUM(IF((tr_detail.status IN ( 1, 3, 4 )),((tr_detail.nominal * tr_detail.sheet) * tr_detail.price),0)) AS total
                                     FROM tr_detail
                                     LEFT JOIN tr_header ON tr_detail.header_id = tr_header.id
-                                    LEFT JOIN m_valas ON tr_detail.valas_id = m_valas.id
+                                    LEFT JOIN m_currency ON tr_detail.currency_id = m_currency.id
                                     WHERE tr_header.company_id = $company_id
                                     AND YEAR(tr_header.tr_date) = $tahun
-                                    GROUP BY tr_detail.valas_id, m_valas.valas_code
+                                    GROUP BY tr_detail.currency_id, m_currency.currency_code
                                     ORDER BY total DESC
                                     LIMIT 5")->result();
 
         if($store_id !== null && $store_id !== ''){
             $query = $this->db->query("SELECT 
-                                    tr_detail.valas_id,
-                                    m_valas.valas_code,
+                                    tr_detail.currency_id,
+                                    m_currency.currency_code,
                                     SUM(IF((tr_detail.status IN ( 1, 3, 4 ) AND ( tr_header.tr_id = 1 )),((tr_detail.nominal * tr_detail.sheet) * tr_detail.price),0)) AS buy_equivalent,
                                     SUM(IF((tr_detail.status IN ( 1, 3, 4 ) AND ( tr_header.tr_id = 2 )),((tr_detail.nominal * tr_detail.sheet) * tr_detail.price),0)) AS sell_equivalent,
                                     SUM(IF((tr_detail.status IN ( 1, 3, 4 )),((tr_detail.nominal * tr_detail.sheet) * tr_detail.price),0)) AS total
                                     FROM tr_detail
                                     LEFT JOIN tr_header ON tr_detail.header_id = tr_header.id
-                                    LEFT JOIN m_valas ON tr_detail.valas_id = m_valas.id
+                                    LEFT JOIN m_currency ON tr_detail.currency_id = m_currency.id
                                     WHERE tr_header.company_id = $company_id
                                     AND tr_header.store_id = $store_id
                                     AND YEAR(tr_header.tr_date) = $tahun
-                                    GROUP BY tr_detail.valas_id, m_valas.valas_code
+                                    GROUP BY tr_detail.currency_id, m_currency.currency_code
                                     ORDER BY total DESC
                                     LIMIT 5")->result();
         }

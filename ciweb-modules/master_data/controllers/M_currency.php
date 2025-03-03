@@ -1,29 +1,27 @@
 <?php
 
-class M_customer_work extends Bks_Controller {
+class M_currency extends Bks_Controller {
 
     function __construct() {
-        $config = array('modules' => 'master_data', 'jsfiles' => array('m_customer_work'));
+        $config = array('modules' => 'master_data', 'jsfiles' => array('m_currency'));
         parent::__construct($config);
-        $this->Bksmdl->table = 'm_customer_work';
+        $this->Bksmdl->table = 'm_currency';
+        $this->auth = $this->session->userdata( 'auth' );
+        $this->companyId = $this->auth['company_id'];
     }
     
     function index() {
         $this->libauth->check(__METHOD__);
-        $this->template->title('Cust. Work');
-        $this->template->set('tsmall', 'Data');
+        $this->template->title('Currency');
+        $this->template->set('tsmall', 'File');
         $this->template->set('icon', 'fa fa-navicon');
-        $this->template->build('master_data/m_customer_work_v');
+        $this->template->build('master_data/m_currency_v');
     }
     
     function insert() {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
-
-        if(isset($postData['customer_profesi_id'])){
-            $postData['customer_profesi_id'] = $postData['customer_profesi_id'];
-        }
         $postData['status'] = cekStatus($postData);
 
         $this->db->trans_begin();
@@ -44,9 +42,6 @@ class M_customer_work extends Bks_Controller {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
-        if(isset($postData['customer_profesi_id'])){
-            $postData['customer_profesi_id'] = $postData['customer_profesi_id'];
-        }
         $postData['status'] = cekStatus($postData);
         $id = $postData['id'];
         unset($postData['id']);
@@ -64,7 +59,7 @@ class M_customer_work extends Bks_Controller {
             echo json_encode($json);
         }
     }
-
+    
     function delete() {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
@@ -85,23 +80,59 @@ class M_customer_work extends Bks_Controller {
         }
     }
     
-    function getData() {
+    function getdata() {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
-        $this->Bksmdl->table = 'v_m_customer_work';
+        $this->Bksmdl->table = 'm_currency';
         $cpData = $this->Bksmdl->getDataTable();
         $this->Bksmdl->outputToJson($cpData);
-    }
-        
-    function getWork() {
+    }   
+
+    function getcurrencybyid() {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
-        $this->Bksmdl->table = 'm_customer_work';
-        $this->Bksmdl->searchable = array('customer_work_name', 'id');
-        $this->Bksmdl->select2fields = array('id' => 'id', 'text' => "concat(customer_work_name,' [', id,']')");
+        $postData = $this->input->post();
+        $currency_id = json_decode($postData['currency_id']);
+        $query = $this->db->query("SELECT * FROM m_currency WHERE id = $currency_id")->result();
+        echo json_encode($query, true);
+    }
+    
+    function getcurrency() {
+        checkIfNotAjax();
+        $this->libauth->check(__METHOD__);
+        $this->Bksmdl->table = 'm_currency';
+        $this->Bksmdl->searchable = array('currency_code', 'currency_name', 'id');
+        $this->Bksmdl->select2fields = array('id' => 'id', 'text' => "concat(currency_code,' - ',currency_name)");
         $result['results'] = $this->Bksmdl->getSelect2(array('status' => '1'));
         $result['more'] = true;
         echo json_encode($result);
+    }  
+        
+    function getcurrencytrx() {
+        checkIfNotAjax();
+        $this->libauth->check(__METHOD__);
+        $company_id = $this->input->post('company_id'); 
+        $store_id = $this->input->post('store_id');
+        $tr_id = $this->input->post('tr_id');
+        if($tr_id === '2'){
+            $menus = $this->db->order_by('currency_id,nominal', 'ASC')->get_where('v_stocksale', array('status' => '1', 'company_id' => $company_id, 'store_id' => $store_id))->result();        
+            if (count($menus) > 0){
+                $option ="<option selected value=''>-- Pilih Mata Uang --</option>";
+                foreach($menus as $row){
+                    $option.="<option value='".$row->currency_id."'>".$row->currency_code . " - " . $row->currency_name . " [ Nominal : " . number_format($row->nominal, "0", ".", ",") ." ]</option>";
+                }
+                echo $option;
+            }    
+        } else {
+            $menus = $this->db->order_by('currency_code', 'ASC')->get_where('m_currency', array('status' => '1'))->result();
+            if (count($menus) > 0){
+                $option ="<option selected value=''>-- Pilih Mata Uang --</option>";
+                foreach($menus as $row){
+                    $option.="<option value='".$row->id."'>".$row->currency_code . " - " . $row->currency_name ."</option>";
+                }
+                echo $option;
+            }
+        }        
     }
 
 }

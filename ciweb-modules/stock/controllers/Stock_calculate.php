@@ -1,10 +1,10 @@
 <?php
 
-class Stockcalculate extends Bks_Controller {    
+class Stock_calculate extends Bks_Controller {    
 
     function __construct() 
     {
-        $config = array('modules' => 'stock', 'jsfiles' => array('stockcalculate'));
+        $config = array('modules' => 'stock', 'jsfiles' => array('stock_calculate'));
         parent::__construct($config);        
         $this->auth = $this->session->userdata( 'auth' );        
     }
@@ -16,7 +16,7 @@ class Stockcalculate extends Bks_Controller {
         $this->template->set('tsmall', 'Stock');
         $this->template->set('icon', 'fa fa-list');
         $data['auth'] = $this->auth;
-        $this->template->build('stock/stockcalculate_v', $data);
+        $this->template->build('stock/stock_calculate_v', $data);
     }    
 
     function generate_stock_pull(){
@@ -40,15 +40,17 @@ class Stockcalculate extends Bks_Controller {
             $bulan2 = 1;
         }
         $this->db->trans_begin();
+
+        /*Transaction Buy*/        
         $select = $this->db->query("
-                                    SELECT valas_id, nominal 
+                                    SELECT currency_id, nominal 
                                     FROM v_tr_detail 
                                     WHERE status IN (3,4)
                                     AND company_id = $company_id
                                     AND store_id = $store_id
                                     AND tr_id = 1
-                                    GROUP BY valas_id, nominal                                    
-                                    ORDER BY valas_id,nominal ASC                                    
+                                    GROUP BY currency_id, nominal                                    
+                                    ORDER BY currency_id,nominal ASC                                    
                                     ");
         if(count($select) > 0){
             /******************************************************************************************************/
@@ -71,9 +73,9 @@ class Stockcalculate extends Bks_Controller {
 
             /******************************************************************************************************/
             foreach($select->result_array() as $row) {
-                $valas_id = $row['valas_id'];
+                $currency_id = $row['currency_id'];
                 $nominal = $row['nominal'];
-                $this->Bksmdl->generate_stock($company_id, $store_id, $tahun, $bulan, $valas_id, $nominal);
+                $this->Bksmdl->generate_stock($company_id, $store_id, $tahun, $bulan, $currency_id, $nominal);
             }
         }
         if ($this->db->trans_status() === FALSE) {
@@ -121,24 +123,24 @@ class Stockcalculate extends Bks_Controller {
             $bulan2 = $bulan + 1;
         }        
 
-        $mvalas = $this->db->query("
-                                    SELECT x.valas_id 
+        $mcurrency = $this->db->query("
+                                    SELECT x.currency_id 
                                     FROM v_tr_detail x
                                     WHERE x.status IN (3,4)
                                     AND x.company_id = $company_id 
                                     AND x.store_id = $store_id 
-                                    GROUP BY x.valas_id
-                                    ORDER BY valas_id ASC                                    
+                                    GROUP BY x.currency_id
+                                    ORDER BY currency_id ASC                                    
                                     ");
 
-        // $mvalas = $this->db->select('valas_id')
+        // $mcurrency = $this->db->select('currency_id')
         //                    ->where(array('company_id' => $company_id, 'store_id' => $store_id))
         //                    ->where_in('status', ['3','4'])
-        //                    ->group_by('valas_id')
-        //                    ->order_by('valas_id')
+        //                    ->group_by('currency_id')
+        //                    ->order_by('currency_id')
         //                    ->get('v_tr_detail');
-        // if($mvalas->num_rows()){
-        if(count($mvalas) > 0){
+        // if($mcurrency->num_rows()){
+        if(count($mcurrency) > 0){
             /** Delete Reccord */
             /***************************************************************************************************************** */
             $where = array(
@@ -149,15 +151,15 @@ class Stockcalculate extends Bks_Controller {
             );
             $this->db->trans_begin();
             $this->db->delete('stock_price', $where);
-            foreach($mvalas->result_array() as $row) {
+            foreach($mcurrency->result_array() as $row) {
                 $id = 0;
-                $valas_id = $row['valas_id'];                
+                $currency_id = $row['currency_id'];                
 
                 /** Get Beginning Stock */
                 /***************************************************************************************************************** */
                 $select_max_date = $this->db->query("SELECT MAX(stock_date) AS max_date
                                                      FROM stock_price 
-                                                     WHERE valas_id = $valas_id 
+                                                     WHERE currency_id = $currency_id 
                                                      AND YEAR(stock_date) = $tahun1 
                                                      AND MONTH(stock_date) = $bulan1")->result();   
                 $buy_amount = 0;
@@ -170,7 +172,7 @@ class Stockcalculate extends Bks_Controller {
                     if($max_date !== null) {
                         $select_max_id = $this->db->query("SELECT MAX(id) AS max_id
                                                      FROM stock_price 
-                                                     WHERE valas_id = $valas_id 
+                                                     WHERE currency_id = $currency_id 
                                                      AND stock_date = '$max_date'")->result();                    
                         if(count($select_max_id) > 0) {
                             $max_id = $select_max_id[0]->max_id;
@@ -179,7 +181,7 @@ class Stockcalculate extends Bks_Controller {
                                                                         stock_last_price,
                                                                         stock_last_total
                                                         FROM stock_price 
-                                                        WHERE valas_id = $valas_id 
+                                                        WHERE currency_id = $currency_id 
                                                         AND stock_date = '$max_date'
                                                         AND id = $max_id")->result();
                                 if(count($select_last_stock) > 0) {
@@ -192,7 +194,7 @@ class Stockcalculate extends Bks_Controller {
                                             'stock_date' => $tgl1,
                                             'stock_year' => $tahun,
                                             'stock_month' => $bulan,
-                                            'valas_id' => $valas_id,                                
+                                            'currency_id' => $currency_id,                                
                                             'stock_last_amount' => $select_last_stock[0]->stock_last_amount,
                                             'stock_last_price' => $select_last_stock[0]->stock_last_price,
                                             'stock_last_total' => $select_last_stock[0]->stock_last_total,                              
@@ -210,7 +212,7 @@ class Stockcalculate extends Bks_Controller {
                                                           'stock_last_price' => $last_price_amount,
                                                           'stock_last_total' => $last_price_total);                        
                                             if(count($data) > 0){
-                                                $where = array('id' => $id, 'valas_id' => $valas_id);
+                                                $where = array('id' => $id, 'currency_id' => $currency_id);
                                                 $this->db->update('stock_price', $data, $where);                
                                             }
                                         }
@@ -232,9 +234,10 @@ class Stockcalculate extends Bks_Controller {
                     $tr_date = $tahun.'-'.sprintf("%02d", $bulan).'-'. sprintf("%02d", $tgl);
                     /***************************************************************************************************************** */
                     /*Get Transaction Buy*/
-                    $trxbuy = $this->db->select('tr_date, valas_id, header_id, nominal, sheet, price, subtotal')
-                                    ->where(array('tr_date' => $tr_date, 'tr_id' => 1, 'valas_id' => $valas_id))
+                    $trxbuy = $this->db->select('tr_date, currency_id, header_id, nominal, SUM(sheet) AS sheet, price')
+                                    ->where(array('tr_date' => $tr_date, 'tr_id' => 1, 'currency_id' => $currency_id))
                                     ->where_in('status', ['3','4'])
+                                    ->group_by('tr_date, currency_id, header_id, price')
                                     ->get('v_tr_detail');
                     if($trxbuy->num_rows()){
                         foreach($trxbuy->result_array() as $row) {                            
@@ -246,7 +249,7 @@ class Stockcalculate extends Bks_Controller {
                                 'stock_date' => $row['tr_date'],
                                 'stock_year' => $tahun,
                                 'stock_month' => $bulan,
-                                'valas_id' => $row['valas_id'],                                
+                                'currency_id' => $row['currency_id'],                                
                                 'buy_tr_header_id' => $row['header_id'],
                                 'buy_amount' => $row['nominal'] * $row['sheet'],
                                 'buy_price' => $row['price'],                              
@@ -267,7 +270,7 @@ class Stockcalculate extends Bks_Controller {
                                               'stock_last_price' => $last_price_amount,
                                               'stock_last_total' => $last_price_total);
                                 if(count($data) > 0){
-                                    $where = array('id' => $id, 'valas_id' => $valas_id);
+                                    $where = array('id' => $id, 'currency_id' => $currency_id);
                                     $this->db->update('stock_price', $data, $where);                
                                 }
                             }
@@ -276,12 +279,13 @@ class Stockcalculate extends Bks_Controller {
 
                     /***************************************************************************************************************** */
                     /*Get Transaction Sell*/
-                    $trxbuy = $this->db->select('tr_date, valas_id, header_id, nominal, sheet, price, subtotal')
-                                    ->where(array('tr_date' => $tr_date, 'tr_id' => 2, 'valas_id' => $valas_id))
+                    $trxsell = $this->db->select('tr_date, currency_id, header_id, nominal, SUM(sheet) AS sheet, price')
+                                    ->where(array('tr_date' => $tr_date, 'tr_id' => 2, 'currency_id' => $currency_id))
                                     ->where_in('status', ['3','4'])
+                                    ->group_by('tr_date, currency_id, header_id, price')
                                     ->get('v_tr_detail');
-                    if($trxbuy->num_rows()){
-                        foreach($trxbuy->result_array() as $row) {                            
+                    if($trxsell->num_rows()){
+                        foreach($trxsell->result_array() as $row) {                            
                             $id++;
                             $data = array(               
                                 'id' => $id,
@@ -290,11 +294,11 @@ class Stockcalculate extends Bks_Controller {
                                 'stock_date' => $row['tr_date'],
                                 'stock_year' => $tahun,
                                 'stock_month' => $bulan,
-                                'valas_id' => $row['valas_id'],                                
+                                'currency_id' => $row['currency_id'],                                
                                 'sell_tr_header_id' => $row['header_id'],
                                 'sell_amount' => $row['nominal'] * $row['sheet'],
                                 'sell_price' => $row['price'],                              
-                                'saell_total' => ($row['nominal'] * $row['sheet']) * $row['price'],
+                                'sell_total' => ($row['nominal'] * $row['sheet']) * $row['price'],
                                 'created' => date('Y-m-d H:i:s', time()),
                                 'createdby' => $this->auth['id']
                             );
@@ -315,7 +319,7 @@ class Stockcalculate extends Bks_Controller {
                                               'sell_average_total' => $sell_average_total,
                                               'profit' => $profit);
                                 if(count($data) > 0){
-                                    $where = array('id' => $id, 'valas_id' => $valas_id);
+                                    $where = array('id' => $id, 'currency_id' => $currency_id);
                                     $this->db->update('stock_price', $data, $where);          
                                 }
                             }

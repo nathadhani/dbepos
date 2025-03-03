@@ -131,7 +131,7 @@ class Inventory extends Bks_Controller {
     }
 
     function stock($header_id){
-        $select = $this->db->select('company_id,store_id,tr_date,valas_id,nominal')
+        $select = $this->db->select('company_id,store_id,tr_date,currency_id,nominal')
                            ->where('header_id',$header_id)
                            ->where('status',3)
                            ->get('v_inventory_detail');
@@ -141,9 +141,9 @@ class Inventory extends Bks_Controller {
                 $store_id = $row['store_id'];
                 $tahun = (int) SUBSTR($row['tr_date'],0,4);
                 $bulan = (int) SUBSTR($row['tr_date'],5,2);    
-                $valas_id = $row['valas_id'];
+                $currency_id = $row['currency_id'];
                 $nominal  = $row['nominal'];
-                $this->Bksmdl->generate_stock($company_id, $store_id, $tahun, $bulan, $valas_id, $nominal);
+                $this->Bksmdl->generate_stock($company_id, $store_id, $tahun, $bulan, $currency_id, $nominal);
             }
         }
     }
@@ -234,7 +234,7 @@ class Inventory extends Bks_Controller {
         $postData = $this->input->post();
         $tr_id = $postData['tr_id'];
         $header_id = $postData['header_id'];
-        $query = $this->db->query("SELECT * FROM v_inventory_detail WHERE header_id= " . $header_id ." ORDER BY valas_id, price ASC")->result();
+        $query = $this->db->query("SELECT * FROM v_inventory_detail WHERE header_id= " . $header_id ." ORDER BY currency_id, price ASC")->result();
         echo json_encode($query, true);
     }
 
@@ -307,7 +307,7 @@ class Inventory extends Bks_Controller {
             foreach($data_content as $r){
                 $no++;
                 
-                $valas_code = $r->valas_code;
+                $currency_code = $r->currency_code;
                 $nominal    = ($r->nominal == 'null' || $r->nominal == '' ? '' : (float) $r->nominal);
                 $sheet      = ($r->sheet == 'null' || $r->sheet == '' ? '' : (float) $r->sheet);                
                 $amount     = ($nominal * $sheet);
@@ -316,7 +316,7 @@ class Inventory extends Bks_Controller {
                 $total      = $total + ($amount * $price);
  
                 $pdf->Cell(07,01,$no,0,0);
-                $pdf->Cell(17,01,$valas_code,0,0);
+                $pdf->Cell(17,01,$currency_code,0,0);
                 $pdf->Cell(20,01,number_format($amount, "0", ".", ","),0,0);
                 $pdf->Cell(18,01,number_format($price, "0", ".", ","),0,0);   
                 $pdf->Cell(30,01,number_format($subtotal, "0", ".", ","),0,0);

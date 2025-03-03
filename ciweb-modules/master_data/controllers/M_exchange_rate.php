@@ -29,15 +29,15 @@ class M_exchange_rate extends Bks_Controller {
         $this->db->where('exchange_rate_date =', $tanggal);
         $this->db->delete($this->Bksmdl->table);
 
-        $hsl = $this->db->query("SELECT id, valas_code, valas_name
-                                 FROM m_valas
+        $hsl = $this->db->query("SELECT id, currency_code, currency_name
+                                 FROM m_currency
                                  WHERE status = 1
                                  AND NOT EXISTS
                                 ( SELECT 1 FROM m_exchange_rate AS p 
                                   WHERE p.company_id = $this->company_id
                                   AND p.store_id = $store_id
                                   AND p.exchange_rate_date = '$tanggal'                                  
-                                  AND p.valas_id = m_valas.id
+                                  AND p.currency_id = m_currency.id
                                 )
                                 GROUP BY id
                                 ORDER BY id ASC")->result();
@@ -47,7 +47,7 @@ class M_exchange_rate extends Bks_Controller {
                 $data = [
                     'company_id' => $this->company_id,
                     'store_id' => $store_id,
-                    'valas_id' => $val->id,
+                    'currency_id' => $val->id,
                     'exchange_rate_date' => $tanggal,
                     'status' => 1,
                     'created' => date('Y-m-d H:i:s', time()),
@@ -62,7 +62,7 @@ class M_exchange_rate extends Bks_Controller {
             $hslx = $this->db->query("SELECT
                                             company_id,
                                             store_id,                                 
-                                            valas_id, 
+                                            currency_id, 
                                             IFNULL(exchange_rate_buy,0) AS exchange_rate_buy,
                                             IFNULL(difference_buy,0) AS difference_buy,                                            
                                             IFNULL(exchange_rate_sell,0) AS exchange_rate_sell,                                                                                        
@@ -83,10 +83,10 @@ class M_exchange_rate extends Bks_Controller {
                                         WHERE p.company_id = $this->company_id
                                         AND p.store_id = $store_id                                        
                                         AND p.exchange_rate_date = '$tanggal'
-                                        AND p.valas_id = m_exchange_rate.valas_id 
+                                        AND p.currency_id = m_exchange_rate.currency_id 
                                     )
                                     GROUP BY id
-                                    ORDER BY valas_id ASC")->result();
+                                    ORDER BY currency_id ASC")->result();
             // echo $this->db->last_query(); exit;            
             if(count($hslx) > 0){                                
                 foreach ($hslx as $key => $val) {
@@ -101,7 +101,7 @@ class M_exchange_rate extends Bks_Controller {
                         'price_sell_bot' => ($val->price_sell_bot == null ? 0 : $val->price_sell_bot),
                         'price_sell_top' => ($val->price_sell_top == null ? 0 : $val->price_sell_top)
                     ];
-                    $where = array('company_id' => $this->company_id, 'store_id' => $store_id, 'exchange_rate_date' => $tanggal, 'valas_id' => $val->valas_id);  
+                    $where = array('company_id' => $this->company_id, 'store_id' => $store_id, 'exchange_rate_date' => $tanggal, 'currency_id' => $val->currency_id);  
                     $this->db->where($where);
                     $this->db->update('m_exchange_rate',$data_upd);                    
                     // echo $this->db->last_query(); exit;
@@ -144,14 +144,7 @@ class M_exchange_rate extends Bks_Controller {
 
         $postData['status'] = cekStatus($postData);
         $id = $postData['id'];
-        $valas_id = $postData['valas_id'];
-
-        $postData['exchange_rate_buy'] = str_replace('.','',$postData['exchange_rate_buy']);
-        $postData['exchange_rate_sell'] = str_replace('.','',$postData['exchange_rate_sell']);
-        $postData['price_buy_bot'] = str_replace('.','',$postData['price_buy_bot']);
-        $postData['price_buy_top'] = str_replace('.','',$postData['price_buy_top']);     
-        $postData['price_sell_bot'] = str_replace('.','',$postData['price_sell_bot']);
-        $postData['price_sell_top'] = str_replace('.','',$postData['price_sell_top']);
+        $currency_id = $postData['currency_id'];
 
         /*difference_buy*/
         $postData['difference_buy'] = 0;
@@ -160,11 +153,11 @@ class M_exchange_rate extends Bks_Controller {
                                  WHERE company_id = $this->company_id 
                                  AND store_id = $store_id 
                                  AND exchange_rate_date = '$tanggalx' 
-                                 AND valas_id = $valas_id")->row();
+                                 AND currency_id = $currency_id")->row();
         if(isset($cek)){
-            if($cek->rate_buy > 0) {
-                if($postData['rate_buy'] > 0) {
-                    $postData['difference_buy'] = $postData['rate_buy'] - $cek->rate_buy;
+            if($cek->exchange_rate_buy > 0) {
+                if($postData['exchange_rate_buy'] > 0) {
+                    $postData['difference_buy'] = $postData['exchange_rate_buy'] - $cek->exchange_rate_buy;
                 }
             }
         }         
@@ -176,10 +169,10 @@ class M_exchange_rate extends Bks_Controller {
                                  WHERE company_id = $this->company_id 
                                  AND store_id = $store_id
                                  AND exchange_rate_date = '$tanggalx' 
-                                 AND valas_id = $valas_id")->row();
+                                 AND currency_id = $currency_id")->row();
         if(isset($cek)){
-            if($cek->rate_sell > 0) {
-                if($postData['rate_sell'] > 0) {
+            if($cek->exchange_rate_sell > 0) {
+                if($postData['exchange_rate_sell'] > 0) {
                     $postData['difference_sell'] = $postData['exchange_rate_sell'] - $cek->exchange_rate_sell;
                 }
             }
@@ -187,10 +180,10 @@ class M_exchange_rate extends Bks_Controller {
         
         unset($postData['id']);
         unset($postData['store_id']);
-        unset($postData['valas_id']);
+        unset($postData['currency_id']);
         unset($postData['exchange_rate_date']);
-        unset($postData['valas_code']);
-        unset($postData['valas_name']);
+        unset($postData['currency_code']);
+        unset($postData['currency_name']);
 
         $this->db->trans_begin();
         $status = $this->Bksmdl->update($postData, 'id=' . $id);

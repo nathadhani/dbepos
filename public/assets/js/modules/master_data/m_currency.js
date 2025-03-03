@@ -5,7 +5,8 @@
         $(':submit', this).attr('disabled', true);
     }).on('reset', function (e) {
         $("#ftitle").html('Add');
-        $("#customer_work_name").focus();
+        $("#currency_code").focus();
+        $("#currency_name").html('');
         $("#status").iCheck('check');
         $(':submit').removeAttr('disabled');
     });
@@ -21,7 +22,7 @@
         onSuccess: function () {
             if ($("#ftitle").html().substr(0, 4) == "Edit") {
                 //--- Edit
-                $.post('master_data/m_customer_work/update', $("#mainForm").serialize() + "&id=" + $("body").data("id"), function (obj) {
+                $.post('master_data/m_currency/update', $("#mainForm").serialize() + "&id=" + $("body").data("id"), function (obj) {
                     if (obj.msg == 1) {
                         $("#mainForm")[0].reset();
                         $('#mainTable table').DataTable().ajax.reload();
@@ -34,7 +35,7 @@
                 });
             } else {
                 //--- Insert
-                $.post('master_data/m_customer_work/insert', $("#mainForm").serialize(), function (obj) {
+                $.post('master_data/m_currency/insert', $("#mainForm").serialize(), function (obj) {
                     if (obj.msg == 1) {
                         $("#mainForm")[0].reset();
                         $('#mainTable table').DataTable().ajax.reload();
@@ -59,7 +60,8 @@
         var elm = $(this).closest("tr");
         var d = t.row(elm).data();
         $("#ftitle").html('Edit');
-        $("#customer_work_name").val(d.customer_work_name).focus();
+        $("#currency_code").val(d.currency_code).focus();
+        $("#currency_name").val(d.currency_name);
         $("#status").iCheck(d.status == 1 ? 'check' : 'uncheck');
         $("body").data("id", d.id);
     });
@@ -72,17 +74,16 @@
         sDom: 'it<"row"lp>',
         lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
         ajax: {
-            url: baseUrl + 'master_data/m_customer_work/getData',
+            url: baseUrl + 'master_data/m_currency/getdata',
             type: 'POST'
         },
         columns: [
             {data: "#", className: "dt-body-center", width: "5%", orderable: false, searchable: false},
-            {data: 'customer_work_name'},
-            {data: 'createdby_name'},
+            {data: 'currency_code', width: "8%"},
+            {data: 'currency_name'},
             {data: 'created', orderable: false, width: "12%", render: function (data, type, row, meta) {
                     return data;
                 }},
-            {data: 'updatedby_name'},
             {data: 'updated', orderable: false, width: "12%", render: function (data, type, row, meta) {
                 return data;
             }},
@@ -93,21 +94,20 @@
             {data: 'id', className: "dt-body-center", orderable: false, width: "5%", render: function (data, type, row, meta) {
                     return '<a title="Edit" href="#"><i class="fa fa-edit"></i></a>';
                 }
-            },            
-            {data: 'created', visible: false},
-            {data: 'updated', visible: false},
+            },
+            {data: 'createdby', visible: false},
         ],
         order: [[1, 'asc']]
     });
     //--- Select Row , Toggle Row & Delete
-    $('#mainTable').selectDTBks(t, 'master_data/m_customer_work/delete');
+    $('#mainTable').selectDTBks(t, 'master_data/m_currency/delete');
 
     // Setup - add a text input to each header cell
     $('#searchid td').each(function () {
-        if ($(this).index() != 0 && $(this).index() != 3 && $(this).index() != 5 && $(this).index() != 7) {
+        if ($(this).index() != 0 && $(this).index() <= 2) {
             $(this).html('<input style="width:100%" type="text" placeholder="Search" data-id="' + $(this).index() + '" />');
         }
-        if ($(this).index() == 6) {
+        if ($(this).index() == 5) {
             $(this).html('<select style="width:100%" type="text"><option value="">-</option><option value="1">Active</option><option value="0">Not Active</option><select/>');
         }
     });
@@ -115,7 +115,7 @@
         t.columns($(this).data('id')).search(this.value).draw();
     });
     $('#searchid select').change(function () {
-        t.columns(6).search(this.value).draw();
+        t.columns(5).search(this.value).draw();
     });
     $(".clrs").click(function () {
         $('#searchid input').val('');

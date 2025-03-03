@@ -1,6 +1,11 @@
 <div class="row">
     <div class="col-md-12">
         <div class="panel panel-default">
+            <div class="panel-heading ui-draggable-handle">                                
+                <div class="panel-title-box">
+                    <h3>Stock - In Nominal</h3>
+                </div>
+            </div>
             <div class="panel-body">
                 <div class="row">
                     <div class="col-md-4">
@@ -55,26 +60,20 @@
                                     <th rowspan="2" style="vertical-align:middle;text-align:center;">#</th>
                                     <th rowspan="2" style="vertical-align:middle;text-align:center;">Currency</th>
                                     <th rowspan="2" style="vertical-align:middle;text-align:center;">Nominal</th>
-                                    <th colspan="7" style="vertical-align:middle;text-align:center;background-color:#baffc9;color:black;">Sheet ( Currency )</th>
+                                    <th colspan="5" style="vertical-align:middle;text-align:center;">In Sheet</th>
                                     <th rowspan="2" style="vertical-align:middle;text-align:center;">Balance Amount</th>
                                 </tr>
                                 <tr>
-                                    <th style="vertical-align:middle;text-align:center;">Beginning</th>
-                                    
-                                    <th style="vertical-align:middle;text-align:center;">Inv.In</th>                                
-                                    <th style="vertical-align:middle;text-align:center;">Inv.Out</th>       
-
-                                    <th style="vertical-align:middle;text-align:center;">Trx.Buy</th>                                
-                                    <th style="vertical-align:middle;text-align:center;">Trx.Sale</th>
-                                    <th style="vertical-align:middle;text-align:center;">Trx.Task</th>
+                                    <th style="vertical-align:middle;text-align:center;">Beginning</th>                                   
+                                    <th style="vertical-align:middle;text-align:center;">Buy</th>                                
+                                    <th style="vertical-align:middle;text-align:center;">Sell</th>
+                                    <th style="vertical-align:middle;text-align:center;">Task</th>
                                     <th style="vertical-align:middle;text-align:center;">Balance</th>
                                 </tr>
                             </thead>
                             <thead id="searchid">
                                 <tr>
                                     <td><button class="clrs btn btn-info btn-sm btn-line">Clear</button></td>
-                                    <td></td>
-                                    <td></td>
                                     <td></td>
                                     <td></td>
                                     <td></td>

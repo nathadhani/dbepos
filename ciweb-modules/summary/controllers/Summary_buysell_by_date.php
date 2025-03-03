@@ -95,7 +95,7 @@ class Summary_buysell_by_date extends Bks_Controller {
                                     ) AS `trx_name`,
                                     tr_header.tr_number,	
                                     tr_header.tr_date AS tr_date,		
-                                    CONCAT(m_valas.valas_code,' - ',m_valas.valas_name) AS valas_name,
+                                    CONCAT(m_currency.currency_code,' - ',m_currency.currency_name) AS currency_name,
                                     tr_detail.nominal AS nominal,
                                     tr_detail.sheet AS sheet,
                                     (tr_detail.nominal * tr_detail.sheet) AS amount,
@@ -115,7 +115,7 @@ class Summary_buysell_by_date extends Bks_Controller {
                                     usr2.fullname AS updated_name
                                 FROM tr_detail
                                 JOIN tr_header ON tr_detail.header_id = tr_header.id 				
-                                JOIN m_valas ON tr_detail.valas_id = m_valas.id
+                                JOIN m_currency ON tr_detail.currency_id = m_currency.id
                                 JOIN m_customer ON m_customer.id = tr_header.customer_id
                                 JOIN m_company ON m_company.id = tr_header.company_id
                                 JOIN m_company_store ON m_company_store.id = tr_header.store_id
@@ -125,7 +125,7 @@ class Summary_buysell_by_date extends Bks_Controller {
                                 AND tr_header.store_id = $store_id
                                 AND tr_header.tr_date = '$tanggal'
                                 AND tr_detail.status IN(3,4)
-                                ORDER BY tr_header.tr_date, tr_header.tr_id, tr_header.tr_number, tr_detail.valas_id, tr_detail.nominal ASC");   
+                                ORDER BY tr_header.tr_date, tr_header.tr_id, tr_header.tr_number, tr_detail.currency_id, tr_detail.nominal ASC");   
 
         if (!$query)
         return false;
