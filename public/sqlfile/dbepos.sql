@@ -1,7 +1,7 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : MYSQL
+ Source Server         : mySQL
  Source Server Type    : MySQL
  Source Server Version : 80030
  Source Host           : localhost:3306
@@ -11,7 +11,7 @@
  Target Server Version : 80030
  File Encoding         : 65001
 
- Date: 04/03/2025 16:17:17
+ Date: 04/03/2025 23:15:26
 */
 
 SET NAMES utf8mb4;
@@ -33,7 +33,7 @@ CREATE TABLE `auth_group_role`  (
   `updated` datetime NULL DEFAULT NULL,
   `updatedby` bigint NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 391 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 485 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of auth_group_role
@@ -482,7 +482,7 @@ CREATE TABLE `auth_menu`  (
   `updated` datetime NULL DEFAULT NULL,
   `updatedby` bigint NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 47 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 48 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of auth_menu
@@ -742,69 +742,6 @@ INSERT INTO `m_airport` VALUES (15, 'UPG', 'Bandara Sultan Hasanuddin - Makassar
 INSERT INTO `m_airport` VALUES (16, 'YIA', 'Bandara Internasional Yogyakarta - Kulon Progo', 1, '2024-03-17 00:00:00', NULL, 3, NULL);
 
 -- ----------------------------
--- Table structure for m_company
--- ----------------------------
-DROP TABLE IF EXISTS `m_company`;
-CREATE TABLE `m_company`  (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `company_name` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `company_address` longtext CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `company_phone` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  `company_city` varchar(30) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  `company_pos_code` varchar(15) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  `company_email` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  `company_type` varchar(10) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  `user_limits` smallint NULL DEFAULT NULL,
-  `api_method` smallint NULL DEFAULT NULL,
-  `api_angkasapura` varchar(5) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  `api_username` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  `api_password` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  `status` smallint NOT NULL,
-  `created` datetime NULL DEFAULT NULL,
-  `updated` datetime NULL DEFAULT NULL,
-  `createdby` bigint NULL DEFAULT NULL,
-  `updatedby` bigint NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
-
--- ----------------------------
--- Records of m_company
--- ----------------------------
-INSERT INTO `m_company` VALUES (1, 'PT. INDONESIA CENTRAL VALUTAMAS', 'Terminal 2 - Soekarno Hatta', '(021)', 'Jakarta', '', '', 'M03', 5, 0, 'AP2', 'api.indocev.cgk', 'api.indocev.cgk', 1, '2024-03-17 00:00:00', '2025-02-23 23:01:25', 1, 1);
-INSERT INTO `m_company` VALUES (2, 'PT. INDONESIA CENTRAL VALUTAMAS', 'Terminal 3 - Soekarno Hatta', '(021) ', 'Jakarta', '', '', 'M03', 5, 0, 'AP2', 'api.indocev.cgk', 'api.indocev.cgk', 1, '2024-03-17 00:00:00', '2025-02-23 23:01:46', 1, 1);
-INSERT INTO `m_company` VALUES (3, 'PT. INDONESIA CENTRAL VALUTAMAS', 'Terminal 2 - Juanda', '(031)', 'Surabaya', '', '', 'M03', 5, 0, 'AP1', 'api.indocev.sub', 'api.indocev.sub', 1, '2024-03-21 13:29:04', '2025-02-23 23:01:56', 1, 1);
-
--- ----------------------------
--- Table structure for m_company_store
--- ----------------------------
-DROP TABLE IF EXISTS `m_company_store`;
-CREATE TABLE `m_company_store`  (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `company_id` bigint NOT NULL,
-  `store_name` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `store_address` text CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL,
-  `airport_id` bigint NULL DEFAULT NULL,
-  `airport_terminal` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  `api_store_id` text CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL,
-  `api_store_name` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  `api_register_status` smallint NULL DEFAULT NULL,
-  `status` smallint NOT NULL,
-  `created` datetime NULL DEFAULT NULL,
-  `updated` datetime NULL DEFAULT NULL,
-  `createdby` bigint NULL DEFAULT NULL,
-  `updatedby` bigint NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
-
--- ----------------------------
--- Records of m_company_store
--- ----------------------------
-INSERT INTO `m_company_store` VALUES (1, 1, 'Indocev Money Changer', 'Terminal 2F - Shopping Arcade Dep', 5, '2F', '53e92e8d102d983ea54d1990e4cd16d4', 'Indocev Money Changer T2F #Shopping Arcade Dep', 1, 1, '2024-03-17 00:00:00', '2024-05-27 17:15:57', 1, 1);
-INSERT INTO `m_company_store` VALUES (2, 2, 'Indocev Money Changer', 'Terminal 3 - Arrival Internatioanl', 5, '3', '00d8c2a3c5242f301ed4034c33802c2b', 'Indocev Money Changer T3 #Arr Intl', 1, 1, '2024-03-17 00:00:00', '2024-05-27 17:16:08', 1, 1);
-INSERT INTO `m_company_store` VALUES (3, 3, 'Indocev Money Changer', 'Terminal 2 SV-21-6 - Departure', 14, '2 (Dua) DEPARTURE', 'e9c2a6e6a7b9300338cccb7fdb011f61', 'Money Changer (Departure Int-SV-22-7)', 1, 1, '2024-03-17 00:00:00', '2024-05-27 10:14:00', 1, 1);
-INSERT INTO `m_company_store` VALUES (4, 3, 'Indocev Money Changer', 'Terminal 2 SV-21-7 - Arrival', 14, '2 (Dua) ARRIVAL\r\n', '496b1f88ef3e2b6fc8b27b4b04bc5751', 'Money Changer (Arrival Int-SV-21-6)', 1, 1, '2024-03-17 00:00:00', '2024-03-21 13:29:41', 1, 1);
-
--- ----------------------------
 -- Table structure for m_currency
 -- ----------------------------
 DROP TABLE IF EXISTS `m_currency`;
@@ -903,7 +840,7 @@ CREATE TABLE `m_customer_act_on`  (
   `createdby` bigint NULL DEFAULT NULL,
   `updatedby` bigint NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of m_customer_act_on
@@ -1366,6 +1303,43 @@ INSERT INTO `m_payment_type` VALUES (1, 'Cash', 1, '2024-04-01 10:00:00', NULL, 
 INSERT INTO `m_payment_type` VALUES (2, 'Transfer', 1, '2024-04-01 10:00:00', NULL, 3, NULL);
 
 -- ----------------------------
+-- Table structure for m_store
+-- ----------------------------
+DROP TABLE IF EXISTS `m_store`;
+CREATE TABLE `m_store`  (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `store_name` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `store_address` longtext CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `store_phone` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `store_city` varchar(30) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `store_pos_code` varchar(15) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `store_email` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `api_method` smallint NULL DEFAULT NULL,
+  `api_angkasapura` varchar(5) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `api_username` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `api_password` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `api_store_id` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `api_store_name` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `airport_id` bigint NULL DEFAULT NULL,
+  `airport_terminal` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `user_limits` smallint NULL DEFAULT NULL,
+  `status` smallint NOT NULL,
+  `created` datetime NULL DEFAULT NULL,
+  `updated` datetime NULL DEFAULT NULL,
+  `createdby` bigint NULL DEFAULT NULL,
+  `updatedby` bigint NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
+
+-- ----------------------------
+-- Records of m_store
+-- ----------------------------
+INSERT INTO `m_store` VALUES (1, 'PT. INDONESIA CENTRAL VALUTAMAS', 'Terminal 2F - Shopping Arcade Dep', '(021)', 'Jakarta', '', '', 0, 'AP2', 'api.indocev.cgk', 'api.indocev.cgk', '53e92e8d102d983ea54d1990e4cd16d4', 'Indocev Money Changer T2F #Shopping Arcade Dep', 5, '2F', 5, 1, '2024-03-17 00:00:00', '2025-02-23 23:01:25', 1, 1);
+INSERT INTO `m_store` VALUES (2, 'PT. INDONESIA CENTRAL VALUTAMAS', 'Terminal 3 - Arrival Internatioanl', '(021) ', 'Jakarta', '', '', 0, 'AP2', 'api.indocev.cgk', 'api.indocev.cgk', '00d8c2a3c5242f301ed4034c33802c2b', 'Indocev Money Changer T3 #Arr Intl', 5, '3', 5, 1, '2024-03-17 00:00:00', '2025-02-23 23:01:46', 1, 1);
+INSERT INTO `m_store` VALUES (3, 'PT. INDONESIA CENTRAL VALUTAMAS', 'Terminal 2 SV-21-6 - Departure', '(031)', 'Surabaya', '', '', 0, 'AP1', 'api.indocev.sub', 'api.indocev.sub', 'e9c2a6e6a7b9300338cccb7fdb011f61', 'Money Changer (Departure Int-SV-22-7)', 14, '2 (Dua) DEPARTURE', 5, 1, '2024-03-21 13:29:04', '2025-02-23 23:01:56', 1, 1);
+INSERT INTO `m_store` VALUES (4, 'PT. INDONESIA CENTRAL VALUTAMAS', 'Terminal 2 SV-21-7 - Arrival', '(031)', 'Surabaya', '', '', 0, 'AP1', 'api.indocev.sub', 'api.indocev.sub', '496b1f88ef3e2b6fc8b27b4b04bc5751', 'Money Changer (Arrival Int-SV-21-6)', 14, '2 (Dua) ARRIVAL\r\n', 5, 1, '2024-03-21 13:29:04', '2025-02-23 23:01:56', 1, 1);
+
+-- ----------------------------
 -- Table structure for m_transaction
 -- ----------------------------
 DROP TABLE IF EXISTS `m_transaction`;
@@ -1397,7 +1371,6 @@ INSERT INTO `m_transaction` VALUES (6, 'Bank Keluar', 'Transaksi Bank Keluar', 1
 DROP TABLE IF EXISTS `m_transaction_date`;
 CREATE TABLE `m_transaction_date`  (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `company_id` bigint NOT NULL,
   `store_id` bigint NOT NULL,
   `tr_id` bigint NOT NULL,
   `tr_date` date NOT NULL,
@@ -1412,7 +1385,6 @@ CREATE TABLE `m_transaction_date`  (
 -- ----------------------------
 -- Records of m_transaction_date
 -- ----------------------------
-INSERT INTO `m_transaction_date` VALUES (1, 1, 1, 1, '2025-02-23', 1, '2025-02-23 21:21:43', '2025-02-28 15:45:39', 1, 1);
 
 -- ----------------------------
 -- Table structure for ppatk_dttot
@@ -1984,7 +1956,6 @@ DROP TABLE IF EXISTS `stock`;
 CREATE TABLE `stock`  (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `currency_id` bigint NOT NULL,
-  `company_id` bigint NOT NULL,
   `store_id` bigint NOT NULL,
   `stock_year` int NOT NULL,
   `stock_month` int NOT NULL,
@@ -2001,14 +1972,6 @@ CREATE TABLE `stock`  (
 -- ----------------------------
 -- Records of stock
 -- ----------------------------
-INSERT INTO `stock` VALUES (1, 1, 1, 1, 2025, 3, 100, 0, 1, '2025-03-04 16:09:39', 3, NULL, NULL);
-INSERT INTO `stock` VALUES (2, 1, 1, 1, 2025, 4, 100, 10, 1, '2025-03-04 16:09:39', 3, '2025-03-04 16:09:39', 3);
-INSERT INTO `stock` VALUES (3, 7, 1, 1, 2025, 3, 100, 0, 1, '2025-03-04 16:09:39', 3, NULL, NULL);
-INSERT INTO `stock` VALUES (4, 7, 1, 1, 2025, 4, 100, 50, 1, '2025-03-04 16:09:39', 3, '2025-03-04 16:09:39', 3);
-INSERT INTO `stock` VALUES (5, 21, 1, 1, 2025, 3, 500, 0, 1, '2025-03-04 16:09:39', 3, NULL, NULL);
-INSERT INTO `stock` VALUES (6, 21, 1, 1, 2025, 4, 500, 6, 1, '2025-03-04 16:09:39', 3, '2025-03-04 16:09:39', 3);
-INSERT INTO `stock` VALUES (7, 10, 1, 1, 2025, 3, 100, 0, 1, '2025-03-04 16:09:39', 3, NULL, NULL);
-INSERT INTO `stock` VALUES (8, 10, 1, 1, 2025, 4, 100, 3000, 1, '2025-03-04 16:09:39', 3, '2025-03-04 16:09:39', 3);
 
 -- ----------------------------
 -- Table structure for stock_price
@@ -2016,7 +1979,6 @@ INSERT INTO `stock` VALUES (8, 10, 1, 1, 2025, 4, 100, 3000, 1, '2025-03-04 16:0
 DROP TABLE IF EXISTS `stock_price`;
 CREATE TABLE `stock_price`  (
   `id` int NOT NULL,
-  `company_id` bigint NOT NULL,
   `store_id` bigint NOT NULL,
   `stock_date` date NOT NULL,
   `stock_year` int NULL DEFAULT NULL,
@@ -2049,7 +2011,6 @@ CREATE TABLE `stock_price`  (
 DROP TABLE IF EXISTS `tr_api_get`;
 CREATE TABLE `tr_api_get`  (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `company_id` bigint NULL DEFAULT NULL,
   `store_id` bigint NULL DEFAULT NULL,
   `tr_id` bigint NULL DEFAULT NULL,
   `invoice_number` varchar(16) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
@@ -2149,10 +2110,6 @@ CREATE TABLE `tr_detail`  (
 -- ----------------------------
 -- Records of tr_detail
 -- ----------------------------
-INSERT INTO `tr_detail` VALUES (1, 1, 1, 100, 10, 16000.00, 16000000.00, 3, '2025-03-04 16:08:20', '2025-03-04 16:09:39', 3, 3);
-INSERT INTO `tr_detail` VALUES (2, 1, 7, 100, 50, 13000.00, 65000000.00, 3, '2025-03-04 16:08:32', '2025-03-04 16:09:39', 3, 3);
-INSERT INTO `tr_detail` VALUES (3, 1, 21, 500, 6, 0.50, 1500.00, 3, '2025-03-04 16:08:53', '2025-03-04 16:09:39', 3, 3);
-INSERT INTO `tr_detail` VALUES (4, 1, 10, 100, 3000, 4300.00, 1290000000.00, 3, '2025-03-04 16:09:24', '2025-03-04 16:09:39', 3, 3);
 
 -- ----------------------------
 -- Table structure for tr_header
@@ -2160,7 +2117,6 @@ INSERT INTO `tr_detail` VALUES (4, 1, 10, 100, 3000, 4300.00, 1290000000.00, 3, 
 DROP TABLE IF EXISTS `tr_header`;
 CREATE TABLE `tr_header`  (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `company_id` bigint NOT NULL,
   `store_id` bigint NOT NULL,
   `tr_id` smallint NOT NULL,
   `tr_date` date NOT NULL,
@@ -2184,7 +2140,6 @@ CREATE TABLE `tr_header`  (
 -- ----------------------------
 -- Records of tr_header
 -- ----------------------------
-INSERT INTO `tr_header` VALUES (1, 1, 1, 1, '2025-03-04', '2503010101000001', '2503010101000001', 1, NULL, '', '', NULL, 0, NULL, 3, '2025-03-04 16:07:46', '2025-03-04 16:09:39', 3, 3);
 
 -- ----------------------------
 -- View structure for v_auth_group_role
@@ -2226,7 +2181,7 @@ CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_auth_users` AS select 
 -- View structure for v_m_company_store
 -- ----------------------------
 DROP VIEW IF EXISTS `v_m_company_store`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_m_company_store` AS select `m_company_store`.`id` AS `id`,`m_company_store`.`store_name` AS `store_name`,`m_company_store`.`store_address` AS `store_address`,`m_company_store`.`api_store_id` AS `api_store_id`,`m_company_store`.`api_store_name` AS `api_store_name`,`m_company_store`.`api_register_status` AS `api_register_status`,`m_company_store`.`company_id` AS `company_id`,`m_company`.`company_name` AS `company_name`,`m_company`.`company_address` AS `company_address`,`m_company`.`company_city` AS `company_city`,`m_company`.`company_type` AS `company_type`,`m_company`.`api_angkasapura` AS `api_angkasapura`,`m_company_store`.`airport_id` AS `airport_id`,`m_airport`.`airport_code` AS `airport_code`,`m_airport`.`airport_desc` AS `airport_desc`,`m_company_store`.`airport_terminal` AS `airport_terminal`,`m_company`.`status` AS `status`,`m_company`.`created` AS `created`,`m_company`.`updated` AS `updated`,`m_company`.`createdby` AS `createdby`,`m_company`.`updatedby` AS `updatedby`,`usr1`.`fullname` AS `createdby_name`,`usr2`.`fullname` AS `updatedby_name` from ((((`m_company_store` join `m_company` on((`m_company_store`.`company_id` = `m_company`.`id`))) left join `m_airport` on((`m_airport`.`id` = `m_company_store`.`airport_id`))) join `auth_users` `usr1` on((`m_company_store`.`createdby` = `usr1`.`id`))) left join `auth_users` `usr2` on((`m_company_store`.`updatedby` = `usr2`.`id`)));
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_m_company_store` AS select `m_store`.`id` AS `id`,`m_store`.`store_name` AS `store_name`,`m_store`.`store_address` AS `store_address`,`m_store`.`store_phone` AS `store_phone`,`m_store`.`store_city` AS `store_city`,`m_store`.`store_pos_code` AS `store_pos_code`,`m_store`.`store_email` AS `store_email`,`m_store`.`api_method` AS `api_method`,`m_store`.`api_angkasapura` AS `api_angkasapura`,`m_store`.`api_username` AS `api_username`,`m_store`.`api_password` AS `api_password`,`m_store`.`api_store_id` AS `api_store_id`,`m_store`.`api_store_name` AS `api_store_name`,`m_store`.`airport_id` AS `airport_id`,`m_airport`.`airport_code` AS `airport_code`,`m_airport`.`airport_desc` AS `airport_desc`,`m_store`.`airport_terminal` AS `airport_terminal`,`m_store`.`status` AS `status`,`m_store`.`created` AS `created`,`m_store`.`updated` AS `updated`,`m_store`.`createdby` AS `createdby`,`m_store`.`updatedby` AS `updatedby`,`usr1`.`fullname` AS `createdby_name`,`usr2`.`fullname` AS `updatedby_name` from (((`m_store` left join `m_airport` on((`m_airport`.`id` = `m_store`.`airport_id`))) join `auth_users` `usr1` on((`m_store`.`createdby` = `usr1`.`id`))) left join `auth_users` `usr2` on((`m_store`.`updatedby` = `usr2`.`id`)));
 
 -- ----------------------------
 -- View structure for v_m_customer
