@@ -18,6 +18,9 @@
                     <div class="panel-title-box">
                         <h3>Buy / Sell - New</h3>
                     </div>
+                    <ul class="panel-controls">
+                        <a id="btn-excel" title="Download" href="#" class="btn btn-default pull-right"><i class="fa fa-download"></i></a>
+                    </ul>
                 </div>
                 <div class="panel-body">
                     <form class="form-horizontal" autocomplete="off">
@@ -38,7 +41,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-2">
-                                        <button id="btn_add" name="btn_add" class="btn btn-info btn btn-sm btn-block pull-right" style="width:150px;margin-top:-20px;">Add New Data</button>
+                                        <button id="btn_add" name="btn_add" class="btn btn-primary btn btn-sm btn-block pull-right" style="width:150px;margin-top:-20px;">Add New Data</button>
                                     </div>                        
                                 </div>
                             </div>                                              

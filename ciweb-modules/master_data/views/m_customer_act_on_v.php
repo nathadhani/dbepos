@@ -12,10 +12,9 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group row">
-                                <label for="menu" class="control-label col-lg-4">Customer Type</label>
+                                <label for="menu" class="control-label col-lg-4">Customer Act On</label>
                                 <div class="col-lg-8">
-                                    <input type="text" id="customer_type_name" name="customer_type_name" placeholder="Tipe Nasabah..." data-validation="required" class="form-control">
-                                    <!-- <span class="help-block">Tipe Nasabah</span> -->
+                                    <input type="text" id="customer_act_on" name="customer_act_on" placeholder="Bertindak Atas..." data-validation="required" class="form-control">
                                 </div>
                             </div><!-- /.form-group -->                            
                         </div>
@@ -62,7 +61,7 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Customer Type</th>
+                                <th>Customer Act On</th>
                                 <th>Created</th>
                                 <th>Updated</th>
                                 <th>Status</th>

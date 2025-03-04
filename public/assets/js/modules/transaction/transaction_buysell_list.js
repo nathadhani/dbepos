@@ -7,7 +7,7 @@
             $('#store_id').prop('disabled', false);
             $('#store_id').focus()
             $.ajax({
-                url : baseUrl +  'master_data/m_store/getStore',
+                url : baseUrl +  'master_data/m_store/getstore',
                 type: 'POST',
                 data: {'company_id' : $(this).val()},
                 datatype: 'json',
@@ -83,7 +83,7 @@
             lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
             sDom: 'it<"row"lp>',
             ajax: {
-                url: baseUrl + 'transaction/transaction_buysell_list/getData',
+                url: baseUrl + 'transaction/transaction_buysell_list/getdata',
                 type: 'POST',
                 // beforeSend: function(){
                 //     $(".ajax-loader").height($(document).height());
@@ -121,10 +121,11 @@
                         return data;
                 }},
                 {data: 'status', width: "10%", render: function (data, type, row, meta) {
-                    return lstatus_name(data);
+                    return row.status_name;
                 }},         
                 {data: 'id', visible: false},
                 {data: 'customer_id', visible: false},
+                {data: 'status_name', visible: false},
             ],            
             order: [[1, 'asc'],[3, 'asc'],[2, 'asc']]
         });
@@ -195,25 +196,3 @@
         });
     }
 })(jQuery);
-
-function lstatus_name(status_id) {
-    var status_Id =  Number(status_id);
-    var lstatus = '';
-    switch(status_Id) {
-        case 1:
-            lstatus += '<strong>Task</strong>';
-            break;
-        case 2:
-            lstatus += '<strong style="color:red;">Canceled</strong>';
-            break;
-        case 3:
-            lstatus += '<strong>Confirm</strong>';
-            break;
-        case 4:
-            lstatus += '<strong>API - inputtrx</strong>';
-            break;
-        default:
-            lstatus = '';
-    }
-    return lstatus;
-}

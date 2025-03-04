@@ -18,7 +18,7 @@ class Listmethod extends Bks_Controller {
         $this->template->build('admin/listmethod_v');
     }
     
-    function getDirContents($dir, &$results = array()) {
+    function getdircontents($dir, &$results = array()) {
         $files = scandir($dir);
         foreach ($files as $key => $value) {
             if ($value == 'auth' || $value == 'admin') {
@@ -39,7 +39,7 @@ class Listmethod extends Bks_Controller {
         return $results;
     }
     
-    function getDataClass() {
+    function getdataclass() {
         $files = $this->getDirContents($this->folder);
         foreach ($files as $key => $file) {
             $d[$key]['path'] = $file;
@@ -116,7 +116,7 @@ class Listmethod extends Bks_Controller {
         }
     }
     
-    function getData() {
+    function getdata() {
         checkIfNotAjax();
         $cpData = $this->Bksmdl->getDataTable();
         $this->Bksmdl->outputToJson($cpData);

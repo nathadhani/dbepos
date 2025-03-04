@@ -12,7 +12,7 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group row">
-                                <label for="menu" class="control-label col-lg-4">Cust. Identity Type</label>
+                                <label for="menu" class="control-label col-lg-4">Customer Identity Type</label>
                                 <div class="col-lg-8">
                                     <input type="text" id="customer_data_name" name="customer_data_name" placeholder="Jenis Identitas..." data-validation="required" class="form-control">
                                 </div>
@@ -61,11 +61,9 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Cust. Identity Type</th>
-                                <th>Diinput Oleh</th>
-                                <th>Tgl Input</th>
-                                <th>Diubah Oleh</th>
-                                <th>Tgl Ubah</th>
+                                <th>Customer Identity Type</th>
+                                <th>Created</th>
+                                <th>Updated</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
@@ -73,8 +71,6 @@
                         <thead id="searchid">
                             <tr>
                                 <td><button class="clrs btn btn-sm btn-info btn-line">Clear</button></td>
-                                <td></td>
-                                <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>

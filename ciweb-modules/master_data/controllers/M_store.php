@@ -83,7 +83,7 @@ class M_store extends Bks_Controller {
         }
     }
     
-    function getData() {
+    function getdata() {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $this->Bksmdl->table = 'v_m_company_store';
@@ -91,7 +91,7 @@ class M_store extends Bks_Controller {
         $this->Bksmdl->outputToJson($cpData);
     }
     
-    function getStore() {        
+    function getstore() {        
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $company_id = $this->input->post('company_id');
@@ -106,7 +106,7 @@ class M_store extends Bks_Controller {
         }
     }
     
-    function getStoreTrx() {
+    function getstoreTrx() {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $this->Bksmdl->table = 'm_company_store';

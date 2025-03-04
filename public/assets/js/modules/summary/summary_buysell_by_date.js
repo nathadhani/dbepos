@@ -6,7 +6,7 @@
             $('#store_id').prop('disabled', false);
             $('#store_id').focus()
             $.ajax({
-                url : baseUrl +  'master_data/m_store/getStore',
+                url : baseUrl +  'master_data/m_store/getstore',
                 type: 'POST',
                 data: {'company_id' : $(this).val()},
                 datatype: 'json',

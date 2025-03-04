@@ -10,7 +10,7 @@
             lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
             sDom: 'it<"row"lp>',
             ajax: {
-                url: baseUrl + 'transaction/transaction_buysell_task/getData',
+                url: baseUrl + 'transaction/transaction_buysell_task/getdata',
                 type: 'POST',
                 // beforeSend: function(){
                 //     $(".ajax-loader").height($(document).height());
@@ -47,10 +47,11 @@
                         return data;
                 }},                
                 {data: 'status', width: "10%", render: function (data, type, row, meta) {
-                    return lstatus_name(data);
+                    return row.status_name;
                 }},          
                 {data: 'id', visible: false},
                 {data: 'customer_id', visible: false},
+                {data: 'status_name', visible: false},
                 {data: 'createdby', visible: false},
             ],            
             order: [[1, 'asc'],[3, 'asc'],[2, 'asc']]
@@ -101,7 +102,7 @@
                 if(Number(d.tr_id) == 1){
                     url = call_page_task_buy(d.customer_id, d.id);
                 } else {
-                    url = call_page_task_sale(d.customer_id, d.id);
+                    url = call_page_task_sell(d.customer_id, d.id);
                 }
             }
             if(url !== ''){
@@ -119,25 +120,3 @@
         });
     }
 })(jQuery);
-
-function lstatus_name(status_id) {
-    var status_Id =  Number(status_id);
-    var lstatus = '';
-    switch(status_Id) {
-        case 1:
-            lstatus += '<strong>Task</strong>';
-            break;
-        case 2:
-            lstatus += '<strong style="color:red;">Canceled</strong>';
-            break;
-        case 3:
-            lstatus += '<strong>Confirm</strong>';
-            break;
-        case 4:
-            lstatus += '<strong>API - inputtrx</strong>';
-            break;
-        default:
-            lstatus = '';
-    }
-    return lstatus;
-}

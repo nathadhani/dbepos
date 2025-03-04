@@ -15,15 +15,15 @@
                             <h3>Customer Form / <strong id="ftitle"></strong></h3>
                         </div>
                         <ul class="panel-controls">
-                            <button id="btn-buy" class="btn btn-default btn btn-sm" style="width:120px;font-weight:bold;color:blue;">Buy / Beli</button>
-                            <button id="btn-sell" class="btn btn-default btn-sm" style="width:120px;font-weight:bold;color:red;">Sell / Jual</button>
+                            <button id="btn-buy" class="btn btn-primary btn btn-sm" style="width:120px;">Buy / Beli</button>
+                            <button id="btn-sell" class="btn btn-danger btn btn-sm" style="width:120px;margin-left:5px;">Sell / Jual</button>
                         </ul>
-                    </div>
+                    </div>                    
                     <div class="panel-body">                        
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="form_name" class="control-label col-lg-4">Customer Code</label>
+                                    <label for="form_name" class="control-label col-lg-4">CIF</label>
                                     <div class="col-lg-8">
                                         <div class="input-group">
                                             <input type="text" id="customer_code" name="customer_code" class="form-control" style="width:120px;" readonly>
@@ -122,8 +122,8 @@
                                                 data-url="master_data/m_nationality/getNationality/"
                                                 data-value="" 
                                                 data-limit="100"
-                                                id="country_id" 
-                                                placeholder="Warga Negara"
+                                                id="nationality_id"
+                                                placeholder="Kebangsaan"
                                                 class='form-control select2'                                                
                                         >
                                         </select>
@@ -207,11 +207,11 @@
                     </div>
                     <!--.end panel-body -->
                     
-                    <div class="panel-body" style="margin-top:-25px;">
+                    <div class="panel-body" style="margin-top:-35px;">
                         <div class="row">
                             <div class="col-lg-12">
-                                <button type="reset" class="btn btn-default btn btn-sm pull-right" style="width:120px;margin-left:10px;">Reset</button>
-                                <button type="submit" class="btn btn-default btn btn-sm pull-right" style="width:120px;">Submit</button>
+                                <button type="reset" class="btn btn-danger btn btn-sm pull-right" style="width:120px;margin-left:10px;">Reset</button>
+                                <button type="submit" class="btn btn-primary btn btn-sm pull-right" style="width:120px;">Save</button>
                             </div>
                         </div>                            
                     </div>
@@ -223,7 +223,7 @@
         <div class="col-md-12">            
             <div class="panel panel-default">
                 <div class="panel-heading ui-draggable-handle">
-                    <h3 class="panel-title"><i class="fa fa-user"></i>&nbsp;Photo</h3>
+                    <h3 class="panel-title">Photo</h3>
                     <ul class="panel-controls">
                         <a class="file-input-wrapper btn btn-info fileinput"><span>Upload</span>           
                             <form id="form_foto" method="post" enctype="multipart/form-data">
@@ -242,34 +242,9 @@
                         </div>
                         <div class="col-md-3">
                         </div>
-                    </div>
-                    <hr style="border: 1px solid green;">
-                </div>                    
-
-                <div class="panel-body created_updated" style="margin-top:-25px;">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <table style="width:100%" class="table table-bordered table-condensed table-hoverx table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Created by</th>
-                                        <th>Created</th>
-                                        <th>Updated by</th>
-                                        <th>Updated</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <td id="createdby_name"></td>
-                                    <td id="created"></td>
-                                    <td id="updatedby_name"></td>
-                                    <td id="updated"></td>
-                                </tbody>                                    
-                            </table>                                
-                        </div>                           
                     </div>                    
-                </div>                    
-                <!--.end panel-body -->                                                                                     
-            </div>            
-        </div>        
-    </div>          
+                </div>                                                                                                                    
+            </div>        
+        </div>
+    </div>
 </div>

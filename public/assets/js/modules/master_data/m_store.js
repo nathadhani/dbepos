@@ -89,7 +89,7 @@
         sDom: 'it<"row"lp>',
         lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
         ajax: {
-            url: baseUrl + 'master_data/m_store/getData',
+            url: baseUrl + 'master_data/m_store/getdata',
             type: 'POST'
         },
         columns: [

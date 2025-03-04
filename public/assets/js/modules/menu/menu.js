@@ -74,7 +74,7 @@
         sDom: 'it<"row"lp>',
         pageLength: 10,
         ajax: {
-            url: baseUrl + 'menu/getData',
+            url: baseUrl + 'menu/getdata',
             type: 'POST'
         },
         columns: [

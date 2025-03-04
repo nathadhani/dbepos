@@ -26,7 +26,7 @@ class Transaction_buysell extends Bks_Controller {
         $branchcode = sprintf("%02d", $company_id);
         $storecode  =sprintf("%02d", $store_id);
         $trcode = sprintf("%02d", $tr_id);
-        $sql = $this->db->query("SELECT max(right(tr_number_temp,4)) as id 
+        $sql = $this->db->query("SELECT max(right(tr_number_temp,6)) as id 
                                  FROM tr_header
                                  WHERE company_id = $company_id
                                  AND store_id = $store_id 
@@ -39,7 +39,7 @@ class Transaction_buysell extends Bks_Controller {
                 $Number = intval($data->id) + 1;
             }
         }        
-        return SUBSTR($thn,2,2) . $bln . '-' . $branchcode . $storecode . '-' . $trcode . sprintf("%04d", $Number);
+        return SUBSTR($thn,2,2) . $bln . $branchcode . $storecode . $trcode . sprintf("%06d", $Number);
     }    
     
     function generate_code_confirm($company_id, $store_id, $tr_id, $tr_date) {
@@ -49,7 +49,7 @@ class Transaction_buysell extends Bks_Controller {
         $branchcode = sprintf("%02d", $company_id);
         $storecode  =sprintf("%02d", $store_id);
         $trcode = sprintf("%02d", $tr_id);
-        $sql = $this->db->query("SELECT max(right(tr_number,4)) as id 
+        $sql = $this->db->query("SELECT max(right(tr_number,6)) as id
                                  FROM tr_header 
                                  WHERE company_id = $company_id
                                  AND store_id = $store_id
@@ -62,7 +62,7 @@ class Transaction_buysell extends Bks_Controller {
                 $Number = intval($data->id) + 1;
             }
         }
-        return SUBSTR($thn,2,2) . $bln . '-' . $branchcode . $storecode . '-' . $trcode . sprintf("%04d", $Number);
+        return SUBSTR($thn,2,2) . $bln . $branchcode . $storecode . $trcode . sprintf("%06d", $Number);
     }
    
     function insert_header(){
@@ -74,6 +74,8 @@ class Transaction_buysell extends Bks_Controller {
         $postData['company_id'] = $this->company_id;
         $postData['tr_date'] = revDate($postData['tr_date']);
         $postData['tr_number_temp'] = $this->generate_code_temp($this->company_id, $postData['store_id'], $tr_id, $postData['tr_date']);
+        $postData['customer_source'] = ucwords(strtolower(trim($postData['customer_source'])));
+        $postData['customer_purpose'] = ucwords(strtolower(trim($postData['customer_purpose'])));
         $postData['createdby'] = $postData['user_id'];
         $postData['status'] = '1';
         unset($postData['user_id']);       
@@ -102,6 +104,8 @@ class Transaction_buysell extends Bks_Controller {
 
         $id = $postData['id'];
         $postData['company_id'] = $this->company_id;
+        $postData['customer_source'] = ucwords(strtolower(trim($postData['customer_source'])));
+        $postData['customer_purpose'] = ucwords(strtolower(trim($postData['customer_purpose'])));
         $postData['updatedby'] = $postData['user_id'];
         $postData['status'] = '1';   
         unset($postData['tr_date']);   
@@ -318,14 +322,20 @@ class Transaction_buysell extends Bks_Controller {
         }
     }
 
-    function cancel_task(){
+    function cancel_trx(){
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
-        $header_id = json_decode($postData['id']);
+        $header_id = json_decode($postData['id']);        
+        if( isset($postData['description']) ){
+            $postData['description'] = ucwords(strtolower(trim($postData['description']))); 
+        } else {
+            $postData['description'] = 'Canceled';
+        }
+        // var_dump($postData);exit;
         $this->db->trans_begin();
         $this->db->where(array('id' => $header_id));
-        $this->db->update('tr_header', array('status' => 2, 'description' => 'Canceled', 'updated' => date('Y-m-d H:i:s', time()), 'updatedby' => $this->userId) );
+        $this->db->update('tr_header', array('status' => 2, 'description' => $postData['description'], 'updated' => date('Y-m-d H:i:s', time()), 'updatedby' => $this->userId) );
         if ($this->db->trans_status() === FALSE) {
             $this->db->trans_rollback();
             $err = $this->db->error();

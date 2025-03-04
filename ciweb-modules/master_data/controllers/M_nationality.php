@@ -11,7 +11,7 @@ class M_nationality extends Bks_Controller {
     function index() {
         $this->libauth->check(__METHOD__);
         $this->template->title('Nationality');
-        $this->template->set('tsmall', 'Data');
+        $this->template->set('tsmall', 'File');
         $this->template->set('icon', 'fa fa-navicon');
         $this->template->build('master_data/m_nationality_v');
     }
@@ -78,15 +78,15 @@ class M_nationality extends Bks_Controller {
         }
     }
     
-    function getData() {
+    function getdata() {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
-        $this->Bksmdl->table = 'v_m_nationality';
+        $this->Bksmdl->table = 'm_nationality';
         $cpData = $this->Bksmdl->getDataTable();
         $this->Bksmdl->outputToJson($cpData);
     }
     
-    function getNationality() {
+    function getnationality() {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $this->Bksmdl->table = 'm_nationality';

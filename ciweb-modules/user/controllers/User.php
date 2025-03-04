@@ -120,7 +120,7 @@ class User extends Bks_Controller {
         }
     }
    
-    function getData() {
+    function getdata() {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $this->Bksmdl->table = 'v_auth_users';
@@ -139,7 +139,7 @@ class User extends Bks_Controller {
         $this->Bksmdl->outputToJson($cpData);
     }
     
-    function getUsergroup() {
+    function getusergroup() {
         checkIfNotAjax();
         $usergroup_id = $this->auth['usergroup_id'];
         if ($usergroup_id != '1')
@@ -163,7 +163,7 @@ class User extends Bks_Controller {
         echo json_encode($result);
     } 
     
-    function getUserlevel() {
+    function getuserlevel() {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $this->Bksmdl->table = 'auth_userlevel';
@@ -174,7 +174,7 @@ class User extends Bks_Controller {
         echo json_encode($result);
     }
     
-    function getDataUser() {
+    function getdatauser() {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $this->Bksmdl->table = 'v_auth_users';
@@ -187,7 +187,7 @@ class User extends Bks_Controller {
         echo json_encode($result);
     }    
     
-    function getCreatedby() {
+    function getcreatedby() {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $this->Bksmdl->table = 'v_auth_users';
@@ -198,7 +198,7 @@ class User extends Bks_Controller {
         echo json_encode($result);
     }
     
-    function getuserbyId() {
+    function getuserbyid() {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
@@ -207,7 +207,7 @@ class User extends Bks_Controller {
         echo json_encode($query, true);
     }
     
-    function getcountuserbyCompanyId() {
+    function getcountuserbycompanyid() {
         checkIfNotAjax();
         $postData = $this->input->post();
         $company_id = $postData['company_id'];

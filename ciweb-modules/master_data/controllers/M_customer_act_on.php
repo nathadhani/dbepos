@@ -1,19 +1,19 @@
 <?php
 
-class M_customer_type extends Bks_Controller {
+class M_customer_act_on extends Bks_Controller {
 
     function __construct() {
-        $config = array('modules' => 'master_data', 'jsfiles' => array('m_customer_type'));
+        $config = array('modules' => 'master_data', 'jsfiles' => array('m_customer_act_on'));
         parent::__construct($config);
-        $this->Bksmdl->table = 'm_customer_type';
+        $this->Bksmdl->table = 'm_customer_act_on';
     }
     
     function index() {
         $this->libauth->check(__METHOD__);
-        $this->template->title('Customer Type');
+        $this->template->title('Customer act on');
         $this->template->set('tsmall', 'File');
         $this->template->set('icon', 'fa fa-navicon');
-        $this->template->build('master_data/m_customer_type_v');
+        $this->template->build('master_data/m_customer_act_on_v');
     }
     
     function insert() {
@@ -21,7 +21,7 @@ class M_customer_type extends Bks_Controller {
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
         $postData['status'] = cekStatus($postData);
-
+        
         $this->db->trans_begin();
         $status = $this->Bksmdl->insert($postData);
         if ($this->db->trans_status() === FALSE) {
@@ -35,7 +35,7 @@ class M_customer_type extends Bks_Controller {
             echo json_encode($json);
         }
     }
-    
+
     function update() {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
@@ -81,17 +81,17 @@ class M_customer_type extends Bks_Controller {
     function getdata() {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
-        $this->Bksmdl->table = 'm_customer_type';
+        $this->Bksmdl->table = 'm_customer_act_on';
         $cpData = $this->Bksmdl->getDataTable();
         $this->Bksmdl->outputToJson($cpData);
     }
-    
-    function gettype() {
+
+    function getacton() {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
-        $this->Bksmdl->table = 'm_customer_type';
-        $this->Bksmdl->searchable = array('customer_type_name', 'id');
-        $this->Bksmdl->select2fields = array('id' => 'id', 'text' => "concat(customer_type_name,' [', id,']')");
+        $this->Bksmdl->table = 'm_customer_act_on';
+        $this->Bksmdl->searchable = array('customer_act_on', 'id');
+        $this->Bksmdl->select2fields = array('id' => 'id', 'text' => "concat(customer_act_on,' [', id,']')");
         $result['results'] = $this->Bksmdl->getSelect2(array('status' => '1'));
         $result['more'] = true;
         echo json_encode($result);

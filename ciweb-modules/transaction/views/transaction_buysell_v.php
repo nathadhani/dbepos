@@ -22,15 +22,15 @@
                                 if($this->uri->segment(5) === '432d21') {
                                     echo '<span style="color:blue;font-weight:800;font-size:20px;">Buy / Beli</span>';
                                 } else if($this->uri->segment(5) === '523d3455') {
-                                    echo '<span style="color:red;font-weight:800;">Sell / Jual</span>';
+                                    echo '<span style="color:red;font-weight:800;font-size:20px;">Sell / Jual</span>';
                                 }
                             ?>                               
                             - <span id="ftitle" style="color:black;font-weight:600;font-size:16px;">Add</span>
                         </h3>
                     </div>
                     <ul class="panel-controls">
-                        <button id="btn-confirm" class="btn btn-default btn btn-sm" style="width:120px;font-weight:bold;color:blue;">Confirm</button>
-                        <button id="btn-cancel" class="btn btn-default btn-sm" style="width:120px;font-weight:bold;color:red;">Cancel</button>
+                        <button id="btn-confirm" class="btn btn-success btn btn-sm" style="width:120px;">Confirm</button>
+                        <button id="btn-cancel" class="btn btn-danger btn-sm" style="width:120px;">Cancel</button>
                     </ul>    
                 </div>                  
                 <div class="panel-body">                                       
@@ -54,7 +54,7 @@
                             </div>
                             <div class="col-md-8">
                                 <div class="form-group">                                
-                                    <div class="col-lg-10">
+                                    <div class="col-lg-12">
                                         <label for="store_id" style="display:block">Store</label>
                                         <select id="store_id"
                                                 name="store_id"
@@ -68,15 +68,12 @@
                                                 require
                                         >
                                         </select>
-                                    </div>
-                                    <div class="col-lg-2">
-                                        <button id="btn-simpan-header" class="btn btn-default btn btn-sm" style="width:110px;font-weight:bold;">Save</button>
-                                    </div>
+                                    </div>                                    
                                 </div>
                             </div>
                         </div>
                         <div class="row" style="margin-left:-5px;margin-top:15px;">                                                              
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <div class="form-group">                                
                                     <div class="col-lg-12">
                                         <label for="customer_name" style="display:block">Customer</label>
@@ -84,7 +81,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <div class="form-group">                                
                                     <div class="col-lg-12">
                                         <label for="store_id" style="display:block">Source</label>
@@ -92,11 +89,14 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="form-group">                                
-                                    <div class="col-lg-12">
+                                    <div class="col-lg-8">
                                         <label for="store_id" style="display:block">Purpose</label>
                                         <input type="text" autofocuse="" id="customer_purpose" name="customer_purpose" class="form-control" placeholder="Tujuan Transaksi...">
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <button id="btn-simpan-header" class="btn btn-primary btn btn-sm" style="width:100px;">Save Task</button>
                                     </div>
                                 </div>
                             </div>                            
@@ -189,7 +189,7 @@
                                                     <input type="text" autofocuse="" id="subtotal" name="subtotal" class="form-control" style='text-align:right;' value="0" readonly>
                                                 </td>                                                                
                                                 <td width="10%" style='text-align:center'>
-                                                    <button id="btn-add-row-detail" class="btn btn-default btn btn-sm" style="width:90px;">Add</button>
+                                                    <button id="btn-add-row-detail" class="btn btn-primary btn btn-sm" style="width:90px;">Add</button>
                                                 </td>                
                                             </tr>                                         
                                         </tbody>                                       
@@ -210,4 +210,40 @@
             </div>
         </div>
     </div>   
+</div>
+
+<div class="modal fade" id="ModalCancel" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Reason</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form id="mainForm" class="form-horizontal" autocomplete="off">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <div class="row">                        
+                                        <div class="col-lg-12">
+                                            <div class="form-group">                                
+                                                <div class="col-lg-10">
+                                                    <label for="modal-description" style="display:block">Reason Cancel</label>
+                                                    <input type="text" autofocuse="" id="modal-description" name="modal-description" class="form-control" placeholder="Alasan Batal..." required>
+                                                </div>
+                                                <div class="col-lg-2">
+                                                    <button id="btn-cancel-modal" class="btn btn-danger btn btn-sm" style="width:120px;">Submit</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

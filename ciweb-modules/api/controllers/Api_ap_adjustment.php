@@ -17,7 +17,7 @@ class Api_ap_adjustment extends Bks_Controller {
         $this->template->build('api/api_ap_adjustment_v', $data);
     }
     
-    function getData() {
+    function getdata() {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();

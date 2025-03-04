@@ -3,7 +3,7 @@
         <div class="panel panel-default">
             <div class="panel-heading ui-draggable-handle">
                 <div class="panel-title-box">
-                    <h3>Store List</h3>
+                    <h3>Branch List</h3>
                 </div>
             </div>
             <div class="panel-body">
@@ -13,14 +13,12 @@
                             <tr>
                                 <th>#</th>
                                 <th>Branch</th>
-                                <th>Store</th>
                                 <th>Status</th>
                             </tr>
                         </thead>
                         <thead id="searchid">
                             <tr>
                                 <td><button class="clrs btn btn-sm btn-info btn-line">Clear</button></td>
-                                <td></td>
                                 <td></td>
                                 <td></td>
                             </tr>

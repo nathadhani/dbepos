@@ -29,7 +29,7 @@
                                 if($this->uri->segment(5) === '432d21') {
                                     echo '<span style="color:blue;font-weight:800;font-size:20px;">Buy / Beli</span>';
                                 } else if($this->uri->segment(5) === '523d3455') {
-                                    echo '<span style="color:red;font-weight:800;">Sell / Jual</span>';
+                                    echo '<span style="color:red;font-weight:800;font-size:20px;">Sell / Jual</span>';
                                 }
                             ?>
                         </h3>
@@ -41,35 +41,31 @@
                             if($get_AP){                                                                          
                                 if($get_AP[0]->api_method === '1') {              
                         ?>
-                            <button id="btn-input" class="btn btn-default btn btn-sm" style="width:120px;font-weight:bold;color:blue;">Submit</button>
+                            <button id="btn-submit" class="btn btn-success btn btn-sm" style="width:130px;">Submit to ECSys</button>
                         <?php
                                 }
                             }
                         ?>                                                                                                                      
-                        <button id="btn-cancel" class="btn btn-default btn-sm" style="width:120px;font-weight:bold;color:red;">Cancel</button>
-                        <button id="btn-pdf" class="btn btn-default btn-sm" style="width:120px;font-weight:bold;">Print</button>
+                        <button id="btn-cancel" class="btn btn-danger btn btn-sm" style="width:120px;">Cancel</button>
+                        <button id="btn-pdf" class="btn btn-primary btn btn-sm" style="width:120px;">Print</button>
                     </ul>    
                 </div>
                 <form id="mainForm" class="form-horizontal" autocomplete="off">
                     <div class="panel-body">   
                         <div class="row">
-                            <div class="col-md-2">     
+                            <div class="col-md-6">     
+                                Store : <span id="store_address"></span><br>
                                 Number <span id="tr_number"></span><br>
                                 Date <span id="tr_date"></span><br>
-                                Status : <span id="ftitle"></span>
+                                Status : <span id="ftitle"></span><br>
+                                Description : <span id="description_header"></span>
                             </div>    
-                            <div class="col-md-4">                                
+                            <div class="col-md-6">                                
                                 Customer : <a href="#" id="customer_name"></a><br>
                                 Source : <span id="customer_source"></span><br>
-                                Purpose : <span id="customer_purpose"></span>
-                            </div>                            
-                            <div class="col-md-3">   
+                                Purpose : <span id="customer_purpose"></span><br>
                                 Payment Type : <span id="payment_name"></span><br>
-                                Cashier Name : <span id="cashier_name"></span><br>
-                                Description : <span id="description_header"></span>
-                            </div>
-                            <div class="col-md-3">
-                                Store : <span id="store_address"></span>                                
+                                Cashier Name : <span id="cashier_name"></span>
                             </div>
                         </div>
 
@@ -100,9 +96,11 @@
                         <hr style="border: 1px solid green;margin-top:-15px;">
 
                         <div class="row" style="margin-top:-10px;">
-                            <div class="col-md-12">                     
+                            <div class="col-md-6">                     
                                 <span id="created_by"></span>
-                                <span id="cancel_by"></span>
+                            </div>
+                            <div class="col-md-6">                     
+                                <span id="cancel_by" class="pull-right"></span>
                             </div>
                         </div>
 
@@ -123,7 +121,7 @@
                                                         <br>
                                                         <table class="table table-bordered table-condensed table-hover" width="100%">
                                                             <thead>
-                                                                <span style="color:black;font-weight:bolder;">API - logs</span>
+                                                                <span style="color:black;font-weight:bolder;">Integrasi System ECSys (API) - logs</span>
                                                                 <tr>
                                                                     <th style='vertical-align: middle;text-align:left;'>Method</th>
                                                                     <th style='vertical-align: middle;text-align:left;'>Status</th>
@@ -164,4 +162,40 @@
             </div>
         </div>
     </div>   
+</div>
+
+<div class="modal fade" id="ModalCancel" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Reason</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form id="mainForm" class="form-horizontal" autocomplete="off">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <div class="row">                        
+                                        <div class="col-lg-12">
+                                            <div class="form-group">                                
+                                                <div class="col-lg-10">
+                                                    <label for="modal-description" style="display:block">Reason Cancel</label>
+                                                    <input type="text" autofocuse="" id="modal-description" name="modal-description" class="form-control" placeholder="Alasan Batal..." required>
+                                                </div>
+                                                <div class="col-lg-2">
+                                                    <button id="btn-cancel-modal" class="btn btn-danger btn btn-sm" style="width:120px;">Submit</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

@@ -121,7 +121,7 @@ class Ppatk_dttot extends Bks_Controller {
         }
     }
    
-    function getData() {
+    function getdata() {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $cpData = $this->Bksmdl->getDataTable();

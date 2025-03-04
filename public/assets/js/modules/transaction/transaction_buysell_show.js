@@ -22,11 +22,41 @@
                             $("body").data("id", d.id);
                             $("#tr_number").html(': '+d.tr_number);
                             $("#tr_date").html(': '+bksfn.revDate(d.tr_date));
-                            $("#ftitle").html(lstatus_name(d.status));
                             
-                            $("#created_by").html('Created by : '+d.createdby_name +' | '+d.created);
+                            $("#ftitle").html(d.status == 2 ? '<span style="color:red;font-weight:bolder;">'+d.status_name+'</span>' : d.status_name);
+                            switch(Number(d.status)) {
+                                case 1:                
+                                    $("#btn-submit").hide();
+                                    $("#btn-cancel").show();
+                                    $("#btn-pdf").show();
+                                    break;
+                                case 2:
+                                    $("#btn-submit").hide();
+                                    $("#btn-cancel").hide();
+                                    $("#btn-pdf").show();
+                                    break;
+                                case 3:
+                                    if(Number(Apimethod) == 1){
+                                        $("#btn-submit").show();
+                                    }
+                                    $("#btn-cancel").show();
+                                    $("#btn-pdf").show();              
+                                    break;
+                                case 4:
+                                    $("#btn-submit").hide();   
+                                    $("#btn-cancel").show();
+                                    $("#btn-pdf").show();                                           
+                                    break;
+                                default:
+                                    $("#btn-submit").hide();
+                                    $("#btn-cancel").hide();
+                                    $("#btn-pdf").hide();
+                                    break;
+                            }
+                            
+                            $("#created_by").html('Created by : '+d.createdby_name +' - '+d.created);
                             if(d.status == '2'){
-                                $("#cancel_by").html('Canceled by : '+d.updatedby_name +' | '+d.updated);
+                                $("#cancel_by").html('Canceled by : '+d.updatedby_name +' - '+d.updated);
                             }                            
 
                             $("#customer_name").html(d.customer_name);
@@ -114,40 +144,7 @@
                 });
             }
         }        
-    }
-
-    function lstatus_name(status_id) {
-        var status_Id =  Number(status_id);
-        var lstatus = '';
-        switch(status_Id) {
-            case 1:
-                lstatus += 'Task';
-                $("#btn-submit").hide();
-                break;
-            case 2:
-                lstatus += 'Canceled';
-                $("#btn-submit").hide();
-                $("#btn-cancel").hide();
-                $("#btn-pdf").hide();
-                break;
-            case 3:
-                lstatus += 'Confirm';
-                $("#btn-submit").hide();                
-                break;
-
-            case 4:
-                lstatus += 'API - inputtrx';
-                if(Number(Apimethod) == 1){
-                    $("#btn-submit").show();
-                    $("#btn-cancel").show();
-                }                
-                $("#btn-submit").hide();                
-                break;    
-            default:
-                lstatus = '';
-        }
-        return lstatus;
-    }
+    }    
 
     $("#customer_name").on('click', function (e) {
         e.preventDefault();
@@ -164,9 +161,9 @@
         }); 
     });
 
-    $("#btn-input").on('click', function (e) {
+    $("#btn-submit").on('click', function (e) {
         e.preventDefault();
-        alertify.confirm("are you sure, Submit API - Input ?", function (x) {
+        alertify.confirm("are you sure, Submit to ECSYS applicatoin Angkasapura ?", function (x) {
             if (x) {
                 api_ap_input_trx(id_tr_header);
             }
@@ -176,23 +173,29 @@
     // $("li#btn-cancel").click(function(e) {
     $("#btn-cancel").on('click', function (e) {
         e.preventDefault();
-        if(Number(Apimethod) == 1){
-            alertify.confirm("are you sure, API - Transaction Adjustment ?", function (x) {
-                if (x) {
-                    api_ap_adjustment_trx(id_tr_header);
-                }
-            });
-        } else {
+        $(".modal-dialog").width('800px');
+        $("#ModalCancel").modal('show');                    
+    });    
+    $("#btn-cancel-modal").on('click', function (e) {
+        e.preventDefault();
+        if($("#modal-description").val() === '' || $("#modal-description").val() === null ){
+            bksfn.errMsg('Alasan belum di input!');
+        } else {            
             alertify.confirm("are you sure, CANCEL transaction ?", function (x) {
                 if (x) {
                     $.ajax({
                         url: baseUrl + 'transaction/transaction_buysell/cancel_trx',
                         type: 'POST',
-                        data: {'id' : id_tr_header},
+                        data: {'id' : id_tr_header, 'description' : $("#modal-description").val()},
                         datatype: 'json',
                         success: function() {
-                            back_to_page_show();
-                            alertify.success('CANCEL Transaction Success!');
+                            if(Number(Apimethod) == 1){
+                                api_ap_adjustment_trx(id_tr_header);
+                            } else {
+                                back_to_page_show();
+                                alertify.success('CANCEL Transaction Success!');
+                            }         
+                            $("#ModalCancel").modal('hide');                
                         },
                         error: function(xhr){
                             alertify.error("error");
@@ -203,10 +206,9 @@
                 } else {
                     back_to_page_show();
                 }   
-            });
-        }            
-    });   
-    
+            });            
+        }          
+    });    
 
     $("#btn-pdf").on('click', function (e) {
         e.preventDefault();

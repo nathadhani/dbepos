@@ -12,7 +12,7 @@ class M_exchange_rate extends Bks_Controller {
     
     function index() {
         $this->template->title('Exchange Rate');
-        $this->template->set('tsmall', 'Data');
+        $this->template->set('tsmall', 'File');
         $this->template->build('master_data/m_exchange_rate_v');
     }   
     
@@ -219,7 +219,7 @@ class M_exchange_rate extends Bks_Controller {
         }
     }
     
-    function getData() {
+    function getdata() {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();

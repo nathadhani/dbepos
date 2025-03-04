@@ -170,7 +170,7 @@ $.validate({
  */
 // $("#upload_foto").fileinput({
 //     showUpload: false,
-//     showCaption: true,
+//     showCaption: false,
 //     browseClass: "btn btn-danger",
 //     fileType: "any"
 // });
@@ -236,6 +236,11 @@ $('#upload_foto').on('change',function(e){
                     $("#ftitle").html('Edit');
                     $("body").data("id", d.id);
 
+                    if(d.status !== '1'){
+                        $("#btn-buy").hide();
+                        $("#btn-sell").hide();
+                    }
+
                     $("#customer_code").val(d.customer_code);
                     
                     $('#links').empty();
@@ -245,27 +250,27 @@ $('#upload_foto').on('change',function(e){
                         if(d.customer_type_id === '1'){
                             $(".perorangan").show();
                             $(".cfoto").show();
-                            if ($('#customer_code').val() !== null && $('#customer_code').val() !== ''){                     
-                                var image_url = baseUrl + "assets/img/customer_form/" + d.customer_code + ".jpg";
-                                $.ajax({
-                                    url:image_url,
-                                    type:'HEAD',
-                                    success: function() {
-                                        //file exists
-                                        var showfoto = '<a class="gallery-item" href="'+image_url+'" data-gallery>'+
-                                                            '<div class="image">'+
-                                                                '<img src="'+image_url+'" alt="" style="height:325px;width:550px;"/>'+
-                                                            '</div>'+
-                                                        '</a>'                                                     
-                                        $('#links').append(showfoto);
-                                        $("#links").show();
-                                    },
-                                    error: function() {
-                                        //file not exists
-                                        $("#links").hide();
-                                    }
-                                });
-                            }
+                            // if ($('#customer_code').val() !== null && $('#customer_code').val() !== ''){                     
+                            //     var image_url = baseUrl + "assets/img/customer_form/" + d.customer_code + ".jpg";
+                            //     $.ajax({
+                            //         url:image_url,
+                            //         type:'HEAD',
+                            //         success: function() {
+                            //             //file exists
+                            //             var showfoto = '<a class="gallery-item" href="'+image_url+'" data-gallery>'+
+                            //                                 '<div class="image">'+
+                            //                                     '<img src="'+image_url+'" alt="" style="height:325px;width:550px;"/>'+
+                            //                                 '</div>'+
+                            //                             '</a>'                                                     
+                            //             $('#links').append(showfoto);
+                            //             $("#links").show();
+                            //         },
+                            //         error: function() {
+                            //             //file not exists
+                            //             $("#links").hide();
+                            //         }
+                            //     });
+                            // }
                         } else {
                             $(".perorangan").hide();
                             $(".cnpwp").show();
@@ -316,11 +321,6 @@ $('#upload_foto').on('change',function(e){
                     $("#city").val(d.city);   
                     $("#customerprofil").val(d.customerprofil);    
                     $("#status").iCheck(d.status == 1 ? 'check' : 'uncheck');                     
-
-                    $("#createdby_name").html(d.createdby_name);
-                    $("#created").html(d.created);
-                    $("#updatedby_name").html(d.updatedby_name);
-                    $("#updated").html(d.updated);                    
                     
                     $("#btn-buy").show();
                     $("#btn-sell").show();
@@ -367,12 +367,7 @@ function reset_form(){
     $("#village").html('');
     $("#sub_district").html('');
     $("#city").html('');        
-    $("#customerprofil").html('');
-   
-    $("#createdby_name").html('');
-    $("#created").html('');
-    $("#updatedby_name").html('');
-    $("#updated").html('');
+    $("#customerprofil").html('');   
 
     $(':submit').removeAttr('disabled');
 
@@ -402,38 +397,94 @@ function back_to_page_ini(){
  * button buy/beli
  */
 $("#btn-buy").click(function (e) {
-    e.preventDefault();
-    $.ajax({
-        url: baseUrl + 'transaction/customer_form/getByID',
-        type: 'POST',
-        data: {'id' : $("body").data("id")},
-        datatype: 'json',
-        success: function(data){
-            var d = JSON.parse(data)[0];            
-            $("#customer_code").val(d.customer_code);        
-            if(d.status === '0'){ // Non Active
-                bksfn.errMsg("status data tidak aktif!");
-            } else {
-                alertify.confirm("Transaction Buy / Beli ?", function (x) {    
-                    if (x) {                                   
-                        var url = call_page_task_buy($("body").data("id"), null);
-                        if(url !== ''){
-                            $.ajax({
-                                url: url,
-                                type: 'POST',
-                                success: function() {
-                                    window.open(url,'_self'); 
+    e.preventDefault();    
+    if($("#customer_data_number").val() !== '' && $("#customer_data_number").val() !== null){
+        $.ajax({
+            url: baseUrl + 'transaction/customer_form/ceknikdttot',
+            type: 'POST',
+            data: {'nik' : $("#customer_data_number").val()},
+            datatype: 'json',
+            success: function(data){
+                try {
+                    var d = JSON.parse(data)[0];
+                    if(d.deskripsi !== null && d.deskripsi !== ''){
+                        alertify.alert('Peringatan, Pelanggan ini Terdaftar di list DTTOT PPATK...!');
+                        $("#btn-buy").hide();
+                        $("#btn-sell").hide();
+                    } else {
+                        $.ajax({
+                            url: baseUrl + 'transaction/customer_form/getbyid',
+                            type: 'POST',
+                            data: {'id' : $("body").data("id")},
+                            datatype: 'json',
+                            success: function(data){
+                                var d = JSON.parse(data)[0];            
+                                $("#customer_code").val(d.customer_code);        
+                                if(d.status === '0'){ // Non Active
+                                    bksfn.errMsg("status data tidak aktif!");
+                                } else {
+                                    alertify.confirm("Transaction Buy / Beli ?", function (x) {    
+                                        if (x) {                                   
+                                            var url = call_page_task_buy($("body").data("id"), null);
+                                            if(url !== ''){
+                                                $.ajax({
+                                                    url: url,
+                                                    type: 'POST',
+                                                    success: function() {
+                                                        window.open(url,'_self'); 
+                                                    }
+                                                });
+                                            }                        
+                                        }    
+                                    });                
                                 }
-                            });
-                        }                        
-                    }    
-                });                
+                            },
+                            error: function(xhr){
+                                alertify.error(xhr.responseText);
+                            }
+                        });
+                    }
+                } catch (error) {
+                    console.error('Error parsing JSON:', error.message);
+                }                            
+            },
+            error: function(xhr){
+                alertify.error(xhr.responseText);
             }
-        },
-        error: function(xhr){
-            alertify.error(xhr.responseText);
-        }
-    });            
+        });
+    } else {
+        $.ajax({
+            url: baseUrl + 'transaction/customer_form/getbyid',
+            type: 'POST',
+            data: {'id' : $("body").data("id")},
+            datatype: 'json',
+            success: function(data){
+                var d = JSON.parse(data)[0];            
+                $("#customer_code").val(d.customer_code);        
+                if(d.status === '0'){ // Non Active
+                    bksfn.errMsg("status data tidak aktif!");
+                } else {
+                    alertify.confirm("Transaction Buy / Beli ?", function (x) {    
+                        if (x) {                                   
+                            var url = call_page_task_buy($("body").data("id"), null);
+                            if(url !== ''){
+                                $.ajax({
+                                    url: url,
+                                    type: 'POST',
+                                    success: function() {
+                                        window.open(url,'_self'); 
+                                    }
+                                });
+                            }                        
+                        }    
+                    });                
+                }
+            },
+            error: function(xhr){
+                alertify.error(xhr.responseText);
+            }
+        });
+    }                  
 });
 
 /**
@@ -441,35 +492,115 @@ $("#btn-buy").click(function (e) {
  */
 $("#btn-sell").click(function (e) {
     e.preventDefault();
+    if($("#customer_data_number").val() !== '' && $("#customer_data_number").val() !== null){
+        $.ajax({
+            url: baseUrl + 'transaction/customer_form/ceknikdttot',
+            type: 'POST',
+            data: {'nik' : $("#customer_data_number").val()},
+            datatype: 'json',
+            success: function(data){
+                try {
+                    var d = JSON.parse(data)[0];
+                    if(d.deskripsi !== null && d.deskripsi !== ''){
+                        alertify.alert('Peringatan, Pelanggan ini Terdaftar di list DTTOT PPATK...!');
+                    } else {
+                        $.ajax({
+                            url: baseUrl + 'transaction/customer_form/getbyid',
+                            type: 'POST',
+                            data: {'id' : $("body").data("id")},
+                            datatype: 'json',
+                            success: function(data){
+                                var d = JSON.parse(data)[0];            
+                                $("#customer_code").val(d.customer_code);        
+                                if(d.status === '0'){ // Non Active
+                                    bksfn.errMsg("status data tidak aktif!");
+                                } else {
+                                    alertify.confirm("Transaction Sell / Jual ?", function (x) {    
+                                        if (x) {           
+                                            var url = call_page_task_sell($("body").data("id"), null);
+                                            if(url !== ''){
+                                                $.ajax({
+                                                    url: url,
+                                                    type: 'POST',
+                                                    success: function() {
+                                                        window.open(url,'_self'); 
+                                                    }
+                                                });
+                                            }                        
+                                        }    
+                                    });                
+                                }
+                            },
+                            error: function(xhr){
+                                alertify.error(xhr.responseText);
+                            }
+                        });
+                    }
+                } catch (error) {
+                    console.error('Error parsing JSON:', error.message);
+                }                            
+            },
+            error: function(xhr){
+                alertify.error(xhr.responseText);
+            }
+        });
+    } else {
+        $.ajax({
+            url: baseUrl + 'transaction/customer_form/getbyid',
+            type: 'POST',
+            data: {'id' : $("body").data("id")},
+            datatype: 'json',
+            success: function(data){
+                var d = JSON.parse(data)[0];            
+                $("#customer_code").val(d.customer_code);        
+                if(d.status === '0'){ // Non Active
+                    bksfn.errMsg("status data tidak aktif!");
+                } else {
+                    alertify.confirm("Transaction Sell / Jual ?", function (x) {    
+                        if (x) {           
+                            var url = call_page_task_sell($("body").data("id"), null);
+                            if(url !== ''){
+                                $.ajax({
+                                    url: url,
+                                    type: 'POST',
+                                    success: function() {
+                                        window.open(url,'_self'); 
+                                    }
+                                });
+                            }                        
+                        }    
+                    });                
+                }
+            },
+            error: function(xhr){
+                alertify.error(xhr.responseText);
+            }
+        });
+    }          
+});
+
+const inputElement = document.getElementById('customer_data_number');
+inputElement.addEventListener('change', function(e) {
+    e.preventDefault();
     $.ajax({
-        url: baseUrl + 'transaction/customer_form/getByID',
+        url: baseUrl + 'transaction/customer_form/ceknikdttot',
         type: 'POST',
-        data: {'id' : $("body").data("id")},
+        data: {'nik' : inputElement.value},
         datatype: 'json',
         success: function(data){
-            var d = JSON.parse(data)[0];            
-            $("#customer_code").val(d.customer_code);        
-            if(d.status === '0'){ // Non Active
-                bksfn.errMsg("status data tidak aktif!");
-            } else {
-                alertify.confirm("Transaction Sell / Jual ?", function (x) {    
-                    if (x) {           
-                        var url = call_page_task_sell($("body").data("id"), null);
-                        if(url !== ''){
-                            $.ajax({
-                                url: url,
-                                type: 'POST',
-                                success: function() {
-                                    window.open(url,'_self'); 
-                                }
-                            });
-                        }                        
-                    }    
-                });                
-            }
+            try {
+                var d = JSON.parse(data)[0];
+                if(d.deskripsi !== null && d.deskripsi !== ''){
+                    alertify.alert('Peringatan, Pelanggan ini Terdaftar di list DTTOT PPATK...!');
+                    $("#btn-buy").hide();
+                    $("#btn-sell").hide();
+                }
+            } catch (error) {
+                console.error('Error parsing JSON:', error.message);
+            }                            
         },
         error: function(xhr){
             alertify.error(xhr.responseText);
         }
-    });    
+    });
 });

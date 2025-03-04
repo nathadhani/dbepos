@@ -85,7 +85,7 @@ class M_company extends Bks_Controller {
         }
     }
     
-    function getData() {
+    function getdata() {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $this->Bksmdl->table = 'm_company';
@@ -93,7 +93,7 @@ class M_company extends Bks_Controller {
         $this->Bksmdl->outputToJson($cpData);
     }
     
-    function getBranch() {
+    function getbranch() {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $this->Bksmdl->table = 'm_company';
@@ -104,7 +104,7 @@ class M_company extends Bks_Controller {
         echo json_encode($result);
     }
     
-    function getRegion() {
+    function getregion() {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $this->Bksmdl->table = 'm_company';

@@ -81,7 +81,7 @@ class Role extends Bks_Controller {
         }
     }
     
-    function getDataRole($id = '') {
+    function getdatarole($id = '') {
         checkIfNotAjax();
         //$this->libauth->check(__METHOD__);
         $postData = $this->input->post();
@@ -93,7 +93,7 @@ class Role extends Bks_Controller {
         $this->Bksmdl->outputToJson($cpData);
     }
     
-    function getDataListMethod() {
+    function getdatalistmethod() {
         checkIfNotAjax();
 //        $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
@@ -110,7 +110,7 @@ class Role extends Bks_Controller {
         $this->Bksmdl->outputToJson($cpData);
     }
     
-    function updateStatus() {
+    function updatestatus() {
         checkIfNotAjax();
         //$this->libauth->check(__METHOD__);
         $postData = $this->input->post();

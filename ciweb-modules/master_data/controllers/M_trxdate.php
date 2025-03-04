@@ -80,7 +80,7 @@ class M_trxdate extends Bks_Controller {
         }
     }
     
-    function getData() {
+    function getdata() {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $this->Bksmdl->table = 'v_m_transaction_date';

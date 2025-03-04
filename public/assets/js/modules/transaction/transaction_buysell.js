@@ -116,8 +116,25 @@ function show_header(){
                         $("#customer_source").val(d.customer_source);
                         $("#customer_purpose").val(d.customer_purpose);
 
-                        $("#ftitle").html(lstatus_name(d.status, d.id));
+                        $("#ftitle").html(d.status_name);
                         show_detail(d.status);
+                        switch(Number(d.status)) {
+                            case 1:
+                                $("#btn-simpan-header").show();
+                                $(".form_detail_input").show();
+                                $("#btn-confirm").show();
+                                $("#btn-cancel").show();
+                                break;
+                            case 3:
+                                back_to_page_show(d.id);
+                                break;
+                            default:
+                                $("#btn-simpan-header").hide();
+                                $(".form_detail_input").hide();
+                                $("#btn-confirm").hide();
+                                $("#btn-cancel").hide();
+                                break;
+                        }
                     } else{                        
                         reset_form_header();
                         var url = "transaction/nasabah/index/";
@@ -625,8 +642,7 @@ $("#btn-confirm").on('click', function (e) {
                                     var d = JSON.parse(data);
                                     if(d.tr_header_id !== null && d.tr_header_id !== ''){
                                         var id_tr_header = d.tr_header_id;
-                                        // api_ap_input_trx(id_tr_header);
-                                        back_to_page_show(id_header);
+                                        back_to_page_show(id_header);                                        
                                     } else {
                                         back_to_page_task();
                                     }
@@ -655,24 +671,36 @@ $("#btn-confirm").on('click', function (e) {
 
 $("#btn-cancel").on('click', function (e) {
     e.preventDefault();
-    alertify.confirm("Are you sure, CANCEL transaction ?", function (x) {
-        if (x) {           
-            $.ajax({
-                url: baseUrl + 'transaction/transaction_buysell/cancel_task',
-                type: 'POST',
-                data: {'id' : id_header},
-                datatype: 'json',
-                success: function() {
-                    alertify.success('CANCEL Transaction Success!');
-                    back_to_page_task();
-                },
-                error: function(xhr){
-                    alertify.error("error");
-                    StringtoFile(xhr.responseText, 'error');
-                }
-            });     
-        }    
-    });    
+    $(".modal-dialog").width('800px');
+    $("#ModalCancel").modal('show');       
+});
+
+$("#btn-cancel-modal").on('click', function (e) {
+    e.preventDefault();
+    if($("#modal-description").val() === '' || $("#modal-description").val() === null ){
+        bksfn.errMsg('Alasan belum di input!');
+    } else {            
+        alertify.confirm("are you sure, CANCEL transaction ?", function (x) {
+            if (x) {
+                $.ajax({
+                    url: baseUrl + 'transaction/transaction_buysell/cancel_trx',
+                    type: 'POST',
+                    data: {'id' : id_header, 'description' : $("#modal-description").val()},
+                    datatype: 'json',
+                    success: function() {
+                        alertify.success('CANCEL Transaction Success!');
+                        back_to_page_show(id_header);
+                    },
+                    error: function(xhr){
+                        alertify.error("error");
+                        StringtoFile(xhr.responseText, 'error');
+                    }
+                });                                                                    
+            } else {
+                back_to_page_show(id_header);
+            }   
+        });            
+    }          
 });
 
 $("#customer_name").on('click', function (e) {
@@ -689,31 +717,3 @@ $("#customer_name").on('click', function (e) {
         }
     }); 
 });
-
-function lstatus_name(status_id, id) {
-    var status_Id =  Number(status_id);
-    var lstatus = '';
-    switch(status_Id) {
-        case 1:
-            lstatus += 'Task';
-            break;
-        case 2:
-            lstatus += 'Canceled';
-            $("#btn-simpan-header").hide();
-            $(".form_detail_input").hide();
-            $("#btn-confirm").hide();
-            $("#btn-cancel").hide();
-            break;
-        case 3:
-            lstatus += 'Confirm';
-            $("#btn-simpan-header").hide();
-            $(".form_detail_input").hide();
-            $("#btn-confirm").hide();
-            $("#btn-cancel").hide();
-            back_to_page_show(id);
-            break;
-        default:
-            lstatus = '';
-    }
-    return lstatus;
-}

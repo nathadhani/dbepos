@@ -10,7 +10,7 @@ class M_customer_job extends Bks_Controller {
     
     function index() {
         $this->libauth->check(__METHOD__);
-        $this->template->title('Customer - Job');
+        $this->template->title('Customer Job');
         $this->template->set('tsmall', 'File');
         $this->template->set('icon', 'fa fa-navicon');
         $this->template->build('master_data/m_customer_job_v');

@@ -5,8 +5,7 @@
         $(':submit', this).attr('disabled', true);
     }).on('reset', function (e) {
         $("#ftitle").html('Add');
-        $("#title").html('').focus();
-        $("#description").html('');
+        $("#customer_act_on").focus();
         $("#status").iCheck('check');
         $(':submit').removeAttr('disabled');
     });
@@ -22,7 +21,7 @@
         onSuccess: function () {
             if ($("#ftitle").html().substr(0, 4) == "Edit") {
                 //--- Edit
-                $.post('master_data/m_trxlist/update', $("#mainForm").serialize() + "&id=" + $("body").data("id"), function (obj) {
+                $.post('master_data/m_customer_act_on/update', $("#mainForm").serialize() + "&id=" + $("body").data("id"), function (obj) {
                     if (obj.msg == 1) {
                         $("#mainForm")[0].reset();
                         $('#mainTable table').DataTable().ajax.reload();
@@ -35,7 +34,7 @@
                 });
             } else {
                 //--- Insert
-                $.post('master_data/m_trxlist/insert', $("#mainForm").serialize(), function (obj) {
+                $.post('master_data/m_customer_act_on/insert', $("#mainForm").serialize(), function (obj) {
                     if (obj.msg == 1) {
                         $("#mainForm")[0].reset();
                         $('#mainTable table').DataTable().ajax.reload();
@@ -60,8 +59,7 @@
         var elm = $(this).closest("tr");
         var d = t.row(elm).data();
         $("#ftitle").html('Edit');
-        $("#title").val(d.title);
-        $("#description").val(d.description).focus();
+        $("#customer_act_on").val(d.customer_act_on).focus();
         $("#status").iCheck(d.status == 1 ? 'check' : 'uncheck');
         $("body").data("id", d.id);
     });
@@ -74,18 +72,15 @@
         sDom: 'it<"row"lp>',
         lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
         ajax: {
-            url: baseUrl + 'master_data/m_trxlist/getdata',
+            url: baseUrl + 'master_data/m_customer_act_on/getdata',
             type: 'POST'
         },
         columns: [
-            {data: "#", width: "5%", orderable: false, searchable: false},
-            {data: 'title'},
-            {data: 'description'},
-            {data: 'createdby_name'},
+            {data: "#", className: "dt-body-center", width: "5%", orderable: false, searchable: false},
+            {data: 'customer_act_on'},
             {data: 'created', orderable: false, width: "12%", render: function (data, type, row, meta) {
                     return data;
                 }},
-            {data: 'updatedby_name'},
             {data: 'updated', orderable: false, width: "12%", render: function (data, type, row, meta) {
                 return data;
             }},
@@ -96,27 +91,27 @@
             {data: 'id', className: "dt-body-center", orderable: false, width: "5%", render: function (data, type, row, meta) {
                     return '<a title="Edit" href="#"><i class="fa fa-edit"></i></a>';
                 }
-            },            
+            },
         ],
         order: [[1, 'asc']]
     });
     //--- Select Row , Toggle Row & Delete
-    $('#mainTable').selectDTBks(t, 'master_data/m_trxlist/delete');
+    $('#mainTable').selectDTBks(t, 'master_data/m_customer_act_on/delete');
 
     // Setup - add a text input to each header cell
     $('#searchid td').each(function () {
-        if ($(this).index() != 0 && $(this).index() != 4 && $(this).index() != 6 && $(this).index() != 8) {
+        if ($(this).index() != 0 && $(this).index() <= 1) {
             $(this).html('<input style="width:100%" type="text" placeholder="Search" data-id="' + $(this).index() + '" />');
         }
-        if ($(this).index() == 7) {
+        if ($(this).index() == 4) {
             $(this).html('<select style="width:100%" type="text"><option value="">-</option><option value="1">Active</option><option value="0">Not Active</option><select/>');
         }
     });
     $('#searchid input').keyup(function () {
-        t.columns($(this).data('id')).search(this.value).draw();    
+        t.columns($(this).data('id')).search(this.value).draw();
     });
     $('#searchid select').change(function () {
-        t.columns(7).search(this.value).draw();
+        t.columns(4).search(this.value).draw();
     });
     $(".clrs").click(function () {
         $('#searchid input').val('');

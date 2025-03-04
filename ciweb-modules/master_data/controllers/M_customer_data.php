@@ -10,8 +10,8 @@ class M_customer_data extends Bks_Controller {
     
     function index() {
         $this->libauth->check(__METHOD__);
-        $this->template->title('Cust. Identity Type');
-        $this->template->set('tsmall', 'Data');
+        $this->template->title('Customer Identity Type');
+        $this->template->set('tsmall', 'File');
         $this->template->set('icon', 'fa fa-navicon');
         $this->template->build('master_data/m_customer_data_v');
     }
@@ -78,15 +78,15 @@ class M_customer_data extends Bks_Controller {
         }
     }
     
-    function getData() {
+    function getdata() {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
-        $this->Bksmdl->table = 'v_m_customer_data';
+        $this->Bksmdl->table = 'm_customer_data';
         $cpData = $this->Bksmdl->getDataTable();
         $this->Bksmdl->outputToJson($cpData);
     }
 
-    function getIdentitas() {
+    function getidentitas() {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $this->Bksmdl->table = 'm_customer_data';

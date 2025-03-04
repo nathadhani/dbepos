@@ -18,7 +18,7 @@
                                 <select name="company_id"
                                         data-ajax="true" 
                                         data-placeholder="-- Pilih Cabang --"
-                                        data-url="master_data/m_company/getRegion/" 
+                                        data-url="master_data/m_company/getregion/" 
                                         data-value="" 
                                         data-limit="100"                                                
                                         id="company_id" placeholder="Region"

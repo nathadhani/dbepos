@@ -71,9 +71,7 @@
                                 <th>#</th>
                                 <th>Nationality Code</th>
                                 <th>Description</th>
-                                <th>Created by</th>
                                 <th>Created</th>
-                                <th>Updated by</th>
                                 <th>Updated</th>
                                 <th>Status</th>
                                 <th>Action</th>
@@ -82,8 +80,6 @@
                         <thead id="searchid">
                             <tr>
                                 <td><button class="clrs btn btn-sm btn-info btn-line">Clear</button></td>
-                                <td></td>
-                                <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>

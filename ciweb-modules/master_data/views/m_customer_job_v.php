@@ -12,7 +12,7 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group row">
-                                <label for="customer_job_name" class="control-label col-lg-4">Job Name</label>
+                                <label for="customer_job_name" class="control-label col-lg-4">Customer Job Name</label>
                                 <div class="col-lg-8">
                                     <input type="text" id="customer_job_name" name="customer_job_name" placeholder="Pekerjaan Sesuai Identitas..." data-validation="required" class="form-control">
                                 </div>
@@ -61,7 +61,7 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Job Name</th>
+                                <th>Customer Job Name</th>
                                 <th>Created</th>
                                 <th>Updated</th>
                                 <th>Status</th>

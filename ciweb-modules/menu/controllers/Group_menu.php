@@ -107,7 +107,7 @@ class Group_menu extends Bks_Controller {
         }
     }
     
-    function getDataMenu($id = '') {
+    function getdatamenu($id = '') {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
@@ -119,7 +119,7 @@ class Group_menu extends Bks_Controller {
         $this->Bksmdl->outputToJson($cpData);
     }
     
-    function getMenu() {
+    function getmenu() {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $this->Bksmdl->table = 'auth_menu';

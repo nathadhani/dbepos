@@ -78,14 +78,14 @@ class Menu extends Bks_Controller {
         }
     }
     
-    function getData() {
+    function getdata() {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $cpData = $this->Bksmdl->getDataTable();
         $this->Bksmdl->outputToJson($cpData);
     }
 
-    function _createMenu_sidebar($group_id = null, $pid = 0) {
+    function _createmenu_sidebar($group_id = null, $pid = 0) {
         $query = $this->db->order_by("menuorder")->get_where('v_auth_menu_group_create', array('usergroup_id' => $group_id, 'parent_id' => $pid, 'status' => '1'))->result_array();
         if (count($query) > 0) {
             foreach ($query as $val) {
@@ -118,7 +118,7 @@ class Menu extends Bks_Controller {
         }
     }
 
-    function _createMenuAplikasi($group_id = null, $pid = 0) {
+    function _createmenuaplikasi($group_id = null, $pid = 0) {
         $query = $this->db->query("SELECT * FROM menu WHERE link = '#' ORDER BY menu")->result_array();
         if (count($query) > 0) {
             foreach ($query as $val) {

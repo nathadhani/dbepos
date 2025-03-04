@@ -114,6 +114,17 @@ class Customer_form extends Bks_Controller {
             echo json_encode($query, true);
         }    
     }
+
+    function ceknikdttot() {
+        checkIfNotAjax();
+        // $this->libauth->check(__METHOD__);
+        $postData = $this->input->post();
+        $nik = trim($postData['nik']);        
+        if($nik != null && $nik != ''){
+            $query = $this->db->query("SELECT deskripsi FROM ppatk_dttot WHERE deskripsi LIKE '%".$nik."%' LIMIT 1")->result();
+            echo json_encode($query, true);
+        }    
+    }
     
     function add_foto(){
         $postData = $this->input->post();

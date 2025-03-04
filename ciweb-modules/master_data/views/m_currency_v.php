@@ -67,8 +67,8 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Currency Code</th>
-                                <th>Currency Name</th>
+                                <th>Curr</th>
+                                <th>Description</th>
                                 <th>Created</th>
                                 <th>Updated</th>
                                 <th>Status</th>

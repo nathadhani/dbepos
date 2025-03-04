@@ -274,19 +274,20 @@ class Api_ap extends Bks_Controller {
 
                     if(count($get_tr_detail) > 0){
                         $data_detail = array();
+                        $sequence = 1;
                         foreach($get_tr_detail->result_array() as $row) {
                             $r = array(           
-                                        'flag_void' => 'true',
+                                        'flag_void' => 'false',
                                         'invoice_no' => $tr_number,
                                         'trans_date' => $get_tr_header[0]['tr_date'],
                                         'trans_time' => $get_tr_header[0]['created'],
-                                        'sequence_unique' => $row['sequence'],
+                                        'sequence_unique' => $sequence,
                                         'item_name' => $row['currency_name'],
                                         'item_code' => $row['currency_id'],
                                         'item_barcode' => '0',
                                         'item_cat_name' => '0',
                                         'item_cat_code' => '0',
-                                        'item_qty' => $row['amount'],
+                                        'item_qty' => ($row['amount'] * -1),
                                         'item_unit' => '0',
                                         'item_price_per_unit' => $row['price'],
                                         'item_discount' => '0',
@@ -294,13 +295,13 @@ class Api_ap extends Bks_Controller {
                                         'item_vat' => '0',
                                         'item_tax' => '0',
                                         'item_total_discount' => '0',
-                                        'item_total_price_amount' => $row['subtotal'],
+                                        'item_total_price_amount' => ($row['subtotal'] * -1),
                                         'item_total_vat' => '0',
                                         'item_total_tax' => '0',
                                         'item_total_service_charge' => '0',
                                         'invoice_tax' => '0',
                                         'invoice_discount' => '0',
-                                        'transaction_amount' => $row['subtotal'],
+                                        'transaction_amount' => ($row['subtotal'] * -1),
                                         'currency' => 'IDR',
                                         'rate' => '1',
                                         'payment_type' => $get_tr_header[0]['payment_type_name'],
@@ -311,7 +312,7 @@ class Api_ap extends Bks_Controller {
                                         'buyer_flight_no' => $get_tr_header[0]['flight_no'],
                                         'buyer_destination' => $get_tr_header[0]['flight_destination_code'],
                                         'buyer_nationality' => $get_tr_header[0]['nationality_code'],
-                                        'remark' => 'Success',
+                                        'remark' => $get_tr_header[0]['description'],
                                         'tax_id' => 'PPN',
                                         'payment_name' => $get_tr_header[0]['payment_type_name'],
                                         'payment_time' => $get_tr_header[0]['created'],
@@ -319,6 +320,7 @@ class Api_ap extends Bks_Controller {
                                         'journey_time' => '0'
                                     );
                             array_push($data_detail, $r);
+                            $sequence++;
                         }
 
                         $data [] = array(

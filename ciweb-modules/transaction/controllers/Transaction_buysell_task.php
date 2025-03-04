@@ -18,7 +18,7 @@ class Transaction_buysell_task extends Bks_Controller {
         $this->template->build('transaction/transaction_buysell_task_v', $data);
     }
     
-    function getData() {
+    function getdata() {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();

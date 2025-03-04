@@ -82,7 +82,7 @@ class M_trxlist extends Bks_Controller {
         }
     }
     
-    function getData() {
+    function getdata() {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $this->Bksmdl->table = 'v_m_transaction';
@@ -90,7 +90,7 @@ class M_trxlist extends Bks_Controller {
         $this->Bksmdl->outputToJson($cpData);
     }
     
-    function getTransactionId() {
+    function gettransactionid() {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $this->Bksmdl->table = 'm_transaction';
