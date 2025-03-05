@@ -2,10 +2,6 @@
     $auth = $this->session->userdata('auth');    
     if($auth['usergroup_id'] !== '1'){
 ?>
-<script type="text/javascript">
-    var companyIduser = <?php echo $auth['company_id'];?>;
-</script>
-
 <div class="page-content-wrap">
     <div class="row">
         <div class="col-md-12">
@@ -18,34 +14,24 @@
                 </div>                               
                 <div class="panel-body">
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-8">
                             <div class="form-group">                                
                                 <div class="col-lg-12">
-                                    <label for="company_id" style="display:block">Branch</label>
-                                    <select name="company_id"
+                                    <label for="store_id" style="display:block">Store</label>
+                                    <select name="store_id"
                                             data-ajax="true" 
-                                            data-placeholder="-- Pilih Cabang --"
-                                            data-url="master_data/m_company/getRegion/" 
+                                            data-placeholder="-- Pilih --"
+                                            data-url="master_data/m_store/getregion/" 
                                             data-value="" 
                                             data-limit="100"                                                
-                                            id="company_id" placeholder="Region"
+                                            id="store_id" placeholder="Region"
                                             class='form-control select2'
                                             width="100%"
                                             >
                                     </select>                                
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">                                
-                                <div class="col-lg-12">
-                                    <label for="store_id" style="display:block">Store</label>
-                                    <select class='form-control select2' name="store_id" id="store_id" disabled="true" width="100%">
-                                        <option value=""> -- Pilih Store --</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
+                        </div>                        
                         <div class="col-md-2">
                             <div class="form-group">
                                 <div class="col-lg-8">
@@ -57,8 +43,7 @@
                                     <a style="width:100px;display:block" id="btn-submit" title="Lihat Data" href="#" class="btn btn-primary">Submit</a>
                                 </div>
                             </div>                            
-                        </div>
-                        <div class="col-md-2"></div>
+                        </div>                        
                     </div>                    
                 </div>
             </div>            

@@ -5,11 +5,7 @@ class Home extends Bks_Controller {
     function __construct() {
         $this->auth = $this->session->userdata('auth');
         $this->userid = $this->auth['id'];
-        $this->usergroup_id = $this->auth['usergroup_id'];
-        $this->userlevel_id = $this->auth['userlevel_id'];    
-        $this->company_id = $this->auth['company_id'];
-        $this->api_method = $this->auth['api_method'];  
-        $config = array('modules' => 'home', 'jsfiles' => array('home2212'));
+        $config = array('modules' => 'home', 'jsfiles' => array('home'));
         parent::__construct($config);
     }
     

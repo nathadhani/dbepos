@@ -1,30 +1,5 @@
 (function ($) {
-    window.scroll(0, 0); 
-
-    $('#company_id').on('change',function(e){
-        e.preventDefault()
-        if($(this).val() != null && $(this).val() != ''){
-            $('#store_id').html('').sel2dma();
-            $('#store_id').prop('disabled', false);
-            $('#store_id').focus()
-            $.ajax({
-                url : baseUrl +  'master_data/m_store/getStore',
-                type: 'POST',
-                data: {'company_id' : $(this).val()},
-                datatype: 'json',
-                success: function(data){
-                    $('#store_id').html(data);
-                },
-                error: function(){
-                    alert("can't get store");  
-                }
-            });
-        } else {    
-            $('#store_id').html('').sel2dma();
-            $('#store_id').prop('disabled', true);        
-        }
-    });
-
+    window.scroll(0, 0);     
     //--- Refresh Button  
     $("#btn-generate").on('click', function (e) {
         e.preventDefault();
@@ -216,8 +191,7 @@
                         return '<a title="Edit" href="#"><i class="fa fa-edit"></i></a>';
                     }
                 },
-                {data: 'id', visible: false},
-                {data: 'company_id', visible: false},
+                {data: 'id', visible: false},                
                 {data: 'store_id', visible: false},
                 {data: 'exchange_rate_date', visible: false},
             ],
@@ -260,7 +234,7 @@
 
         // Setup - add a text input to each header cell
         $('#searchid td').each(function () {
-            if ($(this).index() != 0 && $(this).index() != 13 && ( $(this).index() < 3 && $(this).index() <= 11 ) ) {
+            if ($(this).index() != 0 && $(this).index() <= 2) {
                 $(this).html('<input style="width:100%" type="text" placeholder="Search" data-id="' + $(this).index() + '" />');
             }
             if ($(this).index() == 12) {

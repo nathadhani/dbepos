@@ -5,15 +5,14 @@ class M_store extends Bks_Controller {
     function __construct() {
         $config = array('modules' => 'master_data', 'jsfiles' => array('m_store'));
         parent::__construct($config);
-        $this->Bksmdl->table = 'm_company_store';
-        $this->auth = $this->session->userdata( 'auth' );
-        $this->company_id = $this->auth['company_id'];
+        $this->Bksmdl->table = 'm_store';
+        $this->auth = $this->session->userdata( 'auth' );       
     }
     
     function index() {
         $this->libauth->check(__METHOD__);
         $this->template->title('Store');
-        $this->template->set('tsmall', 'Location');
+        $this->template->set('tsmall', 'File');
         $this->template->set('icon', 'fa fa-navicon');
         $this->template->build('master_data/m_store_v');
     }
@@ -86,34 +85,33 @@ class M_store extends Bks_Controller {
     function getdata() {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
-        $this->Bksmdl->table = 'v_m_company_store';
+        $this->Bksmdl->table = 'v_m_store';
         $cpData = $this->Bksmdl->getDataTable();
         $this->Bksmdl->outputToJson($cpData);
-    }
-    
-    function getstore() {        
+    }   
+        
+    function getstore() {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
-        $company_id = $this->input->post('company_id');
-        $menus = $this->db->get_where('m_company_store', array('status' => '1', 'company_id' => $company_id))->result();
-        if (count($menus) > 0)
-        {
-            $option ="<option selected value=''>-- Pilih Store --</option>";
-            foreach($menus as $row){
-                $option.="<option value='".$row->id."'>".$row->store_address."</option>";
-            }
-            echo $option;
-        }
-    }
-    
-    function getstoreTrx() {
-        checkIfNotAjax();
-        $this->libauth->check(__METHOD__);
-        $this->Bksmdl->table = 'm_company_store';
+        $this->Bksmdl->table = 'm_store';
         $this->Bksmdl->searchable = array('store_name', 'store_address', 'id');
-        $this->Bksmdl->select2fields = array('id' => 'id', 'text' => 'store_address');        
-        $result['results'] = $this->Bksmdl->getSelect2(array('status' => '1', 'company_id' => $this->auth['company_id']));
+        $this->Bksmdl->select2fields = array('id' => 'id', 'text' => 'store_address');
+        $result['results'] = $this->Bksmdl->getSelect2(array('status' => '1'));
+        $result['more'] = true;
+        echo json_encode($result);
+    }
 
+    function getregion() {
+        checkIfNotAjax();
+        $this->libauth->check(__METHOD__);
+        $this->Bksmdl->table = 'm_store';
+        $this->Bksmdl->searchable = array('store_address', 'store_name', 'id');
+        $this->Bksmdl->select2fields = array('id' => 'id', 'text' => 'store_address');
+        if($this->auth['region'] !== NULL && $this->auth['region'] !== ''){
+            $result['results'] = $this->Bksmdl->getSelect2(array('status' => '1'), null, explode(',', $this->auth['region']) );
+        } else {
+            $result['results'] = $this->Bksmdl->getSelect2(array('status' => '1', 'id' => $this->auth['store_id']));
+        }
         $result['more'] = true;
         echo json_encode($result);
     }

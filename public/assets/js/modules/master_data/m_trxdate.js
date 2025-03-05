@@ -4,9 +4,8 @@
         e.preventDefault();
         $(':submit', this).attr('disabled', true);
     }).on('reset', function (e) {
-        $("#ftitle").html('Add');
-        $("#company_id").html('').sel2dma().focus();
-        $("#store_id").html('').sel2dma();
+        $("#ftitle").html('Add');        
+        $("#store_id").html('').sel2dma().focus();
         $("#tr_id").html('').sel2dma();
         $("#tr_date").val('');
         $("#status").iCheck('check');
@@ -50,31 +49,7 @@
                 });
             }
         }
-    });
-
-    $('#company_id').on('change',function(e){
-        e.preventDefault()
-        if($(this).val() != null && $(this).val() != ''){
-            $('#store_id').html('').sel2dma();
-            $('#store_id').prop('disabled', false);
-            $('#store_id').focus()
-            $.ajax({
-                url : baseUrl +  'master_data/m_store/getStore',
-                type: 'POST',
-                data: {'company_id' : $(this).val()},
-                datatype: 'json',
-                success: function(data){
-                    $('#store_id').html(data);
-                },
-                error: function(){
-                    alert("can't get store");  
-                }
-            });
-        } else {    
-            $('#store_id').html('').sel2dma();
-            $('#store_id').prop('disabled', true);        
-        }
-    });
+    });    
 
     //--- Edit Button
     $('#mainTable').on('click', 'a[title^=Edit]', function (e) {
@@ -85,19 +60,14 @@
         }
         var elm = $(this).closest("tr");
         var d = t.row(elm).data();
-        $("#ftitle").html('Edit');
-        if (d.company_id != null) {
-            $("#company_id").html('<option value="' + d.company_id + '">' + d.company_name + '</option>').sel2dma();
-        } else {
-            $("#company_id").html('').sel2dma();
-        }
+        $("#ftitle").html('Edit');        
         if (d.store_id != 0 || d.store_id !== null) {
             $("#store_id").html('<option value="' + d.store_id + '">' + d.store_name + ' [' + d.store_id + ']' + '</option>').sel2dma();
         } else {
             $("#store_id").html('').sel2dma();
         }
         if (d.tr_id != 0 || d.tr_id !== null ) {
-            $("#tr_id").html('<option value="' + d.tr_id + '">' + d.tr_description + ' [' + d.tr_id + ']' + '</option>').sel2dma();
+            $("#tr_id").html('<option value="' + d.tr_id + '">' + d.description + ' [' + d.tr_id + ']' + '</option>').sel2dma();
         } else {
             $("#tr_id").html('').sel2dma();
         }
@@ -119,12 +89,9 @@
         },
         columns: [
             {data: "#", width: "5%", orderable: false, searchable: false},
-            {data: 'company_address', render: function (data, type, row, meta) {
-                return data;
-            }},
             {data: 'store_name'},
             {data: 'store_address'},
-            {data: 'tr_title'},
+            {data: 'title'},
             {data: 'tr_date', render: function (data, type, row, meta) {
                     return bksfn.revDate(data);
                 }},
@@ -137,9 +104,7 @@
                 }
             },
             {data: 'tr_id', visible: false},
-            {data: 'tr_description', visible: false},
-            {data: 'company_id', visible: false},
-            {data: 'company_name', visible: false},
+            {data: 'description', visible: false},
             {data: 'store_id', visible: false},
         ],
         order: [[1, 'asc']]

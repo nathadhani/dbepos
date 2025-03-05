@@ -12,30 +12,18 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group row">
-                                <label for="company_id" class="control-label col-lg-4">Branch</label>
+                                <label for="store_id" class="control-label col-lg-4">Store</label>
                                 <div class="col-lg-8">
-                                    <select name="company_id"
+                                    <select name="store_id"
                                             data-ajax="true" 
-                                            data-placeholder="Pilih Cabang..."
-                                            data-url="master_data/m_company/getBranch/" 
+                                            data-placeholder="Pilih..."
+                                            data-url="master_data/m_store/getstore/" 
                                             data-value="" 
                                             data-limit="100"
-                                            id="company_id" placeholder="Branch"  class='form-control select2'>
+                                            id="store_id" placeholder="Store"  class='form-control select2'>
                                     </select>
                                 </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="company_id" class="control-label col-lg-4">Store</label>
-                                <div class="col-lg-8">
-                                    <div class="input-group">
-                                        <select style="width:340px" class='form-control select2' name="store_id" id="store_id" disabled="true">
-                                            <option value=""> -- Pilih Store --</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div><!-- /.form-group -->                                                                                                                
-                        </div>
-                        <div class="col-lg-6">
+                            </div>            
                             <div class="form-group row">
                                 <label for="tr_id" class="control-label col-lg-4">Transaksi</label>
                                 <div class="col-lg-8">
@@ -51,7 +39,9 @@
                                         <span class="input-group-addon"><a href="master_data/m_transaction" target="_blank" title="Add Category"><i class="fa fa-plus-circle"></i></a></span>
                                     </div>
                                 </div>
-                            </div><!-- /.form-group -->      
+                            </div><!-- /.form-group -->                                                                                                                               
+                        </div>
+                        <div class="col-lg-6">                                 
                             <div class="form-group row">
                                 <label for="menu" class="control-label col-lg-4">Tanggal</label>
                                 <div class="col-lg-8">
@@ -100,7 +90,6 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Branch</th>
                                 <th>Store Name</th>
                                 <th>Store Address</th>                                                            
                                 <th>Transaction</th>
@@ -112,7 +101,6 @@
                         <thead id="searchid">
                             <tr>
                                 <td><button class="clrs btn btn-sm btn-info btn-line">Clear</button></td>
-                                <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>

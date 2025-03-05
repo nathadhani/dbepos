@@ -47,10 +47,6 @@ ALTER TABLE log_b CHANGE id id BIGINT AUTO_INCREMENT;
 SET foreign_key_checks = 1;
 
 SET foreign_key_checks = 0;
-ALTER TABLE m_airport CHANGE id id BIGINT AUTO_INCREMENT;
-SET foreign_key_checks = 1;
-
-SET foreign_key_checks = 0;
 ALTER TABLE m_company CHANGE id id BIGINT AUTO_INCREMENT;
 SET foreign_key_checks = 1;
 

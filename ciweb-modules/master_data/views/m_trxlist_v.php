@@ -67,12 +67,10 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Transaksi</th>
-                                <th>Keterangan</th>
-                                <th>Diinput Oleh</th>
-                                <th>Tgl input</th>
-                                <th>Diubah Oleh</th>
-                                <th>Tgl Ubah</th>
+                                <th>Transaction</th>
+                                <th>Description</th>
+                                <th>Created</th>
+                                <th>Updated</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
@@ -80,8 +78,6 @@
                         <thead id="searchid">
                             <tr>
                                 <td><button class="clrs btn btn-sm btn-info btn-line">Clear</button></td>
-                                <td></td>
-                                <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>

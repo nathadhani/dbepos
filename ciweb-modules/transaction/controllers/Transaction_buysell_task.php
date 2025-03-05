@@ -6,7 +6,7 @@ class Transaction_buysell_task extends Bks_Controller {
         $config = array('modules' => 'transaction', 'jsfiles' => array('transaction_buysell_task'));
         parent::__construct($config);        
         $this->auth = $this->session->userdata( 'auth' );
-        $this->company_id = $this->auth['company_id'];
+        $this->store_id = $this->auth['store_id'];
     }
     
     function index() {
@@ -25,8 +25,8 @@ class Transaction_buysell_task extends Bks_Controller {
 
         $this->Bksmdl->table = 'v_tr_header';
 
-        $where[0]['field'] = 'company_id';
-        $where[0]['data']  = $this->company_id;
+        $where[0]['field'] = 'store_id';
+        $where[0]['data']  = $this->store_id;
         $where[0]['sql']   = 'where';
 
         $where[1]['field'] = 'status';

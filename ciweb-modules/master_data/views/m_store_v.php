@@ -10,57 +10,37 @@
                 </div>
                 <div class="panel-body">                                                                        
                     <div class="row">
-                        <div class="col-lg-6">
+                        <div class="col-lg-6">                            
                             <div class="form-group row">
-                                <label for="company_id" class="control-label col-lg-4">Branch</label>
-                                <div class="col-lg-8">
-                                    <select name="company_id"
-                                            data-ajax="true" 
-                                            data-placeholder="Pilih Cabang..."
-                                            data-url="master_data/m_company/getBranch/" 
-                                            data-value="" 
-                                            data-limit="100"
-                                            id="company_id" placeholder="Branch"  class='form-control select2'>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="menu" class="control-label col-lg-4">Airport Code</label>
-                                <div class="col-lg-8">
-                                    <select name="airport_id"
-                                            data-ajax="true" 
-                                            data-placeholder="Select Airport..."
-                                            data-url="master_data/m_airport/getAirport/" 
-                                            data-value="" 
-                                            data-limit="100"
-                                            id="airport_id" placeholder="Kode Bandara"  class='form-control select2'>
-                                    </select>
-                                </div>
-                            </div><!-- /.form-group -->
-                            <div class="form-group row">
-                                <label for="menu" class="control-label col-lg-4">Airport Terminial</label>
-                                <div class="col-lg-8">
-                                    <input type="text" id="airport_terminal" name="airport_terminal" placeholder="Airport Terminal..." class="form-control" data-validation="required">                                    
-                                </div>
-                            </div><!-- /.form-group -->                   
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="form-group row">
-                                <label for="menu" class="control-label col-lg-4">Name</label>
+                                <label for="store_name" class="control-label col-lg-4">Store Name</label>
                                 <div class="col-lg-8">
                                     <input type="text" id="store_name" name="store_name" placeholder="Store Name..." class="form-control" data-validation="required">
                                 </div>
                             </div><!-- /.form-group -->
                             <div class="form-group row">
-                                <label for="menuorder" class="control-label col-lg-4">Address</label>
+                                <label for="store_address" class="control-label col-lg-4">Store Address</label>
                                 <div class="col-lg-8">
                                 <input type="text" id="store_address" name="store_address" placeholder="Store Address..." class="form-control" data-validation="required">
                                 </div>
                             </div><!-- /.form-group -->
                             <div class="form-group row">
+                                <label for="store_email" class="control-label col-lg-4">Store Email</label>
+                                <div class="col-lg-8">
+                                <input type="text" id="store_email" name="store_email" placeholder="Store Email..." class="form-control" data-validation="required">
+                                </div>
+                            </div><!-- /.form-group -->                            
+                        </div>
+                        <div class="col-lg-6">                            
+                            <div class="form-group row">
                                 <label for="menuorder" class="control-label col-lg-4">API Id</label>
                                 <div class="col-lg-8">
-                                <input type="text" id="api_store_id" name="api_store_id" placeholder="Store Reference Id..." class="form-control">
+                                <input type="text" id="api_store_id" name="api_store_id" placeholder="API Store Id..." class="form-control">
+                                </div>
+                            </div><!-- /.form-group -->
+                            <div class="form-group row">
+                                <label for="menuorder" class="control-label col-lg-4">API AP</label>
+                                <div class="col-lg-8">
+                                <input type="text" id="api_angkasapura" name="api_angkasapura" placeholder="API Angkasa Pura..." class="form-control">
                                 </div>
                             </div><!-- /.form-group -->
                             <div class="form-group row">
@@ -106,20 +86,17 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Branch</th>
-                                <th>Name</th>
-                                <th>Address</th>
+                                <th>Store Name</th>
+                                <th>Store Address</th>
                                 <th>API Id</th>
-                                <th>Status</th>
-                                <th>Action</th>
                                 <th>Api AP</th>
-                                <th>Register</th>
+                                <th>Status</th>
+                                <th>Action</th>                                
                             </tr>
                         </thead>
                         <thead id="searchid">
                             <tr>
                                 <td><button class="clrs btn btn-sm btn-info btn-line">Clear</button></td>
-                                <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>

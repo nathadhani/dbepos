@@ -6,7 +6,7 @@
     var userId = <?php echo $auth['id'];?>;
     var usergroupId = <?php echo $auth['usergroup_id'];?>;
     var userlevelId = <?php echo $auth['userlevel_id'];?>;
-    var companyId = <?php echo $auth['company_id'];?>;
+    var storeId = <?php echo $auth['store_id'];?>;
 </script>
 <div class="row">
     <div class="col-md-12">
@@ -103,15 +103,15 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group row">
-                                    <label for="company_id" class="control-label col-lg-4">Brach</label>
+                                    <label for="store_id" class="control-label col-lg-4">Store</label>
                                     <div class="col-lg-8">
-                                        <select name="company_id"
+                                        <select name="store_id"
                                                 data-ajax="true" 
-                                                data-placeholder="-- Pilih Cabang --"
-                                                data-url="master_data/m_company/getBranch/" 
+                                                data-placeholder="-- Pilih --"
+                                                data-url="master_data/m_store/getstore/" 
                                                 data-value="" 
                                                 data-limit="100"
-                                                id="company_id" placeholder="Lokasi"  class='form-control select2'>
+                                                id="store_id" placeholder="Lokasi" class='form-control select2'>
                                         </select>
                                     </div>
                                 </div>
@@ -121,7 +121,7 @@
                                         <select name="region[]"
                                                 data-ajax="true" 
                                                 data-placeholder="-- Pilih Multiple --"
-                                                data-url="master_data/m_company/getBranch/" 
+                                                data-url="master_data/m_store/getstore/" 
                                                 data-value="" 
                                                 data-limit="100"
                                                 multiple
@@ -169,7 +169,7 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Branch</th>
+                                <th>Store</th>
                                 <th>User Name</th>
                                 <th>Full Name</th>
                                 <th>Level</th>

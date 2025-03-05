@@ -10,7 +10,6 @@ ALTER TABLE inventory_detail ADD PRIMARY KEY (id);
 ALTER TABLE inventory_header ADD PRIMARY KEY (id);
 ALTER TABLE log_a ADD PRIMARY KEY (id);
 ALTER TABLE log_b ADD PRIMARY KEY (id);
-ALTER TABLE m_airport ADD PRIMARY KEY (id);
 ALTER TABLE m_company ADD PRIMARY KEY (id);
 ALTER TABLE m_company_store ADD PRIMARY KEY (id);
 ALTER TABLE m_customer ADD PRIMARY KEY (id);

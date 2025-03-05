@@ -81,11 +81,9 @@
             {data: "#", width: "5%", orderable: false, searchable: false},
             {data: 'title'},
             {data: 'description'},
-            {data: 'createdby_name'},
             {data: 'created', orderable: false, width: "12%", render: function (data, type, row, meta) {
                     return data;
                 }},
-            {data: 'updatedby_name'},
             {data: 'updated', orderable: false, width: "12%", render: function (data, type, row, meta) {
                 return data;
             }},
@@ -105,10 +103,10 @@
 
     // Setup - add a text input to each header cell
     $('#searchid td').each(function () {
-        if ($(this).index() != 0 && $(this).index() != 4 && $(this).index() != 6 && $(this).index() != 8) {
+        if ($(this).index() != 0 && $(this).index() <=1) {
             $(this).html('<input style="width:100%" type="text" placeholder="Search" data-id="' + $(this).index() + '" />');
         }
-        if ($(this).index() == 7) {
+        if ($(this).index() == 4) {
             $(this).html('<select style="width:100%" type="text"><option value="">-</option><option value="1">Active</option><option value="0">Not Active</option><select/>');
         }
     });
@@ -116,7 +114,7 @@
         t.columns($(this).data('id')).search(this.value).draw();    
     });
     $('#searchid select').change(function () {
-        t.columns(7).search(this.value).draw();
+        t.columns(4).search(this.value).draw();
     });
     $(".clrs").click(function () {
         $('#searchid input').val('');

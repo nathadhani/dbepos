@@ -6,8 +6,7 @@ class M_exchange_rate extends Bks_Controller {
         $config = array('modules' => 'master_data', 'jsfiles' => array('m_exchange_rate'));
         parent::__construct($config);
         $this->Bksmdl->table = 'm_exchange_rate';
-        $this->auth = $this->session->userdata( 'auth' );
-        $this->company_id = $this->auth['company_id'];
+        $this->auth = $this->session->userdata( 'auth' );        
     }
     
     function index() {
@@ -34,8 +33,7 @@ class M_exchange_rate extends Bks_Controller {
                                  WHERE status = 1
                                  AND NOT EXISTS
                                 ( SELECT 1 FROM m_exchange_rate AS p 
-                                  WHERE p.company_id = $this->company_id
-                                  AND p.store_id = $store_id
+                                  WHERE p.store_id = $store_id
                                   AND p.exchange_rate_date = '$tanggal'                                  
                                   AND p.currency_id = m_currency.id
                                 )
@@ -44,8 +42,7 @@ class M_exchange_rate extends Bks_Controller {
         $rows = []; 
         if(count($hsl) > 0){       
             foreach ($hsl as $key => $val) {
-                $data = [
-                    'company_id' => $this->company_id,
+                $data = [                    
                     'store_id' => $store_id,
                     'currency_id' => $val->id,
                     'exchange_rate_date' => $tanggal,
@@ -60,7 +57,6 @@ class M_exchange_rate extends Bks_Controller {
             $this->db->insert_batch($this->Bksmdl->table, $rows);
             // echo $this->db->last_query(); exit;            
             $hslx = $this->db->query("SELECT
-                                            company_id,
                                             store_id,                                 
                                             currency_id, 
                                             IFNULL(exchange_rate_buy,0) AS exchange_rate_buy,
@@ -72,16 +68,14 @@ class M_exchange_rate extends Bks_Controller {
                                             price_sell_bot,
                                             price_sell_top            
                                     FROM m_exchange_rate
-                                    WHERE company_id = $this->company_id
-                                    AND store_id = $store_id
+                                    WHERE store_id = $store_id
                                     AND exchange_rate_date = '$tanggalx'                                    
                                     AND status = 1
                                     AND ( exchange_rate_buy > 0 OR  exchange_rate_sell > 0 ) 
                                     AND EXISTS
                                     ( 
                                         SELECT id FROM m_exchange_rate AS p 
-                                        WHERE p.company_id = $this->company_id
-                                        AND p.store_id = $store_id                                        
+                                        WHERE p.store_id = $store_id                                        
                                         AND p.exchange_rate_date = '$tanggal'
                                         AND p.currency_id = m_exchange_rate.currency_id 
                                     )
@@ -101,7 +95,7 @@ class M_exchange_rate extends Bks_Controller {
                         'price_sell_bot' => ($val->price_sell_bot == null ? 0 : $val->price_sell_bot),
                         'price_sell_top' => ($val->price_sell_top == null ? 0 : $val->price_sell_top)
                     ];
-                    $where = array('company_id' => $this->company_id, 'store_id' => $store_id, 'exchange_rate_date' => $tanggal, 'currency_id' => $val->currency_id);  
+                    $where = array('store_id' => $store_id, 'exchange_rate_date' => $tanggal, 'currency_id' => $val->currency_id);  
                     $this->db->where($where);
                     $this->db->update('m_exchange_rate',$data_upd);                    
                     // echo $this->db->last_query(); exit;
@@ -150,8 +144,7 @@ class M_exchange_rate extends Bks_Controller {
         $postData['difference_buy'] = 0;
         $cek = $this->db->query("SELECT exchange_rate_buy 
                                  FROM m_exchange_rate 
-                                 WHERE company_id = $this->company_id 
-                                 AND store_id = $store_id 
+                                 WHERE store_id = $store_id 
                                  AND exchange_rate_date = '$tanggalx' 
                                  AND currency_id = $currency_id")->row();
         if(isset($cek)){
@@ -166,8 +159,7 @@ class M_exchange_rate extends Bks_Controller {
         $postData['difference_sell'] = 0;
         $cek = $this->db->query("SELECT exchange_rate_sell 
                                  FROM m_exchange_rate 
-                                 WHERE company_id = $this->company_id 
-                                 AND store_id = $store_id
+                                 WHERE store_id = $store_id
                                  AND exchange_rate_date = '$tanggalx' 
                                  AND currency_id = $currency_id")->row();
         if(isset($cek)){
@@ -225,15 +217,11 @@ class M_exchange_rate extends Bks_Controller {
         $postData = $this->input->post();
         $store_id = $postData['store_id'];
         $tanggal = revDate($postData['periode']);
-        $this->Bksmdl->table = 'v_m_exchange_rate';       
-        
-        $where[0]['field'] = 'company_id';
-        $where[0]['data']  = $this->company_id;
-        $where[0]['sql']   = 'where';
+        $this->Bksmdl->table = 'v_m_exchange_rate';               
 
-        $where[1]['field'] = 'store_id';
-        $where[1]['data']  = $tanggal;
-        $where[1]['sql']   = 'where';
+        $where[0]['field'] = 'store_id';
+        $where[0]['data']  = $tanggal;
+        $where[0]['sql']   = 'where';
 
         $where[1]['field'] = 'exchange_rate_date';
         $where[1]['data']  = $tanggal;

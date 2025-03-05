@@ -27,10 +27,6 @@ UPDATE auth_users SET id = @num := (@num+1);
 ALTER TABLE auth_users AUTO_INCREMENT = 1
 
 SET  @num := 0;
-UPDATE m_airport SET id = @num := (@num+1);
-ALTER TABLE m_airport AUTO_INCREMENT = 1
-
-SET  @num := 0;
 UPDATE m_company SET id = @num := (@num+1);
 ALTER TABLE m_company AUTO_INCREMENT = 1
 

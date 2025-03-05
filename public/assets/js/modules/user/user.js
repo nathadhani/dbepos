@@ -23,7 +23,7 @@
         $("#status").iCheck('checked');
 
         if( usergroupId == 1) {
-            $("#company_id").html('').sel2dma();
+            $("#store_id").html('').sel2dma();
             $("#region").html('').sel2dma();
             $("#usergroup_id").html('').sel2dma();
             $("#userlevel_id").html('').sel2dma();    
@@ -44,13 +44,13 @@
         },
         onSuccess: function () {
             if( usergroupId == 1) {
-                var company_id = $("#company_id").val();
+                var store_id = $("#store_id").val();
             } else {
-                var company_id = companyId;
+                var store_id = storeId;
             }  
             if ($("#ftitle").html().substr(0, 4) == "Edit") {
                 //--- Edit
-                $.post('user/update', $("#mainForm").serialize() + "&id=" + $("body").data("id") + "&company_id=" + company_id, function (obj) {
+                $.post('user/update', $("#mainForm").serialize() + "&id=" + $("body").data("id") + "&store_id=" + store_id, function (obj) {
                     if (obj.msg == 1) {
                         $("#mainForm")[0].reset();
                         $('#mainTable table').DataTable().ajax.reload();
@@ -64,7 +64,7 @@
             } else {
                 if( usergroupId == 1) {
                     //--- Insert
-                    $.post('user/insert', $("#mainForm").serialize() + "&company_id=" + company_id, function (obj) {
+                    $.post('user/insert', $("#mainForm").serialize() + "&store_id=" + store_id, function (obj) {
                         if (obj.msg == 1) {
                             $("#mainForm")[0].reset();
                             $('#mainTable table').DataTable().ajax.reload();
@@ -77,9 +77,9 @@
                     });
                 } else {
                     $.ajax({
-                        url: baseUrl + 'user/getcountuserbyCompanyId',
+                        url: baseUrl + 'user/getcountuserbystoreid',
                         type: 'POST',
-                        data: {'company_id' : companyId},
+                        data: {'store_id' : storeId},
                         datatype: 'json',
                         success: function(data){
                             if (data !== undefined) {
@@ -87,7 +87,7 @@
                                     var d = JSON.parse(data);
                                     if(Number(d.count_users) < Number(d.user_limits) ){
                                         //--- Insert
-                                        $.post('user/insert', $("#mainForm").serialize() + "&company_id=" + company_id, function (obj) {
+                                        $.post('user/insert', $("#mainForm").serialize() + "&store_id=" + store_id, function (obj) {
                                             if (obj.msg == 1) {
                                                 $("#mainForm")[0].reset();
                                                 $('#mainTable table').DataTable().ajax.reload();
@@ -127,7 +127,7 @@
         },
         columns: [
             {data: "#", className: "dt-body-center", width: "5%", orderable: false, searchable: false},
-            {data: 'company_address'},
+            {data: 'store_address'},
             {data: 'username', render: function (data, type, row, meta) {                    
                     return data;                    
                 }
@@ -152,9 +152,8 @@
                 }
             },
             {data: 'id', visible: false},
-            {data: 'company_id', visible: false},
-            {data: 'company_name', visible: false},
-            {data: 'company_city', visible: false},
+            {data: 'store_id', visible: false},
+            {data: 'store_name', visible: false},            
             {data: 'region', visible: false},
             {data: 'region_code', visible: false},
             {data: 'usergroup_id', visible: false},
@@ -209,10 +208,10 @@
         $("#fullname").val(d.fullname);
 
         if( usergroupId == 1) {
-            if (d.company_id != null) {
-                $("#company_id").html('<option value="' + d.company_id + '">' + d.company_address + '</option>').sel2dma();
+            if (d.store_id != null) {
+                $("#store_id").html('<option value="' + d.store_id + '">' + d.store_address + '</option>').sel2dma();
             } else {
-                $("#company_id").html('').sel2dma();
+                $("#store_id").html('').sel2dma();
             }
             
             if (d.region_code != null) {
@@ -220,8 +219,8 @@
                 // console.log(region_code);    
                 $("#region").html('').sel2dma();    
                 $.each(region_code, function (i, val) {
-                    $("#region").append(`<option value="${val.id}">${val.company_addres} [${val.id}]</option>`);    
-                    $("#region-container").find("span.select2-container ul.select2-selection__rendered").append(`<li class="select2-selection__choice" title="${val.company_addres} [${val.id}]"><span class="select2-selection__choice__remove" role="presentation">×</span>${val.company_addres} [${val.id}]</li>`);
+                    $("#region").append(`<option value="${val.id}">${val.store_addres} [${val.id}]</option>`);    
+                    $("#region-container").find("span.select2-container ul.select2-selection__rendered").append(`<li class="select2-selection__choice" title="${val.store_addres} [${val.id}]"><span class="select2-selection__choice__remove" role="presentation">×</span>${val.store_addres} [${val.id}]</li>`);
                 });    
                 $("input.select2-search__field").attr('placeholder', '');
                 $("input.select2-search__field").css("width", "0");

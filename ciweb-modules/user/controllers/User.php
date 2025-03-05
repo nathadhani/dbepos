@@ -7,7 +7,7 @@ class User extends Bks_Controller {
         parent::__construct($config);
         $this->Bksmdl->table = 'auth_users';
         $this->auth = $this->session->userdata( 'auth' );
-        $this->companyId = $this->auth['company_id'];
+        $this->store_id = $this->auth['store_id'];
 
     }
     
@@ -128,8 +128,8 @@ class User extends Bks_Controller {
         if ($usergroup_id == '1') {
             $cpData = $this->Bksmdl->getDataTable();
         } else {
-            $where[0]['field'] = 'company_id';
-            $where[0]['data']  = $this->auth['company_id'];
+            $where[0]['field'] = 'store_id';
+            $where[0]['data']  = $this->auth['store_id'];
             $where[0]['sql']   = 'where';
             $where[1]['field'] = 'usergroup_id > 1';
             $where[1]['data']  = NULL;
@@ -193,7 +193,7 @@ class User extends Bks_Controller {
         $this->Bksmdl->table = 'v_auth_users';
         $this->Bksmdl->searchable = array('username', 'fullname');
         $this->Bksmdl->select2fields = array('id' => 'id', 'text' => "fullname");
-        $result['results'] = $this->Bksmdl->getSelect2(array('status' => '1', 'company_id' => $this->companyId), 'id <> 1');
+        $result['results'] = $this->Bksmdl->getSelect2(array('status' => '1', 'store_id' => $this->store_id), 'id <> 1');
         $result['more'] = true;
         echo json_encode($result);
     }
@@ -207,12 +207,12 @@ class User extends Bks_Controller {
         echo json_encode($query, true);
     }
     
-    function getcountuserbycompanyid() {
+    function getcountuserbystoreid() {
         checkIfNotAjax();
         $postData = $this->input->post();
-        $company_id = $postData['company_id'];
-        $query1 = $this->db->query("SELECT user_limits AS user_limits FROM m_company WHERE id = $company_id")->result();
-        $query2 = $this->db->query("SELECT COUNT(id) AS count_users FROM auth_users WHERE company_id = $company_id")->result();
+        $store_id = $postData['store_id'];
+        $query1 = $this->db->query("SELECT user_limits AS user_limits FROM m_store WHERE id = $store_id")->result();
+        $query2 = $this->db->query("SELECT COUNT(id) AS count_users FROM auth_users WHERE store_id = $store_id")->result();
         $data = array(
                       'user_limits' => $query1[0]->user_limits , 
                       'count_users' => $query2[0]->count_users 

@@ -1,7 +1,7 @@
 <?php
     $auth = $this->session->userdata('auth');
     $usergroup_id = $auth['usergroup_id'];
-    $company_id = $auth['company_id']; 
+    $store_id = $auth['store_id']; 
     $api_method = $auth['api_method'];
     // phpinfo();exit;    
 ?>
@@ -36,9 +36,9 @@
                 <li class="xn-icon-button">
                     <a href="transaction/transaction_buysell_task" title="Buy / Sell - Task" data-toggle="tooltip" data-placement="bottom"><span class="fa fa-comment"></span></a>
                     <?php 
-                        if($company_id != null){
+                        if($store_id != null){
                             $count = $this->db->query("SELECT COUNT(status) AS jumlah FROM tr_header
-                                                    WHERE company_id = $company_id
+                                                    WHERE store_id = $store_id
                                                     AND status = '1' 
                                                     LIMIT 1")->result();
                             if(isset($count)) {
@@ -59,9 +59,9 @@
                     <li class="xn-icon-button">
                         <a href="api/api_ap_input" title="API Input Pending" data-toggle="tooltip" data-placement="bottom"><span class="fa fa-comment"></span></a>
                         <?php
-                            if($company_id != null){
+                            if($store_id != null){
                                 $count = $this->db->query("SELECT COUNT(status) AS jumlah FROM v_tr_header
-                                                        WHERE  company_id = $company_id
+                                                        WHERE  store_id = $store_id
                                                         AND api_method = '1'
                                                         AND status = '3'
                                                         LIMIT 1")->result();
@@ -102,7 +102,7 @@
             if( $usergroup_id != 1) {
         ?>
             <span>
-                User login : <?php echo $auth['fullname'] . ' | Location : ' . $auth['company_address'];?>
+                User login : <?php echo $auth['fullname'] . ' | Location : ' . $auth['store_address'];?>
             </label>
             <span class="pull-right"> 
                 Today : <?php print dayList(). ', ' . date('d F Y'); ?> 

@@ -1,37 +1,11 @@
-$('#company_id').on('change',function(e){
-    e.preventDefault()
-    if($(this).val() != null && $(this).val() != ''){
-        $('#store_id').html('').sel2dma();
-        $('#store_id').prop('disabled', false);
-        $('#store_id').focus()
-        $.ajax({
-            url : baseUrl +  'master_data/m_store/getStore',
-            type: 'POST',
-            data: {'company_id' : $(this).val()},
-            datatype: 'json',
-            success: function(data){
-                $('#store_id').html(data);
-            },
-            error: function(){
-                alert("can't get store");  
-            }
-        });
-    } else {    
-        $('#store_id').html('').sel2dma();
-        $('#store_id').prop('disabled', true);        
-    }
-});
-
-var companyId = ($("#company_id").val() === '' || $("#company_id").val() === null ? companyIduser : $("#company_id").val());
 var storeId =  $("#store_id").val();
 var title_tahun = $("#periode").val();
 
 $("#btn-submit").on('click', function (e) {
     e.preventDefault();
-    if($('#company_id').val() === null || $('#company_id').val() === ''){
-        bksfn.errMsg('Cabang Belum Dipilih!');
-    } else {
-        companyId = $("#company_id").val();
+    if($('#store_id').val() === null || $('#store_id').val() === ''){
+        bksfn.errMsg('Store Belum Dipilih!');
+    } else {        
         storeId = $("#store_id").val();
         title_tahun = $('#periode').val();
         loaddata();
@@ -53,10 +27,7 @@ function getdatatable1(){
     $.ajax({
         url: baseUrl + 'dashboard/dashboard_buysell/getdatatable1',
         type: 'POST',
-        data: {'company_id' : companyId,
-                'store_id' : storeId,
-                'periode' : $('#periode').val()
-            },
+        data: {'store_id' : storeId, 'periode' : $('#periode').val()},
         dataType: 'json',
         success: function (data) {
             if (data !== '[]' && data.length > 0){
@@ -107,10 +78,7 @@ function getdatatable2(){
     $.ajax({
         url: baseUrl + 'dashboard/dashboard_buysell/getdatatable2',
         type: 'POST',
-        data: {'company_id' : companyId,
-                'store_id' : storeId,
-                'periode' : $('#periode').val()
-            },
+        data: {'store_id' : storeId, 'periode' : $('#periode').val()},
         dataType: 'json',
         success: function (data) {
             if (data !== '[]' && data.length > 0){
@@ -155,18 +123,15 @@ function getdatatable2(){
 }
 
 function getchart1(){
-    if( typeof(companyId) !== 'undefined') {
-        if(companyId !== null && companyId !== '') {
+    if( typeof(storeId) !== 'undefined') {
+        if(storeId !== null && storeId !== '') {
             var datasource = [];
             $("#chart1").empty();
             $("#title-chart1").html(title_tahun);
             $.ajax({
                 url: baseUrl + 'dashboard/dashboard_buysell/getchart1',
                 type: 'POST',
-                data: {'company_id' : companyId,
-                       'store_id' : storeId,
-                       'periode' : $('#periode').val()
-                    },
+                data: {'store_id' : storeId, 'periode' : $('#periode').val()},
                 dataType: 'json',
                 success: function (data) {
                     if (data !== '[]' && data.length > 0){
@@ -209,18 +174,15 @@ function getchart1(){
 }
 
 function getchart2(){
-    if( typeof(companyId) !== 'undefined') {
-        if(companyId !== null && companyId !== '') {
+    if( typeof(storeId) !== 'undefined') {
+        if(storeId !== null && storeId !== '') {
             var datasource = [];
             $("#chart2").empty();
             $("#title-chart2").html(title_tahun);
             $.ajax({
                 url: baseUrl + 'dashboard/dashboard_buysell/getchart2',
                 type: 'POST',
-                data: {'company_id' : companyId,
-                       'store_id' : storeId,
-                       'periode' : $('#periode').val()
-                    },
+                data: {'store_id' : storeId, 'periode' : $('#periode').val()},
                 dataType: 'json',
                 success: function (data) {
                     if (data !== '[]' && data.length > 0){
@@ -270,13 +232,13 @@ function getlastupdated(){
     $.ajax({
         url: baseUrl + 'dashboard/dashboard_buysell/getlastupdated',
         type: 'POST',
-        data: {'company_id' : companyId,
-                'store_id' : storeId
-            },
+        data: {'store_id' : storeId},
         dataType: 'json',
         success: function (data) {
             if (data !== '[]' && data.length > 0){
-                $("#lastupdated").html('Last Updated : ' + data[0].lastupdated);
+                if(data[0].lastupdated !== null){
+                    $("#lastupdated").html('Last Updated : ' + data[0].lastupdated);
+                }                
             }
         },
         error: function(xhr){
@@ -284,7 +246,6 @@ function getlastupdated(){
         }
     });
 }
-
 
 function getfullbulan(bln){
     var lbulan = '';
