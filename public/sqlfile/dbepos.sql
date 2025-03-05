@@ -1,7 +1,7 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : MYSQL
+ Source Server         : mySQL
  Source Server Type    : MySQL
  Source Server Version : 80030
  Source Host           : localhost:3306
@@ -11,7 +11,7 @@
  Target Server Version : 80030
  File Encoding         : 65001
 
- Date: 05/03/2025 16:52:05
+ Date: 06/03/2025 06:22:54
 */
 
 SET NAMES utf8mb4;
@@ -33,7 +33,7 @@ CREATE TABLE `auth_group_role`  (
   `updated` datetime NULL DEFAULT NULL,
   `updatedby` bigint NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 485 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 489 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of auth_group_role
@@ -554,7 +554,7 @@ INSERT INTO `auth_menu_group` VALUES (38, 3, 16, 46, 17, 1, '2025-03-03 21:39:00
 INSERT INTO `auth_menu_group` VALUES (39, 3, 15, 46, 23, 1, '2025-03-03 21:39:26', 1, '2025-03-05 15:35:00', 1);
 INSERT INTO `auth_menu_group` VALUES (40, 3, 18, 13, 19, 1, '2025-03-03 21:39:56', 1, '2025-03-05 15:34:32', 1);
 INSERT INTO `auth_menu_group` VALUES (41, 3, 36, 13, 20, 1, '2025-03-03 21:40:24', 1, '2025-03-05 15:34:44', 1);
-INSERT INTO `auth_menu_group` VALUES (44, 3, 38, 0, 24, 1, '2025-03-03 21:41:53', 1, '2025-03-05 15:35:05', 1);
+INSERT INTO `auth_menu_group` VALUES (44, 3, 38, 13, 24, 1, '2025-03-03 21:41:53', 1, '2025-03-05 20:19:10', 1);
 
 -- ----------------------------
 -- Table structure for auth_usergroup
@@ -633,7 +633,7 @@ CREATE TABLE `auth_users`  (
 -- ----------------------------
 INSERT INTO `auth_users` VALUES (1, '8989', 'f794bdbef7990b5112e526b5cd4ea67f4a35af21', NULL, 0, 1, 1, NULL, '', NULL, NULL, NULL, NULL, NULL, 1, '2025-02-23 13:58:46', NULL, NULL, NULL);
 INSERT INTO `auth_users` VALUES (2, 'konsolidasi', '7c4a8d09ca3762af61e59520943dc26494f8941b', '123456', 0, 2, 1, '1,2,3', 'Konsolidasi', '', '', NULL, NULL, NULL, 1, '2025-02-23 13:58:46', NULL, NULL, NULL);
-INSERT INTO `auth_users` VALUES (3, 'icv1', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 1, 3, 1, NULL, 'Admin', '', '', '2025-03-05 16:37:07', NULL, NULL, 1, '2025-02-23 13:58:46', NULL, '2025-03-05 16:18:09', 1);
+INSERT INTO `auth_users` VALUES (3, 'icv1', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 1, 3, 1, NULL, 'Admin', '', '', '2025-03-06 04:47:45', NULL, NULL, 1, '2025-02-23 13:58:46', NULL, '2025-03-05 16:18:09', 1);
 INSERT INTO `auth_users` VALUES (4, 'icv2', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 1, 4, 2, NULL, 'User', '', '', '2025-02-26 15:42:17', NULL, NULL, 1, '2025-02-23 13:58:46', NULL, '2025-02-23 15:06:13', 1);
 
 -- ----------------------------
@@ -665,42 +665,6 @@ CREATE TABLE `log_auth_sessions`  (
 -- ----------------------------
 -- Records of log_auth_sessions
 -- ----------------------------
-
--- ----------------------------
--- Table structure for m_airport
--- ----------------------------
-DROP TABLE IF EXISTS `m_airport`;
-CREATE TABLE `m_airport`  (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `airport_code` varchar(3) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `airport_desc` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  `status` smallint NOT NULL,
-  `created` datetime NULL DEFAULT NULL,
-  `updated` datetime NULL DEFAULT NULL,
-  `createdby` bigint NULL DEFAULT NULL,
-  `updatedby` bigint NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
-
--- ----------------------------
--- Records of m_airport
--- ----------------------------
-INSERT INTO `m_airport` VALUES (1, 'AMQ', 'Bandara Pattimura - Ambon', 1, '2024-03-17 00:00:00', '2025-03-03 12:33:59', 3, 3);
-INSERT INTO `m_airport` VALUES (2, 'BDJ', 'Bandara Syamsudin Noor - Banjarmasin', 1, '2024-03-17 00:00:00', NULL, 3, NULL);
-INSERT INTO `m_airport` VALUES (3, 'BIK', 'Bandara Frans Kaisiepo - Biak', 1, '2024-03-17 00:00:00', NULL, 3, NULL);
-INSERT INTO `m_airport` VALUES (4, 'BPN', 'Bandara Sultan Aji Muhammad Sulaiman Sepinggan - Balikpapan', 1, '2024-03-17 00:00:00', NULL, 3, NULL);
-INSERT INTO `m_airport` VALUES (5, 'CGK', 'Bandara Internasional Cengkareng - Jakarta', 1, '2024-03-17 00:00:00', NULL, 3, NULL);
-INSERT INTO `m_airport` VALUES (6, 'DJJ', 'Bandara Sentani - Jayapura', 1, '2024-03-17 00:00:00', NULL, 3, NULL);
-INSERT INTO `m_airport` VALUES (7, 'DPS', 'Bandara I Gusti Ngurah Rai - Denpasar', 1, '2024-03-17 00:00:00', NULL, 3, NULL);
-INSERT INTO `m_airport` VALUES (8, 'JOG', 'Bandara Adisutjipto - Yogyakarta', 1, '2024-03-17 00:00:00', NULL, 3, NULL);
-INSERT INTO `m_airport` VALUES (9, 'KOE', 'Bandara El Tari - Kupang', 1, '2024-03-17 00:00:00', NULL, 3, NULL);
-INSERT INTO `m_airport` VALUES (10, 'LOP', 'Bandara Internasional Lombok - Lombok Tengah', 1, '2024-03-17 00:00:00', NULL, 3, NULL);
-INSERT INTO `m_airport` VALUES (11, 'MDC', 'Bandara Sam Ratulangi - Manado', 1, '2024-03-17 00:00:00', NULL, 3, NULL);
-INSERT INTO `m_airport` VALUES (12, 'SOC', 'Bandara Adi Soemarmo - Surakarta', 1, '2024-03-17 00:00:00', NULL, 3, NULL);
-INSERT INTO `m_airport` VALUES (13, 'SRG', 'Bandara Jenderal Ahmad Yani - Semarang', 1, '2024-03-17 00:00:00', NULL, 3, NULL);
-INSERT INTO `m_airport` VALUES (14, 'SUB', 'Bandara Juanda - Surabaya', 1, '2024-03-17 00:00:00', NULL, 3, NULL);
-INSERT INTO `m_airport` VALUES (15, 'UPG', 'Bandara Sultan Hasanuddin - Makassar', 1, '2024-03-17 00:00:00', NULL, 3, NULL);
-INSERT INTO `m_airport` VALUES (16, 'YIA', 'Bandara Internasional Yogyakarta - Kulon Progo', 1, '2024-03-17 00:00:00', NULL, 3, NULL);
 
 -- ----------------------------
 -- Table structure for m_currency
@@ -921,6 +885,32 @@ CREATE TABLE `m_exchange_rate`  (
 -- ----------------------------
 -- Records of m_exchange_rate
 -- ----------------------------
+INSERT INTO `m_exchange_rate` VALUES (417, 1, 1, '2025-03-05', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-03-05 20:08:52', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (418, 1, 2, '2025-03-05', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-03-05 20:08:52', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (419, 1, 3, '2025-03-05', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-03-05 20:08:52', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (420, 1, 4, '2025-03-05', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-03-05 20:08:52', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (421, 1, 5, '2025-03-05', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-03-05 20:08:52', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (422, 1, 6, '2025-03-05', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-03-05 20:08:52', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (423, 1, 7, '2025-03-05', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-03-05 20:08:52', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (424, 1, 8, '2025-03-05', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-03-05 20:08:52', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (425, 1, 9, '2025-03-05', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-03-05 20:08:52', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (426, 1, 10, '2025-03-05', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-03-05 20:08:52', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (427, 1, 11, '2025-03-05', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-03-05 20:08:52', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (428, 1, 12, '2025-03-05', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-03-05 20:08:52', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (429, 1, 13, '2025-03-05', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-03-05 20:08:52', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (430, 1, 14, '2025-03-05', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-03-05 20:08:52', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (431, 1, 15, '2025-03-05', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-03-05 20:08:52', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (432, 1, 16, '2025-03-05', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-03-05 20:08:52', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (433, 1, 17, '2025-03-05', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-03-05 20:08:52', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (434, 1, 18, '2025-03-05', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-03-05 20:08:52', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (435, 1, 19, '2025-03-05', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-03-05 20:08:52', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (436, 1, 20, '2025-03-05', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-03-05 20:08:52', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (437, 1, 21, '2025-03-05', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-03-05 20:08:52', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (438, 1, 22, '2025-03-05', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-03-05 20:08:52', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (439, 1, 23, '2025-03-05', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-03-05 20:08:52', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (440, 1, 24, '2025-03-05', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-03-05 20:08:52', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (441, 1, 25, '2025-03-05', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-03-05 20:08:52', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (442, 1, 26, '2025-03-05', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-03-05 20:08:52', NULL, 3, NULL);
 
 -- ----------------------------
 -- Table structure for m_nationality
@@ -1284,7 +1274,7 @@ CREATE TABLE `m_transaction_date`  (
   `createdby` bigint NULL DEFAULT NULL,
   `updatedby` bigint NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of m_transaction_date
@@ -2034,7 +2024,6 @@ CREATE TABLE `tr_header`  (
   `customer_purpose` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
   `description` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
   `cashier_id` bigint NOT NULL,
-  `flag` bit(1) NULL DEFAULT NULL,
   `status` smallint NOT NULL,
   `created` datetime NULL DEFAULT NULL,
   `updated` datetime NULL DEFAULT NULL,
@@ -2183,6 +2172,6 @@ CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_tr_detail` AS select `
 -- View structure for v_tr_header
 -- ----------------------------
 DROP VIEW IF EXISTS `v_tr_header`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_tr_header` AS select `tr_header`.`id` AS `id`,`tr_header`.`tr_id` AS `tr_id`,`tr_header`.`tr_date` AS `tr_date`,`tr_header`.`tr_number_temp` AS `tr_number_temp`,`tr_header`.`tr_number` AS `tr_number`,(select sum(`tr_detail`.`subtotal`) from `tr_detail` where (`tr_detail`.`header_id` = `tr_header`.`id`)) AS `total`,`tr_header`.`customer_id` AS `customer_id`,`m_customer`.`customer_code` AS `customer_code`,`m_customer`.`customer_name` AS `customer_name`,`m_customer`.`customer_address` AS `customer_address`,`m_nationality`.`nationality_code` AS `nationality_code`,`m_nationality`.`nationality_desc` AS `nationality_desc`,`tr_header`.`customer_source` AS `customer_source`,`tr_header`.`customer_purpose` AS `customer_purpose`,`tr_header`.`description` AS `description`,`tr_header`.`cashier_id` AS `cashier_id`,`usr1`.`fullname` AS `cashier_name`,`tr_header`.`store_id` AS `store_id`,`m_store`.`store_name` AS `store_name`,`m_store`.`store_address` AS `store_address`,`m_store`.`store_city` AS `store_city`,`m_store`.`airport_id` AS `airport_id`,`m_store`.`airport_terminal` AS `airport_terminal`,`m_store`.`api_method` AS `api_method`,`m_store`.`api_store_id` AS `api_store_id`,`m_transaction`.`title` AS `tr_title`,`tr_header`.`flag` AS `flag`,`tr_header`.`status` AS `status`,(select (case when (`tr_header`.`status` = 2) then 'Canceled' when (`tr_header`.`status` = 3) then 'Confirm' when (`tr_header`.`status` = 4) then 'Integrasi System ECSys (API)' else 'Task' end)) AS `status_name`,`tr_header`.`created` AS `created`,`tr_header`.`updated` AS `updated`,`tr_header`.`createdby` AS `createdby`,`tr_header`.`updatedby` AS `updatedby`,`usr2`.`fullname` AS `createdby_name`,`usr3`.`fullname` AS `updatedby_name` from ((((((((`tr_header` join `m_transaction` on((`tr_header`.`tr_id` = `m_transaction`.`id`))) left join `auth_users` `usr1` on((`tr_header`.`cashier_id` = `usr1`.`id`))) join `auth_users` `usr2` on((`tr_header`.`createdby` = `usr2`.`id`))) left join `auth_users` `usr3` on((`tr_header`.`updatedby` = `usr3`.`id`))) join `m_customer` on((`tr_header`.`customer_id` = `m_customer`.`id`))) left join `m_nationality` on((`m_customer`.`nationality_id` = `m_nationality`.`id`))) join `m_store` on((`m_store`.`id` = `tr_header`.`store_id`))) join `m_airport` on((`m_airport`.`id` = `m_store`.`airport_id`)));
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_tr_header` AS select `tr_header`.`id` AS `id`,`tr_header`.`tr_id` AS `tr_id`,`tr_header`.`tr_date` AS `tr_date`,`tr_header`.`tr_number_temp` AS `tr_number_temp`,`tr_header`.`tr_number` AS `tr_number`,(select sum(`tr_detail`.`subtotal`) from `tr_detail` where (`tr_detail`.`header_id` = `tr_header`.`id`)) AS `total`,`tr_header`.`customer_id` AS `customer_id`,`m_customer`.`customer_code` AS `customer_code`,`m_customer`.`customer_name` AS `customer_name`,`m_customer`.`customer_address` AS `customer_address`,`m_nationality`.`nationality_code` AS `nationality_code`,`m_nationality`.`nationality_desc` AS `nationality_desc`,`tr_header`.`customer_source` AS `customer_source`,`tr_header`.`customer_purpose` AS `customer_purpose`,`tr_header`.`description` AS `description`,`tr_header`.`cashier_id` AS `cashier_id`,`usr1`.`fullname` AS `cashier_name`,`tr_header`.`store_id` AS `store_id`,`m_store`.`store_name` AS `store_name`,`m_store`.`store_address` AS `store_address`,`m_store`.`api_method` AS `api_method`,`m_store`.`api_store_id` AS `api_store_id`,`m_transaction`.`title` AS `tr_title`,`tr_header`.`status` AS `status`,(select (case when (`tr_header`.`status` = 2) then 'Canceled' when (`tr_header`.`status` = 3) then 'Confirm' when (`tr_header`.`status` = 4) then 'Integrasi System ECSys (API)' else 'Task' end)) AS `status_name`,`tr_header`.`created` AS `created`,`tr_header`.`updated` AS `updated`,`tr_header`.`createdby` AS `createdby`,`tr_header`.`updatedby` AS `updatedby`,`usr2`.`fullname` AS `createdby_name`,`usr3`.`fullname` AS `updatedby_name` from (((((((`tr_header` join `m_transaction` on((`tr_header`.`tr_id` = `m_transaction`.`id`))) left join `auth_users` `usr1` on((`tr_header`.`cashier_id` = `usr1`.`id`))) join `auth_users` `usr2` on((`tr_header`.`createdby` = `usr2`.`id`))) left join `auth_users` `usr3` on((`tr_header`.`updatedby` = `usr3`.`id`))) join `m_customer` on((`tr_header`.`customer_id` = `m_customer`.`id`))) left join `m_nationality` on((`m_customer`.`nationality_id` = `m_nationality`.`id`))) join `m_store` on((`m_store`.`id` = `tr_header`.`store_id`)));
 
 SET FOREIGN_KEY_CHECKS = 1;

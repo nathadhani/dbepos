@@ -1,5 +1,4 @@
-(function ($) {
-    var storeId = '';
+(function ($) {    
     var xtr_id = (decrypt(tr_uri_code) === 'buy' ? 1 : decrypt(tr_uri_code) === 'sell' ? 2 : 0);
     back_to_page_show();
 
@@ -65,9 +64,7 @@
                             
                             $("#description_header").html(d.description);
                             $("#payment_name").html(d.payment_type_name);
-                            $("#cashier_name").html(d.cashier_name);
-
-                            storeId = d.store_id;
+                            $("#cashier_name").html(d.cashier_name);                            
                         } else{                        
                             var url = "transaction/customer/index/";
                             window.open(url,'_self');    

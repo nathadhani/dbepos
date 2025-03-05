@@ -23,8 +23,6 @@ class Stock_calculate extends Bks_Controller {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();     
-
-        $company_id = $postData['company_id'];
         $store_id = $postData['store_id'];
 
         $tahun = (int) date('Y');
@@ -46,7 +44,6 @@ class Stock_calculate extends Bks_Controller {
                                     SELECT currency_id, nominal 
                                     FROM v_tr_detail 
                                     WHERE status IN (3,4)
-                                    AND company_id = $company_id
                                     AND store_id = $store_id
                                     AND tr_id = 1
                                     GROUP BY currency_id, nominal                                    
@@ -55,7 +52,6 @@ class Stock_calculate extends Bks_Controller {
         if(count($select) > 0){
             /******************************************************************************************************/
             $where = array(
-                    'company_id' => $company_id,
                     'store_id' => $store_id,
                     'stock_year' => $tahun,
                     'stock_month' => $bulan
@@ -64,7 +60,6 @@ class Stock_calculate extends Bks_Controller {
 
             /******************************************************************************************************/
             $where = array(
-                    'company_id' => $company_id,
                     'store_id' => $store_id,
                     'stock_year' => $tahun2,
                     'stock_month' => $bulan2
@@ -75,7 +70,7 @@ class Stock_calculate extends Bks_Controller {
             foreach($select->result_array() as $row) {
                 $currency_id = $row['currency_id'];
                 $nominal = $row['nominal'];
-                $this->Bksmdl->generate_stock($company_id, $store_id, $tahun, $bulan, $currency_id, $nominal);
+                $this->Bksmdl->generate_stock($store_id, $tahun, $bulan, $currency_id, $nominal);
             }
         }
         if ($this->db->trans_status() === FALSE) {
@@ -94,9 +89,7 @@ class Stock_calculate extends Bks_Controller {
     function generate_stock_price(){
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
-        $postData = $this->input->post();     
-
-        $company_id = $postData['company_id'];
+        $postData = $this->input->post();        
         $store_id = $postData['store_id'];
 
         $tahun = (int) date('Y');
@@ -127,14 +120,13 @@ class Stock_calculate extends Bks_Controller {
                                     SELECT x.currency_id 
                                     FROM v_tr_detail x
                                     WHERE x.status IN (3,4)
-                                    AND x.company_id = $company_id 
                                     AND x.store_id = $store_id 
                                     GROUP BY x.currency_id
                                     ORDER BY currency_id ASC                                    
                                     ");
 
         // $mcurrency = $this->db->select('currency_id')
-        //                    ->where(array('company_id' => $company_id, 'store_id' => $store_id))
+        //                    ->where('store_id' => $store_id))
         //                    ->where_in('status', ['3','4'])
         //                    ->group_by('currency_id')
         //                    ->order_by('currency_id')
@@ -144,7 +136,6 @@ class Stock_calculate extends Bks_Controller {
             /** Delete Reccord */
             /***************************************************************************************************************** */
             $where = array(
-                    'company_id' => $company_id,
                     'store_id' => $store_id,
                     'stock_year' => $tahun,
                     'stock_month' => $bulan
@@ -188,8 +179,7 @@ class Stock_calculate extends Bks_Controller {
                                     if($select_last_stock[0]->stock_last_amount > 0) {                                        
                                         $id++;
                                         $data = array(            
-                                            'id' => $id,
-                                            'company_id' => $company_id,
+                                            'id' => $id,                                            
                                             'store_id' => $store_id,
                                             'stock_date' => $tgl1,
                                             'stock_year' => $tahun,
@@ -243,8 +233,7 @@ class Stock_calculate extends Bks_Controller {
                         foreach($trxbuy->result_array() as $row) {                            
                             $id++;
                             $data = array(                  
-                                'id' => $id,
-                                'company_id' => $company_id,
+                                'id' => $id,                                
                                 'store_id' => $store_id,
                                 'stock_date' => $row['tr_date'],
                                 'stock_year' => $tahun,
@@ -288,8 +277,7 @@ class Stock_calculate extends Bks_Controller {
                         foreach($trxsell->result_array() as $row) {                            
                             $id++;
                             $data = array(               
-                                'id' => $id,
-                                'company_id' => $company_id,
+                                'id' => $id,                                
                                 'store_id' => $store_id,   
                                 'stock_date' => $row['tr_date'],
                                 'stock_year' => $tahun,

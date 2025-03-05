@@ -1,12 +1,5 @@
-<script type="text/javascript">
-    var userId = <?php echo $auth['id'];?>;
-    var companyId = <?php echo $auth['company_id'];?>;
-    var usergroupId = <?php echo $auth['usergroup_id'];?>;
-    var userlevelId = <?php echo $auth['userlevel_id'];?>;
-
+<script type="text/javascript">  
     var Apimethod = <?php echo $auth['api_method'];?>;
-    var ApiAP = "<?php echo $auth['api_angkasapura'];?>";    
-
     var customerId = <?php echo $this->uri->segment(4);?>;
     var tr_uri_code = <?php echo "'" . $this->uri->segment(5) ."'";?>;
     var id_header = <?php echo $this->uri->segment(6);?>;
@@ -52,27 +45,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-8">
-                                <div class="form-group">                                
-                                    <div class="col-lg-12">
-                                        <label for="store_id" style="display:block">Store</label>
-                                        <select id="store_id"
-                                                name="store_id"
-                                                data-ajax="true" 
-                                                data-placeholder="-- PIlih Store --"
-                                                data-url="master_data/m_store/getStoreTrx/"
-                                                data-value=""
-                                                data-limit="100"                                                
-                                                placeholder="Store"  
-                                                class='form-control select2'
-                                                require
-                                        >
-                                        </select>
-                                    </div>                                    
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row" style="margin-left:-5px;margin-top:15px;">                                                              
                             <div class="col-md-3">
                                 <div class="form-group">                                
                                     <div class="col-lg-12">
@@ -80,8 +52,10 @@
                                         <a href="#" id="customer_name"></a>                                        
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-3">
+                            </div>                            
+                        </div>
+                        <div class="row" style="margin-left:-5px;margin-top:15px;">                                                                                          
+                            <div class="col-md-6">
                                 <div class="form-group">                                
                                     <div class="col-lg-12">
                                         <label for="store_id" style="display:block">Source</label>
@@ -153,9 +127,6 @@
                                         <tbody>       
                                             <tr style="background:#ffffff;">
                                                 <td width="30%">                                                    
-                                                    <!-- <select class='form-control select2' name="currency_id" id="currency_id" disabled="true">
-                                                        <option value="">-- Pilih Mata Uang --</option>
-                                                    </select>  -->
                                                     <select id="currency_id"
                                                             name="currency_id"
                                                             data-ajax="true" 
@@ -168,7 +139,6 @@
                                                             require                                            
                                                     >
                                                     </select>
-                                                    <input type="hidden" id="currency_code" class="form-control">                                                                                                                                         
                                                 </td>                                                                                                
                                                 <td width="10%">
                                                     <input type="text" onkeypress="validasiAngka(event)" autofocuse="" id="nominal" name="nominal" class="form-control" style='text-align:right;'>

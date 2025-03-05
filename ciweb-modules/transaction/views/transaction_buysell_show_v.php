@@ -1,13 +1,8 @@
 <script type="text/javascript">
-    var companyId = <?php echo $auth['company_id'];?>;
-    var usergroupId = <?php echo $auth['usergroup_id'];?>;
-    var userlevelId = <?php echo $auth['userlevel_id'];?>;
-
     var Apimethod = <?php echo $auth['api_method'];?>;
     var ApiAP = "<?php echo $auth['api_angkasapura'];?>";
 
     var customerId = <?php echo $this->uri->segment(4);?>;
-
     var tr_uri_code = <?php echo "'" . $this->uri->segment(5) ."'";?>;
     var id_tr_header = <?php echo $this->uri->segment(6);?>;
 </script>
@@ -36,8 +31,8 @@
                     </div>
                     <ul class="panel-controls">
                         <?php
-                            $company_id = $auth['company_id'];
-                            $get_AP = $this->db->query("SELECT api_angkasapura, api_method FROM m_company WHERE id = $company_id ")->result(); 
+                            $store_id = $auth['store_id'];
+                            $get_AP = $this->db->query("SELECT api_angkasapura, api_method FROM m_store WHERE id = $store_id ")->result(); 
                             if($get_AP){                                                                          
                                 if($get_AP[0]->api_method === '1') {              
                         ?>
@@ -105,8 +100,8 @@
                         </div>
 
                         <?php
-                                $company_id = $auth['company_id'];
-                                $get_AP = $this->db->query("SELECT api_angkasapura, api_method FROM m_company WHERE id = $company_id ")->result(); 
+                                $store_id = $auth['store_id'];
+                                $get_AP = $this->db->query("SELECT api_angkasapura, api_method FROM m_store WHERE id = $store_id ")->result();
                                 if($get_AP){                                                                        
                             ?>                                   
                                     <div class="row">

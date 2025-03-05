@@ -6,8 +6,7 @@ class Customer extends Bks_Controller {
         $config = array('modules' => 'transaction', 'jsfiles' => array('customer'));
         parent::__construct($config);
         $this->Bksmdl->table = 'm_customer';
-        $this->auth = $this->session->userdata( 'auth' );
-        $this->company_id = $this->auth['company_id'];
+        $this->auth = $this->session->userdata( 'auth' );       
     }
     
     function index(){

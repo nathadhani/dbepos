@@ -6,8 +6,7 @@ class M_currency extends Bks_Controller {
         $config = array('modules' => 'master_data', 'jsfiles' => array('m_currency'));
         parent::__construct($config);
         $this->Bksmdl->table = 'm_currency';
-        $this->auth = $this->session->userdata( 'auth' );
-        $this->companyId = $this->auth['company_id'];
+        $this->auth = $this->session->userdata( 'auth' );        
     }
     
     function index() {
@@ -111,11 +110,10 @@ class M_currency extends Bks_Controller {
     function getcurrencytrx() {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
-        $company_id = $this->input->post('company_id'); 
         $store_id = $this->input->post('store_id');
         $tr_id = $this->input->post('tr_id');
         if($tr_id === '2'){
-            $menus = $this->db->order_by('currency_id,nominal', 'ASC')->get_where('v_stocksale', array('status' => '1', 'company_id' => $company_id, 'store_id' => $store_id))->result();        
+            $menus = $this->db->order_by('currency_id,nominal', 'ASC')->get_where('v_stocksale', array('status' => '1', 'store_id' => $store_id))->result();        
             if (count($menus) > 0){
                 $option ="<option selected value=''>-- Pilih Mata Uang --</option>";
                 foreach($menus as $row){

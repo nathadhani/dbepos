@@ -10,7 +10,7 @@ class Store extends Bks_Controller {
     function index() {
         $this->libauth->check(__METHOD__);
         $this->template->title('Store');
-        $this->template->set('tsmall', 'Location');
+        $this->template->set('tsmall', 'File');
         $this->template->set('icon', 'fa fa-navicon');
         $this->template->build('master_data/store_v');
     }   
@@ -18,7 +18,7 @@ class Store extends Bks_Controller {
     function getdata() {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
-        $this->Bksmdl->table = 'v_m_company_store';
+        $this->Bksmdl->table = 'v_m_store';
         $cpData = $this->Bksmdl->getDataTable();
         $this->Bksmdl->outputToJson($cpData);
     }        

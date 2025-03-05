@@ -220,7 +220,7 @@ class M_exchange_rate extends Bks_Controller {
         $this->Bksmdl->table = 'v_m_exchange_rate';               
 
         $where[0]['field'] = 'store_id';
-        $where[0]['data']  = $tanggal;
+        $where[0]['data']  = $store_id;
         $where[0]['sql']   = 'where';
 
         $where[1]['field'] = 'exchange_rate_date';

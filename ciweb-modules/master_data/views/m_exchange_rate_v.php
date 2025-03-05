@@ -14,7 +14,7 @@
             </div>            
             <div class="panel-body">
                 <div class="row">                                        
-                    <div class="col-md-10">
+                    <div class="col-md-8">
                         <div class="form-group">                                
                             <div class="col-lg-12">
                                 <label for="store_id" style="display:block">Store</label>

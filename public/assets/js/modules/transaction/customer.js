@@ -98,10 +98,10 @@ $("#btn_search").click(function (e) {
                 initComplete: function() {
                     var table = $('#mainTable').DataTable();
                     var table_length = table.data().count();
-                    // if(Number(table_length) <= 0){   
+                    if(Number(table_length) <= 0){   
                         $('#btn_add').show();
                         $("#task-table").show();
-                    // }
+                    }
                     $('.ajax-loader').css("visibility", "hidden");
                 }
             });

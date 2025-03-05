@@ -152,9 +152,7 @@
             },
             columns: [
                 {data: "#", className: "dt-body-center", width: "5%", orderable: false, searchable: false},
-                {data: 'currency_code',  width: "7%", render: function (data, type, row, meta) {
-                    return data;
-                }},
+                {data: 'currency_code',  width: "7%"},
                 {data: 'currency_name'},
                 {data: 'currency_id', render: function (data, type, row, meta) {
                     return bksfn.revDate(row.exchange_rate_date);
@@ -206,18 +204,18 @@
                     $(nRow).find('td:eq(5)').css('color','#0000ff');
                 }    
                 if (aData.price_buy_bot != 0) {
-                    $(nRow).find('td:eq(8)').css('color','#0000ff');
+                    $(nRow).find('td:eq(6)').css('color','#0000ff');
                 }    
                 if (aData.price_buy_top != 0) {
-                    $(nRow).find('td:eq(9)').css('color','#0000ff');
+                    $(nRow).find('td:eq(7)').css('color','#0000ff');
                 }    
 
                 // Color Jual
                 if (aData.exchange_rate_sell > 0) {
-                    $(nRow).find('td:eq(6)').css('color','#ff0000');
+                    $(nRow).find('td:eq(8)').css('color','#ff0000');
                 }    
                 if (aData.difference_sell > 0) {
-                    $(nRow).find('td:eq(6)').css('color','#ff0000');
+                    $(nRow).find('td:eq(8)').css('color','#ff0000');
                 }    
                 if (aData.price_buy_sell != 0) {
                     $(nRow).find('td:eq(10)').css('color','#ff0000');

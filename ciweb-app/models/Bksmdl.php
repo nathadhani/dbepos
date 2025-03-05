@@ -16,9 +16,9 @@ class Bksmdl extends Bks_Model {
 
     public function getprofileusaha($customer_id, $user_id){
         if($customer_id !== null && $customer_id !== ''){
-            $getId = $this->db->query("SELECT company_id FROM m_customer WHERE id = $customer_id")->result();
-            $id = $getId[0]->company_id;
-            $hasil = $this->db->query("SELECT * FROM m_company WHERE id = $id")->result();
+            $getId = $this->db->query("SELECT store_id FROM m_customer WHERE id = $customer_id")->result();
+            $id = $getId[0]->store_id;
+            $hasil = $this->db->query("SELECT * FROM m_store WHERE id = $id")->result();
             return $hasil;
         }
     }
@@ -391,7 +391,7 @@ class Bksmdl extends Bks_Model {
         }
     }
 
-    function generate_stock($company_id, $store_id, $tahun, $bulan, $currency_id, $nominal)
+    function generate_stock($store_id, $tahun, $bulan, $currency_id, $nominal)
     {
         $this->db->trans_begin();
         $auth = $this->session->userdata('auth');        
@@ -415,16 +415,14 @@ class Bksmdl extends Bks_Model {
         /******************************************************************************************************/        
         // insert table stock bulan berjalan
         $qinsert = $this->db->query("SELECT currency_id FROM stock
-                                    WHERE company_id = $company_id
-                                    AND store_id = $store_id
+                                    WHERE store_id = $store_id
                                     AND stock_year = $tahun
                                     AND stock_month = $bulan
                                     AND currency_id = $currency_id
                                     AND nominal = $nominal")->result();
         // echo $this->db->last_query();exit;
         if(count($qinsert) < 1){
-            $data = array(
-                        'company_id' => $company_id,
+            $data = array(                        
                         'store_id' => $store_id,
                         'stock_year' => $tahun,
                         'stock_month' => $bulan,
@@ -442,8 +440,7 @@ class Bksmdl extends Bks_Model {
 
         // update saldo awal table stock bulan berjalan        
         $qlast_stock = $this->db->query("SELECT last_stock_sheet FROM v_stock_tr9
-                                    WHERE company_id = $company_id
-                                    AND store_id = $store_id
+                                    WHERE store_id = $store_id
                                     AND stock_year = $tahun1
                                     AND stock_month = $bulan1
                                     AND currency_id = $currency_id
@@ -458,7 +455,6 @@ class Bksmdl extends Bks_Model {
                     );
             if(count($data) > 0){
                 $where = array(
-                        'company_id' => $company_id,
                         'store_id' => $store_id,
                         'stock_year' => $tahun,
                         'stock_month' => $bulan,
@@ -471,8 +467,7 @@ class Bksmdl extends Bks_Model {
 
         /******************************************************************************************************/
         $qinsert = $this->db->query("SELECT currency_id FROM stock 
-                                    WHERE company_id = $company_id
-                                    AND store_id = $store_id                                    
+                                    WHERE store_id = $store_id                                    
                                     AND stock_year = $tahun2
                                     AND stock_month = $bulan2
                                     AND currency_id = $currency_id
@@ -481,7 +476,6 @@ class Bksmdl extends Bks_Model {
         // insert table stock bulan berikutnya
         if(count($qinsert) < 1){
             $data = array(              
-                'company_id' => $company_id,
                 'store_id' => $store_id,
                 'stock_year' => $tahun2,
                 'stock_month' => $bulan2,
@@ -499,8 +493,7 @@ class Bksmdl extends Bks_Model {
 
         // update saldo awal table stock bulan berikutnya
         $qlast_stock = $this->db->query("SELECT last_stock_sheet FROM v_stock_tr9
-                                    WHERE company_id = $company_id
-                                    AND store_id = $store_id                                        
+                                    WHERE store_id = $store_id                                        
                                     AND stock_year = $tahun
                                     AND stock_month = $bulan
                                     AND currency_id = $currency_id
@@ -514,7 +507,6 @@ class Bksmdl extends Bks_Model {
             );                        
             if(count($data) > 0){
                 $where = array(
-                        'company_id' => $company_id,
                         'store_id' => $store_id,
                         'stock_year' => $tahun2,
                         'stock_month' => $bulan2,

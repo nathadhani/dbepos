@@ -4,27 +4,24 @@ var xtr_id = (decrypt(tr_uri_code) === 'buy' ? 1 : decrypt(tr_uri_code) === 'sel
 back_to_page_ini();
 
 function reset_form_header(){    
-    $('#tr_number').prop('disabled', true);
-    $("#store_id").html('').sel2dma();
+    $('#tr_number').prop('disabled', true);    
     $("#customer_name").html('');
     $("#customer_soure").html('');
     $("#customer_purpose").html('');
 }
 
 function reset_form_input(){
-    $("#stock_nominal").html('');
-    $("#stock_sheet").html('');
-    $("#stock_amount").html('');
-
-    $("#currency_id").html('').sel2dma(); 
-    $("#currency_code").html('');
-
+    $("#currency_id").html('').sel2dma();    
     $("#nominal").val('');
     $("#sheet").val('');
     $('#total_amount').html('');
     $("#price").val('');
     $("#subtotal").val('');
     $("#btn-add-detail-data").focus();
+
+    $("#stock_nominal").html('');
+    $("#stock_sheet").html('');
+    $("#stock_amount").html('');
 }
 
 function show_customer(){
@@ -37,7 +34,7 @@ function show_customer(){
                     data: {'customer_id' : customerId},
                     datatype: 'json',
                     success: function(data){
-                        if (data !== '[]'){   
+                        if (data !== '[]' && data.length > 0){
                             var d = JSON.parse(data)[0];
                             $("#customer_name").html(d.customer_name);
                         } else {
@@ -53,27 +50,6 @@ function show_customer(){
             }
         }
     }    
-}    
-
-function getcurrencyTrx(company_id, store_id){
-    if( typeof(id_header) != 'undefined' && id_header !== null && id_header !== '' ) {
-        // $("#currency_id").html('').sel2dma();
-        // $.ajax({
-        //     url : baseUrl +  'master_data/m_currency/getcurrencyTrx',
-        //     type: 'POST',
-        //     data: {'company_id' : company_id , 'store_id' : store_id, 'tr_id' : xtr_id},
-        //     datatype: 'json',
-        //     success: function(data){
-        //         $('#currency_id').prop('disabled', false);      
-        //         $('#currency_id').html(data);
-        //     },
-        //     error: function(xhr){
-        //         alertify.error("error");
-        //         StringtoFile(xhr.responseText, 'error');
-        //     }
-        // });
-        $('#currency_id').prop('disabled', false);
-    }    
 }
 
 function show_header(){
@@ -87,8 +63,7 @@ function show_header(){
                 datatype: 'json',
                 success: function(data){
                     if (data !== '[]' && data.length > 0){
-                        var d = JSON.parse(data)[0];
-                        $('#btn-simpan-header').prop('disabled', false);                        
+                        var d = JSON.parse(data)[0];                                                
                         $('#btn-add-row-detail').prop('disabled', false);                        
 
                         $("#created_by").html('Created by : '+d.createdby_name +' | '+d.created);
@@ -99,20 +74,14 @@ function show_header(){
                         $("#tr_date").val(bksfn.revDate(d.tr_date));
                         $('#tr_date').prop('disabled', true);
                         $("#tr_number").val(d.tr_number_temp);
+                        if (d.tr_number === null) {
+                            $('#currency_id').prop('disabled', true);
+                            $("#currency_id").html('').sel2dma();
+                        } else {
+                            $('#currency_id').prop('disabled', false);
+                        }
 
                         $("#customer_name").html(d.customer_name);
-                        
-                        if (d.store_id != null) {
-                            $("#store_id").html('<option value="' + d.store_id + '">' + d.store_name + ' [' + d.store_address + ']' + '</option>').sel2dma();
-                            $('#store_id').prop('disabled', false);
-                            getcurrencyTrx(d.company_id, d.store_id);
-                        } else {
-                            $('#store_id').removeAttr('disabled');
-                            $("#store_id").html('').sel2dma();
-                            $('#currency_id').prop('disabled', true);                  
-                            $("#currency_id").html('').sel2dma();
-                        }          
-                        
                         $("#customer_source").val(d.customer_source);
                         $("#customer_purpose").val(d.customer_purpose);
 
@@ -266,7 +235,7 @@ function delete_line_detail($id){
 }
 
 function add_item(){    
-    $.post('transaction/transaction_buysell/insert_detail', $("#form_detail").serialize() + "&header_id=" + id_header + "&tr_id=" + xtr_id + "&user_id=" + userId , function (obj) {
+    $.post('transaction/transaction_buysell/insert_detail', $("#form_detail").serialize() + "&header_id=" + id_header, function (obj) {
         if (obj.msg == 1) {
             reset_form_input();
             back_to_page_ini()
@@ -377,11 +346,11 @@ function getstockbyid(){
     $.ajax({
         url: baseUrl + 'transaction/transaction_buysell/getstockbyid',
         type: 'POST',
-        data: {'company_id' : companyId, 'store_id' : $("#store_id").val(), 'currency_id' : $("#currency_id").val(), 'nominal' : $("#nominal").val() },
+        data: {'currency_id' : $("#currency_id").val(), 'nominal' : $("#nominal").val() },
         datatype: 'json',
         success: function(data){
             if (data !== undefined) {
-                if (data !== '[]'){   
+                if (data !== '[]' && data.length > 0){
                     var d = JSON.parse(data)[0];
                     sisa_stock_sheet = (d.last_stock_sheet === null ? 0 : d.last_stock_sheet);
                     sisa_stock_amount = (d.last_stock_amount === null ? 0 : d.last_stock_amount);
@@ -402,9 +371,8 @@ function getstockbyid(){
 
 function back_to_page_ini(){
     $("#btn-confirm").hide();
-    $("#btn-cancel").hide();  
-
-    $('#btn-simpan-header').prop('disabled', true);
+    $("#btn-cancel").hide();      
+    // $(".form_detail_input").hide();
     $('#currency_id').prop('disabled', true);
     $('#btn-add-row-detail').prop('disabled', true);
     if( typeof(id_header) != 'undefined' && id_header !== null && id_header !== '' ) {
@@ -480,25 +448,33 @@ function back_to_page_show($id){
         type: 'POST',
         data: {'id' : $id},
         datatype: 'json',
-        success: function(data){
+        success: function(data){            
             if (data !== undefined) {
-                if (data !== '[]'){   
-                    var d = JSON.parse(data)[0];
-                    if(d.customer_id !== null && d.customer_id !== '' && d.customer_id !== null && d.customer_id !== ''){
+                if (data !== '[]' && data.length > 0){   
+                    // var x = JSON.parse(data)[0];
+                    // console.log('x : '+x.id);
+                    // return false;
+                    var d = JSON.parse(data);
+                    let xid = d[0].id;
+                    let xtr_id = d[0].tr_id;
+                    let xcustomer_id = d[0].customer_id;
+                    if(xcustomer_id !== null && xcustomer_id !== '' && xcustomer_id !== null && xcustomer_id !== ''){
                         var url = '';
-                        if(Number(d.tr_id) == 1){
-                            url = call_page_show_buy(d.customer_id, d.id);
+                        if(Number(xtr_id) == 1){
+                            url = call_page_show_buy(xcustomer_id, xid);
                         } else {
-                            url = call_page_show_sell(d.customer_id, d.id);
+                            url = call_page_show_sell(xcustomer_id, xid);
                         }
                         if(url !== ''){
+                            console.log(url);
                             $.ajax({
                                 url: url,
                                 type: 'POST',
                                 success: function() {
                                     window.open(url,'_self'); 
                                 },
-                                error: function(){
+                                error: function(xhr){
+                                    console.log(xhr.responseText())
                                     alertify.error("can't open page.!");
                                 }
                             });    
@@ -506,6 +482,8 @@ function back_to_page_show($id){
                     } else {
                         back_to_page_task();
                     }         
+                } else {
+                    back_to_page_task();    
                 }
             } else {
                 back_to_page_task();
@@ -526,7 +504,7 @@ function getratebyid(){
     $.ajax({
         url: baseUrl + 'transaction/transaction_buysell/getratebyid',
         type: 'POST',
-        data: {'store_id' : $("#store_id").val(), 'currency_id' : $("#currency_id").val(), 'tr_id' : xtr_id},
+        data: {'currency_id' : $("#currency_id").val(), 'tr_id' : xtr_id},
         datatype: 'json',
         success: function(data){
             if (data !== undefined) {
@@ -555,72 +533,59 @@ function getratebyid(){
     });
 }
 
-$('#store_id').on('change',function(){
-    if($(this).val() != null && $(this).val() != ''){
-        $('#btn-simpan-header').prop('disabled', false);
-    } else {
-        $('#btn-simpan-header').prop('disabled', true);
-    }
-});
-
 $('#btn-simpan-header').on('click', function (e) {
     e.preventDefault();
-    if( $("#store_id").val() === null || $("#store_id").val() === '' ) {
-        bksfn.errMsg("Stor belum di pilih!");
-        $("#store_id").focus();
-    } else {
-        alertify.confirm("are you sure, SAVE transaction ?", function (x) {
-            if (x) {
-                if ($("#ftitle").html().substr(0, 3) == "Add") {            
-                    $.post('transaction/transaction_buysell/insert_header', $("#form_header").serialize() + "&customer_id=" + customerId + "&tr_id=" + xtr_id + "&store_id=" + $("#store_id").val() + "&user_id=" + userId , function (obj) {
-                        if (obj.msg == 1) {              
-                            id_header = obj.id;      
-                            alertify.success("Insert Data Success");                    
-                            var url = '';
-                            if( xtr_id == 1 ){
-                                url = call_page_task_buy(customerId, id_header);
-                            } else {
-                                url = call_page_task_sell(customerId, id_header);
-                            }
-                            if(url !== ''){
-                                $.ajax({
-                                    url: url,
-                                    type: 'POST',
-                                    success: function() {
-                                        window.open(url,'_self'); 
-                                    },
-                                    error: function(){
-                                        alertify.error("can't open page.!");
-                                    }
-                                });    
-                            }                       
+    alertify.confirm("are you sure, SAVE transaction ?", function (x) {
+        if (x) {
+            if ($("#ftitle").html().substr(0, 3) == "Add") {            
+                $.post('transaction/transaction_buysell/insert_header', $("#form_header").serialize() + "&customer_id=" + customerId + "&tr_id=" + xtr_id, function (obj) {
+                    if (obj.msg == 1) {              
+                        id_header = obj.id;      
+                        alertify.success("Insert Data Success");                    
+                        var url = '';
+                        if( xtr_id == 1 ){
+                            url = call_page_task_buy(customerId, id_header);
                         } else {
-                            reset_form_header();
-                            reset_form_input();
-                            bksfn.errMsg(obj.msg);
+                            url = call_page_task_sell(customerId, id_header);
                         }
-                    }, "json").fail(function (xhr) {                
-                        alertify.error("error");
-                        StringtoFile(xhr.responseText, 'error');
-                    });
-                }
-                if (id_header !== null && id_header !== '') {
-                    $.post('transaction/transaction_buysell/update_header', $("#form_header").serialize() + "&id=" + id_header + "&user_id=" + userId + "&store_id=" + $("#store_id").val(), function (obj) {
-                        if (obj.msg == 1) {
-                            back_to_page_ini();
-                            alertify.success("Edit Data Success");
-                        } else {
-                            reset_form_input();
-                            bksfn.errMsg(obj.msg);
-                        }
-                    }, "json").fail(function (xhr) {
-                        alertify.error("error");
-                        StringtoFile(xhr.responseText, 'error');
-                    });
-                }            
+                        if(url !== ''){
+                            $.ajax({
+                                url: url,
+                                type: 'POST',
+                                success: function() {
+                                    window.open(url,'_self'); 
+                                },
+                                error: function(){
+                                    alertify.error("can't open page.!");
+                                }
+                            });    
+                        }                       
+                    } else {
+                        reset_form_header();
+                        reset_form_input();
+                        bksfn.errMsg(obj.msg);
+                    }
+                }, "json").fail(function (xhr) {                
+                    alertify.error("error");
+                    StringtoFile(xhr.responseText, 'error');
+                });
             }
-        });
-    }
+            if (id_header !== null && id_header !== '') {
+                $.post('transaction/transaction_buysell/update_header', $("#form_header").serialize() + "&id=" + id_header, function (obj) {
+                    if (obj.msg == 1) {
+                        back_to_page_ini();
+                        alertify.success("Edit Data Success");
+                    } else {
+                        reset_form_input();
+                        bksfn.errMsg(obj.msg);
+                    }
+                }, "json").fail(function (xhr) {
+                    alertify.error("error");
+                    StringtoFile(xhr.responseText, 'error');
+                });
+            }            
+        }
+    });
 });
 
 $("#btn-confirm").on('click', function (e) {

@@ -84,11 +84,11 @@ class Transaction_buysell_show extends Bks_Controller {
         
         // Add Title
         $pdf->SetFont('', 'B', 9);
-        $pdf->Cell(01, 01, strtoupper($profilusaha[0]->company_name), 0, 1, 'L');
+        $pdf->Cell(01, 01, strtoupper($profilusaha[0]->store_name), 0, 1, 'L');
 
         $pdf->SetFont('', '', 9);
-        $pdf->Cell(01, 01, $profilusaha[0]->company_address . ' ' . $profilusaha[0]->company_city, 0, 1, 'L');
-        $pdf->Cell(01, 01, 'Telpon : ' . $profilusaha[0]->company_phone, 0, 1, 'L');
+        $pdf->Cell(01, 01, $profilusaha[0]->store_address, 0, 1, 'L');
+        $pdf->Cell(01, 01, 'Telpon : ' . $profilusaha[0]->store_phone, 0, 1, 'L');
 
         $pdf->Ln(1);
         $pdf->SetFont('', '', 9);

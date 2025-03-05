@@ -7,7 +7,7 @@ class Transaction_buysell extends Bks_Controller {
         parent::__construct($config);
         $this->auth = $this->session->userdata( 'auth' );
         $this->userId = $this->auth['id'];
-        $this->company_id = $this->auth['company_id'];
+        $this->store_id = $this->auth['store_id'];
     }
     
     function index(){
@@ -19,17 +19,15 @@ class Transaction_buysell extends Bks_Controller {
         $this->template->build('transaction/transaction_buysell_v', $data);
     }    
     
-    function generate_code_temp($company_id, $store_id, $tr_id, $tr_date){
+    function generate_code_temp($store_id, $tr_id, $tr_date){
         $Number = 1;
         $thn = SUBSTR($tr_date,0,4);
         $bln = SUBSTR($tr_date,5,2);        
-        $branchcode = sprintf("%02d", $company_id);
         $storecode  =sprintf("%02d", $store_id);
         $trcode = sprintf("%02d", $tr_id);
         $sql = $this->db->query("SELECT max(right(tr_number_temp,6)) as id 
                                  FROM tr_header
-                                 WHERE company_id = $company_id
-                                 AND store_id = $store_id 
+                                 WHERE store_id = $store_id 
                                  AND tr_id = $tr_id
                                  AND YEAR(tr_date) = $thn 
                                  AND MONTH(tr_date) = $bln 
@@ -39,20 +37,18 @@ class Transaction_buysell extends Bks_Controller {
                 $Number = intval($data->id) + 1;
             }
         }        
-        return SUBSTR($thn,2,2) . $bln . $branchcode . $storecode . $trcode . sprintf("%06d", $Number);
+        return SUBSTR($thn,2,2) . $bln . $storecode . $trcode . sprintf("%06d", $Number);
     }    
     
-    function generate_code_confirm($company_id, $store_id, $tr_id, $tr_date) {
+    function generate_code_confirm($store_id, $tr_id, $tr_date) {
         $Number = 1;
         $thn = SUBSTR($tr_date,0,4);
         $bln = SUBSTR($tr_date,5,2);
-        $branchcode = sprintf("%02d", $company_id);
         $storecode  =sprintf("%02d", $store_id);
         $trcode = sprintf("%02d", $tr_id);
         $sql = $this->db->query("SELECT max(right(tr_number,6)) as id
                                  FROM tr_header 
-                                 WHERE company_id = $company_id
-                                 AND store_id = $store_id
+                                 WHERE store_id = $store_id
                                  AND tr_id = $tr_id
                                  AND YEAR(tr_date) = $thn 
                                  AND MONTH(tr_date) = $bln 
@@ -62,7 +58,7 @@ class Transaction_buysell extends Bks_Controller {
                 $Number = intval($data->id) + 1;
             }
         }
-        return SUBSTR($thn,2,2) . $bln . $branchcode . $storecode . $trcode . sprintf("%06d", $Number);
+        return SUBSTR($thn,2,2) . $bln . $storecode . $trcode . sprintf("%06d", $Number);
     }
    
     function insert_header(){
@@ -71,14 +67,12 @@ class Transaction_buysell extends Bks_Controller {
         $postData = $this->input->post();
 
         $tr_id = $postData['tr_id'];
-        $postData['company_id'] = $this->company_id;
+        $postData['store_id'] = $this->store_id;
         $postData['tr_date'] = revDate($postData['tr_date']);
-        $postData['tr_number_temp'] = $this->generate_code_temp($this->company_id, $postData['store_id'], $tr_id, $postData['tr_date']);
+        $postData['tr_number_temp'] = $this->generate_code_temp($postData['store_id'], $tr_id, $postData['tr_date']);
         $postData['customer_source'] = ucwords(strtolower(trim($postData['customer_source'])));
         $postData['customer_purpose'] = ucwords(strtolower(trim($postData['customer_purpose'])));
-        $postData['createdby'] = $postData['user_id'];
         $postData['status'] = '1';
-        unset($postData['user_id']);       
         
         $this->db->trans_begin();
         $this->Bksmdl->table = 'tr_header';        
@@ -103,13 +97,11 @@ class Transaction_buysell extends Bks_Controller {
         $postData = $this->input->post();
 
         $id = $postData['id'];
-        $postData['company_id'] = $this->company_id;
+        $postData['store_id'] = $this->store_id;
         $postData['customer_source'] = ucwords(strtolower(trim($postData['customer_source'])));
         $postData['customer_purpose'] = ucwords(strtolower(trim($postData['customer_purpose'])));
-        $postData['updatedby'] = $postData['user_id'];
         $postData['status'] = '1';   
-        unset($postData['tr_date']);   
-        unset($postData['user_id']);   
+        unset($postData['tr_date']);
 
         $this->db->trans_begin();
         $this->Bksmdl->table = 'tr_header';
@@ -130,22 +122,13 @@ class Transaction_buysell extends Bks_Controller {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);                
         $postData = $this->input->post();
-
         $header_id = $postData['header_id'];
-        $tr_id = $postData['tr_id'];
-
         unset($postData['subtotal']);
         if (strpos($postData['price'], ',') !== false) {
             $postData['price'] = str_replace(',','.',$postData['price']);
         }
         $postData['subtotal'] = ( ($postData['nominal'] * $postData['sheet']) * $postData['price'] );
-        $postData['createdby'] = $postData['user_id'];
-        $postData['updatedby'] = $postData['user_id'];
-        $postData['status'] = '1';          
-
-        unset($postData['tr_id']);
-        unset($postData['user_id']);       
-        
+        $postData['status'] = '1';                  
         $this->db->trans_begin();
         $this->Bksmdl->table = 'tr_detail';
         $response = $this->Bksmdl->insert($postData);
@@ -165,9 +148,7 @@ class Transaction_buysell extends Bks_Controller {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);        
         $postData = $this->input->post();
-
-        $id = json_decode($postData['id']);
-        
+        $id = json_decode($postData['id']);        
         $this->db->trans_begin();
         $this->Bksmdl->table = 'tr_detail';
         $status = $this->Bksmdl->delete('id', $id);        
@@ -218,8 +199,6 @@ class Transaction_buysell extends Bks_Controller {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
-        $company_id = $postData['company_id']; 
-        $store_id = $postData['store_id'];
         $tahun    = (int) Date('Y');
         $bulan    = (int) Date('m');
         $currency_id = $postData['currency_id'];
@@ -228,8 +207,7 @@ class Transaction_buysell extends Bks_Controller {
                                           last_stock_sheet, 
                                           IF(last_stock_sheet IS NOT NULL, (nominal * last_stock_sheet),0 ) AS last_stock_amount
                                           FROM v_stock_tr9
-                                   WHERE company_id = $company_id 
-                                   AND store_id = $store_id                                   
+                                   WHERE store_id = $this->store_id
                                    AND stock_year = $tahun 
                                    AND stock_month = $bulan
                                    AND currency_id = $currency_id 
@@ -241,7 +219,6 @@ class Transaction_buysell extends Bks_Controller {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
-        $store_id = $postData['store_id'];
         $currency_id = $postData['currency_id'];
         $tr_date  = Date('Y-m-d');
         $tr_id = $postData['tr_id'];  
@@ -250,8 +227,7 @@ class Transaction_buysell extends Bks_Controller {
                                               price_buy_bot AS rate_today_bot, 
                                               price_buy_top AS rate_today_top
                                               FROM m_exchange_rate
-                                    WHERE company_id = $this->company_id 
-                                    AND store_id = $store_id
+                                    WHERE store_id = $this->store_id
                                     AND currency_id = $currency_id
                                     AND exchange_rate_date = '$tr_date' LIMIT 1")->result();
             echo json_encode($query, true);
@@ -260,8 +236,7 @@ class Transaction_buysell extends Bks_Controller {
                                               price_sell_bot AS rate_today_bot,
                                               price_sell_top AS rate_today_top 
                                               FROM m_exchange_rate
-                                    WHERE company_id = $this->company_id 
-                                    AND store_id = $store_id
+                                    WHERE store_id = $this->store_id
                                     AND currency_id = $currency_id
                                     AND exchange_rate_date = '$tr_date' LIMIT 1")->result();
             echo json_encode($query, true);
@@ -289,13 +264,12 @@ class Transaction_buysell extends Bks_Controller {
             $json['msg'] = $err['code'] . '<br>' . $err['message'];
             echo json_encode($json);
         } else {
-            $get_header = $this->db->query("SELECT id,company_id,store_id,tr_id,tr_date,tr_number FROM tr_header WHERE id = $header_id")->result();                
+            $get_header = $this->db->query("SELECT id, store_id, tr_id, tr_date, tr_number FROM tr_header WHERE id = $header_id")->result();                
             if(count($get_header > 0)){
-                $company_id = $get_header[0]->company_id;
                 $store_id = $get_header[0]->store_id;
                 $tr_id = $get_header[0]->tr_id;
                 $tr_date = $get_header[0]->tr_date;                
-                $tr_number = ($get_header[0]->tr_number !== '' &&  $get_header[0]->tr_number !== null ? $get_header[0]->tr_number : $this->generate_code_confirm($company_id, $store_id, $tr_id, $tr_date));
+                $tr_number = ($get_header[0]->tr_number !== '' &&  $get_header[0]->tr_number !== null ? $get_header[0]->tr_number : $this->generate_code_confirm($store_id, $tr_id, $tr_date));
 
                 $this->db->where(array('id' => $header_id));
                 $this->db->update('tr_header', array('tr_number' => $tr_number, 'status' => 3, 'updated' => date('Y-m-d H:i:s', time()), 'updatedby' => $this->userId) );
@@ -303,14 +277,14 @@ class Transaction_buysell extends Bks_Controller {
                 $this->db->where(array('header_id' => $header_id));
                 $this->db->update('tr_detail', array('status' => 3, 'updated' => date('Y-m-d H:i:s', time()), 'updatedby' => $this->userId) );
 
-                $select = $this->db->select('currency_id,nominal')->where('header_id',$header_id)->get('tr_detail');
+                $select = $this->db->select('currency_id, nominal')->where('header_id', $header_id)->get('tr_detail');
                 if($select->num_rows()){                           
                     $tahun = (int) SUBSTR($get_header[0]->tr_date,0,4);
                     $bulan = (int) SUBSTR($get_header[0]->tr_date,5,2);
                     foreach($select->result_array() as $row) {
                         $currency_id = $row['currency_id'];
                         $nominal  = $row['nominal'];
-                        $this->Bksmdl->generate_stock($company_id, $store_id, $tahun, $bulan, $currency_id, $nominal);
+                        $this->Bksmdl->generate_stock($store_id, $tahun, $bulan, $currency_id, $nominal);
                     }
                 }
 
@@ -332,7 +306,6 @@ class Transaction_buysell extends Bks_Controller {
         } else {
             $postData['description'] = 'Canceled';
         }
-        // var_dump($postData);exit;
         $this->db->trans_begin();
         $this->db->where(array('id' => $header_id));
         $this->db->update('tr_header', array('status' => 2, 'description' => $postData['description'], 'updated' => date('Y-m-d H:i:s', time()), 'updatedby' => $this->userId) );
