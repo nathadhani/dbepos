@@ -85,6 +85,7 @@ function show_header(){
                         $("#customer_source").val(d.customer_source);
                         $("#customer_purpose").val(d.customer_purpose);
 
+                        $('#btn-simpan-header').html('Save Task');
                         $("#ftitle").html(d.status_name);
                         show_detail(d.status);
                         switch(Number(d.status)) {

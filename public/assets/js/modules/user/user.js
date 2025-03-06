@@ -24,7 +24,7 @@
 
         if( usergroupId == 1) {
             $("#store_id").html('').sel2dma();
-            $("#region").html('').sel2dma();
+            $("#store_id_multiple").html('').sel2dma();
             $("#usergroup_id").html('').sel2dma();
             $("#userlevel_id").html('').sel2dma();    
         }
@@ -154,8 +154,8 @@
             {data: 'id', visible: false},
             {data: 'store_id', visible: false},
             {data: 'store_name', visible: false},            
-            {data: 'region', visible: false},
-            {data: 'region_code', visible: false},
+            {data: 'store_id_multiple', visible: false},
+            {data: 'store_id_multiple_object', visible: false},
             {data: 'usergroup_id', visible: false},
             {data: 'usergroupname', visible: false},
             {data: 'userlevel_id', visible: false},
@@ -207,30 +207,6 @@
 
         $("#fullname").val(d.fullname);
 
-        if( usergroupId == 1) {
-            if (d.store_id != null) {
-                $("#store_id").html('<option value="' + d.store_id + '">' + d.store_address + '</option>').sel2dma();
-            } else {
-                $("#store_id").html('').sel2dma();
-            }
-            
-            if (d.region_code != null) {
-                region_code = JSON.parse(d.region_code);
-                // console.log(region_code);    
-                $("#region").html('').sel2dma();    
-                $.each(region_code, function (i, val) {
-                    $("#region").append(`<option value="${val.id}">${val.store_addres} [${val.id}]</option>`);    
-                    $("#region-container").find("span.select2-container ul.select2-selection__rendered").append(`<li class="select2-selection__choice" title="${val.store_addres} [${val.id}]"><span class="select2-selection__choice__remove" role="presentation">×</span>${val.store_addres} [${val.id}]</li>`);
-                });    
-                $("input.select2-search__field").attr('placeholder', '');
-                $("input.select2-search__field").css("width", "0");
-                $("ul.select2-selection__rendered").append('<span class="select2-selection__clear">×</span>');
-            }    
-            if (d.region != null) {
-                $("#region").val(d.region.split(','));
-            }
-        }
-
         if (d.usergroup_id != null) {
             $("#usergroup_id").html('<option value="' + d.usergroup_id + '">' + d.usergroupname + '</option>').sel2dma();
         } else {
@@ -247,6 +223,30 @@
         $("#celluler").val(d.celluler);
         
         $("#status").iCheck(d.status == 1 ? 'check' : 'uncheck');
+
+        if( usergroupId == 1) {
+            if (d.store_id != null) {
+                $("#store_id").html('<option value="' + d.store_id + '">' + d.store_address + '</option>').sel2dma();
+            } else {
+                $("#store_id").html('').sel2dma();
+            }
+            
+            if (d.store_id_multiple_object != null) {
+                store_id_multiple_object = JSON.parse(d.store_id_multiple_object);
+                console.log(store_id_multiple_object);    
+                $("#store_id_multiple").html('').sel2dma();    
+                $.each(store_id_multiple_object, function (i, val) {
+                    $("#store_id_multiple").append(`<option value="${val.id}">${val.store_address} [${val.id}]</option>`);    
+                    $("#store_id_multiple-container").find("span.select2-container ul.select2-selection__rendered").append(`<li class="select2-selection__choice" title="${val.store_address} [${val.id}]"><span class="select2-selection__choice__remove" role="presentation">×</span>${val.store_address} [${val.id}]</li>`);
+                });    
+                $("input.select2-search__field").attr('placeholder', '');
+                $("input.select2-search__field").css("width", "0");
+                $("ul.select2-selection__rendered").append('<span class="select2-selection__clear">×</span>');
+            }    
+            if (d.store_id_multiple != null) {
+                $("#store_id_multiple").val(d.store_id_multiple.split(','));
+            }
+        }       
         $("body").data("id", d.id);
     });    
 

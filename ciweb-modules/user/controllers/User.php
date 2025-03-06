@@ -25,21 +25,21 @@ class User extends Bks_Controller {
         $postData = $this->input->post();
 
         $postData['username'] = trim(trim(strtolower($postData['username'])));        
-        $postData['password'] = $this->encrypt->hash($postData['password']);
         $postData['password_plain'] = $postData['password'];
+        $postData['password'] = $this->encrypt->hash($postData['password']);
         $postData['fullname'] = trim(trim(ucwords($postData['fullname'])));
         $postData['status'] = cekStatus($postData);
 
-        if(isset($postData['region'])){
-            $postData['region'] = implode(',', $postData['region']);
-            $mystring = $postData['region'];
+        if(isset($postData['store_id_multiple'])){
+            $postData['store_id_multiple'] = implode(',', $postData['store_id_multiple']);
+            $mystring = $postData['store_id_multiple'];
             $findme   = ',';
             $pos = strpos($mystring, $findme);
             if($pos === false) {
-                $postData['region'] = (int) $postData['region'];                                     
+                $postData['store_id_multiple'] = (int) $postData['store_id_multiple'];                                     
             }
         } else {
-            $postData['region'] = Null;
+            $postData['store_id_multiple'] = Null;
         }
 
         $this->db->trans_begin();
@@ -63,24 +63,24 @@ class User extends Bks_Controller {
         $postData = $this->input->post();
         $postData['username'] = strtolower($postData['username']);
         if (strlen($postData['password']) > 0) {
-            $postData['password'] = $this->encrypt->hash($postData['password']);
             $postData['password_plain'] = $postData['password'];
+            $postData['password'] = $this->encrypt->hash($postData['password']);
         } else {
             unset($postData['password']);
         }
         $postData['fullname'] = trim(trim(ucwords($postData['fullname'])));        
         $postData['status'] = cekStatus($postData);
         
-        if(isset($postData['region'])){
-            $postData['region'] = implode(',', $postData['region']);
-            // $mystring = $postData['region'];
+        if(isset($postData['store_id_multiple'])){
+            $postData['store_id_multiple'] = implode(',', $postData['store_id_multiple']);
+            // $mystring = $postData['store_id_multiple'];
             // $findme   = ',';
             // $pos = strpos($mystring, $findme);
             // if($pos === false) {
-            //     $postData['region'] = (int) $postData['region'];                                     
+            //     $postData['store_id_multiple'] = (int) $postData['store_id_multiple'];
             // }
         } else {
-            $postData['region'] = Null;
+            $postData['store_id_multiple'] = Null;
         }
 
         $id = $postData['id'];

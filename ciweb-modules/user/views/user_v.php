@@ -115,17 +115,17 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="form-group row" id="region-container">
-                                    <label for="region" class="control-label col-lg-4">Region</label>
+                                <div class="form-group row" id="store_id_multiple-container">
+                                    <label for="store_id_multiple" class="control-label col-lg-4">Store Multiple</label>
                                     <div class="col-lg-8">
-                                        <select name="region[]"
+                                        <select name="store_id_multiple[]"
                                                 data-ajax="true" 
                                                 data-placeholder="-- Pilih Multiple --"
                                                 data-url="master_data/m_store/getstore/" 
                                                 data-value="" 
                                                 data-limit="100"
                                                 multiple
-                                                id="region" placeholder="Region" class='form-control select2'>
+                                                id="store_id_multiple" placeholder="Store Multiple" class='form-control select2'>
                                         </select>
                                     </div>
                                 </div>

@@ -21,7 +21,7 @@
                             - <span id="ftitle" style="color:black;font-weight:600;font-size:16px;">Add</span>
                         </h3>
                     </div>
-                    <ul class="panel-controls">
+                    <ul class="panel-controls">                       
                         <button id="btn-confirm" class="btn btn-success btn btn-sm" style="width:120px;">Confirm</button>
                         <button id="btn-cancel" class="btn btn-danger btn-sm" style="width:120px;">Cancel</button>
                     </ul>    
@@ -69,8 +69,8 @@
                                         <label for="store_id" style="display:block">Purpose</label>
                                         <input type="text" autofocuse="" id="customer_purpose" name="customer_purpose" class="form-control" placeholder="Tujuan Transaksi...">
                                     </div>
-                                    <div class="col-lg-4">
-                                        <button id="btn-simpan-header" class="btn btn-primary btn btn-sm" style="width:100px;">Save Task</button>
+                                    <div class="col-lg-4">                                        
+                                        <button id="btn-simpan-header" class="btn btn-primary btn btn-sm" style="width:100px;">Create Task</button>
                                     </div>
                                 </div>
                             </div>                            

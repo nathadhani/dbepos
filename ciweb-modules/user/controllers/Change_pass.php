@@ -28,8 +28,8 @@ class Change_pass extends Bks_Controller {
             echo json_encode($json);
         } else {
             if (strlen($postData['password']) > 0) {
+                $datax['password_plain'] = $postData['password'];     
                 $datax['password'] = $this->encrypt->hash($postData['password']);
-                $datax['password_plain'] = $postData['password'];
                     
                 $this->db->trans_begin();
                 $status = $this->Bksmdl->update($datax, 'id=' . $id);

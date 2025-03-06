@@ -107,8 +107,8 @@ class M_store extends Bks_Controller {
         $this->Bksmdl->table = 'm_store';
         $this->Bksmdl->searchable = array('store_address', 'store_name', 'id');
         $this->Bksmdl->select2fields = array('id' => 'id', 'text' => 'store_address');
-        if($this->auth['region'] !== NULL && $this->auth['region'] !== ''){
-            $result['results'] = $this->Bksmdl->getSelect2(array('status' => '1'), null, explode(',', $this->auth['region']) );
+        if($this->auth['store_id_multiple'] !== NULL && $this->auth['store_id_multiple'] !== ''){
+            $result['results'] = $this->Bksmdl->getSelect2(array('status' => '1'), null, explode(',', $this->auth['store_id_multiple']) );
         } else {
             $result['results'] = $this->Bksmdl->getSelect2(array('status' => '1', 'id' => $this->auth['store_id']));
         }
