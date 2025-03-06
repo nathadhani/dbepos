@@ -12,6 +12,7 @@
         },
         columns: [
             {data: "#", className: "dt-body-center", width: "5%", orderable: false, searchable: false},
+            {data: 'store_name'},
             {data: 'store_address'},            
             {data: 'status', className: "dt-body-center", width: "5%", render: function (data, type, row, meta) {
                 var act = (data == '1') ? '<span class="label label-success"><i class="fa fa-check"></i></span>' : '<span class="label label-danger"><i class="fa fa-times"></i></span>';
@@ -26,10 +27,10 @@
 
     // Setup - add a text input to each header cell
     $('#searchid td').each(function () {
-        if ($(this).index() != 0 && $(this).index() <= 1) {
+        if ($(this).index() != 0 && $(this).index() <= 2) {
             $(this).html('<input style="width:100%" type="text" placeholder="Search" data-id="' + $(this).index() + '" />');
         }
-        if ($(this).index() == 2) {
+        if ($(this).index() == 3) {
             $(this).html('<select style="width:100%" type="text"><option value="">-</option><option value="1">Active</option><option value="0">Not Active</option><select/>');
         }
     });
@@ -37,7 +38,7 @@
         t.columns($(this).data('id')).search(this.value).draw();
     });
     $('#searchid select').change(function () {
-        t.columns(2).search(this.value).draw();
+        t.columns(3).search(this.value).draw();
     });
     $(".clrs").click(function () {
         $('#searchid input').val('');

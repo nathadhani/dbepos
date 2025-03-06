@@ -1,28 +1,4 @@
 (function ($) {
-    $('#company_id').on('change',function(e){
-        e.preventDefault()
-        if($(this).val() != null && $(this).val() != ''){
-            $('#store_id').html('').sel2dma();
-            $('#store_id').prop('disabled', false);
-            $('#store_id').focus()
-            $.ajax({
-                url : baseUrl +  'master_data/m_store/getStore',
-                type: 'POST',
-                data: {'company_id' : $(this).val()},
-                datatype: 'json',
-                success: function(data){
-                    $('#store_id').html(data);
-                },
-                error: function(){
-                    alert("can't get store");  
-                }
-            });
-        } else {    
-            $('#store_id').html('').sel2dma();
-            $('#store_id').prop('disabled', true);        
-        }
-    });  
-    
     $('#store_id').on('change',function(e){
         e.preventDefault()
         if($(this).val() != null && $(this).val() != ''){
@@ -30,9 +6,9 @@
             $('#currency_id').prop('disabled', false);
             $('#currency_id').focus()
             $.ajax({
-                url : baseUrl +  'stock/stock_price/getcurrencyStock',
+                url : baseUrl +  'stock/stock_price/getcurrencystock',
                 type: 'POST',
-                data: {'company_id' : $("#company_id").val(), 'store_id' : $(this).val()},
+                data: {'store_id' : $(this).val()},
                 datatype: 'json',
                 success: function(data){
                     $('#currency_id').html(data);
@@ -46,9 +22,7 @@
     
     $("#btn-submit").on('click', function (e) {
         e.preventDefault();
-        if($('#company_id').val() === null || $('#company_id').val() === ''){
-            bksfn.errMsg('Cabang Belum Dipilih!');
-        } else if($('#store_id').val() === null || $('#store_id').val() === ''){
+        if($('#store_id').val() === null || $('#store_id').val() === ''){
             bksfn.errMsg('Store Belum Dipilih!');    
         } else if($('#currency_id').val() === null || $('#currency_id').val() === ''){
             bksfn.errMsg('Matauang Belum Dipilih!');            
@@ -61,14 +35,12 @@
     $("#btn-excel").hide();
     $("#btn-excel").on('click', function (e) {
         e.preventDefault();
-        if($('#company_id').val() === null || $('#company_id').val() === ''){
-            bksfn.errMsg('Cabang Belum Dipilih!');
-        } else if($('#store_id').val() === null || $('#store_id').val() === ''){
+        if($('#store_id').val() === null || $('#store_id').val() === ''){
             bksfn.errMsg('Store Belum Dipilih!');            
         } else {
             alertify.confirm("download stock period " + $("#periode").val() + " ?", function (e) {
                 if (e) {
-                    var url = "stock/stock_price/excel/"+$('#periode').val()+"/"+$('#company_id').val()+"/"+$('#store_id').val();
+                    var url = "stock/stock_price/excel/"+$('#store_id').val()+"/"+$('#periode').val();
                     $.ajax({
                         url: url,
                         type: 'POST',
@@ -108,9 +80,7 @@
             ajax: {
                 url: baseUrl + 'stock/stock_price/getData',
                 type: 'POST',
-                data: function(d) {
-                    d.company_id = $('#company_id').val(),
-                    d.tenant_id = $('#tenant_id').val(),
+                data: function(d) {                   
                     d.store_id = $('#store_id').val(),
                     d.currency_id = $('#currency_id').val(),
                     d.periode = $('#periode').val()
@@ -166,7 +136,6 @@
                 }},
                            
                 {data: 'id', visible: false},
-                {data: 'company_id', visible: false},
                 {data: 'currency_code', visible: false},
                 {data: 'currency_name', visible: false},
                 {data: 'created', visible: false},

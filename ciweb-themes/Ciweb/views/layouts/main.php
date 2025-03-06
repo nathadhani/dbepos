@@ -22,7 +22,7 @@
         </li>
 
         <?php 
-            if(!in_array($usergroup_id, array('1','2'))) {
+            if(!in_array($usergroup_id, array('1','2','6'))) {
         ?>
                 <li class="xn-icon-button">
                     <a href="stock/stock_calculate" title="Calculate Stock" data-toggle="tooltip" data-placement="bottom"><span class="fa fa-calculator"></span></a>
@@ -54,10 +54,10 @@
                     ?>        
                 </li>
                 <?php                    
-                    if($api_method === '1' && $api_method !== null){                        
+                    if($api_method === '0' && $api_method !== null){                        
                 ?>            
                     <li class="xn-icon-button">
-                        <a href="api/api_ap_input" title="API Input Pending" data-toggle="tooltip" data-placement="bottom"><span class="fa fa-comment"></span></a>
+                        <a href="api/api_ap_input" title="Integrasi ECSys ( Pending )" data-toggle="tooltip" data-placement="bottom"><span class="fa fa-comment"></span></a>
                         <?php
                             if($store_id != null){
                                 $count = $this->db->query("SELECT COUNT(status) AS jumlah FROM v_tr_header
@@ -90,26 +90,27 @@
 
     <!-- START BREADCRUMB -->
     <ul class="breadcrumb">
-        <!-- <li>
-            <a href=".">Main Menu</a>
-        </li>
-        <?php if (isset($tsmall)) echo '<li class="">' . $tsmall . '</li>';?>
-        <?php if (isset($tparent)) echo '<li class="">' . $tparent . '</li>';?>
-        <li class="">
-            <?php if (isset($template['title'])) echo $template['title'];?>
-        </li> -->
+        <!-- <li> -->
+            <!-- <a href=".">Main Menu</a> -->
+        <!-- </li> -->
+        <!-- <?php if (isset($tsmall)) echo '<li class="">' . $tsmall . '</li>';?> -->
+        <!-- <?php if (isset($tparent)) echo '<li class="">' . $tparent . '</li>';?> -->
+        <!-- <li class=""> -->
+            <!-- <?php if (isset($template['title'])) echo $template['title'];?> -->
+        <!-- </li> -->
+
         <?php 
-            if( $usergroup_id != 1) {
+            if(!in_array($usergroup_id, array('1','2','6'))) {
         ?>
             <span>
-                User login : <?php echo $auth['fullname'] . ' | Location : ' . $auth['store_address'];?>
-            </label>
-            <span class="pull-right"> 
-                Today : <?php print dayList(). ', ' . date('d F Y'); ?> 
-            </span>
+                Logged in as : <?php echo $auth['fullname'] . ' | Store : ' . $auth['store_address'];?>
+            </span>            
         <?php 
             }
         ?>    
+        <span class="pull-right"> 
+            Today : <?php print dayList(). ', ' . date('d F Y'); ?> 
+        </span>
     </ul>
     <!-- END BREADCRUMB -->
 

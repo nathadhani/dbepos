@@ -25,7 +25,7 @@ class Transaction_buysell extends Bks_Controller {
         $bln = SUBSTR($tr_date,5,2);        
         $storecode  =sprintf("%02d", $store_id);
         $trcode = sprintf("%02d", $tr_id);
-        $sql = $this->db->query("SELECT max(right(tr_number_temp,6)) as id 
+        $sql = $this->db->query("SELECT max(right(tr_number_temp,4)) as id 
                                  FROM tr_header
                                  WHERE store_id = $store_id 
                                  AND tr_id = $tr_id
@@ -37,7 +37,7 @@ class Transaction_buysell extends Bks_Controller {
                 $Number = intval($data->id) + 1;
             }
         }        
-        return SUBSTR($thn,2,2) . $bln . $storecode . $trcode . sprintf("%06d", $Number);
+        return SUBSTR($thn,2,2) . $bln . $storecode . $trcode . sprintf("%04d", $Number);
     }    
     
     function generate_code_confirm($store_id, $tr_id, $tr_date) {
@@ -46,7 +46,7 @@ class Transaction_buysell extends Bks_Controller {
         $bln = SUBSTR($tr_date,5,2);
         $storecode  =sprintf("%02d", $store_id);
         $trcode = sprintf("%02d", $tr_id);
-        $sql = $this->db->query("SELECT max(right(tr_number,6)) as id
+        $sql = $this->db->query("SELECT max(right(tr_number,4)) as id
                                  FROM tr_header 
                                  WHERE store_id = $store_id
                                  AND tr_id = $tr_id
@@ -58,7 +58,7 @@ class Transaction_buysell extends Bks_Controller {
                 $Number = intval($data->id) + 1;
             }
         }
-        return SUBSTR($thn,2,2) . $bln . $storecode . $trcode . sprintf("%06d", $Number);
+        return SUBSTR($thn,2,2) . $bln . $storecode . $trcode . sprintf("%04d", $Number);
     }
    
     function insert_header(){

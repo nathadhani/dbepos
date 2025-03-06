@@ -14,11 +14,11 @@ class Bksmdl extends Bks_Model {
         parent::__construct();
     }
 
-    public function getprofileusaha($customer_id, $user_id){
-        if($customer_id !== null && $customer_id !== ''){
-            $getId = $this->db->query("SELECT store_id FROM m_customer WHERE id = $customer_id")->result();
-            $id = $getId[0]->store_id;
-            $hasil = $this->db->query("SELECT * FROM m_store WHERE id = $id")->result();
+    public function getprofileusaha($id, $user_id){
+        if($id !== null && $id !== ''){
+            $getId = $this->db->query("SELECT store_id FROM tr_header WHERE id = $id LIMIT 1")->result();
+            $store_id = $getId[0]->store_id;
+            $hasil = $this->db->query("SELECT * FROM m_store WHERE id = $store_id")->result();
             return $hasil;
         }
     }

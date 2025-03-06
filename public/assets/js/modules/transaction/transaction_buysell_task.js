@@ -12,14 +12,7 @@
             ajax: {
                 url: baseUrl + 'transaction/transaction_buysell_task/getdata',
                 type: 'POST',
-                // beforeSend: function(){
-                //     $(".ajax-loader").height($(document).height());
-                //     $('.ajax-loader').css("visibility", "visible");
-                // },
-                data: function(d) {},
-                complete: function(){
-                    // $('.ajax-loader').css("visibility", "hidden");
-                }
+                data: function(d) {}
             },
             columns: [
                 {data: "#", className: "dt-body-center", width: "5%", orderable: false, searchable: false},   

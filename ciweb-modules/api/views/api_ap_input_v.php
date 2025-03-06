@@ -1,15 +1,12 @@
-<script type="text/javascript">
+<script type="text/javascript">  
     var userId = <?php echo $auth['id'];?>;
-    var companyId = <?php echo $auth['company_id'];?>;
-    var usergroupId = <?php echo $auth['usergroup_id'];?>;
-    var userlevelId = <?php echo $auth['userlevel_id'];?>;
 </script>
 <div class="row">
     <div class="col-md-12">
         <div class="panel panel-default">
             <div class="panel-heading ui-draggable-handle">                                
                 <div class="panel-title-box">
-                    <h3>Buy / Sell - API Input Pending</h3>
+                    <h3>Buy / Sell - Integrasi System ECSys ( API - Input Pending )</h3>
                 </div>
             </div>
             <div class="panel-body table-responsive">                

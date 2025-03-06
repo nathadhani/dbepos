@@ -1,7 +1,7 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : mySQL
+ Source Server         : MYSQL
  Source Server Type    : MySQL
  Source Server Version : 80030
  Source Host           : localhost:3306
@@ -11,7 +11,7 @@
  Target Server Version : 80030
  File Encoding         : 65001
 
- Date: 06/03/2025 06:22:54
+ Date: 06/03/2025 16:25:21
 */
 
 SET NAMES utf8mb4;
@@ -232,6 +232,107 @@ INSERT INTO `auth_group_role` VALUES (485, 1, 'User', 'getcountuserbystoreid', '
 INSERT INTO `auth_group_role` VALUES (486, 3, 'Customer_form', 'ceknikdttot', '', 1, '2025-03-05 15:39:36', 1, NULL, NULL);
 INSERT INTO `auth_group_role` VALUES (487, 3, 'M_currency', 'index', '', 1, '2025-03-05 15:40:14', 1, NULL, NULL);
 INSERT INTO `auth_group_role` VALUES (488, 3, 'M_store', 'getregion', '', 1, '2025-03-05 16:37:03', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (489, 6, 'Change_pass', 'index', '', 1, '2025-03-06 13:10:59', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (490, 6, 'Change_pass', 'update', '', 1, '2025-03-06 13:10:59', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (491, 6, 'Home', 'index', '', 1, '2025-03-06 13:11:04', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (492, 6, 'Transaction_buysell_list', 'index', '', 1, '2025-03-06 13:15:17', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (493, 6, 'Transaction_buysell_list', 'getdata', '', 1, '2025-03-06 13:15:17', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (494, 6, 'Transaction_buysell_list', 'excel', '', 1, '2025-03-06 13:15:17', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (495, 6, 'Summary_buysell_by_date', 'index', '', 1, '2025-03-06 13:15:33', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (496, 6, 'Summary_buysell_by_date', 'getdata', '', 1, '2025-03-06 13:15:33', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (497, 6, 'Summary_buysell_by_date', 'gettotal', '', 1, '2025-03-06 13:15:33', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (498, 6, 'Summary_buysell_by_date', 'getcount', '', 1, '2025-03-06 13:15:33', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (499, 6, 'Summary_buysell_by_month', 'index', '', 1, '2025-03-06 13:15:33', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (500, 6, 'Summary_buysell_by_month', 'getdata', '', 1, '2025-03-06 13:15:33', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (501, 6, 'Summary_buysell_by_month', 'gettotal', '', 1, '2025-03-06 13:15:33', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (502, 6, 'Summary_buysell_by_month', 'getcount', '', 1, '2025-03-06 13:15:33', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (503, 6, 'Summary_buysell_by_year', 'index', '', 1, '2025-03-06 13:15:33', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (504, 6, 'Summary_buysell_by_year', 'getdata', '', 1, '2025-03-06 13:15:33', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (505, 6, 'Summary_buysell_by_year', 'gettotal', '', 1, '2025-03-06 13:15:33', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (506, 6, 'Summary_buysell_by_year', 'getcount', '', 1, '2025-03-06 13:15:33', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (507, 6, 'M_store', 'getregion', '', 1, '2025-03-06 13:17:10', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (508, 6, 'Transaction_buysell_show', 'index', '', 1, '2025-03-06 13:18:27', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (509, 6, 'Transaction_buysell_show', 'getshowid', '', 1, '2025-03-06 13:18:27', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (510, 6, 'Transaction_buysell_show', 'show_header', '', 1, '2025-03-06 13:18:27', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (511, 6, 'Transaction_buysell_show', 'show_detail', '', 1, '2025-03-06 13:18:27', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (512, 4, 'Summary_buysell_by_date', 'index', '', 1, '2025-03-06 13:34:05', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (513, 4, 'Summary_buysell_by_date', 'getdata', '', 1, '2025-03-06 13:34:05', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (514, 4, 'Summary_buysell_by_date', 'gettotal', '', 1, '2025-03-06 13:34:05', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (515, 4, 'Summary_buysell_by_date', 'getcount', '', 1, '2025-03-06 13:34:05', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (516, 4, 'Summary_buysell_by_month', 'index', '', 1, '2025-03-06 13:34:05', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (517, 4, 'Summary_buysell_by_month', 'getdata', '', 1, '2025-03-06 13:34:05', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (518, 4, 'Summary_buysell_by_month', 'gettotal', '', 1, '2025-03-06 13:34:05', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (519, 4, 'Summary_buysell_by_month', 'getcount', '', 1, '2025-03-06 13:34:05', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (520, 4, 'Summary_buysell_by_year', 'index', '', 1, '2025-03-06 13:34:05', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (521, 4, 'Summary_buysell_by_year', 'getdata', '', 1, '2025-03-06 13:34:05', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (522, 4, 'Summary_buysell_by_year', 'gettotal', '', 1, '2025-03-06 13:34:05', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (523, 4, 'Summary_buysell_by_year', 'getcount', '', 1, '2025-03-06 13:34:05', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (524, 4, 'Transaction_buysell_list', 'index', '', 1, '2025-03-06 13:34:05', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (525, 4, 'Transaction_buysell_list', 'getdata', '', 1, '2025-03-06 13:34:05', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (526, 4, 'Transaction_buysell_list', 'excel', '', 1, '2025-03-06 13:34:05', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (527, 4, 'Transaction_buysell_show', 'index', '', 1, '2025-03-06 13:34:05', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (528, 4, 'Transaction_buysell_show', 'getshowid', '', 1, '2025-03-06 13:34:05', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (529, 4, 'Transaction_buysell_show', 'show_header', '', 1, '2025-03-06 13:34:05', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (530, 4, 'Transaction_buysell_show', 'show_detail', '', 1, '2025-03-06 13:34:05', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (531, 4, 'Transaction_buysell_show', 'printnota', '', 1, '2025-03-06 13:34:05', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (532, 4, 'Transaction_buysell_task', 'index', '', 1, '2025-03-06 13:34:05', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (533, 4, 'Transaction_buysell_task', 'getdata', '', 1, '2025-03-06 13:34:05', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (534, 4, 'Customer', 'index', '', 1, '2025-03-06 13:34:21', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (535, 4, 'Customer', 'getdata', '', 1, '2025-03-06 13:34:21', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (536, 4, 'Customer', 'excel', '', 1, '2025-03-06 13:34:21', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (537, 4, 'Customer_form', 'index', '', 1, '2025-03-06 13:34:21', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (538, 4, 'Customer_form', 'generate_code', '', 1, '2025-03-06 13:34:21', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (539, 4, 'Customer_form', 'insert', '', 1, '2025-03-06 13:34:21', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (540, 4, 'Customer_form', 'update', '', 1, '2025-03-06 13:34:21', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (541, 4, 'Customer_form', 'delete', '', 1, '2025-03-06 13:34:21', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (542, 4, 'Customer_form', 'getbyid', '', 1, '2025-03-06 13:34:21', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (543, 4, 'Customer_form', 'ceknikdttot', '', 1, '2025-03-06 13:34:21', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (544, 4, 'Customer_form', 'add_foto', '', 1, '2025-03-06 13:34:21', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (545, 4, 'M_customer_data', 'getidentitas', '', 1, '2025-03-06 13:34:40', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (546, 4, 'M_customer_job', 'getjob', '', 1, '2025-03-06 13:34:40', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (547, 4, 'M_customer_type', 'gettype', '', 1, '2025-03-06 13:34:40', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (548, 4, 'Dashboard_buysell', 'index', '', 1, '2025-03-06 13:34:50', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (549, 4, 'Dashboard_buysell', 'getlastupdated', '', 1, '2025-03-06 13:34:50', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (550, 4, 'Dashboard_buysell', 'getdatatable1', '', 1, '2025-03-06 13:34:50', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (551, 4, 'Dashboard_buysell', 'getchart1', '', 1, '2025-03-06 13:34:50', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (552, 4, 'Dashboard_buysell', 'getdatatable2', '', 1, '2025-03-06 13:34:50', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (553, 4, 'Dashboard_buysell', 'getchart2', '', 1, '2025-03-06 13:34:50', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (554, 4, 'M_currency', 'getcurrency', '', 1, '2025-03-06 13:35:31', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (557, 4, 'M_exchange_rate', 'index', '', 1, '2025-03-06 13:36:53', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (558, 4, 'M_exchange_rate', 'insert', '', 1, '2025-03-06 13:36:53', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (559, 4, 'M_exchange_rate', 'update', '', 1, '2025-03-06 13:36:53', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (560, 4, 'M_exchange_rate', 'delete', '', 1, '2025-03-06 13:36:53', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (561, 4, 'M_exchange_rate', 'getdata', '', 1, '2025-03-06 13:36:53', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (562, 4, 'M_nationality', 'getnationality', '', 1, '2025-03-06 13:36:53', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (563, 4, 'M_payment_type', 'getpaymenttype', '', 1, '2025-03-06 13:36:53', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (564, 4, 'M_store', 'getregion', '', 1, '2025-03-06 13:36:53', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (565, 4, 'Stock', 'index', '', 1, '2025-03-06 13:38:41', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (566, 4, 'Stock', 'getdata', '', 1, '2025-03-06 13:38:41', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (567, 4, 'Stock', 'excel', '', 1, '2025-03-06 13:38:41', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (568, 4, 'Stock_calculate', 'index', '', 1, '2025-03-06 13:38:41', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (569, 4, 'Stock_calculate', 'generate_stock_pull', '', 1, '2025-03-06 13:38:41', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (570, 4, 'Stock_calculate', 'generate_stock_price', '', 1, '2025-03-06 13:38:41', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (571, 4, 'Stock_price', 'index', '', 1, '2025-03-06 13:38:41', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (572, 4, 'Stock_price', 'getcurrencystock', '', 1, '2025-03-06 13:38:41', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (573, 4, 'Stock_price', 'getdata', '', 1, '2025-03-06 13:38:41', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (574, 4, 'Stock_price', 'excel', '', 1, '2025-03-06 13:38:41', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (575, 4, 'Api_ap_input', 'index', '', 1, '2025-03-06 13:38:48', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (576, 4, 'Api_ap_input', 'getdata', '', 1, '2025-03-06 13:38:48', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (577, 4, 'Transaction_buysell', 'index', '', 1, '2025-03-06 13:43:10', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (578, 4, 'Transaction_buysell', 'generate_code_temp', '', 1, '2025-03-06 13:43:10', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (579, 4, 'Transaction_buysell', 'generate_code_confirm', '', 1, '2025-03-06 13:43:10', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (580, 4, 'Transaction_buysell', 'insert_header', '', 1, '2025-03-06 13:43:10', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (581, 4, 'Transaction_buysell', 'update_header', '', 1, '2025-03-06 13:43:10', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (582, 4, 'Transaction_buysell', 'insert_detail', '', 1, '2025-03-06 13:43:10', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (583, 4, 'Transaction_buysell', 'delete_detail', '', 1, '2025-03-06 13:43:10', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (584, 4, 'Transaction_buysell', 'show_header', '', 1, '2025-03-06 13:43:10', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (585, 4, 'Transaction_buysell', 'show_detail', '', 1, '2025-03-06 13:43:10', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (586, 4, 'Transaction_buysell', 'show_customer', '', 1, '2025-03-06 13:43:10', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (587, 4, 'Transaction_buysell', 'getstockbyid', '', 1, '2025-03-06 13:43:27', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (588, 4, 'Transaction_buysell', 'getratebyid', '', 1, '2025-03-06 13:43:27', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (589, 4, 'Transaction_buysell', 'getshowid', '', 1, '2025-03-06 13:43:27', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (590, 4, 'Transaction_buysell', 'confirm_task', '', 1, '2025-03-06 13:43:27', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (591, 4, 'Transaction_buysell', 'cancel_trx', '', 1, '2025-03-06 13:43:27', 1, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for auth_listmethod
@@ -489,7 +590,7 @@ INSERT INTO `auth_menu` VALUES (31, 'Buy / Sell - by Month', 'fa fa-minus-square
 INSERT INTO `auth_menu` VALUES (32, 'Buy / Sell - by Year', 'fa fa-minus-square-o', 'summary\\summary_buysell_by_year', 1, '2024-04-01 10:00:00', NULL, '2025-02-26 15:18:00', 1);
 INSERT INTO `auth_menu` VALUES (34, 'Store', 'fa fa-minus-square-o', 'master_data/m_store', 1, '2024-04-01 10:00:00', NULL, NULL, NULL);
 INSERT INTO `auth_menu` VALUES (36, 'Payment Type', 'fa fa-minus-square-o', 'master_data/m_payment_type', 1, '2024-04-01 10:00:00', NULL, NULL, NULL);
-INSERT INTO `auth_menu` VALUES (38, 'Store', 'fa fa-minus-square-o', 'master_data/store', 1, '2024-04-01 10:00:00', NULL, NULL, NULL);
+INSERT INTO `auth_menu` VALUES (38, 'Store List', 'fa fa-minus-square-o', 'master_data/store', 1, '2024-04-01 10:00:00', NULL, '2025-03-06 11:35:22', 1);
 INSERT INTO `auth_menu` VALUES (39, 'Stock - In Nominal', 'fa fa-minus-square-o', 'stock/stock', 1, '2024-04-19 12:21:31', 1, '2025-03-03 11:02:04', 1);
 INSERT INTO `auth_menu` VALUES (40, 'Stock - In Average', 'fa fa-minus-square-o', 'stock/stock_price', 1, '2024-04-19 12:21:59', 1, '2025-03-03 11:01:56', 1);
 INSERT INTO `auth_menu` VALUES (44, 'Buy / Sell', 'fa fa-minus-square-o', '#', 1, '2025-02-26 15:57:48', 1, NULL, NULL);
@@ -544,17 +645,34 @@ INSERT INTO `auth_menu_group` VALUES (26, 3, 28, 44, 10, 1, '2025-03-02 07:27:52
 INSERT INTO `auth_menu_group` VALUES (27, 3, 39, 28, 11, 1, '2025-03-02 07:28:08', 1, NULL, NULL);
 INSERT INTO `auth_menu_group` VALUES (28, 3, 40, 28, 12, 1, '2025-03-02 07:28:35', 1, NULL, NULL);
 INSERT INTO `auth_menu_group` VALUES (29, 3, 13, 0, 13, 1, '2025-03-03 10:35:40', 1, NULL, NULL);
-INSERT INTO `auth_menu_group` VALUES (30, 3, 45, 13, 21, 1, '2025-03-03 10:35:57', 1, '2025-03-05 15:34:49', 1);
-INSERT INTO `auth_menu_group` VALUES (31, 3, 22, 45, 22, 1, '2025-03-03 10:36:07', 1, '2025-03-05 15:34:55', 1);
+INSERT INTO `auth_menu_group` VALUES (30, 3, 45, 13, 20, 1, '2025-03-03 10:35:57', 1, '2025-03-05 15:34:49', 1);
+INSERT INTO `auth_menu_group` VALUES (31, 3, 22, 45, 21, 1, '2025-03-03 10:36:07', 1, '2025-03-05 15:34:55', 1);
 INSERT INTO `auth_menu_group` VALUES (32, 3, 20, 13, 14, 1, '2025-03-03 11:09:50', 1, NULL, NULL);
-INSERT INTO `auth_menu_group` VALUES (33, 3, 17, 46, 18, 1, '2025-03-03 11:10:44', 1, '2025-03-03 11:13:16', 1);
+INSERT INTO `auth_menu_group` VALUES (33, 3, 17, 46, 17, 1, '2025-03-03 11:10:44', 1, '2025-03-03 11:13:16', 1);
 INSERT INTO `auth_menu_group` VALUES (34, 3, 46, 13, 15, 1, '2025-03-03 11:12:56', 1, '2025-03-03 11:13:24', 1);
-INSERT INTO `auth_menu_group` VALUES (37, 3, 23, 46, 16, 1, '2025-03-03 21:38:33', 1, NULL, NULL);
-INSERT INTO `auth_menu_group` VALUES (38, 3, 16, 46, 17, 1, '2025-03-03 21:39:00', 1, NULL, NULL);
-INSERT INTO `auth_menu_group` VALUES (39, 3, 15, 46, 23, 1, '2025-03-03 21:39:26', 1, '2025-03-05 15:35:00', 1);
-INSERT INTO `auth_menu_group` VALUES (40, 3, 18, 13, 19, 1, '2025-03-03 21:39:56', 1, '2025-03-05 15:34:32', 1);
-INSERT INTO `auth_menu_group` VALUES (41, 3, 36, 13, 20, 1, '2025-03-03 21:40:24', 1, '2025-03-05 15:34:44', 1);
-INSERT INTO `auth_menu_group` VALUES (44, 3, 38, 13, 24, 1, '2025-03-03 21:41:53', 1, '2025-03-05 20:19:10', 1);
+INSERT INTO `auth_menu_group` VALUES (38, 3, 16, 46, 16, 1, '2025-03-03 21:39:00', 1, NULL, NULL);
+INSERT INTO `auth_menu_group` VALUES (39, 3, 15, 46, 22, 1, '2025-03-03 21:39:26', 1, '2025-03-05 15:35:00', 1);
+INSERT INTO `auth_menu_group` VALUES (40, 3, 18, 13, 18, 1, '2025-03-03 21:39:56', 1, '2025-03-05 15:34:32', 1);
+INSERT INTO `auth_menu_group` VALUES (41, 3, 36, 13, 19, 1, '2025-03-03 21:40:24', 1, '2025-03-05 15:34:44', 1);
+INSERT INTO `auth_menu_group` VALUES (44, 3, 38, 13, 23, 1, '2025-03-03 21:41:53', 1, '2025-03-05 20:19:10', 1);
+INSERT INTO `auth_menu_group` VALUES (45, 4, 12, 44, 2, 1, '2025-02-26 12:48:12', 1, NULL, NULL);
+INSERT INTO `auth_menu_group` VALUES (46, 4, 14, 12, 3, 1, '2025-02-26 12:48:39', 1, NULL, NULL);
+INSERT INTO `auth_menu_group` VALUES (47, 4, 29, 12, 4, 1, '2025-02-26 12:48:56', 1, NULL, NULL);
+INSERT INTO `auth_menu_group` VALUES (48, 4, 27, 12, 5, 1, '2025-02-26 12:49:44', 1, NULL, NULL);
+INSERT INTO `auth_menu_group` VALUES (49, 4, 19, 44, 6, 1, '2025-02-26 12:50:41', 1, NULL, NULL);
+INSERT INTO `auth_menu_group` VALUES (50, 4, 30, 19, 7, 1, '2025-02-26 12:50:51', 1, NULL, NULL);
+INSERT INTO `auth_menu_group` VALUES (51, 4, 31, 19, 8, 1, '2025-02-26 12:51:06', 1, NULL, NULL);
+INSERT INTO `auth_menu_group` VALUES (52, 4, 32, 19, 9, 1, '2025-02-26 12:51:16', 1, NULL, NULL);
+INSERT INTO `auth_menu_group` VALUES (53, 4, 44, 0, 1, 1, '2025-02-26 15:58:07', 1, NULL, NULL);
+INSERT INTO `auth_menu_group` VALUES (54, 4, 28, 44, 10, 1, '2025-03-02 07:27:52', 1, NULL, NULL);
+INSERT INTO `auth_menu_group` VALUES (55, 4, 39, 28, 11, 1, '2025-03-02 07:28:08', 1, NULL, NULL);
+INSERT INTO `auth_menu_group` VALUES (56, 4, 40, 28, 12, 1, '2025-03-02 07:28:35', 1, NULL, NULL);
+INSERT INTO `auth_menu_group` VALUES (76, 6, 12, 0, 1, 1, '2025-02-26 12:48:12', 1, '2025-03-06 13:09:32', 1);
+INSERT INTO `auth_menu_group` VALUES (79, 6, 27, 12, 3, 1, '2025-02-26 12:49:44', 1, NULL, NULL);
+INSERT INTO `auth_menu_group` VALUES (80, 6, 19, 12, 4, 1, '2025-02-26 12:50:41', 1, '2025-03-06 13:11:51', 1);
+INSERT INTO `auth_menu_group` VALUES (81, 6, 30, 19, 5, 1, '2025-02-26 12:50:51', 1, NULL, NULL);
+INSERT INTO `auth_menu_group` VALUES (82, 6, 31, 19, 6, 1, '2025-02-26 12:51:06', 1, NULL, NULL);
+INSERT INTO `auth_menu_group` VALUES (83, 6, 32, 19, 7, 1, '2025-02-26 12:51:16', 1, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for auth_usergroup
@@ -579,6 +697,7 @@ INSERT INTO `auth_usergroup` VALUES (2, 'Consolidation', 1, '2024-04-01 10:00:00
 INSERT INTO `auth_usergroup` VALUES (3, 'Admin', 1, '2024-04-01 10:00:00', NULL, '2025-02-16 08:22:30', 1);
 INSERT INTO `auth_usergroup` VALUES (4, 'Counter', 1, '2024-04-01 10:00:00', NULL, '2025-02-23 20:56:31', 1);
 INSERT INTO `auth_usergroup` VALUES (5, 'Cashier', 1, '2025-02-23 20:56:02', 1, '2025-02-23 20:56:24', 1);
+INSERT INTO `auth_usergroup` VALUES (6, 'Angkasa Pura', 1, '2025-03-06 13:02:56', 1, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for auth_userlevel
@@ -633,8 +752,10 @@ CREATE TABLE `auth_users`  (
 -- ----------------------------
 INSERT INTO `auth_users` VALUES (1, '8989', 'f794bdbef7990b5112e526b5cd4ea67f4a35af21', NULL, 0, 1, 1, NULL, '', NULL, NULL, NULL, NULL, NULL, 1, '2025-02-23 13:58:46', NULL, NULL, NULL);
 INSERT INTO `auth_users` VALUES (2, 'konsolidasi', '7c4a8d09ca3762af61e59520943dc26494f8941b', '123456', 0, 2, 1, '1,2,3', 'Konsolidasi', '', '', NULL, NULL, NULL, 1, '2025-02-23 13:58:46', NULL, NULL, NULL);
-INSERT INTO `auth_users` VALUES (3, 'icv1', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 1, 3, 1, NULL, 'Admin', '', '', '2025-03-06 04:47:45', NULL, NULL, 1, '2025-02-23 13:58:46', NULL, '2025-03-05 16:18:09', 1);
-INSERT INTO `auth_users` VALUES (4, 'icv2', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 1, 4, 2, NULL, 'User', '', '', '2025-02-26 15:42:17', NULL, NULL, 1, '2025-02-23 13:58:46', NULL, '2025-02-23 15:06:13', 1);
+INSERT INTO `auth_users` VALUES (3, 'admin', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 1, 3, 1, NULL, 'Admin', '', '', '2025-03-06 13:26:50', NULL, NULL, 1, '2025-02-23 13:58:46', NULL, '2025-03-05 16:18:09', 1);
+INSERT INTO `auth_users` VALUES (4, 'counter', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 1, 4, 2, NULL, 'Counter', '', '', '2025-03-06 13:44:25', NULL, NULL, 1, '2025-02-23 13:58:46', NULL, '2025-02-23 15:06:13', 1);
+INSERT INTO `auth_users` VALUES (5, 'cashier', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 1, 5, 1, NULL, 'Cashier', '', '', NULL, NULL, NULL, 1, '2025-03-06 13:05:41', 1, NULL, NULL);
+INSERT INTO `auth_users` VALUES (6, 'user_ap1', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 0, 6, 1, '1,2,3,4', 'Angkasa Pura 1', '', '', '2025-03-06 13:30:22', NULL, NULL, 1, '2025-03-06 13:06:45', 1, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for log_auth
@@ -650,6 +771,23 @@ CREATE TABLE `log_auth`  (
 -- ----------------------------
 -- Records of log_auth
 -- ----------------------------
+INSERT INTO `log_auth` VALUES (3, 'login', '2025-03-06 09:46:51', '::1');
+INSERT INTO `log_auth` VALUES (3, 'login', '2025-03-06 11:35:26', '::1');
+INSERT INTO `log_auth` VALUES (4, 'login', '2025-03-06 13:07:06', '::1');
+INSERT INTO `log_auth` VALUES (6, 'login', '2025-03-06 13:09:54', '::1');
+INSERT INTO `log_auth` VALUES (6, 'login', '2025-03-06 13:11:14', '::1');
+INSERT INTO `log_auth` VALUES (6, 'login', '2025-03-06 13:12:12', '::1');
+INSERT INTO `log_auth` VALUES (6, 'login', '2025-03-06 13:13:58', '::1');
+INSERT INTO `log_auth` VALUES (6, 'login', '2025-03-06 13:15:44', '::1');
+INSERT INTO `log_auth` VALUES (6, 'login', '2025-03-06 13:17:17', '::1');
+INSERT INTO `log_auth` VALUES (6, 'login', '2025-03-06 13:18:36', '::1');
+INSERT INTO `log_auth` VALUES (3, 'login', '2025-03-06 13:26:50', '::1');
+INSERT INTO `log_auth` VALUES (6, 'login', '2025-03-06 13:30:22', '::1');
+INSERT INTO `log_auth` VALUES (4, 'login', '2025-03-06 13:33:17', '::1');
+INSERT INTO `log_auth` VALUES (4, 'login', '2025-03-06 13:37:48', '::1');
+INSERT INTO `log_auth` VALUES (4, 'login', '2025-03-06 13:38:57', '::1');
+INSERT INTO `log_auth` VALUES (4, 'login', '2025-03-06 13:41:05', '::1');
+INSERT INTO `log_auth` VALUES (4, 'login', '2025-03-06 13:44:25', '::1');
 
 -- ----------------------------
 -- Table structure for log_auth_sessions
@@ -665,6 +803,7 @@ CREATE TABLE `log_auth_sessions`  (
 -- ----------------------------
 -- Records of log_auth_sessions
 -- ----------------------------
+INSERT INTO `log_auth_sessions` VALUES ('1ltol9mc0077vnqddpgenjmmcjrhvs3i', '::1', 1741250890, 'auth|a:27:{s:2:\"id\";s:1:\"4\";s:8:\"username\";s:7:\"counter\";s:8:\"password\";s:40:\"40bd001563085fc35165329ea1ff5c5ecbdbbeef\";s:8:\"store_id\";s:1:\"1\";s:10:\"store_name\";s:31:\"PT. INDONESIA CENTRAL VALUTAMAS\";s:13:\"store_address\";s:48:\"Terminal 2F - Shopping Arcade Dep Soekarno Hatta\";s:10:\"api_method\";s:1:\"0\";s:15:\"api_angkasapura\";s:3:\"AP2\";s:12:\"api_username\";s:15:\"api.indocev.cgk\";s:12:\"api_password\";s:15:\"api.indocev.cgk\";s:12:\"usergroup_id\";s:1:\"4\";s:13:\"usergroupname\";s:7:\"Counter\";s:12:\"userlevel_id\";s:1:\"2\";s:13:\"userlevelname\";s:4:\"User\";s:8:\"fullname\";s:4:\"User\";s:5:\"email\";s:0:\"\";s:8:\"celluler\";s:0:\"\";s:6:\"region\";N;s:11:\"region_code\";N;s:6:\"status\";s:1:\"1\";s:7:\"lastlog\";s:19:\"2025-03-06 13:41:05\";s:7:\"chgpass\";N;s:7:\"created\";s:19:\"2025-02-23 13:58:46\";s:7:\"updated\";s:19:\"2025-02-23 15:06:13\";s:9:\"createdby\";N;s:9:\"updatedby\";s:1:\"1\";s:7:\"expired\";i:1741279690;}roles|a:81:{i:0;s:11:\"Home::index\";i:1;s:18:\"Change_pass::index\";i:2;s:19:\"Change_pass::update\";i:3;s:30:\"Summary_buysell_by_date::index\";i:4;s:32:\"Summary_buysell_by_date::getdata\";i:5;s:33:\"Summary_buysell_by_date::gettotal\";i:6;s:33:\"Summary_buysell_by_date::getcount\";i:7;s:31:\"Summary_buysell_by_month::index\";i:8;s:33:\"Summary_buysell_by_month::getdata\";i:9;s:34:\"Summary_buysell_by_month::gettotal\";i:10;s:34:\"Summary_buysell_by_month::getcount\";i:11;s:30:\"Summary_buysell_by_year::index\";i:12;s:32:\"Summary_buysell_by_year::getdata\";i:13;s:33:\"Summary_buysell_by_year::gettotal\";i:14;s:33:\"Summary_buysell_by_year::getcount\";i:15;s:31:\"Transaction_buysell_list::index\";i:16;s:33:\"Transaction_buysell_list::getdata\";i:17;s:31:\"Transaction_buysell_list::excel\";i:18;s:31:\"Transaction_buysell_show::index\";i:19;s:35:\"Transaction_buysell_show::getshowid\";i:20;s:37:\"Transaction_buysell_show::show_header\";i:21;s:37:\"Transaction_buysell_show::show_detail\";i:22;s:35:\"Transaction_buysell_show::printnota\";i:23;s:31:\"Transaction_buysell_task::index\";i:24;s:33:\"Transaction_buysell_task::getdata\";i:25;s:15:\"Customer::index\";i:26;s:17:\"Customer::getdata\";i:27;s:15:\"Customer::excel\";i:28;s:20:\"Customer_form::index\";i:29;s:28:\"Customer_form::generate_code\";i:30;s:21:\"Customer_form::insert\";i:31;s:21:\"Customer_form::update\";i:32;s:21:\"Customer_form::delete\";i:33;s:22:\"Customer_form::getbyid\";i:34;s:26:\"Customer_form::ceknikdttot\";i:35;s:23:\"Customer_form::add_foto\";i:36;s:29:\"M_customer_data::getidentitas\";i:37;s:22:\"M_customer_job::getjob\";i:38;s:24:\"M_customer_type::gettype\";i:39;s:24:\"Dashboard_buysell::index\";i:40;s:33:\"Dashboard_buysell::getlastupdated\";i:41;s:32:\"Dashboard_buysell::getdatatable1\";i:42;s:28:\"Dashboard_buysell::getchart1\";i:43;s:32:\"Dashboard_buysell::getdatatable2\";i:44;s:28:\"Dashboard_buysell::getchart2\";i:45;s:23:\"M_currency::getcurrency\";i:46;s:22:\"M_exchange_rate::index\";i:47;s:23:\"M_exchange_rate::insert\";i:48;s:23:\"M_exchange_rate::update\";i:49;s:23:\"M_exchange_rate::delete\";i:50;s:24:\"M_exchange_rate::getdata\";i:51;s:29:\"M_nationality::getnationality\";i:52;s:30:\"M_payment_type::getpaymenttype\";i:53;s:18:\"M_store::getregion\";i:54;s:12:\"Stock::index\";i:55;s:14:\"Stock::getdata\";i:56;s:12:\"Stock::excel\";i:57;s:22:\"Stock_calculate::index\";i:58;s:36:\"Stock_calculate::generate_stock_pull\";i:59;s:37:\"Stock_calculate::generate_stock_price\";i:60;s:18:\"Stock_price::index\";i:61;s:29:\"Stock_price::getcurrencystock\";i:62;s:20:\"Stock_price::getdata\";i:63;s:18:\"Stock_price::excel\";i:64;s:19:\"Api_ap_input::index\";i:65;s:21:\"Api_ap_input::getdata\";i:66;s:26:\"Transaction_buysell::index\";i:67;s:39:\"Transaction_buysell::generate_code_temp\";i:68;s:42:\"Transaction_buysell::generate_code_confirm\";i:69;s:34:\"Transaction_buysell::insert_header\";i:70;s:34:\"Transaction_buysell::update_header\";i:71;s:34:\"Transaction_buysell::insert_detail\";i:72;s:34:\"Transaction_buysell::delete_detail\";i:73;s:32:\"Transaction_buysell::show_header\";i:74;s:32:\"Transaction_buysell::show_detail\";i:75;s:34:\"Transaction_buysell::show_customer\";i:76;s:33:\"Transaction_buysell::getstockbyid\";i:77;s:32:\"Transaction_buysell::getratebyid\";i:78;s:30:\"Transaction_buysell::getshowid\";i:79;s:33:\"Transaction_buysell::confirm_task\";i:80;s:31:\"Transaction_buysell::cancel_trx\";}');
 
 -- ----------------------------
 -- Table structure for m_currency
@@ -750,7 +889,7 @@ CREATE TABLE `m_customer`  (
 -- ----------------------------
 -- Records of m_customer
 -- ----------------------------
-INSERT INTO `m_customer` VALUES (1, 1, '2503000001', '081395627817', '021 46825821', 'Gede Suteja', 'Tejo', 'Mampang Jakarta Selatan', '011/013', 'Pela Mampang', 'Mampang Prapatan', 'Jakarta Selatan', 'P. Raharjo', '2025-03-04', 1, 8, 102, 1, '', '', NULL, 'Baik Hati dan Tidak Sombong', 1, '2025-03-04 14:40:42', '2025-03-04 16:06:57', 3, 3);
+INSERT INTO `m_customer` VALUES (1, 1, '2503000001', '081395627817', '021 46825821', 'Gede Suteja', 'Tejo', 'Mampang Jakarta Selatan', '011/013', 'Pela Mampang', 'Mampang Prapatan', 'Jakarta Selatan', 'P. Raharjo', '2025-03-04', 1, 8, 102, 1, '', '', NULL, 'Baik Hati dan Tidak Sombong', 1, '2025-03-04 14:40:42', '2025-03-06 13:42:07', 3, 4);
 
 -- ----------------------------
 -- Table structure for m_customer_act_on
@@ -880,7 +1019,7 @@ CREATE TABLE `m_exchange_rate`  (
   `createdby` smallint NULL DEFAULT NULL,
   `updatedby` smallint NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 391 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 443 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of m_exchange_rate
@@ -1228,10 +1367,10 @@ CREATE TABLE `m_store`  (
 -- ----------------------------
 -- Records of m_store
 -- ----------------------------
-INSERT INTO `m_store` VALUES (1, 'PT. INDONESIA CENTRAL VALUTAMAS', 'Terminal 2F - Shopping Arcade Dep', 'indocev@gmail.com', NULL, 0, 'AP2', 'api.indocev.cgk', 'api.indocev.cgk', '53e92e8d102d983ea54d1990e4cd16d4', 'Indocev Money Changer T2F #Shopping Arcade Dep', 5, 1, '2024-03-17 00:00:00', '2025-03-05 16:15:36', 1, 1);
-INSERT INTO `m_store` VALUES (2, 'PT. INDONESIA CENTRAL VALUTAMAS', 'Terminal 3 - Arrival Internatioanl', 'indocev@gmail.com', NULL, 0, 'AP2', 'api.indocev.cgk', 'api.indocev.cgk', '00d8c2a3c5242f301ed4034c33802c2b', 'Indocev Money Changer T3 #Arr Intl', 5, 1, '2024-03-17 00:00:00', '2025-03-05 16:09:11', 1, 1);
-INSERT INTO `m_store` VALUES (3, 'PT. INDONESIA CENTRAL VALUTAMAS', 'Terminal 2 SV-21-6 - Departure', 'indocev@gmail.com', NULL, 0, 'AP1', 'api.indocev.sub', 'api.indocev.sub', 'e9c2a6e6a7b9300338cccb7fdb011f61', 'Money Changer (Departure Int-SV-22-7)', 5, 1, '2024-03-21 13:29:04', '2025-03-05 16:09:14', 1, 1);
-INSERT INTO `m_store` VALUES (4, 'PT. INDONESIA CENTRAL VALUTAMAS', 'Terminal 2 SV-21-7 - Arrival', 'indocev@gmail.com', NULL, 0, 'AP1', 'api.indocev.sub', 'api.indocev.sub', '496b1f88ef3e2b6fc8b27b4b04bc5751', 'Money Changer (Arrival Int-SV-21-6)', 5, 1, '2024-03-21 13:29:04', '2025-03-05 16:09:18', 1, 1);
+INSERT INTO `m_store` VALUES (1, 'PT. INDONESIA CENTRAL VALUTAMAS', 'Terminal 2F - Shopping Arcade Dep Soekarno Hatta', 'indocev@gmail.com', NULL, 0, 'AP2', 'api.indocev.cgk', 'api.indocev.cgk', '53e92e8d102d983ea54d1990e4cd16d4', 'Indocev Money Changer T2F #Shopping Arcade Dep', 5, 1, '2024-03-17 00:00:00', '2025-03-05 16:15:36', 1, 1);
+INSERT INTO `m_store` VALUES (2, 'PT. INDONESIA CENTRAL VALUTAMAS', 'Terminal 3 - Arrival Internatioanl Soekarno Hatta', 'indocev@gmail.com', NULL, 0, 'AP2', 'api.indocev.cgk', 'api.indocev.cgk', '00d8c2a3c5242f301ed4034c33802c2b', 'Indocev Money Changer T3 #Arr Intl', 5, 1, '2024-03-17 00:00:00', '2025-03-05 16:09:11', 1, 1);
+INSERT INTO `m_store` VALUES (3, 'PT. INDONESIA CENTRAL VALUTAMAS', 'Terminal 2 SV-21-6 - Departure Juanda Surabaya', 'indocev@gmail.com', NULL, 0, 'AP1', 'api.indocev.sub', 'api.indocev.sub', 'e9c2a6e6a7b9300338cccb7fdb011f61', 'Money Changer (Departure Int-SV-22-7)', 5, 1, '2024-03-21 13:29:04', '2025-03-05 16:09:14', 1, 1);
+INSERT INTO `m_store` VALUES (4, 'PT. INDONESIA CENTRAL VALUTAMAS', 'Terminal 2 SV-21-7 - Arrival Juanda Surabaya', 'indocev@gmail.com', NULL, 0, 'AP1', 'api.indocev.sub', 'api.indocev.sub', '496b1f88ef3e2b6fc8b27b4b04bc5751', 'Money Changer (Arrival Int-SV-21-6)', 5, 1, '2024-03-21 13:29:04', '2025-03-05 16:09:18', 1, 1);
 
 -- ----------------------------
 -- Table structure for m_transaction
@@ -1868,6 +2007,12 @@ CREATE TABLE `stock`  (
 -- ----------------------------
 -- Records of stock
 -- ----------------------------
+INSERT INTO `stock` VALUES (1, 1, 1, 2025, 3, 100, 0, 1, '2025-03-06 14:47:05', 4, NULL, NULL);
+INSERT INTO `stock` VALUES (2, 1, 1, 2025, 4, 100, 20, 1, '2025-03-06 14:47:05', 4, '2025-03-06 14:47:05', 4);
+INSERT INTO `stock` VALUES (3, 7, 1, 2025, 3, 50, 0, 1, '2025-03-06 14:47:05', 4, NULL, NULL);
+INSERT INTO `stock` VALUES (4, 7, 1, 2025, 4, 50, 30, 1, '2025-03-06 14:47:05', 4, '2025-03-06 14:47:05', 4);
+INSERT INTO `stock` VALUES (5, 10, 1, 2025, 3, 500, 0, 1, '2025-03-06 14:47:39', 4, NULL, NULL);
+INSERT INTO `stock` VALUES (6, 10, 1, 2025, 4, 500, 15, 1, '2025-03-06 14:47:39', 4, '2025-03-06 14:47:39', 4);
 
 -- ----------------------------
 -- Table structure for stock_price
@@ -2006,6 +2151,9 @@ CREATE TABLE `tr_detail`  (
 -- ----------------------------
 -- Records of tr_detail
 -- ----------------------------
+INSERT INTO `tr_detail` VALUES (1, 1, 1, 100, 20, 16000.00, 32000000.00, 3, '2025-03-06 14:46:25', '2025-03-06 14:47:05', 4, 4);
+INSERT INTO `tr_detail` VALUES (2, 1, 7, 50, 30, 13000.00, 19500000.00, 3, '2025-03-06 14:46:36', '2025-03-06 14:47:05', 4, 4);
+INSERT INTO `tr_detail` VALUES (3, 2, 10, 500, 15, 4500.00, 33750000.00, 3, '2025-03-06 14:47:36', '2025-03-06 14:47:39', 4, 4);
 
 -- ----------------------------
 -- Table structure for tr_header
@@ -2016,8 +2164,8 @@ CREATE TABLE `tr_header`  (
   `store_id` bigint NOT NULL,
   `tr_id` smallint NOT NULL,
   `tr_date` date NOT NULL,
-  `tr_number_temp` varchar(16) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
-  `tr_number` varchar(16) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `tr_number_temp` varchar(12) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `tr_number` varchar(12) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   `customer_id` bigint NOT NULL,
   `customer_action_id` bigint NULL DEFAULT NULL,
   `customer_source` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
@@ -2035,6 +2183,8 @@ CREATE TABLE `tr_header`  (
 -- ----------------------------
 -- Records of tr_header
 -- ----------------------------
+INSERT INTO `tr_header` VALUES (1, 1, 1, '2025-03-06', '250301010001', '250301010001', 1, NULL, 'Tabungan', 'Investasi', NULL, 0, 3, '2025-03-06 14:46:14', '2025-03-06 14:47:05', 4, 4);
+INSERT INTO `tr_header` VALUES (2, 1, 1, '2025-03-06', '250301010002', '250301010002', 1, NULL, '', '', NULL, 0, 3, '2025-03-06 14:47:27', '2025-03-06 14:47:39', 4, 4);
 
 -- ----------------------------
 -- View structure for v_auth_group_role

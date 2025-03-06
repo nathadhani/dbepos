@@ -54,7 +54,7 @@ class Transaction_buysell_show extends Bks_Controller {
         $id = $this->uri->segment(4);
         $data_header = $this->db->select('*')->from('v_tr_header')->where('id', $id)->get()->result();
         $customer_id = $data_header[0]->customer_id;
-        $profilusaha = $this->Bksmdl->getprofileusaha($customer_id, null);
+        $profilusaha = $this->Bksmdl->getprofileusaha($id, null);
         $tr_number = $data_header[0]->tr_number;
         $tr_date = revDate($data_header[0]->tr_date);
         $CIF = $data_header[0]->customer_code;
@@ -72,10 +72,10 @@ class Transaction_buysell_show extends Bks_Controller {
         // $pdf->AddPage('P', 'mm', array('14','12'), true, 'UTF-8', false);
 
         if($this->uri->segment(5) == 1) { 
-            $tr_title = '** BUY SLIP **';
+            $tr_title = '** BUY **';
         }
         if($this->uri->segment(5) == 2) {
-            $tr_title = '** SELL SLIP **';
+            $tr_title = '** SELL **';
         }
         $pdf->Ln(1);
         $pdf->SetFont('', 'B', 9);
@@ -88,13 +88,12 @@ class Transaction_buysell_show extends Bks_Controller {
 
         $pdf->SetFont('', '', 9);
         $pdf->Cell(01, 01, $profilusaha[0]->store_address, 0, 1, 'L');
-        $pdf->Cell(01, 01, 'Telpon : ' . $profilusaha[0]->store_phone, 0, 1, 'L');
 
         $pdf->Ln(1);
         $pdf->SetFont('', '', 9);
-        $pdf->Cell(01, 01, 'No. : ' . $tr_number, 0, 1, 'L');
-        $pdf->Cell(01, 01, 'Date    : ' . $tr_date, 0, 1, 'L');
-        $pdf->Cell(01, 01, 'CIF     : ' . $CIF, 0, 1, 'L');
+        $pdf->Cell(01, 01, 'Trx.No : ' . $tr_number, 0, 1, 'L');
+        $pdf->Cell(01, 01, 'Trs.Date : ' . $tr_date, 0, 1, 'L');
+        $pdf->Cell(01, 01, 'CIF : ' . $CIF, 0, 1, 'L');
         
         $pdf->SetAutoPageBreak(true, 0);
  

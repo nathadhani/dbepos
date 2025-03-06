@@ -23,11 +23,10 @@ class Stock_price extends Bks_Controller {
     function getcurrencystock() {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
-        $company_id = $this->input->post('company_id'); 
         $store_id = $this->input->post('store_id');
         $menus = $this->db->group_by('currency_id')
-                          ->order_by('currency_id,currency_code,currency_name', 'ASC')
-                          ->get_where('v_stock_price', array('company_id' => $company_id, 'store_id' => $store_id))->result();        
+                          ->order_by('currency_id, currency_code, currency_name', 'ASC')
+                          ->get_where('v_stock_price', array('store_id' => $store_id))->result();        
         if (count($menus) > 0){
             $option ="<option selected value=''>-- Pilih Mata Uang --</option>";
             foreach($menus as $row){
@@ -42,7 +41,6 @@ class Stock_price extends Bks_Controller {
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();     
 
-        $company_id = $postData['company_id'];
         $store_id = $postData['store_id'];
         $currency_id = $postData['currency_id'];
 
@@ -51,27 +49,23 @@ class Stock_price extends Bks_Controller {
         if(isset($postData['periode'])){
             $tahun = intval(SUBSTR($postData['periode'],3,4));
             $bulan = intval(SUBSTR($postData['periode'],0,2));
-        }
-        
-        $where[0]['field'] = 'company_id';
-        $where[0]['data']  = $company_id;
+        }       
+
+        $where[0]['field'] = 'store_id';
+        $where[0]['data']  = $store_id;
         $where[0]['sql']   = 'where';
 
-        $where[1]['field'] = 'store_id';
-        $where[1]['data']  = $store_id;
+        $where[1]['field'] = 'stock_year';
+        $where[1]['data']  = $tahun;
         $where[1]['sql']   = 'where';
 
-        $where[2]['field'] = 'stock_year';
-        $where[2]['data']  = $tahun;
+        $where[2]['field'] = 'stock_month';
+        $where[2]['data']  = $bulan;
         $where[2]['sql']   = 'where';
 
-        $where[3]['field'] = 'stock_month';
-        $where[3]['data']  = $bulan;
+        $where[3]['field'] = 'currency_id';
+        $where[3]['data']  = $currency_id;
         $where[3]['sql']   = 'where';
-
-        $where[4]['field'] = 'currency_id';
-        $where[4]['data']  = $currency_id;
-        $where[4]['sql']   = 'where';
 
         $this->Bksmdl->table = 'v_stock_price';
         $cpData = $this->Bksmdl->getDataTable($where);
@@ -80,10 +74,9 @@ class Stock_price extends Bks_Controller {
     
     function excel(){
         $this->libauth->check(__METHOD__);
-        $company_id = $this->uri->segment(5);
-        $store_id = $this->uri->segment(6);
-        $tahun = SUBSTR($this->uri->segment(4),3,4);
-        $bulan = SUBSTR($this->uri->segment(4),0,2);
+        $store_id = $this->uri->segment(4);
+        $tahun = SUBSTR($this->uri->segment(5),3,4);
+        $bulan = SUBSTR($this->uri->segment(5),0,2);
         
         $query = $this->db->query("SELECT CONCAT(currency_code,' - ',currency_name) AS currency_code,
                                                 stock_date,                                                
@@ -99,14 +92,11 @@ class Stock_price extends Bks_Controller {
                                                 stock_last_price,
                                                 stock_last_total,
                                                 profit,
-                                                company_name,
-                                                company_address,
                                                 store_name,
                                                 store_address,
                                                 created
                                         FROM v_stock_price
-                                        WHERE company_id = $company_id
-                                        AND store_id = $store_id
+                                        WHERE store_id = $store_id
                                         AND stock_year = $tahun
                                         AND stock_month = $bulan
                                         ORDER BY currency_id, stock_date, id ASC ");
@@ -138,7 +128,7 @@ class Stock_price extends Bks_Controller {
         $this->excel->setActiveSheetIndex(0)->setCellValue('A1', "Stock In Average Rate Period " . namabulan($bulan) . ' - ' . $tahun ); 
         $this->excel->getActiveSheet()->getStyle('A1')->getFont()->setBold(TRUE);
         $this->excel->getActiveSheet()->getStyle('A1')->getFont()->setSize(12);
-        $this->excel->getActiveSheet()->mergeCells('A1:R1');
+        $this->excel->getActiveSheet()->mergeCells('A1:O1');
 
         $judul = array('Currency',
                         'Date',                        
@@ -154,8 +144,6 @@ class Stock_price extends Bks_Controller {
                         'Avg Price',
                         'Balance Stock Equivalent',
                         'Gross Profit',
-                        'Branch Name',
-                        'Branch Address',
                         'Store Name',                        
                         'Store Address',
                         'Updated');        
@@ -179,7 +167,7 @@ class Stock_price extends Bks_Controller {
             $row++;
         }
 
-        foreach (range('A', 'S') as $columnID) {
+        foreach (range('A', 'O') as $columnID) {
             $this->excel->getActiveSheet()->getColumnDimension($columnID)->setAutoSize(true);
         }
         $this->excel->setActiveSheetIndex(0);        

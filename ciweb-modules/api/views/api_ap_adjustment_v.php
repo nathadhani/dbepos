@@ -1,8 +1,3 @@
-<script type="text/javascript">
-    var companyId = <?php echo $auth['company_id'];?>;
-    var usergroupId = <?php echo $auth['usergroup_id'];?>;
-    var userlevelId = <?php echo $auth['userlevel_id'];?>;
-</script>
 <div class="row">
     <div class="col-md-12">
         <div class="panel panel-default">

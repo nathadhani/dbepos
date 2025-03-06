@@ -1,33 +1,7 @@
-(function ($) {
-    $('#company_id').on('change',function(e){
-        e.preventDefault()
-        if($(this).val() != null && $(this).val() != ''){
-            $('#store_id').html('').sel2dma();
-            $('#store_id').prop('disabled', false);
-            $('#store_id').focus()
-            $.ajax({
-                url : baseUrl +  'master_data/m_store/getstore',
-                type: 'POST',
-                data: {'company_id' : $(this).val()},
-                datatype: 'json',
-                success: function(data){
-                    $('#store_id').html(data);
-                },
-                error: function(){
-                    alert("can't get store");  
-                }
-            });
-        } else {    
-            $('#store_id').html('').sel2dma();
-            $('#store_id').prop('disabled', true);        
-        }
-    });    
-
+(function ($) {     
     $("#btn-submit").on('click', function (e) {
         e.preventDefault();
-        if($('#company_id').val() === null || $('#company_id').val() === ''){
-            bksfn.errMsg('Cabang Belum Dipilih!');
-        } else if($('#store_id').val() === null || $('#store_id').val() === ''){
+        if($('#store_id').val() === null || $('#store_id').val() === ''){
             bksfn.errMsg('Store Belum Dipilih!');            
         } else {
             fethdata();
@@ -55,8 +29,7 @@
                 //     $(".ajax-loader").height($(document).height());
                 //     $('.ajax-loader').css("visibility", "visible");
                 // },
-                data: function(d) {
-                    d.company_id = $('#company_id').val(),
+                data: function(d) {                    
                     d.store_id = $('#store_id').val(),
                     d.periode = $('#tr_date').val()
                 },
@@ -65,10 +38,7 @@
                     $.ajax({
                         url: baseUrl + 'summary/summary_buysell_by_date/gettotal',
                         type: 'POST',
-                        data: {'company_id' : $("#company_id").val(),
-                               'store_id' : $("#store_id").val(),
-                               'periode' : $('#tr_date').val()
-                              },
+                        data: {'store_id' : $("#store_id").val(), 'periode' : $('#tr_date').val()},
                         datatype: 'json',
                         success: function(data){
                             if (data !== undefined) {
@@ -92,10 +62,7 @@
                     $.ajax({
                         url: baseUrl + 'summary/summary_buysell_by_date/getcount',
                         type: 'POST',
-                        data: {'company_id' : $("#company_id").val(),
-                               'store_id' : $("#store_id").val(),
-                               'periode' : $('#tr_date').val()
-                              },
+                        data: {'store_id' : $("#store_id").val(), 'periode' : $('#tr_date').val()},
                         datatype: 'json',
                         success: function(data){
                             if (data !== undefined) {
@@ -135,7 +102,6 @@
                 {data: 'sell_equivalent', className: "dt-body-right", width: "15%", render: function (data, type, row, meta) {
                     return formatRupiah(data);
                 }},
-                {data: 'company_id', visible: false},                
                 {data: 'currency_name', visible: false},
                 {data: 'buy_nominal', visible: false},
             ],            

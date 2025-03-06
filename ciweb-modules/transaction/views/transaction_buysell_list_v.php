@@ -1,8 +1,3 @@
-<script type="text/javascript">
-    var companyId = <?php echo $auth['company_id'];?>;
-    var usergroupId = <?php echo $auth['usergroup_id'];?>;
-    var userlevelId = <?php echo $auth['userlevel_id'];?>;
-</script>
 <div class="row">
     <div class="col-md-12">
         <div class="panel panel-default">
@@ -17,30 +12,20 @@
             </div>
             <div class="panel-body">
                 <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-group">                                
-                            <div class="col-lg-12">
-                                <label for="company_id" style="display:block">Branch</label>
-                                <select name="company_id"
-                                        data-ajax="true" 
-                                        data-placeholder="-- Pilih Cabang --"
-                                        data-url="master_data/m_company/getRegion/" 
-                                        data-value="" 
-                                        data-limit="100"                                                
-                                        id="company_id" placeholder="Region"
-                                        class='form-control select2'
-                                        width="100%"
-                                        >
-                                </select>                                
-                            </div>
-                        </div>
-                    </div>             
-                    <div class="col-md-4">
+                    <div class="col-md-8">
                         <div class="form-group">                                
                             <div class="col-lg-12">
                                 <label for="store_id" style="display:block">Store</label>
-                                <select class='form-control select2' name="store_id" id="store_id" disabled="true" width="100%">
-                                    <option value=""> -- Pilih Store --</option>
+                                <select name="store_id"
+                                        data-ajax="true" 
+                                        data-placeholder="-- Pilih --"
+                                        data-url="master_data/m_store/getregion/" 
+                                        data-value="" 
+                                        data-limit="100"                                                
+                                        id="store_id" placeholder="Region"
+                                        class='form-control select2'
+                                        width="100%"
+                                        >
                                 </select>
                             </div>
                         </div>

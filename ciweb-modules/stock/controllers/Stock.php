@@ -25,31 +25,25 @@ class Stock extends Bks_Controller {
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();     
 
-        $company_id = $postData['company_id'];
         $store_id = $postData['store_id'];
-
         $tahun = date('Y');
         $bulan = date('m');
         if(isset($postData['periode'])){
             $tahun = intval(SUBSTR($postData['periode'],3,4));
             $bulan = intval(SUBSTR($postData['periode'],0,2));
-        }
-        
-        $where[0]['field'] = 'company_id';
-        $where[0]['data']  = $company_id;
+        }        
+
+        $where[0]['field'] = 'store_id';
+        $where[0]['data']  = $store_id;
         $where[0]['sql']   = 'where';
 
-        $where[1]['field'] = 'store_id';
-        $where[1]['data']  = $store_id;
+        $where[1]['field'] = 'stock_year';
+        $where[1]['data']  = $tahun;
         $where[1]['sql']   = 'where';
 
-        $where[2]['field'] = 'stock_year';
-        $where[2]['data']  = $tahun;
+        $where[2]['field'] = 'stock_month';
+        $where[2]['data']  = $bulan;
         $where[2]['sql']   = 'where';
-
-        $where[3]['field'] = 'stock_month';
-        $where[3]['data']  = $bulan;
-        $where[3]['sql']   = 'where';
 
         $this->Bksmdl->table = 'v_stock_tr9';
         $cpData = $this->Bksmdl->getDataTable($where);
@@ -58,10 +52,9 @@ class Stock extends Bks_Controller {
     
     function excel(){
         $this->libauth->check(__METHOD__);
-        $company_id = $this->uri->segment(5);
-        $store_id = $this->uri->segment(6);
-        $tahun = SUBSTR($this->uri->segment(4),3,4);
-        $bulan = SUBSTR($this->uri->segment(4),0,2);
+        $store_id = $this->uri->segment(4);
+        $tahun = SUBSTR($this->uri->segment(5),3,4);
+        $bulan = SUBSTR($this->uri->segment(5),0,2);
         
         $query = $this->db->query("SELECT CONCAT(currency_code,' - ',currency_name) AS currency_code,
                                                 nominal,
@@ -71,14 +64,11 @@ class Stock extends Bks_Controller {
                                                 sell_alocation_sheet,
                                                 last_stock_sheet,
                                                 IF( last_stock_sheet > 0 , (nominal * last_stock_sheet), 0) AS last_stock_amount,
-                                                company_name,
-                                                company_address,
                                                 store_name,
                                                 store_address,
                                                 IF(updated IS NULL, created, updated) AS updated
                                         FROM v_stock_tr9
-                                        WHERE company_id = $company_id
-                                        AND store_id = $store_id
+                                        WHERE store_id = $store_id
                                         AND stock_year = $tahun
                                         AND stock_month = $bulan
                                         ORDER BY currency_id ASC ");        
@@ -109,7 +99,7 @@ class Stock extends Bks_Controller {
         $this->excel->setActiveSheetIndex(0)->setCellValue('A1', "Stock in Nominal Period " . namabulan($bulan) . ' - ' . $tahun ); 
         $this->excel->getActiveSheet()->getStyle('A1')->getFont()->setBold(TRUE);
         $this->excel->getActiveSheet()->getStyle('A1')->getFont()->setSize(12);
-        $this->excel->getActiveSheet()->mergeCells('A1:M1');
+        $this->excel->getActiveSheet()->mergeCells('A1:K1');
 
         $judul = array('Currency',
                         'Nominal',
@@ -119,8 +109,6 @@ class Stock extends Bks_Controller {
                         'Task Sheet',
                         'Balance Sheet',
                         'Balance Amount',
-                        'Branch Name',
-                        'Branch Address',
                         'Store Name',                        
                         'Store Address',
                         'Updated');
@@ -144,7 +132,7 @@ class Stock extends Bks_Controller {
             $row++;
         }
 
-        foreach (range('A', 'M') as $columnID) {
+        foreach (range('A', 'K') as $columnID) {
             $this->excel->getActiveSheet()->getColumnDimension($columnID)->setAutoSize(true);
         }
         $this->excel->setActiveSheetIndex(0);        

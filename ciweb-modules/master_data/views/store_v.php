@@ -12,8 +12,8 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Branch</th>
-                                <th>Store</th>
+                                <th>Store Name</th>
+                                <th>Store Address</th>
                                 <th>Status</th>
                             </tr>
                         </thead>

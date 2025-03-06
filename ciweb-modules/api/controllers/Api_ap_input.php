@@ -6,12 +6,12 @@ class Api_ap_input extends Bks_Controller {
         $config = array('modules' => 'api', 'jsfiles' => array('api_ap_input'));
         parent::__construct($config);        
         $this->auth = $this->session->userdata( 'auth' );
-        $this->company_id = $this->auth['company_id'];
+        $this->store_id = $this->auth['store_id'];
     }
     
     function index() {
         $this->libauth->check(__METHOD__);
-        $this->template->title('API - buysellInput');
+        $this->template->title('Buy Sell - API Input');
         $this->template->set('tsmall', 'API');
         $this->template->set('icon', 'fa fa-edit');
         $data['auth'] = $this->auth;
@@ -25,8 +25,8 @@ class Api_ap_input extends Bks_Controller {
 
         $this->Bksmdl->table = 'v_tr_header';
 
-        $where[0]['field'] = 'company_id';
-        $where[0]['data']  = $this->company_id;
+        $where[0]['field'] = 'store_id';
+        $where[0]['data']  = $this->store_id;
         $where[0]['sql']   = 'where';
 
         $where[1]['field'] = 'api_method';

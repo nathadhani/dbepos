@@ -22,21 +22,15 @@ class Transaction_buysell_list extends Bks_Controller {
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
         
-        $company_id = $postData['company_id'];
-        $store_id  = $postData['store_id'];
-    
+        $store_id  = $postData['store_id'];    
         $tanggal1 = revDate($postData['periode1']);
         $tanggal2 = revDate($postData['periode2']);
 
         $this->Bksmdl->table = 'v_tr_header';
 
-        $where[0]['field'] = 'company_id';
-        $where[0]['data']  = $company_id;
+        $where[0]['field'] = 'store_id';
+        $where[0]['data']  = $store_id;
         $where[0]['sql']   = 'where';
-
-        $where[1]['field'] = 'store_id';
-        $where[1]['data']  = $store_id;
-        $where[1]['sql']   = 'where';
         
         $where2 = "tr_date >= '". $tanggal1 ."' AND tr_date <= '". $tanggal2 ."'";
 
@@ -46,10 +40,9 @@ class Transaction_buysell_list extends Bks_Controller {
 
     function excel(){
         $this->libauth->check(__METHOD__);
-        $company_id = $this->uri->segment(4);
-        $store_id = $this->uri->segment(5);
-        $tanggal1 = revDate($this->uri->segment(6));
-        $tanggal2 = revDate($this->uri->segment(7));
+        $store_id = $this->uri->segment(4);
+        $tanggal1 = revDate($this->uri->segment(5));
+        $tanggal2 = revDate($this->uri->segment(6));
         
         $query = $this->db->query("SELECT
                                     (
@@ -60,7 +53,7 @@ class Transaction_buysell_list extends Bks_Controller {
                                     tr_header.tr_date AS tr_date,		
                                     (
                                         SELECT
-                                        ( CASE WHEN ( tr_header.status IN ( 2 )) THEN 'Canceled' WHEN ( tr_header.status IN ( 3 )) THEN 'Confirm' WHEN ( tr_header.status = 4 ) THEN 'API - inputtrx' ELSE 'Task' 
+                                        ( CASE WHEN ( tr_header.status IN ( 2 )) THEN 'Canceled' WHEN ( tr_header.status IN ( 3 )) THEN 'Confirm' WHEN ( tr_header.status = 4 ) THEN 'Integrasi System ECSys (API)' ELSE 'Task' 
                                         END
                                         )
                                     ) AS status_name,
@@ -68,16 +61,14 @@ class Transaction_buysell_list extends Bks_Controller {
                                     tr_detail.nominal AS nominal,
                                     tr_detail.sheet AS sheet,
                                     (tr_detail.nominal * tr_detail.sheet) AS amount,
-                                    tr_detail.price AS price,
-                                    tr_detail.subtotal AS subtotal,
+                                    tr_detail.price AS exchange_rate,
+                                    ((tr_detail.nominal * tr_detail.sheet) * tr_detail.price)  AS subtotal,
                                     m_customer.customer_code,
                                     m_customer.customer_name,
                                     m_customer.customer_address,
                                     m_customer.customer_phone,
-                                    m_company.company_name,
-                                    m_company.company_address,
-                                    m_company_store.store_name,
-                                    m_company_store.store_address,
+                                    m_store.store_name,
+                                    m_store.store_address,
                                     tr_detail.created AS created,
                                     tr_detail.updated AS updated,
                                     usr1.fullname AS createdby_name,
@@ -86,12 +77,10 @@ class Transaction_buysell_list extends Bks_Controller {
                                 JOIN tr_header ON tr_detail.header_id = tr_header.id 				
                                 JOIN m_currency ON tr_detail.currency_id = m_currency.id
                                 JOIN m_customer ON m_customer.id = tr_header.customer_id
-                                JOIN m_company ON m_company.id = tr_header.company_id
-                                JOIN m_company_store ON m_company_store.id = tr_header.store_id
+                                JOIN m_store ON m_store.id = tr_header.store_id
                                 JOIN auth_users usr1 ON usr1.id = tr_header.createdby
                                 LEFT JOIN auth_users usr2 ON usr2.id = tr_header.updatedby            
-                                WHERE tr_header.company_id = $company_id
-                                AND tr_header.store_id = $store_id
+                                WHERE tr_header.store_id = $store_id
                                 AND tr_header.tr_date >= '$tanggal1'
                                 AND tr_header.tr_date <= '$tanggal2'
                                 AND tr_detail.status IN(2,3,4)
@@ -112,6 +101,7 @@ class Transaction_buysell_list extends Bks_Controller {
         $this->excel->getActiveSheet()->setTitle("temp");
 
         $bold = array('font' => array('bold' => true));
+        $fontcolor = array('font' => array('color' => array('rgb' => 'ff0000')));
         $title = array('font' => array('color' => array('rgb' => 'ffffff'), 'bold' => true), 
                        'fill' => array('type' => PHPExcel_Style_Fill::FILL_SOLID, 'color' => array('rgb' => '337AB7')));
 
@@ -123,7 +113,7 @@ class Transaction_buysell_list extends Bks_Controller {
         $this->excel->setActiveSheetIndex(0)->setCellValue('A1', "Transaction Buy Sell Period " . revDate($tanggal1) . ' s/d ' .  revDate($tanggal2)); 
         $this->excel->getActiveSheet()->getStyle('A1')->getFont()->setBold(TRUE);
         $this->excel->getActiveSheet()->getStyle('A1')->getFont()->setSize(12);
-        $this->excel->getActiveSheet()->mergeCells('A1:V1');
+        $this->excel->getActiveSheet()->mergeCells('A1:T1');
 
         $judul = array('Trx.Name',
                         'Trx.Number',
@@ -133,14 +123,12 @@ class Transaction_buysell_list extends Bks_Controller {
                         'Nominal',
                         'Sheet',
                         'Amount',
+                        'Exchange Rate',
                         'Equivalent',
-                        'Total Price',
                         'Customer Code',                        
                         'Customer Name',
                         'Customer Address',
                         'Customer Phone',
-                        'Company Name',
-                        'Company Address',
                         'Store Name',
                         'Store Address',
                         'Created',
@@ -160,14 +148,22 @@ class Transaction_buysell_list extends Bks_Controller {
         foreach ($query->result_array() as $data) {
             $col = 0;
             foreach ($fields as $field) {
-                $this->excel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $data[$field]); // Retreive Data Value                
-                $this->excel->getActiveSheet()->getStyle('E'.$row.':'.'I'.$row)->getNumberFormat()->setFormatCode('#,##0'); // Number Format
+                $this->excel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $data[$field]); // Retreive Data Value
+                $this->excel->getActiveSheet()->getStyle('F'.$row.':'.'H'.$row)->getNumberFormat()->setFormatCode('#,##0'); // Number Format
+                $this->excel->getActiveSheet()->getStyle('J'.$row.':'.'J'.$row)->getNumberFormat()->setFormatCode('#,##0'); // Number Format                
+                if($field == 'exchange_rate'){
+                    if( $this->Bksmdl->cekdecimalgreaterthenzero($data[$field]) > 0){
+                        $this->excel->getActiveSheet()->getStyle('I'.$row.':'.'I'.$row)->getNumberFormat()->setFormatCode('#,##0.00'); // Number Format Decimal
+                    } else {
+                        $this->excel->getActiveSheet()->getStyle('I'.$row.':'.'I'.$row)->getNumberFormat()->setFormatCode('#,##0'); // Number Format Decimal                        
+                    }
+                }
                 $col++;
             }
             $row++;
-        }
+        }        
 
-        foreach (range('A', 'V') as $columnID) {
+        foreach (range('A', 'T') as $columnID) {
             $this->excel->getActiveSheet()->getColumnDimension($columnID)->setAutoSize(true);
         }
         $this->excel->setActiveSheetIndex(0);        

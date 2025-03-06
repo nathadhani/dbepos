@@ -1,5 +1,6 @@
 <script type="text/javascript">
-    var Apimethod = <?php echo $auth['api_method'];?>;
+    var userId = <?php echo $auth['id'];?>;
+    var Apimethod = <?php echo ($auth['api_method'] == null ? 0 : $auth['api_method']) ;?>;
     var ApiAP = "<?php echo $auth['api_angkasapura'];?>";
 
     var customerId = <?php echo $this->uri->segment(4);?>;

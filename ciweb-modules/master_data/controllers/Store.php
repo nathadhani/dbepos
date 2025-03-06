@@ -19,7 +19,12 @@ class Store extends Bks_Controller {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $this->Bksmdl->table = 'v_m_store';
-        $cpData = $this->Bksmdl->getDataTable();
+
+        $where[0]['field'] = 'status';
+        $where[0]['data']  = 1;
+        $where[0]['sql']   = 'where';
+
+        $cpData = $this->Bksmdl->getDataTable($where);
         $this->Bksmdl->outputToJson($cpData);
     }        
 

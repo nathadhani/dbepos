@@ -22,7 +22,6 @@ class Summary_buysell_by_month extends Bks_Controller {
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
 
-        $company_id = $postData['company_id'];
         $store_id = $postData['store_id'];
         $tahun = Date('Y');
         $bulan = Date('m');
@@ -33,21 +32,17 @@ class Summary_buysell_by_month extends Bks_Controller {
         
         $this->Bksmdl->table = 'v_summary_by_month';
 
-        $where[0]['field'] = 'company_id';
-        $where[0]['data']  = $company_id;
+        $where[0]['field'] = 'store_id';
+        $where[0]['data']  = $store_id;
         $where[0]['sql']   = 'where';
 
-        $where[1]['field'] = 'store_id';
-        $where[1]['data']  = $store_id;
+        $where[1]['field'] = 'tr_year';
+        $where[1]['data']  = $tahun;
         $where[1]['sql']   = 'where';
 
-        $where[2]['field'] = 'tr_year';
-        $where[2]['data']  = $tahun;
+        $where[2]['field'] = 'tr_month';
+        $where[2]['data']  = $bulan;
         $where[2]['sql']   = 'where';
-
-        $where[3]['field'] = 'tr_month';
-        $where[3]['data']  = $bulan;
-        $where[3]['sql']   = 'where';
 
         $cpData = $this->Bksmdl->getDataTable($where);
         $this->Bksmdl->outputToJson($cpData);
@@ -58,7 +53,6 @@ class Summary_buysell_by_month extends Bks_Controller {
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
 
-        $company_id = $postData['company_id'];
         $store_id = $postData['store_id'];
         $tahun = Date('Y');
         $bulan = Date('m');
@@ -70,8 +64,7 @@ class Summary_buysell_by_month extends Bks_Controller {
         $query = $this->db->query("SELECT SUM(buy_equivalent) AS buy_equivalent,
                                    SUM(sell_equivalent) AS sell_equivalent
                                    FROM v_summary_by_month
-                                   WHERE company_id = $company_id
-                                   AND store_id = $store_id
+                                   WHERE store_id = $store_id
                                    AND tr_year = $tahun
                                    AND tr_month = $bulan")->result();
 
@@ -83,7 +76,6 @@ class Summary_buysell_by_month extends Bks_Controller {
         // $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
 
-        $company_id = $postData['company_id'];
         $store_id = $postData['store_id'];
         $tahun = Date('Y');
         $bulan = Date('m');
@@ -95,8 +87,7 @@ class Summary_buysell_by_month extends Bks_Controller {
         $query = $this->db->query("SELECT COUNT(CASE WHEN tr_id = 1 AND status IN(3,4) THEN 1 END) AS buy_count,
                                 COUNT(CASE WHEN tr_id = 2 AND status IN(3,4) THEN 1 END) AS sell_count
                                 FROM tr_header
-                                WHERE company_id = $company_id
-                                AND store_id = $store_id
+                                WHERE store_id = $store_id
                                 AND YEAR(tr_date) = $tahun
                                 AND MONTH(tr_date) = $bulan
                                 AND status IN(3,4)")->result();

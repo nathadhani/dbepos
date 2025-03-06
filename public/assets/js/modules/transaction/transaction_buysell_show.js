@@ -1,10 +1,13 @@
 (function ($) {    
     var xtr_id = (decrypt(tr_uri_code) === 'buy' ? 1 : decrypt(tr_uri_code) === 'sell' ? 2 : 0);
+    $("#btn-submit").hide();
+    $("#btn-cancel").hide();
+    $("#btn-pdf").hide();
     back_to_page_show();
 
     function back_to_page_show(){
         show_header(id_tr_header);
-        show_detail(id_tr_header);        
+        show_detail(id_tr_header);
     }
 
     function show_header(id){
@@ -23,34 +26,43 @@
                             $("#tr_date").html(': '+bksfn.revDate(d.tr_date));
                             
                             $("#ftitle").html(d.status == 2 ? '<span style="color:red;font-weight:bolder;">'+d.status_name+'</span>' : d.status_name);
-                            switch(Number(d.status)) {
-                                case 1:                
-                                    $("#btn-submit").hide();
-                                    $("#btn-cancel").show();
-                                    $("#btn-pdf").show();
-                                    break;
-                                case 2:
-                                    $("#btn-submit").hide();
-                                    $("#btn-cancel").hide();
-                                    $("#btn-pdf").show();
-                                    break;
-                                case 3:
-                                    if(Number(Apimethod) == 1){
-                                        $("#btn-submit").show();
-                                    }
-                                    $("#btn-cancel").show();
-                                    $("#btn-pdf").show();              
-                                    break;
-                                case 4:
-                                    $("#btn-submit").hide();   
-                                    $("#btn-cancel").show();
-                                    $("#btn-pdf").show();                                           
-                                    break;
-                                default:
-                                    $("#btn-submit").hide();
-                                    $("#btn-cancel").hide();
-                                    $("#btn-pdf").hide();
-                                    break;
+                            
+                            if(Number(d.createdby) === Number(userId)){
+                                switch(Number(d.status)) {
+                                    case 1:                
+                                        $("#btn-submit").hide();
+                                        $("#btn-cancel").show();
+                                        $("#btn-pdf").show();
+                                        break;
+                                    case 2:
+                                        $("#btn-submit").hide();
+                                        $("#btn-cancel").hide();
+                                        $("#btn-pdf").show();
+                                        break;
+                                    case 3:
+                                        if(Number(Apimethod) == 1){
+                                            $("#btn-submit").show();
+                                        }
+                                        $("#btn-cancel").show();
+                                        $("#btn-pdf").show();              
+                                        break;
+                                    case 4:
+                                        $("#btn-submit").hide();   
+                                        $("#btn-cancel").show();
+                                        $("#btn-pdf").show();                                           
+                                        break;
+                                    default:
+                                        $("#btn-submit").hide();
+                                        $("#btn-cancel").hide();
+                                        $("#btn-pdf").hide();
+                                        break;
+                                }
+                            }
+                            
+                            if(Number(d.createdby) !== Number(userId)){
+                                $("#btn-submit").hide();
+                                $("#btn-cancel").hide();
+                                $("#btn-pdf").hide();
                             }
                             
                             $("#created_by").html('Created by : '+d.createdby_name +' - '+d.created);

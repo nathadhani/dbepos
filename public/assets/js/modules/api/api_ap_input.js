@@ -39,10 +39,11 @@
                         return data;
                 }},                
                 {data: 'status', width: "10%", render: function (data, type, row, meta) {
-                    return lstatus_name(data);
+                    return row.status_name;
                 }},          
                 {data: 'id', visible: false},
                 {data: 'customer_id', visible: false},
+                {data: 'status_name', visible: false},
                 {data: 'createdby', visible: false},
             ],            
             order: [[1, 'asc'],[3, 'asc'],[2, 'asc']]
@@ -109,25 +110,3 @@
         });
     }
 })(jQuery);
-
-function lstatus_name(status_id) {
-    var status_Id =  Number(status_id);
-    var lstatus = '';
-    switch(status_Id) {
-        case 1:
-            lstatus += '<strong>Task</strong>';
-            break;
-        case 2:
-            lstatus += '<strong style="color:red;">Canceled</strong>';
-            break;
-        case 3:
-            lstatus += '<strong>Confirm</strong>';
-            break;
-        case 4:
-            lstatus += '<strong>API - Inputtrx</strong>';
-            break;             
-        default:
-            lstatus = '';
-    }
-    return lstatus;
-}

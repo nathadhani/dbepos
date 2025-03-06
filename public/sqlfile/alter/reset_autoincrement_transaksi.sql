@@ -8,16 +8,8 @@
 -- delete from inventory_header
 
 SET  @num := 0;
-UPDATE inventory_detail SET id = @num := (@num+1);
-ALTER TABLE inventory_detail AUTO_INCREMENT = 1
-
-SET  @num := 0;
-UPDATE inventory_header SET id = @num := (@num+1);
-ALTER TABLE inventory_header AUTO_INCREMENT = 1
-
-SET  @num := 0;
-UPDATE rate_daily SET id = @num := (@num+1);
-ALTER TABLE rate_daily AUTO_INCREMENT = 1
+UPDATE m_exchange_rate SET id = @num := (@num+1);
+ALTER TABLE m_exchange_rate AUTO_INCREMENT = 1
 
 SET  @num := 0;
 UPDATE stock SET id = @num := (@num+1);
