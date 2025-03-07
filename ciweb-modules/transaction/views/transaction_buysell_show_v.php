@@ -43,7 +43,7 @@
                             }
                         ?>                                                                                                                      
                         <button id="btn-cancel" class="btn btn-danger btn btn-sm" style="width:120px;">Cancel</button>
-                        <button id="btn-pdf" class="btn btn-primary btn btn-sm" style="width:120px;">Print</button>
+                        <button id="btn-pdf" class="btn btn-success btn btn-sm" style="width:120px;">Print</button>
                     </ul>    
                 </div>
                 <form id="mainForm" class="form-horizontal" autocomplete="off">

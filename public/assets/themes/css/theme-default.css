@@ -47,7 +47,7 @@ body {
   background: #f5f5f5 url('../img/bg.png') left top repeat;
   position: relative;
   font-family: 'Open Sans', sans-serif;
-  font-size: 12px;
+  font-size: 13px;
   color: #22262e;  
   overflow-x: hidden;
 }
@@ -92,7 +92,7 @@ body {
   /* END RTL CONTENT MODE */
 }
 .page-container .page-sidebar {
-  width: 220px;
+  width: 230px;
   float: left;
   position: relative;
   z-index: 3;
@@ -105,8 +105,8 @@ body {
 }
 .page-container .page-content {
   min-height: 100%;
-  margin-left: 220px;
-  background: #f5f5f5 url('../img/bg.png') left top repeat;
+  margin-left: 230px;
+  background: #f5f5f5 url('../img/bg.png') left top repeat;  
   position: relative;
   zoom: 1;
 }
@@ -345,7 +345,7 @@ body.page-container-boxed .page-container {
   overflow: hidden;
 }
 .x-navigation li > ul li > a {
-  font-size: 12px;
+  font-size: 13px;
   line-height: 19px;
   font-weight: 400;
   padding: 12px 10px;
@@ -1959,7 +1959,7 @@ ul.panel-controls > li > .dropdown-menu:before {
 /* END USER */
 /* BUTTONS */
 .btn {
-  font-size: 12px;
+  font-size: 13px;
   padding: 4px 15px;
   line-height: 20px;
   font-weight: 400;
@@ -1979,7 +1979,7 @@ ul.panel-controls > li > .dropdown-menu:before {
 }
 .btn.btn-sm,
 .btn-group-sm > .btn {
-  font-size: 11px;
+  font-size: 13px;
   padding: 2px 10px;
 }
 .btn.btn-xs,
@@ -3122,7 +3122,7 @@ blockquote.pull-right {
 .table > thead > tr > th {
   background: #f1f5f9;
   color: #56688A;
-  font-size: 12px;
+  font-size: 13px;
 }
 .panel-body.panel-body-table {
   padding: 0px;

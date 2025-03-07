@@ -7,7 +7,7 @@ class Transaction_buysell extends Bks_Controller {
         parent::__construct($config);
         $this->auth = $this->session->userdata( 'auth' );
         $this->userId = $this->auth['id'];
-        $this->store_id = $this->auth['store_id'];
+        $this->store_id = $this->auth['store_id'];        
     }
     
     function index(){
@@ -17,7 +17,19 @@ class Transaction_buysell extends Bks_Controller {
         $this->template->set('icon', 'fa fa-edit');
         $data['auth'] = $this->auth;
         $this->template->build('transaction/transaction_buysell_v', $data);
-    }    
+    }
+
+    function cekclosingtrx(){
+        checkIfNotAjax();
+        // $this->libauth->check(__METHOD__);        
+        $postData = $this->input->post();        
+        $cekclosing = $this->Bksmdl->cekclosingdate($this->store_id);
+        if($cekclosing[0]->tr_date !== null && $cekclosing[0]->tr_date < Date('Y-m-d') ){      
+            $json['msg'] = '1';
+            $json['tr_date'] = $cekclosing[0]->tr_date;
+            echo json_encode($json);
+        }        
+    }
     
     function generate_code_temp($store_id, $tr_id, $tr_date){
         $Number = 1;
@@ -68,7 +80,18 @@ class Transaction_buysell extends Bks_Controller {
 
         $tr_id = $postData['tr_id'];
         $postData['store_id'] = $this->store_id;
-        $postData['tr_date'] = revDate($postData['tr_date']);
+        
+        if(isset($postData['tr_date'])){
+            $postData['tr_date'] = revDate($postData['tr_date']);
+
+            $datetime = date('Y-m-d H:i:s');
+            $new_date = $postData['tr_date'];
+            $new_datetime = date('Y-m-d H:i:s', strtotime($new_date . ' ' . date('H:i:s', strtotime($datetime))));
+            $postData['created'] = $new_datetime;
+        } else {
+            $postData['tr_date'] = Date('Y-m-d');
+        }
+
         $postData['tr_number_temp'] = $this->generate_code_temp($postData['store_id'], $tr_id, $postData['tr_date']);
         $postData['customer_source'] = ucwords(strtolower(trim($postData['customer_source'])));
         $postData['customer_purpose'] = ucwords(strtolower(trim($postData['customer_purpose'])));
@@ -101,7 +124,10 @@ class Transaction_buysell extends Bks_Controller {
         $postData['customer_source'] = ucwords(strtolower(trim($postData['customer_source'])));
         $postData['customer_purpose'] = ucwords(strtolower(trim($postData['customer_purpose'])));
         $postData['status'] = '1';   
-        unset($postData['tr_date']);
+
+        if(isset($postData['tr_date'])){
+            unset($postData['tr_date']);
+        }
 
         $this->db->trans_begin();
         $this->Bksmdl->table = 'tr_header';

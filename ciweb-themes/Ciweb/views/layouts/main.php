@@ -17,19 +17,12 @@
             <a href="#" class="x-navigation-minimize" title="Minimize"><span class="fa fa-dedent"></span></a>
         </li>
         <!-- END TOGGLE NAVIGATION -->        
-        <li class="xn-icon-button">
-            <a href="user/change_pass" title="Change Password" data-toggle="tooltip" data-placement="bottom"><span class="fa fa-unlock"></span></a>                        
-        </li>
 
+        <!-- For Admin & Counter -->
         <?php 
-            if(!in_array($usergroup_id, array('1','2','6'))) {
+        
+            if(in_array($usergroup_id, array('3','4'))) {
         ?>
-                <li class="xn-icon-button">
-                    <a href="stock/stock_calculate" title="Calculate Stock" data-toggle="tooltip" data-placement="bottom"><span class="fa fa-calculator"></span></a>
-                </li>
-                <li class="xn-icon-button">
-                    <a href="master_data/m_exchange_rate" title="Exchange Rate" data-toggle="tooltip" data-placement="bottom"><span class="fa fa-wrench"></span></a>
-                </li>
                 <li class="xn-icon-button">
                     <a href="dashboard/dashboard_buysell" title="Buy / Sell Chart" data-toggle="tooltip" data-placement="bottom"><span class="fa fa-area-chart"></span></a>
                 </li>
@@ -54,7 +47,7 @@
                     ?>        
                 </li>
                 <?php                    
-                    if($api_method === '0' && $api_method !== null){                        
+                    if($api_method === '1'){
                 ?>            
                     <li class="xn-icon-button">
                         <a href="api/api_ap_input" title="Integrasi ECSys ( Pending )" data-toggle="tooltip" data-placement="bottom"><span class="fa fa-comment"></span></a>
@@ -80,7 +73,8 @@
         <?php 
                 }
             }  
-        ?>
+        ?>        
+        <!-- End For Admin & Counter -->
 
         <li class="xn-icon-button pull-right">
             <a href="auth/logout" title='Sign Out'><span class="fa fa-sign-out" style="font-size:20px;font-weight;bold;"></span></a>

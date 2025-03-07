@@ -94,6 +94,7 @@
                                 <th>Store Address</th>                                                            
                                 <th>Transaction</th>
                                 <th>Date</th>
+                                <th>Updated</th>                                
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
@@ -101,6 +102,7 @@
                         <thead id="searchid">
                             <tr>
                                 <td><button class="clrs btn btn-sm btn-info btn-line">Clear</button></td>
+                                <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>

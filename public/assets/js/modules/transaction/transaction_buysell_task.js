@@ -16,9 +16,8 @@
             },
             columns: [
                 {data: "#", className: "dt-body-center", width: "5%", orderable: false, searchable: false},   
-                {data: 'tr_id', width: "8%", render: function (data, type, row, meta) {
-                    var act = (data == '1') ? '<Stong style="color:blue;">Trx Buy</Stong>' : '<Stong style="color:red;">Trx Sell</Stong>';
-                    return act;
+                {data: 'tr_name', width: "8%", render: function (data, type, row, meta) {                    
+                    return data;
                 }},
                 {data: 'tr_number_temp',  width: "10%", render: function (data, type, row, meta) {
                     if(Number(row.createdby) == Number(userId)){
@@ -39,12 +38,14 @@
                 {data: 'createdby_name',  width: "15%", render: function (data, type, row, meta) {
                         return data;
                 }},                
-                {data: 'status', width: "10%", render: function (data, type, row, meta) {
-                    return row.status_name;
+                {data: 'status_name', width: "10%", render: function (data, type, row, meta) {
+                    return data;
                 }},          
                 {data: 'id', visible: false},
+                {data: 'tr_id', visible: false},
                 {data: 'customer_id', visible: false},
-                {data: 'status_name', visible: false},
+                {data: 'tr_name', visible: false},
+                {data: 'status', visible: false},
                 {data: 'createdby', visible: false},
             ],            
             order: [[1, 'asc'],[3, 'asc'],[2, 'asc']]
@@ -53,12 +54,9 @@
 
         // Setup - add a text input to each header cell
         $('#searchid td').each(function () {
-            if ($(this).index() != 0 && $(this).index() != 4 && $(this).index() != 7 ) {
+            if ($(this).index() != 0 && $(this).index() != 4) {
                 $(this).html('<input style="width:100%" type="text" placeholder="Search" data-id="' + $(this).index() + '" />');
-            }
-            if ($(this).index() == 1) {
-                $(this).html('<select style="width:100%" type="text"><option value="">-</option><option value="1">Trx Buy</option><option value="2">Trx Sell</option><select/>');
-            }
+            }            
             if ($(this).index() == 3) {
                 var index = parseInt($(this).index()) + 1;
                 $(this).html('<input class="dpM1" style="width:100%; border: solid 1px #ccc; padding: 4px;" type="text" placeholder="Search" data-id="' + index + '" />');

@@ -20,7 +20,7 @@ class M_trxlist extends Bks_Controller {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
-        $postData['title'] = ucwords(strtolower(trim($postData['title'])));
+        $postData['transaction_name'] = ucwords(strtolower(trim($postData['transaction_name'])));
         $postData['description'] = ucwords(strtolower(trim($postData['description'])));
         $postData['status'] = cekStatus($postData);
 
@@ -42,7 +42,7 @@ class M_trxlist extends Bks_Controller {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
-        $postData['title'] = ucwords(strtolower(trim($postData['title'])));
+        $postData['transaction_name'] = ucwords(strtolower(trim($postData['transaction_name'])));
         $postData['description'] = ucwords(strtolower(trim($postData['description'])));
         $postData['status'] = cekStatus($postData);
         $id = $postData['id'];
@@ -90,11 +90,11 @@ class M_trxlist extends Bks_Controller {
         $this->Bksmdl->outputToJson($cpData);
     }
     
-    function gettransactionid() {
+    function gettrxlist() {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $this->Bksmdl->table = 'm_transaction';
-        $this->Bksmdl->searchable = array('description', 'title', 'id');
+        $this->Bksmdl->searchable = array('description', 'transaction_name', 'id');
         $this->Bksmdl->select2fields = array('id' => 'id', 'text' => "concat(description,' [', id,']')");
         $result['results'] = $this->Bksmdl->getSelect2(array('status' => '1'));
         $result['more'] = true;

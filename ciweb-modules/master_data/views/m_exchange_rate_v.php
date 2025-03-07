@@ -4,7 +4,7 @@
             <div class="panel-heading ui-draggable-handle">                                
                 <div class="panel-title-box">
                     <h3>
-                        Exchange Rate
+                        Buy / Sell - Exchange Rate
                     </h3>
                 </div>
                 <ul class="panel-controls">

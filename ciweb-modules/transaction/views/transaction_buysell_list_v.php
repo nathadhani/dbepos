@@ -6,7 +6,7 @@
                     <h3>Buy / Sell - List</h3>
                 </div>
                 <ul class="panel-controls">
-                    <button id="btn-submit" class="btn btn-default btn btn-sm" style="width:120px;">Submit</button>
+                    <button id="btn-submit" class="btn btn-primary btn btn-sm" style="width:120px;">Submit</button>
                     <a id="btn-excel" title="Download" href="#" class="btn btn-default btn btn-sm pull-right" style="margin-left:5px;"><i class="fa fa-download"></i></a>
                 </ul>
             </div>
@@ -55,7 +55,7 @@
                             <thead>
                                 <tr>
                                     <th style="vertical-align:middle;text-align:center;">#</th>
-                                    <th style="vertical-align:middle;text-align:center;">Trx</th>
+                                    <th style="vertical-align:middle;text-align:center;">Trx Name</th>
                                     <th style="vertical-align:middle;text-align:center;">Number</th>
                                     <th style="vertical-align:middle;text-align:center;">Date</th>
                                     <th style="vertical-align:middle;text-align:center;">Value</th>

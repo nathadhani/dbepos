@@ -26,23 +26,67 @@
                             <div class="form-group row">
                                 <label for="store_email" class="control-label col-lg-4">Store Email</label>
                                 <div class="col-lg-8">
-                                <input type="text" id="store_email" name="store_email" placeholder="Store Email..." class="form-control" data-validation="required">
-                                </div>
-                            </div><!-- /.form-group -->                            
-                        </div>
-                        <div class="col-lg-6">                            
-                            <div class="form-group row">
-                                <label for="menuorder" class="control-label col-lg-4">API Id</label>
-                                <div class="col-lg-8">
-                                <input type="text" id="api_store_id" name="api_store_id" placeholder="API Store Id..." class="form-control">
+                                <input type="text" id="store_email" name="store_email" placeholder="Store Email..." class="form-control">
                                 </div>
                             </div><!-- /.form-group -->
                             <div class="form-group row">
-                                <label for="menuorder" class="control-label col-lg-4">API AP</label>
+                                <label for="store_email" class="control-label col-lg-4">Store Permint Number</label>
+                                <div class="col-lg-8">
+                                <input type="text" id="store_permit_number" name="store_permit_number" placeholder="Store Permite Number..." class="form-control">
+                                </div>
+                            </div><!-- /.form-group -->
+                            <div class="form-group row">
+                                <label for="menuorder" class="control-label col-lg-4">API Method</label>
+                                <div class="col-lg-8">
+                                <input type="number" id="api_method" name="api_method" placeholder="API Method..." class="form-control">
+                                </div>
+                            </div><!-- /.form-group -->
+                            <div class="form-group row">
+                                <label for="menuorder" class="control-label col-lg-4">API Angkasa Pura</label>
                                 <div class="col-lg-8">
                                 <input type="text" id="api_angkasapura" name="api_angkasapura" placeholder="API Angkasa Pura..." class="form-control">
                                 </div>
+                            </div><!-- /.form-group -->                                                        
+                        </div>
+                        <div class="col-lg-6">         
+                            <div class="form-group row" id="tr_id-container">
+                                <label for="tr_id" class="control-label col-lg-4">AP Trx List</label>
+                                <div class="col-lg-8">
+                                    <select name="tr_id[]"
+                                            data-ajax="true" 
+                                            data-placeholder="-- Pilih Multiple --"
+                                            data-url="master_data/m_trxlist/gettrxlist/" 
+                                            data-value="" 
+                                            data-limit="100"
+                                            multiple
+                                            id="tr_id" placeholder="Trx Name" class='form-control select2'>
+                                    </select>
+                                </div>
+                            </div>                          
+                            <div class="form-group row">
+                                <label for="menuorder" class="control-label col-lg-4">API Username</label>
+                                <div class="col-lg-8">
+                                <input type="text" id="api_username" name="api_username" placeholder="API Username..." class="form-control">
+                                </div>
                             </div><!-- /.form-group -->
+                            <div class="form-group row">
+                                <label for="menuorder" class="control-label col-lg-4">API Password</label>
+                                <div class="col-lg-8">
+                                <input type="text" id="api_password" name="api_password" placeholder="API Password..." class="form-control">
+                                </div>
+                            </div><!-- /.form-group -->                     
+                            <div class="form-group row">
+                                <label for="menuorder" class="control-label col-lg-4">API Store Id</label>
+                                <div class="col-lg-8">
+                                <input type="text" id="api_store_id" name="api_store_id" placeholder="API Store Id..." class="form-control">
+                                </div>
+                            </div><!-- /.form-group -->                            
+                            <div class="form-group row">
+                                <label for="menuorder" class="control-label col-lg-4">API Store Name</label>
+                                <div class="col-lg-8">
+                                <input type="text" id="api_store_name" name="api_store_name" placeholder="API Store Name..." class="form-control">
+                                </div>
+                            </div><!-- /.form-group -->                            
                             <div class="form-group row">
                                 <label class="control-label col-lg-4">Status</label>
                                 <div>
@@ -53,7 +97,7 @@
                                         <span class="form-control">Active</span>
                                     </div>
                                 </div>
-                            </div><!-- /.form-group -->
+                            </div><!-- /.form-group -->                           
                         </div>
                     </div>
                 </div>
@@ -88,7 +132,7 @@
                                 <th>#</th>
                                 <th>Store Name</th>
                                 <th>Store Address</th>
-                                <th>API Id</th>
+                                <th>API Store Id</th>
                                 <th>Api AP</th>
                                 <th>Status</th>
                                 <th>Action</th>                                

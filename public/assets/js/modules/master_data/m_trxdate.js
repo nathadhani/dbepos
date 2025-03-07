@@ -91,10 +91,11 @@
             {data: "#", width: "5%", orderable: false, searchable: false},
             {data: 'store_name'},
             {data: 'store_address'},
-            {data: 'title'},
+            {data: 'tr_name'},            
             {data: 'tr_date', render: function (data, type, row, meta) {
                     return bksfn.revDate(data);
                 }},
+            {data: 'updated'},
             {data: 'status', className: "dt-body-center", width: "5%", render: function (data, type, row, meta) {
                     var act = (data == '1') ? '<span class="label label-success"><i class="fa fa-check"></i></span>' : '<span class="label label-danger"><i class="fa fa-times"></i></span>';
                     return act;
@@ -114,7 +115,7 @@
 
     // Setup - add a text input to each header cell
     $('#searchid td').each(function () {
-        if ($(this).index() != 0 && $(this).index() < 7) {
+        if ($(this).index() != 0 && $(this).index() != 5 && $(this).index() < 7) {
             $(this).html('<input style="width:100%" type="text" placeholder="Search" data-id="' + $(this).index() + '" />');
         }
         if ($(this).index() == 6) {

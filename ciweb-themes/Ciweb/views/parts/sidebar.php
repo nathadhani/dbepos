@@ -8,8 +8,8 @@ $auth = $this->session->userdata('auth');
     <ul class="x-navigation">
         <li class="xn-logo">
             <a href=".">
-                <span style="font-weight:bold; font-size:15px; font-family:'Arial Black';color:#37ef0d;">
-                    INDOCEV App
+                <span style="font-weight:bold; font-size:13px; font-family:'Arial Black';">
+                    MAIN Application
                 </span>
                 <!-- <small>INDOCEV APP</small> -->
             </a>

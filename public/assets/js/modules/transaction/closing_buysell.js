@@ -26,6 +26,27 @@
                         datatype: 'json',
                         success: function(data){
                             alertify.success('Calculate stock price average done.!');
+                            $.ajax({
+                                url: baseUrl + 'transaction/closing_buysell/closing_trxdate',
+                                type: 'POST',
+                                beforeSend: function(){
+                                    $(".ajax-loader").height($(document).height());
+                                    $('.ajax-loader').css("visibility", "visible");
+                                },
+                                data: {'store_id' : $('#store_id').val(), 'tanggal' : $('#tanggal').val()},
+                                datatype: 'json',
+                                success: function(data){
+                                    alertify.success('Closing transaction buy / sell done.!');
+                                },
+                                complete: function(){
+                                    $('.ajax-loader').css("visibility", "hidden");
+                                },
+                                error: function(xhr){
+                                    $('.ajax-loader').css("visibility", "hidden");
+                                    alertify.error("error losing transaction buy / sell.!");
+                                    StringtoFile(xhr.response.text(), 'error');
+                                }
+                            });
                         },
                         complete: function(){
                             $('.ajax-loader').css("visibility", "hidden");

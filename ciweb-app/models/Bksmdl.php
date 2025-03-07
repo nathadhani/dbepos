@@ -14,6 +14,13 @@ class Bksmdl extends Bks_Model {
         parent::__construct();
     }
 
+    public function cekclosingdate($store_id){
+        if($store_id !== null && $store_id !== ''){
+            $result = $this->db->query("SELECT * FROM m_transaction_date WHERE store_id = $store_id AND status = 1 LIMIT 1")->result();
+            return $result;
+        }
+    }
+
     public function getprofileusaha($id, $user_id){
         if($id !== null && $id !== ''){
             $getId = $this->db->query("SELECT store_id FROM tr_header WHERE id = $id LIMIT 1")->result();
@@ -32,10 +39,12 @@ class Bksmdl extends Bks_Model {
     }
 
     //--- Insert
-    function insert($data, $show_last_id = false) {
-        $s = date('Y-m-d H:i:s', time());
-        $data['created'] = $s;
-        $auth = $this->session->userdata('auth');        
+    function insert($data, $show_last_id = false) {       
+        $auth = $this->session->userdata('auth');
+        if(!isset($data['created'])){
+            $s = date('Y-m-d H:i:s', time());
+            $data['created'] = $s;
+        }
         if(!isset($data['createdby'])){
             $data['createdby'] = $auth['id'];
         }
@@ -49,9 +58,11 @@ class Bksmdl extends Bks_Model {
 
     //--- Update
     function update($dataUpdate, $where) {
-        $s = date('Y-m-d H:i:s', time());
         $user_session = $this->session->userdata('auth');
-        $dataUpdate['updated'] = $s;       
+        if(!isset($dataUpdate['updated'])){
+            $s = date('Y-m-d H:i:s', time());
+            $dataUpdate['updated'] = $s;       
+        }
         if(!isset($data['updatedby'])){
             $dataUpdate['updatedby'] = $user_session['id'];
         }

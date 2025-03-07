@@ -15,7 +15,7 @@
                         <thead>
                             <tr>
                                 <th style="vertical-align:middle;text-align:center;">#</th>
-                                <th style="vertical-align:middle;text-align:center;">Trx</th>
+                                <th style="vertical-align:middle;text-align:center;">Trx Name</th>
                                 <th style="vertical-align:middle;text-align:center;">Number</th>
                                 <th style="vertical-align:middle;text-align:center;">Date</th>
                                 <th style="vertical-align:middle;text-align:center;">Value</th>

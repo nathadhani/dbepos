@@ -72,14 +72,14 @@ class Transaction_buysell_show extends Bks_Controller {
         // $pdf->AddPage('P', 'mm', array('14','12'), true, 'UTF-8', false);
 
         if($this->uri->segment(5) == 1) { 
-            $tr_title = '** BUY **';
+            $tr_name = '** BUY **';
         }
         if($this->uri->segment(5) == 2) {
-            $tr_title = '** SELL **';
+            $tr_name = '** SELL **';
         }
         $pdf->Ln(1);
         $pdf->SetFont('', 'B', 9);
-        $pdf->Cell(131, 01, $tr_title, 0, 1, 'C');
+        $pdf->Cell(131, 01, $tr_name, 0, 1, 'C');
         $pdf->Ln(1);
         
         // Add Title

@@ -14,7 +14,7 @@
                             <div class="form-group row">
                                 <label for="menu" class="control-label col-lg-4">Transaksi</label>
                                 <div class="col-lg-8">
-                                    <input type="text" id="title" name="title" placeholder="Transaksi..." data-validation="required" class="form-control">                                    
+                                    <input type="text" id="transaction_name" name="transaction_name" placeholder="Transaksi..." data-validation="required" class="form-control">                                    
                                 </div>
                             </div><!-- /.form-group -->
                             <div class="form-group row">

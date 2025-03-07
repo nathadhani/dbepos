@@ -5,11 +5,21 @@
         $(':submit', this).attr('disabled', true);
     }).on('reset', function (e) {
         $("#ftitle").html('Add');        
-        $("#store_name").html('').focus();
-        $("#store_address").val('');
-        $("#store_email").val('');
-        $("#api_store_id").val('');
-        $("#api_angkasapura").val('');
+        
+        $("#store_name").val('').focus();
+        $("#store_address").val();
+        $("#store_email").val();
+        $("#store_permit_number").val();
+
+        $("#api_method").val();
+        $("#api_angkasapura").val();        
+        $("#api_username").val();
+        $("#api_password").val();
+        $("#api_store_id").val();
+        $("#api_store_name").val();
+
+        $("#tr_id").html('').sel2dma();
+
         $("#status").iCheck('check');
         $(':submit').removeAttr('disabled');
     });
@@ -62,11 +72,35 @@
         var elm = $(this).closest("tr");
         var d = t.row(elm).data();
         $("#ftitle").html('Edit');
+
         $("#store_name").val(d.store_name).focus();
         $("#store_address").val(d.store_address);
         $("#store_email").val(d.store_email);
+        $("#store_permit_number").val(d.store_permit_number);
+
+        $("#api_method").val(d.api_method);
+        $("#api_angkasapura").val(d.api_angkasapura);        
+        $("#api_username").val(d.api_username);
+        $("#api_password").val(d.api_password);
         $("#api_store_id").val(d.api_store_id);
-        $("#api_angkasapura").val(d.api_angkasapura);
+        $("#api_store_name").val(d.api_store_name);
+
+        if (d.tr_id_object != null) {
+            tr_id_object = JSON.parse(d.tr_id_object);
+            console.log(tr_id_object);    
+            $("#tr_id").html('').sel2dma();    
+            $.each(tr_id_object, function (i, val) {
+                $("#tr_id").append(`<option value="${val.id}">${val.tr_name} [${val.id}]</option>`);    
+                $("#tr_id-container").find("span.select2-container ul.select2-selection__rendered").append(`<li class="select2-selection__choice" title="${val.tr_name} [${val.id}]"><span class="select2-selection__choice__remove" role="presentation">×</span>${val.tr_name} [${val.id}]</li>`);
+            });    
+            $("input.select2-search__field").attr('placeholder', '');
+            $("input.select2-search__field").css("width", "0");
+            $("ul.select2-selection__rendered").append('<span class="select2-selection__clear">×</span>');
+        }    
+        if (d.tr_id != null) {
+            $("#tr_id").val(d.tr_id_object.split(','));
+        }
+
         $("#status").iCheck(d.status == 1 ? 'check' : 'uncheck');
         $("body").data("id", d.id);
     });    
@@ -100,6 +134,15 @@
                 }
             },            
             {data: 'store_email', visible: false},
+            {data: 'store_permit_number', visible: false},
+            {data: 'api_method', visible: false},
+            {data: 'api_angkasapura', visible: false},
+            {data: 'api_username', visible: false},
+            {data: 'api_password', visible: false},
+            {data: 'api_store_name', visible: false},
+            {data: 'tr_id', visible: false},
+            {data: 'tr_id_object', visible: false},
+            {data: 'user_limits', visible: false},
         ],
         order: [[1, 'asc']]
     });
@@ -152,75 +195,5 @@
             }             
         });                             
     });
-
-    $('#mainTable').on('click', 'a[title^=Register]', function (e) {
-        e.preventDefault();
-        window.scroll(0, 0);
-        if ($("#mainForm .panel-body").css('display') == 'none') {
-            $("#mainForm .panel-controls a").click();
-        }
-        var elm = $(this).closest("tr");
-        var d = t.row(elm).data();
-        var Id = d.id;
-        alertify.confirm("Are you sure register store AP1 ?", function (x) {
-            if (x) {           
-                var StringLog = '';
-                $.ajax({
-                    url: baseUrl + 'api/api_ap1/ap1_sha1',
-                    type: 'POST',
-                    data: {'method' : 'register', 'id' : Id},
-                    datatype: 'json',
-                    success: function(tmp) {
-                        if(tmp.length > 0) {
-                            var datasha = JSON.parse(tmp);
-                            var encodeBase64_sha1 = encodeBase64(datasha.sha1);
-                            var base64key = encodeBase64(datasha.base64key);
-                            $.ajax({
-                                url: baseUrl + 'api/api_ap1/ap1_encrypt_store',
-                                type: 'POST',
-                                data: {'id' : Id, 'sign' : encodeBase64_sha1},
-                                datatype: 'json',
-                                success: function(data) {
-                                    if(data.length > 0) {            
-                                        var dataenc = encryptCriptoJS(data, base64key);                                        
-                                        $.ajax({
-                                            url: baseUrl + 'api/api_ap1/ap1_post_api',
-                                            type: 'POST',
-                                            data: {'method' : 'register', 'dataenc' : "'"+dataenc+"'"},
-                                            datatype: 'json',
-                                            success: function(resp) {
-                                                StringLog = decryptCriptoJS(resp, base64key);
-                                                // StringtoFile(StringLog, 'Register_Store');
-                                                if (resp) {
-                                                    let result;
-                                                    try {
-                                                        result = JSON.parse(decryptCriptoJS(resp));
-                                                        responseServerAP1(result);
-                                                    } catch (err) {
-                                                        alertify.error("error");
-                                                        StringtoFile(err.message, 'error');    
-                                                    }                            
-                                                }    
-                                            },
-                                            error: function(){
-                                                alertify.error("can't register store API.!");
-                                            }
-                                        });                            
-                                    }
-                                },
-                                error: function(){
-                                    alertify.error("can't ecrypt data trx API.!");
-                                }
-                            });
-                        }
-                    },
-                    error: function(){
-                        alertify.error("can't ecrypt data sha1.!");
-                    }
-                });          
-            }
-        });
-    });
-
 })(jQuery);
 

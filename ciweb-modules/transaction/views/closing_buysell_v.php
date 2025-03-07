@@ -4,11 +4,11 @@
             <div class="panel-heading ui-draggable-handle">                                
                 <div class="panel-title-box">
                     <h3>
-                        Stock - Calculate
+                        Buy / Sell - Closing Transaction
                     </h3>
                 </div>
                 <ul class="panel-controls">
-                    <button id="btn-submit" class="btn btn-primary btn btn-sm" style="width:120px;">Calculate</button>
+                    <button id="btn-submit" class="btn btn-primary btn btn-sm" style="width:120px;">Closing</button>
                 </ul>    
             </div>            
             <div class="panel-body">
@@ -34,8 +34,8 @@
                     <div class="col-md-2">
                         <div class="form-group">
                             <div class="col-lg-12">
-                                <label for="periode" style="display:block">Period</label>
-                                <input style="width:100px;" type="text" data-inputmask="'mask': '[99-9999]'" class="form-control dpM" placeholder="Periode" name="periode" id="periode" value="<?=date('m-Y')?>">
+                                <label for="periode" style="display:block">Date</label>
+                                <input type="text" id="tanggal" name="tanggal" placeholder="Tanggal ..." class="form-control dp" data-date-format="DD MMMM YYYY" style="width:120px;" value="<?=date('d-m-Y');?>">
                             </div>                            
                         </div>                            
                     </div>
@@ -43,9 +43,12 @@
                 <div class="row">
                     <div class="col-md-12">
                       <br>Information :
-                        <br><span><strong style="color:black;font-weight:bolder;">Calculate </strong> 
-                            : 
-                            Untuk melakukan proses penghitungan ulang saldo akhir stok jika terjadi transaksi gagal/error dan penghitungan harga rata - rata.
+                        <br>
+                        <span>
+                            <strong style="color:black;font-weight:bolder;">
+                                Closing Transaction
+                            </strong> 
+                            : Untuk mengunci transaksi beli & jual tanggal sebelumnya.
                         </span>
                     </div>
                 </div>                                   

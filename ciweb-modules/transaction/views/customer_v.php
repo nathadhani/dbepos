@@ -19,7 +19,8 @@
                         <h3>Buy / Sell - New</h3>
                     </div>
                     <ul class="panel-controls">
-                        <a id="btn-excel" title="Download" href="#" class="btn btn-default pull-right"><i class="fa fa-download"></i></a>
+                        <button id="btn_add" name="btn_add" class="btn btn-primary btn btn-sm" style="width:120px;">Add New Data</button>
+                        <a id="btn-excel" title="Download" href="#" class="btn btn-default btn btn-sm"><i class="fa fa-download"></i></a>
                     </ul>
                 </div>
                 <div class="panel-body">
@@ -31,18 +32,15 @@
                                     <div class="col-md-10">
                                         <div class="input-group">
                                             <div class="input-group-addon">
-                                                <span for="text_search" class="fa fa-search"></span>
+                                                <span id="btn_search" name="btn_search" for="text_search" class="fa fa-search"></span>                                                
                                             </div>
                                             <input type="text" id="text_search" name="text_search" class="form-control" placeholder="Ketik kata yang mau di cari" data-validation="required"/>
                                             <span class="fa fa-fw fa-close field-icon toggle-close"></span>
-                                            <div class="input-group-btn">
-                                                <button class="btn btn-default" id="btn_search" name="btn_search" style="margin-left:5px;">Submit</button>
-                                            </div>
+                                            <!-- <div class="input-group-btn">
+                                                <button class="btn btn-primary btn btn-sm" id="btn_search" name="btn_search" style="width:120px;margin-left:10px;">Submit</button>
+                                            </div> -->
                                         </div>
                                     </div>
-                                    <div class="col-md-2">
-                                        <button id="btn_add" name="btn_add" class="btn btn-primary btn btn-sm btn-block pull-right" style="width:150px;margin-top:-20px;">Add New Data</button>
-                                    </div>                        
                                 </div>
                             </div>                                              
                         </div>

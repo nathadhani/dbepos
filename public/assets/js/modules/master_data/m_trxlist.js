@@ -5,7 +5,7 @@
         $(':submit', this).attr('disabled', true);
     }).on('reset', function (e) {
         $("#ftitle").html('Add');
-        $("#title").html('').focus();
+        $("#transaction_name").html('').focus();
         $("#description").html('');
         $("#status").iCheck('check');
         $(':submit').removeAttr('disabled');
@@ -60,7 +60,7 @@
         var elm = $(this).closest("tr");
         var d = t.row(elm).data();
         $("#ftitle").html('Edit');
-        $("#title").val(d.title);
+        $("#transaction_name").val(d.transaction_name);
         $("#description").val(d.description).focus();
         $("#status").iCheck(d.status == 1 ? 'check' : 'uncheck');
         $("body").data("id", d.id);
@@ -79,7 +79,7 @@
         },
         columns: [
             {data: "#", width: "5%", orderable: false, searchable: false},
-            {data: 'title'},
+            {data: 'transaction_name'},
             {data: 'description'},
             {data: 'created', orderable: false, width: "12%", render: function (data, type, row, meta) {
                     return data;
