@@ -5,7 +5,6 @@ var xtr_id = (decrypt(tr_uri_code) === 'buy' ? 1 : decrypt(tr_uri_code) === 'sel
 back_to_page_ini();
 
 function reset_form_header(){    
-    $('#tr_number').prop('disabled', true);    
     $("#customer_name").html('');
     $("#customer_soure").html('');
     $("#customer_purpose").html('');
@@ -37,7 +36,7 @@ function show_customer(){
                     success: function(data){
                         if (data !== '[]' && data.length > 0){
                             var d = JSON.parse(data)[0];
-                            $("#customer_name").html(d.customer_name);
+                            $("#customer_name").html(d.customer_name.trim() + ' ( ' + d.customer_address.trim() + ' )');
                         } else {
                             $("#customer_name").html('');
                             customerId = null;
@@ -74,20 +73,18 @@ function show_header(){
 
                         $("#tr_date").val(bksfn.revDate(d.tr_date));
                         $('#tr_date').prop('disabled', true);
-                        $("#tr_number").val(d.tr_number_temp);
-                        if (d.tr_number === null) {
-                            $('#currency_id').prop('disabled', true);
-                            $("#currency_id").html('').sel2dma();
-                        } else {
-                            $('#currency_id').prop('disabled', false);
-                        }
-
-                        $("#customer_name").html(d.customer_name);
+                        $("#customer_name").html(d.customer_name + ' ( ' + d.customer_address + ' )');
                         $("#customer_source").val(d.customer_source);
                         $("#customer_purpose").val(d.customer_purpose);
 
                         $('#btn-simpan-header').html('Save Task');
                         $("#ftitle").html(d.status_name);
+                        if ($("#ftitle").html().substr(0, 3) == "Add") {
+                            $('#currency_id').prop('disabled', true);
+                            $("#currency_id").html('').sel2dma();
+                        } else {
+                            $('#currency_id').prop('disabled', false);
+                        }
                         show_detail(d.status);
                         switch(Number(d.status)) {
                             case 1:
@@ -241,6 +238,7 @@ function add_item(){
         if (obj.msg == 1) {
             reset_form_input();
             back_to_page_ini()
+            window.scrollTo({ left: 0, top: document.body.scrollHeight, behavior: "smooth" });
             alertify.success("Insert Data Item Success");                
         } else {
             bksfn.errMsg(obj.msg);
@@ -369,99 +367,6 @@ function getstockbyid(){
             StringtoFile(xhr.responseText, 'error');
         }
     });
-}
-
-function back_to_page_ini(){
-    $("#btn-confirm").hide();
-    $("#btn-cancel").hide();          
-    $('#tr_number').prop('disabled', true);
-    $('#tr_date').prop('disabled', true);
-    $('#currency_id').prop('disabled', true);
-    $('#btn-add-row-detail').prop('disabled', true);
-    $.ajax({
-        url: baseUrl + "transaction/transaction_buysell/cekclosingtrx",
-        type: 'POST',
-        data: {},
-        datatype: 'json',
-        success: function(data){
-            if (data !== '[]' && data.length > 0){
-                var d = JSON.parse(data);                                                            
-                if(d.msg == 1){
-                    $('#tr_date').val(bksfn.revDate(d.tr_date));
-                    $("#btn-confirm").hide();
-                    $("#btn-cancel").hide();
-                    $("#btn-simpan-header").hide();
-                    $(".form_detail_input").hide(); 
-                    alertify.alert("sistem belum closing, tanggal transaksi masih tanggal " + bksfn.revDate(d.tr_date));
-                    var url = "transaction/closing_buysell/index/";
-                    $.ajax({
-                        url: url,
-                        type: 'POST',
-                        success: function() {            
-                            window.open(url,'_self'); 
-                        },
-                        error: function(){            
-                            alertify.error("can't open page.!");
-                        }
-                    }); 
-                }            
-            } else {                
-                if( typeof(id_header) != 'undefined' && id_header !== null && id_header !== '' ) {
-                    if( typeof(customerId) !== 'undefined' && customerId !== null && customerId !== '') {
-                        $("#btn-cancel").show();
-                        let url = '';
-                        if( xtr_id == 1 ){
-                            url = call_page_task_buy(customerId, id_header);
-                        } else {
-                            url = call_page_task_sell(customerId, id_header);
-                        }    
-                        if(url !== ''){
-                            $.ajax({
-                                url: url,
-                                type: 'POST',
-                                success: function(data) {            
-                                    if (data !== '[]') {                        
-                                        show_header();
-                                    }
-                                },
-                                error: function(xhr){
-                                    alertify.error("error");
-                                    StringtoFile(xhr.responseText, 'error');
-                                }
-                            });
-                        }                        
-                    }
-                } else {
-                    reset_form_header();
-                    reset_form_input();
-                    $("#ftitle").html('Add');
-                    var url = '';
-                    if( xtr_id == 1 ){
-                        url = call_page_task_buy(customerId, null);
-                    } else {
-                        url = call_page_task_sell(customerId, null);
-                    }
-                    if(url !== ''){
-                        $.ajax({
-                            url: url,
-                            type: 'POST',
-                            success: function() {                
-                                show_customer();
-                            },
-                            error: function(xhr){
-                                alertify.error("error");
-                                StringtoFile(xhr.responseText, 'error');
-                            }
-                        });
-                    }
-                }                
-            }               
-        },
-        error: function(xhr){
-            alertify.error("error");
-            StringtoFile(xhr.responseText, 'error');
-        }
-    });    
 }
 
 function back_to_page_task(){
@@ -720,3 +625,95 @@ $("#customer_name").on('click', function (e) {
         }
     }); 
 });
+
+function back_to_page_ini(){
+    $("#btn-confirm").hide();
+    $("#btn-cancel").hide();    
+    $('#tr_date').prop('disabled', true);
+    $('#currency_id').prop('disabled', true);
+    $('#btn-add-row-detail').prop('disabled', true);
+    $.ajax({
+        url: baseUrl + "transaction/transaction_buysell/cekclosingtrx",
+        type: 'POST',
+        data: {},
+        datatype: 'json',
+        success: function(data){
+            if (data !== '[]' && data.length > 0){
+                var d = JSON.parse(data);                                                            
+                if(d.msg == 1){
+                    $('#tr_date').val( bksfn.revDate(d.tr_date));
+                    $("#btn-confirm").hide();
+                    $("#btn-cancel").hide();
+                    $("#btn-simpan-header").hide();
+                    $(".form_detail_input").hide(); 
+                    alertify.alert("sistem belum closing, tanggal transaksi masih tanggal " + bksfn.revDate(d.tr_date));
+                    var url = "transaction/closing_buysell/index/";
+                    $.ajax({
+                        url: url,
+                        type: 'POST',
+                        success: function() {            
+                            window.open(url,'_self'); 
+                        },
+                        error: function(){            
+                            alertify.error("can't open page.!");
+                        }
+                    }); 
+                }            
+            } else {          
+                if( typeof(id_header) != 'undefined' && id_header !== null && id_header !== '' ) {
+                    if( typeof(customerId) !== 'undefined' && customerId !== null && customerId !== '') {
+                        $("#btn-cancel").show();
+                        let url = '';
+                        if( xtr_id == 1 ){
+                            url = call_page_task_buy(customerId, id_header);
+                        } else {
+                            url = call_page_task_sell(customerId, id_header);
+                        }    
+                        if(url !== ''){
+                            $.ajax({
+                                url: url,
+                                type: 'POST',
+                                success: function(data) {            
+                                    if (data !== '[]') {                        
+                                        show_header();
+                                    }
+                                },
+                                error: function(xhr){
+                                    alertify.error("error");
+                                    StringtoFile(xhr.responseText, 'error');
+                                }
+                            });
+                        }                        
+                    }
+                } else {
+                    reset_form_header();
+                    reset_form_input();
+                    $("#ftitle").html('Add');
+                    var url = '';
+                    if( xtr_id == 1 ){
+                        url = call_page_task_buy(customerId, null);
+                    } else {
+                        url = call_page_task_sell(customerId, null);
+                    }
+                    if(url !== ''){
+                        $.ajax({
+                            url: url,
+                            type: 'POST',
+                            success: function() {                
+                                show_customer();
+                            },
+                            error: function(xhr){
+                                alertify.error("error");
+                                StringtoFile(xhr.responseText, 'error');
+                            }
+                        });
+                    }
+                }                
+            }               
+        },
+        error: function(xhr){
+            alertify.error("error");
+            StringtoFile(xhr.responseText, 'error');
+        }
+    });    
+}

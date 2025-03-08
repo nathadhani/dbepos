@@ -8,8 +8,8 @@
                     </h3>
                 </div>
                 <ul class="panel-controls">
-                    <button id="btn-show" class="btn btn-default btn btn-sm" style="width:120px;">Show Data</button>
-                    <button id="btn-generate" class="btn btn-default btn-sm" style="width:120px;">Generate Data</button>
+                    <button id="btn-show" class="btn btn-success btn btn-sm" style="width:120px;">Show Data</button>
+                    <button id="btn-generate" class="btn btn-danger btn-sm" style="width:120px;">Generate Data</button>
                 </ul>    
             </div>            
             <div class="panel-body">

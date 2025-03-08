@@ -60,8 +60,6 @@
                                 Customer : <a href="#" id="customer_name"></a><br>
                                 Source : <span id="customer_source"></span><br>
                                 Purpose : <span id="customer_purpose"></span><br>
-                                Payment Type : <span id="payment_name"></span><br>
-                                Cashier Name : <span id="cashier_name"></span>
                             </div>
                         </div>
 

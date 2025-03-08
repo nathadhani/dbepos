@@ -22,7 +22,7 @@
                             $(".ajax-loader").height($(document).height());
                             $('.ajax-loader').css("visibility", "visible");
                         },
-                        data: {'store_id' : $('#store_id').val(), 'periode' : $('#periode').val()},
+                        data: {'store_id' : $('#store_id').val(), 'period' : $('#period').val()},
                         datatype: 'json',
                         success: function(data){
                             alertify.success('Calculate stock price average done.!');

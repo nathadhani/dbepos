@@ -27,9 +27,13 @@ class Stock_calculate extends Bks_Controller {
 
         $tahun = (int) date('Y');
         $bulan = (int) date('m');
-        if(isset($postData['periode'])){
-            $tahun = (int) SUBSTR($postData['periode'],3,4);
-            $bulan = (int) SUBSTR($postData['periode'],0,2);
+        if(isset($postData['period'])){
+            $tahun = (int) SUBSTR($postData['period'],3,4);
+            $bulan = (int) SUBSTR($postData['period'],0,2);
+        }
+        if(isset($postData['tr_date'])){
+            $tahun = (int) SUBSTR(revDate($postData['tr_date']),0,4);
+            $bulan = (int) SUBSTR(revDate($postData['tr_date']),5,2);
         }
         $tahun2 = $tahun;
         $bulan2 = $bulan + 1;
@@ -94,9 +98,13 @@ class Stock_calculate extends Bks_Controller {
 
         $tahun = (int) date('Y');
         $bulan = (int) date('m');
-        if(isset($postData['periode'])){
-            $tahun = (int) SUBSTR($postData['periode'],3,4);
-            $bulan = (int) SUBSTR($postData['periode'],0,2);
+        if(isset($postData['period'])){
+            $tahun = (int) SUBSTR($postData['period'],3,4);
+            $bulan = (int) SUBSTR($postData['period'],0,2);
+        }
+        if(isset($postData['tr_date'])){
+            $tahun = (int) SUBSTR(revDate($postData['tr_date']),0,4);
+            $bulan = (int) SUBSTR(revDate($postData['tr_date']),5,2);
         }
         $tgl1 = $tahun.'-'.sprintf("%02d", $bulan).'-01';
         

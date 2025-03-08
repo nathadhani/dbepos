@@ -70,13 +70,11 @@
                                 $("#cancel_by").html('Canceled by : '+d.updatedby_name +' - '+d.updated);
                             }                            
 
-                            $("#customer_name").html(d.customer_name);
+                            $("#customer_name").html(d.customer_name.trim() + ' ( ' + d.customer_address + ' )');
 
                             $("#store_address").html(d.store_address);   
                             
                             $("#description_header").html(d.description);
-                            $("#payment_name").html(d.payment_type_name);
-                            $("#cashier_name").html(d.cashier_name);                            
                         } else{                        
                             var url = "transaction/customer/index/";
                             window.open(url,'_self');    

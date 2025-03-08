@@ -21,36 +21,16 @@ class Transaction_buysell extends Bks_Controller {
 
     function cekclosingtrx(){
         checkIfNotAjax();
-        // $this->libauth->check(__METHOD__);        
+        $this->libauth->check(__METHOD__);
         $postData = $this->input->post();        
         $cekclosing = $this->Bksmdl->cekclosingdate($this->store_id);
-        if($cekclosing[0]->tr_date !== null && $cekclosing[0]->tr_date < Date('Y-m-d') ){      
+        $tanggal_kemarin = date('Y-m-d', strtotime('-1 day', strtotime(date('Y-m-d'))));
+        if($cekclosing[0]->tr_date !== null && $cekclosing[0]->tr_date < $tanggal_kemarin ){      
             $json['msg'] = '1';
             $json['tr_date'] = $cekclosing[0]->tr_date;
             echo json_encode($json);
         }        
-    }
-    
-    function generate_code_temp($store_id, $tr_id, $tr_date){
-        $Number = 1;
-        $thn = SUBSTR($tr_date,0,4);
-        $bln = SUBSTR($tr_date,5,2);        
-        $storecode  =sprintf("%02d", $store_id);
-        $trcode = sprintf("%02d", $tr_id);
-        $sql = $this->db->query("SELECT max(right(tr_number_temp,4)) as id 
-                                 FROM tr_header
-                                 WHERE store_id = $store_id 
-                                 AND tr_id = $tr_id
-                                 AND YEAR(tr_date) = $thn 
-                                 AND MONTH(tr_date) = $bln 
-                                 ")->result();
-        if (count($sql) > 0) {
-            foreach ($sql as $data) {
-                $Number = intval($data->id) + 1;
-            }
-        }        
-        return SUBSTR($thn,2,2) . $bln . $storecode . $trcode . sprintf("%04d", $Number);
-    }    
+    }  
     
     function generate_code_confirm($store_id, $tr_id, $tr_date) {
         $Number = 1;
@@ -91,8 +71,7 @@ class Transaction_buysell extends Bks_Controller {
         } else {
             $postData['tr_date'] = Date('Y-m-d');
         }
-
-        $postData['tr_number_temp'] = $this->generate_code_temp($postData['store_id'], $tr_id, $postData['tr_date']);
+                
         $postData['customer_source'] = ucwords(strtolower(trim($postData['customer_source'])));
         $postData['customer_purpose'] = ucwords(strtolower(trim($postData['customer_purpose'])));
         $postData['status'] = '1';

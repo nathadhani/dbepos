@@ -312,7 +312,7 @@ body.page-container-boxed .page-container {
   color: #455a64;
   text-align: center;
   width: 10px;
-  font-size: 13px;
+  font-size: 12px;
   margin-right: 10px;
   vertical-align: baseline;
   -webkit-transition: color 200ms ease;
@@ -345,7 +345,7 @@ body.page-container-boxed .page-container {
   overflow: hidden;
 }
 .x-navigation li > ul li > a {
-  font-size: 13px;
+  font-size: 14px;
   line-height: 19px;
   font-weight: 400;
   padding: 12px 10px;

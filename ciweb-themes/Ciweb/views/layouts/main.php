@@ -78,7 +78,7 @@
 
         <li class="xn-icon-button pull-right">
             <a href="auth/logout" title='Sign Out'><span class="fa fa-sign-out" style="font-size:20px;font-weight;bold;"></span></a>
-        </li>
+        </li>        
     </ul>
     <!-- END X-NAVIGATION VERTICAL -->                      
 

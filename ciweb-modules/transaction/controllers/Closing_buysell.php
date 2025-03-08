@@ -1,12 +1,12 @@
 <?php
 
-class Closing_buysell extends Bks_Controller {    
+class Closing_buysell extends Bks_Controller {
 
-    function __construct() 
+    function __construct()
     {
         $config = array('modules' => 'transaction', 'jsfiles' => array('closing_buysell'));
-        parent::__construct($config);        
-        $this->auth = $this->session->userdata( 'auth' );        
+        parent::__construct($config);
+        $this->auth = $this->session->userdata( 'auth' );
         $this->userId = $this->auth['id'];
     }
     
@@ -22,14 +22,14 @@ class Closing_buysell extends Bks_Controller {
 
     function closing_trxdate(){
         checkIfNotAjax();
-        $this->libauth->check(__METHOD__);                
+        $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
         $store_id = $postData['store_id'];
-        if(isset($postData['tanggal'])){
-            $tr_date = revDate($postData['tanggal']);
-        } else {
-            $tr_date = Date('Y-m-d');
-        }        
+        if(isset($postData['tr_date'])){
+            $tr_date = revDate($postData['tr_date']);
+        } else {                        
+            $tr_date = date('Y-m-d', strtotime('-1 day', strtotime(date('Y-m-d'))));
+        }
         $this->db->trans_begin();
         if ($this->db->trans_status() === FALSE) {
             $this->db->trans_rollback();

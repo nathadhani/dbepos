@@ -62,11 +62,13 @@
                                     <th style="vertical-align:middle;text-align:center;">Customer Name</th>
                                     <th style="vertical-align:middle;text-align:center;">Created by</th>
                                     <th style="vertical-align:middle;text-align:center;">Status</th>
+                                    <th style="vertical-align:middle;text-align:center;">Action</th>
                                 </tr>
                             </thead>
                             <thead id="searchid">
                                 <tr>
                                     <td><button class="clrs btn btn-info btn-sm btn-line">Clear</button></td>
+                                    <td></td>
                                     <td></td>
                                     <td></td>
                                     <td></td>

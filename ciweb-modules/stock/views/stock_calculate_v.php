@@ -35,7 +35,7 @@
                         <div class="form-group">
                             <div class="col-lg-12">
                                 <label for="periode" style="display:block">Period</label>
-                                <input style="width:100px;" type="text" data-inputmask="'mask': '[99-9999]'" class="form-control dpM" placeholder="Periode" name="periode" id="periode" value="<?=date('m-Y')?>">
+                                <input style="width:100px;" type="text" data-inputmask="'mask': '[99-9999]'" class="form-control dpM" placeholder="Periode" name="period" id="period" value="<?=date('m-Y')?>">
                             </div>                            
                         </div>                            
                     </div>

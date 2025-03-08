@@ -11,7 +11,7 @@
                     $(".ajax-loader").height($(document).height());
                     $('.ajax-loader').css("visibility", "visible");
                 },
-                data: {'store_id' : $('#store_id').val(), 'periode' : $('#periode').val()},
+                data: {'store_id' : $('#store_id').val(), 'tr_date' : $('#tr_date').val()},
                 datatype: 'json',
                 success: function(data){
                     alertify.success('Calculate stock done.!');
@@ -22,7 +22,7 @@
                             $(".ajax-loader").height($(document).height());
                             $('.ajax-loader').css("visibility", "visible");
                         },
-                        data: {'store_id' : $('#store_id').val(), 'periode' : $('#periode').val()},
+                        data: {'store_id' : $('#store_id').val(), 'tr_date' : $('#tr_date').val()},
                         datatype: 'json',
                         success: function(data){
                             alertify.success('Calculate stock price average done.!');
@@ -33,7 +33,7 @@
                                     $(".ajax-loader").height($(document).height());
                                     $('.ajax-loader').css("visibility", "visible");
                                 },
-                                data: {'store_id' : $('#store_id').val(), 'tanggal' : $('#tanggal').val()},
+                                data: {'store_id' : $('#store_id').val(), 'tr_date' : $('#tr_date').val()},
                                 datatype: 'json',
                                 success: function(data){
                                     alertify.success('Closing transaction buy / sell done.!');

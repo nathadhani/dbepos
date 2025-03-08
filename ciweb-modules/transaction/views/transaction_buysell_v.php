@@ -28,15 +28,7 @@
                 </div>                  
                 <div class="panel-body">                                       
                     <form id="form_header" class="form-horizontal" autocomplete="off">
-                        <div class="row" style="margin-left:-5px;">                                  
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    <div class="col-lg-12">
-                                        <label for=tr_number style="display:block">Number</label>
-                                        <input type="text" id="tr_number" class="form-control">
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="row" style="margin-left:-5px;">                            
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <div class="col-lg-12">
@@ -45,20 +37,38 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-8">
                                 <div class="form-group">                                
                                     <div class="col-lg-12">
-                                        <label for="customer_name" style="display:block">Customer</label>
+                                        <label for="customer_name" style="display:block">Customer ( Name / Address )</label>
                                         <a href="#" id="customer_name"></a>                                        
                                     </div>
                                 </div>
                             </div>                            
                         </div>
-                        <div class="row" style="margin-left:-5px;margin-top:15px;">                                                                                          
-                            <div class="col-md-6">
+                        <div class="row" style="margin-left:-5px;margin-top:15px;">
+                            <div class="col-md-3">
                                 <div class="form-group">                                
                                     <div class="col-lg-12">
-                                        <label for="store_id" style="display:block">Source</label>
+                                        <label for="customer_act_on_id" style="display:block">Customer ( Act On )</label>
+                                        <select name="customer_act_on_id"
+                                                data-ajax="true" 
+                                                data-placeholder="-- Pilih --"
+                                                data-url="master_data/m_customer_act_on/getacton/" 
+                                                data-value="" 
+                                                data-limit="100"                                                
+                                                id="customer_act_on_id" placeholder="Bertindak atas"
+                                                class='form-control select2'
+                                                width="100%"
+                                                >
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">                                
+                                    <div class="col-lg-12">
+                                        <label for="store_id" style="display:block">Customer ( Source )</label>
                                         <input type="text" autofocuse="" id="customer_source" name="customer_source" class="form-control" placeholder="Sumber Dana...">
                                     </div>
                                 </div>
@@ -66,7 +76,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">                                
                                     <div class="col-lg-8">
-                                        <label for="store_id" style="display:block">Purpose</label>
+                                        <label for="store_id" style="display:block">Customer ( Purpose )</label>
                                         <input type="text" autofocuse="" id="customer_purpose" name="customer_purpose" class="form-control" placeholder="Tujuan Transaksi...">
                                     </div>
                                     <div class="col-lg-4">                                        
