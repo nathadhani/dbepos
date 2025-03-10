@@ -58,6 +58,7 @@
                             </div>    
                             <div class="col-md-6">                                
                                 Customer : <a href="#" id="customer_name"></a><br>
+                                Act on : <span id="customer_act_on"></span><br>
                                 Source : <span id="customer_source"></span><br>
                                 Purpose : <span id="customer_purpose"></span><br>
                             </div>

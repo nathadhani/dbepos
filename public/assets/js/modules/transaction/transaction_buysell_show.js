@@ -23,10 +23,10 @@
                             var d = JSON.parse(data)[0];
                             $("body").data("id", d.id);
                             $("#tr_number").html(': '+d.tr_number);
-                            $("#tr_date").html(': '+bksfn.revDate(d.tr_date));
-                            
+                            $("#tr_date").html(': '+bksfn.revDate(d.tr_date));                            
                             $("#ftitle").html(d.status == 2 ? '<span style="color:red;font-weight:bolder;">'+d.status_name+'</span>' : d.status_name);
-                            
+                            $("#description_header").html(d.description);
+
                             if(Number(d.createdby) === Number(userId)){
                                 switch(Number(d.status)) {
                                     case 1:                
@@ -71,10 +71,9 @@
                             }                            
 
                             $("#customer_name").html(d.customer_name.trim() + ' ( ' + d.customer_address + ' )');
-
-                            $("#store_address").html(d.store_address);   
-                            
-                            $("#description_header").html(d.description);
+                            $("#customer_act_on").html(d.customer_act_on);
+                            $("#customer_source").html(d.customer_source);
+                            $("#customer_purpose").html(d.customer_purpose);
                         } else{                        
                             var url = "transaction/customer/index/";
                             window.open(url,'_self');    

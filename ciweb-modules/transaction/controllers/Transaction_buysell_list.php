@@ -31,6 +31,12 @@ class Transaction_buysell_list extends Bks_Controller {
         $where[0]['field'] = 'store_id';
         $where[0]['data']  = $store_id;
         $where[0]['sql']   = 'where';
+
+        if( $this->auth['store_id_multiple'] !== null && strlen($this->auth['store_id_multiple']) > 0){
+            $where[1]['field'] = 'tr_id';
+            $where[1]['data']  = explode(',',implode(',', $this->auth['store_id_multiple']));
+            $where[1]['sql']   = 'where_in';
+        }
         
         $where2 = "tr_date >= '". $tanggal1 ."' AND tr_date <= '". $tanggal2 ."'";
 
@@ -41,8 +47,9 @@ class Transaction_buysell_list extends Bks_Controller {
     function excel(){
         $this->libauth->check(__METHOD__);
         $store_id = $this->uri->segment(4);
+        $store_id_multiple = explode(',',implode(',', $this->auth['store_id_multiple']));
         $tanggal1 = revDate($this->uri->segment(5));
-        $tanggal2 = revDate($this->uri->segment(6));
+        $tanggal2 = revDate($this->uri->segment(6));        
         
         $query = $this->db->query("SELECT
                                     (
@@ -69,6 +76,7 @@ class Transaction_buysell_list extends Bks_Controller {
                                     m_customer.customer_phone,
                                     m_store.store_name,
                                     m_store.store_address,
+                                    tr_header.description,
                                     tr_detail.created AS created,
                                     tr_detail.updated AS updated,
                                     usr1.fullname AS createdby_name,
@@ -79,12 +87,23 @@ class Transaction_buysell_list extends Bks_Controller {
                                 JOIN m_customer ON m_customer.id = tr_header.customer_id
                                 JOIN m_store ON m_store.id = tr_header.store_id
                                 JOIN auth_users usr1 ON usr1.id = tr_header.createdby
-                                LEFT JOIN auth_users usr2 ON usr2.id = tr_header.updatedby            
-                                WHERE tr_header.store_id = $store_id
-                                AND tr_header.tr_date >= '$tanggal1'
-                                AND tr_header.tr_date <= '$tanggal2'
-                                AND tr_detail.status IN(2,3,4)
-                                ORDER BY tr_header.tr_date ASC, tr_header.tr_id ASC, tr_header.tr_number ASC, tr_detail.currency_id ASC, tr_detail.nominal ASC, tr_detail.sheet ASC"); 
+                                LEFT JOIN auth_users usr2 ON usr2.id = tr_header.updatedby"); 
+
+        if( $this->auth['store_id_multiple'] !== null && strlen($this->auth['store_id_multiple']) > 0){
+            $query .= " WHERE tr_header.store_id = $store_id
+                    AND tr_detail.tr_id IN ($store_id_multiple)
+                    AND tr_header.tr_date >= '$tanggal1'
+                    AND tr_header.tr_date <= '$tanggal2'
+                    AND tr_detail.status IN (2,3,4)                    
+                    ORDER BY tr_header.tr_date ASC, tr_header.tr_id ASC, tr_header.tr_number ASC, tr_detail.currency_id ASC, tr_detail.nominal ASC, tr_detail.sheet ASC";
+        } else {
+            $query .= " WHERE tr_header.store_id = $store_id
+                    AND tr_header.tr_date >= '$tanggal1'
+                    AND tr_header.tr_date <= '$tanggal2'
+                    AND tr_detail.status IN (2,3,4)
+                    ORDER BY tr_header.tr_date ASC, tr_header.tr_id ASC, tr_header.tr_number ASC, tr_detail.currency_id ASC, tr_detail.nominal ASC, tr_detail.sheet ASC";
+        }    
+
 
         if (!$query)
         return false;
@@ -131,6 +150,7 @@ class Transaction_buysell_list extends Bks_Controller {
                         'Customer Phone',
                         'Store Name',
                         'Store Address',
+                        'Description',
                         'Created',
                         'Updated',
                         'Created by Name',
@@ -163,7 +183,7 @@ class Transaction_buysell_list extends Bks_Controller {
             $row++;
         }        
 
-        foreach (range('A', 'T') as $columnID) {
+        foreach (range('A', 'U') as $columnID) {
             $this->excel->getActiveSheet()->getColumnDimension($columnID)->setAutoSize(true);
         }
         $this->excel->setActiveSheetIndex(0);        

@@ -6,6 +6,7 @@ back_to_page_ini();
 
 function reset_form_header(){    
     $("#customer_name").html('');
+    $("#customer_act_on_id").html('').sel2dma();
     $("#customer_soure").html('');
     $("#customer_purpose").html('');
 }
@@ -73,7 +74,13 @@ function show_header(){
 
                         $("#tr_date").val(bksfn.revDate(d.tr_date));
                         $('#tr_date').prop('disabled', true);
+
                         $("#customer_name").html(d.customer_name + ' ( ' + d.customer_address + ' )');
+                        if (d.customer_act_on_id != null) {
+                            $("#customer_act_on_id").html('<option value="' + d.customer_act_on_id + '">' + d.customer_act_on + '</option>').sel2dma();
+                        } else {
+                            $("#customer_act_on_id").html('').sel2dma();
+                        }                
                         $("#customer_source").val(d.customer_source);
                         $("#customer_purpose").val(d.customer_purpose);
 

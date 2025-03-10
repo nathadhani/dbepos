@@ -32,7 +32,7 @@
                             INDOCEV<small style="color:#000;">Application</small>
                         </h2> 
                         <p style="color: #33414e; font-size: 14px; font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;margin-top: -15px;">
-                            PT. Indonesia Centra Valutamas <br>
+                            PT. Indonesia Central Valutamas <br>
                         </p>                        
                     </div>
                     <form class="form-horizontal" id="frmLogin" autocomplete="off">
