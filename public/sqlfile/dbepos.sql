@@ -11,7 +11,7 @@
  Target Server Version : 80030
  File Encoding         : 65001
 
- Date: 11/03/2025 06:28:29
+ Date: 12/03/2025 05:38:43
 */
 
 SET NAMES utf8mb4;
@@ -775,8 +775,8 @@ CREATE TABLE `auth_users`  (
 -- ----------------------------
 INSERT INTO `auth_users` VALUES (1, '8989', 'f794bdbef7990b5112e526b5cd4ea67f4a35af21', NULL, 1, 1, 0, NULL, '', NULL, NULL, NULL, NULL, 1, '2025-02-23 13:58:46', NULL, NULL, NULL);
 INSERT INTO `auth_users` VALUES (2, 'konsolidasi', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 2, 1, 0, '1,2,3,4', 'Konsolidasi', '', '', NULL, NULL, 1, '2025-02-23 13:58:46', NULL, '2025-03-07 12:10:06', 1);
-INSERT INTO `auth_users` VALUES (3, 'admin', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 3, 1, 1, NULL, 'Admin', '', '', '2025-03-10 21:15:47', NULL, 1, '2025-02-23 13:58:46', NULL, '2025-03-07 12:10:19', 1);
-INSERT INTO `auth_users` VALUES (4, 'konter', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 4, 2, 1, NULL, 'Counter', '', '', '2025-03-11 06:25:43', NULL, 1, '2025-02-23 13:58:46', NULL, '2025-03-07 12:10:34', 1);
+INSERT INTO `auth_users` VALUES (3, 'admin', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 3, 1, 1, NULL, 'Admin', '', '', '2025-03-12 05:25:36', NULL, 1, '2025-02-23 13:58:46', NULL, '2025-03-07 12:10:19', 1);
+INSERT INTO `auth_users` VALUES (4, 'konter', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 4, 2, 1, NULL, 'Counter', '', '', '2025-03-12 05:21:52', NULL, 1, '2025-02-23 13:58:46', NULL, '2025-03-07 12:10:34', 1);
 INSERT INTO `auth_users` VALUES (5, 'kasir', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 5, 1, 1, NULL, 'Cashier', '', '', '2025-03-10 21:17:34', NULL, 1, '2025-03-06 13:05:41', 1, '2025-03-07 12:10:24', 1);
 INSERT INTO `auth_users` VALUES (6, 'ap1', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 6, 1, 0, '3,4', 'Angkasa Pura 1', '', '', '2025-03-07 04:23:59', NULL, 1, '2025-03-06 13:06:45', 1, '2025-03-07 12:10:12', 1);
 
@@ -794,6 +794,9 @@ CREATE TABLE `log_auth`  (
 -- ----------------------------
 -- Records of log_auth
 -- ----------------------------
+INSERT INTO `log_auth` VALUES (3, 'login', '2025-03-11 19:35:09', '::1');
+INSERT INTO `log_auth` VALUES (4, 'login', '2025-03-12 05:21:52', '::1');
+INSERT INTO `log_auth` VALUES (3, 'login', '2025-03-12 05:25:36', '::1');
 
 -- ----------------------------
 -- Table structure for log_auth_sessions
@@ -809,6 +812,7 @@ CREATE TABLE `log_auth_sessions`  (
 -- ----------------------------
 -- Records of log_auth_sessions
 -- ----------------------------
+INSERT INTO `log_auth_sessions` VALUES ('37hi0ejmq5u28rlkuhiggnark7do07lh', '::1', 1741732704, '');
 
 -- ----------------------------
 -- Table structure for m_currency
@@ -2008,11 +2012,17 @@ CREATE TABLE `stock`  (
   `updated` datetime NULL DEFAULT NULL,
   `updatedby` bigint NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of stock
 -- ----------------------------
+INSERT INTO `stock` VALUES (1, 1, 1, 2025, 3, 100, 0, 1, '2025-03-11 19:37:30', 3, NULL, NULL);
+INSERT INTO `stock` VALUES (2, 1, 1, 2025, 4, 100, 10, 1, '2025-03-11 19:37:30', 3, '2025-03-11 19:37:30', 3);
+INSERT INTO `stock` VALUES (3, 7, 1, 2025, 3, 500, 0, 1, '2025-03-11 19:37:30', 3, NULL, NULL);
+INSERT INTO `stock` VALUES (4, 7, 1, 2025, 4, 500, 5, 1, '2025-03-11 19:37:30', 3, '2025-03-11 19:37:30', 3);
+INSERT INTO `stock` VALUES (5, 21, 1, 2025, 3, 500, 0, 1, '2025-03-11 19:37:30', 3, NULL, NULL);
+INSERT INTO `stock` VALUES (6, 21, 1, 2025, 4, 500, 6, 1, '2025-03-11 19:37:30', 3, '2025-03-11 19:37:30', 3);
 
 -- ----------------------------
 -- Table structure for stock_price
@@ -2146,11 +2156,14 @@ CREATE TABLE `tr_detail`  (
   `createdby` bigint NULL DEFAULT NULL,
   `updatedby` bigint NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of tr_detail
 -- ----------------------------
+INSERT INTO `tr_detail` VALUES (1, 1, 1, 100, 10, 16000.00, 16000000.00, 3, '2025-03-11 19:36:28', '2025-03-11 19:37:30', 3, 3);
+INSERT INTO `tr_detail` VALUES (2, 1, 7, 500, 5, 13000.00, 32500000.00, 3, '2025-03-11 19:36:43', '2025-03-11 19:37:30', 3, 3);
+INSERT INTO `tr_detail` VALUES (4, 1, 21, 500, 6, 0.50, 1500.00, 3, '2025-03-11 19:37:13', '2025-03-11 19:37:30', 3, 3);
 
 -- ----------------------------
 -- Table structure for tr_header
@@ -2173,11 +2186,12 @@ CREATE TABLE `tr_header`  (
   `createdby` bigint NULL DEFAULT NULL,
   `updatedby` bigint NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of tr_header
 -- ----------------------------
+INSERT INTO `tr_header` VALUES (1, 1, 1, '2025-03-11', '250301010001', 1, 1, 'Tabungan', 'Investasi', NULL, 3, '2025-03-11 19:36:18', '2025-03-11 19:37:30', 3, 3);
 
 -- ----------------------------
 -- View structure for v_auth_group_role
@@ -2321,6 +2335,6 @@ CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_tr_detail` AS select `
 -- View structure for v_tr_header
 -- ----------------------------
 DROP VIEW IF EXISTS `v_tr_header`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_tr_header` AS select `tr_header`.`id` AS `id`,`tr_header`.`tr_id` AS `tr_id`,`m_transaction`.`transaction_name` AS `tr_name`,`tr_header`.`tr_date` AS `tr_date`,`tr_header`.`tr_number` AS `tr_number`,(select sum(((`tr_detail`.`nominal` * `tr_detail`.`sheet`) * `tr_detail`.`price`)) from `tr_detail` where (`tr_detail`.`header_id` = `tr_header`.`id`)) AS `total`,`tr_header`.`customer_id` AS `customer_id`,`m_customer`.`customer_code` AS `customer_code`,`m_customer`.`customer_name` AS `customer_name`,`m_customer`.`customer_address` AS `customer_address`,`m_nationality`.`nationality_code` AS `nationality_code`,`m_nationality`.`nationality_desc` AS `nationality_desc`,`tr_header`.`customer_act_on_id` AS `customer_act_on_id`,`m_customer_act_on`.`customer_act_on` AS `customer_act_on`,`tr_header`.`customer_source` AS `customer_source`,`tr_header`.`customer_purpose` AS `customer_purpose`,`tr_header`.`description` AS `description`,`tr_header`.`store_id` AS `store_id`,`m_store`.`store_name` AS `store_name`,`m_store`.`store_address` AS `store_address`,`m_store`.`api_method` AS `api_method`,`m_store`.`api_store_id` AS `api_store_id`,`tr_header`.`status` AS `status`,(select (case when (`tr_header`.`status` = 2) then 'Canceled' when (`tr_header`.`status` = 3) then 'Confirm' when (`tr_header`.`status` = 4) then 'Integrasi System ECSys (API)' else 'Task' end)) AS `status_name`,`tr_header`.`created` AS `created`,`tr_header`.`updated` AS `updated`,`tr_header`.`createdby` AS `createdby`,`tr_header`.`updatedby` AS `updatedby`,`usr1`.`fullname` AS `createdby_name`,`usr2`.`fullname` AS `updatedby_name` from (((((((`tr_header` left join `m_transaction` on((`tr_header`.`tr_id` = `m_transaction`.`id`))) left join `auth_users` `usr1` on((`tr_header`.`createdby` = `usr1`.`id`))) left join `auth_users` `usr2` on((`tr_header`.`updatedby` = `usr2`.`id`))) left join `m_customer` on((`tr_header`.`customer_id` = `m_customer`.`id`))) left join `m_customer_act_on` on((`tr_header`.`customer_act_on_id` = `m_customer_act_on`.`id`))) left join `m_nationality` on((`m_customer`.`nationality_id` = `m_nationality`.`id`))) left join `m_store` on((`m_store`.`id` = `tr_header`.`store_id`)));
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_tr_header` AS select `tr_header`.`id` AS `id`,`tr_header`.`tr_id` AS `tr_id`,`m_transaction`.`transaction_name` AS `tr_name`,`tr_header`.`tr_date` AS `tr_date`,`tr_header`.`tr_number` AS `tr_number`,(select sum(((`tr_detail`.`nominal` * `tr_detail`.`sheet`) * `tr_detail`.`price`)) from `tr_detail` where (`tr_detail`.`header_id` = `tr_header`.`id`)) AS `total`,`tr_header`.`customer_id` AS `customer_id`,`m_customer`.`customer_code` AS `customer_code`,`m_customer`.`customer_name` AS `customer_name`,`m_customer`.`customer_address` AS `customer_address`,`m_customer`.`job_id` AS `customer_job_id`,`m_customer_job`.`customer_job_name` AS `customer_job_name`,`m_nationality`.`nationality_code` AS `nationality_code`,`m_nationality`.`nationality_desc` AS `nationality_desc`,`tr_header`.`customer_act_on_id` AS `customer_act_on_id`,`m_customer_act_on`.`customer_act_on` AS `customer_act_on`,`tr_header`.`customer_source` AS `customer_source`,`tr_header`.`customer_purpose` AS `customer_purpose`,`tr_header`.`description` AS `description`,`tr_header`.`store_id` AS `store_id`,`m_store`.`store_name` AS `store_name`,`m_store`.`store_address` AS `store_address`,`m_store`.`api_method` AS `api_method`,`m_store`.`api_store_id` AS `api_store_id`,`tr_header`.`status` AS `status`,(select (case when (`tr_header`.`status` = 2) then 'Canceled' when (`tr_header`.`status` = 3) then 'Confirm' when (`tr_header`.`status` = 4) then 'Integrasi System ECSys (API)' else 'Task' end)) AS `status_name`,`tr_header`.`created` AS `created`,`tr_header`.`updated` AS `updated`,`tr_header`.`createdby` AS `createdby`,`tr_header`.`updatedby` AS `updatedby`,`usr1`.`fullname` AS `createdby_name`,`usr2`.`fullname` AS `updatedby_name` from ((((((((`tr_header` left join `m_transaction` on((`tr_header`.`tr_id` = `m_transaction`.`id`))) left join `auth_users` `usr1` on((`tr_header`.`createdby` = `usr1`.`id`))) left join `auth_users` `usr2` on((`tr_header`.`updatedby` = `usr2`.`id`))) left join `m_customer` on((`tr_header`.`customer_id` = `m_customer`.`id`))) left join `m_customer_act_on` on((`tr_header`.`customer_act_on_id` = `m_customer_act_on`.`id`))) left join `m_nationality` on((`m_customer`.`nationality_id` = `m_nationality`.`id`))) left join `m_customer_job` on((`m_customer`.`job_id` = `m_customer_job`.`id`))) left join `m_store` on((`m_store`.`id` = `tr_header`.`store_id`)));
 
 SET FOREIGN_KEY_CHECKS = 1;

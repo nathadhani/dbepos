@@ -22,6 +22,7 @@
                         if (data !== '[]'){
                             var d = JSON.parse(data)[0];
                             $("body").data("id", d.id);
+                            $("#store_address").html(': '+d.store_address);
                             $("#tr_number").html(': '+d.tr_number);
                             $("#tr_date").html(': '+bksfn.revDate(d.tr_date));                            
                             $("#ftitle").html(d.status == 2 ? '<span style="color:red;font-weight:bolder;">'+d.status_name+'</span>' : d.status_name);
