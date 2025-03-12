@@ -25,12 +25,12 @@ class Mypdf extends TCPDF
 
         // Title
         // $Bksmdl = new Bksmdl;
-        // $data['profilusaha'] = $this->Bksmdl->getprofileusaha(2, null);
+        // $data['profil_usaha'] = $this->Bksmdl->getprofilusaha(2);
         // $this->SetFont('helvetica', 'B', 14);
-        // $this->writeHTML('<h4>' . $profilusaha[0]->company_name . '</h4>');
+        // $this->writeHTML('<h4>' . $profil_usaha[0]->store_name . '</h4>');
         // $this->SetFont('helvetica', 'B', 12);
-        // $this->writeHTML('<small>' . $profilusaha[0]->company_address . '</small>');
-        // $this->writeHTML('<small>' . $profilusaha[0]->company_phone . '</small>');
+        // $this->writeHTML('<small>' . $profil_usaha[0]->store_address . '</small>');
+        // $this->writeHTML('<small>' . $profil_usaha[0]->store_phone . '</small>');
         // $this->writeHTML('<hr>');
     }
 

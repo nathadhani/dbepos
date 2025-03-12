@@ -54,11 +54,10 @@ class Transaction_buysell_show extends Bks_Controller {
         $id = $this->uri->segment(4);
         $data_header = $this->db->select('*')->from('v_tr_header')->where('id', $id)->get()->result();
         $customer_id = $data_header[0]->customer_id;
-        $profilusaha = $this->Bksmdl->getprofileusaha($id, null);
+        $profil_usaha = $this->Bksmdl->getprofilusaha($data_header[0]->store_id);
+        $profil_customer = $this->Bksmdl->getprofilcustomer($data_header[0]->customer_id);
         $tr_number = $data_header[0]->tr_number;
         $tr_date = revDate($data_header[0]->tr_date);
-        $customer_code = $data_header[0]->customer_code . ' - ' . $data_header[0]->customer_name;
-        $customer_job = $data_header[0]->customer_job_name;
         $customer_source = $data_header[0]->customer_source;
         $customer_puprpose = $data_header[0]->customer_purpose;
         $tr_time =  date('H:i:s',strtotime($data_header[0]->created));
@@ -87,22 +86,25 @@ class Transaction_buysell_show extends Bks_Controller {
         // Add Title
         $pdf->Ln(1);
         $pdf->SetFont('', 'B', 9);
-        $pdf->Cell(01, 01, strtoupper($profilusaha[0]->store_name), 0, 1, 'L');
+        $pdf->Cell(01, 01, strtoupper($profil_usaha[0]->store_name), 0, 1, 'L');
         $pdf->SetFont('', '', 9);
-        if(strlen($profilusaha[0]->store_address) > 50){
-            $pdf->Cell(01, 01, SUBSTR($profilusaha[0]->store_address,0,50), 0, 1, 'L');
-            $pdf->Cell(01, 01, SUBSTR($profilusaha[0]->store_address,51,100), 0, 1, 'L');
+        if(strlen($profil_usaha[0]->store_address) > 50){
+            $pdf->Cell(01, 01, SUBSTR($profil_usaha[0]->store_address,0,50), 0, 1, 'L');
+            $pdf->Cell(01, 01, SUBSTR($profil_usaha[0]->store_address,51,100), 0, 1, 'L');
         } else {
-            $pdf->Cell(01, 01, $profilusaha[0]->store_address, 0, 1, 'L');
+            $pdf->Cell(01, 01, $profil_usaha[0]->store_address, 0, 1, 'L');
         }      
 
         $pdf->Ln(1);
         $pdf->SetFont('', '', 9);
         $pdf->Cell(01, 01, 'Number : ' . $tr_number . '     Date : ' . $tr_date, 0, 1, 'L');
-        $pdf->Cell(01, 01, 'CIF : ' . $customer_code, 0, 1, 'L');
-        $pdf->Cell(01, 01, 'Job : ' . $customer_job, 0, 1, 'L');
-        $pdf->Cell(01, 01, 'Source : ' . $customer_source, 0, 1, 'L');
-        $pdf->Cell(01, 01, 'Purpose : ' . $customer_puprpose, 0, 1, 'L');        
+        $pdf->Cell(01, 01, "------------------------------------------------------------------------------------", 0, 1, 'L');
+        $pdf->Cell(01, 01, 'CIF : ' . $profil_customer[0]->customer_code . '     ID No. : ' . $profil_usaha[0]->customer_data_number, 0, 1, 'L');
+        $pdf->Cell(01, 01, 'Name : ' . SUBSTR($profil_usaha[0]->customer_name,0,45), 0, 1, 'L');
+        $pdf->Cell(01, 01, 'Address : ' . SUBSTR($profil_usaha[0]->customer_address,0,45), 0, 1, 'L');
+        $pdf->Cell(01, 01, 'Phone : ' . $profil_usaha[0]->customer_handphone . '     Job : ' . $profil_usaha[0]->customer_job_name, 0, 1, 'L');
+        $pdf->Cell(01, 01, 'Source : ' . SUBSTR($customer_source,0,50), 0, 1, 'L');
+        $pdf->Cell(01, 01, 'Purpose : ' . SUBSTR($customer_puprpose,0,50), 0, 1, 'L');        
         $pdf->SetAutoPageBreak(true, 0);
  
         // Add Header Column

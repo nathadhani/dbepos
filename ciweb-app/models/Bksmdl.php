@@ -21,12 +21,46 @@ class Bksmdl extends Bks_Model {
         }
     }
 
-    public function getprofileusaha($id, $user_id){
+    public function get_user_information($id)
+    {
         if($id !== null && $id !== ''){
-            $getId = $this->db->query("SELECT store_id FROM tr_header WHERE id = $id LIMIT 1")->result();
-            $store_id = $getId[0]->store_id;
-            $hasil = $this->db->query("SELECT * FROM m_store WHERE id = $store_id")->result();
-            return $hasil;
+            $result = $this->db->get_where('v_auth_users', array('id' => $id));
+            if($result->num_rows() > 0){
+                return $result->result();
+            }
+            else{
+                exit("User not found");
+            }
+        } else {
+            exit("User not found");
+        }
+    }
+
+    public function getprofilusaha($id){
+        if($id !== null && $id !== ''){
+            $result = $this->db->get_where('v_m_store', array('id' => $id));
+            if($result->num_rows() > 0){
+                return $result->result();
+            }
+            else{
+                exit("store not found");
+            }
+        } else {
+            exit("store not found");
+        }
+    }
+
+    public function getprofilcustomer($id){
+        if($id !== null && $id !== ''){
+            $result = $this->db->get_where('v_m_customer', array('id' => $id));
+            if($result->num_rows() > 0){
+                return $result->result();
+            }
+            else{
+                exit("customer not found");
+            }
+        } else {
+            exit("customer not found");
         }
     }
 

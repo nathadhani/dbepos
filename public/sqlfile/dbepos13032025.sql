@@ -11,7 +11,7 @@
  Target Server Version : 80030
  File Encoding         : 65001
 
- Date: 12/03/2025 05:38:43
+ Date: 13/03/2025 04:45:15
 */
 
 SET NAMES utf8mb4;
@@ -794,9 +794,6 @@ CREATE TABLE `log_auth`  (
 -- ----------------------------
 -- Records of log_auth
 -- ----------------------------
-INSERT INTO `log_auth` VALUES (3, 'login', '2025-03-11 19:35:09', '::1');
-INSERT INTO `log_auth` VALUES (4, 'login', '2025-03-12 05:21:52', '::1');
-INSERT INTO `log_auth` VALUES (3, 'login', '2025-03-12 05:25:36', '::1');
 
 -- ----------------------------
 -- Table structure for log_auth_sessions
@@ -812,7 +809,6 @@ CREATE TABLE `log_auth_sessions`  (
 -- ----------------------------
 -- Records of log_auth_sessions
 -- ----------------------------
-INSERT INTO `log_auth_sessions` VALUES ('37hi0ejmq5u28rlkuhiggnark7do07lh', '::1', 1741732704, '');
 
 -- ----------------------------
 -- Table structure for m_currency
@@ -867,7 +863,7 @@ DROP TABLE IF EXISTS `m_customer`;
 CREATE TABLE `m_customer`  (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `customer_type_id` bigint NULL DEFAULT NULL,
-  `customer_code` varchar(10) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
+  `customer_code` varchar(12) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
   `customer_handphone` varchar(13) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   `customer_phone` varchar(25) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
   `customer_name` varchar(75) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
@@ -2017,12 +2013,6 @@ CREATE TABLE `stock`  (
 -- ----------------------------
 -- Records of stock
 -- ----------------------------
-INSERT INTO `stock` VALUES (1, 1, 1, 2025, 3, 100, 0, 1, '2025-03-11 19:37:30', 3, NULL, NULL);
-INSERT INTO `stock` VALUES (2, 1, 1, 2025, 4, 100, 10, 1, '2025-03-11 19:37:30', 3, '2025-03-11 19:37:30', 3);
-INSERT INTO `stock` VALUES (3, 7, 1, 2025, 3, 500, 0, 1, '2025-03-11 19:37:30', 3, NULL, NULL);
-INSERT INTO `stock` VALUES (4, 7, 1, 2025, 4, 500, 5, 1, '2025-03-11 19:37:30', 3, '2025-03-11 19:37:30', 3);
-INSERT INTO `stock` VALUES (5, 21, 1, 2025, 3, 500, 0, 1, '2025-03-11 19:37:30', 3, NULL, NULL);
-INSERT INTO `stock` VALUES (6, 21, 1, 2025, 4, 500, 6, 1, '2025-03-11 19:37:30', 3, '2025-03-11 19:37:30', 3);
 
 -- ----------------------------
 -- Table structure for stock_price
@@ -2057,88 +2047,6 @@ CREATE TABLE `stock_price`  (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for tr_api_get
--- ----------------------------
-DROP TABLE IF EXISTS `tr_api_get`;
-CREATE TABLE `tr_api_get`  (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `store_id` bigint NULL DEFAULT NULL,
-  `tr_id` bigint NULL DEFAULT NULL,
-  `invoice_number` varchar(16) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
-  `transaction_date` date NULL DEFAULT NULL,
-  `transaction_time` datetime NULL DEFAULT NULL,
-  `sequence` varchar(5) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
-  `item_code` bigint NULL DEFAULT NULL,
-  `item_name` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
-  `item_quantity` decimal(12, 2) NULL DEFAULT NULL,
-  `item_price_unit` decimal(12, 2) NULL DEFAULT NULL,
-  `item_price_amount` decimal(12, 2) NULL DEFAULT NULL,
-  `item_total_price_amount` decimal(18, 2) NULL DEFAULT NULL,
-  `item_vat` varchar(15) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
-  `transaction_amount` varchar(15) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
-  `item_barcode` varchar(15) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
-  `item_category_name` varchar(15) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
-  `item_category_code` varchar(15) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
-  `item_unit` varchar(15) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
-  `item_discount` varchar(15) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
-  `item_tax` varchar(15) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
-  `item_total_discount` varchar(15) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
-  `item_total_vat` varchar(15) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
-  `item_total_tax` varchar(15) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
-  `item_total_service_charge` varchar(15) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
-  `currency` varchar(15) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
-  `rate` varchar(15) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
-  `payment_type` varchar(25) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
-  `payment_by` varchar(150) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
-  `username` varchar(150) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
-  `buyer_barcode` varchar(25) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
-  `buyer_name` varchar(150) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
-  `buyer_flight_no` varchar(25) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
-  `buyer_destination` varchar(15) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
-  `buyer_nationality` varchar(15) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
-  `remark` varchar(15) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
-  `invoice_tax` varchar(15) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
-  `tax_id` varbinary(15) NULL DEFAULT NULL,
-  `payment_name` varchar(15) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
-  `payment_time` varchar(25) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
-  `distance` varchar(15) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
-  `journey_time` varchar(15) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
-  `status` smallint NULL DEFAULT NULL,
-  `created` datetime NULL DEFAULT NULL,
-  `updated` datetime NULL DEFAULT NULL,
-  `createdby` bigint NULL DEFAULT NULL,
-  `updatedby` bigint NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
-
--- ----------------------------
--- Records of tr_api_get
--- ----------------------------
-
--- ----------------------------
--- Table structure for tr_api_log
--- ----------------------------
-DROP TABLE IF EXISTS `tr_api_log`;
-CREATE TABLE `tr_api_log`  (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `header_id` bigint NOT NULL,
-  `api_method` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
-  `api_status` varchar(6) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
-  `api_success_insert` smallint NULL DEFAULT NULL,
-  `api_failed_insert` smallint NULL DEFAULT NULL,
-  `api_reason` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
-  `created` datetime NULL DEFAULT NULL,
-  `createdby` bigint NULL DEFAULT NULL,
-  `updated` datetime NULL DEFAULT NULL,
-  `updatedby` bigint NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
-
--- ----------------------------
--- Records of tr_api_log
--- ----------------------------
-
--- ----------------------------
 -- Table structure for tr_detail
 -- ----------------------------
 DROP TABLE IF EXISTS `tr_detail`;
@@ -2161,9 +2069,6 @@ CREATE TABLE `tr_detail`  (
 -- ----------------------------
 -- Records of tr_detail
 -- ----------------------------
-INSERT INTO `tr_detail` VALUES (1, 1, 1, 100, 10, 16000.00, 16000000.00, 3, '2025-03-11 19:36:28', '2025-03-11 19:37:30', 3, 3);
-INSERT INTO `tr_detail` VALUES (2, 1, 7, 500, 5, 13000.00, 32500000.00, 3, '2025-03-11 19:36:43', '2025-03-11 19:37:30', 3, 3);
-INSERT INTO `tr_detail` VALUES (4, 1, 21, 500, 6, 0.50, 1500.00, 3, '2025-03-11 19:37:13', '2025-03-11 19:37:30', 3, 3);
 
 -- ----------------------------
 -- Table structure for tr_header
@@ -2174,7 +2079,7 @@ CREATE TABLE `tr_header`  (
   `store_id` bigint NOT NULL,
   `tr_id` smallint NOT NULL,
   `tr_date` date NOT NULL,
-  `tr_number` varchar(12) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `tr_number` varchar(14) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   `customer_id` bigint NOT NULL,
   `customer_act_on_id` bigint NULL DEFAULT NULL,
   `customer_source` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
@@ -2191,7 +2096,29 @@ CREATE TABLE `tr_header`  (
 -- ----------------------------
 -- Records of tr_header
 -- ----------------------------
-INSERT INTO `tr_header` VALUES (1, 1, 1, '2025-03-11', '250301010001', 1, 1, 'Tabungan', 'Investasi', NULL, 3, '2025-03-11 19:36:18', '2025-03-11 19:37:30', 3, 3);
+
+-- ----------------------------
+-- Table structure for tr_log_api
+-- ----------------------------
+DROP TABLE IF EXISTS `tr_log_api`;
+CREATE TABLE `tr_log_api`  (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `header_id` bigint NOT NULL,
+  `api_method` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
+  `api_status` varchar(6) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
+  `api_success_insert` smallint NULL DEFAULT NULL,
+  `api_failed_insert` smallint NULL DEFAULT NULL,
+  `api_reason` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
+  `created` datetime NULL DEFAULT NULL,
+  `createdby` bigint NULL DEFAULT NULL,
+  `updated` datetime NULL DEFAULT NULL,
+  `updatedby` bigint NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
+
+-- ----------------------------
+-- Records of tr_log_api
+-- ----------------------------
 
 -- ----------------------------
 -- View structure for v_auth_group_role
@@ -2242,16 +2169,16 @@ DROP VIEW IF EXISTS `v_m_exchange_rate`;
 CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_m_exchange_rate` AS select `m_exchange_rate`.`id` AS `id`,`m_exchange_rate`.`store_id` AS `store_id`,`m_exchange_rate`.`currency_id` AS `currency_id`,`m_currency`.`currency_code` AS `currency_code`,`m_currency`.`currency_name` AS `currency_name`,`m_exchange_rate`.`exchange_rate_date` AS `exchange_rate_date`,`m_exchange_rate`.`exchange_rate_buy` AS `exchange_rate_buy`,`m_exchange_rate`.`difference_buy` AS `difference_buy`,`m_exchange_rate`.`exchange_rate_sell` AS `exchange_rate_sell`,`m_exchange_rate`.`difference_sell` AS `difference_sell`,`m_exchange_rate`.`price_buy_bot` AS `price_buy_bot`,`m_exchange_rate`.`price_buy_top` AS `price_buy_top`,`m_exchange_rate`.`price_sell_bot` AS `price_sell_bot`,`m_exchange_rate`.`price_sell_top` AS `price_sell_top`,`m_store`.`store_name` AS `store_name`,`m_store`.`store_address` AS `store_address`,`m_exchange_rate`.`status` AS `status`,`m_exchange_rate`.`created` AS `created`,`m_exchange_rate`.`updated` AS `updated`,`m_exchange_rate`.`createdby` AS `createdby`,`usr1`.`fullname` AS `createdby_name`,`m_exchange_rate`.`updatedby` AS `updatedby`,`usr2`.`fullname` AS `updatedby_name` from ((((`m_exchange_rate` left join `m_currency` on((`m_exchange_rate`.`currency_id` = `m_currency`.`id`))) left join `m_store` on((`m_exchange_rate`.`store_id` = `m_store`.`id`))) left join `auth_users` `usr1` on((`m_exchange_rate`.`createdby` = `usr1`.`id`))) left join `auth_users` `usr2` on((`m_exchange_rate`.`updatedby` = `usr2`.`id`)));
 
 -- ----------------------------
--- View structure for v_m_store
--- ----------------------------
-DROP VIEW IF EXISTS `v_m_store`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_m_store` AS select `m_store`.`id` AS `id`,`m_store`.`store_name` AS `store_name`,`m_store`.`store_address` AS `store_address`,`m_store`.`store_email` AS `store_email`,`m_store`.`store_permit_number` AS `store_permit_number`,`m_store`.`api_method` AS `api_method`,`m_store`.`api_angkasapura` AS `api_angkasapura`,`m_store`.`api_username` AS `api_username`,`m_store`.`api_password` AS `api_password`,`m_store`.`api_store_id` AS `api_store_id`,`m_store`.`api_store_name` AS `api_store_name`,`m_store`.`tr_id` AS `tr_id`,(select concat('[',group_concat('{"id":"',`v_m_store_object`.`tr_id`,'","tr_name":"',`v_m_store_object`.`tr_name`,'"}' separator ','),']') from `v_m_store_object` where (`v_m_store_object`.`store_id` = `m_store`.`id`)) AS `tr_id_object`,`m_store`.`user_limits` AS `user_limits`,`m_store`.`status` AS `status`,`m_store`.`created` AS `created`,`m_store`.`updated` AS `updated`,`m_store`.`createdby` AS `createdby`,`m_store`.`updatedby` AS `updatedby`,`usr1`.`fullname` AS `createdby_name`,`usr2`.`fullname` AS `updatedby_name` from ((`m_store` left join `auth_users` `usr1` on((`m_store`.`createdby` = `usr1`.`id`))) left join `auth_users` `usr2` on((`m_store`.`updatedby` = `usr2`.`id`)));
-
--- ----------------------------
 -- View structure for v_m_store_object
 -- ----------------------------
 DROP VIEW IF EXISTS `v_m_store_object`;
 CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_m_store_object` AS select `t`.`id` AS `store_id`,`t`.`store_address` AS `store_address`,`s`.`id` AS `tr_id`,group_concat(`s`.`transaction_name` separator ',') AS `tr_name` from (`m_store` `t` join `m_transaction` `s` on((0 <> find_in_set(`s`.`id`,`t`.`tr_id`)))) group by `s`.`id`;
+
+-- ----------------------------
+-- View structure for v_m_store
+-- ----------------------------
+DROP VIEW IF EXISTS `v_m_store`;
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_m_store` AS select `m_store`.`id` AS `id`,`m_store`.`store_name` AS `store_name`,`m_store`.`store_address` AS `store_address`,`m_store`.`store_email` AS `store_email`,`m_store`.`store_permit_number` AS `store_permit_number`,`m_store`.`api_method` AS `api_method`,`m_store`.`api_angkasapura` AS `api_angkasapura`,`m_store`.`api_username` AS `api_username`,`m_store`.`api_password` AS `api_password`,`m_store`.`api_store_id` AS `api_store_id`,`m_store`.`api_store_name` AS `api_store_name`,`m_store`.`tr_id` AS `tr_id`,(select concat('[',group_concat('{"id":"',`v_m_store_object`.`tr_id`,'","tr_name":"',`v_m_store_object`.`tr_name`,'"}' separator ','),']') from `v_m_store_object` where (`v_m_store_object`.`store_id` = `m_store`.`id`)) AS `tr_id_object`,`m_store`.`user_limits` AS `user_limits`,`m_store`.`status` AS `status`,`m_store`.`created` AS `created`,`m_store`.`updated` AS `updated`,`m_store`.`createdby` AS `createdby`,`m_store`.`updatedby` AS `updatedby`,`usr1`.`fullname` AS `createdby_name`,`usr2`.`fullname` AS `updatedby_name` from ((`m_store` left join `auth_users` `usr1` on((`m_store`.`createdby` = `usr1`.`id`))) left join `auth_users` `usr2` on((`m_store`.`updatedby` = `usr2`.`id`)));
 
 -- ----------------------------
 -- View structure for v_m_transaction_date
@@ -2314,27 +2241,15 @@ DROP VIEW IF EXISTS `v_summary_by_year`;
 CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_summary_by_year` AS select `tr_header`.`store_id` AS `store_id`,`tr_detail`.`currency_id` AS `currency_id`,`m_currency`.`currency_code` AS `currency_code`,`m_currency`.`currency_name` AS `currency_name`,year(`tr_header`.`tr_date`) AS `tr_year`,sum(if(((`tr_header`.`tr_id` = 1) and (`tr_detail`.`status` in (3,4))),(`tr_detail`.`nominal` * `tr_detail`.`sheet`),0)) AS `buy_nominal`,sum(if(((`tr_header`.`tr_id` = 1) and (`tr_detail`.`status` in (3,4))),`tr_detail`.`subtotal`,0)) AS `buy_equivalent`,sum(if(((`tr_header`.`tr_id` = 2) and (`tr_detail`.`status` in (3,4))),(`tr_detail`.`nominal` * `tr_detail`.`sheet`),0)) AS `sell_nominal`,sum(if(((`tr_header`.`tr_id` = 2) and (`tr_detail`.`status` in (3,4))),`tr_detail`.`subtotal`,0)) AS `sell_equivalent` from ((`tr_detail` join `tr_header` on((`tr_header`.`id` = `tr_detail`.`header_id`))) join `m_currency` on((`tr_detail`.`currency_id` = `m_currency`.`id`))) where (`tr_detail`.`status` in (3,4)) group by `tr_header`.`store_id`,`tr_detail`.`currency_id`,`m_currency`.`currency_code`,`m_currency`.`currency_name`,year(`tr_header`.`tr_date`);
 
 -- ----------------------------
--- View structure for v_tr_api_get
--- ----------------------------
-DROP VIEW IF EXISTS `v_tr_api_get`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_tr_api_get` AS select `tr_api_get`.`id` AS `id`,`tr_api_get`.`store_id` AS `store_id`,`tr_header`.`id` AS `tr_number`,`tr_header`.`tr_id` AS `tr_header_tr_id`,`tr_header`.`tr_date` AS `tr_header_tr_date`,`tr_header`.`tr_number` AS `tr_header_tr_number`,`tr_header`.`customer_id` AS `tr_header_customer_id`,`tr_api_get`.`tr_id` AS `tr_api_get_tr_id`,`tr_api_get`.`invoice_number` AS `tr_api_get_invoice_number`,`tr_api_get`.`transaction_date` AS `tr_api_get_transaction_date`,`tr_api_get`.`transaction_time` AS `tr_api_get_transaction_time`,`tr_api_get`.`status` AS `tr_api_get_status`,count(`tr_api_get`.`invoice_number`) AS `tr_api_get_total_data`,`tr_header`.`created` AS `created`,`tr_header`.`updated` AS `updated`,`auth_users`.`fullname` AS `createdby_name` from ((`tr_api_get` join `tr_header` on(((`tr_header`.`tr_number` = `tr_api_get`.`invoice_number`) and (`tr_header`.`tr_id` = `tr_api_get`.`tr_id`)))) join `auth_users` on((`auth_users`.`id` = `tr_header`.`createdby`))) group by `tr_api_get`.`store_id`,`tr_api_get`.`tr_id`,`tr_header`.`id`,`tr_header`.`tr_id`,`tr_header`.`tr_date`,`tr_header`.`tr_number`,`tr_header`.`customer_id`,`tr_api_get`.`invoice_number`,`tr_api_get`.`transaction_date`,`tr_api_get`.`transaction_time`;
-
--- ----------------------------
--- View structure for v_tr_api_get_detail
--- ----------------------------
-DROP VIEW IF EXISTS `v_tr_api_get_detail`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_tr_api_get_detail` AS select `tr_api_get`.`id` AS `id`,`tr_api_get`.`store_id` AS `store_id`,`tr_api_get`.`tr_id` AS `tr_id`,`tr_header`.`id` AS `tr_number`,`tr_api_get`.`invoice_number` AS `invoice_number`,`tr_api_get`.`transaction_date` AS `transaction_date`,`tr_api_get`.`transaction_time` AS `transaction_time`,`tr_api_get`.`created` AS `created`,`tr_api_get`.`updated` AS `updated`,`tr_api_get`.`createdby` AS `createdby`,`tr_api_get`.`updatedby` AS `updatedby`,`auth_users`.`fullname` AS `createdby_name`,`tr_api_get`.`sequence` AS `sequence`,`tr_api_get`.`item_code` AS `item_id`,`m_currency`.`currency_code` AS `item_code`,`tr_api_get`.`item_name` AS `item_name`,`tr_api_get`.`item_quantity` AS `item_quantity`,`tr_api_get`.`item_price_unit` AS `item_price_unit`,`tr_api_get`.`item_price_amount` AS `item_price_amount`,`tr_api_get`.`item_total_price_amount` AS `item_total_price_amount`,`tr_api_get`.`item_vat` AS `item_vat`,`tr_api_get`.`transaction_amount` AS `transaction_amount`,`tr_api_get`.`item_barcode` AS `item_barcode`,`tr_api_get`.`item_category_name` AS `item_category_name`,`tr_api_get`.`item_category_code` AS `item_category_code`,`tr_api_get`.`item_unit` AS `item_unit`,`tr_api_get`.`item_discount` AS `item_discount`,`tr_api_get`.`item_tax` AS `item_tax`,`tr_api_get`.`item_total_discount` AS `item_total_discount`,`tr_api_get`.`item_total_vat` AS `item_total_vat`,`tr_api_get`.`item_total_tax` AS `item_total_tax`,`tr_api_get`.`item_total_service_charge` AS `item_total_service_charge`,`tr_api_get`.`currency` AS `currency`,`tr_api_get`.`rate` AS `rate`,`tr_api_get`.`payment_type` AS `payment_type`,`tr_api_get`.`payment_by` AS `payment_by`,`tr_api_get`.`username` AS `username`,`tr_api_get`.`buyer_barcode` AS `buyer_barcode`,`tr_api_get`.`buyer_name` AS `buyer_name`,`tr_api_get`.`buyer_flight_no` AS `buyer_flight_no`,`tr_api_get`.`buyer_destination` AS `buyer_destination`,`tr_api_get`.`buyer_nationality` AS `buyer_nationality`,`tr_api_get`.`remark` AS `remark`,`tr_api_get`.`invoice_tax` AS `invoice_tax`,`tr_api_get`.`tax_id` AS `tax_id`,`tr_api_get`.`payment_name` AS `payment_name`,`tr_api_get`.`payment_time` AS `payment_time`,`tr_api_get`.`distance` AS `distance`,`tr_api_get`.`journey_time` AS `journey_time`,`m_store`.`store_name` AS `store_name`,`m_store`.`store_address` AS `store_address` from ((((`tr_api_get` join `tr_header` on(((`tr_header`.`tr_number` = `tr_api_get`.`invoice_number`) and (`tr_header`.`tr_id` = `tr_api_get`.`tr_id`)))) join `m_currency` on((`m_currency`.`id` = `tr_api_get`.`item_code`))) join `auth_users` on((`auth_users`.`id` = `tr_api_get`.`createdby`))) left join `m_store` on((`m_store`.`id` = `tr_api_get`.`store_id`)));
-
--- ----------------------------
 -- View structure for v_tr_detail
 -- ----------------------------
 DROP VIEW IF EXISTS `v_tr_detail`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_tr_detail` AS select `tr_detail`.`id` AS `id`,`tr_header`.`store_id` AS `store_id`,`tr_detail`.`header_id` AS `header_id`,`tr_header`.`tr_id` AS `tr_id`,`tr_header`.`tr_date` AS `tr_date`,`tr_header`.`customer_id` AS `customer_id`,`tr_detail`.`currency_id` AS `currency_id`,`m_currency`.`currency_code` AS `currency_code`,`m_currency`.`currency_name` AS `currency_name`,`tr_detail`.`nominal` AS `nominal`,`tr_detail`.`sheet` AS `sheet`,`tr_detail`.`price` AS `price`,((`tr_detail`.`nominal` * `tr_detail`.`sheet`) * `tr_detail`.`price`) AS `subtotal`,`tr_detail`.`status` AS `status`,`tr_detail`.`created` AS `created`,`tr_detail`.`updated` AS `updated`,`tr_detail`.`createdby` AS `createdby`,`tr_detail`.`updatedby` AS `updatedby` from ((`tr_detail` join `tr_header` on((`tr_detail`.`header_id` = `tr_header`.`id`))) left join `m_currency` on((`tr_detail`.`currency_id` = `m_currency`.`id`)));
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_tr_detail` AS select `tr_detail`.`id` AS `id`,`tr_detail`.`header_id` AS `header_id`,`tr_detail`.`currency_id` AS `currency_id`,`tr_detail`.`nominal` AS `nominal`,`tr_detail`.`sheet` AS `sheet`,`tr_detail`.`price` AS `price`,((`tr_detail`.`nominal` * `tr_detail`.`sheet`) * `tr_detail`.`price`) AS `subtotal`,`tr_detail`.`status` AS `status`,`tr_detail`.`created` AS `created`,`tr_detail`.`updated` AS `updated`,`tr_detail`.`createdby` AS `createdby`,`tr_detail`.`updatedby` AS `updatedby`,`tr_header`.`store_id` AS `store_id`,`tr_header`.`tr_id` AS `tr_id`,`tr_header`.`tr_date` AS `tr_date`,`tr_header`.`customer_id` AS `customer_id`,`m_currency`.`currency_code` AS `currency_code`,`m_currency`.`currency_name` AS `currency_name` from ((`tr_detail` join `tr_header` on((`tr_detail`.`header_id` = `tr_header`.`id`))) join `m_currency` on((`tr_detail`.`currency_id` = `m_currency`.`id`)));
 
 -- ----------------------------
 -- View structure for v_tr_header
 -- ----------------------------
 DROP VIEW IF EXISTS `v_tr_header`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_tr_header` AS select `tr_header`.`id` AS `id`,`tr_header`.`tr_id` AS `tr_id`,`m_transaction`.`transaction_name` AS `tr_name`,`tr_header`.`tr_date` AS `tr_date`,`tr_header`.`tr_number` AS `tr_number`,(select sum(((`tr_detail`.`nominal` * `tr_detail`.`sheet`) * `tr_detail`.`price`)) from `tr_detail` where (`tr_detail`.`header_id` = `tr_header`.`id`)) AS `total`,`tr_header`.`customer_id` AS `customer_id`,`m_customer`.`customer_code` AS `customer_code`,`m_customer`.`customer_name` AS `customer_name`,`m_customer`.`customer_address` AS `customer_address`,`m_customer`.`job_id` AS `customer_job_id`,`m_customer_job`.`customer_job_name` AS `customer_job_name`,`m_nationality`.`nationality_code` AS `nationality_code`,`m_nationality`.`nationality_desc` AS `nationality_desc`,`tr_header`.`customer_act_on_id` AS `customer_act_on_id`,`m_customer_act_on`.`customer_act_on` AS `customer_act_on`,`tr_header`.`customer_source` AS `customer_source`,`tr_header`.`customer_purpose` AS `customer_purpose`,`tr_header`.`description` AS `description`,`tr_header`.`store_id` AS `store_id`,`m_store`.`store_name` AS `store_name`,`m_store`.`store_address` AS `store_address`,`m_store`.`api_method` AS `api_method`,`m_store`.`api_store_id` AS `api_store_id`,`tr_header`.`status` AS `status`,(select (case when (`tr_header`.`status` = 2) then 'Canceled' when (`tr_header`.`status` = 3) then 'Confirm' when (`tr_header`.`status` = 4) then 'Integrasi System ECSys (API)' else 'Task' end)) AS `status_name`,`tr_header`.`created` AS `created`,`tr_header`.`updated` AS `updated`,`tr_header`.`createdby` AS `createdby`,`tr_header`.`updatedby` AS `updatedby`,`usr1`.`fullname` AS `createdby_name`,`usr2`.`fullname` AS `updatedby_name` from ((((((((`tr_header` left join `m_transaction` on((`tr_header`.`tr_id` = `m_transaction`.`id`))) left join `auth_users` `usr1` on((`tr_header`.`createdby` = `usr1`.`id`))) left join `auth_users` `usr2` on((`tr_header`.`updatedby` = `usr2`.`id`))) left join `m_customer` on((`tr_header`.`customer_id` = `m_customer`.`id`))) left join `m_customer_act_on` on((`tr_header`.`customer_act_on_id` = `m_customer_act_on`.`id`))) left join `m_nationality` on((`m_customer`.`nationality_id` = `m_nationality`.`id`))) left join `m_customer_job` on((`m_customer`.`job_id` = `m_customer_job`.`id`))) left join `m_store` on((`m_store`.`id` = `tr_header`.`store_id`)));
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_tr_header` AS select `tr_header`.`id` AS `id`,`tr_header`.`store_id` AS `store_id`,`tr_header`.`tr_id` AS `tr_id`,`tr_header`.`tr_date` AS `tr_date`,`tr_header`.`tr_number` AS `tr_number`,`tr_header`.`customer_id` AS `customer_id`,`tr_header`.`customer_act_on_id` AS `customer_act_on_id`,`tr_header`.`customer_source` AS `customer_source`,`tr_header`.`customer_purpose` AS `customer_purpose`,`tr_header`.`description` AS `description`,`tr_header`.`status` AS `status`,`m_customer`.`customer_type_id` AS `customer_type_id`,`m_customer`.`job_id` AS `customer_job_id`,`m_customer`.`nationality_id` AS `customer_nationality_id`,`m_customer`.`customer_data_id` AS `customer_data_id`,`tr_header`.`created` AS `created`,`tr_header`.`updated` AS `updated`,`tr_header`.`createdby` AS `createdby`,`tr_header`.`updatedby` AS `updatedby`,`usr1`.`fullname` AS `createdby_name`,`usr2`.`fullname` AS `updatedby_name`,`m_transaction`.`transaction_name` AS `tr_name`,(select (case when (`tr_header`.`status` = 2) then 'Canceled' when (`tr_header`.`status` = 3) then 'Confirm' when (`tr_header`.`status` = 4) then 'Integrasi System ECSys (API)' else 'Task' end)) AS `status_name`,(select sum(((`tr_detail`.`nominal` * `tr_detail`.`sheet`) * `tr_detail`.`price`)) from `tr_detail` where (`tr_detail`.`header_id` = `tr_header`.`id`)) AS `total` from ((((`tr_header` left join `m_transaction` on((`tr_header`.`tr_id` = `m_transaction`.`id`))) left join `m_customer` on((`tr_header`.`customer_id` = `m_customer`.`id`))) left join `auth_users` `usr1` on((`tr_header`.`createdby` = `usr1`.`id`))) left join `auth_users` `usr2` on((`tr_header`.`updatedby` = `usr2`.`id`)));
 
 SET FOREIGN_KEY_CHECKS = 1;

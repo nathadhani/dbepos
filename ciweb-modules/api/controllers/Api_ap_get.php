@@ -22,6 +22,77 @@ class Api_ap_get extends Bks_Controller {
         $tanggal = revDate($this->uri->segment(4));
         $company_id = $this->uri->segment(5);
         $store_id = $this->uri->segment(6);
+
+        /*
+         SELECT
+            tr_api_get.id AS id,
+            tr_api_get.store_id AS store_id,
+            tr_api_get.tr_id AS tr_id,
+            tr_header.id AS tr_number,
+            tr_api_get.invoice_number AS invoice_number,
+            tr_api_get.transaction_date AS transaction_date,
+            tr_api_get.transaction_time AS transaction_time,
+            tr_api_get.created AS created,
+            tr_api_get.updated AS updated,
+            tr_api_get.createdby AS createdby,
+            tr_api_get.updatedby AS updatedby,
+            auth_users.fullname AS createdby_name,
+            tr_api_get.sequence AS sequence,
+            tr_api_get.item_code AS item_id,
+            m_currency.currency_code AS item_code,
+            tr_api_get.item_name AS item_name,
+            tr_api_get.item_quantity AS item_quantity,
+            tr_api_get.item_price_unit AS item_price_unit,
+            tr_api_get.item_price_amount AS item_price_amount,
+            tr_api_get.item_total_price_amount AS item_total_price_amount,
+            tr_api_get.item_vat AS item_vat,
+            tr_api_get.transaction_amount AS transaction_amount,
+            tr_api_get.item_barcode AS item_barcode,
+            tr_api_get.item_category_name AS item_category_name,
+            tr_api_get.item_category_code AS item_category_code,
+            tr_api_get.item_unit AS item_unit,
+            tr_api_get.item_discount AS item_discount,
+            tr_api_get.item_tax AS item_tax,
+            tr_api_get.item_total_discount AS item_total_discount,
+            tr_api_get.item_total_vat AS item_total_vat,
+            tr_api_get.item_total_tax AS item_total_tax,
+            tr_api_get.item_total_service_charge AS item_total_service_charge,
+            tr_api_get.currency AS currency,
+            tr_api_get.rate AS rate,
+            tr_api_get.payment_type AS payment_type,
+            tr_api_get.payment_by AS payment_by,
+            tr_api_get.username AS username,
+            tr_api_get.buyer_barcode AS buyer_barcode,
+            tr_api_get.buyer_name AS buyer_name,
+            tr_api_get.buyer_flight_no AS buyer_flight_no,
+            tr_api_get.buyer_destination AS buyer_destination,
+            tr_api_get.buyer_nationality AS buyer_nationality,
+            tr_api_get.remark AS remark,
+            tr_api_get.invoice_tax AS invoice_tax,
+            tr_api_get.tax_id AS tax_id,
+            tr_api_get.payment_name AS payment_name,
+            tr_api_get.payment_time AS payment_time,
+            tr_api_get.distance AS distance,
+            tr_api_get.journey_time AS journey_time,
+            m_store.store_name AS store_name,
+            m_store.store_address AS store_address 
+        FROM
+            ((((
+                            tr_api_get
+                            JOIN tr_header ON (((
+                                        tr_header.tr_number = tr_api_get.invoice_number 
+                                        ) 
+                                AND ( tr_header.tr_id = tr_api_get.tr_id ))))
+                        JOIN m_currency ON ((
+                                m_currency.id = tr_api_get.item_code 
+                            )))
+                    JOIN auth_users ON ((
+                            auth_users.id = tr_api_get.createdby 
+                        )))
+                LEFT JOIN m_store ON ((
+                    m_store.id = tr_api_get.store_id 
+            )))
+         */
         
         if($store_id !== null && $store_id !== ''){
             $query = $this->db->query("SELECT invoice_number,

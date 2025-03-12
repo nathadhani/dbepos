@@ -109,7 +109,7 @@
                                             <?php
                                                 if($get_AP[0]->api_method === '1') {
                                                     $id = $this->uri->segment(6);
-                                                    $resp_api = $this->db->query("SELECT * FROM tr_api_log WHERE header_id = $id")->result_array(); 
+                                                    $resp_api = $this->db->query("SELECT * FROM tr_log_api WHERE header_id = $id")->result_array(); 
                                                     // echo $this->db->last_query();exit;
                                                     if($resp_api){
                                             ?>              
