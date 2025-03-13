@@ -196,7 +196,7 @@ class Transaction_buysell extends Bks_Controller {
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
         $customer_id = json_decode($postData['customer_id']);
-        $query = $this->db->query("SELECT * FROM m_customer WHERE id = " . $customer_id . " LIMIT 1")->result();
+        $query = $this->db->query("SELECT * FROM v_m_customer WHERE id = " . $customer_id . " LIMIT 1")->result();
         echo json_encode($query, true);
     }
     
@@ -211,7 +211,7 @@ class Transaction_buysell extends Bks_Controller {
         $query = $this->db->query("SELECT nominal,
                                           last_stock_sheet, 
                                           IF(last_stock_sheet IS NOT NULL, (nominal * last_stock_sheet),0 ) AS last_stock_amount
-                                          FROM v_stock_tr9
+                                          FROM v_st2
                                    WHERE store_id = $this->store_id
                                    AND stock_year = $tahun 
                                    AND stock_month = $bulan

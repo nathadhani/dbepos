@@ -11,7 +11,7 @@
  Target Server Version : 80030
  File Encoding         : 65001
 
- Date: 13/03/2025 04:45:15
+ Date: 14/03/2025 06:21:08
 */
 
 SET NAMES utf8mb4;
@@ -775,7 +775,7 @@ CREATE TABLE `auth_users`  (
 -- ----------------------------
 INSERT INTO `auth_users` VALUES (1, '8989', 'f794bdbef7990b5112e526b5cd4ea67f4a35af21', NULL, 1, 1, 0, NULL, '', NULL, NULL, NULL, NULL, 1, '2025-02-23 13:58:46', NULL, NULL, NULL);
 INSERT INTO `auth_users` VALUES (2, 'konsolidasi', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 2, 1, 0, '1,2,3,4', 'Konsolidasi', '', '', NULL, NULL, 1, '2025-02-23 13:58:46', NULL, '2025-03-07 12:10:06', 1);
-INSERT INTO `auth_users` VALUES (3, 'admin', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 3, 1, 1, NULL, 'Admin', '', '', '2025-03-12 05:25:36', NULL, 1, '2025-02-23 13:58:46', NULL, '2025-03-07 12:10:19', 1);
+INSERT INTO `auth_users` VALUES (3, 'admin', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 3, 1, 1, NULL, 'Admin', '', '', '2025-03-13 21:00:45', NULL, 1, '2025-02-23 13:58:46', NULL, '2025-03-07 12:10:19', 1);
 INSERT INTO `auth_users` VALUES (4, 'konter', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 4, 2, 1, NULL, 'Counter', '', '', '2025-03-12 05:21:52', NULL, 1, '2025-02-23 13:58:46', NULL, '2025-03-07 12:10:34', 1);
 INSERT INTO `auth_users` VALUES (5, 'kasir', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 5, 1, 1, NULL, 'Cashier', '', '', '2025-03-10 21:17:34', NULL, 1, '2025-03-06 13:05:41', 1, '2025-03-07 12:10:24', 1);
 INSERT INTO `auth_users` VALUES (6, 'ap1', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 6, 1, 0, '3,4', 'Angkasa Pura 1', '', '', '2025-03-07 04:23:59', NULL, 1, '2025-03-06 13:06:45', 1, '2025-03-07 12:10:12', 1);
@@ -1424,8 +1424,8 @@ CREATE TABLE `m_transaction_date`  (
 -- ----------------------------
 -- Records of m_transaction_date
 -- ----------------------------
-INSERT INTO `m_transaction_date` VALUES (2, 1, 2, '2025-03-10', 1, '2025-03-05 16:03:58', '2025-03-10 21:33:10', 1, 4);
-INSERT INTO `m_transaction_date` VALUES (3, 1, 1, '2025-03-10', 1, '2025-03-05 16:06:33', '2025-03-10 21:33:10', 1, 4);
+INSERT INTO `m_transaction_date` VALUES (2, 1, 2, '2025-03-13', 1, '2025-03-05 16:03:58', '2025-03-13 21:02:11', 1, 3);
+INSERT INTO `m_transaction_date` VALUES (3, 1, 1, '2025-03-13', 1, '2025-03-05 16:06:33', '2025-03-13 21:02:11', 1, 3);
 
 -- ----------------------------
 -- Table structure for ppatk_dttot
@@ -2008,7 +2008,7 @@ CREATE TABLE `stock`  (
   `updated` datetime NULL DEFAULT NULL,
   `updatedby` bigint NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of stock
@@ -2054,17 +2054,17 @@ CREATE TABLE `tr_detail`  (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `header_id` bigint NOT NULL,
   `currency_id` bigint NOT NULL,
-  `nominal` decimal(12, 0) NULL DEFAULT 0,
-  `sheet` smallint NULL DEFAULT NULL,
-  `price` decimal(12, 2) NULL DEFAULT 0.00,
-  `subtotal` decimal(18, 2) NULL DEFAULT 0.00,
-  `status` smallint NULL DEFAULT NULL,
+  `nominal` decimal(12, 0) NOT NULL DEFAULT 0,
+  `sheet` smallint NOT NULL,
+  `price` decimal(12, 2) NOT NULL DEFAULT 0.00,
+  `subtotal` decimal(18, 2) NOT NULL DEFAULT 0.00,
+  `status` smallint NOT NULL,
   `created` datetime NULL DEFAULT NULL,
   `updated` datetime NULL DEFAULT NULL,
-  `createdby` bigint NULL DEFAULT NULL,
+  `createdby` bigint NOT NULL,
   `updatedby` bigint NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of tr_detail
@@ -2091,7 +2091,7 @@ CREATE TABLE `tr_header`  (
   `createdby` bigint NULL DEFAULT NULL,
   `updatedby` bigint NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of tr_header
@@ -2118,6 +2118,28 @@ CREATE TABLE `tr_log_api`  (
 
 -- ----------------------------
 -- Records of tr_log_api
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for tr_payment
+-- ----------------------------
+DROP TABLE IF EXISTS `tr_payment`;
+CREATE TABLE `tr_payment`  (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `header_id` bigint NOT NULL,
+  `payment_type` smallint NOT NULL,
+  `amount` decimal(18, 2) NOT NULL DEFAULT 0.00,
+  `cashier_id` smallint NOT NULL,
+  `status` smallint NOT NULL,
+  `created` datetime NOT NULL,
+  `updated` datetime NULL DEFAULT NULL,
+  `createdby` bigint NOT NULL,
+  `updatedby` bigint NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
+
+-- ----------------------------
+-- Records of tr_payment
 -- ----------------------------
 
 -- ----------------------------
@@ -2169,16 +2191,16 @@ DROP VIEW IF EXISTS `v_m_exchange_rate`;
 CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_m_exchange_rate` AS select `m_exchange_rate`.`id` AS `id`,`m_exchange_rate`.`store_id` AS `store_id`,`m_exchange_rate`.`currency_id` AS `currency_id`,`m_currency`.`currency_code` AS `currency_code`,`m_currency`.`currency_name` AS `currency_name`,`m_exchange_rate`.`exchange_rate_date` AS `exchange_rate_date`,`m_exchange_rate`.`exchange_rate_buy` AS `exchange_rate_buy`,`m_exchange_rate`.`difference_buy` AS `difference_buy`,`m_exchange_rate`.`exchange_rate_sell` AS `exchange_rate_sell`,`m_exchange_rate`.`difference_sell` AS `difference_sell`,`m_exchange_rate`.`price_buy_bot` AS `price_buy_bot`,`m_exchange_rate`.`price_buy_top` AS `price_buy_top`,`m_exchange_rate`.`price_sell_bot` AS `price_sell_bot`,`m_exchange_rate`.`price_sell_top` AS `price_sell_top`,`m_store`.`store_name` AS `store_name`,`m_store`.`store_address` AS `store_address`,`m_exchange_rate`.`status` AS `status`,`m_exchange_rate`.`created` AS `created`,`m_exchange_rate`.`updated` AS `updated`,`m_exchange_rate`.`createdby` AS `createdby`,`usr1`.`fullname` AS `createdby_name`,`m_exchange_rate`.`updatedby` AS `updatedby`,`usr2`.`fullname` AS `updatedby_name` from ((((`m_exchange_rate` left join `m_currency` on((`m_exchange_rate`.`currency_id` = `m_currency`.`id`))) left join `m_store` on((`m_exchange_rate`.`store_id` = `m_store`.`id`))) left join `auth_users` `usr1` on((`m_exchange_rate`.`createdby` = `usr1`.`id`))) left join `auth_users` `usr2` on((`m_exchange_rate`.`updatedby` = `usr2`.`id`)));
 
 -- ----------------------------
--- View structure for v_m_store_object
--- ----------------------------
-DROP VIEW IF EXISTS `v_m_store_object`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_m_store_object` AS select `t`.`id` AS `store_id`,`t`.`store_address` AS `store_address`,`s`.`id` AS `tr_id`,group_concat(`s`.`transaction_name` separator ',') AS `tr_name` from (`m_store` `t` join `m_transaction` `s` on((0 <> find_in_set(`s`.`id`,`t`.`tr_id`)))) group by `s`.`id`;
-
--- ----------------------------
 -- View structure for v_m_store
 -- ----------------------------
 DROP VIEW IF EXISTS `v_m_store`;
 CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_m_store` AS select `m_store`.`id` AS `id`,`m_store`.`store_name` AS `store_name`,`m_store`.`store_address` AS `store_address`,`m_store`.`store_email` AS `store_email`,`m_store`.`store_permit_number` AS `store_permit_number`,`m_store`.`api_method` AS `api_method`,`m_store`.`api_angkasapura` AS `api_angkasapura`,`m_store`.`api_username` AS `api_username`,`m_store`.`api_password` AS `api_password`,`m_store`.`api_store_id` AS `api_store_id`,`m_store`.`api_store_name` AS `api_store_name`,`m_store`.`tr_id` AS `tr_id`,(select concat('[',group_concat('{"id":"',`v_m_store_object`.`tr_id`,'","tr_name":"',`v_m_store_object`.`tr_name`,'"}' separator ','),']') from `v_m_store_object` where (`v_m_store_object`.`store_id` = `m_store`.`id`)) AS `tr_id_object`,`m_store`.`user_limits` AS `user_limits`,`m_store`.`status` AS `status`,`m_store`.`created` AS `created`,`m_store`.`updated` AS `updated`,`m_store`.`createdby` AS `createdby`,`m_store`.`updatedby` AS `updatedby`,`usr1`.`fullname` AS `createdby_name`,`usr2`.`fullname` AS `updatedby_name` from ((`m_store` left join `auth_users` `usr1` on((`m_store`.`createdby` = `usr1`.`id`))) left join `auth_users` `usr2` on((`m_store`.`updatedby` = `usr2`.`id`)));
+
+-- ----------------------------
+-- View structure for v_m_store_object
+-- ----------------------------
+DROP VIEW IF EXISTS `v_m_store_object`;
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_m_store_object` AS select `t`.`id` AS `store_id`,`t`.`store_address` AS `store_address`,`s`.`id` AS `tr_id`,group_concat(`s`.`transaction_name` separator ',') AS `tr_name` from (`m_store` `t` join `m_transaction` `s` on((0 <> find_in_set(`s`.`id`,`t`.`tr_id`)))) group by `s`.`id`;
 
 -- ----------------------------
 -- View structure for v_m_transaction_date
@@ -2187,40 +2209,28 @@ DROP VIEW IF EXISTS `v_m_transaction_date`;
 CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_m_transaction_date` AS select `m_transaction_date`.`id` AS `id`,`m_transaction_date`.`store_id` AS `store_id`,`m_transaction_date`.`tr_id` AS `tr_id`,`m_transaction_date`.`tr_date` AS `tr_date`,`m_transaction_date`.`status` AS `status`,`m_transaction_date`.`created` AS `created`,`m_transaction_date`.`updated` AS `updated`,`m_store`.`store_name` AS `store_name`,`m_store`.`store_address` AS `store_address`,`m_transaction`.`transaction_name` AS `tr_name`,`m_transaction`.`description` AS `description` from ((`m_transaction_date` join `m_store` on((`m_transaction_date`.`store_id` = `m_store`.`id`))) join `m_transaction` on((`m_transaction_date`.`tr_id` = `m_transaction`.`id`)));
 
 -- ----------------------------
--- View structure for v_stock_price
+-- View structure for v_st1
 -- ----------------------------
-DROP VIEW IF EXISTS `v_stock_price`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_stock_price` AS select `stock_price`.`id` AS `id`,`stock_price`.`store_id` AS `store_id`,`stock_price`.`currency_id` AS `currency_id`,`stock_price`.`stock_date` AS `stock_date`,`stock_price`.`stock_year` AS `stock_year`,`stock_price`.`stock_month` AS `stock_month`,`stock_price`.`buy_tr_header_id` AS `buy_tr_header_id`,`tr_header_buy`.`tr_number` AS `buy_tr_number`,`stock_price`.`buy_amount` AS `buy_amount`,`stock_price`.`buy_price` AS `buy_price`,`stock_price`.`buy_total` AS `buy_total`,`stock_price`.`sell_tr_header_id` AS `sell_tr_header_id`,`tr_header_sell`.`tr_number` AS `sell_tr_number`,`stock_price`.`sell_amount` AS `sell_amount`,`stock_price`.`sell_price` AS `sell_price`,`stock_price`.`sell_total` AS `sell_total`,`stock_price`.`sell_average_total` AS `sell_average_total`,`stock_price`.`stock_last_amount` AS `stock_last_amount`,`stock_price`.`stock_last_price` AS `stock_last_price`,`stock_price`.`stock_last_total` AS `stock_last_total`,`stock_price`.`profit` AS `profit`,`stock_price`.`created` AS `created`,`stock_price`.`createdby` AS `createdby`,`m_store`.`store_name` AS `store_name`,`m_store`.`store_address` AS `store_address`,`m_currency`.`currency_code` AS `currency_code`,`m_currency`.`currency_name` AS `currency_name` from ((((`stock_price` left join `tr_header` `tr_header_buy` on((`stock_price`.`buy_tr_header_id` = `tr_header_buy`.`id`))) left join `tr_header` `tr_header_sell` on((`stock_price`.`sell_tr_header_id` = `tr_header_sell`.`id`))) join `m_store` on((`stock_price`.`store_id` = `m_store`.`id`))) join `m_currency` on((`stock_price`.`currency_id` = `m_currency`.`id`)));
+DROP VIEW IF EXISTS `v_st1`;
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_st1` AS select `tr_header`.`store_id` AS `store_id`,year(`tr_header`.`tr_date`) AS `stock_year`,month(`tr_header`.`tr_date`) AS `stock_month`,`tr_detail`.`currency_id` AS `currency_id`,`tr_detail`.`nominal` AS `nominal`,sum(if(((`tr_header`.`tr_id` = 1) and (`tr_detail`.`status` in (3,4))),`tr_detail`.`sheet`,0)) AS `buy_sheet`,sum(if(((`tr_header`.`tr_id` = 2) and (`tr_detail`.`status` in (3,4))),`tr_detail`.`sheet`,0)) AS `sell_sheet`,sum(if(((`tr_header`.`tr_id` = 2) and (`tr_detail`.`status` = 1)),`tr_detail`.`sheet`,0)) AS `sell_alocation_sheet` from (`tr_detail` join `tr_header` on((`tr_detail`.`header_id` = `tr_header`.`id`))) group by `tr_header`.`store_id`,year(`tr_header`.`tr_date`),month(`tr_header`.`tr_date`),`tr_detail`.`currency_id`,`tr_detail`.`nominal`;
 
 -- ----------------------------
--- View structure for v_stock_tr1
+-- View structure for v_st2
 -- ----------------------------
-DROP VIEW IF EXISTS `v_stock_tr1`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_stock_tr1` AS select `tr_header`.`store_id` AS `store_id`,`tr_header`.`tr_id` AS `tr_id`,year(`tr_header`.`tr_date`) AS `stock_year`,month(`tr_header`.`tr_date`) AS `stock_month`,`tr_detail`.`currency_id` AS `currency_id`,`tr_detail`.`nominal` AS `buy_nominal`,sum(`tr_detail`.`sheet`) AS `buy_sheet` from (`tr_detail` join `tr_header` on((`tr_detail`.`header_id` = `tr_header`.`id`))) where ((`tr_header`.`tr_id` = 1) and (`tr_header`.`status` in (3,4))) group by `tr_header`.`store_id`,year(`tr_header`.`tr_date`),month(`tr_header`.`tr_date`),`tr_header`.`tr_id`,`tr_detail`.`currency_id`,`tr_detail`.`nominal`;
+DROP VIEW IF EXISTS `v_st2`;
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_st2` AS select `stock`.`id` AS `id`,`stock`.`currency_id` AS `currency_id`,`m_currency`.`currency_code` AS `currency_code`,`m_currency`.`currency_name` AS `currency_name`,`stock`.`stock_year` AS `stock_year`,`stock`.`stock_month` AS `stock_month`,`stock`.`nominal` AS `nominal`,`stock`.`beginning_stock_sheet` AS `beginning_stock_sheet`,if((`v_st1`.`buy_sheet` is null),0,`v_st1`.`buy_sheet`) AS `buy_sheet`,if((`v_st1`.`sell_sheet` is null),0,`v_st1`.`sell_sheet`) AS `sell_sheet`,if((`v_st1`.`sell_alocation_sheet` is null),0,`v_st1`.`sell_alocation_sheet`) AS `sell_alocation_sheet`,(((`stock`.`beginning_stock_sheet` + if((`v_st1`.`buy_sheet` is null),0,`v_st1`.`buy_sheet`)) - if((`v_st1`.`sell_sheet` is null),0,`v_st1`.`sell_sheet`)) - if((`v_st1`.`sell_alocation_sheet` is null),0,`v_st1`.`sell_alocation_sheet`)) AS `last_stock_sheet`,(select `stock_price`.`stock_last_price` from `stock_price` where ((`stock_price`.`currency_id` = `stock`.`currency_id`) and (`stock_price`.`store_id` = `stock`.`store_id`) and (`stock_price`.`stock_year` = `stock`.`stock_year`) and (`stock_price`.`stock_month` = `stock_price`.`stock_month`)) order by `stock_price`.`id` desc limit 1) AS `stock_last_price`,`stock`.`store_id` AS `store_id`,`m_store`.`store_name` AS `store_name`,`m_store`.`store_address` AS `store_address`,`stock`.`status` AS `status`,`stock`.`created` AS `created`,`stock`.`createdby` AS `createdby`,`stock`.`updated` AS `updated`,`stock`.`updatedby` AS `updatedby` from (((`stock` join `m_currency` on((`m_currency`.`id` = `stock`.`currency_id`))) left join `v_st1` on(((`stock`.`store_id` = `v_st1`.`store_id`) and (`stock`.`currency_id` = `v_st1`.`currency_id`) and (`stock`.`nominal` = `v_st1`.`nominal`) and (`stock`.`stock_year` = `v_st1`.`stock_year`) and (`stock`.`stock_month` = `v_st1`.`stock_month`)))) left join `m_store` on((`m_store`.`id` = `stock`.`store_id`))) group by `m_currency`.`currency_code`,`m_currency`.`currency_name`,`stock`.`currency_id`,`stock`.`store_id`,`stock`.`stock_year`,`stock`.`stock_month`,`stock`.`nominal`;
 
 -- ----------------------------
--- View structure for v_stock_tr2
+-- View structure for v_stprice
 -- ----------------------------
-DROP VIEW IF EXISTS `v_stock_tr2`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_stock_tr2` AS select `tr_header`.`store_id` AS `store_id`,`tr_header`.`tr_id` AS `tr_id`,year(`tr_header`.`tr_date`) AS `stock_year`,month(`tr_header`.`tr_date`) AS `stock_month`,`tr_detail`.`currency_id` AS `currency_id`,`tr_detail`.`nominal` AS `sell_nominal`,sum(`tr_detail`.`sheet`) AS `sell_sheet` from (`tr_detail` join `tr_header` on((`tr_detail`.`header_id` = `tr_header`.`id`))) where ((`tr_header`.`tr_id` = 2) and (`tr_header`.`status` in (3,4))) group by `tr_header`.`store_id`,year(`tr_header`.`tr_date`),month(`tr_header`.`tr_date`),`tr_header`.`tr_id`,`tr_detail`.`currency_id`,`tr_detail`.`nominal`;
+DROP VIEW IF EXISTS `v_stprice`;
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_stprice` AS select `stock_price`.`id` AS `id`,`stock_price`.`store_id` AS `store_id`,`stock_price`.`currency_id` AS `currency_id`,`stock_price`.`stock_date` AS `stock_date`,`stock_price`.`stock_year` AS `stock_year`,`stock_price`.`stock_month` AS `stock_month`,`stock_price`.`buy_tr_header_id` AS `buy_tr_header_id`,`tr_header_buy`.`tr_number` AS `buy_tr_number`,`stock_price`.`buy_amount` AS `buy_amount`,`stock_price`.`buy_price` AS `buy_price`,`stock_price`.`buy_total` AS `buy_total`,`stock_price`.`sell_tr_header_id` AS `sell_tr_header_id`,`tr_header_sell`.`tr_number` AS `sell_tr_number`,`stock_price`.`sell_amount` AS `sell_amount`,`stock_price`.`sell_price` AS `sell_price`,`stock_price`.`sell_total` AS `sell_total`,`stock_price`.`sell_average_total` AS `sell_average_total`,`stock_price`.`stock_last_amount` AS `stock_last_amount`,`stock_price`.`stock_last_price` AS `stock_last_price`,`stock_price`.`stock_last_total` AS `stock_last_total`,`stock_price`.`profit` AS `profit`,`stock_price`.`created` AS `created`,`stock_price`.`createdby` AS `createdby`,`m_store`.`store_name` AS `store_name`,`m_store`.`store_address` AS `store_address`,`m_currency`.`currency_code` AS `currency_code`,`m_currency`.`currency_name` AS `currency_name` from ((((`stock_price` left join `tr_header` `tr_header_buy` on((`stock_price`.`buy_tr_header_id` = `tr_header_buy`.`id`))) left join `tr_header` `tr_header_sell` on((`stock_price`.`sell_tr_header_id` = `tr_header_sell`.`id`))) join `m_store` on((`stock_price`.`store_id` = `m_store`.`id`))) join `m_currency` on((`stock_price`.`currency_id` = `m_currency`.`id`)));
 
 -- ----------------------------
--- View structure for v_stock_tr3
+-- View structure for v_stsale
 -- ----------------------------
-DROP VIEW IF EXISTS `v_stock_tr3`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_stock_tr3` AS select `tr_header`.`store_id` AS `store_id`,year(`tr_header`.`tr_date`) AS `stock_year`,month(`tr_header`.`tr_date`) AS `stock_month`,`tr_detail`.`currency_id` AS `currency_id`,`tr_detail`.`nominal` AS `sell_alocation_nominal`,sum(`tr_detail`.`sheet`) AS `sell_alocation_sheet` from (`tr_detail` join `tr_header` on((`tr_detail`.`header_id` = `tr_header`.`id`))) where ((`tr_header`.`status` = 1) and (`tr_header`.`tr_id` = 2)) group by `tr_header`.`store_id`,year(`tr_header`.`tr_date`),month(`tr_header`.`tr_date`),`tr_detail`.`currency_id`,`tr_detail`.`nominal`;
-
--- ----------------------------
--- View structure for v_stock_tr9
--- ----------------------------
-DROP VIEW IF EXISTS `v_stock_tr9`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_stock_tr9` AS select `stock`.`id` AS `id`,`stock`.`currency_id` AS `currency_id`,`m_currency`.`currency_code` AS `currency_code`,`m_currency`.`currency_name` AS `currency_name`,`stock`.`stock_year` AS `stock_year`,`stock`.`stock_month` AS `stock_month`,`stock`.`nominal` AS `nominal`,`stock`.`beginning_stock_sheet` AS `beginning_stock_sheet`,if((`v_stock_tr1`.`buy_sheet` is null),0,`v_stock_tr1`.`buy_sheet`) AS `buy_sheet`,if((`v_stock_tr2`.`sell_sheet` is null),0,`v_stock_tr2`.`sell_sheet`) AS `sell_sheet`,if((`v_stock_tr3`.`sell_alocation_sheet` is null),0,`v_stock_tr3`.`sell_alocation_sheet`) AS `sell_alocation_sheet`,(((`stock`.`beginning_stock_sheet` + if((`v_stock_tr1`.`buy_sheet` is null),0,`v_stock_tr1`.`buy_sheet`)) - if((`v_stock_tr2`.`sell_sheet` is null),0,`v_stock_tr2`.`sell_sheet`)) - if((`v_stock_tr3`.`sell_alocation_sheet` is null),0,`v_stock_tr3`.`sell_alocation_sheet`)) AS `last_stock_sheet`,(select `stock_price`.`stock_last_price` from `stock_price` where ((`stock_price`.`currency_id` = `stock`.`currency_id`) and (`stock_price`.`store_id` = `stock`.`store_id`) and (`stock_price`.`stock_year` = `stock`.`stock_year`) and (`stock_price`.`stock_month` = `stock_price`.`stock_month`)) order by `stock_price`.`id` desc limit 1) AS `stock_last_price`,`stock`.`store_id` AS `store_id`,`m_store`.`store_name` AS `store_name`,`m_store`.`store_address` AS `store_address`,`stock`.`status` AS `status`,`stock`.`created` AS `created`,`stock`.`createdby` AS `createdby`,`stock`.`updated` AS `updated`,`stock`.`updatedby` AS `updatedby` from (((((`stock` join `m_currency` on((`m_currency`.`id` = `stock`.`currency_id`))) left join `v_stock_tr1` on(((`stock`.`store_id` = `v_stock_tr1`.`store_id`) and (`stock`.`currency_id` = `v_stock_tr1`.`currency_id`) and (`stock`.`nominal` = `v_stock_tr1`.`buy_nominal`) and (`stock`.`stock_year` = `v_stock_tr1`.`stock_year`) and (`stock`.`stock_month` = `v_stock_tr1`.`stock_month`)))) left join `v_stock_tr2` on(((`stock`.`store_id` = `v_stock_tr2`.`store_id`) and (`stock`.`currency_id` = `v_stock_tr2`.`currency_id`) and (`stock`.`nominal` = `v_stock_tr2`.`sell_nominal`) and (`stock`.`stock_year` = `v_stock_tr2`.`stock_year`) and (`stock`.`stock_month` = `v_stock_tr2`.`stock_month`)))) left join `v_stock_tr3` on(((`stock`.`store_id` = `v_stock_tr3`.`store_id`) and (`stock`.`currency_id` = `v_stock_tr3`.`currency_id`) and (`stock`.`nominal` = `v_stock_tr3`.`sell_alocation_nominal`) and (`stock`.`stock_year` = `v_stock_tr3`.`stock_year`) and (`stock`.`stock_month` = `v_stock_tr3`.`stock_month`)))) left join `m_store` on((`m_store`.`id` = `stock`.`store_id`))) group by `m_currency`.`currency_code`,`m_currency`.`currency_name`,`stock`.`currency_id`,`stock`.`store_id`,`stock`.`stock_year`,`stock`.`stock_month`,`stock`.`nominal`;
-
--- ----------------------------
--- View structure for v_stocksale
--- ----------------------------
-DROP VIEW IF EXISTS `v_stocksale`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_stocksale` AS select `v_stock_tr9`.`store_id` AS `store_id`,`v_stock_tr9`.`currency_id` AS `currency_id`,`m_currency`.`currency_code` AS `currency_code`,`m_currency`.`currency_name` AS `currency_name`,`v_stock_tr9`.`nominal` AS `nominal`,`m_currency`.`status` AS `status` from (`v_stock_tr9` join `m_currency` on((`v_stock_tr9`.`currency_id` = `m_currency`.`id`))) where ((`v_stock_tr9`.`last_stock_sheet` > 0) and (`v_stock_tr9`.`stock_year` = year(curdate())) and (`v_stock_tr9`.`stock_month` = month(curdate()))) group by `v_stock_tr9`.`store_id`,`v_stock_tr9`.`currency_id`,`v_stock_tr9`.`nominal`;
+DROP VIEW IF EXISTS `v_stsale`;
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_stsale` AS select `v_st2`.`store_id` AS `store_id`,`v_st2`.`currency_id` AS `currency_id`,`m_currency`.`currency_code` AS `currency_code`,`m_currency`.`currency_name` AS `currency_name`,`v_st2`.`nominal` AS `nominal`,`m_currency`.`status` AS `status` from (`v_st2` join `m_currency` on((`v_st2`.`currency_id` = `m_currency`.`id`))) where ((`v_st2`.`last_stock_sheet` > 0) and (`v_st2`.`stock_year` = year(curdate())) and (`v_st2`.`stock_month` = month(curdate()))) group by `v_st2`.`store_id`,`v_st2`.`currency_id`,`v_st2`.`nominal`;
 
 -- ----------------------------
 -- View structure for v_summary_by_date
@@ -2250,6 +2260,6 @@ CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_tr_detail` AS select `
 -- View structure for v_tr_header
 -- ----------------------------
 DROP VIEW IF EXISTS `v_tr_header`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_tr_header` AS select `tr_header`.`id` AS `id`,`tr_header`.`store_id` AS `store_id`,`tr_header`.`tr_id` AS `tr_id`,`tr_header`.`tr_date` AS `tr_date`,`tr_header`.`tr_number` AS `tr_number`,`tr_header`.`customer_id` AS `customer_id`,`tr_header`.`customer_act_on_id` AS `customer_act_on_id`,`tr_header`.`customer_source` AS `customer_source`,`tr_header`.`customer_purpose` AS `customer_purpose`,`tr_header`.`description` AS `description`,`tr_header`.`status` AS `status`,`m_customer`.`customer_type_id` AS `customer_type_id`,`m_customer`.`job_id` AS `customer_job_id`,`m_customer`.`nationality_id` AS `customer_nationality_id`,`m_customer`.`customer_data_id` AS `customer_data_id`,`tr_header`.`created` AS `created`,`tr_header`.`updated` AS `updated`,`tr_header`.`createdby` AS `createdby`,`tr_header`.`updatedby` AS `updatedby`,`usr1`.`fullname` AS `createdby_name`,`usr2`.`fullname` AS `updatedby_name`,`m_transaction`.`transaction_name` AS `tr_name`,(select (case when (`tr_header`.`status` = 2) then 'Canceled' when (`tr_header`.`status` = 3) then 'Confirm' when (`tr_header`.`status` = 4) then 'Integrasi System ECSys (API)' else 'Task' end)) AS `status_name`,(select sum(((`tr_detail`.`nominal` * `tr_detail`.`sheet`) * `tr_detail`.`price`)) from `tr_detail` where (`tr_detail`.`header_id` = `tr_header`.`id`)) AS `total` from ((((`tr_header` left join `m_transaction` on((`tr_header`.`tr_id` = `m_transaction`.`id`))) left join `m_customer` on((`tr_header`.`customer_id` = `m_customer`.`id`))) left join `auth_users` `usr1` on((`tr_header`.`createdby` = `usr1`.`id`))) left join `auth_users` `usr2` on((`tr_header`.`updatedby` = `usr2`.`id`)));
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_tr_header` AS select `tr_header`.`id` AS `id`,`tr_header`.`store_id` AS `store_id`,`tr_header`.`tr_id` AS `tr_id`,`tr_header`.`tr_date` AS `tr_date`,`tr_header`.`tr_number` AS `tr_number`,`tr_header`.`customer_id` AS `customer_id`,`tr_header`.`customer_act_on_id` AS `customer_act_on_id`,`tr_header`.`customer_source` AS `customer_source`,`tr_header`.`customer_purpose` AS `customer_purpose`,`tr_header`.`description` AS `description`,`tr_header`.`status` AS `status`,`m_customer`.`customer_type_id` AS `customer_type_id`,`m_customer`.`job_id` AS `customer_job_id`,`m_customer`.`nationality_id` AS `customer_nationality_id`,`m_customer`.`customer_data_id` AS `customer_data_id`,`tr_header`.`created` AS `created`,`tr_header`.`updated` AS `updated`,`tr_header`.`createdby` AS `createdby`,`tr_header`.`updatedby` AS `updatedby`,`usr1`.`fullname` AS `createdby_name`,`usr2`.`fullname` AS `updatedby_name`,`m_customer_act_on`.`customer_act_on` AS `customer_act_on`,`m_transaction`.`transaction_name` AS `tr_name`,(select (case when (`tr_header`.`status` = 2) then 'Canceled' when (`tr_header`.`status` = 3) then 'Confirm' when (`tr_header`.`status` = 4) then 'Integrasi System ECSys (API)' else 'Task' end)) AS `status_name`,(select sum(((`tr_detail`.`nominal` * `tr_detail`.`sheet`) * `tr_detail`.`price`)) from `tr_detail` where (`tr_detail`.`header_id` = `tr_header`.`id`)) AS `total` from (((((`tr_header` left join `m_transaction` on((`tr_header`.`tr_id` = `m_transaction`.`id`))) left join `m_customer` on((`tr_header`.`customer_id` = `m_customer`.`id`))) left join `m_customer_act_on` on((`tr_header`.`customer_act_on_id` = `m_customer_act_on`.`id`))) left join `auth_users` `usr1` on((`tr_header`.`createdby` = `usr1`.`id`))) left join `auth_users` `usr2` on((`tr_header`.`updatedby` = `usr2`.`id`)));
 
 SET FOREIGN_KEY_CHECKS = 1;

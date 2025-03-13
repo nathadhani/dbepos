@@ -65,7 +65,8 @@ function show_header(){
                 success: function(data){
                     if (data !== '[]' && data.length > 0){
                         var d = JSON.parse(data)[0];                                                
-                        $('#btn-add-row-detail').prop('disabled', false);                        
+                        $('#btn-add-row-detail').prop('disabled', false);
+                        show_customer();
 
                         $("#created_by").html('Created by : '+d.createdby_name +' | '+d.created);
                         if(d.status == '2'){
@@ -349,31 +350,37 @@ $("#btn-add-row-detail").on('click', function (e) {
     }    
 });
 
-function getstockbyid(){    
-    $.ajax({
-        url: baseUrl + 'transaction/transaction_buysell/getstockbyid',
-        type: 'POST',
-        data: {'currency_id' : $("#currency_id").val(), 'nominal' : $("#nominal").val() },
-        datatype: 'json',
-        success: function(data){
-            if (data !== undefined) {
-                if (data !== '[]' && data.length > 0){
-                    var d = JSON.parse(data)[0];
-                    sisa_stock_sheet = (d.last_stock_sheet === null ? 0 : d.last_stock_sheet);
-                    sisa_stock_amount = (d.last_stock_amount === null ? 0 : d.last_stock_amount);
-                    if(sisa_stock_sheet > 0){
-                        $("#stock_nominal").html(formatRupiah(d.nominal));
-                        $("#stock_sheet").html(formatRupiah(sisa_stock_sheet));
-                        $("#stock_amount").html(formatRupiah(sisa_stock_amount));
-                    }                                                                    
-                }
+function getstockbyid(){
+    if($("#currency_id").val() !== null && $("#currency_id").val() !== ''){
+        if($("#nominal").val() !== null && $("#nominal").val() !== ''){
+            if(Number($("#currency_id").val()) > 0 && Number($("#currency_id").val()) > 0){
+                $.ajax({
+                    url: baseUrl + 'transaction/transaction_buysell/getstockbyid',
+                    type: 'POST',
+                    data: {'currency_id' : $("#currency_id").val(), 'nominal' : $("#nominal").val() },
+                    datatype: 'json',
+                    success: function(data){
+                        if (data !== undefined) {
+                            if (data !== '[]' && data.length > 0){
+                                var d = JSON.parse(data)[0];
+                                sisa_stock_sheet = (d.last_stock_sheet === null ? 0 : d.last_stock_sheet);
+                                sisa_stock_amount = (d.last_stock_amount === null ? 0 : d.last_stock_amount);
+                                if(sisa_stock_sheet > 0){
+                                    $("#stock_nominal").html(formatRupiah(d.nominal));
+                                    $("#stock_sheet").html(formatRupiah(sisa_stock_sheet));
+                                    $("#stock_amount").html(formatRupiah(sisa_stock_amount));
+                                }
+                            }
+                        }
+                    },
+                    error: function(xhr){
+                        alertify.error("error");
+                        StringtoFile(xhr.responseText, 'error');
+                    }
+                });
             }
-        },
-        error: function(xhr){            
-            alertify.error("error");
-            StringtoFile(xhr.responseText, 'error');
         }
-    });
+    }
 }
 
 function back_to_page_task(){

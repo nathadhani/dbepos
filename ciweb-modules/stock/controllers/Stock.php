@@ -45,7 +45,7 @@ class Stock extends Bks_Controller {
         $where[2]['data']  = $bulan;
         $where[2]['sql']   = 'where';
 
-        $this->Bksmdl->table = 'v_stock_tr9';
+        $this->Bksmdl->table = 'v_st2';
         $cpData = $this->Bksmdl->getDataTable($where);
         $this->Bksmdl->outputToJson($cpData);
     }
@@ -67,7 +67,7 @@ class Stock extends Bks_Controller {
                                                 store_name,
                                                 store_address,
                                                 IF(updated IS NULL, created, updated) AS updated
-                                        FROM v_stock_tr9
+                                        FROM v_st2
                                         WHERE store_id = $store_id
                                         AND stock_year = $tahun
                                         AND stock_month = $bulan
