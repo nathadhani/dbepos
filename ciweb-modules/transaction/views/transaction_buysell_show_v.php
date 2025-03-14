@@ -18,7 +18,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">
-                <div class="panel-heading ui-draggable-handle">                                
+                <div class="panel-heading ui-draggable-handle">                        
                     <div class="panel-title-box">
                         <h3>
                             <?php 
@@ -50,9 +50,9 @@
                     <div class="panel-body">   
                         <div class="row">
                             <div class="col-md-6">     
-                                Store : <span id="store_address"></span><br>
-                                Number <span id="tr_number"></span><br>
-                                Date <span id="tr_date"></span><br>
+                                Store :<span id="store_address"></span><br>
+                                Number :<span id="tr_number"></span><br>
+                                Date : <span id="tr_date"></span><br>
                                 Status : <span id="ftitle"></span><br>
                                 Description : <span id="description_header"></span>
                             </div>    

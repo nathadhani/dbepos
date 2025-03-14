@@ -23,10 +23,10 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="form_name" class="control-label col-lg-4">CIF</label>
+                                    <label for="form_name" class="control-label col-lg-4">Register Code</label>
                                     <div class="col-lg-8">
                                         <div class="input-group">
-                                            <input type="text" id="customer_code" name="customer_code" class="form-control" style="width:120px;" readonly>
+                                            <input type="text" id="customer_code" name="customer_code" class="form-control" style="width:150px;" readonly>
                                             <div class="input-group">
                                                 <label class="control-label col-lg-4" style="margin-top:-30px;">Status</label>
                                                 <!-- <div> -->

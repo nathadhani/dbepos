@@ -36,6 +36,7 @@ class Transaction_buysell extends Bks_Controller {
         $Number = 1;
         $thn = SUBSTR($tr_date,0,4);
         $bln = SUBSTR($tr_date,5,2);
+        $day = SUBSTR($tr_date,8,2);
         $storecode  =sprintf("%02d", $store_id);
         $trcode = sprintf("%02d", $tr_id);
         $sql = $this->db->query("SELECT max(right(tr_number,4)) as id
@@ -43,14 +44,15 @@ class Transaction_buysell extends Bks_Controller {
                                  WHERE store_id = $store_id
                                  AND tr_id = $tr_id
                                  AND YEAR(tr_date) = $thn 
-                                 AND MONTH(tr_date) = $bln 
+                                 AND MONTH(tr_date) = $bln
+                                 AND DAY(tr_date) = $day
                                  ")->result();
         if (count($sql) > 0) {
             foreach ($sql as $data) {
                 $Number = intval($data->id) + 1;
             }
         }
-        return SUBSTR($thn,2,2) . $bln . $storecode . $trcode . sprintf("%04d", $Number);
+        return SUBSTR($thn,2,2) . $bln . $day . $storecode . $trcode . sprintf("%04d", $Number);
     }
    
     function insert_header(){
@@ -189,17 +191,8 @@ class Transaction_buysell extends Bks_Controller {
         $header_id = json_decode($postData['header_id']);
         $query = $this->db->query("SELECT * FROM v_tr_detail WHERE customer_id = " . $customer_id . " AND tr_id = " . $tr_id . " AND header_id= " . $header_id ." ORDER BY currency_id, nominal, price ASC")->result();
         echo json_encode($query, true);
-    }
-    
-    function show_customer(){
-        checkIfNotAjax();
-        $this->libauth->check(__METHOD__);
-        $postData = $this->input->post();
-        $customer_id = json_decode($postData['customer_id']);
-        $query = $this->db->query("SELECT * FROM v_m_customer WHERE id = " . $customer_id . " LIMIT 1")->result();
-        echo json_encode($query, true);
-    }
-    
+    }  
+        
     function getstockbyid(){
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);

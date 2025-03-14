@@ -8,7 +8,7 @@
     function back_to_page_show(){
         show_header(id_tr_header);
         show_detail(id_tr_header);
-    }
+    }  
 
     function show_header(id){
         if( typeof(customerId) !== 'undefined') {
@@ -22,9 +22,9 @@
                         if (data !== '[]'){
                             var d = JSON.parse(data)[0];
                             $("body").data("id", d.id);
-                            $("#store_address").html(': '+d.store_address);
-                            $("#tr_number").html(': '+d.tr_number);
-                            $("#tr_date").html(': '+bksfn.revDate(d.tr_date));                            
+                            $("#store_address").html(d.store_address);
+                            $("#tr_number").html(d.tr_number);
+                            $("#tr_date").html(bksfn.revDate(d.tr_date));  
                             $("#ftitle").html(d.status == 2 ? '<span style="color:red;font-weight:bolder;">'+d.status_name+'</span>' : d.status_name);
                             $("#description_header").html(d.description);
 
@@ -71,7 +71,7 @@
                                 $("#cancel_by").html('Canceled by : '+d.updatedby_name +' - '+d.updated);
                             }                            
 
-                            $("#customer_name").html(d.customer_name.trim() + ' ( ' + d.customer_address + ' )');
+                            $("#customer_name").html(d.customer_name.trim() + ' ( ' + d.customer_address.trim() + ' )');
                             $("#customer_act_on").html(d.customer_act_on);
                             $("#customer_source").html(d.customer_source);
                             $("#customer_purpose").html(d.customer_purpose);

@@ -6,7 +6,8 @@ class Customer_form extends Bks_Controller {
         $config = array('modules' => 'transaction', 'jsfiles' => array('customer_form'));
         parent::__construct($config);
         $this->Bksmdl->table = 'm_customer';
-        $this->auth = $this->session->userdata( 'auth' );        
+        $this->auth = $this->session->userdata( 'auth' );
+        $this->store_id = $this->auth['store_id'];
     }
     
     function index() {
@@ -22,16 +23,19 @@ class Customer_form extends Bks_Controller {
         $Number = 1;
         $thn = SUBSTR(Date('Y-m-d'),0,4);
         $bln = SUBSTR(Date('Y-m-d'),5,2);
-        $sql = $this->db->query("SELECT max(right(customer_code,6)) as id 
+        $day = SUBSTR(Date('Y-m-d'),8,2);
+        $storecode  =sprintf("%02d", $this->store_id);
+        $sql = $this->db->query("SELECT max(right(customer_code,4)) as id 
                                  FROM m_customer 
                                  WHERE YEAR(created) = $thn
-                                 AND MONTH(created) = $bln")->result();
+                                 AND MONTH(created) = $bln
+                                 AND DAY(created) = $day")->result();
         if (count($sql) > 0) {
             foreach ($sql as $data) {
                 $Number = intval($data->id) + 1;
             }
         }
-        return SUBSTR($thn,2,2) . $bln . sprintf("%06d", $Number);
+        return SUBSTR($thn,2,2) . $bln . $day . $storecode . sprintf("%04d", $Number);
     } 
 
     function insert() {
@@ -104,7 +108,7 @@ class Customer_form extends Bks_Controller {
         }
     }   
     
-    function getbyid() {
+    function getcustomerbyid() {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();

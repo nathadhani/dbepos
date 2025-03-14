@@ -25,32 +25,32 @@ function reset_form_input(){
     $("#stock_amount").html('');
 }
 
-function show_customer(){
-    if ($("#ftitle").html().substr(0, 3) == "Add") {
-        if( typeof(customerId) !== 'undefined') {
-            if(customerId !== null && customerId !== '') {
-                $.ajax({
-                    url: baseUrl + 'transaction/transaction_buysell/show_customer',
-                    type: 'POST',
-                    data: {'customer_id' : customerId},
-                    datatype: 'json',
-                    success: function(data){
-                        if (data !== '[]' && data.length > 0){
-                            var d = JSON.parse(data)[0];
-                            $("#customer_name").html(d.customer_name.trim() + ' ( ' + d.customer_address.trim() + ' )');
-                        } else {
-                            $("#customer_name").html('');
-                            customerId = null;
-                        }    
-                    },
-                    error: function(xhr){                        
-                        alertify.error("error");
-                        StringtoFile(xhr.responseText, 'error');
-                    }
-                });
+function show_customer($id){
+    if($id !== null && $id !== '') {
+        $.ajax({
+            url: baseUrl + 'transaction/customer_form/getcustomerbyid',
+            type: 'POST',
+            data: {'id' : $id},
+            datatype: 'json',
+            success: function(data){
+                try {
+                    if (data !== '[]' && data.length > 0){
+                        var d = JSON.parse(data)[0];
+                        $("#customer_name").html(d.customer_name.trim() + ' ( ' + d.customer_address.trim() + ' )');
+                    } else {
+                        return 'data customer not found';
+                    }  
+                } catch (e) {
+                    alertify.error("Error parsing JSON"+e);
+                    console.error('Error parsing JSON:', e);
+                }       
+            },
+            error: function(xhr){                        
+                alertify.error("error");
+                StringtoFile(xhr.responseText, 'error');
             }
-        }
-    }    
+        });
+    }
 }
 
 function show_header(){
@@ -66,7 +66,6 @@ function show_header(){
                     if (data !== '[]' && data.length > 0){
                         var d = JSON.parse(data)[0];                                                
                         $('#btn-add-row-detail').prop('disabled', false);
-                        show_customer();
 
                         $("#created_by").html('Created by : '+d.createdby_name +' | '+d.created);
                         if(d.status == '2'){
@@ -76,7 +75,6 @@ function show_header(){
                         $("#tr_date").val(bksfn.revDate(d.tr_date));
                         $('#tr_date').prop('disabled', true);
 
-                        $("#customer_name").html(d.customer_name + ' ( ' + d.customer_address + ' )');
                         if (d.customer_act_on_id != null) {
                             $("#customer_act_on_id").html('<option value="' + d.customer_act_on_id + '">' + d.customer_act_on + '</option>').sel2dma();
                         } else {
@@ -84,6 +82,8 @@ function show_header(){
                         }                
                         $("#customer_source").val(d.customer_source);
                         $("#customer_purpose").val(d.customer_purpose);
+
+                        show_customer(d.customer_id);
 
                         $('#btn-simpan-header').html('Save Task');
                         $("#ftitle").html(d.status_name);
@@ -688,7 +688,7 @@ function back_to_page_ini(){
                                 url: url,
                                 type: 'POST',
                                 success: function(data) {            
-                                    if (data !== '[]') {                        
+                                    if (data !== '[]') {          
                                         show_header();
                                     }
                                 },
@@ -714,7 +714,7 @@ function back_to_page_ini(){
                             url: url,
                             type: 'POST',
                             success: function() {                
-                                show_customer();
+                                show_header();
                             },
                             error: function(xhr){
                                 alertify.error("error");
