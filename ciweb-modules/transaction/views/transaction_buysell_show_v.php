@@ -37,7 +37,7 @@
                             if($get_AP){                                                                          
                                 if($get_AP[0]->api_method === '1') {              
                         ?>
-                            <button id="btn-submit" class="btn btn-success btn btn-sm" style="width:130px;">Submit to ECSys</button>
+                            <button id="btn-submit" class="btn btn-primary btn btn-sm" style="width:130px;">Submit to ECSys</button>
                         <?php
                                 }
                             }

@@ -22,8 +22,9 @@ class Api_ap extends Bks_Controller {
     }
 
     public function ap_login($url){
-        // $data = json_encode(array('username' => 'api.icv', 'password' => 'api.icv')); // For Trial
-        $data = json_encode(array('username' => $this->api_username, 'password' => $this->api_password)); // For Production
+        // $data = json_encode(array('username' => 'api.icv', 'password' => 'api.icv')); // For Trial AP1
+        $data = json_encode(array('username' => 'api.indocev.cgk', 'password' => 'api.indocev.cgk')); // For Trial AP2
+        // $data = json_encode(array('username' => $this->api_username, 'password' => $this->api_password)); // For Production
         $result = $this->Apimdl->callcurl($url, $data, null);
         return $result;
     }
@@ -58,8 +59,8 @@ class Api_ap extends Bks_Controller {
             $tr_date = revDate($postData['tr_date']);
         }                  
 
-        // $url = 'https://api-ecsysdev.angkasapura2.co.id/api/auth/login'; // Trial
-        $url  = 'https://api-ecsys.angkasapura2.co.id/api/auth/login'; // Production
+        $url = 'https://api-ecsysdev.angkasapura2.co.id/api/auth/login'; // Trial
+        // $url  = 'https://api-ecsys.angkasapura2.co.id/api/auth/login'; // Production
         $login = $this->ap_login($url);
         if($login) {
             $resp_login = json_decode($login,true);            
@@ -67,18 +68,18 @@ class Api_ap extends Bks_Controller {
             $token = (isset($resp_login['token']) ? $resp_login['token'] : '');
             if($token !== null && $token !== ''){
                 if($method === 'inputtrx'){
-                    // $url = 'https://api-ecsysdev.angkasapura2.co.id/api/v1/transaction/'; // Trial
-                    $url = 'https://api-ecsys.angkasapura2.co.id/api/v1/transaction/'; // Production
+                    $url = 'https://api-ecsysdev.angkasapura2.co.id/api/v1/transaction/'; // Trial
+                    // $url = 'https://api-ecsys.angkasapura2.co.id/api/v1/transaction/'; // Production
                     $this->ap_input_trx($url, $token, $method, $id);
 
                 } else if($method === 'adjustmenttrx'){
-                    // $url = 'https://api-ecsysdev.angkasapura2.co.id/api/v1/transaction/adjustment'; // Trial
-                    $url = 'https://api-ecsys.angkasapura2.co.id/api/v1/transaction/adjustment'; // Production
+                    $url = 'https://api-ecsysdev.angkasapura2.co.id/api/v1/transaction/adjustment'; // Trial
+                    // $url = 'https://api-ecsys.angkasapura2.co.id/api/v1/transaction/adjustment'; // Production
                     $this->ap_adjustment_trx($url, $token, $method, $id);
 
                 } else if($method === 'gettrx'){
-                    // $url = 'https://api-ecsysdev.angkasapura2.co.id/api/v1/simulation/'; // Trial
-                    $url = 'https://api-ecsys.angkasapura2.co.id/api/v1/simulation/'; // Production
+                    $url = 'https://api-ecsysdev.angkasapura2.co.id/api/v1/simulation/'; // Trial
+                    // $url = 'https://api-ecsys.angkasapura2.co.id/api/v1/simulation/'; // Production
                     $this->db->truncate('trx_api_ap_get');
                     $this->ap_get_trx($url, $token, $company_id, $store_id, $tr_date, $method);
 
@@ -96,20 +97,20 @@ class Api_ap extends Bks_Controller {
 
     public function ap_input_trx($url, $token, $method, $id){
         if($id !== null){
-            $status_trx = 1;
+            $status_trx = 3;
             $get_tr_header = $this->db->select('*')
                                            ->where(array('id'=>$id, 'status' => $status_trx))
                                            ->get('v_tr_header')
                                            ->result_array();
             if(count($get_tr_header) > 0){
                 $store_id = $get_tr_header[0]['store_id'];
-                $get_store_ref_id = $this->db->query("SELECT * FROM m_company_store WHERE id = $store_id")->result();
-                if($get_store_ref_id[0]->store_reference_id !== null){
-                    $store_ref_id = $get_store_ref_id[0]->store_reference_id;
+                $get_store_ref_id = $this->db->query("SELECT * FROM m_store WHERE id = $store_id")->result();
+                if($get_store_ref_id[0]->api_store_id !== null){
+                    $store_ref_id = $get_store_ref_id[0]->api_store_id;
                     $tr_number = $get_tr_header[0]['tr_number'];
 
                     // Get trx detail
-                    $get_tr_detail = $this->db->select('sequence,
+                    $get_tr_detail = $this->db->select('id,
                                                    currency_id,
                                                    currency_code,
                                                    currency_name,
@@ -121,12 +122,13 @@ class Api_ap extends Bks_Controller {
 
                     if(count($get_tr_detail) > 0){
                         $data_detail = array();
+                        $sequence_unique = 1;
                         foreach($get_tr_detail->result_array() as $row) {
                             $r = array(                  
                                         'invoice_no' => $tr_number,
                                         'trans_date' => $get_tr_header[0]['tr_date'],
                                         'trans_time' => $get_tr_header[0]['created'],
-                                        'sequence_unique' => $row['sequence'],
+                                        'sequence_unique' => $sequence_unique,
                                         'item_name' => $row['currency_name'],
                                         'item_code' => $row['currency_id'],
                                         'item_barcode' => '0',
@@ -149,23 +151,26 @@ class Api_ap extends Bks_Controller {
                                         'transaction_amount' => $row['subtotal'],
                                         'currency' => 'IDR',
                                         'rate' => '1',
-                                        'payment_type' => $get_tr_header[0]['payment_type_name'],
+                                        'payment_type' => '',
                                         'payment_by' => $get_tr_header[0]['customer_name'],
                                         'username' => $get_tr_header[0]['createdby_name'],
-                                        'buyer_barcode' => $get_tr_header[0]['flight_barcode'],
+                                        'buyer_barcode' => '',
                                         'buyer_name' => $get_tr_header[0]['customer_name'],
-                                        'buyer_flight_no' => $get_tr_header[0]['flight_no'],
-                                        'buyer_destination' => $get_tr_header[0]['flight_destination_code'],
-                                        'buyer_nationality' => $get_tr_header[0]['nationality_code'],
+                                        'buyer_flight_no' => '',
+                                        'buyer_destination' => '',
+                                        'buyer_nationality' => '',
                                         'remark' => 'Success',
                                         'tax_id' => 'PPN',
-                                        'payment_name' => $get_tr_header[0]['payment_type_name'],
+                                        'payment_name' => '',
                                         'payment_time' => $get_tr_header[0]['created'],
                                         'distance' => '0',
                                         'journey_time' => '0'
                                     );
                             array_push($data_detail, $r);
+                            $sequence_unique++;
                         }
+
+                        var_dump($data_detail);exit;
 
                         $data [] = array(
                                             'store_id' => $store_ref_id,
@@ -173,7 +178,7 @@ class Api_ap extends Bks_Controller {
                                         );
                         $data = array('store' => $data);        
                         $data = json_encode($data);
-                        // $this->Apimdl->exportJSONtofile($tr_number, $data);exit;
+                        $this->Apimdl->exportJSONtofile($tr_number, $data);exit;
 
                         if(isset($data) && count($data) > 0){
                             if(isset($token) && ($token !== null && $token !== '')){
@@ -255,7 +260,7 @@ class Api_ap extends Bks_Controller {
                                  ->get('v_tr_header')->result_array();
             if(count($get_tr_header) > 0){
                 $store_id = $get_tr_header[0]['store_id'];
-                $get_store_ref_id = $this->db->query("SELECT * FROM m_company_store WHERE id = $store_id")->result();
+                $get_store_ref_id = $this->db->query("SELECT * FROM m_store WHERE id = $store_id")->result();
                 if($get_store_ref_id[0]->store_reference_id !== null){
                     $store_ref_id = $get_store_ref_id[0]->store_reference_id;
                     $tr_number = $get_tr_header[0]['tr_number'];
@@ -421,7 +426,7 @@ class Api_ap extends Bks_Controller {
     
     public function ap_get_trx($url, $token, $company_id, $store_id, $tr_date, $method){
         if($store_id !== null){
-            $get_store_ref_id = $this->db->query("SELECT * FROM m_company_store WHERE id = $store_id AND company_id = $company_id")->result();
+            $get_store_ref_id = $this->db->query("SELECT * FROM m_store WHERE id = $store_id AND company_id = $company_id")->result();
             if($get_store_ref_id[0]->store_reference_id !== null){                
                 $store_ref_id = $get_store_ref_id[0]->store_reference_id;                
                 $data = array(
@@ -514,20 +519,19 @@ class Api_ap extends Bks_Controller {
         $this->db->trans_begin();
         if(isset($resArr['user']['store']) && $resArr['user']['store'] !== null){
             foreach ($resArr['user']['store'] as $key => $item) {
-                $store_reference_id = $item['store_id'];
-                $cek_h = $this->db->query("SELECT * FROM m_company_store WHERE store_reference_id = '$store_reference_id' ")->result();
-                if( !isset($cek_h[0]->store_reference_id) ){
+                $api_store_id = $item['store_id'];
+                $cek_h = $this->db->query("SELECT * FROM m_store WHERE api_store_id = '$api_store_id' ")->result();
+                if( !isset($cek_h[0]->api_store_id) ){
                     $data = array(
                                 'company_id' => $company_id,
-                                'store_reference_id' => $item['store_id'],
-                                'store_reference_name' => $item['store_name'],
-                                'register_status' => 1,
+                                'api_store_id' => $api_store_id,
+                                'api_store_name' => $item['store_name'],
                                 'status' => 1,
                                 'created' => date('Y-m-d H:i:s', time()),
                                 'createdby' => $this->userId
                             );
                     if(count($data) > 0){
-                        $response = $this->db->insert('m_company_store', $data);
+                        $response = $this->db->insert('m_store', $data);
                         // echo $this->db->last_query();exit;
                     }
                 }            

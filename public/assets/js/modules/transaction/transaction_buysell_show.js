@@ -41,7 +41,7 @@
                                         $("#btn-pdf").show();
                                         break;
                                     case 3:
-                                        if(Number(Apimethod) == 1){
+                                        if(Number(Apimethod) === 1){                                            
                                             $("#btn-submit").show();
                                         }
                                         $("#btn-cancel").show();

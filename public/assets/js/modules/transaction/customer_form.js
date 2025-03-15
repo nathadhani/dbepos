@@ -227,7 +227,7 @@ $('#upload_foto').on('change',function(e){
         if($("body").data("id") !== null && $("body").data("id") !== '') {
             $("body").data("text_search", '');
             $.ajax({
-                url: baseUrl + 'transaction/customer_form/getbyid',
+                url: baseUrl + 'transaction/customer_form/getcustomerbyid',
                 type: 'POST',
                 data: {'id' : $("body").data("id")},
                 datatype: 'json',
@@ -413,7 +413,7 @@ $("#btn-buy").click(function (e) {
                         $("#btn-sell").hide();
                     } else {
                         $.ajax({
-                            url: baseUrl + 'transaction/customer_form/getbyid',
+                            url: baseUrl + 'transaction/customer_form/getcustomerbyid',
                             type: 'POST',
                             data: {'id' : $("body").data("id")},
                             datatype: 'json',
@@ -454,7 +454,7 @@ $("#btn-buy").click(function (e) {
         });
     } else {
         $.ajax({
-            url: baseUrl + 'transaction/customer_form/getbyid',
+            url: baseUrl + 'transaction/customer_form/getcustomerbyid',
             type: 'POST',
             data: {'id' : $("body").data("id")},
             datatype: 'json',
@@ -505,7 +505,7 @@ $("#btn-sell").click(function (e) {
                         alertify.alert('Peringatan, Pelanggan ini Terdaftar di list DTTOT PPATK...!');
                     } else {
                         $.ajax({
-                            url: baseUrl + 'transaction/customer_form/getbyid',
+                            url: baseUrl + 'transaction/customer_form/getcustomerbyid',
                             type: 'POST',
                             data: {'id' : $("body").data("id")},
                             datatype: 'json',
@@ -546,7 +546,7 @@ $("#btn-sell").click(function (e) {
         });
     } else {
         $.ajax({
-            url: baseUrl + 'transaction/customer_form/getbyid',
+            url: baseUrl + 'transaction/customer_form/getcustomerbyid',
             type: 'POST',
             data: {'id' : $("body").data("id")},
             datatype: 'json',

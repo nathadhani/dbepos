@@ -1,7 +1,6 @@
 var sisa_stock_amount = 0;
 var sisa_stock_sheet = 0;
 var xtr_id = (decrypt(tr_uri_code) === 'buy' ? 1 : decrypt(tr_uri_code) === 'sell' ? 2 : 0);
-
 back_to_page_ini();
 
 function reset_form_header(){    
@@ -81,9 +80,7 @@ function show_header(){
                             $("#customer_act_on_id").html('').sel2dma();
                         }                
                         $("#customer_source").val(d.customer_source);
-                        $("#customer_purpose").val(d.customer_purpose);
-
-                        show_customer(d.customer_id);
+                        $("#customer_purpose").val(d.customer_purpose);                        
 
                         $('#btn-simpan-header').html('Save Task');
                         $("#ftitle").html(d.status_name);
@@ -111,6 +108,7 @@ function show_header(){
                                 $("#btn-cancel").hide();
                                 break;
                         }
+                        show_customer(d.customer_id);
                     } else{                        
                         reset_form_header();
                         var url = "transaction/nasabah/index/";
@@ -714,7 +712,8 @@ function back_to_page_ini(){
                             url: url,
                             type: 'POST',
                             success: function() {                
-                                show_header();
+                                // show_header();
+                                show_customer(customerId);
                             },
                             error: function(xhr){
                                 alertify.error("error");
