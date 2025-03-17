@@ -21,6 +21,28 @@
                     success: function(data){
                         if (data !== '[]'){
                             var d = JSON.parse(data)[0];
+
+                            if(Number(d.status) === 1){ // back to task
+                                if(Number(d.tr_id) === 1){
+                                    url = call_page_task_buy(d.customer_id,d.id);
+                                }
+                                if(Number(d.tr_id) === 2){
+                                    url = call_page_task_sell(d.customer_id,d.id);
+                                }         
+                                if(url !== ''){
+                                    $.ajax({
+                                        url: url,
+                                        type: 'POST',
+                                        success: function() {
+                                            window.open(url,'_self'); 
+                                        },
+                                        error: function(){
+                                            alertify.error("can't open page.!");
+                                        }
+                                    });    
+                                }                       
+                            }
+
                             $("body").data("id", d.id);
                             $("#store_address").html(d.store_address);
                             $("#tr_number").html(d.tr_number);
@@ -151,7 +173,58 @@
                 });
             }
         }        
+    }
+
+    function show_detail_payment(header_id){
+        $('#table-detail tbody').empty();
+        var counter = document.getElementById('table-modal-payment').rows.length;
+        $.ajax({
+            url: baseUrl + 'transaction/transaction_buysell/show_detail_payment',
+            type: 'POST',
+            data: {'header_id' : header_id},
+            dataType: 'json',
+            success: function (data) {
+                if (data !== '[]' && data.length > 0){
+                    var totalpaymentx = 0;
+                    $.each(data, function (i, d) {                 
+                        totalpaymentx += Number(d.amount);
+                        var rows =`<tr id="` + counter + `">
+                                    <td width="5%" style="text-align:center;vertical-align:middle">
+                                        ` + counter + `
+                                    </td>
+                                    <td width="30%" style="vertical-align: middle;color:black">
+                                        ` + d.payment_type_name +`
+                                    </td>
+                                    <td width="15%" style='text-align:left;'>
+                                        ` + (isDecimal(d.amount) ? formatDecimal(d.amount,2) : formatRupiah(d.amount) ) + `
+                                    </td>
+                                    <td width="50%" style='text-align:left;'>
+                                        ` + d.payment_description + `
+                                    </td>
+                                </tr>`
+                        $('#table-modal-payment tbody').append(rows);
+                        counter++;
+                    });
+                    var rowsx =`<tr>
+                                <td colspan="3" style='vertical-align:middle;text-align:center;background-color:#e3e4e6;font-weight:bold;font-size:14px;'>
+                                <i>Say</i> : ` + bksfn.terBilang(totalpaymentx) + `
+                                </td>
+                                <td style='text-align:left;background-color:#f1f5f9;font-weight:bold;font-size:15px;'>
+                                    Rp. ` + formatRupiah(totalpaymentx) + `
+                                </td>                         
+                            </tr>`   
+                    $('#table-modal-payment tbody').append(rowsx);     
+                }else{
+                    return false;
+                }
+            },
+            error: function(xhr){
+                alertify.error("error");
+                StringtoFile(xhr.responseText, 'error');
+            }
+        });
     }    
+    
 
     $("#customer_name").on('click', function (e) {
         e.preventDefault();
@@ -168,32 +241,89 @@
         }); 
     });
 
-    $("#btn-submit").on('click', function (e) {
+    $("#btn-payment").on('click', function (e) {
         e.preventDefault();
-        alertify.confirm("are you sure, Submit to ECSYS applicatoin Angkasapura ?", function (x) {
-            if (x) {
-                api_ap_input_trx(id_tr_header);
-            }
-        });
-    });    
+        $(".modal-dialog").width('1200px');
+        $("#ModalPayment").modal('show');                    
+    });
+    $("#btn-modal-payment-close").on('click', function (e) {
+        e.preventDefault();
+        $("#ModalPayment").modal('hide');
+    });
+    // $("#modal_payment_amount").keyup(function(e) {
+    //     e.preventDefault();
+    //     $(this).val(bksfn.toRp($(this).val()));
+    // }); 
+    $("#btn-modal-add-row-payment").on('click', function (e) {
+        e.preventDefault();
+        if( $("#modal_payment_type").val() === '' || $("#modal_payment_type").val() === null) {
+            bksfn.errMsg('tipe pembayaran belum diinput!');
+        } else if( $("#modal_payment_type").val() === '' || $("#modal_payment_type").val() === null) {
+            bksfn.errMsg('tipe pembayaran belum diinput!');
+        } else {
+            $.post(baseUrl + 'transaction/transaction_buysell/insert_payment', $("#mainFormModalPayment").serialize() + "&header_id=" + id_tr_header, function (obj) {
+                if (obj.msg == 1) {
+                    alertify.success('Data add success!');
+                    show_detail_payment(id_tr_header);
+                } else {
+                    alertify.error("error");
+                    StringtoFile(xhr.responseText, 'error');
+                }
+            }, "json").fail(function (xhr) {        
+                alertify.error("error");
+                StringtoFile(xhr.responseText, 'error');
+            });
+        }
+    });   
+    $("#btn-modal-payment").on('click', function (e) {
+        e.preventDefault();
+        if( document.getElementById('table-modal-payment').rows.length < 2 ) {
+            bksfn.errMsg('pembayaran belum diinput!');
+        } else {            
+            alertify.confirm("are you sure, SAVE payment transaction ?", function (x) {
+                if (x) {$.ajax({
+                        url: baseUrl + 'transaction/transaction_buysell/insert_payment',
+                        type: 'POST',
+                        data: {'id' : id_tr_header},
+                        datatype: 'json',
+                        success: function() {
+                            back_to_page_show();
+                            alertify.success('Payment Transaction Success!');
+                            $("#ModalPayment").modal('hide');                
+                        },
+                        error: function(xhr){
+                            alertify.error("error");
+                            StringtoFile(xhr.responseText, 'error');
+                            back_to_page_show();
+                        }
+                    });                                                    
+                } else {
+                    back_to_page_show();
+                }   
+            });            
+        }          
+    });
 
-    // $("li#btn-cancel").click(function(e) {
     $("#btn-cancel").on('click', function (e) {
         e.preventDefault();
-        $(".modal-dialog").width('800px');
-        $("#ModalCancel").modal('show');                    
+        $(".modal-dialog").width('1000px');
+        $("#ModalCancel").modal('show');
     });    
-    $("#btn-cancel-modal").on('click', function (e) {
+    $("#btn-modal-cancel-close").on('click', function (e) {
         e.preventDefault();
-        if($("#modal-description").val() === '' || $("#modal-description").val() === null ){
-            bksfn.errMsg('Alasan belum di input!');
+        $("#ModalCancel").modal('hide');
+    });    
+    $("#btn-modal-cancel").on('click', function (e) {
+        e.preventDefault();
+        if($("#modal-cancel-description").val() === '' || $("#modal-cancel-description").val() === null ){
+            bksfn.errMsg('Alasan batal belum di input!');
         } else {            
             alertify.confirm("are you sure, CANCEL transaction ?", function (x) {
                 if (x) {
                     $.ajax({
                         url: baseUrl + 'transaction/transaction_buysell/cancel_trx',
                         type: 'POST',
-                        data: {'id' : id_tr_header, 'description' : $("#modal-description").val()},
+                        data: {'id' : id_tr_header, 'description' : $("#modal-cancel-description").val()},
                         datatype: 'json',
                         success: function() {
                             if(Number(Apimethod) == 1){
@@ -235,6 +365,16 @@
                 });                                       
         //     }    
         // });  
-    });   
+    });
+
+    $("#btn-submit").on('click', function (e) {
+        e.preventDefault();
+        alertify.confirm("are you sure, Submit to ECSYS applicatoin Angkasapura ?", function (x) {
+            if (x) {
+                api_ap_input_trx(id_tr_header);
+            }
+        });
+    });    
+
         
 })(jQuery);

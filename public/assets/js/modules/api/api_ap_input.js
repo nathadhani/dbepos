@@ -19,11 +19,7 @@
                     return data;
                 }},
                 {data: 'tr_number',  width: "10%", render: function (data, type, row, meta) {
-                    if(Number(row.createdby) == Number(userId)){
-                        return '<a title="Pilih" href="#">' + data + '</a>';
-                    } else {
-                        return data;
-                    }                    
+                    return data;
                 }},
                 {data: 'tr_date',  width: "10%", render: function (data, type, row, meta) {
                         return bksfn.revDate(data);
@@ -39,8 +35,11 @@
                 }},                
                 {data: 'status_name', width: "10%", render: function (data, type, row, meta) {
                     return data;
-                }},          
-                {data: 'id', visible: false},
+                }},     
+                {data: 'id', className: "dt-body-center", orderable: false, width: "10%", render: function (data, type, row, meta) {
+                        return '<a title="Edit" href="#"><i class="fa fa-edit"></i></a>';
+                    }
+                },     
                 {data: 'tr_id', visible: false},
                 {data: 'customer_id', visible: false},
                 {data: 'tr_name', visible: false},
@@ -53,7 +52,7 @@
 
         // Setup - add a text input to each header cell
         $('#searchid td').each(function () {
-            if ($(this).index() != 0 && $(this).index() != 4) {
+            if ($(this).index() != 0 && $(this).index() != 4 && $(this).index() != 8) {
                 $(this).html('<input style="width:100%" type="text" placeholder="Search" data-id="' + $(this).index() + '" />');
             }            
             if ($(this).index() == 3) {
@@ -83,7 +82,7 @@
         });
 
         //--- Edit Data
-        $('#mainTable').on('click', 'a[title^=Pilih]', function (e) {
+        $('#mainTable').on('click', 'a[title^=Edit]', function (e) {
             e.preventDefault();
             var elm = $(this).closest("tr");
             var d = t.row(elm).data();          

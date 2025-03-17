@@ -547,7 +547,7 @@ function call_page_show_sell(customer_id, id_tr_header){
 
 function back_to_page_show($id){
     $.ajax({
-        url: baseUrl + 'transaction/transaction_buysell_show/getshowid',
+        url: baseUrl + 'transaction/transaction_buysell/getshowid',
         type: 'POST',
         data: {'id' : $id},
         datatype: 'json',
@@ -603,8 +603,8 @@ function api_ap_input_trx(id_tr_header){
                 if (resp !== undefined) {
                     if (resp !== '[]') {
                         if(resp.length > 0) {
-                            // StringtoFile(resp, 'Trx_Record');
-                            back_to_page_show(id_tr_header);
+                            StringtoFile(resp, 'api_input');
+                            // back_to_page_show(id_tr_header);
                         }
                     }
                 }        
@@ -638,7 +638,7 @@ function api_ap_adjustment_trx(id_tr_header){
                 if (resp !== undefined) {
                     if (resp !== '[]') {
                         if(resp.length > 0) {
-                            // StringtoFile(resp, 'Trx_Refund');
+                            // StringtoFile(resp, 'api_adjusment');
                             back_to_page_show(id_tr_header);
                         }                        
                     }

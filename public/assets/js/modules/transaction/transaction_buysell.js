@@ -545,7 +545,7 @@ $('#btn-simpan-header').on('click', function (e) {
 
 $("#btn-confirm").on('click', function (e) {
     e.preventDefault();
-    if( document.getElementById('table-detail').rows.length < 1 ) {
+    if( document.getElementById('table-detail').rows.length < 2 ) {
         bksfn.errMsg("Mata uang belum diinput!");        
     } else {
         alertify.confirm("are you sure, CONFIRM transaction ?", function (x) {

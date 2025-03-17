@@ -321,4 +321,40 @@ class Transaction_buysell extends Bks_Controller {
             echo json_encode($json);
         }            
     }
+
+    function insert_payment(){
+        checkIfNotAjax();
+        // $this->libauth->check(__METHOD__);                
+        $postData = $this->input->post();
+        $header_id = $postData['header_id'];
+        $postData['payment_type'] = $postData['modal_payment_type'];
+        $postData['payment_description'] = $postData['modal_payment_description'];
+        $postData['amount'] = $postData['modal_payment_amount'];
+        if (strpos($postData['modal_payment_amount'], ',') !== false) {
+            $postData['amount'] = str_replace(',','.',$postData['modal_payment_amount']);
+        }
+        $postData['status'] = '1';                  
+        $this->db->trans_begin();
+        $this->Bksmdl->table = 'tr_payment';
+        $response = $this->Bksmdl->insert($postData);
+        if ($this->db->trans_status() === FALSE) {
+            $this->db->trans_rollback();
+            $err = $this->db->error();
+            $json['msg'] = $err['code'] . '<br>' . $err['message'];
+            echo json_encode($json);
+        } else {
+            $this->db->trans_commit();
+            $json['msg'] = '1';
+            echo json_encode($json);
+        }
+    }
+
+    function show_detail_payment(){
+        checkIfNotAjax();
+        // $this->libauth->check(__METHOD__);
+        $postData = $this->input->post();
+        $header_id = json_decode($postData['header_id']);
+        $query = $this->db->query("SELECT * FROM tr_payment WHERE header_id= " . $header_id ." ORDER BY payment_type ASC")->result();
+        echo json_encode($query, true);
+    }
 }

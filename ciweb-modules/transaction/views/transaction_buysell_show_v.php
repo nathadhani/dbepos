@@ -31,6 +31,7 @@
                         </h3>
                     </div>
                     <ul class="panel-controls">
+                        <button id="btn-cancel" class="btn btn-danger btn btn-sm" style="width:130px;">Cancel</button>
                         <?php
                             $store_id = $auth['store_id'];
                             $get_AP = $this->db->query("SELECT api_angkasapura, api_method FROM m_store WHERE id = $store_id ")->result(); 
@@ -41,9 +42,7 @@
                         <?php
                                 }
                             }
-                        ?>                                                                                                                      
-                        <button id="btn-cancel" class="btn btn-danger btn btn-sm" style="width:120px;">Cancel</button>
-                        <button id="btn-pdf" class="btn btn-success btn btn-sm" style="width:120px;">Print</button>
+                        ?>
                     </ul>    
                 </div>
                 <form id="mainForm" class="form-horizontal" autocomplete="off">
@@ -92,10 +91,12 @@
 
                         <div class="row" style="margin-top:-10px;">
                             <div class="col-md-6">                     
-                                <span id="created_by"></span>
-                            </div>
-                            <div class="col-md-6">                     
+                                <span id="created_by"></span><br>
                                 <span id="cancel_by" class="pull-right"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <button id="btn-pdf" class="btn btn-success btn btn-sm pull-right" style="width:120px;margin-left:5px;">Print</button>
+                                <button id="btn-payment" class="btn btn-warning btn btn-sm pull-right" style="width:120px;margin-left:5px;">Payment</button>
                             </div>
                         </div>
 
@@ -162,32 +163,115 @@
 <div class="modal fade" id="ModalCancel" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Reason</h4>
-            </div>
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <form id="mainForm" class="form-horizontal" autocomplete="off">
-                            <div class="panel panel-default">
-                                <div class="panel-body">
-                                    <div class="row">                        
-                                        <div class="col-lg-12">
-                                            <div class="form-group">                                
-                                                <div class="col-lg-10">
-                                                    <label for="modal-description" style="display:block">Reason Cancel</label>
-                                                    <input type="text" autofocuse="" id="modal-description" name="modal-description" class="form-control" placeholder="Alasan Batal..." required>
-                                                </div>
-                                                <div class="col-lg-2">
-                                                    <button id="btn-cancel-modal" class="btn btn-danger btn btn-sm" style="width:120px;">Submit</button>
-                                                </div>
-                                            </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading ui-draggable-handle">                        
+                                <div class="panel-title-box">
+                                    <h3>
+                                        Reason Cancel
+                                    </h3>
+                                </div>
+                                <ul class="panel-controls">
+                                    <button id="btn-modal-cancel" class="btn btn-primary btn btn-sm" style="width:120px;margin-left:5px;">Save</button>
+                                    <button id="btn-modal-cancel-close" class="btn btn-default btn btn-sm" style="width:120px;margin-left:5px;">Close</button>
+                                </ul>    
+                            </div>
+                            <form id="mainFormCancel" class="form-horizontal" autocomplete="off">
+                                <div class="panel-body">   
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <input type="text" autofocuse="" id="modal-cancel-description" name="modal-cancel-description" class="form-control" placeholder="Alasan Batal..." required>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ModalPayment" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Payment</h4>
+            </div> -->
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading ui-draggable-handle">                        
+                                <div class="panel-title-box">
+                                    <h3>
+                                        Payment
+                                    </h3>
+                                </div>
+                                <ul class="panel-controls">
+                                    <button id="btn-modal-payment" class="btn btn-primary btn btn-sm" style="width:120px;margin-left:5px;">Save</button>
+                                    <button id="btn-modal-payment-close" class="btn btn-default btn btn-sm" style="width:120px;margin-left:5px;">Close</button>
+                                </ul>    
+                            </div>                            
+                            <div class="panel-body">   
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <table class="table table-bordered" cellspacing="0" width="100%">
+                                            <thead>
+                                                <tr>
+                                                    <th style='vertical-align:middle;text-align:left;'>Payment Type</th>
+                                                    <th style='vertical-align:middle;text-align:left;'>Payment Value</th>
+                                                    <th style='vertical-align:middle;text-align:left;'>Payment Description</th>
+                                                    <th id="act-title" style='vertical-align:middle;text-align:center;' width="50px">Action</th>
+                                                </tr>
+                                            </thead>                                                
+                                            <tbody>  
+                                                <form id="mainFormModalPayment" class="form-horizontal" autocomplete="off">     
+                                                    <tr style="background:#ffffff;">
+                                                        <td width="30%">                                                    
+                                                            <select class="form-control" style="width: 100%" id="modal_payment_type" name="modal_payment_type">
+                                                                <option value="" />-- Pilih --
+                                                                <option value="1" />Cash
+                                                                <option value="2" />Transfer
+                                                            </select>
+                                                        </td>                                                                                                
+                                                        <td width="15%">
+                                                            <input type="text" id="modal_payment_amount" name="modal_payment_amount" class="form-control">
+                                                        </td>
+                                                        <td width="45%">
+                                                            <input type="text" id="modal_payment_description" name="modal_payment_description" class="form-control">
+                                                        </td>
+                                                        <td width="10%" style='text-align:center'>
+                                                            <button id="btn-modal-add-row-payment" class="btn btn-primary btn btn-sm" style="width:90px;">Add</button>
+                                                        </td>                
+                                                    </tr>
+                                                </form>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 table-responsive">
+                                        <table class="table table-bordered table-condensed table-hover" width="100%" id="table-modal-payment">
+                                            <thead>
+                                                <tr style="background:#f1f5f9;">
+                                                    <td style='vertical-align: middle;text-align:center;'>#</td>
+                                                    <th style='vertical-align:middle;text-align:left;'>Payment Type</th>
+                                                    <th style='vertical-align:middle;text-align:left;'>Payment Value</th>
+                                                    <th style='vertical-align:middle;text-align:left;'>Payment Description</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>                                                
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>                            
+                        </div>
                     </div>
                 </div>
             </div>

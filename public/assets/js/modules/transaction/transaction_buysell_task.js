@@ -39,7 +39,7 @@
                 }},          
                 {data: 'id', className: "dt-body-center", orderable: false, width: "10%", render: function (data, type, row, meta) {
                         if(Number(row.createdby) == Number(userId)){
-                            return '<a title="Pilih" href="#"><i class="fa fa-edit"></i></a>';
+                            return '<a title="Edit" href="#"><i class="fa fa-edit"></i></a>';
                         } else {
                             return '<i class="fa fa-ban" style="color:red;font-weight:bold;" title="only user who created the transaction can edit"></i>';
                         }                        
@@ -87,7 +87,7 @@
         });
 
         //--- Edit Data
-        $('#mainTable').on('click', 'a[title^=Pilih]', function (e) {
+        $('#mainTable').on('click', 'a[title^=Edit]', function (e) {
             e.preventDefault();
             var elm = $(this).closest("tr");
             var d = t.row(elm).data();

@@ -16,15 +16,13 @@ class Api_ap extends Bks_Controller {
             $this->api_username = 'api.indocev.cgk';
             $this->api_password = 'api.indocev.cgk';    
 
-            // $this->api_username = 'api.indocev.sub';
-            // $this->api_password = 'api.indocev.sub';    
+            // $this->api_username = 'api.icv';
+            // $this->api_password = 'api.icv';    
         }
     }
 
     public function ap_login($url){
-        // $data = json_encode(array('username' => 'api.icv', 'password' => 'api.icv')); // For Trial AP1
-        $data = json_encode(array('username' => 'api.indocev.cgk', 'password' => 'api.indocev.cgk')); // For Trial AP2
-        // $data = json_encode(array('username' => $this->api_username, 'password' => $this->api_password)); // For Production
+        $data = json_encode(array('username' => $this->api_username, 'password' => $this->api_password));
         $result = $this->Apimdl->callcurl($url, $data, null);
         return $result;
     }
@@ -170,21 +168,20 @@ class Api_ap extends Bks_Controller {
                             $sequence_unique++;
                         }
 
-                        var_dump($data_detail);exit;
-
                         $data [] = array(
                                             'store_id' => $store_ref_id,
                                             'transactions' => $data_detail
                                         );
                         $data = array('store' => $data);        
                         $data = json_encode($data);
-                        $this->Apimdl->exportJSONtofile($tr_number, $data);exit;
+                        // $this->Apimdl->exportJSONtofile($tr_number, $data);exit;
+                        var_dump($data_detail);exit;
 
                         if(isset($data) && count($data) > 0){
                             if(isset($token) && ($token !== null && $token !== '')){
-                                $result = $this->Apimdl->callcurl($url, $data, $token);
+                                // $result = $this->Apimdl->callcurl($url, $data, $token);
                                 $resArr = json_decode($result,true);
-                                // echo json_encode($resArr);
+                                echo json_encode($resArr);
 
                                 $resp_status = $resArr['status'];
                                 $resp_success_insert = $resArr['success_insert'];
