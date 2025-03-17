@@ -1,7 +1,7 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : mySQL
+ Source Server         : MYSQL
  Source Server Type    : MySQL
  Source Server Version : 80030
  Source Host           : localhost:3306
@@ -11,7 +11,7 @@
  Target Server Version : 80030
  File Encoding         : 65001
 
- Date: 17/03/2025 07:03:05
+ Date: 17/03/2025 16:51:38
 */
 
 SET NAMES utf8mb4;
@@ -788,7 +788,7 @@ CREATE TABLE `auth_users`  (
 -- ----------------------------
 INSERT INTO `auth_users` VALUES (1, '8989', 'f794bdbef7990b5112e526b5cd4ea67f4a35af21', NULL, 1, 1, 0, NULL, '', NULL, NULL, NULL, NULL, 1, '2025-02-23 13:58:46', NULL, NULL, NULL);
 INSERT INTO `auth_users` VALUES (2, 'konsolidasi', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 2, 1, 0, '1,2,3,4', 'Konsolidasi', '', '', NULL, NULL, 1, '2025-02-23 13:58:46', NULL, '2025-03-07 12:10:06', 1);
-INSERT INTO `auth_users` VALUES (3, 'admin', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 3, 1, 1, NULL, 'Admin', '', '', '2025-03-16 05:46:48', NULL, 1, '2025-02-23 13:58:46', NULL, '2025-03-07 12:10:19', 1);
+INSERT INTO `auth_users` VALUES (3, 'admin', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 3, 1, 1, NULL, 'Admin', '', '', '2025-03-17 15:03:15', NULL, 1, '2025-02-23 13:58:46', NULL, '2025-03-07 12:10:19', 1);
 INSERT INTO `auth_users` VALUES (4, 'konter', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 4, 2, 1, NULL, 'Counter', '', '', '2025-03-14 11:45:23', NULL, 1, '2025-02-23 13:58:46', NULL, '2025-03-07 12:10:34', 1);
 INSERT INTO `auth_users` VALUES (5, 'kasir', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 5, 1, 1, NULL, 'Cashier', '', '', '2025-03-10 21:17:34', NULL, 1, '2025-03-06 13:05:41', 1, '2025-03-07 12:10:24', 1);
 INSERT INTO `auth_users` VALUES (6, 'ap1', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 6, 1, 0, '3,4', 'Angkasa Pura 1', '', '', '2025-03-07 04:23:59', NULL, 1, '2025-03-06 13:06:45', 1, '2025-03-07 12:10:12', 1);
@@ -807,6 +807,7 @@ CREATE TABLE `log_auth`  (
 -- ----------------------------
 -- Records of log_auth
 -- ----------------------------
+INSERT INTO `log_auth` VALUES (3, 'login', '2025-03-17 15:03:15', '::1');
 
 -- ----------------------------
 -- Table structure for log_auth_sessions
@@ -822,6 +823,7 @@ CREATE TABLE `log_auth_sessions`  (
 -- ----------------------------
 -- Records of log_auth_sessions
 -- ----------------------------
+INSERT INTO `log_auth_sessions` VALUES ('vru9ohifgdn0ak4jeb100ivbbklvak6v', '::1', 1742200763, 'auth|a:27:{s:2:\"id\";s:1:\"3\";s:8:\"username\";s:5:\"admin\";s:8:\"password\";s:40:\"40bd001563085fc35165329ea1ff5c5ecbdbbeef\";s:12:\"usergroup_id\";s:1:\"3\";s:13:\"usergroupname\";s:5:\"Admin\";s:12:\"userlevel_id\";s:1:\"1\";s:13:\"userlevelname\";s:5:\"Admin\";s:8:\"fullname\";s:5:\"Admin\";s:5:\"email\";s:0:\"\";s:8:\"celluler\";s:0:\"\";s:8:\"store_id\";s:1:\"1\";s:10:\"store_name\";s:31:\"PT. INDONESIA CENTRAL VALUTAMAS\";s:13:\"store_address\";s:48:\"Terminal 2F - Shopping Arcade Dep Soekarno Hatta\";s:10:\"api_method\";s:1:\"1\";s:15:\"api_angkasapura\";s:3:\"AP2\";s:12:\"api_username\";s:15:\"api.indocev.cgk\";s:12:\"api_password\";s:15:\"api.indocev.cgk\";s:17:\"store_id_multiple\";N;s:24:\"store_id_multiple_object\";N;s:6:\"status\";s:1:\"1\";s:7:\"lastlog\";s:19:\"2025-03-16 05:46:48\";s:7:\"chgpass\";N;s:7:\"created\";s:19:\"2025-02-23 13:58:46\";s:7:\"updated\";s:19:\"2025-03-07 12:10:19\";s:9:\"createdby\";N;s:9:\"updatedby\";s:1:\"1\";s:7:\"expired\";i:1742229563;}roles|a:140:{i:0;s:11:\"Home::index\";i:1;s:18:\"Change_pass::index\";i:2;s:19:\"Change_pass::update\";i:3;s:20:\"Customer_form::index\";i:4;s:28:\"Customer_form::generate_code\";i:5;s:21:\"Customer_form::insert\";i:6;s:21:\"Customer_form::update\";i:7;s:21:\"Customer_form::delete\";i:8;s:15:\"Customer::index\";i:9;s:26:\"Transaction_buysell::index\";i:10;s:39:\"Transaction_buysell::generate_code_temp\";i:11;s:42:\"Transaction_buysell::generate_code_confirm\";i:12;s:34:\"Transaction_buysell::insert_header\";i:13;s:34:\"Transaction_buysell::update_header\";i:14;s:34:\"Transaction_buysell::insert_detail\";i:15;s:34:\"Transaction_buysell::delete_detail\";i:16;s:32:\"Transaction_buysell::show_header\";i:17;s:32:\"Transaction_buysell::show_detail\";i:18;s:33:\"Transaction_buysell::getstockbyid\";i:19;s:32:\"Transaction_buysell::getratebyid\";i:20;s:30:\"Transaction_buysell::getshowid\";i:21;s:33:\"Transaction_buysell::confirm_task\";i:22;s:31:\"Transaction_buysell_list::index\";i:23;s:31:\"Transaction_buysell_show::index\";i:24;s:35:\"Transaction_buysell_show::getshowid\";i:25;s:37:\"Transaction_buysell_show::show_header\";i:26;s:37:\"Transaction_buysell_show::show_detail\";i:27;s:46:\"Transaction_buysell_show::generateRandomString\";i:28;s:40:\"Transaction_buysell_show::printdotmatrix\";i:29;s:34:\"Transaction_buysell_show::printpdf\";i:30;s:31:\"Transaction_buysell_task::index\";i:31;s:30:\"Summary_buysell_by_date::index\";i:32;s:33:\"Summary_buysell_by_date::gettotal\";i:33;s:33:\"Summary_buysell_by_date::getcount\";i:34;s:31:\"Summary_buysell_by_month::index\";i:35;s:34:\"Summary_buysell_by_month::gettotal\";i:36;s:34:\"Summary_buysell_by_month::getcount\";i:37;s:30:\"Summary_buysell_by_year::index\";i:38;s:33:\"Summary_buysell_by_year::gettotal\";i:39;s:33:\"Summary_buysell_by_year::getcount\";i:40;s:24:\"Dashboard_buysell::index\";i:41;s:33:\"Dashboard_buysell::getlastupdated\";i:42;s:32:\"Dashboard_buysell::getdatatable1\";i:43;s:28:\"Dashboard_buysell::getchart1\";i:44;s:32:\"Dashboard_buysell::getdatatable2\";i:45;s:28:\"Dashboard_buysell::getchart2\";i:46;s:12:\"Stock::index\";i:47;s:12:\"Stock::excel\";i:48;s:22:\"Stock_calculate::index\";i:49;s:36:\"Stock_calculate::generate_stock_pull\";i:50;s:37:\"Stock_calculate::generate_stock_price\";i:51;s:18:\"Ppatk_dttot::index\";i:52;s:19:\"Ppatk_dttot::insert\";i:53;s:19:\"Ppatk_dttot::update\";i:54;s:19:\"Ppatk_dttot::delete\";i:55;s:18:\"Stock_price::index\";i:56;s:29:\"Stock_price::getcurrencystock\";i:57;s:18:\"Stock_price::excel\";i:58;s:23:\"Customer_form::add_foto\";i:59;s:32:\"Summary_buysell_by_date::getdata\";i:60;s:33:\"Summary_buysell_by_month::getdata\";i:61;s:32:\"Summary_buysell_by_year::getdata\";i:62;s:33:\"Transaction_buysell_list::getdata\";i:63;s:31:\"Transaction_buysell_list::excel\";i:64;s:35:\"Transaction_buysell_show::printnota\";i:65;s:17:\"Customer::getdata\";i:66;s:24:\"M_customer_act_on::index\";i:67;s:25:\"M_customer_act_on::insert\";i:68;s:25:\"M_customer_act_on::update\";i:69;s:25:\"M_customer_act_on::delete\";i:70;s:26:\"M_customer_act_on::getdata\";i:71;s:22:\"M_customer_data::index\";i:72;s:23:\"M_customer_data::insert\";i:73;s:23:\"M_customer_data::update\";i:74;s:23:\"M_customer_data::delete\";i:75;s:24:\"M_customer_data::getdata\";i:76;s:29:\"M_customer_data::getidentitas\";i:77;s:21:\"M_customer_job::index\";i:78;s:22:\"M_customer_job::insert\";i:79;s:22:\"M_customer_job::update\";i:80;s:22:\"M_customer_job::delete\";i:81;s:23:\"M_customer_job::getdata\";i:82;s:22:\"M_customer_job::getjob\";i:83;s:22:\"M_customer_type::index\";i:84;s:23:\"M_customer_type::insert\";i:85;s:23:\"M_customer_type::update\";i:86;s:23:\"M_customer_type::delete\";i:87;s:24:\"M_customer_type::getdata\";i:88;s:24:\"M_customer_type::gettype\";i:89;s:22:\"M_exchange_rate::index\";i:90;s:23:\"M_exchange_rate::insert\";i:91;s:23:\"M_exchange_rate::update\";i:92;s:23:\"M_exchange_rate::delete\";i:93;s:24:\"M_exchange_rate::getdata\";i:94;s:20:\"M_nationality::index\";i:95;s:21:\"M_nationality::insert\";i:96;s:21:\"M_nationality::update\";i:97;s:21:\"M_nationality::delete\";i:98;s:22:\"M_nationality::getdata\";i:99;s:29:\"M_nationality::getnationality\";i:100;s:21:\"M_payment_type::index\";i:101;s:22:\"M_payment_type::insert\";i:102;s:22:\"M_payment_type::update\";i:103;s:22:\"M_payment_type::delete\";i:104;s:23:\"M_payment_type::getdata\";i:105;s:30:\"M_payment_type::getpaymenttype\";i:106;s:12:\"Store::index\";i:107;s:18:\"M_currency::insert\";i:108;s:18:\"M_currency::update\";i:109;s:18:\"M_currency::delete\";i:110;s:19:\"M_currency::getdata\";i:111;s:27:\"M_currency::getcurrencybyid\";i:112;s:23:\"M_currency::getcurrency\";i:113;s:26:\"M_currency::getcurrencytrx\";i:114;s:14:\"Store::getdata\";i:115;s:20:\"Ppatk_dttot::getdata\";i:116;s:14:\"Stock::getdata\";i:117;s:20:\"Stock_price::getdata\";i:118;s:33:\"Transaction_buysell_task::getdata\";i:119;s:15:\"Customer::excel\";i:120;s:31:\"Transaction_buysell::cancel_trx\";i:121;s:26:\"Customer_form::ceknikdttot\";i:122;s:17:\"M_currency::index\";i:123;s:18:\"M_store::getregion\";i:124;s:22:\"Closing_buysell::index\";i:125;s:32:\"Closing_buysell::closing_trxdate\";i:126;s:27:\"M_customer_act_on::getacton\";i:127;s:34:\"Transaction_buysell::cekclosingtrx\";i:128;s:30:\"Customer_form::getcustomerbyid\";i:129;s:16:\"Api_ap::ap_login\";i:130;s:19:\"Api_ap::ap_post_api\";i:131;s:20:\"Api_ap::ap_input_trx\";i:132;s:25:\"Api_ap::ap_adjustment_trx\";i:133;s:18:\"Api_ap::ap_get_trx\";i:134;s:24:\"Api_ap_adjustment::index\";i:135;s:26:\"Api_ap_adjustment::getdata\";i:136;s:17:\"Api_ap_get::index\";i:137;s:17:\"Api_ap_get::excel\";i:138;s:19:\"Api_ap_input::index\";i:139;s:21:\"Api_ap_input::getdata\";}');
 
 -- ----------------------------
 -- Table structure for m_currency
@@ -907,7 +909,7 @@ CREATE TABLE `m_customer`  (
 -- ----------------------------
 -- Records of m_customer
 -- ----------------------------
-INSERT INTO `m_customer` VALUES (1, 1, '250314010001', '081395627817', '', 'Gede', '', 'Jakarta', '', '', '', '', '', '2025-03-14', 0, NULL, NULL, NULL, '', '', NULL, '', 1, '2025-03-14 11:19:13', '2025-03-15 13:17:04', 3, 3);
+INSERT INTO `m_customer` VALUES (1, 1, '250314010001', '081395627817', '', 'Gede', '', 'Jakarta', '', '', '', '', '', '2025-03-14', 0, NULL, NULL, NULL, '', '', NULL, '', 1, '2025-03-14 11:19:13', '2025-03-17 15:09:31', 3, 3);
 
 -- ----------------------------
 -- Table structure for m_customer_act_on
@@ -1437,8 +1439,8 @@ CREATE TABLE `m_transaction_date`  (
 -- ----------------------------
 -- Records of m_transaction_date
 -- ----------------------------
-INSERT INTO `m_transaction_date` VALUES (2, 1, 2, '2025-03-15', 1, '2025-03-05 16:03:58', '2025-03-15 13:17:12', 1, 3);
-INSERT INTO `m_transaction_date` VALUES (3, 1, 1, '2025-03-15', 1, '2025-03-05 16:06:33', '2025-03-15 13:17:12', 1, 3);
+INSERT INTO `m_transaction_date` VALUES (2, 1, 2, '2025-03-17', 1, '2025-03-05 16:03:58', '2025-03-17 15:09:38', 1, 3);
+INSERT INTO `m_transaction_date` VALUES (3, 1, 1, '2025-03-17', 1, '2025-03-05 16:06:33', '2025-03-17 15:09:38', 1, 3);
 
 -- ----------------------------
 -- Table structure for ppatk_dttot
@@ -2026,6 +2028,12 @@ CREATE TABLE `stock`  (
 -- ----------------------------
 -- Records of stock
 -- ----------------------------
+INSERT INTO `stock` VALUES (7, 1, 1, 2025, 3, 100, 0, 1, '2025-03-17 15:10:59', 3, NULL, NULL);
+INSERT INTO `stock` VALUES (8, 1, 1, 2025, 4, 100, 10, 1, '2025-03-17 15:10:59', 3, '2025-03-17 15:10:59', 3);
+INSERT INTO `stock` VALUES (9, 7, 1, 2025, 3, 100, 0, 1, '2025-03-17 15:10:59', 3, NULL, NULL);
+INSERT INTO `stock` VALUES (10, 7, 1, 2025, 4, 100, 50, 1, '2025-03-17 15:10:59', 3, '2025-03-17 15:10:59', 3);
+INSERT INTO `stock` VALUES (11, 21, 1, 2025, 3, 500, 0, 1, '2025-03-17 15:10:59', 3, NULL, NULL);
+INSERT INTO `stock` VALUES (12, 21, 1, 2025, 4, 500, 6, 1, '2025-03-17 15:10:59', 3, '2025-03-17 15:10:59', 3);
 
 -- ----------------------------
 -- Table structure for stock_price
@@ -2082,6 +2090,9 @@ CREATE TABLE `tr_detail`  (
 -- ----------------------------
 -- Records of tr_detail
 -- ----------------------------
+INSERT INTO `tr_detail` VALUES (3, 2, 1, 100, 10, 16000.00, 16000000.00, 3, '2025-03-17 15:10:24', '2025-03-17 15:10:59', 3, 3);
+INSERT INTO `tr_detail` VALUES (4, 2, 7, 100, 50, 13000.00, 65000000.00, 3, '2025-03-17 15:10:36', '2025-03-17 15:10:59', 3, 3);
+INSERT INTO `tr_detail` VALUES (5, 2, 21, 500, 6, 0.50, 1500.00, 3, '2025-03-17 15:10:56', '2025-03-17 15:10:59', 3, 3);
 
 -- ----------------------------
 -- Table structure for tr_header
@@ -2109,6 +2120,7 @@ CREATE TABLE `tr_header`  (
 -- ----------------------------
 -- Records of tr_header
 -- ----------------------------
+INSERT INTO `tr_header` VALUES (2, 1, 1, '2025-03-17', '25031701010001', 1, 1, 'Tabungan', 'Investasi', NULL, 3, '2025-03-17 15:10:16', '2025-03-17 15:10:59', 3, 3);
 
 -- ----------------------------
 -- Table structure for tr_log_api
@@ -2155,6 +2167,7 @@ CREATE TABLE `tr_payment`  (
 -- ----------------------------
 -- Records of tr_payment
 -- ----------------------------
+INSERT INTO `tr_payment` VALUES (1, 2, 1, 'Pembayaran Tunai', 81001500.00, 0, 1, '2025-03-17 15:24:58', NULL, 3, NULL);
 
 -- ----------------------------
 -- View structure for v_auth_group_role
@@ -2275,5 +2288,11 @@ CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_tr_detail` AS select `
 -- ----------------------------
 DROP VIEW IF EXISTS `v_tr_header`;
 CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_tr_header` AS select `tr_header`.`id` AS `id`,`tr_header`.`store_id` AS `store_id`,`tr_header`.`tr_id` AS `tr_id`,`tr_header`.`tr_date` AS `tr_date`,`tr_header`.`tr_number` AS `tr_number`,`tr_header`.`customer_id` AS `customer_id`,`tr_header`.`customer_act_on_id` AS `customer_act_on_id`,`tr_header`.`customer_source` AS `customer_source`,`tr_header`.`customer_purpose` AS `customer_purpose`,`tr_header`.`description` AS `description`,`tr_header`.`status` AS `status`,`tr_header`.`created` AS `created`,`tr_header`.`updated` AS `updated`,`tr_header`.`createdby` AS `createdby`,`tr_header`.`updatedby` AS `updatedby`,`m_store`.`store_address` AS `store_address`,`m_store`.`api_method` AS `api_method`,`m_customer`.`customer_code` AS `customer_code`,`m_customer`.`customer_name` AS `customer_name`,`m_customer`.`customer_address` AS `customer_address`,`m_customer`.`customer_type_id` AS `customer_type_id`,`m_customer`.`job_id` AS `customer_job_id`,`m_customer`.`nationality_id` AS `customer_nationality_id`,`m_customer`.`customer_data_id` AS `customer_data_id`,`m_customer_act_on`.`customer_act_on` AS `customer_act_on`,`m_transaction`.`transaction_name` AS `tr_name`,`usr1`.`fullname` AS `createdby_name`,`usr2`.`fullname` AS `updatedby_name`,(select (case when (`tr_header`.`status` = 2) then 'Canceled' when (`tr_header`.`status` = 3) then 'Confirm' when (`tr_header`.`status` = 9) then 'Integrasi System ECSys (API)' else 'Task' end)) AS `status_name`,(select sum(((`tr_detail`.`nominal` * `tr_detail`.`sheet`) * `tr_detail`.`price`)) from `tr_detail` where (`tr_detail`.`header_id` = `tr_header`.`id`)) AS `total` from ((((((`tr_header` join `m_store` on((`tr_header`.`store_id` = `m_store`.`id`))) left join `m_transaction` on((`tr_header`.`tr_id` = `m_transaction`.`id`))) left join `m_customer` on((`tr_header`.`customer_id` = `m_customer`.`id`))) left join `m_customer_act_on` on((`tr_header`.`customer_act_on_id` = `m_customer_act_on`.`id`))) left join `auth_users` `usr1` on((`tr_header`.`createdby` = `usr1`.`id`))) left join `auth_users` `usr2` on((`tr_header`.`updatedby` = `usr2`.`id`)));
+
+-- ----------------------------
+-- View structure for v_tr_payment
+-- ----------------------------
+DROP VIEW IF EXISTS `v_tr_payment`;
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_tr_payment` AS select `tr_payment`.`id` AS `id`,`tr_payment`.`header_id` AS `header_id`,`tr_payment`.`payment_type` AS `payment_type`,`tr_payment`.`payment_description` AS `payment_description`,`tr_payment`.`amount` AS `amount`,`tr_payment`.`cashier_id` AS `cashier_id`,`tr_payment`.`status` AS `status`,`tr_payment`.`created` AS `created`,`tr_payment`.`updated` AS `updated`,`tr_payment`.`createdby` AS `createdby`,`tr_payment`.`updatedby` AS `updatedby`,`m_payment_type`.`payment_type_name` AS `payment_type_name` from (`tr_payment` join `m_payment_type` on((`tr_payment`.`payment_type` = `m_payment_type`.`id`)));
 
 SET FOREIGN_KEY_CHECKS = 1;

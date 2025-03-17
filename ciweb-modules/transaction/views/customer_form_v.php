@@ -21,7 +21,7 @@
                     </div>                    
                     <div class="panel-body">                        
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-6">                                
                                 <div class="form-group">
                                     <label for="form_name" class="control-label col-lg-4">Register Code</label>
                                     <div class="col-lg-8">
@@ -40,7 +40,19 @@
                                             </div>
                                         </div>
                                     </div>                                        
-                                </div>                                
+                                </div>
+                                <div class="form-group">
+                                    <label for="form_name" class="control-label col-lg-4">Celluler <strong style="color:red;font-weight:bold;font-size:18px;">**</strong></label>
+                                    <div class="col-lg-8">
+                                        <input type="text" id="customer_handphone" name="customer_handphone" class="form-control" placeholder="No Handphone..." data-validation="required">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="form_name" class="control-label col-lg-4">Phone</label>
+                                    <div class="col-lg-8">
+                                        <input type="text" id="customer_phone" name="customer_phone" class="form-control" placeholder="No Telpon Rumah / Kantor...">
+                                    </div>
+                                </div>                             
                                 <div class="form-group">
                                     <label for="form_name" class="control-label col-lg-4">Full Name <strong style="color:red;font-weight:bold;font-size:18px;">**</strong></label>
                                     <div class="col-lg-8">
@@ -90,17 +102,7 @@
                                     <div class="col-lg-8">
                                         <input type="text" id="customer_data_number" name="customer_data_number" class="form-control" placeholder="No Identitas...">
                                     </div>
-                                </div>            
-                                <div class="form-group perorangan">
-                                    <label for="form_name" class="control-label col-lg-4">Gender</label>
-                                    <div class="col-lg-8">
-                                        <select id="gender_id" name="gender_id" placeholder="Pilih Jenis Kelamin" class="form-control">
-                                            <option value="" selected="">-- Pilih --</option>
-                                            <option value="1">Laki - Laki</option>
-                                            <option value="2">Perempuan</option>
-                                        </select>
-                                    </div>
-                                </div>                        
+                                </div>                                                                    
                                 <div class="form-group perorangan">
                                     <label for="form_name" class="control-label col-lg-4">Birth Place</label>
                                     <div class="col-lg-8">
@@ -112,7 +114,9 @@
                                     <div class="col-lg-8">
                                         <input type="text" id="bornday" name="bornday" placeholder="Tanggal Lahir ..." class="form-control dp" data-date-format="DD MMMM YYYY" style="width:100px;" value="<?=date('d-m-Y');?>">
                                     </div>
-                                </div>
+                                </div>                                                                                                
+                            </div>
+                            <div class="col-md-6">                                                               
                                 <div class="form-group perorangan">
                                     <label for="nationality_id" class="control-label col-lg-4">Nationality</label>
                                     <div class="col-lg-8">
@@ -128,9 +132,7 @@
                                         >
                                         </select>
                                     </div>
-                                </div>                                
-                            </div>
-                            <div class="col-md-6">
+                                </div>
                                 <div class="form-group perorangan">
                                     <label for="job_id" class="control-label col-lg-4">Job</label>
                                     <div class="col-lg-8">
@@ -145,19 +147,7 @@
                                                 class='form-control select2'                                               
                                         >
                                         </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="form_name" class="control-label col-lg-4">Celluler <strong style="color:red;font-weight:bold;font-size:18px;">**</strong></label>
-                                    <div class="col-lg-8">
-                                        <input type="text" id="customer_handphone" name="customer_handphone" class="form-control" placeholder="No Handphone..." data-validation="required">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="form_name" class="control-label col-lg-4">Phone</label>
-                                    <div class="col-lg-8">
-                                        <input type="text" id="customer_phone" name="customer_phone" class="form-control" placeholder="No Telpon Rumah / Kantor...">
-                                    </div>
+                                    </div>                                    
                                 </div>
                                 <div class="form-group">
                                     <label for="form_name" class="control-label col-lg-4">Address <strong style="color:red;font-weight:bold;font-size:18px;">**</strong></label>
@@ -187,6 +177,16 @@
                                     <label for="form_name" class="control-label col-lg-4">Regency / City</label>
                                     <div class="col-lg-8">
                                         <input type="text" id="city" name="city" class="form-control" placeholder="Kabupaten / Kota...">
+                                    </div>
+                                </div>
+                                <div class="form-group perorangan">
+                                    <label for="form_name" class="control-label col-lg-4">Gender</label>
+                                    <div class="col-lg-8">
+                                        <select id="gender_id" name="gender_id" placeholder="Pilih Jenis Kelamin" class="form-control">
+                                            <option value="" selected="">-- Pilih --</option>
+                                            <option value="1">Laki - Laki</option>
+                                            <option value="2">Perempuan</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group cnpwp">

@@ -333,7 +333,12 @@ class Transaction_buysell extends Bks_Controller {
         if (strpos($postData['modal_payment_amount'], ',') !== false) {
             $postData['amount'] = str_replace(',','.',$postData['modal_payment_amount']);
         }
-        $postData['status'] = '1';                  
+        $postData['status'] = '1';      
+        
+        unset($postData['modal_payment_type']);
+        unset($postData['modal_payment_description']);
+        unset($postData['modal_payment_amount']);
+
         $this->db->trans_begin();
         $this->Bksmdl->table = 'tr_payment';
         $response = $this->Bksmdl->insert($postData);
@@ -354,7 +359,7 @@ class Transaction_buysell extends Bks_Controller {
         // $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
         $header_id = json_decode($postData['header_id']);
-        $query = $this->db->query("SELECT * FROM tr_payment WHERE header_id= " . $header_id ." ORDER BY payment_type ASC")->result();
+        $query = $this->db->query("SELECT * FROM v_tr_payment WHERE header_id= " . $header_id ." ORDER BY payment_type ASC")->result();
         echo json_encode($query, true);
     }
 }

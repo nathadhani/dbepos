@@ -176,7 +176,7 @@
     }
 
     function show_detail_payment(header_id){
-        $('#table-detail tbody').empty();
+        $('#table-modal-payment tbody').empty();
         var counter = document.getElementById('table-modal-payment').rows.length;
         $.ajax({
             url: baseUrl + 'transaction/transaction_buysell/show_detail_payment',
@@ -244,7 +244,8 @@
     $("#btn-payment").on('click', function (e) {
         e.preventDefault();
         $(".modal-dialog").width('1200px');
-        $("#ModalPayment").modal('show');                    
+        $("#ModalPayment").modal('show');   
+        show_detail_payment(id_tr_header);                 
     });
     $("#btn-modal-payment-close").on('click', function (e) {
         e.preventDefault();
@@ -369,7 +370,7 @@
 
     $("#btn-submit").on('click', function (e) {
         e.preventDefault();
-        alertify.confirm("are you sure, Submit to ECSYS applicatoin Angkasapura ?", function (x) {
+        alertify.confirm("are you sure, Submit to ECSys applicatoin Angkasapura ?", function (x) {
             if (x) {
                 api_ap_input_trx(id_tr_header);
             }

@@ -95,7 +95,6 @@
                                 <span id="cancel_by" class="pull-right"></span>
                             </div>
                             <div class="col-md-6">
-                                <button id="btn-pdf" class="btn btn-success btn btn-sm pull-right" style="width:120px;margin-left:5px;">Print</button>
                                 <button id="btn-payment" class="btn btn-warning btn btn-sm pull-right" style="width:120px;margin-left:5px;">Payment</button>
                             </div>
                         </div>
@@ -213,7 +212,6 @@
                                     </h3>
                                 </div>
                                 <ul class="panel-controls">
-                                    <button id="btn-modal-payment" class="btn btn-primary btn btn-sm" style="width:120px;margin-left:5px;">Save</button>
                                     <button id="btn-modal-payment-close" class="btn btn-default btn btn-sm" style="width:120px;margin-left:5px;">Close</button>
                                 </ul>    
                             </div>                            
@@ -268,6 +266,8 @@
                                             <tbody>                                                
                                             </tbody>
                                         </table>
+                                        <button id="btn-pdf" class="btn btn-success btn btn-sm pull-right" style="width:120px;margin-left:5px;">Print</button>
+                                        <button id="btn-modal-payment" class="btn btn-primary btn btn-sm pull-right" style="width:120px;margin-left:5px;">Save</button>
                                     </div>
                                 </div>
                             </div>                            
