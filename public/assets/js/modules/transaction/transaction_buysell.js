@@ -594,18 +594,21 @@ $("#btn-cancel").on('click', function (e) {
     $(".modal-dialog").width('800px');
     $("#ModalCancel").modal('show');       
 });
-
-$("#btn-cancel-modal").on('click', function (e) {
+$("#btn-modal-cancel-close").on('click', function (e) {
     e.preventDefault();
-    if($("#modal-description").val() === '' || $("#modal-description").val() === null ){
-        bksfn.errMsg('Alasan belum di input!');
+    $("#ModalCancel").modal('hide');
+});
+$("#btn-modal-cancel").on('click', function (e) {
+    e.preventDefault();
+    if($("#modal-cancel-description").val() === '' || $("#modal-cancel-description").val() === null ){
+        bksfn.errMsg('Alasan batal belum di input!');
     } else {            
         alertify.confirm("are you sure, CANCEL transaction ?", function (x) {
             if (x) {
                 $.ajax({
                     url: baseUrl + 'transaction/transaction_buysell/cancel_trx',
                     type: 'POST',
-                    data: {'id' : id_header, 'description' : $("#modal-description").val()},
+                    data: {'id' : id_header, 'description' : $("#modal-cancel-description").val()},
                     datatype: 'json',
                     success: function() {
                         alertify.success('CANCEL Transaction Success!');

@@ -77,7 +77,7 @@
         <!-- End For Admin & Counter -->
 
         <li class="xn-icon-button pull-right">
-            <a href="auth/logout" title='Sign Out'><span class="fa fa-sign-out" style="font-size:20px;font-weight;bold;"></span></a>
+            <a href="auth/logout" title='Sign Out' style="margin-right: 30px;"><span class="fa fa-sign-out" style="font-size:20px;font-weight;bold;"></span></a>
         </li>        
     </ul>
     <!-- END X-NAVIGATION VERTICAL -->                      

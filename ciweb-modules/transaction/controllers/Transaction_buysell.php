@@ -323,7 +323,7 @@ class Transaction_buysell extends Bks_Controller {
 
     function insert_payment(){
         checkIfNotAjax();
-        // $this->libauth->check(__METHOD__);                
+        $this->libauth->check(__METHOD__);                
         $postData = $this->input->post();
         $header_id = $postData['header_id'];
         $cashierby = $postData['cashierby'];
@@ -359,7 +359,7 @@ class Transaction_buysell extends Bks_Controller {
 
     function show_detail_payment(){
         checkIfNotAjax();
-        // $this->libauth->check(__METHOD__);
+        $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
         $header_id = json_decode($postData['header_id']);
         $query = $this->db->query("SELECT * FROM v_tr_payment WHERE header_id= " . $header_id ." ORDER BY payment_type,id ASC")->result();
@@ -368,7 +368,7 @@ class Transaction_buysell extends Bks_Controller {
 
     function delete_detail_payment(){
         checkIfNotAjax();
-        // $this->libauth->check(__METHOD__);        
+        $this->libauth->check(__METHOD__);        
         $postData = $this->input->post();
         $id = json_decode($postData['id']);        
         $this->db->trans_begin();

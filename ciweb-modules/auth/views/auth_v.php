@@ -29,7 +29,8 @@
                     </div> -->
                     <div class="login-title" style="text-align:left">                        
                         <h2 style="color:green; font-weight:bold; font-size:22px; font-family:'Arial Black';">
-                            INDOCEV<small style="color:#000;">Application</small>
+                            INDOCEV
+                            <!-- <small style="color:#000;">Application</small> -->
                         </h2> 
                         <p style="color: #33414e; font-size: 14px; font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;margin-top: -15px;">
                             PT. Indonesia Central Valutamas <br>
@@ -49,7 +50,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-md-12">                            
-                                <button type="submit" class="btn btn-default btn-block">Login</button>
+                                <button type="submit" class="btn btn-primary btn-block">Login</button>
                             </div>
                         </div>
                         <div class="login-footer">

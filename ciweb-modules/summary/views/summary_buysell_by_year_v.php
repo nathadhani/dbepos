@@ -6,7 +6,7 @@
                     <h3>Summary Buy / Sell - by Year</h3>
                 </div>
                 <ul class="panel-controls">
-                    <button id="btn-submit" class="btn btn-default btn btn-sm" style="width:120px;">Submit</button>
+                    <button id="btn-submit" class="btn btn-primary btn btn-sm" style="width:120px;">Submit</button>
                 </ul>
             </div>
             <div class="panel-body">

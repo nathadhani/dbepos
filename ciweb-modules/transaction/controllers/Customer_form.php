@@ -121,7 +121,7 @@ class Customer_form extends Bks_Controller {
 
     function ceknikdttot() {
         checkIfNotAjax();
-        // $this->libauth->check(__METHOD__);
+        $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
         $nik = trim($postData['nik']);        
         if($nik != null && $nik != ''){

@@ -17,9 +17,9 @@
                         <thead>
                             <tr>
                                 <th style="vertical-align:middle;text-align:center;">#</th>
-                                <th style="vertical-align:middle;text-align:center;">Trx Name</th>
-                                <th style="vertical-align:middle;text-align:center;">Number</th>
+                                <th style="vertical-align:middle;text-align:center;">Buy/Sell</th>
                                 <th style="vertical-align:middle;text-align:center;">Date</th>
+                                <th style="vertical-align:middle;text-align:center;">Number</th>
                                 <th style="vertical-align:middle;text-align:center;">Value</th>
                                 <th style="vertical-align:middle;text-align:center;">Customer Name</th>
                                 <th style="vertical-align:middle;text-align:center;">Created by</th>

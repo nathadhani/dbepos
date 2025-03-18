@@ -18,12 +18,12 @@
                 {data: 'tr_name', width: "8%", render: function (data, type, row, meta) {                    
                     return data;
                 }},
-                {data: 'tr_number',  width: "10%", render: function (data, type, row, meta) {
-                    return data;
-                }},
                 {data: 'tr_date',  width: "10%", render: function (data, type, row, meta) {
                         return bksfn.revDate(data);
-                }},                
+                }},
+                {data: 'tr_number',  width: "10%", render: function (data, type, row, meta) {
+                    return data;
+                }},                                
                 {data: 'total', width: "8%", render: function (data, type, row, meta) {
                     return formatRupiah(data);
                 }},
@@ -55,7 +55,7 @@
             if ($(this).index() != 0 && $(this).index() != 4 && $(this).index() != 8) {
                 $(this).html('<input style="width:100%" type="text" placeholder="Search" data-id="' + $(this).index() + '" />');
             }            
-            if ($(this).index() == 3) {
+            if ($(this).index() == 2) {
                 var index = parseInt($(this).index()) + 1;
                 $(this).html('<input class="dpM1" style="width:100%; border: solid 1px #ccc; padding: 4px;" type="text" placeholder="Search" data-id="' + index + '" />');
                 $(".dpM1").datepicker({
@@ -68,11 +68,8 @@
         $('#searchid input').keyup(function () {
             t.columns($(this).data('id')).search(this.value).draw();
         });
-        $('#searchid select').change(function () {
-            t.columns(1).search(this.value).draw();
-        });
         $('#searchid .dpM1').change(function () {
-            t.columns(3).search(this.value).draw();
+            t.columns(2).search(this.value).draw();
         });        
         $(".clrs").click(function () {
             $('#searchid input').val('');

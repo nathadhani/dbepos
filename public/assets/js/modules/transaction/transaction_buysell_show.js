@@ -59,6 +59,7 @@ function show_header($id){
                                     $("#btn-pdf").show();
                                     break;
                                 case 2:
+                                    $("#btn-payment").hide();
                                     $("#btn-submit").hide();
                                     $("#btn-cancel").hide();
                                     $("#btn-pdf").show();
@@ -67,15 +68,18 @@ function show_header($id){
                                     if(Number(Apimethod) === 1){                                            
                                         $("#btn-submit").show();
                                     }
+                                    $("#btn-payment").show();
                                     $("#btn-cancel").show();
                                     $("#btn-pdf").show();              
                                     break;
-                                case 4:
+                                case 9:
+                                    $("#btn-payment").hide();
                                     $("#btn-submit").hide();   
                                     $("#btn-cancel").show();
                                     $("#btn-pdf").show();                                           
                                     break;
                                 default:
+                                    $("#btn-payment").hide();
                                     $("#btn-submit").hide();
                                     $("#btn-cancel").hide();
                                     $("#btn-pdf").hide();
@@ -200,33 +204,30 @@ function show_detail_payment($header_id){
                                         <td width="5%" style="text-align:center;vertical-align:middle">
                                             ` + counter + `
                                         </td>
-                                        <td width="30%" style="vertical-align: middle;color:black">
+                                        <td width="20%" style="vertical-align: middle;color:black">
                                             ` + d.payment_type_name +`
                                             <a style="color:red; cursor:pointer" title="hapus" onClick="delete_line_detail_payment(` + d.id + `)"> / <i>remove<i></a>
-                                        </td>
-                                        <td width="15%" style='text-align:left;'>
-                                            ` + (isDecimal(d.amount) ? formatDecimal(d.amount,2) : formatRupiah(d.amount) ) + `
                                         </td>
                                         <td width="45%" style='text-align:left;'>
                                             ` + d.payment_description.trim() + `
                                         </td>
-                                        <td width="5%" style='text-align:left;'>
+                                        <td width="15%" style='text-align:left;'>
                                             ` + (d.updated == null ? d.created : d.updated) + `
                                         </td>                       
+                                        <td width="15%" style='text-align:left;'>
+                                            ` + (isDecimal(d.amount) ? formatDecimal(d.amount,2) : formatRupiah(d.amount) ) + `
+                                        </td>
                                     </tr>`
                     $('#table-modal-payment tbody').append(rows);
                     counter++;
                 });
                 var rowsx =`<tr>
-                                <td colspan="2" style='vertical-align:middle;text-align:center;font-weight:bold;background-color:#f1f5f9;color:#56688A;font-size:13px;'>
+                                <td colspan="4" style='vertical-align:middle;text-align:center;font-weight:bold;background-color:#f1f5f9;color:#56688A;font-size:13px;'>
                                     Total Payment Value
                                 </td>
                                 <td style='text-align:left;font-weight:bold;'>
                                     Rp. ` + formatRupiah(totalpaymentx) + `
                                 </td>                         
-                                <td colspan="4" style='vertical-align:middle;'>
-                                    ` + bksfn.terBilang(totalpaymentx) + `
-                                </td>
                             </tr>`   
                 $('#table-modal-payment tbody').append(rowsx); 
                 $("#modal_remaining_payment_value").val(formatRupiah( formatRupiahtoNumber($("#modal_total_value").val()) - (totalpaymentx) ));
@@ -262,8 +263,8 @@ function delete_line_detail_payment($id){
 
 function reset_form_input_payment(){
     $("#modal_payment_type").val('');
-    $("#modal_payment_amount").val('');
     $('#modal_payment_description').val('');
+    $("#modal_payment_amount").val('');
     $("#terbilang_modal_payment_amount").html('');
 }   
 
@@ -308,6 +309,8 @@ $("#btn-modal-add-row-payment").on('click', function (e) {
         bksfn.errMsg('tipe pembayaran belum diinput!');
     } else if( $("#modal_payment_description").val() === '' || $("#modal_payment_description").val() === null) {
         bksfn.errMsg('keterangan pembayaran belum diinput!');    
+    } else if( $("#modal_payment_amount").val() === '' || $("#modal_payment_amount").val() === null || Number($("#modal_payment_amount").val()) <= 0) {
+        bksfn.errMsg('jumlah pembayaran belum diinput!');
     } else {
         $.post(baseUrl + 'transaction/transaction_buysell/insert_payment', $("#mainFormModalPayment").serialize() + "&header_id=" + id_tr_header + "&cashierby=" + $("#modal_cashierby").val(), function (obj) {
             if (obj.msg == 1) {

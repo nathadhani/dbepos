@@ -1669,6 +1669,7 @@ ul.panel-controls {
   float: right;
   padding: 0px;
   margin: 0px;
+  margin-right: 30px;
   list-style: none;
   position: relative;
 }
@@ -3919,7 +3920,8 @@ background: #1caf9a !important;
 .login-container .login-box .login-body {
   width: 100%;
   float: left;    
-  background: rgba(255, 255, 255, 0.90);
+  /* background: rgba(255, 255, 255, 0.90); */
+  background-color: #FAFAFA;
   padding: 20px;
   -moz-border-radius: 0px;
   -webkit-border-radius: 0px;
@@ -5024,7 +5026,7 @@ background: #1caf9a !important;
 .to-top {
   width: 40px;
   height: 40px;
-  background: #f5f5f5;
+  /* background: #045498; */
   line-height: 35px;
   text-align: center;
   border: 1px solid #FFF;
@@ -5032,7 +5034,7 @@ background: #1caf9a !important;
   -webkit-border-radius: 0px;
   border-radius: 0px;
   font-size: 23px;
-  color: #CCC;
+  color: #000000;
   -webkit-transition: all 200ms ease;
   -moz-transition: all 200ms ease;
   -ms-transition: all 200ms ease;
@@ -5040,8 +5042,8 @@ background: #1caf9a !important;
   transition: all 200ms ease;
 }
 .to-top:hover {
-  border-color: #1b1e24;
-  color: #333;
+  /* border-color: #1b1e24; */
+  color: #000000;
 }
 /* end To top */
 /* iCheck plugin Minimal skin, black

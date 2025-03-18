@@ -195,32 +195,31 @@
 <div class="modal fade" id="ModalCancel" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Reason</h4>
-            </div>
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <form id="mainForm" class="form-horizontal" autocomplete="off">
-                            <div class="panel panel-default">
-                                <div class="panel-body">
-                                    <div class="row">                        
-                                        <div class="col-lg-12">
-                                            <div class="form-group">                                
-                                                <div class="col-lg-10">
-                                                    <label for="modal-description" style="display:block">Reason Cancel</label>
-                                                    <input type="text" autofocuse="" id="modal-description" name="modal-description" class="form-control" placeholder="Alasan Batal..." required>
-                                                </div>
-                                                <div class="col-lg-2">
-                                                    <button id="btn-cancel-modal" class="btn btn-danger btn btn-sm" style="width:120px;">Submit</button>
-                                                </div>
-                                            </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading ui-draggable-handle">                        
+                                <div class="panel-title-box">
+                                    <h3>
+                                        Reason Cancel
+                                    </h3>
+                                </div>
+                                <ul class="panel-controls">
+                                    <button id="btn-modal-cancel" class="btn btn-primary btn btn-sm" style="width:120px;margin-left:5px;">Submit</button>
+                                    <button id="btn-modal-cancel-close" class="btn btn-default btn btn-sm" style="width:120px;margin-left:5px;">Close</button>
+                                </ul>    
+                            </div>
+                            <form id="mainFormCancel" class="form-horizontal" autocomplete="off">
+                                <div class="panel-body">   
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <input type="text" autofocuse="" id="modal-cancel-description" name="modal-cancel-description" class="form-control" placeholder="Alasan Batal..." required>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>

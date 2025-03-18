@@ -92,10 +92,9 @@
 
                         <div class="row" style="margin-top:-10px;">
                             <div class="col-md-6">                     
-                                <span id="created_by"></span>                                
+                                <span id="created_by"></span> | <span id="cancel_by"></span>
                             </div>
-                            <div class="col-md-6">
-                                <span id="cancel_by" class="pull-right"></span>
+                            <div class="col-md-6">                                
                             </div>
                         </div>
 
@@ -173,7 +172,7 @@
                                     </h3>
                                 </div>
                                 <ul class="panel-controls">
-                                    <button id="btn-modal-cancel" class="btn btn-primary btn btn-sm" style="width:120px;margin-left:5px;">Save</button>
+                                    <button id="btn-modal-cancel" class="btn btn-primary btn btn-sm" style="width:120px;margin-left:5px;">Submit</button>
                                     <button id="btn-modal-cancel-close" class="btn btn-default btn btn-sm" style="width:120px;margin-left:5px;">Close</button>
                                 </ul>    
                             </div>
@@ -252,26 +251,26 @@
                                             <thead>
                                                 <tr>
                                                     <th style='vertical-align:middle;text-align:left;'>Payment Type</th>
-                                                    <th style='vertical-align:middle;text-align:left;'>Payment Value</th>
                                                     <th style='vertical-align:middle;text-align:left;'>Payment Description</th>
+                                                    <th style='vertical-align:middle;text-align:left;'>Payment Value</th>
                                                     <th id="act-title" style='vertical-align:middle;text-align:center;' width="50px">Action</th>
                                                 </tr>
                                             </thead>                                                
                                             <tbody>  
                                                 <form id="mainFormModalPayment" class="form-horizontal" autocomplete="off">     
                                                     <tr style="background:#ffffff;">
-                                                        <td width="30%">                                                    
+                                                        <td width="20%">                                                    
                                                             <select class="form-control" style="width: 100%" id="modal_payment_type" name="modal_payment_type">
                                                                 <option value="" />-- Pilih --
                                                                 <option value="1" />Cash
                                                                 <option value="2" />Transfer
                                                             </select>
                                                         </td>                                                                                                
+                                                        <td width="55%">
+                                                            <input type="text" id="modal_payment_description" name="modal_payment_description" class="form-control">
+                                                        </td>
                                                         <td width="15%">
                                                             <input type="text" onkeypress="validasiAngka(event)" autofocuse="" id="modal_payment_amount" name="modal_payment_amount" class="form-control" style='text-align:right;'>
-                                                        </td>
-                                                        <td width="45%">
-                                                            <input type="text" id="modal_payment_description" name="modal_payment_description" class="form-control">
                                                         </td>
                                                         <td width="10%" style='text-align:center'>
                                                             <button id="btn-modal-add-row-payment" class="btn btn-primary btn btn-sm" style="width:90px;">Add</button>
@@ -292,9 +291,9 @@
                                                 <tr style="background:#f1f5f9;">
                                                     <td style='vertical-align: middle;text-align:center;'>#</td>
                                                     <th style='vertical-align:middle;text-align:left;'>Payment Type</th>
-                                                    <th style='vertical-align:middle;text-align:left;'>Payment Value</th>
                                                     <th style='vertical-align:middle;text-align:left;'>Payment Description</th>
                                                     <th style='vertical-align:middle;text-align:left;'>Timestamp</th>
+                                                    <th style='vertical-align:middle;text-align:left;'>Payment Value</th>
                                                 </tr>
                                             </thead>
                                             <tbody>                                                
