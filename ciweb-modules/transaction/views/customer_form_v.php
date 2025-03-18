@@ -71,7 +71,7 @@
                                         <select id="customer_type_id" 
                                                 name="customer_type_id"
                                                 data-ajax="true" 
-                                                data-placeholder="Pilih..."
+                                                data-placeholder="Tipe Pelanggan..."
                                                 data-url="master_data/m_customer_type/getType/" 
                                                 data-value="" 
                                                 data-limit="100"                                                
@@ -87,7 +87,7 @@
                                         <select id="customer_data_id"
                                                 name="customer_data_id"
                                                 data-ajax="true" 
-                                                data-placeholder="Pilih..."
+                                                data-placeholder="Tipe Identitas..."
                                                 data-url="master_data/m_customer_data/getIdentitas/"
                                                 data-value="" 
                                                 data-limit="100"                                                 
@@ -98,9 +98,9 @@
                                     </div>
                                 </div>
                                 <div class="form-group perorangan">
-                                    <label for="form_name" class="control-label col-lg-4">Identity Type Number</label>
+                                    <label for="form_name" class="control-label col-lg-4">Identity Number</label>
                                     <div class="col-lg-8">
-                                        <input type="text" id="customer_data_number" name="customer_data_number" class="form-control" placeholder="No Identitas...">
+                                        <input type="text" id="customer_data_number" name="customer_data_number" class="form-control" placeholder="Nomor Identitas...">
                                     </div>
                                 </div>                                                                    
                                 <div class="form-group perorangan">
@@ -122,7 +122,7 @@
                                     <div class="col-lg-8">
                                         <select name="nationality_id"
                                                 data-ajax="true" 
-                                                data-placeholder="Pilih..."
+                                                data-placeholder="Kebangsaan..."
                                                 data-url="master_data/m_nationality/getNationality/"
                                                 data-value="" 
                                                 data-limit="100"
@@ -139,7 +139,7 @@
                                         <select id="job_id"
                                                 name="job_id"
                                                 data-ajax="true" 
-                                                data-placeholder="Pilih..."
+                                                data-placeholder="Pekerjaan..."
                                                 data-url="master_data/m_customer_job/getJob/"
                                                 data-value=""
                                                 data-limit="100"                                                
@@ -183,7 +183,7 @@
                                     <label for="form_name" class="control-label col-lg-4">Gender</label>
                                     <div class="col-lg-8">
                                         <select id="gender_id" name="gender_id" placeholder="Pilih Jenis Kelamin" class="form-control">
-                                            <option value="" selected="">-- Pilih --</option>
+                                            <option value="" selected="">Jenis Kelamin...</option>
                                             <option value="1">Laki - Laki</option>
                                             <option value="2">Perempuan</option>
                                         </select>

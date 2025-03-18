@@ -31,6 +31,7 @@
                         </h3>
                     </div>
                     <ul class="panel-controls">
+                        <button id="btn-payment" class="btn btn-success btn btn-sm" style="width:130px;">Payment</button>
                         <button id="btn-cancel" class="btn btn-danger btn btn-sm" style="width:130px;">Cancel</button>
                         <?php
                             $store_id = $auth['store_id'];
@@ -91,11 +92,10 @@
 
                         <div class="row" style="margin-top:-10px;">
                             <div class="col-md-6">                     
-                                <span id="created_by"></span><br>
-                                <span id="cancel_by" class="pull-right"></span>
+                                <span id="created_by"></span>                                
                             </div>
                             <div class="col-md-6">
-                                <button id="btn-payment" class="btn btn-warning btn btn-sm pull-right" style="width:120px;margin-left:5px;">Payment</button>
+                                <span id="cancel_by" class="pull-right"></span>
                             </div>
                         </div>
 
@@ -201,7 +201,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">Payment</h4>
             </div> -->
-            <div class="modal-body">
+            <div class="modal-body" style="max-height:500px; overflow-y:auto;">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="panel panel-default">
@@ -212,10 +212,40 @@
                                     </h3>
                                 </div>
                                 <ul class="panel-controls">
-                                    <button id="btn-modal-payment-close" class="btn btn-default btn btn-sm" style="width:120px;margin-left:5px;">Close</button>
+                                    <button id="btn-pdf" class="btn btn-success btn btn-sm" style="width:120px;margin-left:5px;">Print</button>
+                                    <button id="btn-modal-payment-close" class="btn btn-primary btn btn-sm" style="width:120px;margin-left:5px;">Close</button>
                                 </ul>    
                             </div>                            
                             <div class="panel-body">   
+                                <div class="row" style="margin-left:-10px;">
+                                    <div class="col-md-4">
+                                        <div class="form-group">                                
+                                            <div class="col-lg-12">
+                                                <label for="store_id" style="display:block">Transaction Value</label>
+                                                <input type="text" autofocuse="" id="modal_total_value" class="form-control" placeholder="Nilai Transaksi..." disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">                                
+                                            <div class="col-lg-12">
+                                                <label for="store_id" style="display:block">Remaining Payment Value</label>
+                                                <input type="text" autofocuse="" id="modal_remaining_payment_value" class="form-control" placeholder="Nilai Transaksi..." disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">                                
+                                            <div class="col-lg-12">
+                                                <label for="modal_cashierby" style="display:block">Cashier</label>
+                                                <select id="modal_cashierby" name="modal_cashierby" class="form-control">
+                                                    <option value="">Pilih Kasir...</option>
+                                                </select>                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>     
+                                <br>                           
                                 <div class="row">
                                     <div class="col-md-12">
                                         <table class="table table-bordered" cellspacing="0" width="100%">
@@ -238,7 +268,7 @@
                                                             </select>
                                                         </td>                                                                                                
                                                         <td width="15%">
-                                                            <input type="text" id="modal_payment_amount" name="modal_payment_amount" class="form-control">
+                                                            <input type="text" onkeypress="validasiAngka(event)" autofocuse="" id="modal_payment_amount" name="modal_payment_amount" class="form-control" style='text-align:right;'>
                                                         </td>
                                                         <td width="45%">
                                                             <input type="text" id="modal_payment_description" name="modal_payment_description" class="form-control">
@@ -246,6 +276,9 @@
                                                         <td width="10%" style='text-align:center'>
                                                             <button id="btn-modal-add-row-payment" class="btn btn-primary btn btn-sm" style="width:90px;">Add</button>
                                                         </td>                
+                                                    </tr>
+                                                    <tr>
+                                                        <td id="terbilang_modal_payment_amount" colspan=4></td>
                                                     </tr>
                                                 </form>
                                             </tbody>
@@ -261,13 +294,12 @@
                                                     <th style='vertical-align:middle;text-align:left;'>Payment Type</th>
                                                     <th style='vertical-align:middle;text-align:left;'>Payment Value</th>
                                                     <th style='vertical-align:middle;text-align:left;'>Payment Description</th>
+                                                    <th style='vertical-align:middle;text-align:left;'>Timestamp</th>
                                                 </tr>
                                             </thead>
                                             <tbody>                                                
                                             </tbody>
-                                        </table>
-                                        <button id="btn-pdf" class="btn btn-success btn btn-sm pull-right" style="width:120px;margin-left:5px;">Print</button>
-                                        <button id="btn-modal-payment" class="btn btn-primary btn btn-sm pull-right" style="width:120px;margin-left:5px;">Save</button>
+                                        </table>                                        
                                     </div>
                                 </div>
                             </div>                            

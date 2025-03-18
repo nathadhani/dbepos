@@ -186,6 +186,13 @@ class User extends Bks_Controller {
         $result['more'] = true;
         echo json_encode($result);
     }    
+
+    function getdatacashier() {
+        checkIfNotAjax();
+        $this->libauth->check(__METHOD__);
+        $query = $this->db->query("SELECT id, fullname FROM v_auth_users WHERE store_id = $this->store_id")->result();
+        echo json_encode($query, true);
+    }
     
     function getcreatedby() {
         checkIfNotAjax();

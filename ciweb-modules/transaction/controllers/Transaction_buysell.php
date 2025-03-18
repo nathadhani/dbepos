@@ -133,9 +133,8 @@ class Transaction_buysell extends Bks_Controller {
         unset($postData['subtotal']);
         if (strpos($postData['price'], ',') !== false) {
             $postData['price'] = str_replace(',','.',$postData['price']);
-        }
-        $postData['subtotal'] = ( ($postData['nominal'] * $postData['sheet']) * $postData['price'] );
-        $postData['status'] = '1';                  
+        }        
+        $postData['status'] = '1';
         $this->db->trans_begin();
         $this->Bksmdl->table = 'tr_detail';
         $response = $this->Bksmdl->insert($postData);
@@ -327,6 +326,7 @@ class Transaction_buysell extends Bks_Controller {
         // $this->libauth->check(__METHOD__);                
         $postData = $this->input->post();
         $header_id = $postData['header_id'];
+        $cashierby = $postData['cashierby'];
         $postData['payment_type'] = $postData['modal_payment_type'];
         $postData['payment_description'] = $postData['modal_payment_description'];
         $postData['amount'] = $postData['modal_payment_amount'];
@@ -338,6 +338,7 @@ class Transaction_buysell extends Bks_Controller {
         unset($postData['modal_payment_type']);
         unset($postData['modal_payment_description']);
         unset($postData['modal_payment_amount']);
+        unset($postData['cashierby']);
 
         $this->db->trans_begin();
         $this->Bksmdl->table = 'tr_payment';
@@ -349,6 +350,8 @@ class Transaction_buysell extends Bks_Controller {
             echo json_encode($json);
         } else {
             $this->db->trans_commit();
+            $this->db->where(array('id' => $header_id));
+            $this->db->update('tr_header', array('cashierby' => $cashierby, 'updated' => date('Y-m-d H:i:s', time()), 'updatedby' => $this->userId) );
             $json['msg'] = '1';
             echo json_encode($json);
         }
@@ -359,7 +362,7 @@ class Transaction_buysell extends Bks_Controller {
         // $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
         $header_id = json_decode($postData['header_id']);
-        $query = $this->db->query("SELECT * FROM v_tr_payment WHERE header_id= " . $header_id ." ORDER BY payment_type ASC")->result();
+        $query = $this->db->query("SELECT * FROM v_tr_payment WHERE header_id= " . $header_id ." ORDER BY payment_type,id ASC")->result();
         echo json_encode($query, true);
     }
 

@@ -1,4 +1,6 @@
 var xtr_id = (decrypt(tr_uri_code) === 'buy' ? 1 : decrypt(tr_uri_code) === 'sell' ? 2 : 0);
+var xcashierby = 0;
+var xcashierby_name = '';
 $("#btn-submit").hide();
 $("#btn-cancel").hide();
 $("#btn-pdf").hide();
@@ -96,6 +98,11 @@ function show_header($id){
                         $("#customer_act_on").html(d.customer_act_on);
                         $("#customer_source").html(d.customer_source);
                         $("#customer_purpose").html(d.customer_purpose);
+
+                        if(d.cashierby !== null){
+                            xcashierby = d.cashierby;
+                            xcashierby_name = d.cashierby_name;                            
+                        }                        
                     } else{                        
                         var url = "transaction/customer/index/";
                         window.open(url,'_self');    
@@ -160,6 +167,7 @@ function show_detail($header_id){
                                     </td>                         
                                 </tr>`   
                         $('#table-detail tbody').append(rowsx);     
+                        $("#modal_total_value").val(formatRupiah(totalpricex));
                     }else{
                         var url = "transaction/customer/index/";
                         window.open(url,'_self');
@@ -177,6 +185,7 @@ function show_detail($header_id){
 function show_detail_payment($header_id){
     $('#table-modal-payment tbody').empty();
     var counter = document.getElementById('table-modal-payment').rows.length;
+    $("#modal_remaining_payment_value").val($("#modal_total_value").val());
     $.ajax({
         url: baseUrl + 'transaction/transaction_buysell/show_detail_payment',
         type: 'POST',
@@ -198,22 +207,29 @@ function show_detail_payment($header_id){
                                         <td width="15%" style='text-align:left;'>
                                             ` + (isDecimal(d.amount) ? formatDecimal(d.amount,2) : formatRupiah(d.amount) ) + `
                                         </td>
-                                        <td width="50%" style='text-align:left;'>
+                                        <td width="45%" style='text-align:left;'>
                                             ` + d.payment_description.trim() + `
-                                        </td>                         
+                                        </td>
+                                        <td width="5%" style='text-align:left;'>
+                                            ` + (d.updated == null ? d.created : d.updated) + `
+                                        </td>                       
                                     </tr>`
                     $('#table-modal-payment tbody').append(rows);
                     counter++;
                 });
                 var rowsx =`<tr>
-                            <td colspan="3" style='vertical-align:middle;text-align:center;background-color:#e3e4e6;font-weight:bold;font-size:14px;'>
-                            <i>Say</i> : ` + bksfn.terBilang(totalpaymentx) + `
-                            </td>
-                            <td style='text-align:left;background-color:#f1f5f9;font-weight:bold;font-size:15px;'>
-                                Rp. ` + formatRupiah(totalpaymentx) + `
-                            </td>                         
-                        </tr>`   
-                $('#table-modal-payment tbody').append(rowsx);     
+                                <td colspan="2" style='vertical-align:middle;text-align:center;font-weight:bold;background-color:#f1f5f9;color:#56688A;font-size:13px;'>
+                                    Total Payment Value
+                                </td>
+                                <td style='text-align:left;font-weight:bold;'>
+                                    Rp. ` + formatRupiah(totalpaymentx) + `
+                                </td>                         
+                                <td colspan="4" style='vertical-align:middle;'>
+                                    ` + bksfn.terBilang(totalpaymentx) + `
+                                </td>
+                            </tr>`   
+                $('#table-modal-payment tbody').append(rowsx); 
+                $("#modal_remaining_payment_value").val(formatRupiah( formatRupiahtoNumber($("#modal_total_value").val()) - (totalpaymentx) ));
             }else{
                 return false;
             }
@@ -247,31 +263,53 @@ function delete_line_detail_payment($id){
 function reset_form_input_payment(){
     $("#modal_payment_type").val('');
     $("#modal_payment_amount").val('');
-    $('#modal_payment_description').html('');    }   
+    $('#modal_payment_description').val('');
+    $("#terbilang_modal_payment_amount").html('');
+}   
 
 $("#btn-payment").on('click', function (e) {
     e.preventDefault();
     $(".modal-dialog").width('1200px');
     $("#ModalPayment").modal('show');
+    $("#modal_cashierby").empty();
+    if(xcashierby !== 0){
+        $("#modal_cashierby").html('<option value="' + xcashierby + '">' + xcashierby_name + '</option>');
+    }
+    $.ajax({
+        type: "GET",
+        url: baseUrl + 'user/user/getdatacashier',
+        dataType: "json",
+        success: function(data) {            
+            $("#modal_cashierby").append("<option value=''>Pilih Kasir...</option>");
+            $.each(data, function(index, d) {
+                $("#modal_cashierby").append("<option value='" + d.id + "'>" + d.fullname + "</option>");
+            });
+        }
+    });
     reset_form_input_payment();
     show_detail_payment(id_tr_header);                 
 });
-$("#btn-modal-payment-close").on('click', function (e) {
+$("#modal_payment_type").on("change", function(e) {
     e.preventDefault();
-    $("#ModalPayment").modal('hide');
+    $("#modal_payment_description").val( 'Payment ' + $("#modal_payment_type option:selected").text() )
 });
-// $("#modal_payment_amount").keyup(function(e) {
-//     e.preventDefault();
-//     $(this).val(bksfn.toRp($(this).val()));
-// }); 
+$("#modal_payment_amount").keyup(function(e) {
+    e.preventDefault();
+    $(this).val($(this).val());
+    if( Number($(this).val()) > 0 ){
+        $("#terbilang_modal_payment_amount").html('<i>Payment Value</i> : ' + bksfn.terBilang($(this).val()));
+    }
+}); 
 $("#btn-modal-add-row-payment").on('click', function (e) {
     e.preventDefault();
-    if( $("#modal_payment_type").val() === '' || $("#modal_payment_type").val() === null) {
-        bksfn.errMsg('tipe pembayaran belum diinput!');
+    if( $("#modal_cashierby").val() === '' || $("#modal_cashierby").val() === null) {
+        bksfn.errMsg('Kasir belum diinput!');
     } else if( $("#modal_payment_type").val() === '' || $("#modal_payment_type").val() === null) {
         bksfn.errMsg('tipe pembayaran belum diinput!');
+    } else if( $("#modal_payment_description").val() === '' || $("#modal_payment_description").val() === null) {
+        bksfn.errMsg('keterangan pembayaran belum diinput!');    
     } else {
-        $.post(baseUrl + 'transaction/transaction_buysell/insert_payment', $("#mainFormModalPayment").serialize() + "&header_id=" + id_tr_header, function (obj) {
+        $.post(baseUrl + 'transaction/transaction_buysell/insert_payment', $("#mainFormModalPayment").serialize() + "&header_id=" + id_tr_header + "&cashierby=" + $("#modal_cashierby").val(), function (obj) {
             if (obj.msg == 1) {
                 alertify.success('Data add success!');
                 reset_form_input_payment();
@@ -285,35 +323,11 @@ $("#btn-modal-add-row-payment").on('click', function (e) {
             StringtoFile(xhr.responseText, 'error');
         });
     }
-});   
-$("#btn-modal-payment").on('click', function (e) {
+}); 
+$("#btn-modal-payment-close").on('click', function (e) {
     e.preventDefault();
-    if( document.getElementById('table-modal-payment').rows.length < 2 ) {
-        bksfn.errMsg('pembayaran belum diinput!');
-    } else {            
-        alertify.confirm("are you sure, SAVE payment transaction ?", function (x) {
-            if (x) {$.ajax({
-                    url: baseUrl + 'transaction/transaction_buysell/insert_payment',
-                    type: 'POST',
-                    data: {'id' : id_tr_header},
-                    datatype: 'json',
-                    success: function() {
-                        back_to_page_show();
-                        alertify.success('Payment Transaction Success!');
-                        $("#ModalPayment").modal('hide');                
-                    },
-                    error: function(xhr){
-                        alertify.error("error");
-                        StringtoFile(xhr.responseText, 'error');
-                        back_to_page_show();
-                    }
-                });                                                    
-            } else {
-                back_to_page_show();
-            }   
-        });            
-    }          
-});
+    $("#ModalPayment").modal('hide');
+});  
 
 $("#btn-cancel").on('click', function (e) {
     e.preventDefault();

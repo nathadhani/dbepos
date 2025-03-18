@@ -51,8 +51,7 @@ class Transaction_buysell_show extends Bks_Controller {
         $tr_date = revDate($data_header[0]->tr_date);
         $customer_source = $data_header[0]->customer_source;
         $customer_puprpose = $data_header[0]->customer_purpose;
-        $tr_time =  date('H:i:s',strtotime($data_header[0]->created));
-        $pageno = '1';
+        $tr_time =  date('H:i:s',strtotime($data_header[0]->created));        
         $counter_name = $data_header[0]->createdby_name;
         $status = $data_header[0]->status;
 
@@ -62,56 +61,18 @@ class Transaction_buysell_show extends Bks_Controller {
         $pdf->SetPrintHeader(false);
         $pdf->SetPrintFooter(false);
 
-        $pdf->AddPage('P', 'mm', 'PA5'); // paper size custom in tcpdf_static.php
+        // $pdf->AddPage('P', 'mm', 'PA5'); // paper size custom in tcpdf_static.php
         // $pdf->AddPage('P', 'mm', array('14','12'), true, 'UTF-8', false);
 
         if($this->uri->segment(5) == 1) { 
-            $tr_name = '** BUY **';
+            $tr_name = 'BUY';
         }
         if($this->uri->segment(5) == 2) {
-            $tr_name = '** SELL **';
+            $tr_name = 'SELL';
         }
         if($status == 2){
             $tr_name .= ' Cancel';
-        }
-        $pdf->Ln(1);
-        $pdf->SetFont('', 'B', 12);
-        $pdf->Cell(131, 01, $tr_name, 0, 1, 'C');
-        
-        // Add Title
-        $pdf->Ln(1);
-        $pdf->SetFont('', 'B', 9);
-        $pdf->Cell(01, 01, strtoupper(trim($profil_usaha[0]->store_name)), 0, 1, 'L');
-        $pdf->SetFont('', '', 9);
-        if(strlen(trim($profil_usaha[0]->store_address)) > 50){
-            $pdf->Cell(01, 01, SUBSTR(trim($profil_usaha[0]->store_address),0,50), 0, 1, 'L');
-            $pdf->Cell(01, 01, SUBSTR(trim($profil_usaha[0]->store_address),51,100), 0, 1, 'L');
-        } else {
-            $pdf->Cell(01, 01, trim($profil_usaha[0]->store_address), 0, 1, 'L');
-        }
-
-        $pdf->SetFont('', '', 9);
-        $pdf->Cell(01, 01, 'Date ' . $tr_date . '     No. ' . trim($tr_number), 0, 1, 'L');
-        $pdf->Cell(01, 01, "------------------------------------------------------------------------------------", 0, 1, 'L');
-        $pdf->Cell(01, 01, 'CIF : ' . trim($profil_customer[0]->customer_code) . '     ID No. : ' . $profil_customer[0]->customer_data_number, 0, 1, 'L');
-        $pdf->Cell(01, 01, 'Name : ' . SUBSTR(trim($profil_customer[0]->customer_name),0,45), 0, 1, 'L');
-        $pdf->Cell(01, 01, 'Address : ' . SUBSTR(trim($profil_customer[0]->customer_address),0,45), 0, 1, 'L');
-        $pdf->Cell(01, 01, 'Phone : ' . $profil_customer[0]->customer_handphone . '     Job : ' . $profil_customer[0]->customer_job_name, 0, 1, 'L');
-        $pdf->Cell(01, 01, 'Source : ' . SUBSTR(trim($customer_source),0,50), 0, 1, 'L');
-        $pdf->Cell(01, 01, 'Purpose : ' . SUBSTR(trim($customer_puprpose),0,50), 0, 1, 'L');
-        $pdf->SetAutoPageBreak(true, 0);
- 
-        // Add Header Column
-        // $pdf->Ln(1);
-        $pdf->SetFont('', '', 9);
-        $pdf->Cell(01, 01, "------------------------------------------------------------------------------------", 0, 1, 'L');
-        $pdf->Cell(07, 01, "#", 0, 0, 'C');
-        $pdf->Cell(17, 01, "Curr", 0, 0, 'L');
-        $pdf->Cell(20, 01, "Amount", 0, 0, 'L');
-        $pdf->Cell(18, 01, "Exc.Rate", 0, 0, 'L');
-        $pdf->Cell(30, 01, "Equivalent Rp.", 0, 0, 'L');
-        $pdf->Ln(3);
-        $pdf->Cell(01, 01, "------------------------------------------------------------------------------------", 0, 1, 'L');
+        }        
 
         // Add Content Body
         $pdf->SetFont('', '', 9);
@@ -119,16 +80,63 @@ class Transaction_buysell_show extends Bks_Controller {
         if(count($data_content) > 0) {
             $no = 0;
             $total = 0;
+            $pageno = 0;
             foreach($data_content as $r){
                 $no++;
-                
+                if($no == 1 || $no == 7){
+                    $pdf->AddPage('P', 'mm', 'PA5'); // paper size custom in tcpdf_static.php
+                    $pdf->Ln(1);
+                    $pdf->SetFont('', 'B', 12);
+                    $pdf->Cell(131, 01, '** ' . $tr_name . ' **', 0, 1, 'C');
+                    
+                    // Add Title
+                    $pdf->Ln(1);
+                    $pdf->SetFont('', 'B', 9);
+                    $pdf->Cell(01, 01, strtoupper(trim($profil_usaha[0]->store_name)), 0, 1, 'L');
+                    $pdf->SetFont('', '', 9);
+                    if(strlen(trim($profil_usaha[0]->store_address)) > 50){
+                        $pdf->Cell(01, 01, SUBSTR(trim($profil_usaha[0]->store_address),0,50), 0, 1, 'L');
+                        $pdf->Cell(01, 01, SUBSTR(trim($profil_usaha[0]->store_address),51,100), 0, 1, 'L');
+                    } else {
+                        $pdf->Cell(01, 01, trim($profil_usaha[0]->store_address), 0, 1, 'L');
+                    }
+
+                    if(strlen(trim($profil_usaha[0]->store_permit_number)) > 0){
+                        $pdf->Cell(01, 01, 'Authorized Money Changer ' . trim($profil_usaha[0]->store_permit_number), 0, 1, 'L');
+                    }
+
+
+                    $pdf->SetFont('', '', 9);
+                    $pdf->Cell(01, 01, "------------------------------------------------------------------------------------", 0, 1, 'L');
+                    $pdf->Cell(01, 01, 'Date : ' . $tr_date . '         ' . ucwords(strtolower($tr_name)) . ' No. : ' . trim($tr_number), 0, 1, 'L');
+                    $pdf->Cell(01, 01, 'CIF : ' . trim($profil_customer[0]->customer_code) . '     ID No. : ' . $profil_customer[0]->customer_data_number, 0, 1, 'L');
+                    $pdf->Cell(01, 01, 'Name : ' . SUBSTR(trim($profil_customer[0]->customer_name),0,45), 0, 1, 'L');
+                    $pdf->Cell(01, 01, 'Address : ' . SUBSTR(trim($profil_customer[0]->customer_address),0,45), 0, 1, 'L');
+                    $pdf->Cell(01, 01, 'Phone : ' . $profil_customer[0]->customer_handphone . '     Job : ' . $profil_customer[0]->customer_job_name, 0, 1, 'L');
+                    $pdf->Cell(01, 01, 'Source : ' . SUBSTR(trim($customer_source),0,50), 0, 1, 'L');
+                    $pdf->Cell(01, 01, 'Purpose : ' . SUBSTR(trim($customer_puprpose),0,50), 0, 1, 'L');
+                    $pdf->SetAutoPageBreak(true, 0);
+            
+                    // Add Header Column
+                    // $pdf->Ln(1);
+                    $pdf->SetFont('', '', 9);
+                    $pdf->Cell(01, 01, "------------------------------------------------------------------------------------", 0, 1, 'L');
+                    $pdf->Cell(07, 01, "#", 0, 0, 'C');
+                    $pdf->Cell(17, 01, "Curr", 0, 0, 'L');
+                    $pdf->Cell(20, 01, "Amount", 0, 0, 'L');
+                    $pdf->Cell(18, 01, "Exc.Rate", 0, 0, 'L');
+                    $pdf->Cell(30, 01, "Equivalent Rp.", 0, 0, 'L');
+                    $pdf->Ln(3);
+                    $pdf->Cell(01, 01, "------------------------------------------------------------------------------------", 0, 1, 'L');
+                }
+
                 $currency_code = $r->currency_code;
                 $nominal    = ($r->nominal == 'null' || $r->nominal == '' ? '' : (float) $r->nominal);
                 $sheet      = ($r->sheet == 'null' || $r->sheet == '' ? '' : (float) $r->sheet);                
                 $amount     = ($nominal * $sheet);
                 $price      = ($r->price == 'null' || $r->price == '' ? 0 :  floatval($r->price));
-                $subtotal   = ($r->subtotal == 'null' || $r->subtotal == '' ? '' : (float) $r->subtotal);
-                $total      = $total + ($amount * $price); 
+                $subtotal   = ($amount > 0 ? $amount * $price : 0);
+                $total      = $total + $subtotal;
 
                 $pdf->Cell(07,01,$no,0,0);
                 $pdf->Cell(17,01,$currency_code,0,0);
@@ -147,29 +155,21 @@ class Transaction_buysell_show extends Bks_Controller {
 
             $pdf->SetFont('', '', 9);
             $pdf->Ln(1);
+            $pdf->Cell(01, 01, 'Attention : No Claim after leaving our counter.', 0, 1, 'L');
 
-            $terbilangtotal = ucwords(terbilang($total));
-            if(strlen($terbilangtotal) > 50){
-                $pdf->Cell(01, 01, 'Say : ' . SUBSTR($terbilangtotal,0,50), 0, 1, 'L');
-                $pdf->Cell(01, 01, SUBSTR($terbilangtotal,51,100), 0, 6, 'L');
-            } else {
-                $pdf->Cell(01, 01, 'Say : ' . SUBSTR($terbilangtotal,0,50), 0, 1, 'L');
-            }
-
-            $pdf->SetFont('', '', 9);
-            $pdf->Ln(2);
-            $text = 'Saya menyatakan bahwa transaksi ini belum melebihi threshold';
+            // $pdf->Ln(1);
+            $text = 'I declare that this transaction has not exceeded the threshold ';
             $pdf->Cell(01, 01, $text, 0, 1, 'L');
-            $text = 'USD 25.000 dalam bulan ini dan akan menyertakan Underlying';
+            $text = 'of USD 25,000 in this month and will include the actual Underlying';
             $pdf->Cell(01, 01, $text, 0, 1, 'L');
-            $text = 'yang sebenarnya jika melebihi';
+            $text = 'if it does.';
             $pdf->Cell(01, 01, $text, 0, 1, 'L');
 
             $pdf->SetFont('', '', 9);
             $pdf->Ln(2);
-            $pdf->Cell(01, 01, 'Counter,           Cashier,           Customer,', 0, 1, 'L');
+            $pdf->Cell(01, 01, 'Counter,           Cashier,           Customer,', 0, 1, 'L');                                    
         }        
-        $pdf->Output('Trx No '.$tr_number.'.pdf','I');    
+        $pdf->Output($tr_number.'.pdf','I');
     }
     
 

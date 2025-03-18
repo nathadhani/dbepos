@@ -406,9 +406,9 @@ $("#btn-buy").click(function (e) {
             datatype: 'json',
             success: function(data){
                 try {
-                    var d = JSON.parse(data)[0];
-                    if(d.deskripsi !== null && d.deskripsi !== ''){
-                        alertify.alert('Peringatan, Pelanggan ini Terdaftar di list DTTOT PPATK...!');
+                    if (data !== '[]' && data.length > 0){
+                        var d = JSON.parse(data)[0];
+                        alertify.alert('Peringatan, Pelanggan ini Terdaftar di list DTTOT PPATK...!\n' + d.deskripsi.trim());
                         $("#btn-buy").hide();
                         $("#btn-sell").hide();
                     } else {
@@ -500,9 +500,12 @@ $("#btn-sell").click(function (e) {
             datatype: 'json',
             success: function(data){
                 try {
-                    var d = JSON.parse(data)[0];
-                    if(d.deskripsi !== null && d.deskripsi !== ''){
-                        alertify.alert('Peringatan, Pelanggan ini Terdaftar di list DTTOT PPATK...!');
+                    if (data !== '[]' && data.length > 0){
+                        var d = JSON.parse(data)[0];
+                        alertify.alert('Peringatan, Pelanggan ini Terdaftar di list DTTOT PPATK...!\n' + d.deskripsi.trim());
+                        $("#btn-buy").hide();
+                        $("#btn-sell").hide();                    
+                    
                     } else {
                         $.ajax({
                             url: baseUrl + 'transaction/customer_form/getcustomerbyid',

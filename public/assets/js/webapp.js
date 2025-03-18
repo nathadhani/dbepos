@@ -14,18 +14,7 @@ var bksfn = ({
         err = (err == undefined) ? "Error Connection" : "Error : " + err;
         alertify.error(err);
         $(':submit').removeAttr('disabled');
-    },
-    toRp: function (angka) {
-        var rev = parseInt(angka, 10).toString().split('').reverse().join('');
-        var rev2 = '';
-        for (var i = 0; i < rev.length; i++) {
-            rev2 += rev[i];
-            if ((i + 1) % 3 === 0 && i !== (rev.length - 1)) {
-                rev2 += '.';
-            }
-        }
-        return rev2.split('').reverse().join('');
-    },
+    },    
     toBulan: function (bulan) {
         var month;
         switch (bulan) {
@@ -77,7 +66,7 @@ var bksfn = ({
             return null;
         }
     },
-    formatRibuan: function(number) {
+    formatRupiahInput: function(number) {
         var number_string = number.replace(/[^,\d]/g, '').toString(),
         split   		= number_string.split(','),
         sisa     		= split[0].length % 3,
@@ -88,18 +77,7 @@ var bksfn = ({
             rupiah += separator + ribuan.join('.');
         }
         return rupiah;
-    },
-    toRp2: function (angka) {
-        var rev = parseInt(angka, 10).toString().split('').reverse().join('');
-        var rev2 = '';
-        for (var i = 0; i < rev.length; i++) {
-            rev2 += rev[i];
-            if ((i + 1) % 3 === 0 && i !== (rev.length - 1)) {
-                rev2 += '.';
-            }
-        }
-        return rev2.split('').reverse().join('');
-    },
+    },    
     getAge: function (tanggal_lahir) {
         var date = tanggal_lahir; 
         var today = new Date();
@@ -411,7 +389,6 @@ function formatDMY(inputFormat) {
 }
 
 function formatDecimal(angka, decimal) {
-    // return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     if(Number(angka) > 0 && Number(decimal) > 0){
         return Number(angka).toFixed(Number(decimal));
     } else {
@@ -420,27 +397,8 @@ function formatDecimal(angka, decimal) {
     
 }
 
-// function formatRupiah(angka, prefix){
-//     if(angka != null){
-//         var number_string = angka.replace(/[^,\d]/g, '').toString(),
-//         split   		= number_string.split(','),
-//         sisa     		= split[0].length % 3,
-//         rupiah     		= split[0].substr(0, sisa),
-//         ribuan     		= split[0].substr(sisa).match(/\d{3}/gi);
-//         if(ribuan){
-//             separator = sisa ? '.' : '';
-//             rupiah += separator + ribuan.join('.');
-//         }
-//         rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
-//         return prefix == undefined ? rupiah : (rupiah ? '' + rupiah : '');
-//     } else {
-//         return 0;
-//     }
-// }
-
 function formatRupiah(angka) {
-    var rupiah = Number(angka).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    return rupiah;
+    return Number(angka).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); 
 }  
 
 function formatRupiahtoNumber(v){
@@ -448,16 +406,7 @@ function formatRupiahtoNumber(v){
     // v=v.split('.').join('');
     // v=v.split(',').join('.');
     return Number(v.replace(/[^0-9.]/g, ""));
-} 
-
-function number_to_price(v){
-    if(v==0){return '0,00';}
-    v=parseFloat(v);
-    v=v.toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
-    v=v.split('.').join('*').split(',').join('.').split('*').join(',');
-    return v;
 }
-
 
 function round(value, exp) {
     if (typeof exp === 'undefined' || +exp === 0)
