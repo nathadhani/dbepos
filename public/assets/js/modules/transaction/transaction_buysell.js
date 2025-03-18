@@ -124,7 +124,7 @@ function show_header(){
     }        
 }
 
-function show_detail(statusTrx){
+function show_detail($statusTrx){
     reset_form_input();
     if( typeof(customerId) !== 'undefined' && customerId !== null && customerId !== '') {    
         $('#table-detail tbody').empty();
@@ -202,7 +202,7 @@ function show_detail(statusTrx){
                                     </td>                         
                                 </tr>`
                     $('#table-detail tbody').append(rowsx);
-                    if(statusTrx === '1') {
+                    if($statusTrx === '1') {
                         $("#btn-confirm").show();
                         $("#btn-cancel").show();
                     }
@@ -220,12 +220,12 @@ function show_detail(statusTrx){
     }         
 }
 
-function delete_line_detail($id){
-    if( typeof($id) != 'undefined' && $id !== null && $id !== '' ) {
+function delete_line_detail(id){
+    if( typeof(id) != 'undefined' && id !== null && id !== '' ) {
         $.ajax({
             url : baseUrl +  'transaction/transaction_buysell/delete_detail',
             type: 'POST',
-            data: {'id' : $id },
+            data: {'id' : id },
             datatype: 'json',
             success: function(data){
                 back_to_page_ini();

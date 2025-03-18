@@ -362,4 +362,24 @@ class Transaction_buysell extends Bks_Controller {
         $query = $this->db->query("SELECT * FROM v_tr_payment WHERE header_id= " . $header_id ." ORDER BY payment_type ASC")->result();
         echo json_encode($query, true);
     }
+
+    function delete_detail_payment(){
+        checkIfNotAjax();
+        // $this->libauth->check(__METHOD__);        
+        $postData = $this->input->post();
+        $id = json_decode($postData['id']);        
+        $this->db->trans_begin();
+        $this->Bksmdl->table = 'tr_payment';
+        $status = $this->Bksmdl->delete('id', $id);        
+        if ($this->db->trans_status() === FALSE) {
+            $this->db->trans_rollback();
+            $err = $this->db->error();
+            $json['msg'] = $err['code'] . '<br>' . $err['message'];
+            echo json_encode($json);
+        } else {
+            $this->db->trans_commit();
+            $json['msg'] = '1';
+            echo json_encode($json);
+        }
+    }
 }
