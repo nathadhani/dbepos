@@ -21,10 +21,10 @@ input.addEventListener('keydown', function(event) {
                 $('#mainTable').dataTable().fnClearTable();
                 $('#mainTable').DataTable().destroy();            
                 fetch_data();
-                select_row();
+                // select_row();
             } else {
                 fetch_data();
-                select_row();
+                // select_row();
             }
         }
     }
@@ -69,7 +69,7 @@ function fetch_data(){
         // order: [[ 0, 'asc' ]],
         ordering:false,
         responsive: true,
-        scrollY: "300px",
+        scrollY: true,
         scrollX: true,
         scrollCollapse: true,
         lengthMenu: [[8, 25, 50, 100, -1], [8, 25, 50, 100, "All"]],
@@ -109,15 +109,15 @@ function fetch_data(){
             {data: 'customer_handphone'},       
             {data: 'customer_data_name'},
             {data: 'customer_data_number'},
-            // {data: 'customer_code', className: "dt-body-center", width: "5%", render: function (data, type, row, meta) {
-            //         // return '<a href="#" onClick="edit_data(' + row.id + "," + arrdata.push(row)  + ')">'+data+'</a>';                            
-            //         return data;
-            //     }
-            // },           
             {data: 'status', className: "dt-body-center", width: "5%", render: function (data, type, row, meta) {
-                var act = (data == '1') ? '<span class="label label-success"><i class="fa fa-check"></i></span>' : '<span class="label label-danger"><i class="fa fa-times"></i></span>';
-                return act;
-            }},
+                    var act = (data == '1') ? '<span class="label label-success"><i class="fa fa-check"></i></span>' : '<span class="label label-danger"><i class="fa fa-times"></i></span>';
+                    return act;
+                }
+            },
+            {data: 'customer_code', className: "dt-body-center", width: "5%", render: function (data, type, row, meta) {
+                    return '<a title="Edit" href="#"><i class="fa fa-edit"></i></a>';
+                }
+            },           
         ],
         initComplete: function() {
             var table = $('#mainTable').DataTable();
@@ -129,10 +129,24 @@ function fetch_data(){
             $('.ajax-loader').css("visibility", "hidden");
         }
     });
+
+    $('#mainTable').on('click', 'a[title^=Edit]', function (e) {
+        e.preventDefault();
+        var elm = $(this).closest("tr");
+        var d = t.row(elm).data();
+        alertify.confirm('Customer Name : ' + d.customer_name +'<br> Customer Address : ' + d.customer_address, function (x) {    
+            if (x) {           
+                edit_data(d.id, arrdata.push(d));
+            } else {
+                return;
+            }    
+        });        
+    });
 }
 
 function default_row(){
     var rows =`<tr style="height:22px;">
+                    <td></td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -145,17 +159,23 @@ function default_row(){
     }
 }
 
-function edit_data(id) {
-    d = arrdata.filter(data => data.id === id.toString())[0];
-    var xnama = d.customer_name.trim();      
-    var url = "transaction/customer_form/index/"+d.id+"/null";
-    $.ajax({
-        url: url,
-        type: 'POST',
-        success: function() {
-            window.open(url,'_self'); 
-        }
-    }); 
+function edit_data($id) {   
+    if($id !== null && $id !== ''){
+        d = arrdata.filter(data => data.id === $id.toString())[0];
+        var url = "transaction/customer_form/index/"+d.id+"/null";
+        $.ajax({
+            url: url,
+            type: 'POST',
+            success: function() {
+                window.open(url,'_self'); 
+            },
+            error: function(){
+                alertify.error("can't open page.!");
+            }
+        });    
+    } else {
+        alertify.error("can't open page.!");
+    }
 }
 
 function select_row(){

@@ -202,9 +202,11 @@ $('#upload_foto').on('change',function(e){
             async: false,
             processData: false,
             success: function (data) {
+                console.log(data);
                 $("#form_foto")[0].reset();
                 alertify.success('File has been uploaded');
-                // back_to_page_ini();
+                // location.reload(true);
+                history.go(0);
             },
             complete: function(){
                 $('.ajax-loader').css("visibility", "hidden");
@@ -241,36 +243,31 @@ $('#upload_foto').on('change',function(e){
                         $("#btn-sell").hide();
                     }
 
-                    $("#customer_code").val(d.customer_code);
-                    
-                    $('#links').empty();
-                    $("#links").hide();
+                    $("#customer_code").val(d.customer_code);                    
+                    document.getElementById("links").innerHTML = "";
                     if (d.customer_type_id != 0 && d.customer_type_id != null && d.customer_type_id != '') {
                         $("#customer_type_id").html('<option value="' + d.customer_type_id + '">' + d.customer_type_name + ' [' + d.customer_type_id + ']'  + '</option>').sel2dma();
                         if(d.customer_type_id === '1'){
                             $(".perorangan").show();
                             $(".cfoto").show();
-                            // if ($('#customer_code').val() !== null && $('#customer_code').val() !== ''){                     
-                            //     var image_url = baseUrl + "assets/img/customer_form/" + d.customer_code + ".jpg";
-                            //     $.ajax({
-                            //         url:image_url,
-                            //         type:'HEAD',
-                            //         success: function() {
-                            //             //file exists
-                            //             var showfoto = '<a class="gallery-item" href="'+image_url+'" data-gallery>'+
-                            //                                 '<div class="image">'+
-                            //                                     '<img src="'+image_url+'" alt="" style="height:325px;width:550px;"/>'+
-                            //                                 '</div>'+
-                            //                             '</a>'                                                     
-                            //             $('#links').append(showfoto);
-                            //             $("#links").show();
-                            //         },
-                            //         error: function() {
-                            //             //file not exists
-                            //             $("#links").hide();
-                            //         }
-                            //     });
-                            // }
+                            if ($('#customer_code').val() !== null && $('#customer_code').val() !== ''){   
+                                var image_url = baseUrl + "assets/img/customer_form/" + d.customer_code + ".jpg";
+                                var url = "assets/img/customer_form/" + d.customer_code + ".jpg";
+                                cekFileExists(url).then(exists => {
+                                    if (exists) {
+                                        var showfoto = '<a class="gallery-item" href="'+image_url+'" data-gallery>'+
+                                                            '<div class="image">'+
+                                                                '<img src="'+image_url+'" alt="" style="height:325px;width:550px;"/>'+
+                                                            '</div>'+
+                                                        '</a>'
+                                        document.getElementById("links").innerHTML = showfoto;
+                                        $("#links").show();
+                                    } else {
+                                        document.getElementById("links").innerHTML = "";
+                                        $("#links").hide();
+                                    }
+                                });                                
+                            }
                         } else {
                             $(".perorangan").hide();
                             $(".cnpwp").show();
@@ -371,8 +368,8 @@ function reset_form(){
 
     $(':submit').removeAttr('disabled');
 
-    $('#links').empty();
-    $('#links').html('');
+    document.getElementById("links").innerHTML = "";
+    $("#links").hide();
     $(".perorangan").hide();
     if( $("body").data("id") !== null && $("body").data("id") !== '' ){
         tampil_data();
@@ -388,7 +385,7 @@ function back_to_page_ini(){
         url: url,
         type: 'POST',
         success: function() {
-            window.open(url,'_self');
+            window.open(url,'_self');           
         }
     });
 }

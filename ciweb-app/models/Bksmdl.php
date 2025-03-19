@@ -38,7 +38,7 @@ class Bksmdl extends Bks_Model {
 
     public function getprofilusaha($id){
         if($id !== null && $id !== ''){
-            $result = $this->db->get_where('v_m_store', array('id' => $id));
+            $result = $this->db->get_where('', array('id' => $id));
             if($result->num_rows() > 0){
                 return $result->result();
             }

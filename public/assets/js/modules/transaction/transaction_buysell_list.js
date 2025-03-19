@@ -95,7 +95,7 @@
                     return data;
                 }},         
                 {data: 'id', className: "dt-body-center", orderable: false, width: "10%", render: function (data, type, row, meta) {
-                        return '<a title="Detail" href="#"><i class="fa fa-info"></i></a>';                                                
+                        return '<a title="Detail" href="#"><i class="fa fa-eye"></i></a>';                                                
                     }
                 },
                 {data: 'tr_id', visible: false},

@@ -16,6 +16,8 @@ class Customer_form extends Bks_Controller {
         $this->template->set('tsmall', 'Customer');
         $this->template->set('icon', 'fa fa-edit');
         $data['auth'] = $this->auth;
+        $id = $this->uri->segment(4);
+        $data['customer'] = $this->db->query("SELECT customer_code FROM m_customer WHERE id = $id")->result();
         $this->template->build('transaction/customer_form_v', $data);
     }
     
@@ -132,12 +134,12 @@ class Customer_form extends Bks_Controller {
     
     function add_foto(){
         $postData = $this->input->post();
-        if (isset ($_FILES ['upload_foto'] ['name']) && !empty($_FILES ['upload_foto'] ['name'])) {                        
+        if (isset ($_FILES ['upload_foto'] ['name']) && !empty($_FILES ['upload_foto'] ['name'])) {
             $config['upload_path'] = FCPATH . 'assets/img/customer_form/';
+            $config['allowed_types'] = 'jpeg|jpg';
             $config['file_name'] = $postData['CIF'] . '.jpg';
-            $config['allowed_types'] = 'jpg|jpeg|png';
             $config['overwrite'] = TRUE;
-            $config['max_size'] = '8000';
+            $config['max_size'] = 15360; // 15MB
             $this->load->library('upload',$config);
             $this->upload->initialize($config);            
             $filex = $config['upload_path'] . $config['file_name'];
@@ -149,7 +151,7 @@ class Customer_form extends Bks_Controller {
                 $res_config['create_thumb'] = FALSE;
                 $res_config['maintain_ratio'] = FALSE;
                 $res_config['width'] = 850;
-                $res_config['height'] = 660;
+                $res_config['height'] = 660;                
                 $res_config['source_image'] = $filex;
                 $this->load->library('image_lib', $res_config);
                 $this->image_lib->initialize($res_config);

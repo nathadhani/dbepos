@@ -4,7 +4,10 @@
     $("body").data("usergroup_id", <?php echo $auth['usergroup_id'];?>);
     var text_celluler = <?php echo "'" . str_replace('%20',' ',$this->uri->segment(5)) ."'";?>;
 </script>
-
+<?php 
+    $img_file = "assets/img/customer_form/" . $customer[0]->customer_code . ".jpg";
+    $image_url = base_url($img_file);
+?>
 <div class="page-content-wrap">            
     <div class="row">   
         <div class="col-md-12">
@@ -100,8 +103,23 @@
                                 <div class="form-group perorangan">
                                     <label for="form_name" class="control-label col-lg-4">Identity Number</label>
                                     <div class="col-lg-8">
-                                        <input type="text" id="customer_data_number" name="customer_data_number" class="form-control" placeholder="Nomor Identitas...">
-                                    </div>
+                                        <?php
+                                            if (file_exists($img_file)) {
+                                        ?>
+                                            <div class="input-group">
+                                                <input type="text" id="customer_data_number" name="customer_data_number" class="form-control" placeholder="Nomor Identitas...">
+                                                <span class="input-group-addon">                                                
+                                                    <a href="<?=$image_url;?>" target="_blank" title="Photo"><i class="fa fa-picture-o"></i></i></a>                                                
+                                                </span>
+                                            </div>
+                                        <?php 
+                                            } else {
+                                        ?>
+                                            <input type="text" id="customer_data_number" name="customer_data_number" class="form-control" placeholder="Nomor Identitas...">
+                                        <?php 
+                                            }
+                                        ?>                                  
+                                    </div>                                    
                                 </div>                                                                    
                                 <div class="form-group perorangan">
                                     <label for="form_name" class="control-label col-lg-4">Birth Place</label>
@@ -237,7 +255,12 @@
                         <div class="col-md-3">
                         </div>
                         <div class="col-md-6">
-                            <div class="galleryx" id="links" style="text-align:center; margin:auto; display:block;">
+                            <div class="galleryx" id="links" style="text-align:center; margin:auto; display:block;">                                
+                                <!-- <a class="gallery-item" href="<?=$image_url;?>" data-gallery="">
+                                    <div class="image">
+                                        <img src="<?=$image_url;?>" alt="" style="height:325px;width:550px;">
+                                    </div>
+                                </a> -->
                             </div>                            
                         </div>
                         <div class="col-md-3">

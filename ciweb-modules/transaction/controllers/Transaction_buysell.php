@@ -385,4 +385,25 @@ class Transaction_buysell extends Bks_Controller {
             echo json_encode($json);
         }
     }
+
+    function update_payment_cashierby(){
+        checkIfNotAjax();
+        // $this->libauth->check(__METHOD__);
+        $postData = $this->input->post();
+        $header_id = json_decode($postData['id']);    
+        $cashierby = $postData['cashierby'];    
+        $this->db->trans_begin();
+        $this->db->where(array('id' => $header_id));
+        $this->db->update('tr_header', array('cashierby' => $cashierby, 'updated' => date('Y-m-d H:i:s', time()), 'updatedby' => $this->userId) );
+        if ($this->db->trans_status() === FALSE) {
+            $this->db->trans_rollback();
+            $err = $this->db->error();
+            $json['msg'] = $err['code'] . '<br>' . $err['message'];
+            echo json_encode($json);
+        } else {
+            $this->db->trans_commit();
+            $json['msg'] = '1';
+            echo json_encode($json);
+        }            
+    }
 }

@@ -87,7 +87,7 @@
             if(Number(d.tr_id) == 1){
                 url = call_page_show_buy(d.customer_id, d.id);
             } else {
-                url = call_page_show_sale(d.customer_id, d.id);
+                url = call_page_show_sell(d.customer_id, d.id);
             }
             if(url !== ''){
                 $.ajax({

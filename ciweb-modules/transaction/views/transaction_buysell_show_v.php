@@ -1,5 +1,6 @@
 <script type="text/javascript">
     var userId = <?php echo $auth['id'];?>;
+    var usergroupId = <?php echo $auth['usergroup_id'];?>;
     var Apimethod = <?php echo ($auth['api_method'] == null ? 0 : $auth['api_method']) ;?>;
     var ApiAP = "<?php echo $auth['api_angkasapura'];?>";
 
@@ -237,11 +238,14 @@
                                         <div class="form-group">                                
                                             <div class="col-lg-12">
                                                 <label for="modal_cashierby" style="display:block">Cashier</label>
-                                                <select id="modal_cashierby" name="modal_cashierby" class="form-control">
-                                                    <option value="">Pilih Kasir...</option>
-                                                </select>                                                
+                                                <div class="input-group">
+                                                    <select id="modal_cashierby" name="modal_cashierby" class="form-control">
+                                                        <option value="">Pilih Kasir...</option>
+                                                    </select>     
+                                                    <span class="input-group-addon"><a href="#" id="btn_cashier_save" title="Save"><i class="fa fa-save"></i></a></span>
+                                                </div>
                                             </div>
-                                        </div>
+                                        </div>                                        
                                     </div>
                                 </div>     
                                 <br>                           

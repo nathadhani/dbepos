@@ -465,6 +465,12 @@ function decrypt(text){
      )
 }
 
+function cekFileExists(url) {
+    return fetch(url, { method: 'HEAD' })
+        .then(response => response.ok)
+        .catch(() => false);
+}
+
 function StringtoFile(content, filename){
     const link = document.createElement("a");
     const file = new Blob([content], { type: 'text/plain' });

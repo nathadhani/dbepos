@@ -57,6 +57,7 @@
                                             <th style="text-align:center; vertical-align: middle">Identity Type</th>
                                             <th style="text-align:center; vertical-align: middle">Identity Type Number</th>
                                             <th style="text-align:center; vertical-align: middle">Status</th>
+                                            <th style="text-align:center; vertical-align: middle">Action</th>
                                         </tr>
                                     </thead>                 
                                     <tbody></tbody>

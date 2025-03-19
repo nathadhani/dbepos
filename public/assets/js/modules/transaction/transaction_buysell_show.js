@@ -293,6 +293,11 @@ $("#btn-payment").on('click', function (e) {
 $("#modal_payment_type").on("change", function(e) {
     e.preventDefault();
     $("#modal_payment_description").val( 'Payment ' + $("#modal_payment_type option:selected").text() )
+    if( formatRupiahtoNumber($("#modal_remaining_payment_value").val()) > 0) {
+        $("#modal_payment_amount").val( formatRupiahtoNumber($("#modal_remaining_payment_value").val()) );
+        $("#terbilang_modal_payment_amount").html('<i>Payment Value</i> : ' + bksfn.terBilang( $("#modal_payment_amount").val( )));
+        $("#modal_payment_amount").focus();
+    }    
 });
 $("#modal_payment_amount").keyup(function(e) {
     e.preventDefault();
@@ -406,15 +411,39 @@ $("#btn-submit").on('click', function (e) {
 
 $("#customer_name").on('click', function (e) {
     e.preventDefault();
-    var url = "transaction/customer_form/index/"+customerId;
-    $.ajax({
-        url: url,
-        type: 'POST',
-        success: function() {            
-            window.open(url,'_blank'); 
-        },
-        error: function(){
-            alertify.error("can't open page");
-        }
-    }); 
+    if(Number(usergroupId) !== 6){
+        var url = "transaction/customer_form/index/"+customerId;
+        $.ajax({
+            url: url,
+            type: 'POST',
+            success: function() {            
+                window.open(url,'_blank'); 
+            },
+            error: function(){
+                alertify.error("can't open page");
+            }
+        });
+    }
 });
+
+$("#btn_cashier_save").on('click', function (e) {
+    e.preventDefault();
+    if($("#modal_cashierby").val() === '' || $("#modal_cashierby").val() === null ){
+        bksfn.errMsg('kasir belum di input!');
+    } else {            
+        $.ajax({
+            url: baseUrl + 'transaction/transaction_buysell/update_payment_cashierby',
+            type: 'POST',
+            data: {'id' : id_tr_header, 'cashierby' : $("#modal_cashierby").val()},
+            datatype: 'json',
+            success: function() {
+                back_to_page_show();
+                alertify.success('Save Success!');                
+            },
+            error: function(xhr){
+                alertify.error("error");
+                StringtoFile(xhr.responseText, 'error');
+            }
+        });           
+    }          
+}); 
