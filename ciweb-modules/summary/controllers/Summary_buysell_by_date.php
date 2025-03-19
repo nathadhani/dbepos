@@ -53,23 +53,6 @@ class Summary_buysell_by_date extends Bks_Controller {
                                 AND tr_date = '$tanggal'")->result();
 
         echo json_encode($query, true);
-    }
-
-    function getcount(){
-        checkIfNotAjax();
-        // $this->libauth->check(__METHOD__);
-        $postData = $this->input->post();
-
-        $store_id = $postData['store_id'];
-        $tanggal = revDate($postData['periode']);      
-        
-        $query = $this->db->query("SELECT COUNT(CASE WHEN tr_id = 1 AND status IN(3,4) THEN 1 END) AS buy_count,
-                                COUNT(CASE WHEN tr_id = 2 AND status IN(3,4) THEN 1 END) AS sell_count
-                                FROM tr_header
-                                WHERE store_id = $store_id
-                                AND tr_date = '$tanggal'
-                                AND status IN(3,4)")->result();
-        echo json_encode($query, true);
-    }
+    }    
     
 }

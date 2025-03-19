@@ -45,10 +45,10 @@
                         <h5>Period  : <strong id="ftitle"></strong></h5>
                     </div>
                     <div class="col-md-4">
-                        <h5><b style="color:blue;">Buy</b> Equivalent  : <strong id="total_buy"></strong> ( <strong id="count_buy"></strong> )</h5> 
+                        <h5><b style="color:blue;">Buy</b> Equivalent  : <strong id="total_buy"></strong></h5> 
                     </div>
                     <div class="col-md-4">
-                        <h5><b style="color:red;">Sell</b> Equivalent : <strong id="total_sell"></strong> ( <strong id="count_sell"></strong> )</h5>
+                        <h5><b style="color:red;">Sell</b> Equivalent : <strong id="total_sell"></strong></h5>
                     </div>
                 </div>                
                 
@@ -58,16 +58,20 @@
                             <thead>
                                 <tr>
                                     <th style="vertical-align:middle;text-align:center;">#</th>
-                                    <th style="vertical-align:middle;text-align:center;">Currency</th>
+                                    <th style="vertical-align:middle;text-align:center;">Curr</th>
+                                    <th style="vertical-align:middle;text-align:center;">Beginning</th>
                                     <th style="vertical-align:middle;text-align:center;">Buy Amount</th>
                                     <th style="vertical-align:middle;text-align:center;">Buy Equivalent</th>
                                     <th style="vertical-align:middle;text-align:center;">Sell Amount</th>
                                     <th style="vertical-align:middle;text-align:center;">Sell Equivalent</th>
+                                    <th style="vertical-align:middle;text-align:center;">End</th>
                                 </tr>
                             </thead>
                             <thead id="searchid">
                                 <tr>
                                     <td><button class="clrs btn btn-info btn-sm btn-line">Clear</button></td>
+                                    <td></td>
+                                    <td></td>
                                     <td></td>
                                     <td></td>
                                     <td></td>

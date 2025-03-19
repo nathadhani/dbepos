@@ -149,7 +149,7 @@ class Stock_calculate extends Bks_Controller {
                     'stock_month' => $bulan
             );
             $this->db->trans_begin();
-            $this->db->delete('stock_price', $where);
+            $this->db->delete('stock_price', $where);            
             foreach($mcurrency->result_array() as $row) {
                 $id = 0;
                 $currency_id = $row['currency_id'];                
@@ -158,9 +158,10 @@ class Stock_calculate extends Bks_Controller {
                 /***************************************************************************************************************** */
                 $select_max_date = $this->db->query("SELECT MAX(stock_date) AS max_date
                                                      FROM stock_price 
-                                                     WHERE currency_id = $currency_id 
+                                                     WHERE store_id = $store_id 
+                                                     AND currency_id = $currency_id 
                                                      AND YEAR(stock_date) = $tahun1 
-                                                     AND MONTH(stock_date) = $bulan1")->result();   
+                                                     AND MONTH(stock_date) = $bulan1")->result();                
                 $buy_amount = 0;
                 $buy_total = 0;
                 $last_stock_amount = 0;
@@ -171,7 +172,8 @@ class Stock_calculate extends Bks_Controller {
                     if($max_date !== null) {
                         $select_max_id = $this->db->query("SELECT MAX(id) AS max_id
                                                      FROM stock_price 
-                                                     WHERE currency_id = $currency_id 
+                                                     WHERE store_id = $store_id 
+                                                     AND currency_id = $currency_id 
                                                      AND stock_date = '$max_date'")->result();                    
                         if(count($select_max_id) > 0) {
                             $max_id = $select_max_id[0]->max_id;
@@ -180,7 +182,8 @@ class Stock_calculate extends Bks_Controller {
                                                                         stock_last_price,
                                                                         stock_last_total
                                                         FROM stock_price 
-                                                        WHERE currency_id = $currency_id 
+                                                        WHERE store_id = $store_id 
+                                                        AND currency_id = $currency_id 
                                                         AND stock_date = '$max_date'
                                                         AND id = $max_id")->result();
                                 if(count($select_last_stock) > 0) {
@@ -224,19 +227,21 @@ class Stock_calculate extends Bks_Controller {
                 /** Get Transaction */
                 /***************************************************************************************************************** */
                 $tanggal_awal = date($tgl1,time());
-                $tanggal_akhir = date($tahun."-".$bulan."-t",time());
+                $tanggal_akhir = date('Y-m-t',mktime(0, 0, 0, $bulan + 1, 0, $tahun));
                 $maxday = date('d', strtotime($tanggal_akhir));
                 $buy_amount = 0;
                 $sell_amount = 0;
+                // var_dump($tanggal_awal . ' s/d ' .$tanggal_akhir . ' maxday ' . $maxday);exit;
                 for ($tgl = 1; $tgl <= $maxday; $tgl++) {
                     $tr_date = $tahun.'-'.sprintf("%02d", $bulan).'-'. sprintf("%02d", $tgl);
                     /***************************************************************************************************************** */
                     /*Get Transaction Buy*/
                     $trxbuy = $this->db->select('tr_date, currency_id, header_id, nominal, SUM(sheet) AS sheet, price')
-                                    ->where(array('tr_date' => $tr_date, 'tr_id' => 1, 'currency_id' => $currency_id))
+                                    ->where(array('store_id' => $store_id, 'tr_date' => $tr_date, 'tr_id' => 1, 'currency_id' => $currency_id))
                                     ->where_in('status', ['3','4'])
                                     ->group_by('tr_date, currency_id, header_id, price')
                                     ->get('v_tr_detail');
+                    // echo $this->db->last_query();exit;
                     if($trxbuy->num_rows()){
                         foreach($trxbuy->result_array() as $row) {                            
                             $id++;
@@ -277,7 +282,7 @@ class Stock_calculate extends Bks_Controller {
                     /***************************************************************************************************************** */
                     /*Get Transaction Sell*/
                     $trxsell = $this->db->select('tr_date, currency_id, header_id, nominal, SUM(sheet) AS sheet, price')
-                                    ->where(array('tr_date' => $tr_date, 'tr_id' => 2, 'currency_id' => $currency_id))
+                                    ->where(array('store_id' => $store_id, 'tr_date' => $tr_date, 'tr_id' => 2, 'currency_id' => $currency_id))
                                     ->where_in('status', ['3','4'])
                                     ->group_by('tr_date, currency_id, header_id, price')
                                     ->get('v_tr_detail');

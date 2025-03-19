@@ -13,8 +13,6 @@
         $("#ftitle").html($('#tr_date').val());
         $("#total_buy").html('');
         $("#total_sell").html('');
-        $("#count_buy").html('');
-        $("#count_sell").html('');
         var t = $('#mainTable table').DataTable({
             retrieve: true,
             serverSide: true,
@@ -58,31 +56,7 @@
                         error: function(xhr){
                             alertify.error(xhr.responseText);
                         }
-                    });
-                    $.ajax({
-                        url: baseUrl + 'summary/summary_buysell_by_date/getcount',
-                        type: 'POST',
-                        data: {'store_id' : $("#store_id").val(), 'periode' : $('#tr_date').val()},
-                        datatype: 'json',
-                        success: function(data){
-                            if (data !== undefined) {
-                                if (data !== '[]'){   
-                                    var d = JSON.parse(data)[0];
-                                    var total_buy = Number(d.buy_count === null ? 0 : d.buy_count);
-                                    var total_sell = Number(d.sell_count === null ? 0 : d.sell_count);                                    
-                                    if(total_buy > 0){
-                                        $("#count_buy").html(formatRupiah(total_buy));
-                                    }                                
-                                    if(total_sell > 0){
-                                        $("#count_sell").html(formatRupiah(total_sell));
-                                    }                                       
-                                }
-                            }    
-                        },
-                        error: function(xhr){
-                            alertify.error(xhr.responseText);
-                        }
-                    });
+                    });                    
                 }
             },
             columns: [
