@@ -1,7 +1,7 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : MYSQL
+ Source Server         : mySQL
  Source Server Type    : MySQL
  Source Server Version : 80030
  Source Host           : localhost:3306
@@ -11,7 +11,7 @@
  Target Server Version : 80030
  File Encoding         : 65001
 
- Date: 20/03/2025 16:59:36
+ Date: 21/03/2025 06:41:11
 */
 
 SET NAMES utf8mb4;
@@ -798,130 +798,10 @@ CREATE TABLE `auth_users`  (
 -- ----------------------------
 INSERT INTO `auth_users` VALUES (1, '8989', 'f794bdbef7990b5112e526b5cd4ea67f4a35af21', NULL, 1, 1, 0, NULL, '', NULL, NULL, NULL, NULL, 1, '2025-02-23 13:58:46', NULL, NULL, NULL);
 INSERT INTO `auth_users` VALUES (2, 'konsolidasi', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 2, 1, 0, '1,2,3,4', 'Konsolidasi', '', '', NULL, NULL, 1, '2025-02-23 13:58:46', NULL, '2025-03-07 12:10:06', 1);
-INSERT INTO `auth_users` VALUES (3, 'admin', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 3, 1, 1, NULL, 'Admin', '', '', '2025-03-20 09:39:46', NULL, 1, '2025-02-23 13:58:46', NULL, '2025-03-07 12:10:19', 1);
+INSERT INTO `auth_users` VALUES (3, 'admin', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 3, 1, 1, NULL, 'Admin', '', '', '2025-03-20 19:58:51', NULL, 1, '2025-02-23 13:58:46', NULL, '2025-03-07 12:10:19', 1);
 INSERT INTO `auth_users` VALUES (4, 'konter', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 4, 2, 1, NULL, 'Counter', '', '', '2025-03-19 06:24:09', NULL, 1, '2025-02-23 13:58:46', NULL, '2025-03-07 12:10:34', 1);
 INSERT INTO `auth_users` VALUES (5, 'kasir', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 5, 1, 1, NULL, 'Cashier', '', '', '2025-03-10 21:17:34', NULL, 1, '2025-03-06 13:05:41', 1, '2025-03-07 12:10:24', 1);
 INSERT INTO `auth_users` VALUES (6, 'ap1', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 6, 1, 0, '3,4', 'Angkasa Pura 1', '', '', '2025-03-07 04:23:59', NULL, 1, '2025-03-06 13:06:45', 1, '2025-03-07 12:10:12', 1);
-
--- ----------------------------
--- Table structure for cba
--- ----------------------------
-DROP TABLE IF EXISTS `cba`;
-CREATE TABLE `cba`  (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `cba_tr_id` smallint NOT NULL,
-  `cba_code` varchar(4) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `cba_name` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `cba_bank_account_number` varchar(25) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  `cba_bank_account_name` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  `status` smallint NOT NULL,
-  `created` datetime NULL DEFAULT NULL,
-  `updated` datetime NULL DEFAULT NULL,
-  `createdby` smallint NULL DEFAULT NULL,
-  `updatedby` smallint NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
-
--- ----------------------------
--- Records of cba
--- ----------------------------
-INSERT INTO `cba` VALUES (1, 3, '3001', 'Kas', '', '', 1, '2025-03-08 22:28:04', '2025-03-09 06:46:27', 1, 1);
-INSERT INTO `cba` VALUES (2, 4, '4001', 'Bank', '', '', 1, '2025-03-08 22:28:04', '2025-03-09 03:07:45', 1, 1);
-
--- ----------------------------
--- Table structure for cba_detail
--- ----------------------------
-DROP TABLE IF EXISTS `cba_detail`;
-CREATE TABLE `cba_detail`  (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `header_id` bigint NOT NULL,
-  `description` varchar(150) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `amount` decimal(18, 2) NOT NULL DEFAULT 0.00,
-  `status` smallint NOT NULL,
-  `created` datetime NULL DEFAULT NULL,
-  `updated` datetime NULL DEFAULT NULL,
-  `createdby` smallint NULL DEFAULT NULL,
-  `updatedby` smallint NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
-
--- ----------------------------
--- Records of cba_detail
--- ----------------------------
-
--- ----------------------------
--- Table structure for cba_header
--- ----------------------------
-DROP TABLE IF EXISTS `cba_header`;
-CREATE TABLE `cba_header`  (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `store_id` bigint NOT NULL,
-  `cba_id` smallint NOT NULL,
-  `cba_pos_id` smallint NOT NULL,
-  `tr_date` date NOT NULL,
-  `tr_number` varchar(16) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  `buysell_id` bigint NULL DEFAULT NULL,
-  `buysell_payment_type` smallint NULL DEFAULT NULL,
-  `status` smallint NOT NULL,
-  `created` datetime NULL DEFAULT NULL,
-  `updated` datetime NULL DEFAULT NULL,
-  `createdby` smallint NULL DEFAULT NULL,
-  `updatedby` smallint NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
-
--- ----------------------------
--- Records of cba_header
--- ----------------------------
-
--- ----------------------------
--- Table structure for cba_pos
--- ----------------------------
-DROP TABLE IF EXISTS `cba_pos`;
-CREATE TABLE `cba_pos`  (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `cba_pos_code` varchar(5) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `cba_pos_name` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `status` smallint NOT NULL,
-  `created` datetime NULL DEFAULT NULL,
-  `updated` datetime NULL DEFAULT NULL,
-  `createdby` smallint NULL DEFAULT NULL,
-  `updatedby` smallint NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
-
--- ----------------------------
--- Records of cba_pos
--- ----------------------------
-INSERT INTO `cba_pos` VALUES (1, 'MP001', 'Modal', 1, '2025-03-09 07:25:24', '2025-03-09 20:46:53', 1, 0);
-INSERT INTO `cba_pos` VALUES (2, 'MP002', 'Penerimaan Kas', 1, '2025-03-09 07:33:22', '2025-03-09 07:34:17', 1, 1);
-INSERT INTO `cba_pos` VALUES (3, 'MP003', 'Pengeluaran Kas', 1, '2025-03-09 07:33:43', '2025-03-09 07:34:26', 1, 1);
-INSERT INTO `cba_pos` VALUES (4, 'MP004', 'Penerimaan Bank', 1, '2025-03-09 07:34:43', NULL, 1, NULL);
-INSERT INTO `cba_pos` VALUES (5, 'MP005', 'Pengeluaran Bank', 1, '2025-03-09 07:34:59', NULL, 1, NULL);
-
--- ----------------------------
--- Table structure for cba_saldo
--- ----------------------------
-DROP TABLE IF EXISTS `cba_saldo`;
-CREATE TABLE `cba_saldo`  (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `company_id` smallint NOT NULL,
-  `cba_id` smallint NOT NULL,
-  `cbas_date` date NOT NULL,
-  `cbas_in` decimal(18, 2) NULL DEFAULT 0.00,
-  `cbas_out` decimal(18, 2) NULL DEFAULT 0.00,
-  `cbas_saldo` decimal(18, 2) NULL DEFAULT 0.00,
-  `status` smallint NOT NULL,
-  `created` datetime NULL DEFAULT NULL,
-  `updated` datetime NULL DEFAULT NULL,
-  `createdby` smallint NULL DEFAULT NULL,
-  `updatedby` smallint NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
-
--- ----------------------------
--- Records of cba_saldo
--- ----------------------------
 
 -- ----------------------------
 -- Table structure for log_auth
@@ -952,6 +832,55 @@ CREATE TABLE `log_auth_sessions`  (
 -- ----------------------------
 -- Records of log_auth_sessions
 -- ----------------------------
+
+-- ----------------------------
+-- Table structure for m_cb
+-- ----------------------------
+DROP TABLE IF EXISTS `m_cb`;
+CREATE TABLE `m_cb`  (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `tr_id` smallint NOT NULL,
+  `cb_code` varchar(4) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `cb_name` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `description` varchar(150) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `status` smallint NOT NULL,
+  `created` datetime NULL DEFAULT NULL,
+  `updated` datetime NULL DEFAULT NULL,
+  `createdby` smallint NULL DEFAULT NULL,
+  `updatedby` smallint NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
+
+-- ----------------------------
+-- Records of m_cb
+-- ----------------------------
+INSERT INTO `m_cb` VALUES (1, 3, '3001', 'Kas', '', 1, '2025-03-08 22:28:04', '2025-03-09 06:46:27', 1, 1);
+INSERT INTO `m_cb` VALUES (2, 4, '4001', 'Bank', '', 1, '2025-03-08 22:28:04', '2025-03-09 03:07:45', 1, 1);
+
+-- ----------------------------
+-- Table structure for m_cb_pos
+-- ----------------------------
+DROP TABLE IF EXISTS `m_cb_pos`;
+CREATE TABLE `m_cb_pos`  (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `cb_pos_code` varchar(5) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `cb_pos_name` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `status` smallint NOT NULL,
+  `created` datetime NULL DEFAULT NULL,
+  `updated` datetime NULL DEFAULT NULL,
+  `createdby` smallint NULL DEFAULT NULL,
+  `updatedby` smallint NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
+
+-- ----------------------------
+-- Records of m_cb_pos
+-- ----------------------------
+INSERT INTO `m_cb_pos` VALUES (1, 'MP001', 'Modal', 1, '2025-03-09 07:25:24', '2025-03-09 20:46:53', 1, 0);
+INSERT INTO `m_cb_pos` VALUES (2, 'MP002', 'Penerimaan Kas', 1, '2025-03-09 07:33:22', '2025-03-09 07:34:17', 1, 1);
+INSERT INTO `m_cb_pos` VALUES (3, 'MP003', 'Pengeluaran Kas', 1, '2025-03-09 07:33:43', '2025-03-09 07:34:26', 1, 1);
+INSERT INTO `m_cb_pos` VALUES (4, 'MP004', 'Penerimaan Bank', 1, '2025-03-09 07:34:43', NULL, 1, NULL);
+INSERT INTO `m_cb_pos` VALUES (5, 'MP005', 'Pengeluaran Bank', 1, '2025-03-09 07:34:59', NULL, 1, NULL);
 
 -- ----------------------------
 -- Table structure for m_currency
@@ -2125,7 +2054,7 @@ CREATE TABLE `stock`  (
   `updated` datetime NULL DEFAULT NULL,
   `updatedby` bigint NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 115 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 129 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of stock
@@ -2195,6 +2124,76 @@ INSERT INTO `stock_price` VALUES (1, 1, '2025-03-01', 2025, 3, 21, NULL, 0, 0, 0
 INSERT INTO `stock_price` VALUES (2, 1, '2025-03-20', 2025, 3, 21, 5, 7500, 1, 3750, NULL, 0, 0.00, 0.00, 0.00, 10500.00, 0.50, 5250.00, 0.00, '2025-03-20 06:48:20', 3);
 
 -- ----------------------------
+-- Table structure for tr_cb_detail
+-- ----------------------------
+DROP TABLE IF EXISTS `tr_cb_detail`;
+CREATE TABLE `tr_cb_detail`  (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `header_id` bigint NOT NULL,
+  `description` varchar(150) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `amount` decimal(18, 2) NOT NULL DEFAULT 0.00,
+  `status` smallint NOT NULL,
+  `created` datetime NULL DEFAULT NULL,
+  `updated` datetime NULL DEFAULT NULL,
+  `createdby` smallint NULL DEFAULT NULL,
+  `updatedby` smallint NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
+
+-- ----------------------------
+-- Records of tr_cb_detail
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for tr_cb_header
+-- ----------------------------
+DROP TABLE IF EXISTS `tr_cb_header`;
+CREATE TABLE `tr_cb_header`  (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `store_id` bigint NOT NULL,
+  `cb_id` smallint NOT NULL,
+  `cb_pos_id` smallint NOT NULL,
+  `tr_date` date NOT NULL,
+  `tr_number` varchar(16) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `buysell_id` bigint NULL DEFAULT NULL,
+  `buysell_payment_type` smallint NULL DEFAULT NULL,
+  `status` smallint NOT NULL,
+  `created` datetime NULL DEFAULT NULL,
+  `updated` datetime NULL DEFAULT NULL,
+  `createdby` smallint NULL DEFAULT NULL,
+  `updatedby` smallint NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
+
+-- ----------------------------
+-- Records of tr_cb_header
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for tr_cb_saldo
+-- ----------------------------
+DROP TABLE IF EXISTS `tr_cb_saldo`;
+CREATE TABLE `tr_cb_saldo`  (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `store_id` smallint NOT NULL,
+  `cb_id` smallint NOT NULL,
+  `cbs_date` date NOT NULL,
+  `cbs_in` decimal(18, 2) NULL DEFAULT 0.00,
+  `cbs_out` decimal(18, 2) NULL DEFAULT 0.00,
+  `cbs_saldo` decimal(18, 2) NULL DEFAULT 0.00,
+  `status` smallint NOT NULL,
+  `created` datetime NULL DEFAULT NULL,
+  `updated` datetime NULL DEFAULT NULL,
+  `createdby` smallint NULL DEFAULT NULL,
+  `updatedby` smallint NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
+
+-- ----------------------------
+-- Records of tr_cb_saldo
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for tr_detail
 -- ----------------------------
 DROP TABLE IF EXISTS `tr_detail`;
@@ -2211,7 +2210,7 @@ CREATE TABLE `tr_detail`  (
   `createdby` bigint NOT NULL,
   `updatedby` bigint NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 21 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of tr_detail
@@ -2254,14 +2253,14 @@ CREATE TABLE `tr_header`  (
   `updatedby` bigint NULL DEFAULT NULL,
   `cashierby` bigint NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of tr_header
 -- ----------------------------
 INSERT INTO `tr_header` VALUES (3, 1, 1, '2025-02-19', '25031901010001', 1, 1, 'Tabungan', 'Investasi', NULL, 3, '2025-03-19 10:39:23', '2025-03-19 14:02:36', 3, 3, 5);
 INSERT INTO `tr_header` VALUES (4, 1, 2, '2025-03-19', '25031901020001', 1, 1, 'Tabungan', 'Investasi', NULL, 3, '2025-03-19 14:52:57', '2025-03-19 14:58:23', 3, 3, 5);
-INSERT INTO `tr_header` VALUES (5, 1, 1, '2025-03-20', '25031901010002', 1, 1, 'Tabungan', 'Investasi', NULL, 3, '2025-03-19 21:08:53', '2025-03-19 21:09:40', 3, 3, NULL);
+INSERT INTO `tr_header` VALUES (5, 1, 1, '2025-03-20', '25031901010002', 1, 1, 'Tabungan', 'Investasi', NULL, 3, '2025-03-19 21:08:53', '2025-03-20 20:37:10', 3, 3, 4);
 INSERT INTO `tr_header` VALUES (6, 1, 1, '2025-03-20', '25032001010003', 1, NULL, '', '', NULL, 3, '2025-03-20 11:09:14', '2025-03-20 11:10:58', 3, 3, NULL);
 INSERT INTO `tr_header` VALUES (7, 1, 1, '2025-03-20', '25032001010004', 1, 1, '', '', NULL, 3, '2025-03-20 16:31:16', '2025-03-20 16:32:39', 3, 3, NULL);
 
@@ -2311,6 +2310,7 @@ CREATE TABLE `tr_payment`  (
 -- ----------------------------
 INSERT INTO `tr_payment` VALUES (3, 3, 1, 'Payment Cash                                                                ', 81001500.00, 1, '2025-03-19 10:44:17', NULL, 3, NULL);
 INSERT INTO `tr_payment` VALUES (4, 4, 1, 'Payment Cash                                                                ', 35150000.00, 1, '2025-03-19 14:58:11', NULL, 3, NULL);
+INSERT INTO `tr_payment` VALUES (5, 5, 1, 'Payment Cash                                                                ', 106003750.00, 1, '2025-03-20 20:37:10', NULL, 3, NULL);
 
 -- ----------------------------
 -- View structure for v_auth_group_role
@@ -2385,10 +2385,10 @@ DROP VIEW IF EXISTS `v_st1`;
 CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_st1` AS select `tr_header`.`store_id` AS `store_id`,year(`tr_header`.`tr_date`) AS `stock_year`,month(`tr_header`.`tr_date`) AS `stock_month`,`tr_detail`.`currency_id` AS `currency_id`,`tr_detail`.`nominal` AS `nominal`,sum(if(((`tr_header`.`tr_id` = 1) and (`tr_detail`.`status` in (3,9))),`tr_detail`.`sheet`,0)) AS `buy_sheet`,sum(if(((`tr_header`.`tr_id` = 2) and (`tr_detail`.`status` in (3,9))),`tr_detail`.`sheet`,0)) AS `sell_sheet`,sum(if(((`tr_header`.`tr_id` = 2) and (`tr_detail`.`status` = 1)),`tr_detail`.`sheet`,0)) AS `sell_alocation_sheet` from (`tr_detail` join `tr_header` on((`tr_detail`.`header_id` = `tr_header`.`id`))) group by `tr_header`.`store_id`,year(`tr_header`.`tr_date`),month(`tr_header`.`tr_date`),`tr_detail`.`currency_id`,`tr_detail`.`nominal`;
 
 -- ----------------------------
--- View structure for v_st2
+-- View structure for v_stock
 -- ----------------------------
-DROP VIEW IF EXISTS `v_st2`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_st2` AS select `stock`.`id` AS `id`,`stock`.`currency_id` AS `currency_id`,`m_currency`.`currency_code` AS `currency_code`,`m_currency`.`currency_name` AS `currency_name`,`stock`.`stock_year` AS `stock_year`,`stock`.`stock_month` AS `stock_month`,`stock`.`nominal` AS `nominal`,`stock`.`beginning_stock_sheet` AS `beginning_stock_sheet`,if((`v_st1`.`buy_sheet` is null),0,`v_st1`.`buy_sheet`) AS `buy_sheet`,if((`v_st1`.`sell_sheet` is null),0,`v_st1`.`sell_sheet`) AS `sell_sheet`,if((`v_st1`.`sell_alocation_sheet` is null),0,`v_st1`.`sell_alocation_sheet`) AS `sell_alocation_sheet`,(((`stock`.`beginning_stock_sheet` + if((`v_st1`.`buy_sheet` is null),0,`v_st1`.`buy_sheet`)) - if((`v_st1`.`sell_sheet` is null),0,`v_st1`.`sell_sheet`)) - if((`v_st1`.`sell_alocation_sheet` is null),0,`v_st1`.`sell_alocation_sheet`)) AS `last_stock_sheet`,(select `stock_price`.`stock_last_price` from `stock_price` where ((`stock_price`.`currency_id` = `stock`.`currency_id`) and (`stock_price`.`store_id` = `stock`.`store_id`) and (`stock_price`.`stock_year` = `stock`.`stock_year`) and (`stock_price`.`stock_month` = `stock_price`.`stock_month`)) order by `stock_price`.`id` desc limit 1) AS `stock_last_price`,`stock`.`store_id` AS `store_id`,`m_store`.`store_name` AS `store_name`,`m_store`.`store_address` AS `store_address`,`stock`.`status` AS `status`,`stock`.`created` AS `created`,`stock`.`createdby` AS `createdby`,`stock`.`updated` AS `updated`,`stock`.`updatedby` AS `updatedby` from (((`stock` join `m_currency` on((`m_currency`.`id` = `stock`.`currency_id`))) left join `v_st1` on(((`stock`.`store_id` = `v_st1`.`store_id`) and (`stock`.`currency_id` = `v_st1`.`currency_id`) and (`stock`.`nominal` = `v_st1`.`nominal`) and (`stock`.`stock_year` = `v_st1`.`stock_year`) and (`stock`.`stock_month` = `v_st1`.`stock_month`)))) left join `m_store` on((`m_store`.`id` = `stock`.`store_id`))) group by `m_currency`.`currency_code`,`m_currency`.`currency_name`,`stock`.`currency_id`,`stock`.`store_id`,`stock`.`stock_year`,`stock`.`stock_month`,`stock`.`nominal`;
+DROP VIEW IF EXISTS `v_stock`;
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_stock` AS select `stock`.`id` AS `id`,`stock`.`currency_id` AS `currency_id`,`m_currency`.`currency_code` AS `currency_code`,`m_currency`.`currency_name` AS `currency_name`,`stock`.`stock_year` AS `stock_year`,`stock`.`stock_month` AS `stock_month`,`stock`.`nominal` AS `nominal`,`stock`.`beginning_stock_sheet` AS `beginning_stock_sheet`,if((`v_st1`.`buy_sheet` is null),0,`v_st1`.`buy_sheet`) AS `buy_sheet`,if((`v_st1`.`sell_sheet` is null),0,`v_st1`.`sell_sheet`) AS `sell_sheet`,if((`v_st1`.`sell_alocation_sheet` is null),0,`v_st1`.`sell_alocation_sheet`) AS `sell_alocation_sheet`,(((`stock`.`beginning_stock_sheet` + if((`v_st1`.`buy_sheet` is null),0,`v_st1`.`buy_sheet`)) - if((`v_st1`.`sell_sheet` is null),0,`v_st1`.`sell_sheet`)) - if((`v_st1`.`sell_alocation_sheet` is null),0,`v_st1`.`sell_alocation_sheet`)) AS `last_stock_sheet`,(select `stock_price`.`stock_last_price` from `stock_price` where ((`stock_price`.`currency_id` = `stock`.`currency_id`) and (`stock_price`.`store_id` = `stock`.`store_id`) and (`stock_price`.`stock_year` = `stock`.`stock_year`) and (`stock_price`.`stock_month` = `stock_price`.`stock_month`)) order by `stock_price`.`id` desc limit 1) AS `stock_last_price`,`stock`.`store_id` AS `store_id`,`m_store`.`store_name` AS `store_name`,`m_store`.`store_address` AS `store_address`,`stock`.`status` AS `status`,`stock`.`created` AS `created`,`stock`.`createdby` AS `createdby`,`stock`.`updated` AS `updated`,`stock`.`updatedby` AS `updatedby` from (((`stock` join `m_currency` on((`m_currency`.`id` = `stock`.`currency_id`))) left join `v_st1` on(((`stock`.`store_id` = `v_st1`.`store_id`) and (`stock`.`currency_id` = `v_st1`.`currency_id`) and (`stock`.`nominal` = `v_st1`.`nominal`) and (`stock`.`stock_year` = `v_st1`.`stock_year`) and (`stock`.`stock_month` = `v_st1`.`stock_month`)))) left join `m_store` on((`m_store`.`id` = `stock`.`store_id`))) group by `m_currency`.`currency_code`,`m_currency`.`currency_name`,`stock`.`currency_id`,`stock`.`store_id`,`stock`.`stock_year`,`stock`.`stock_month`,`stock`.`nominal`;
 
 -- ----------------------------
 -- View structure for v_stprice
@@ -2400,7 +2400,7 @@ CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_stprice` AS select `st
 -- View structure for v_stsale
 -- ----------------------------
 DROP VIEW IF EXISTS `v_stsale`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_stsale` AS select `v_st2`.`store_id` AS `store_id`,`v_st2`.`currency_id` AS `currency_id`,`m_currency`.`currency_code` AS `currency_code`,`m_currency`.`currency_name` AS `currency_name`,`v_st2`.`nominal` AS `nominal`,`m_currency`.`status` AS `status` from (`v_st2` join `m_currency` on((`v_st2`.`currency_id` = `m_currency`.`id`))) where ((`v_st2`.`last_stock_sheet` > 0) and (`v_st2`.`stock_year` = year(curdate())) and (`v_st2`.`stock_month` = month(curdate()))) group by `v_st2`.`store_id`,`v_st2`.`currency_id`,`v_st2`.`nominal`;
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_stsale` AS select `v_stock`.`store_id` AS `store_id`,`v_stock`.`currency_id` AS `currency_id`,`m_currency`.`currency_code` AS `currency_code`,`m_currency`.`currency_name` AS `currency_name`,`v_stock`.`nominal` AS `nominal`,`m_currency`.`status` AS `status` from (`v_stock` join `m_currency` on((`v_stock`.`currency_id` = `m_currency`.`id`))) where ((`v_stock`.`last_stock_sheet` > 0) and (`v_stock`.`stock_year` = year(curdate())) and (`v_stock`.`stock_month` = month(curdate()))) group by `v_stock`.`store_id`,`v_stock`.`currency_id`,`v_stock`.`nominal`;
 
 -- ----------------------------
 -- View structure for v_tr_detail

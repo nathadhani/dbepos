@@ -21,10 +21,10 @@ input.addEventListener('keydown', function(event) {
                 $('#mainTable').dataTable().fnClearTable();
                 $('#mainTable').DataTable().destroy();            
                 fetch_data();
-                // select_row();
+                select_row();
             } else {
                 fetch_data();
-                // select_row();
+                select_row();
             }
         }
     }
@@ -114,10 +114,10 @@ function fetch_data(){
                     return act;
                 }
             },
-            {data: 'customer_code', className: "dt-body-center", width: "5%", render: function (data, type, row, meta) {
-                    return '<a title="Edit" href="#"><i class="fa fa-edit"></i></a>';
-                }
-            },           
+            // {data: 'customer_code', className: "dt-body-center", width: "5%", render: function (data, type, row, meta) {
+            //         return '<a title="Edit" href="#"><i class="fa fa-edit"></i></a>';
+            //     }
+            // },           
         ],
         initComplete: function() {
             var table = $('#mainTable').DataTable();
@@ -152,7 +152,6 @@ function default_row(){
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td></td>                                      
                 </tr>`;
     for (let i = 0; i < 4; i++) {
         $('#mainTable tbody').append(rows);

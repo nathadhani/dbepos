@@ -34,8 +34,8 @@
                     </div>
                 </div>
                 <div class="panel-footer">
-                    <button type="submit" class="btn btn-info" style="width:100px;">Submit</button>
-                    <button type="reset" class="btn btn-default" style="width:100px;">Reset</button>
+                    <button type="submit" class="btn btn-info btn btn-sm" style="width:100px;">Submit</button>
+                    <button type="reset" class="btn btn-info btn btn-sm" style="width:100px;">Reset</button>
                 </div>
             </div>
         </form>

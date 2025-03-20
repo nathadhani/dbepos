@@ -203,7 +203,7 @@ class Transaction_buysell extends Bks_Controller {
         $query = $this->db->query("SELECT nominal,
                                           last_stock_sheet, 
                                           IF(last_stock_sheet IS NOT NULL, (nominal * last_stock_sheet),0 ) AS last_stock_amount
-                                          FROM v_st2
+                                          FROM v_stock
                                    WHERE store_id = $this->store_id
                                    AND stock_year = $tahun 
                                    AND stock_month = $bulan

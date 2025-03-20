@@ -25,7 +25,8 @@ th.dt-body-right {
 }
 
 table.dataTable tbody tr.selected {
-    background-color: #dbdcff !important;
+    background-color: #ff0000 !important;
+    color:#ddd
 }
 
 table.dataTable tbody tr {
