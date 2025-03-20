@@ -41,8 +41,8 @@ class Mypdf extends TCPDF
         // Set font
         $this->SetFont('helvetica', 'I', 8);
         // Page number
-        // $this->writeHTML('<hr>');
-        // $this->Cell(0, 1, $this->customFooterText . 'Di cetak menggunakan aplikasi Epos Currency Exchange pada tanggal ' . date('d-m-Y H:i:s T') . '                                                                                         Page '.$this->getAliasNumPage().'/'.$this->getAliasNbPages() , 0, false, 'L', 0, '', 0, false, 'T', 'M');        
+        $this->writeHTML('<hr>');
+        $this->Cell(0, 1, $this->customFooterText . ' print date : ' . date('d-m-Y H:i:s T') . ' Page '.$this->getAliasNumPage().'/'.$this->getAliasNbPages() , 0, false, 'L', 0, '', 0, false, 'T', 'M');        
     }
 }
  

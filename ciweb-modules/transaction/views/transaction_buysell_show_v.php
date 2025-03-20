@@ -32,15 +32,15 @@
                         </h3>
                     </div>
                     <ul class="panel-controls">
-                        <button id="btn-payment" class="btn btn-success btn btn-sm" style="width:130px;">Payment</button>
-                        <button id="btn-cancel" class="btn btn-danger btn btn-sm" style="width:130px;">Cancel</button>
+                        <button id="btn-payment" class="btn btn-info btn btn-sm" style="width:130px;">Payment</button>
+                        <button id="btn-cancel" class="btn btn-info btn btn-sm" style="width:130px;">Cancel</button>
                         <?php
                             $store_id = $auth['store_id'];
                             $get_AP = $this->db->query("SELECT api_angkasapura, api_method FROM m_store WHERE id = $store_id ")->result(); 
                             if($get_AP){                                                                          
                                 if($get_AP[0]->api_method === '1') {              
                         ?>
-                            <button id="btn-submit" class="btn btn-primary btn btn-sm" style="width:130px;">Submit to ECSys</button>
+                            <button id="btn-submit" class="btn btn-info btn btn-sm" style="width:130px;">Submit to ECSys</button>
                         <?php
                                 }
                             }
@@ -70,7 +70,7 @@
 
                         <div class="row">
                             <div class="col-md-12 table-responsive">
-                                <table class="table table-bordered table-condensed table-hover" width="100%" id="table-detail">
+                                <table class="table table-bordered table-condensed table-striped table-hover" width="100%" id="table-detail">
                                     <thead>
                                         <tr style="background:#f1f5f9;">
                                             <td style='vertical-align: middle;text-align:center;'>#</td>
@@ -173,8 +173,8 @@
                                     </h3>
                                 </div>
                                 <ul class="panel-controls">
-                                    <button id="btn-modal-cancel" class="btn btn-primary btn btn-sm" style="width:120px;margin-left:5px;">Submit</button>
-                                    <button id="btn-modal-cancel-close" class="btn btn-default btn btn-sm" style="width:120px;margin-left:5px;">Close</button>
+                                    <button id="btn-modal-cancel" class="btn btn-info btn btn-sm" style="width:120px;margin-left:5px;">Submit</button>
+                                    <button id="btn-modal-cancel-close" class="btn btn-info btn btn-sm" style="width:120px;margin-left:5px;">Close</button>
                                 </ul>    
                             </div>
                             <form id="mainFormCancel" class="form-horizontal" autocomplete="off">
@@ -212,8 +212,8 @@
                                     </h3>
                                 </div>
                                 <ul class="panel-controls">
-                                    <button id="btn-pdf" class="btn btn-success btn btn-sm" style="width:120px;margin-left:5px;">Print</button>
-                                    <button id="btn-modal-payment-close" class="btn btn-primary btn btn-sm" style="width:120px;margin-left:5px;">Close</button>
+                                    <button id="btn-pdf" class="btn btn-info btn btn-sm" style="width:120px;margin-left:5px;">Print</button>
+                                    <button id="btn-modal-payment-close" class="btn btn-info btn btn-sm" style="width:120px;margin-left:5px;">Close</button>
                                 </ul>    
                             </div>                            
                             <div class="panel-body">   
@@ -277,7 +277,7 @@
                                                             <input type="text" onkeypress="validasiAngka(event)" autofocuse="" id="modal_payment_amount" name="modal_payment_amount" class="form-control" style='text-align:right;'>
                                                         </td>
                                                         <td width="10%" style='text-align:center'>
-                                                            <button id="btn-modal-add-row-payment" class="btn btn-primary btn btn-sm" style="width:90px;">Add</button>
+                                                            <button id="btn-modal-add-row-payment" class="btn btn-info btn btn-sm" style="width:90px;">Add</button>
                                                         </td>                
                                                     </tr>
                                                     <tr>

@@ -22,8 +22,8 @@
                         </h3>
                     </div>
                     <ul class="panel-controls">                       
-                        <button id="btn-confirm" class="btn btn-success btn btn-sm" style="width:120px;">Confirm</button>
-                        <button id="btn-cancel" class="btn btn-danger btn-sm" style="width:120px;">Cancel</button>
+                        <button id="btn-confirm" class="btn btn-info btn btn-sm" style="width:120px;">Confirm</button>
+                        <button id="btn-cancel" class="btn btn-info btn-sm" style="width:120px;">Cancel</button>
                     </ul>    
                 </div>                  
                 <div class="panel-body">                                       
@@ -80,7 +80,7 @@
                                         <input type="text" autofocuse="" id="customer_purpose" name="customer_purpose" class="form-control" placeholder="Tujuan Transaksi...">
                                     </div>
                                     <div class="col-lg-4">                                        
-                                        <button id="btn-simpan-header" class="btn btn-primary btn btn-sm" style="width:100px;">Create Task</button>
+                                        <button id="btn-simpan-header" class="btn btn-info btn btn-sm" style="width:100px;">Create Task</button>
                                     </div>
                                 </div>
                             </div>                            
@@ -169,7 +169,7 @@
                                                     <input type="text" autofocuse="" id="subtotal" name="subtotal" class="form-control" style='text-align:right;' value="0" readonly>
                                                 </td>                                                                
                                                 <td width="10%" style='text-align:center'>
-                                                    <button id="btn-add-row-detail" class="btn btn-primary btn btn-sm" style="width:90px;">Add</button>
+                                                    <button id="btn-add-row-detail" class="btn btn-info btn btn-sm" style="width:90px;">Add</button>
                                                 </td>                
                                             </tr>                                         
                                         </tbody>                                       
@@ -206,8 +206,8 @@
                                     </h3>
                                 </div>
                                 <ul class="panel-controls">
-                                    <button id="btn-modal-cancel" class="btn btn-primary btn btn-sm" style="width:120px;margin-left:5px;">Submit</button>
-                                    <button id="btn-modal-cancel-close" class="btn btn-default btn btn-sm" style="width:120px;margin-left:5px;">Close</button>
+                                    <button id="btn-modal-cancel" class="btn btn-info btn btn-sm" style="width:120px;margin-left:5px;">Submit</button>
+                                    <button id="btn-modal-cancel-close" class="btn btn-info btn btn-sm" style="width:120px;margin-left:5px;">Close</button>
                                 </ul>    
                             </div>
                             <form id="mainFormCancel" class="form-horizontal" autocomplete="off">

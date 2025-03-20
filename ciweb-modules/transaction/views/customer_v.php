@@ -19,8 +19,8 @@
                         <h3>Buy / Sell - New</h3>
                     </div>
                     <ul class="panel-controls">
-                        <button id="btn_add" name="btn_add" class="btn btn-primary btn btn-sm" style="width:120px;">Add New Data</button>
-                        <a id="btn-excel" title="Download" href="#" class="btn btn-default btn btn-sm"><i class="fa fa-download"></i></a>
+                        <button id="btn_add" name="btn_add" class="btn btn-info btn btn-sm" style="width:120px;">Add New Data</button>
+                        <button id="btn-excel" class="btn btn-info btn btn-sm" style="margin-left:5px;">Xlsx</button>
                     </ul>
                 </div>
                 <div class="panel-body">

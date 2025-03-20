@@ -1,7 +1,7 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : mySQL
+ Source Server         : MYSQL
  Source Server Type    : MySQL
  Source Server Version : 80030
  Source Host           : localhost:3306
@@ -11,7 +11,7 @@
  Target Server Version : 80030
  File Encoding         : 65001
 
- Date: 20/03/2025 06:55:32
+ Date: 20/03/2025 16:59:36
 */
 
 SET NAMES utf8mb4;
@@ -798,7 +798,7 @@ CREATE TABLE `auth_users`  (
 -- ----------------------------
 INSERT INTO `auth_users` VALUES (1, '8989', 'f794bdbef7990b5112e526b5cd4ea67f4a35af21', NULL, 1, 1, 0, NULL, '', NULL, NULL, NULL, NULL, 1, '2025-02-23 13:58:46', NULL, NULL, NULL);
 INSERT INTO `auth_users` VALUES (2, 'konsolidasi', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 2, 1, 0, '1,2,3,4', 'Konsolidasi', '', '', NULL, NULL, 1, '2025-02-23 13:58:46', NULL, '2025-03-07 12:10:06', 1);
-INSERT INTO `auth_users` VALUES (3, 'admin', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 3, 1, 1, NULL, 'Admin', '', '', '2025-03-20 06:23:54', NULL, 1, '2025-02-23 13:58:46', NULL, '2025-03-07 12:10:19', 1);
+INSERT INTO `auth_users` VALUES (3, 'admin', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 3, 1, 1, NULL, 'Admin', '', '', '2025-03-20 09:39:46', NULL, 1, '2025-02-23 13:58:46', NULL, '2025-03-07 12:10:19', 1);
 INSERT INTO `auth_users` VALUES (4, 'konter', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 4, 2, 1, NULL, 'Counter', '', '', '2025-03-19 06:24:09', NULL, 1, '2025-02-23 13:58:46', NULL, '2025-03-07 12:10:34', 1);
 INSERT INTO `auth_users` VALUES (5, 'kasir', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 5, 1, 1, NULL, 'Cashier', '', '', '2025-03-10 21:17:34', NULL, 1, '2025-03-06 13:05:41', 1, '2025-03-07 12:10:24', 1);
 INSERT INTO `auth_users` VALUES (6, 'ap1', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 6, 1, 0, '3,4', 'Angkasa Pura 1', '', '', '2025-03-07 04:23:59', NULL, 1, '2025-03-06 13:06:45', 1, '2025-03-07 12:10:12', 1);
@@ -937,9 +937,6 @@ CREATE TABLE `log_auth`  (
 -- ----------------------------
 -- Records of log_auth
 -- ----------------------------
-INSERT INTO `log_auth` VALUES (3, 'login', '2025-03-19 20:42:00', '::1');
-INSERT INTO `log_auth` VALUES (3, 'login', '2025-03-19 20:42:00', '::1');
-INSERT INTO `log_auth` VALUES (3, 'login', '2025-03-20 06:23:54', '::1');
 
 -- ----------------------------
 -- Table structure for log_auth_sessions
@@ -955,7 +952,6 @@ CREATE TABLE `log_auth_sessions`  (
 -- ----------------------------
 -- Records of log_auth_sessions
 -- ----------------------------
-INSERT INTO `log_auth_sessions` VALUES ('66hr848bs01r48e35fpd03tb8ejdmgcc', '::1', 1742428100, 'auth|a:27:{s:2:\"id\";s:1:\"3\";s:8:\"username\";s:5:\"admin\";s:8:\"password\";s:40:\"40bd001563085fc35165329ea1ff5c5ecbdbbeef\";s:12:\"usergroup_id\";s:1:\"3\";s:13:\"usergroupname\";s:5:\"Admin\";s:12:\"userlevel_id\";s:1:\"1\";s:13:\"userlevelname\";s:5:\"Admin\";s:8:\"fullname\";s:5:\"Admin\";s:5:\"email\";s:0:\"\";s:8:\"celluler\";s:0:\"\";s:8:\"store_id\";s:1:\"1\";s:10:\"store_name\";s:31:\"PT. INDONESIA CENTRAL VALUTAMAS\";s:13:\"store_address\";s:48:\"Terminal 2F - Shopping Arcade Dep Soekarno Hatta\";s:10:\"api_method\";s:1:\"1\";s:15:\"api_angkasapura\";s:3:\"AP2\";s:12:\"api_username\";s:15:\"api.indocev.cgk\";s:12:\"api_password\";s:15:\"api.indocev.cgk\";s:17:\"store_id_multiple\";N;s:24:\"store_id_multiple_object\";N;s:6:\"status\";s:1:\"1\";s:7:\"lastlog\";s:19:\"2025-03-19 20:42:00\";s:7:\"chgpass\";N;s:7:\"created\";s:19:\"2025-02-23 13:58:46\";s:7:\"updated\";s:19:\"2025-03-07 12:10:19\";s:9:\"createdby\";N;s:9:\"updatedby\";s:1:\"1\";s:7:\"expired\";i:1742456899;}roles|a:143:{i:0;s:11:\"Home::index\";i:1;s:18:\"Change_pass::index\";i:2;s:19:\"Change_pass::update\";i:3;s:15:\"Customer::index\";i:4;s:31:\"Transaction_buysell_list::index\";i:5;s:31:\"Transaction_buysell_show::index\";i:6;s:35:\"Transaction_buysell_show::getshowid\";i:7;s:37:\"Transaction_buysell_show::show_header\";i:8;s:37:\"Transaction_buysell_show::show_detail\";i:9;s:46:\"Transaction_buysell_show::generateRandomString\";i:10;s:40:\"Transaction_buysell_show::printdotmatrix\";i:11;s:34:\"Transaction_buysell_show::printpdf\";i:12;s:31:\"Transaction_buysell_task::index\";i:13;s:30:\"Summary_buysell_by_date::index\";i:14;s:33:\"Summary_buysell_by_date::gettotal\";i:15;s:33:\"Summary_buysell_by_date::getcount\";i:16;s:31:\"Summary_buysell_by_month::index\";i:17;s:34:\"Summary_buysell_by_month::gettotal\";i:18;s:34:\"Summary_buysell_by_month::getcount\";i:19;s:30:\"Summary_buysell_by_year::index\";i:20;s:33:\"Summary_buysell_by_year::gettotal\";i:21;s:33:\"Summary_buysell_by_year::getcount\";i:22;s:24:\"Dashboard_buysell::index\";i:23;s:33:\"Dashboard_buysell::getlastupdated\";i:24;s:32:\"Dashboard_buysell::getdatatable1\";i:25;s:28:\"Dashboard_buysell::getchart1\";i:26;s:32:\"Dashboard_buysell::getdatatable2\";i:27;s:28:\"Dashboard_buysell::getchart2\";i:28;s:12:\"Stock::index\";i:29;s:12:\"Stock::excel\";i:30;s:22:\"Stock_calculate::index\";i:31;s:36:\"Stock_calculate::generate_stock_pull\";i:32;s:37:\"Stock_calculate::generate_stock_price\";i:33;s:18:\"Ppatk_dttot::index\";i:34;s:19:\"Ppatk_dttot::insert\";i:35;s:19:\"Ppatk_dttot::update\";i:36;s:19:\"Ppatk_dttot::delete\";i:37;s:18:\"Stock_price::index\";i:38;s:29:\"Stock_price::getcurrencystock\";i:39;s:18:\"Stock_price::excel\";i:40;s:32:\"Summary_buysell_by_date::getdata\";i:41;s:33:\"Summary_buysell_by_month::getdata\";i:42;s:32:\"Summary_buysell_by_year::getdata\";i:43;s:33:\"Transaction_buysell_list::getdata\";i:44;s:31:\"Transaction_buysell_list::excel\";i:45;s:35:\"Transaction_buysell_show::printnota\";i:46;s:17:\"Customer::getdata\";i:47;s:24:\"M_customer_act_on::index\";i:48;s:25:\"M_customer_act_on::insert\";i:49;s:25:\"M_customer_act_on::update\";i:50;s:25:\"M_customer_act_on::delete\";i:51;s:26:\"M_customer_act_on::getdata\";i:52;s:22:\"M_customer_data::index\";i:53;s:23:\"M_customer_data::insert\";i:54;s:23:\"M_customer_data::update\";i:55;s:23:\"M_customer_data::delete\";i:56;s:24:\"M_customer_data::getdata\";i:57;s:29:\"M_customer_data::getidentitas\";i:58;s:21:\"M_customer_job::index\";i:59;s:22:\"M_customer_job::insert\";i:60;s:22:\"M_customer_job::update\";i:61;s:22:\"M_customer_job::delete\";i:62;s:23:\"M_customer_job::getdata\";i:63;s:22:\"M_customer_job::getjob\";i:64;s:22:\"M_customer_type::index\";i:65;s:23:\"M_customer_type::insert\";i:66;s:23:\"M_customer_type::update\";i:67;s:23:\"M_customer_type::delete\";i:68;s:24:\"M_customer_type::getdata\";i:69;s:24:\"M_customer_type::gettype\";i:70;s:22:\"M_exchange_rate::index\";i:71;s:23:\"M_exchange_rate::insert\";i:72;s:23:\"M_exchange_rate::update\";i:73;s:23:\"M_exchange_rate::delete\";i:74;s:24:\"M_exchange_rate::getdata\";i:75;s:20:\"M_nationality::index\";i:76;s:21:\"M_nationality::insert\";i:77;s:21:\"M_nationality::update\";i:78;s:21:\"M_nationality::delete\";i:79;s:22:\"M_nationality::getdata\";i:80;s:29:\"M_nationality::getnationality\";i:81;s:21:\"M_payment_type::index\";i:82;s:22:\"M_payment_type::insert\";i:83;s:22:\"M_payment_type::update\";i:84;s:22:\"M_payment_type::delete\";i:85;s:23:\"M_payment_type::getdata\";i:86;s:30:\"M_payment_type::getpaymenttype\";i:87;s:12:\"Store::index\";i:88;s:18:\"M_currency::insert\";i:89;s:18:\"M_currency::update\";i:90;s:18:\"M_currency::delete\";i:91;s:19:\"M_currency::getdata\";i:92;s:27:\"M_currency::getcurrencybyid\";i:93;s:23:\"M_currency::getcurrency\";i:94;s:26:\"M_currency::getcurrencytrx\";i:95;s:14:\"Store::getdata\";i:96;s:20:\"Ppatk_dttot::getdata\";i:97;s:14:\"Stock::getdata\";i:98;s:20:\"Stock_price::getdata\";i:99;s:33:\"Transaction_buysell_task::getdata\";i:100;s:15:\"Customer::excel\";i:101;s:17:\"M_currency::index\";i:102;s:18:\"M_store::getregion\";i:103;s:22:\"Closing_buysell::index\";i:104;s:32:\"Closing_buysell::closing_trxdate\";i:105;s:27:\"M_customer_act_on::getacton\";i:106;s:16:\"Api_ap::ap_login\";i:107;s:19:\"Api_ap::ap_post_api\";i:108;s:20:\"Api_ap::ap_input_trx\";i:109;s:25:\"Api_ap::ap_adjustment_trx\";i:110;s:18:\"Api_ap::ap_get_trx\";i:111;s:24:\"Api_ap_adjustment::index\";i:112;s:26:\"Api_ap_adjustment::getdata\";i:113;s:17:\"Api_ap_get::index\";i:114;s:17:\"Api_ap_get::excel\";i:115;s:19:\"Api_ap_input::index\";i:116;s:21:\"Api_ap_input::getdata\";i:117;s:20:\"User::getdatacashier\";i:118;s:20:\"Customer_form::index\";i:119;s:28:\"Customer_form::generate_code\";i:120;s:21:\"Customer_form::insert\";i:121;s:21:\"Customer_form::update\";i:122;s:21:\"Customer_form::delete\";i:123;s:30:\"Customer_form::getcustomerbyid\";i:124;s:26:\"Customer_form::ceknikdttot\";i:125;s:23:\"Customer_form::add_foto\";i:126;s:26:\"Transaction_buysell::index\";i:127;s:34:\"Transaction_buysell::cekclosingtrx\";i:128;s:42:\"Transaction_buysell::generate_code_confirm\";i:129;s:34:\"Transaction_buysell::insert_header\";i:130;s:34:\"Transaction_buysell::update_header\";i:131;s:34:\"Transaction_buysell::insert_detail\";i:132;s:34:\"Transaction_buysell::delete_detail\";i:133;s:32:\"Transaction_buysell::show_header\";i:134;s:32:\"Transaction_buysell::show_detail\";i:135;s:33:\"Transaction_buysell::getstockbyid\";i:136;s:32:\"Transaction_buysell::getratebyid\";i:137;s:30:\"Transaction_buysell::getshowid\";i:138;s:33:\"Transaction_buysell::confirm_task\";i:139;s:31:\"Transaction_buysell::cancel_trx\";i:140;s:35:\"Transaction_buysell::insert_payment\";i:141;s:40:\"Transaction_buysell::show_detail_payment\";i:142;s:42:\"Transaction_buysell::delete_detail_payment\";}');
 
 -- ----------------------------
 -- Table structure for m_currency
@@ -1041,7 +1037,7 @@ CREATE TABLE `m_customer`  (
 -- ----------------------------
 -- Records of m_customer
 -- ----------------------------
-INSERT INTO `m_customer` VALUES (1, 1, '250314010001', '081395627817', '', 'Gede', 'Tejo', 'Jakarta', '011/013', 'Pela Mampang', 'Mampang Prapapatan', 'Jakarta Selatan', 'Lampung', '2025-03-14', 1, 8, 102, 1, '1234578900', '', NULL, 'Baik hati dan tidak sombong', 1, '2025-03-14 11:19:13', '2025-03-18 10:49:38', 3, 3);
+INSERT INTO `m_customer` VALUES (1, 1, '250314010001', '081395627817', '', 'Gede', 'Tejo', 'Jakarta', '011/013', 'Pela Mampang', 'Mampang Prapapatan', 'Jakarta Selatan', 'Lampung', '2025-03-14', 1, 8, 102, 1, '1234578900', '', NULL, 'Baik hati dan tidak sombong', 1, '2025-03-14 11:19:13', '2025-03-20 16:14:49', 3, 3);
 
 -- ----------------------------
 -- Table structure for m_customer_act_on
@@ -2129,7 +2125,7 @@ CREATE TABLE `stock`  (
   `updated` datetime NULL DEFAULT NULL,
   `updatedby` bigint NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 115 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of stock
@@ -2140,6 +2136,20 @@ INSERT INTO `stock` VALUES (111, 7, 1, 2025, 3, 100, 0, 1, '2025-03-20 06:48:19'
 INSERT INTO `stock` VALUES (112, 7, 1, 2025, 4, 100, 0, 1, '2025-03-20 06:48:19', 3, '2025-03-20 06:48:19', 3);
 INSERT INTO `stock` VALUES (113, 21, 1, 2025, 3, 500, 0, 1, '2025-03-20 06:48:19', 3, NULL, NULL);
 INSERT INTO `stock` VALUES (114, 21, 1, 2025, 4, 500, 15, 1, '2025-03-20 06:48:19', 3, '2025-03-20 06:48:19', 3);
+INSERT INTO `stock` VALUES (115, 6, 1, 2025, 3, 1, 0, 1, '2025-03-20 11:10:58', 3, NULL, NULL);
+INSERT INTO `stock` VALUES (116, 6, 1, 2025, 4, 1, 1000, 1, '2025-03-20 11:10:58', 3, '2025-03-20 11:10:58', 3);
+INSERT INTO `stock` VALUES (117, 11, 1, 2025, 3, 500, 0, 1, '2025-03-20 11:10:58', 3, NULL, NULL);
+INSERT INTO `stock` VALUES (118, 11, 1, 2025, 4, 500, 50, 1, '2025-03-20 11:10:58', 3, '2025-03-20 11:10:58', 3);
+INSERT INTO `stock` VALUES (119, 14, 1, 2025, 3, 1, 0, 1, '2025-03-20 11:10:58', 3, NULL, NULL);
+INSERT INTO `stock` VALUES (120, 14, 1, 2025, 4, 1, 3000, 1, '2025-03-20 11:10:58', 3, '2025-03-20 11:10:58', 3);
+INSERT INTO `stock` VALUES (121, 10, 1, 2025, 3, 1, 0, 1, '2025-03-20 11:10:58', 3, NULL, NULL);
+INSERT INTO `stock` VALUES (122, 10, 1, 2025, 4, 1, 5000, 1, '2025-03-20 11:10:58', 3, '2025-03-20 11:10:58', 3);
+INSERT INTO `stock` VALUES (123, 2, 1, 2025, 3, 1, 0, 1, '2025-03-20 11:10:58', 3, NULL, NULL);
+INSERT INTO `stock` VALUES (124, 2, 1, 2025, 4, 1, 2000, 1, '2025-03-20 11:10:58', 3, '2025-03-20 11:10:58', 3);
+INSERT INTO `stock` VALUES (125, 4, 1, 2025, 3, 1, 0, 1, '2025-03-20 11:10:58', 3, NULL, NULL);
+INSERT INTO `stock` VALUES (126, 4, 1, 2025, 4, 1, 25, 1, '2025-03-20 11:10:58', 3, '2025-03-20 11:10:58', 3);
+INSERT INTO `stock` VALUES (127, 1, 1, 2025, 3, 1, 0, 1, '2025-03-20 16:32:39', 3, NULL, NULL);
+INSERT INTO `stock` VALUES (128, 1, 1, 2025, 4, 1, 1000, 1, '2025-03-20 16:32:39', 3, '2025-03-20 16:32:39', 3);
 
 -- ----------------------------
 -- Table structure for stock_price
@@ -2201,7 +2211,7 @@ CREATE TABLE `tr_detail`  (
   `createdby` bigint NOT NULL,
   `updatedby` bigint NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of tr_detail
@@ -2214,6 +2224,13 @@ INSERT INTO `tr_detail` VALUES (10, 4, 7, 100, 20, 13500.00, 3, '2025-03-19 14:5
 INSERT INTO `tr_detail` VALUES (11, 5, 1, 100, 50, 16000.00, 3, '2025-03-19 21:09:07', '2025-03-19 21:09:40', 3, 3);
 INSERT INTO `tr_detail` VALUES (12, 5, 7, 100, 20, 13000.00, 3, '2025-03-19 21:09:20', '2025-03-19 21:09:40', 3, 3);
 INSERT INTO `tr_detail` VALUES (13, 5, 21, 500, 15, 0.50, 3, '2025-03-19 21:09:33', '2025-03-19 21:09:40', 3, 3);
+INSERT INTO `tr_detail` VALUES (14, 6, 6, 1, 1000, 10000.00, 3, '2025-03-20 11:09:23', '2025-03-20 11:10:58', 3, 3);
+INSERT INTO `tr_detail` VALUES (15, 6, 11, 500, 50, 3400.00, 3, '2025-03-20 11:09:30', '2025-03-20 11:10:58', 3, 3);
+INSERT INTO `tr_detail` VALUES (16, 6, 14, 1, 3000, 3000.00, 3, '2025-03-20 11:09:42', '2025-03-20 11:10:58', 3, 3);
+INSERT INTO `tr_detail` VALUES (17, 6, 10, 1, 5000, 4000.00, 3, '2025-03-20 11:09:51', '2025-03-20 11:10:58', 3, 3);
+INSERT INTO `tr_detail` VALUES (18, 6, 2, 1, 2000, 11000.00, 3, '2025-03-20 11:10:01', '2025-03-20 11:10:58', 3, 3);
+INSERT INTO `tr_detail` VALUES (19, 6, 4, 1, 25, 16000.00, 3, '2025-03-20 11:10:36', '2025-03-20 11:10:58', 3, 3);
+INSERT INTO `tr_detail` VALUES (20, 7, 1, 1, 1000, 16100.00, 3, '2025-03-20 16:32:36', '2025-03-20 16:32:39', 3, 3);
 
 -- ----------------------------
 -- Table structure for tr_header
@@ -2237,7 +2254,7 @@ CREATE TABLE `tr_header`  (
   `updatedby` bigint NULL DEFAULT NULL,
   `cashierby` bigint NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of tr_header
@@ -2245,6 +2262,8 @@ CREATE TABLE `tr_header`  (
 INSERT INTO `tr_header` VALUES (3, 1, 1, '2025-02-19', '25031901010001', 1, 1, 'Tabungan', 'Investasi', NULL, 3, '2025-03-19 10:39:23', '2025-03-19 14:02:36', 3, 3, 5);
 INSERT INTO `tr_header` VALUES (4, 1, 2, '2025-03-19', '25031901020001', 1, 1, 'Tabungan', 'Investasi', NULL, 3, '2025-03-19 14:52:57', '2025-03-19 14:58:23', 3, 3, 5);
 INSERT INTO `tr_header` VALUES (5, 1, 1, '2025-03-20', '25031901010002', 1, 1, 'Tabungan', 'Investasi', NULL, 3, '2025-03-19 21:08:53', '2025-03-19 21:09:40', 3, 3, NULL);
+INSERT INTO `tr_header` VALUES (6, 1, 1, '2025-03-20', '25032001010003', 1, NULL, '', '', NULL, 3, '2025-03-20 11:09:14', '2025-03-20 11:10:58', 3, 3, NULL);
+INSERT INTO `tr_header` VALUES (7, 1, 1, '2025-03-20', '25032001010004', 1, 1, '', '', NULL, 3, '2025-03-20 16:31:16', '2025-03-20 16:32:39', 3, 3, NULL);
 
 -- ----------------------------
 -- Table structure for tr_log_api
@@ -2382,24 +2401,6 @@ CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_stprice` AS select `st
 -- ----------------------------
 DROP VIEW IF EXISTS `v_stsale`;
 CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_stsale` AS select `v_st2`.`store_id` AS `store_id`,`v_st2`.`currency_id` AS `currency_id`,`m_currency`.`currency_code` AS `currency_code`,`m_currency`.`currency_name` AS `currency_name`,`v_st2`.`nominal` AS `nominal`,`m_currency`.`status` AS `status` from (`v_st2` join `m_currency` on((`v_st2`.`currency_id` = `m_currency`.`id`))) where ((`v_st2`.`last_stock_sheet` > 0) and (`v_st2`.`stock_year` = year(curdate())) and (`v_st2`.`stock_month` = month(curdate()))) group by `v_st2`.`store_id`,`v_st2`.`currency_id`,`v_st2`.`nominal`;
-
--- ----------------------------
--- View structure for v_summary_by_date
--- ----------------------------
-DROP VIEW IF EXISTS `v_summary_by_date`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_summary_by_date` AS select `tr_header`.`store_id` AS `store_id`,`tr_detail`.`currency_id` AS `currency_id`,`m_currency`.`currency_code` AS `currency_code`,`m_currency`.`currency_name` AS `currency_name`,`tr_header`.`tr_date` AS `tr_date`,(select `x`.`stock_date` from `v_stprice` `x` where ((`x`.`store_id` = `tr_header`.`store_id`) and (`x`.`currency_id` = `tr_detail`.`currency_id`) and (`x`.`stock_date` < `tr_header`.`tr_date`)) order by `x`.`id` desc limit 1) AS `st_date_beginning`,(select `x`.`id` from `v_stprice` `x` where ((`x`.`store_id` = `tr_header`.`store_id`) and (`x`.`currency_id` = `tr_detail`.`currency_id`) and (`x`.`stock_date` < `tr_header`.`tr_date`)) order by `x`.`id` desc limit 1) AS `st_id_beginning`,(select `v_stprice`.`stock_last_amount` from `v_stprice` where ((`v_stprice`.`store_id` = `tr_header`.`store_id`) and (`v_stprice`.`currency_id` = `tr_detail`.`currency_id`) and (`v_stprice`.`id` = `st_id_beginning`)) order by `v_stprice`.`id`) AS `st_beginning_amount`,sum(if(((`tr_header`.`tr_id` = 1) and (`tr_detail`.`status` in (3,4))),(`tr_detail`.`nominal` * `tr_detail`.`sheet`),0)) AS `buy_amount`,sum(if(((`tr_header`.`tr_id` = 1) and (`tr_detail`.`status` in (3,4))),((`tr_detail`.`nominal` * `tr_detail`.`sheet`) * `tr_detail`.`price`),0)) AS `buy_equivalent`,sum(if(((`tr_header`.`tr_id` = 2) and (`tr_detail`.`status` in (3,4))),(`tr_detail`.`nominal` * `tr_detail`.`sheet`),0)) AS `sell_amount`,sum(if(((`tr_header`.`tr_id` = 2) and (`tr_detail`.`status` in (3,4))),((`tr_detail`.`nominal` * `tr_detail`.`sheet`) * `tr_detail`.`price`),0)) AS `sell_equivalent`,(select `v_stprice`.`stock_last_amount` from `v_stprice` where ((`v_stprice`.`store_id` = `tr_header`.`store_id`) and (`v_stprice`.`currency_id` = `tr_detail`.`currency_id`) and (`v_stprice`.`stock_date` = `tr_header`.`tr_date`)) order by `v_stprice`.`id` desc limit 1) AS `st_end_amount` from ((`tr_detail` join `tr_header` on((`tr_header`.`id` = `tr_detail`.`header_id`))) join `m_currency` on((`tr_detail`.`currency_id` = `m_currency`.`id`))) where (`tr_detail`.`status` in (3,4)) group by `tr_header`.`store_id`,`tr_detail`.`currency_id`,`m_currency`.`currency_code`,`m_currency`.`currency_name`,`tr_header`.`tr_date`;
-
--- ----------------------------
--- View structure for v_summary_by_month
--- ----------------------------
-DROP VIEW IF EXISTS `v_summary_by_month`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_summary_by_month` AS select `tr_header`.`store_id` AS `store_id`,`tr_detail`.`currency_id` AS `currency_id`,`m_currency`.`currency_code` AS `currency_code`,`m_currency`.`currency_name` AS `currency_name`,year(`tr_header`.`tr_date`) AS `tr_year`,month(`tr_header`.`tr_date`) AS `tr_month`,(select year(`x`.`stock_date`) from `v_stprice` `x` where ((`x`.`store_id` = `tr_header`.`store_id`) and (`x`.`currency_id` = `tr_detail`.`currency_id`) and (year(`x`.`stock_date`) < year(`tr_header`.`tr_date`)) and (month(`x`.`stock_date`) < month(`tr_header`.`tr_date`))) order by `x`.`id` desc limit 1) AS `st_year_beginning`,(select month(`x`.`stock_date`) from `v_stprice` `x` where ((`x`.`store_id` = `tr_header`.`store_id`) and (`x`.`currency_id` = `tr_detail`.`currency_id`) and (year(`x`.`stock_date`) < year(`tr_header`.`tr_date`)) and (month(`x`.`stock_date`) < month(`tr_header`.`tr_date`))) order by `x`.`id` desc limit 1) AS `st_month_beginning`,(select `x`.`id` from `v_stprice` `x` where ((`x`.`store_id` = `tr_header`.`store_id`) and (`x`.`currency_id` = `tr_detail`.`currency_id`) and (year(`x`.`stock_date`) < year(`tr_header`.`tr_date`)) and (month(`x`.`stock_date`) < month(`tr_header`.`tr_date`))) order by `x`.`id` desc limit 1) AS `st_id_beginning`,(select `v_stprice`.`stock_last_amount` from `v_stprice` where ((`v_stprice`.`store_id` = `tr_header`.`store_id`) and (`v_stprice`.`currency_id` = `tr_detail`.`currency_id`) and (`v_stprice`.`id` = `st_id_beginning`)) order by `v_stprice`.`id`) AS `st_beginning_amount`,sum(if(((`tr_header`.`tr_id` = 1) and (`tr_detail`.`status` in (3,4))),(`tr_detail`.`nominal` * `tr_detail`.`sheet`),0)) AS `buy_amount`,sum(if(((`tr_header`.`tr_id` = 1) and (`tr_detail`.`status` in (3,4))),((`tr_detail`.`nominal` * `tr_detail`.`sheet`) * `tr_detail`.`price`),0)) AS `buy_equivalent`,sum(if(((`tr_header`.`tr_id` = 2) and (`tr_detail`.`status` in (3,4))),(`tr_detail`.`nominal` * `tr_detail`.`sheet`),0)) AS `sell_amount`,sum(if(((`tr_header`.`tr_id` = 2) and (`tr_detail`.`status` in (3,4))),((`tr_detail`.`nominal` * `tr_detail`.`sheet`) * `tr_detail`.`price`),0)) AS `sell_equivalent`,(select `v_stprice`.`stock_last_amount` from `v_stprice` where ((`v_stprice`.`store_id` = `tr_header`.`store_id`) and (`v_stprice`.`currency_id` = `tr_detail`.`currency_id`) and (year(`v_stprice`.`stock_date`) = year(`tr_header`.`tr_date`)) and (month(`v_stprice`.`stock_date`) = month(`tr_header`.`tr_date`))) order by `v_stprice`.`id` desc limit 1) AS `st_end_amount` from ((`tr_detail` join `tr_header` on((`tr_header`.`id` = `tr_detail`.`header_id`))) join `m_currency` on((`tr_detail`.`currency_id` = `m_currency`.`id`))) where (`tr_detail`.`status` in (3,4)) group by `tr_header`.`store_id`,`tr_detail`.`currency_id`,`m_currency`.`currency_code`,`m_currency`.`currency_name`,year(`tr_header`.`tr_date`),month(`tr_header`.`tr_date`);
-
--- ----------------------------
--- View structure for v_summary_by_year
--- ----------------------------
-DROP VIEW IF EXISTS `v_summary_by_year`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_summary_by_year` AS select `tr_header`.`store_id` AS `store_id`,`tr_detail`.`currency_id` AS `currency_id`,`m_currency`.`currency_code` AS `currency_code`,`m_currency`.`currency_name` AS `currency_name`,year(`tr_header`.`tr_date`) AS `tr_year`,sum(if(((`tr_header`.`tr_id` = 1) and (`tr_detail`.`status` in (3,4))),(`tr_detail`.`nominal` * `tr_detail`.`sheet`),0)) AS `buy_nominal`,sum(if(((`tr_header`.`tr_id` = 1) and (`tr_detail`.`status` in (3,4))),((`tr_detail`.`nominal` * `tr_detail`.`sheet`) * `tr_detail`.`price`),0)) AS `buy_equivalent`,sum(if(((`tr_header`.`tr_id` = 2) and (`tr_detail`.`status` in (3,4))),(`tr_detail`.`nominal` * `tr_detail`.`sheet`),0)) AS `sell_nominal`,sum(if(((`tr_header`.`tr_id` = 2) and (`tr_detail`.`status` in (3,4))),((`tr_detail`.`nominal` * `tr_detail`.`sheet`) * `tr_detail`.`price`),0)) AS `sell_equivalent` from ((`tr_detail` join `tr_header` on((`tr_header`.`id` = `tr_detail`.`header_id`))) join `m_currency` on((`tr_detail`.`currency_id` = `m_currency`.`id`))) where (`tr_detail`.`status` in (3,4)) group by `tr_header`.`store_id`,`tr_detail`.`currency_id`,`m_currency`.`currency_code`,`m_currency`.`currency_name`,year(`tr_header`.`tr_date`);
 
 -- ----------------------------
 -- View structure for v_tr_detail

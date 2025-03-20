@@ -211,7 +211,7 @@ $("#btn_add").click(function (e) {
 
 $("#btn-excel").on('click', function (e) {
     e.preventDefault();
-    alertify.confirm("download data customer ?", function (e) {
+    alertify.confirm("export xlsx ?", function (e) {
         if (e) {
             var url = "transaction/customer/excel";
             $.ajax({

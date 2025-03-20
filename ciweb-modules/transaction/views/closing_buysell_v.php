@@ -8,7 +8,7 @@
                     </h3>
                 </div>
                 <ul class="panel-controls">
-                    <button id="btn-submit" class="btn btn-primary btn btn-sm" style="width:120px;">Closing</button>
+                    <button id="btn-submit" class="btn btn-info btn btn-sm" style="width:120px;">Closing</button>
                 </ul>    
             </div>            
             <div class="panel-body">

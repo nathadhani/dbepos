@@ -1,101 +1,135 @@
-(function ($) {     
-    $("#btn-submit").on('click', function (e) {
-        e.preventDefault();
-        if($('#store_id').val() === null || $('#store_id').val() === ''){
-            bksfn.errMsg('Store Belum Dipilih!');            
-        } else {
-            fethdata();
-        }        
-    });    
+$("#btn-pdf").hide();
+$("#btn-excel").hide();
+$("#btn-submit").on('click', function (e) {
+    e.preventDefault();
+    if($('#store_id').val() === null || $('#store_id').val() === ''){
+        bksfn.errMsg('Store Belum Dipilih!');            
+    } else {
+        fethdata();
+    }        
+});
 
-    //--- Datatables
-    function fethdata(){        
-        $("#ftitle").html($('#tr_date').val());
-        $("#total_buy").html('');
-        $("#total_sell").html('');
-        var t = $('#mainTable table').DataTable({
-            retrieve: true,
-            serverSide: true,
-            processing: true,
-            autoWidth: false,
-            lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
-            sDom: 'it<"row"lp>',
-            ajax: {
-                url: baseUrl + 'summary/summary_buysell_by_date/getdata',
-                type: 'POST',
-                // beforeSend: function(){
-                //     $(".ajax-loader").height($(document).height());
-                //     $('.ajax-loader').css("visibility", "visible");
-                // },
-                data: function(d) {                    
-                    d.store_id = $('#store_id').val(),
-                    d.periode = $('#tr_date').val()
-                },
-                complete: function(){
-                    // $('.ajax-loader').css("visibility", "hidden");
-                    $.ajax({
-                        url: baseUrl + 'summary/summary_buysell_by_date/gettotal',
-                        type: 'POST',
-                        data: {'store_id' : $("#store_id").val(), 'periode' : $('#tr_date').val()},
-                        datatype: 'json',
-                        success: function(data){
-                            if (data !== undefined) {
-                                if (data !== '[]'){   
-                                    var d = JSON.parse(data)[0];
-                                    var total_buy = Number(d.buy_equivalent === null ? 0 : d.buy_equivalent);
-                                    var total_sell = Number(d.sell_equivalent === null ? 0 : d.sell_equivalent);                                    
-                                    if(total_buy > 0){
-                                        $("#total_buy").html(formatRupiah(total_buy));
-                                    }                                
-                                    if(total_sell > 0){
-                                        $("#total_sell").html(formatRupiah(total_sell));
-                                    }                 
-                                }
-                            }    
-                        },
-                        error: function(xhr){
-                            alertify.error(xhr.responseText);
-                        }
-                    });                    
-                }
-            },
-            columns: [
-                {data: "#", className: "dt-body-center", width: "5%", orderable: false, searchable: false},
-                {data: 'currency_code',  width: "45%", render: function (data, type, row, meta) {
-                    return row.currency_code + ' - ' + row.currency_name;
-                }},
-                {data: 'currency_id', className: "dt-body-right", width: "10%", render: function (data, type, row, meta) {
-                    return formatRupiah(row.buy_nominal);
-                }},
-                {data: 'buy_equivalent', className: "dt-body-right", width: "15%", render: function (data, type, row, meta) {
-                    return formatRupiah(data);
-                }},
-                {data: 'sell_nominal', className: "dt-body-right", width: "10%", render: function (data, type, row, meta) {
-                    return formatRupiah(data);
-                }},
-                {data: 'sell_equivalent', className: "dt-body-right", width: "15%", render: function (data, type, row, meta) {
-                    return formatRupiah(data);
-                }},
-                {data: 'currency_name', visible: false},
-                {data: 'buy_nominal', visible: false},
-            ],            
-            order: [[2, 'asc']]
-        });
-        t.draw();
-
-        // Setup - add a text input to each header cell
-        $('#searchid td').each(function () {
-            if ($(this).index() != 0 && ( $(this).index() <= 1 ) ) {
-                $(this).html('<input style="width:100%" type="text" placeholder="Search" data-id="' + $(this).index() + '" />');
+//--- Datatables
+function fethdata(){        
+    $("#totalbuy").html('');
+    $("#totalsell").html('');
+    $('#table-detail tbody').empty();
+    $("#table-detail").tableHeadFixer();
+    var counter = document.getElementById('table-detail').rows.length - 1;
+    $.ajax({
+        url: baseUrl + 'summary/summary_buysell_by_date/getdata',
+        type: 'POST',
+        data: {'store_id' : $("#store_id").val(), 'periode' : $('#tr_date').val()},
+        dataType: 'json',
+        success: function (data) {
+            if (data !== '[]' && data.length > 0){
+                var totalbuy = 0;
+                var totalsell = 0;
+                $.each(data, function (i, d) {                 
+                    totalbuy += Number(d.buy_equivalent);
+                    totalsell += Number(d.sell_equivalent);
+                    var rows =`<tr id="` + counter + `" style="vertical-align:middle">
+                                <td width="5%" style="text-align:center;">
+                                    ` + counter + `
+                                </td>
+                                <td width="5%" style='font-weight:600;'>
+                                    ` + d.currency_code +`                       
+                                </td>
+                                <td width="10%" style='text-align:left;font-weight:600;'>
+                                    ` + (d.st_beginning_amount !== null && Number(d.st_beginning_amount) > 0 ? formatRupiah(d.st_beginning_amount) : '-') + `
+                                </td>
+                                <td width="10%" style='text-align:left;color:blue;font-weight:600;'>
+                                    ` + (d.buy_amount !== null && Number(d.buy_amount) > 0 ? formatRupiah(d.buy_amount) : '-')  + `
+                                </td>
+                                <td width="10%" style='text-align:left;color:blue;font-weight:600;'>
+                                    ` + (d.buy_equivalent !== null && Number(d.buy_equivalent) > 0 ? formatRupiah(d.buy_equivalent) : '-') + `
+                                </td>
+                                <td width="10%" style='text-align:left;color:red;font-weight:600;'>
+                                    ` + (d.sell_amount !== null && Number(d.sell_amount) > 0 ? formatRupiah(d.sell_amount) : '-') + `
+                                </td>
+                                <td width="10%" style='text-align:left;color:red;font-weight:600;'>
+                                    ` + (d.sell_equivalent !== null && Number(d.sell_equivalent) > 0 ? formatRupiah(d.sell_equivalent) : '-') + `
+                                </td>
+                                <td width="10%" style='text-align:left;font-weight:600;'>
+                                    ` + (d.st_end_amount !== null && Number(d.st_end_amount) > 0 ? formatRupiah(d.st_end_amount) : '-') + `
+                                </td>
+                                <td width="30%">
+                                    ` + d.currency_name +`                       
+                                </td>
+                            </tr>`
+                    $('#table-detail tbody').append(rows);
+                    counter++;
+                });                
+                $("#totalbuy").html(formatRupiah(totalbuy));
+                $("#totalsell").html(formatRupiah(totalsell));
+                $("#btn-pdf").show();
+                $("#btn-excel").show();
+            }else{
+                return false;
             }
+        },
+        error: function(xhr){
+            alertify.error("error");
+            StringtoFile(xhr.responseText, 'error');
+        }
+    });        
+}
+
+$("#btn-pdf").on('click', function (e) {
+    e.preventDefault();    
+    if($('#store_id').val() === null || $('#store_id').val() === ''){
+        bksfn.errMsg('Store Belum Dipilih!');
+    } else {
+        alertify.confirm("export pdf ?", function (e) {    
+            if (e) {
+                var url = "summary/summary_buysell_by_date/exportpdf/" + $("#store_id").val() + "/" + $("#tr_date").val();
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    success: function(resp){
+                        window.open(url,'blank');                                                                             
+                    },
+                    error: function(xhr){
+                        alertify.error("error can't print");
+                        StringtoFile(xhr.responseText, 'error');
+                    }
+                });
+            }    
         });
-        $('#searchid input').keyup(function () {
-            t.columns($(this).data('id')).search(this.value).draw();
+    }
+});
+
+$("#btn-excel").on('click', function (e) {
+    e.preventDefault();
+    if($('#store_id').val() === null || $('#store_id').val() === ''){
+        bksfn.errMsg('Store Belum Dipilih!');
+    } else {
+        alertify.confirm("export xlsx ?", function (e) {    
+            if (e) {
+                var url = "summary/summary_buysell_by_date/excel/" + $("#store_id").val() + "/" + $("#tr_date").val();
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: {},
+                    beforeSend: function(){
+                        $(".ajax-loader").height($(document).height());
+                        $('.ajax-loader').css("visibility", "visible");
+                    },
+                    success: function() {
+                        window.open(url,'_self'); 
+                    },
+                    complete: function(){
+                        $('.ajax-loader').css("visibility", "hidden");
+                    }
+                }).done(function(data){
+                    var $a = $("<a>");
+                        $a.attr("href",data.file);
+                        $("body").append($a);
+                        $a.attr("download","Summary Buy Sell by date " + bksfn.revDate($("#tr_date").val()) + ".xlsx");
+                        $a[0].click();
+                        $a.remove();
+                });                                    
+            }    
         });
-        $(".clrs").click(function () {
-            $('#searchid input').val('');
-            $('#searchid select').val('');
-            t.search('')
-            t.columns().search('').draw();
-        });    }
-})(jQuery);
+    }              
+});

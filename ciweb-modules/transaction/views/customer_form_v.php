@@ -5,8 +5,12 @@
     var text_celluler = <?php echo "'" . str_replace('%20',' ',$this->uri->segment(5)) ."'";?>;
 </script>
 <?php 
-    $img_file = "assets/img/customer_form/" . $customer[0]->customer_code . ".jpg";
-    $image_url = base_url($img_file);
+    $img_file = '';
+    $image_url = '';
+    if(isset($customer[0]->customer_code)) {
+        $img_file = "assets/img/customer_form/" . $customer[0]->customer_code . ".jpg";
+        $image_url = base_url($img_file);    
+    }
 ?>
 <div class="page-content-wrap">            
     <div class="row">   
@@ -18,8 +22,8 @@
                             <h3>Customer Form / <strong id="ftitle"></strong></h3>
                         </div>
                         <ul class="panel-controls">
-                            <button id="btn-buy" class="btn btn-primary btn btn-sm" style="width:120px;">Buy / Beli</button>
-                            <button id="btn-sell" class="btn btn-danger btn btn-sm" style="width:120px;margin-left:5px;">Sell / Jual</button>
+                            <button id="btn-buy" class="btn btn-info btn" style="width:120px;font-weight:600;color:blue;font-size:14px;">Buy / Beli</button>
+                            <button id="btn-sell" class="btn btn-info btn" style="width:120px;font-weight:600;color:red;font-size:14px;margin-left:5px;">Sell / Jual</button>
                         </ul>
                     </div>                    
                     <div class="panel-body">                        
@@ -228,8 +232,8 @@
                     <div class="panel-body" style="margin-top:-35px;">
                         <div class="row">
                             <div class="col-lg-12">
-                                <button type="reset" class="btn btn-danger btn btn-sm pull-right" style="width:120px;margin-left:10px;">Reset</button>
-                                <button type="submit" class="btn btn-primary btn btn-sm pull-right" style="width:120px;">Save</button>
+                                <button type="reset" class="btn btn-info btn btn-sm pull-right" style="width:120px;margin-left:10px;">Reset</button>
+                                <button type="submit" class="btn btn-info btn btn-sm pull-right" style="width:120px;">Submit</button>
                             </div>
                         </div>                            
                     </div>

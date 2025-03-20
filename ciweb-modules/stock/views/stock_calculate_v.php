@@ -8,7 +8,7 @@
                     </h3>
                 </div>
                 <ul class="panel-controls">
-                    <button id="btn-submit" class="btn btn-primary btn btn-sm" style="width:120px;">Calculate</button>
+                    <button id="btn-submit" class="btn btn-info btn btn-sm" style="width:120px;">Calculate</button>
                 </ul>    
             </div>            
             <div class="panel-body">

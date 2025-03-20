@@ -6,8 +6,8 @@
                     <h3>Buy / Sell - List</h3>
                 </div>
                 <ul class="panel-controls">
-                    <button id="btn-submit" class="btn btn-primary btn btn-sm" style="width:120px;">Submit</button>
-                    <a id="btn-excel" title="Download" href="#" class="btn btn-default btn btn-sm pull-right" style="margin-left:5px;"><i class="fa fa-download"></i></a>
+                    <button id="btn-submit" class="btn btn-info btn btn-sm" style="width:120px;">Submit</button>
+                    <button id="btn-excel" class="btn btn-info btn btn-sm" style="margin-left:5px;">Xlsx</button>
                 </ul>
             </div>
             <div class="panel-body">

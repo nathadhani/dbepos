@@ -16,7 +16,7 @@
         if($('#store_id').val() === null || $('#store_id').val() === ''){
             bksfn.errMsg('Store Belum Dipilih!');
         } else {
-            alertify.confirm("download transaction ?", function (e) {    
+            alertify.confirm("export xlsx ?", function (e) {    
                 if (e) {
                     var url = "transaction/transaction_buysell_list/excel/"+$('#store_id').val()+"/"+$('#tr_date1').val()+"/"+$('#tr_date2').val();
                     $.ajax({

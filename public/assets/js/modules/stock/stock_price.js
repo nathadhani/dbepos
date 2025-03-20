@@ -38,7 +38,7 @@
         if($('#store_id').val() === null || $('#store_id').val() === ''){
             bksfn.errMsg('Store Belum Dipilih!');            
         } else {
-            alertify.confirm("download stock period " + $("#periode").val() + " ?", function (e) {
+            alertify.confirm("export xlsx ?", function (e) {
                 if (e) {
                     var url = "stock/stock_price/excel/"+$('#store_id').val()+"/"+$('#periode').val();
                     $.ajax({
