@@ -49,14 +49,19 @@ function show_header($id){
                         $("#tr_number").html(d.tr_number);
                         $("#tr_date").html(bksfn.revDate(d.tr_date));  
                         $("#ftitle").html(d.status == 2 ? '<span style="color:red;font-weight:bolder;">'+d.status_name+'</span>' : d.status_name);
-                        $("#description_header").html(d.description);
-
+                        $("#description_header").html(d.description);                        
+                        
+                        $("#btn-payment").hide();
+                        $("#btn-submit").hide();
+                        $("#btn-cancel").hide();
+                        $("#btn-pdf").hide();
                         if(Number(d.createdby) === Number(userId)){
                             switch(Number(d.status)) {
-                                case 1:                
+                                case 1:     
+                                    $("#btn-payment").hide();           
                                     $("#btn-submit").hide();
                                     $("#btn-cancel").show();
-                                    $("#btn-pdf").show();
+                                    $("#btn-pdf").hide();
                                     break;
                                 case 2:
                                     $("#btn-payment").hide();
@@ -85,14 +90,8 @@ function show_header($id){
                                     $("#btn-pdf").hide();
                                     break;
                             }
-                        }
-                        
-                        if(Number(d.createdby) !== Number(userId)){
-                            $("#btn-submit").hide();
-                            $("#btn-cancel").hide();
-                            $("#btn-pdf").hide();
-                        }
-                        
+                        }                      
+                                                
                         $("#created_by").html('Created by : '+d.createdby_name +' - '+d.created);
                         if(d.status == '2'){
                             $("#cancel_by").html('Canceled by : '+d.updatedby_name +' - '+d.updated);

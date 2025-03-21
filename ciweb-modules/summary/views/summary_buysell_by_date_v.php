@@ -35,7 +35,7 @@
                         <div class="form-group">
                             <div class="col-lg-12">
                                 <label for="periode" style="display:block">Date</label>
-                                <input style="width:100px;" type="text" id="tr_date" name="tr_date" placeholder="Tanggal..." class="form-control dp" data-date-format="DD MMMM YYYY" value="<?=date('d-m-Y');?>">
+                                <input type="text" name="period" id="period"  class="form-control dp" placeholder="Periode" data-date-format="DD MMMM YYYY" value="<?=date('d-m-Y');?>" style="width:100px;">
                             </div>
                         </div>                            
                     </div>                    

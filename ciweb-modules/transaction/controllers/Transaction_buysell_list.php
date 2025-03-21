@@ -32,11 +32,11 @@ class Transaction_buysell_list extends Bks_Controller {
         $where[0]['data']  = $store_id;
         $where[0]['sql']   = 'where';
 
-        if( $this->auth['store_id_multiple'] !== null && strlen($this->auth['store_id_multiple']) > 0){
+        if( $this->auth['ap_tr_id'] !== null && strlen($this->auth['ap_tr_id']) > 0){
             $where[1]['field'] = 'tr_id';
-            $where[1]['data']  = explode(',',implode(',', $this->auth['store_id_multiple']));
+            $where[1]['data']  = $this->auth['ap_tr_id'];
             $where[1]['sql']   = 'where_in';
-        }
+        }       
         
         $where2 = "tr_date >= '". $tanggal1 ."' AND tr_date <= '". $tanggal2 ."'";
 
@@ -47,47 +47,50 @@ class Transaction_buysell_list extends Bks_Controller {
     function excel(){
         $this->libauth->check(__METHOD__);
         $store_id = $this->uri->segment(4);
-        $store_id_multiple = explode(',',implode(',', $this->auth['store_id_multiple']));
         $tanggal1 = revDate($this->uri->segment(5));
-        $tanggal2 = revDate($this->uri->segment(6));        
+        $tanggal2 = revDate($this->uri->segment(6));
+        $store_id_multiple = '';
+        if( $this->auth['store_id_multiple'] !== null && strlen($this->auth['store_id_multiple']) > 0){
+            $store_id_multiple = explode(',',implode(',', $this->auth['store_id_multiple']));
+        }
         
-        $query = $this->db->query("SELECT
-                                    (
-                                        SELECT
-                                            ( CASE WHEN ( tr_header.tr_id = 1 ) THEN 'Trx Buy' WHEN ( tr_header.tr_id = 2 ) THEN 'Trx Sell' ELSE '' END )
-                                    ) AS trx_name,
-                                    tr_header.tr_number,	
-                                    tr_header.tr_date AS tr_date,		
-                                    (
-                                        SELECT
-                                        ( CASE WHEN ( tr_header.status IN ( 2 )) THEN 'Canceled' WHEN ( tr_header.status IN ( 3 )) THEN 'Confirm' WHEN ( tr_header.status = 4 ) THEN 'Integrasi System ECSys (API)' ELSE 'Task' 
-                                        END
-                                        )
-                                    ) AS status_name,
-                                    CONCAT(m_currency.currency_code,' - ',m_currency.currency_name) AS currency_name,
-                                    tr_detail.nominal AS nominal,
-                                    tr_detail.sheet AS sheet,
-                                    (tr_detail.nominal * tr_detail.sheet) AS amount,
-                                    tr_detail.price AS exchange_rate,
-                                    ((tr_detail.nominal * tr_detail.sheet) * tr_detail.price)  AS subtotal,
-                                    m_customer.customer_code,
-                                    m_customer.customer_name,
-                                    m_customer.customer_address,
-                                    m_customer.customer_phone,
-                                    m_store.store_name,
-                                    m_store.store_address,
-                                    tr_header.description,
-                                    tr_detail.created AS created,
-                                    tr_detail.updated AS updated,
-                                    usr1.fullname AS createdby_name,
-                                    usr2.fullname AS updated_name
-                                FROM tr_detail
-                                JOIN tr_header ON tr_detail.header_id = tr_header.id 				
-                                JOIN m_currency ON tr_detail.currency_id = m_currency.id
-                                JOIN m_customer ON m_customer.id = tr_header.customer_id
-                                JOIN m_store ON m_store.id = tr_header.store_id
-                                JOIN auth_users usr1 ON usr1.id = tr_header.createdby
-                                LEFT JOIN auth_users usr2 ON usr2.id = tr_header.updatedby"); 
+        $query = "SELECT
+                    (
+                        SELECT
+                            ( CASE WHEN ( tr_header.tr_id = 1 ) THEN 'Trx Buy' WHEN ( tr_header.tr_id = 2 ) THEN 'Trx Sell' ELSE '' END )
+                    ) AS trx_name,
+                    tr_header.tr_number,	
+                    tr_header.tr_date AS tr_date,		
+                    (
+                        SELECT
+                        ( CASE WHEN ( tr_header.status IN ( 2 )) THEN 'Canceled' WHEN ( tr_header.status IN ( 3 )) THEN 'Confirm' WHEN ( tr_header.status = 4 ) THEN 'Integrasi System ECSys (API)' ELSE 'Task' 
+                        END
+                        )
+                    ) AS status_name,
+                    CONCAT(m_currency.currency_code,' - ',m_currency.currency_name) AS currency_name,
+                    tr_detail.nominal AS nominal,
+                    tr_detail.sheet AS sheet,
+                    (tr_detail.nominal * tr_detail.sheet) AS amount,
+                    tr_detail.price AS exchange_rate,
+                    ((tr_detail.nominal * tr_detail.sheet) * tr_detail.price)  AS subtotal,
+                    m_customer.customer_code,
+                    m_customer.customer_name,
+                    m_customer.customer_address,
+                    m_customer.customer_phone,
+                    m_store.store_name,
+                    m_store.store_address,
+                    tr_header.description,
+                    tr_detail.created AS created,
+                    tr_detail.updated AS updated,
+                    usr1.fullname AS createdby_name,
+                    usr2.fullname AS updated_name
+                FROM tr_detail
+                JOIN tr_header ON tr_detail.header_id = tr_header.id 				
+                JOIN m_currency ON tr_detail.currency_id = m_currency.id
+                JOIN m_customer ON m_customer.id = tr_header.customer_id
+                JOIN m_store ON m_store.id = tr_header.store_id
+                JOIN auth_users usr1 ON usr1.id = tr_header.createdby
+                LEFT JOIN auth_users usr2 ON usr2.id = tr_header.updatedby"; 
 
         if( $this->auth['store_id_multiple'] !== null && strlen($this->auth['store_id_multiple']) > 0){
             $query .= " WHERE tr_header.store_id = $store_id
@@ -102,14 +105,13 @@ class Transaction_buysell_list extends Bks_Controller {
                     AND tr_header.tr_date <= '$tanggal2'
                     AND tr_detail.status IN (2,3,4)
                     ORDER BY tr_header.tr_date ASC, tr_header.tr_id ASC, tr_header.tr_number ASC, tr_detail.currency_id ASC, tr_detail.nominal ASC, tr_detail.sheet ASC";
-        }    
-
-
-        if (!$query)
+        }
+        
+        if (!$this->db->query($query))
         return false;
 
-        $fields = $query->list_fields();
-        $totcol = $query->num_rows();
+        $fields = $this->db->query($query)->list_fields();
+        $totcol = $this->db->query($query)->num_rows();
         $maxrow = $totcol+1;
 
         // echo $this->db->last_query();exit;
@@ -125,7 +127,7 @@ class Transaction_buysell_list extends Bks_Controller {
                        'fill' => array('type' => PHPExcel_Style_Fill::FILL_SOLID, 'color' => array('rgb' => '337AB7')));
 
         // Field names in the first row
-        $fields = $query->list_fields();
+        $fields = $this->db->query($query)->list_fields();
         $col = 0;
         
         // title column
@@ -165,7 +167,7 @@ class Transaction_buysell_list extends Bks_Controller {
 
         // Fetching the table data
         $row = 4;
-        foreach ($query->result_array() as $data) {
+        foreach ($this->db->query($query)->result_array() as $data) {
             $col = 0;
             foreach ($fields as $field) {
                 $this->excel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $data[$field]); // Retreive Data Value

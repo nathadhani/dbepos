@@ -6,7 +6,9 @@
                     <h3>Summary Buy / Sell - by Year</h3>
                 </div>
                 <ul class="panel-controls">
-                    <button id="btn-submit" class="btn btn-primary btn btn-sm" style="width:120px;">Submit</button>
+                    <button id="btn-submit" class="btn btn-info btn btn-sm" style="width:120px;">Submit</button>
+                    <button id="btn-pdf" class="btn btn-info btn btn-sm" style="margin-left:5px;">pdf</button>
+                    <button id="btn-excel" class="btn btn-info btn btn-sm" style="margin-left:5px;">Xlsx</button>
                 </ul>
             </div>
             <div class="panel-body">
@@ -33,51 +35,43 @@
                         <div class="form-group">
                             <div class="col-lg-12">
                                 <label for="periode" style="display:block">Year</label>
-                                <input style="width:100px;" type="text" data-inputmask="'mask': '[9999]'" class="form-control dpY" placeholder="Periode" name="periode" id="periode" value="<?=date('Y')?>">
+                                <input type="text" name="period" id="period"  class="form-control dpY" data-inputmask="'mask': '[9999]'" placeholder="Periode" value="<?=date('Y')?>" style="width:100px;">
                             </div>
                         </div>                            
                     </div>
                 </div>                
 
                 <br>
+                <div class="row" style="height:270px;">
+                    <table class="table table-bordered table-condensed table-striped table-hover table-responsive" width="100%" id="table-detail">
+                        <thead>
+                            <tr>
+                                <th rowspan="2" style="vertical-align:middle;text-align:center;">#</th>
+                                <th rowspan="2" style="vertical-align:middle;text-align:center;">Curr</th>
+                                <th rowspan="2" style="vertical-align:middle;text-align:center;">Beginning Amount</th>
+                                <th colspan="2" style="vertical-align:middle;text-align:center;">Buy</th>
+                                <th colspan="2" style="vertical-align:middle;text-align:center;">Sell</th>
+                                <th rowspan="2" style="vertical-align:middle;text-align:center;">End Amount</th>
+                                <th rowspan="2" style="vertical-align:middle;text-align:center;">Description</th>
+                            </tr>
+                            <tr>
+                                <th style="vertical-align:middle;text-align:center;">Amount</th>
+                                <th style="vertical-align:middle;text-align:center;">Equivalent</th>
+                                <th style="vertical-align:middle;text-align:center;">Amount</th>
+                                <th style="vertical-align:middle;text-align:center;">Equivalent</th>
+                            </tr>
+                        </thead>                            
+                        <tbody></tbody>
+                    </table>                   
+                </div>
+                <br>
                 <div class="row">
-                    <div class="col-md-4">
-                        <h5>Period  : <strong id="ftitle"></strong></h5>
+                    <div class="col-md-3">
+                        <h5>Total Buy Rp. <span id="totalbuy" style='text-align:left;color:blue;font-weight:600;'></span></h5>
                     </div>
-                    <div class="col-md-4">
-                        <h5><b style="color:blue;">Buy</b> Equivalent : <strong id="total_buy"></strong> ( <strong id="count_buy"></strong> )</h5> 
+                    <div class="col-md-3">
+                        <h5>Total Sell Rp. <span id="totalsell" style='text-align:left;color:red;font-weight:600;'></span></h5>
                     </div>
-                    <div class="col-md-4">
-                        <h5><b style="color:red;">Sell</b> Equivalent : <strong id="total_sell"></strong> ( <strong id="count_sell"></strong> )</h5>
-                    </div>
-                </div>                
-                
-                <div class="row table-responsive" id="mainTable" >
-                    <div class="col-md-12">
-                        <table class="table table-bordered table-condensed table-hover table-striped dataTable">
-                            <thead>
-                                <tr>
-                                    <th style="vertical-align:middle;text-align:center;">#</th>
-                                    <th style="vertical-align:middle;text-align:center;">Currency</th>
-                                    <th style="vertical-align:middle;text-align:center;">Buy Amount</th>
-                                    <th style="vertical-align:middle;text-align:center;">Buy Equivalent</th>
-                                    <th style="vertical-align:middle;text-align:center;">Sell Amount</th>
-                                    <th style="vertical-align:middle;text-align:center;">Sell Equivalent</th>
-                                </tr>
-                            </thead>
-                            <thead id="searchid">
-                                <tr>
-                                    <td><button class="clrs btn btn-info btn-sm btn-line">Clear</button></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                    </div>                    
                 </div>
             </div>
         </div>

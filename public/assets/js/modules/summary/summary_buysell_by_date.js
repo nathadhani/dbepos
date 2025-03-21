@@ -19,7 +19,7 @@ function fethdata(){
     $.ajax({
         url: baseUrl + 'summary/summary_buysell_by_date/getdata',
         type: 'POST',
-        data: {'store_id' : $("#store_id").val(), 'periode' : $('#tr_date').val()},
+        data: {'store_id' : $("#store_id").val(), 'period' : $('#period').val()},
         dataType: 'json',
         success: function (data) {
             if (data !== '[]' && data.length > 0){
@@ -82,7 +82,7 @@ $("#btn-pdf").on('click', function (e) {
     } else {
         alertify.confirm("export pdf ?", function (e) {    
             if (e) {
-                var url = "summary/summary_buysell_by_date/exportpdf/" + $("#store_id").val() + "/" + $("#tr_date").val();
+                var url = "summary/summary_buysell_by_date/exportpdf/" + $("#store_id").val() + "/" + $("#period").val();
                 $.ajax({
                     url: url,
                     type: 'POST',
@@ -106,7 +106,7 @@ $("#btn-excel").on('click', function (e) {
     } else {
         alertify.confirm("export xlsx ?", function (e) {    
             if (e) {
-                var url = "summary/summary_buysell_by_date/excel/" + $("#store_id").val() + "/" + $("#tr_date").val();
+                var url = "summary/summary_buysell_by_date/excel/" + $("#store_id").val() + "/" + $("#period").val();
                 $.ajax({
                     url: url,
                     type: 'POST',
@@ -125,7 +125,7 @@ $("#btn-excel").on('click', function (e) {
                     var $a = $("<a>");
                         $a.attr("href",data.file);
                         $("body").append($a);
-                        $a.attr("download","Summary Buy Sell by date " + bksfn.revDate($("#tr_date").val()) + ".xlsx");
+                        $a.attr("download","Summary Buy Sell by date " + bksfn.revDate($("#period").val()) + ".xlsx");
                         $a[0].click();
                         $a.remove();
                 });                                    

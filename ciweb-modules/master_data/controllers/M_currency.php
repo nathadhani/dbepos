@@ -113,9 +113,9 @@ class M_currency extends Bks_Controller {
         $store_id = $this->input->post('store_id');
         $tr_id = $this->input->post('tr_id');
         if($tr_id === '2'){
-            $menus = $this->db->order_by('currency_id,nominal', 'ASC')->get_where('v_stsale', array('status' => '1', 'store_id' => $store_id))->result();        
+            $menus = $this->db->order_by('currency_id,nominal', 'ASC')->get_where('v_stock_sell', array('status' => '1', 'store_id' => $store_id))->result();        
             if (count($menus) > 0){
-                $option ="<option selected value=''>-- Pilih Mata Uang --</option>";
+                $option ="<option selected value=''>Pilih...</option>";
                 foreach($menus as $row){
                     $option.="<option value='".$row->currency_id."'>".$row->currency_code . " - " . $row->currency_name . " [ Nominal : " . number_format($row->nominal, "0", ".", ",") ." ]</option>";
                 }
@@ -124,7 +124,7 @@ class M_currency extends Bks_Controller {
         } else {
             $menus = $this->db->order_by('currency_code', 'ASC')->get_where('m_currency', array('status' => '1'))->result();
             if (count($menus) > 0){
-                $option ="<option selected value=''>-- Pilih Mata Uang --</option>";
+                $option ="<option selected value=''>Pilih...</option>";
                 foreach($menus as $row){
                     $option.="<option value='".$row->id."'>".$row->currency_code . " - " . $row->currency_name ."</option>";
                 }

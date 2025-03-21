@@ -9,8 +9,8 @@ class Summary_buysell_by_date extends Bks_Controller {
         parent::__construct($config);        
         $this->auth = $this->session->userdata( 'auth' );        
         $this->store_id = 0;
-        $this->tr_date = date('Y-m-d');
         $this->query = '';
+        $this->tr_date = date('Y-m-d');        
     }
     
     function index() {
@@ -36,7 +36,7 @@ class Summary_buysell_by_date extends Bks_Controller {
                                             and x.currency_id = tr_detail.currency_id
                                             ORDER BY x.stock_date DESC, x.id DESC
                                             limit 1					
-                                        ) AS st_beginning_amount,
+                                        ) AS st_beginning_amount,                                        
 
                                         (
                                             SELECT (stock_last_amount * stock_last_price) FROM stock_price x
@@ -91,12 +91,13 @@ class Summary_buysell_by_date extends Bks_Controller {
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
         $this->store_id = $postData['store_id'];
-        $this->tr_date = revDate($postData['periode']);        
+        $this->tr_date = revDate($postData['period']);        
         echo json_encode($this->dbquery()->result(), true);
     }
     
     function exportpdf()
     {   
+        $this->libauth->check(__METHOD__);
         $this->store_id = $this->uri->segment(4);;
         $this->tr_date = revDate($this->uri->segment(5));        
         $profil_usaha = $this->Bksmdl->getprofilusaha($this->store_id);
@@ -131,11 +132,8 @@ class Summary_buysell_by_date extends Bks_Controller {
 
         // Add Title        
         $html_header = strtoupper(trim($profil_usaha[0]->store_name));
-        $html_header .= '<br>' . trim($profil_usaha[0]->store_address) . '</br>';   
-        if(strlen(trim($profil_usaha[0]->store_permit_number)) > 0){
-            $html_header .= '<br>' . 'Authorized Money Changer ' . trim($profil_usaha[0]->store_permit_number) . '</br>';        
-        }                   
-        $html_header .= '<br>' . 'Summary by date period : ' . revDate($this->tr_date) . '</br><br></br><br></br>';        
+        $html_header .= '<br>' . trim($profil_usaha[0]->store_address) . '</br>';
+        $html_header .= '<br>' . 'Summary Buy and Sell Period : ' . revDate($this->tr_date) . '</br><br></br><br></br>';
         
         // Add Content Body
         $data_content = $this->dbquery()->result();
@@ -149,30 +147,35 @@ class Summary_buysell_by_date extends Bks_Controller {
             $html_table .= '<tr>';
                 $html_table .= '<th width="2%" rowspan="2">#</th>';
                 $html_table .= '<th width="5%" rowspan="2">Curr</th>';
-                $html_table .= '<th width="5%" rowspan="2">Beginning Amount</th>';
-                $html_table .= '<th width="15%" colspan="2">Buy</th>';
-                $html_table .= '<th width="15%" colspan="2">Sell</th>';
-                $html_table .= '<th width="5%" rowspan="2">End Amount</th>';
-                $html_table .= '<th width="53%" rowspan="2">Description</th>';
+                $html_table .= '<th width="15%" colspan="2">Awal</th>';
+                $html_table .= '<th width="15%" colspan="2">Beli</th>';
+                $html_table .= '<th width="15%" colspan="2">Jual</th>';
+                $html_table .= '<th width="15%" colspan="2">Akhir</th>';
+                $html_table .= '<th width="33%" rowspan="2">Keterangan</th>';
             $html_table .= '</tr>'; 
             $html_table .= '<tr>';  
-                $html_table .= '<th width="5%">Amount</th>'; 
-                $html_table .= '<th width="10%">Equivalent</th>'; 
-                $html_table .= '<th width="5%">Amount</th>'; 
-                $html_table .= '<th width="10%">Equivalent</th>'; 
+                $html_table .= '<th width="5%">Qty</th>'; 
+                $html_table .= '<th width="10%">Rupiah</th>'; 
+                $html_table .= '<th width="5%">Qty</th>'; 
+                $html_table .= '<th width="10%">Rupiah</th>'; 
+                $html_table .= '<th width="5%">Qty</th>'; 
+                $html_table .= '<th width="10%">Rupiah</th>'; 
+                $html_table .= '<th width="5%">Qty</th>'; 
+                $html_table .= '<th width="10%">Rupiah</th>'; 
             $html_table .= '</tr>';               
 
             $pdf->SetFont('', 'B', 9);
             foreach($data_content as $r){
                 $no++;
                 $totalbuy = $totalbuy + (int) $r->buy_equivalent;
-                $totalsell = $totalsell + (int) $r->st_end_amount;
+                $totalsell = $totalsell + (int) $r->sell_equivalent;
 
                 $html_table .= '<tr>';
                 $html_table .= '<td>' . $no . '</td>';
                 $html_table .= '<td>' . $r->currency_code . '</td>';
                 
                 $html_table .= '<td>' .  ( (int) $r->st_beginning_amount > 0 ? number_format($r->st_beginning_amount, "0", ".", ",") : '-' ). '</td>';
+                $html_table .= '<td>' .  ( (int) $r->st_beginning_equivalent > 0 ? number_format($r->st_beginning_equivalent, "0", ".", ",") : '-' ). '</td>';
                 
                 $html_table .= '<td>' . ( (int) $r->buy_amount > 0 ? number_format($r->buy_amount, "0", ".", ",") : '-' ) . '</td>';
                 $html_table .= '<td>' . ( (int) $r->buy_equivalent > 0 ? number_format($r->buy_equivalent, "0", ".", ",") : '-' ) . '</td>';
@@ -181,6 +184,7 @@ class Summary_buysell_by_date extends Bks_Controller {
                 $html_table .= '<td>' . ( (int) $r->sell_equivalent > 0 ? number_format($r->sell_equivalent, "0", ".", ",") : '-' ) . '</td>';
 
                 $html_table .= '<td>' . ( (int) $r->st_end_amount > 0 ? number_format($r->st_end_amount, "0", ".", ",") : '-' ) . '</td>';
+                $html_table .= '<td>' . ( (int) $r->st_end_equivalent > 0 ? number_format($r->st_end_equivalent, "0", ".", ",") : '-' ) . '</td>';
 
                 $html_table .= '<td>' . ucwords(strtolower(trim($r->currency_name))) . '</td>';
 
@@ -199,7 +203,16 @@ class Summary_buysell_by_date extends Bks_Controller {
             $pdf->Ln(4);
             $pdf->Cell(01, 01, 'Createdby,                       Spv,', 0, 1, 'L');
         }        
-        $pdf->Output('Summary by date ' . revDate($this->tr_date).'.pdf','I');
+        $pdf->Output('Summary Buy and Sell Period ' . revDate($this->tr_date).'.pdf','I');
+    }
+
+    function excelcellColor($cells,$color){    
+        $this->excel->getActiveSheet(0)->getStyle($cells)->getFill()->applyFromArray(array(
+            'type' => PHPExcel_Style_Fill::FILL_SOLID,
+            'startcolor' => array(
+                 'rgb' => $color
+            )
+        ));
     }
 
     function excel(){
@@ -222,78 +235,103 @@ class Summary_buysell_by_date extends Bks_Controller {
         $this->excel->setActiveSheetIndex(0);
         $this->excel->getActiveSheet()->setTitle("temp");
 
-        $bold = array('font' => array('bold' => true));
-        $fontcolor = array('font' => array('color' => array('rgb' => 'ff0000')));
-        $title = array('font' => array('color' => array('rgb' => 'ffffff'), 'bold' => true), 
-                       'fill' => array('type' => PHPExcel_Style_Fill::FILL_SOLID, 'color' => array('rgb' => '337AB7')));
-
         // Field names in the first row
         $fields = $this->dbquery()->list_fields();
         $col = 0;
         
         // title column
-        $this->excel->setActiveSheetIndex(0)->setCellValue('A1', "Transaction Buy Sell Period " . revDate($tanggal1) . ' s/d ' .  revDate($tanggal2)); 
-        $this->excel->getActiveSheet()->getStyle('A1')->getFont()->setBold(TRUE);
-        $this->excel->getActiveSheet()->getStyle('A1')->getFont()->setSize(12);
-        $this->excel->getActiveSheet()->mergeCells('A1:T1');
+        $this->excel->setActiveSheetIndex(0)->setCellValue('A1', strtoupper(trim($profil_usaha[0]->store_name))); 
+        $this->excel->setActiveSheetIndex(0)->setCellValue('A2', strtoupper(trim($profil_usaha[0]->store_address))); 
+        $this->excel->setActiveSheetIndex(0)->setCellValue('A3', 'Summary Buy and Sell Period ' . revDate($this->tr_date)); 
+        $this->excel->setActiveSheetIndex(0)->getStyle('A1:A3')->getFont()->setBold(TRUE);
+        $this->excel->setActiveSheetIndex(0)->getStyle('A1:A3')->getFont()->setSize(11);
+        $this->excel->setActiveSheetIndex(0)->mergeCells('A1:K1');
+        $this->excel->setActiveSheetIndex(0)->mergeCells('A2:K2');
+        $this->excel->setActiveSheetIndex(0)->mergeCells('A3:K3');
 
-        $judul = array('Trx.Name',
-                        'Trx.Number',
-                        'Trx.Date',
-                        'Trx.Status',                        
-                        'Currency',
-                        'Nominal',
-                        'Sheet',
-                        'Amount',
-                        'Exchange Rate',
-                        'Equivalent',
-                        'Customer Code',                        
-                        'Customer Name',
-                        'Customer Address',
-                        'Customer Phone',
-                        'Store Name',
-                        'Store Address',
-                        'Description',
-                        'Created',
-                        'Updated',
-                        'Created by Name',
-                        'Updated by Name');
+        $this->excel->setActiveSheetIndex(0)->setCellValue('A6', "#"); 
+        $this->excel->setActiveSheetIndex(0)->setCellValue('B6', "Curr"); 
+        
+        $this->excel->setActiveSheetIndex(0)->setCellValue('C5', "Awal"); 
+        $this->excel->setActiveSheetIndex(0)->mergeCells('C5:D5');
+        $this->excel->setActiveSheetIndex(0)->setCellValue('C6', "Qty"); 
+        $this->excel->setActiveSheetIndex(0)->setCellValue('D6', "Rupiah"); 
+
+        $this->excel->setActiveSheetIndex(0)->setCellValue('E5', "Beli"); 
+        $this->excel->setActiveSheetIndex(0)->mergeCells('E5:F5');
+        $this->excel->setActiveSheetIndex(0)->setCellValue('E6', "Qty"); 
+        $this->excel->setActiveSheetIndex(0)->setCellValue('F6', "Rupiah"); 
+
+        $this->excel->setActiveSheetIndex(0)->setCellValue('G5', "Jual"); 
+        $this->excel->setActiveSheetIndex(0)->mergeCells('G5:H5');
+        $this->excel->setActiveSheetIndex(0)->setCellValue('G6', "Qty"); 
+        $this->excel->setActiveSheetIndex(0)->setCellValue('H6', "Rupiah"); 
+
+        $this->excel->setActiveSheetIndex(0)->setCellValue('I5', "Akhir"); 
+        $this->excel->setActiveSheetIndex(0)->mergeCells('I5:J5');
+        $this->excel->setActiveSheetIndex(0)->setCellValue('I6', "Qty"); 
+        $this->excel->setActiveSheetIndex(0)->setCellValue('J6', "Rupiah"); 
+
+        $this->excel->setActiveSheetIndex(0)->setCellValue('K6', "Keterangan");
 
 
-        foreach ($fields as $key => $field) {
-            $this->excel->getActiveSheet()->setCellValueByColumnAndRow($col, 3, $judul[$key]);
-            $this->excel->getActiveSheet()->getStyleByColumnAndRow($col, 3)->applyFromArray($title);
-            $col++;
-        }
+        $this->excelcellColor('A6:K6', 'FFFF00');
+        $this->excel->setActiveSheetIndex(0)->getStyle('A5:K6')->getFont()->setBold(TRUE);
+        $this->excel->setActiveSheetIndex(0)->getStyle('A5:K6')->getFont()->setSize(11);
+        $this->excel->setActiveSheetIndex(0)->getStyle('C5:K5')->getBorders()
+                                                            ->getAllBorders()
+                                                            ->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN)
+                                                            ->getColor()
+                                                            ->setRGB('DDDDDD');
+        $this->excel->setActiveSheetIndex(0)->getStyle('A6:L6')->getBorders()
+                                                            ->getAllBorders()
+                                                            ->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN)
+                                                            ->getColor()
+                                                            ->setRGB('DDDDDD');                                                            
+        $this->excel->setActiveSheetIndex(0)->getStyle('A5:L6')->getAlignment()->applyFromArray(
+                                                                    array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+                                                                          'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER,)
+                                                                );
 
         // Fetching the table data
-        $row = 4;
-        foreach ($this->dbquery()->result_array() as $data) {
-            $col = 0;
-            foreach ($fields as $field) {
-                $this->excel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $data[$field]); // Retreive Data Value
-                $this->excel->getActiveSheet()->getStyle('F'.$row.':'.'H'.$row)->getNumberFormat()->setFormatCode('#,##0'); // Number Format
-                $this->excel->getActiveSheet()->getStyle('J'.$row.':'.'J'.$row)->getNumberFormat()->setFormatCode('#,##0'); // Number Format                
-                if($field == 'exchange_rate'){
-                    if( $this->Bksmdl->cekdecimalgreaterthenzero($data[$field]) > 0){
-                        $this->excel->getActiveSheet()->getStyle('I'.$row.':'.'I'.$row)->getNumberFormat()->setFormatCode('#,##0.00'); // Number Format Decimal
-                    } else {
-                        $this->excel->getActiveSheet()->getStyle('I'.$row.':'.'I'.$row)->getNumberFormat()->setFormatCode('#,##0'); // Number Format Decimal                        
-                    }
-                }
-                $col++;
-            }
-            $row++;
-        }        
+        $row = 7; $no = 1;
+        foreach ($this->dbquery()->result_array() as $data) {            
+            $this->excel->setActiveSheetIndex(0)->setCellValue('A'.$row, $no);
+            $this->excel->setActiveSheetIndex(0)->setCellValue('B'.$row, $data['currency_code']);
 
-        foreach (range('A', 'U') as $columnID) {
+            $this->excel->setActiveSheetIndex(0)->setCellValue('C'.$row, $data['st_beginning_amount']);
+            $this->excel->setActiveSheetIndex(0)->setCellValue('D'.$row, $data['st_beginning_equivalent']);
+
+            $this->excel->setActiveSheetIndex(0)->setCellValue('E'.$row, $data['buy_amount']);
+            $this->excel->setActiveSheetIndex(0)->setCellValue('F'.$row, $data['buy_equivalent']);
+
+            $this->excel->setActiveSheetIndex(0)->setCellValue('G'.$row, $data['sell_amount']);
+            $this->excel->setActiveSheetIndex(0)->setCellValue('H'.$row, $data['sell_equivalent']);
+
+            $this->excel->setActiveSheetIndex(0)->setCellValue('I'.$row, $data['st_end_amount']);
+            $this->excel->setActiveSheetIndex(0)->setCellValue('J'.$row, $data['st_end_equivalent']);
+
+            $this->excel->setActiveSheetIndex(0)->setCellValue('K'.$row, ucwords(strtolower(trim($data['currency_name']))) );
+
+            $this->excel->setActiveSheetIndex(0)->getStyle('C'.$row.':'.'J'.$row)->getNumberFormat()->setFormatCode('_(* #,##0_);_(* (#,##0);_(* "-"??_);_(@_)'); // Number Format
+            $this->excel->setActiveSheetIndex(0)->getStyle('A'.$row.':'.'L'.$row)->getBorders()
+                                                                                ->getAllBorders()
+                                                                                ->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN)
+                                                                                ->getColor()
+                                                                                ->setRGB('DDDDDD');
+            $this->excel->setActiveSheetIndex(0)->getStyle('A'.$row.':'.'L'.$row)->getAlignment()->applyFromArray(
+                                                                                        array('vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER,)
+                                                                                    );
+            $row++; $no++;
+        }
+
+        foreach (range('A', 'L') as $columnID) {
             $this->excel->getActiveSheet()->getColumnDimension($columnID)->setAutoSize(true);
         }
         $this->excel->setActiveSheetIndex(0);        
-        
 
         // Sending headers to force the user to download the file
-        $filename = 'Summary Buy Sell by date ' . revDate($tanggal1) . ' sd ' .  revDate($tanggal2);
+        $filename = 'Summary Buy and Sell Period ' . revDate($this->tr_date);
         header("Pragma: public");
         header("Expires: 0");
         header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
