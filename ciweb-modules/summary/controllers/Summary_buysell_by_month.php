@@ -37,7 +37,7 @@ class Summary_buysell_by_month extends Bks_Controller {
                                         tr_header.tr_date AS tr_date,
 
                                         (
-                                            SELECT stock_last_amount FROM stock_price x
+                                            SELECT stock_last_amount FROM tr_stock_price x
                                             WHERE x.store_id = $this->store_id
                                             and YEAR(x.stock_date) = $this->tr_year_old
                                             and MONTH(x.stock_date) = $this->tr_month_old
@@ -47,7 +47,7 @@ class Summary_buysell_by_month extends Bks_Controller {
                                         ) AS st_beginning_amount,                                        
 
                                         (
-                                            SELECT (stock_last_amount * stock_last_price) FROM stock_price x
+                                            SELECT (stock_last_amount * stock_last_price) FROM tr_stock_price x
                                             WHERE x.store_id = $this->store_id
                                             and YEAR(x.stock_date) = $this->tr_year_old
                                             and MONTH(x.stock_date) = $this->tr_month_old
@@ -63,7 +63,7 @@ class Summary_buysell_by_month extends Bks_Controller {
                                         SUM(IF( tr_header.tr_id = 2 AND tr_detail.status IN ( 3, 4 ), ( (tr_detail.nominal * tr_detail.sheet) * tr_detail.price ), 0 )) AS sell_equivalent,
 
                                         (
-                                            SELECT stock_last_amount FROM stock_price x
+                                            SELECT stock_last_amount FROM tr_stock_price x
                                             WHERE x.store_id = $this->store_id
                                             and YEAR(x.stock_date) = $this->tr_year
                                             and MONTH(x.stock_date) = $this->tr_month
@@ -73,7 +73,7 @@ class Summary_buysell_by_month extends Bks_Controller {
                                         ) AS st_end_amount,
 
                                         (
-                                            SELECT (stock_last_amount * stock_last_price) FROM stock_price x
+                                            SELECT (stock_last_amount * stock_last_price) FROM tr_stock_price x
                                             WHERE x.store_id = $this->store_id
                                             and YEAR(x.stock_date) = $this->tr_year
                                             and MONTH(x.stock_date) = $this->tr_month

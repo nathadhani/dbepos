@@ -436,7 +436,7 @@ class Bksmdl extends Bks_Model {
         }
     }
 
-    function generate_stock($store_id, $tahun, $bulan, $currency_id, $nominal)
+    function generate_tr_stock($store_id, $tahun, $bulan, $currency_id, $nominal)
     {
         $this->db->trans_begin();
         $auth = $this->session->userdata('auth');        
@@ -458,8 +458,8 @@ class Bksmdl extends Bks_Model {
         }
 
         /******************************************************************************************************/        
-        // insert table stock bulan berjalan
-        $qinsert = $this->db->query("SELECT currency_id FROM stock
+        // insert table tr_stock bulan berjalan
+        $qinsert = $this->db->query("SELECT currency_id FROM tr_stock
                                     WHERE store_id = $store_id
                                     AND stock_year = $tahun
                                     AND stock_month = $bulan
@@ -479,12 +479,12 @@ class Bksmdl extends Bks_Model {
                         'createdby' => $auth['id']
                     );
             if(count($data) > 0){
-                $this->db->insert('stock', $data);
+                $this->db->insert('tr_stock', $data);
             }
         }
 
-        // update saldo awal table stock bulan berjalan        
-        $qlast_stock = $this->db->query("SELECT last_stock_sheet FROM v_stock
+        // update saldo awal table tr_stock bulan berjalan
+        $qlast_stock = $this->db->query("SELECT last_stock_sheet FROM v_tr_stock_balance
                                     WHERE store_id = $store_id
                                     AND stock_year = $tahun1
                                     AND stock_month = $bulan1
@@ -506,19 +506,19 @@ class Bksmdl extends Bks_Model {
                         'currency_id' => $currency_id,
                         'nominal' => $nominal
                 );
-                $this->db->update('stock', $data, $where);
+                $this->db->update('tr_stock', $data, $where);
             }
         }        
 
         /******************************************************************************************************/
-        $qinsert = $this->db->query("SELECT currency_id FROM stock 
+        $qinsert = $this->db->query("SELECT currency_id FROM tr_stock 
                                     WHERE store_id = $store_id                                    
                                     AND stock_year = $tahun2
                                     AND stock_month = $bulan2
                                     AND currency_id = $currency_id
                                     AND nominal = $nominal")->result();        
 
-        // insert table stock bulan berikutnya
+        // insert table tr_stock bulan berikutnya
         if(count($qinsert) < 1){
             $data = array(              
                 'store_id' => $store_id,
@@ -532,12 +532,12 @@ class Bksmdl extends Bks_Model {
                 'createdby' => $auth['id']
             );
             if(count($data) > 0){
-                $this->db->insert('stock', $data);
+                $this->db->insert('tr_stock', $data);
             }
         }
 
         // update saldo awal table stock bulan berikutnya
-        $qlast_stock = $this->db->query("SELECT last_stock_sheet FROM v_stock
+        $qlast_stock = $this->db->query("SELECT last_stock_sheet FROM v_tr_stock_balance
                                     WHERE store_id = $store_id                                        
                                     AND stock_year = $tahun
                                     AND stock_month = $bulan
@@ -558,7 +558,7 @@ class Bksmdl extends Bks_Model {
                         'currency_id' => $currency_id,
                         'nominal' => $nominal
                 );
-                $this->db->update('stock', $data, $where);                
+                $this->db->update('tr_stock', $data, $where);
             }
         }
 

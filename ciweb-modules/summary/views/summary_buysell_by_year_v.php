@@ -34,7 +34,7 @@
                     <div class="col-md-2">
                         <div class="form-group">
                             <div class="col-lg-12">
-                                <label for="periode" style="display:block">Year</label>
+                                <label for="periode" style="display:block">Period</label>
                                 <input type="text" name="period" id="period"  class="form-control dpY" data-inputmask="'mask': '[9999]'" placeholder="Periode" value="<?=date('Y')?>" style="width:100px;">
                             </div>
                         </div>                            

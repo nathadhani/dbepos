@@ -3,7 +3,7 @@
         <div class="panel panel-default">
             <div class="panel-heading ui-draggable-handle">                                
                 <div class="panel-title-box">
-                    <h3>Buy / Sell - List</h3>
+                    <h3>Transaction - List</h3>
                 </div>
                 <ul class="panel-controls">
                     <button id="btn-submit" class="btn btn-info btn btn-sm" style="width:120px;">Submit</button>
@@ -30,19 +30,14 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <div class="col-lg-12">
-                                <label for="tr_date1" style="display:block">Date 1</label>
-                                <input type="text" id="tr_date1" name="tr_date1" placeholder="Tanggal ..." class="form-control dp" data-date-format="DD MMMM YYYY" style="width:120px;" value="<?=date('d-m-Y');?>">
-                            </div>
-                        </div>                            
-                    </div>
-                    <div class="col-md-2">
-                        <div class="form-group">
-                            <div class="col-lg-12">
-                                <label for="tr_date2" style="display:block">Date 2</label>
-                                <input type="text" id="tr_date2" name="tr_date2" placeholder="Tanggal ..." class="form-control dp" data-date-format="DD MMMM YYYY" style="width:120px;" value="<?=date('d-m-Y');?>">
+                                <label for="tr_date1" style="display:block">Period</label>
+                                <div class="input-group">
+                                    <input type="text" id="tr_date1" name="tr_date1" placeholder="Tanggal ..." class="form-control dp" data-date-format="DD MMMM YYYY" style="width:100px;" value="<?=date('d-m-Y');?>">
+                                    <input type="text" id="tr_date2" name="tr_date2" placeholder="Tanggal ..." class="form-control dp" data-date-format="DD MMMM YYYY" style="width:100px;margin-left:5px;" value="<?=date('d-m-Y');?>">
+                                </div>        
                             </div>
                         </div>                            
                     </div>
@@ -54,8 +49,8 @@
                         <table class="table table-bordered table-condensed table-hover table-striped dataTable">
                             <thead>
                                 <tr>
-                                    <th style="vertical-align:middle;text-align:center;">#</th>
-                                    <th style="vertical-align:middle;text-align:center;">Buy/Sell</th>
+                                    <th style="vertical-align:middle;text-align:center;">#</th>                                    
+                                    <th style="vertical-align:middle;text-align:center;">Trx</th>
                                     <th style="vertical-align:middle;text-align:center;">Date</th>
                                     <th style="vertical-align:middle;text-align:center;">Number</th>
                                     <th style="vertical-align:middle;text-align:center;">Value</th>

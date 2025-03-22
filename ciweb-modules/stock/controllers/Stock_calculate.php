@@ -19,7 +19,7 @@ class Stock_calculate extends Bks_Controller {
         $this->template->build('stock/stock_calculate_v', $data);
     }    
 
-    function generate_stock_pull(){
+    function generate_tr_stock_pull(){
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();     
@@ -60,7 +60,7 @@ class Stock_calculate extends Bks_Controller {
                     'stock_year' => $tahun,
                     'stock_month' => $bulan
             );            
-            $this->db->delete('stock', $where);
+            $this->db->delete('tr_stock', $where);
 
             /******************************************************************************************************/
             $where = array(
@@ -68,13 +68,13 @@ class Stock_calculate extends Bks_Controller {
                     'stock_year' => $tahun2,
                     'stock_month' => $bulan2
             );            
-            $this->db->delete('stock', $where);
+            $this->db->delete('tr_stock', $where);
 
             /******************************************************************************************************/
             foreach($select->result_array() as $row) {
                 $currency_id = $row['currency_id'];
                 $nominal = $row['nominal'];
-                $this->Bksmdl->generate_stock($store_id, $tahun, $bulan, $currency_id, $nominal);
+                $this->Bksmdl->generate_tr_stock($store_id, $tahun, $bulan, $currency_id, $nominal);
             }
         }
         if ($this->db->trans_status() === FALSE) {
@@ -90,7 +90,7 @@ class Stock_calculate extends Bks_Controller {
         }
     }    
 
-    function generate_stock_price(){
+    function generate_tr_stock_price(){
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();        
@@ -149,7 +149,7 @@ class Stock_calculate extends Bks_Controller {
                     'stock_month' => $bulan
             );
             $this->db->trans_begin();
-            $this->db->delete('stock_price', $where);            
+            $this->db->delete('tr_stock_price', $where);            
             foreach($mcurrency->result_array() as $row) {
                 $id = 0;
                 $currency_id = $row['currency_id'];                
@@ -157,7 +157,7 @@ class Stock_calculate extends Bks_Controller {
                 /** Get Beginning Stock */
                 /***************************************************************************************************************** */
                 $select_max_date = $this->db->query("SELECT MAX(stock_date) AS max_date
-                                                     FROM stock_price 
+                                                     FROM tr_stock_price 
                                                      WHERE store_id = $store_id 
                                                      AND currency_id = $currency_id 
                                                      AND YEAR(stock_date) = $tahun1 
@@ -171,7 +171,7 @@ class Stock_calculate extends Bks_Controller {
                     $max_date = $select_max_date[0]->max_date;
                     if($max_date !== null) {
                         $select_max_id = $this->db->query("SELECT MAX(id) AS max_id
-                                                     FROM stock_price 
+                                                     FROM tr_stock_price 
                                                      WHERE store_id = $store_id 
                                                      AND currency_id = $currency_id 
                                                      AND stock_date = '$max_date'")->result();                    
@@ -181,7 +181,7 @@ class Stock_calculate extends Bks_Controller {
                                 $select_last_stock = $this->db->query("SELECT stock_last_amount,
                                                                         stock_last_price,
                                                                         stock_last_total
-                                                        FROM stock_price 
+                                                        FROM tr_stock_price 
                                                         WHERE store_id = $store_id 
                                                         AND currency_id = $currency_id 
                                                         AND stock_date = '$max_date'
@@ -203,7 +203,7 @@ class Stock_calculate extends Bks_Controller {
                                             'createdby' => $this->auth['id']
                                         );
                                         if(count($data) > 0){                                        
-                                            $response = $this->db->insert('stock_price', $data);
+                                            $response = $this->db->insert('tr_stock_price', $data);
                                             /***************************************************************************************************************** */
                                             /*Update last stock*/
                                             $last_stock_amount = $select_last_stock[0]->stock_last_amount;
@@ -214,7 +214,7 @@ class Stock_calculate extends Bks_Controller {
                                                           'stock_last_total' => $last_price_total);                        
                                             if(count($data) > 0){
                                                 $where = array('id' => $id, 'currency_id' => $currency_id);
-                                                $this->db->update('stock_price', $data, $where);                
+                                                $this->db->update('tr_stock_price', $data, $where);                
                                             }
                                         }
                                     }
@@ -260,7 +260,7 @@ class Stock_calculate extends Bks_Controller {
                                 'createdby' => $this->auth['id']
                             );
                             if(count($data) > 0){
-                                $response = $this->db->insert('stock_price', $data);
+                                $response = $this->db->insert('tr_stock_price', $data);
                                 /***************************************************************************************************************** */
                                 /*Update last stock*/
                                 $buy_amount = $row['nominal'] * $row['sheet'];
@@ -273,7 +273,7 @@ class Stock_calculate extends Bks_Controller {
                                               'stock_last_total' => $last_price_total);
                                 if(count($data) > 0){
                                     $where = array('id' => $id, 'currency_id' => $currency_id);
-                                    $this->db->update('stock_price', $data, $where);                
+                                    $this->db->update('tr_stock_price', $data, $where);                
                                 }
                             }
                         }                
@@ -304,7 +304,7 @@ class Stock_calculate extends Bks_Controller {
                                 'createdby' => $this->auth['id']
                             );
                             if(count($data) > 0){
-                                $response = $this->db->insert('stock_price', $data);
+                                $response = $this->db->insert('tr_stock_price', $data);
                                 /***************************************************************************************************************** */
                                 /*Update last stock*/
                                 $sell_amount = $row['nominal'] * $row['sheet'];
@@ -321,7 +321,7 @@ class Stock_calculate extends Bks_Controller {
                                               'profit' => $profit);
                                 if(count($data) > 0){
                                     $where = array('id' => $id, 'currency_id' => $currency_id);
-                                    $this->db->update('stock_price', $data, $where);          
+                                    $this->db->update('tr_stock_price', $data, $where);          
                                 }
                             }
                         }     

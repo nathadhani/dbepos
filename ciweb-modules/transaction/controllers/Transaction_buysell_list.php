@@ -49,18 +49,15 @@ class Transaction_buysell_list extends Bks_Controller {
         $store_id = $this->uri->segment(4);
         $tanggal1 = revDate($this->uri->segment(5));
         $tanggal2 = revDate($this->uri->segment(6));
-        $store_id_multiple = '';
-        if( $this->auth['store_id_multiple'] !== null && strlen($this->auth['store_id_multiple']) > 0){
-            $store_id_multiple = explode(',',implode(',', $this->auth['store_id_multiple']));
-        }
+        $ap_tr_id = $this->auth['ap_tr_id'];
         
         $query = "SELECT
                     (
                         SELECT
-                            ( CASE WHEN ( tr_header.tr_id = 1 ) THEN 'Trx Buy' WHEN ( tr_header.tr_id = 2 ) THEN 'Trx Sell' ELSE '' END )
+                            ( CASE WHEN ( tr_header.tr_id = 1 ) THEN 'Buy/Beli' WHEN ( tr_header.tr_id = 2 ) THEN 'Sell/Jual' ELSE '' END )
                     ) AS trx_name,
-                    tr_header.tr_number,	
-                    tr_header.tr_date AS tr_date,		
+                    tr_header.tr_date,
+                    tr_header.tr_number,
                     (
                         SELECT
                         ( CASE WHEN ( tr_header.status IN ( 2 )) THEN 'Canceled' WHEN ( tr_header.status IN ( 3 )) THEN 'Confirm' WHEN ( tr_header.status = 4 ) THEN 'Integrasi System ECSys (API)' ELSE 'Task' 
@@ -73,10 +70,6 @@ class Transaction_buysell_list extends Bks_Controller {
                     (tr_detail.nominal * tr_detail.sheet) AS amount,
                     tr_detail.price AS exchange_rate,
                     ((tr_detail.nominal * tr_detail.sheet) * tr_detail.price)  AS subtotal,
-                    m_customer.customer_code,
-                    m_customer.customer_name,
-                    m_customer.customer_address,
-                    m_customer.customer_phone,
                     m_store.store_name,
                     m_store.store_address,
                     tr_header.description,
@@ -87,14 +80,13 @@ class Transaction_buysell_list extends Bks_Controller {
                 FROM tr_detail
                 JOIN tr_header ON tr_detail.header_id = tr_header.id 				
                 JOIN m_currency ON tr_detail.currency_id = m_currency.id
-                JOIN m_customer ON m_customer.id = tr_header.customer_id
                 JOIN m_store ON m_store.id = tr_header.store_id
                 JOIN auth_users usr1 ON usr1.id = tr_header.createdby
                 LEFT JOIN auth_users usr2 ON usr2.id = tr_header.updatedby"; 
 
-        if( $this->auth['store_id_multiple'] !== null && strlen($this->auth['store_id_multiple']) > 0){
+        if( $ap_tr_id !== null && strlen($ap_tr_id) > 0){
             $query .= " WHERE tr_header.store_id = $store_id
-                    AND tr_detail.tr_id IN ($store_id_multiple)
+                    AND tr_header.tr_id IN ($ap_tr_id)
                     AND tr_header.tr_date >= '$tanggal1'
                     AND tr_header.tr_date <= '$tanggal2'
                     AND tr_detail.status IN (2,3,4)                    
@@ -129,27 +121,18 @@ class Transaction_buysell_list extends Bks_Controller {
         // Field names in the first row
         $fields = $this->db->query($query)->list_fields();
         $col = 0;
-        
-        // title column
-        $this->excel->setActiveSheetIndex(0)->setCellValue('A1', "Transaction Buy Sell Period " . revDate($tanggal1) . ' s/d ' .  revDate($tanggal2)); 
-        $this->excel->getActiveSheet()->getStyle('A1')->getFont()->setBold(TRUE);
-        $this->excel->getActiveSheet()->getStyle('A1')->getFont()->setSize(12);
-        $this->excel->getActiveSheet()->mergeCells('A1:T1');
 
-        $judul = array('Trx.Name',
-                        'Trx.Number',
-                        'Trx.Date',
-                        'Trx.Status',                        
+        // title column
+        $judul = array('Trx',                            
+                        'Date',
+                        'Number',
+                        'Status',                        
                         'Currency',
                         'Nominal',
                         'Sheet',
                         'Amount',
                         'Exchange Rate',
                         'Equivalent',
-                        'Customer Code',                        
-                        'Customer Name',
-                        'Customer Address',
-                        'Customer Phone',
                         'Store Name',
                         'Store Address',
                         'Description',
@@ -160,13 +143,13 @@ class Transaction_buysell_list extends Bks_Controller {
 
 
         foreach ($fields as $key => $field) {
-            $this->excel->getActiveSheet()->setCellValueByColumnAndRow($col, 3, $judul[$key]);
-            $this->excel->getActiveSheet()->getStyleByColumnAndRow($col, 3)->applyFromArray($title);
+            $this->excel->getActiveSheet()->setCellValueByColumnAndRow($col, 1, $judul[$key]);
+            $this->excel->getActiveSheet()->getStyleByColumnAndRow($col, 1)->applyFromArray($title);
             $col++;
         }
 
         // Fetching the table data
-        $row = 4;
+        $row = 2;
         foreach ($this->db->query($query)->result_array() as $data) {
             $col = 0;
             foreach ($fields as $field) {
@@ -183,16 +166,14 @@ class Transaction_buysell_list extends Bks_Controller {
                 $col++;
             }
             $row++;
-        }        
-
-        foreach (range('A', 'U') as $columnID) {
+        }
+        foreach (range('A', 'Q') as $columnID) {
             $this->excel->getActiveSheet()->getColumnDimension($columnID)->setAutoSize(true);
         }
         $this->excel->setActiveSheetIndex(0);        
-        
 
         // Sending headers to force the user to download the file
-        $filename = 'Transaction Buy Sell Period ' . revDate($tanggal1) . ' sd ' .  revDate($tanggal2);
+        $filename = 'Transaction Period ' . revDate($tanggal1) . ' sd ' .  revDate($tanggal2);
         header("Pragma: public");
         header("Expires: 0");
         header("Cache-Control: must-revalidate, post-check=0, pre-check=0");

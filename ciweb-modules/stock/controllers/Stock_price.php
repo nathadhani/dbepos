@@ -26,9 +26,9 @@ class Stock_price extends Bks_Controller {
         $store_id = $this->input->post('store_id');
         $menus = $this->db->group_by('currency_id')
                           ->order_by('currency_id, currency_code, currency_name', 'ASC')
-                          ->get_where('v_stock_price', array('store_id' => $store_id))->result();
+                          ->get_where('v_tr_stock_balance_price', array('store_id' => $store_id))->result();
         if (count($menus) > 0){
-            $option ="<option selected value=''>-- Pilih Mata Uang --</option>";
+            $option ="<option selected value=''>Pilih...</option>";
             foreach($menus as $row){
                 $option.="<option value='".$row->currency_id."'>".$row->currency_code . " - " . $row->currency_name ."</option>";
             }
@@ -67,7 +67,7 @@ class Stock_price extends Bks_Controller {
         $where[3]['data']  = $currency_id;
         $where[3]['sql']   = 'where';
 
-        $this->Bksmdl->table = 'v_stock_price';
+        $this->Bksmdl->table = 'v_tr_stock_balance_price';
         $cpData = $this->Bksmdl->getDataTable($where);
         $this->Bksmdl->outputToJson($cpData);
     }
@@ -95,7 +95,7 @@ class Stock_price extends Bks_Controller {
                                                 store_name,
                                                 store_address,
                                                 created
-                                        FROM v_stock_price
+                                        FROM v_tr_stock_balance_price
                                         WHERE store_id = $store_id
                                         AND stock_year = $tahun
                                         AND stock_month = $bulan

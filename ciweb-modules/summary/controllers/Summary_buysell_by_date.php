@@ -30,7 +30,7 @@ class Summary_buysell_by_date extends Bks_Controller {
                                         tr_header.tr_date AS tr_date,
 
                                         (
-                                            SELECT stock_last_amount FROM stock_price x
+                                            SELECT stock_last_amount FROM tr_stock_price x
                                             WHERE x.store_id = $this->store_id
                                             and x.stock_date < '$this->tr_date'
                                             and x.currency_id = tr_detail.currency_id
@@ -39,7 +39,7 @@ class Summary_buysell_by_date extends Bks_Controller {
                                         ) AS st_beginning_amount,                                        
 
                                         (
-                                            SELECT (stock_last_amount * stock_last_price) FROM stock_price x
+                                            SELECT (stock_last_amount * stock_last_price) FROM tr_stock_price x
                                             WHERE x.store_id = $this->store_id
                                             and x.stock_date < '$this->tr_date'
                                             and x.currency_id = tr_detail.currency_id
@@ -54,7 +54,7 @@ class Summary_buysell_by_date extends Bks_Controller {
                                         SUM(IF( tr_header.tr_id = 2 AND tr_detail.status IN ( 3, 4 ), ( (tr_detail.nominal * tr_detail.sheet) * tr_detail.price ), 0 )) AS sell_equivalent,
 
                                         (
-                                            SELECT stock_last_amount FROM stock_price x
+                                            SELECT stock_last_amount FROM tr_stock_price x
                                             WHERE x.store_id = $this->store_id
                                             and x.stock_date = '$this->tr_date'
                                             and x.currency_id = tr_detail.currency_id
@@ -63,7 +63,7 @@ class Summary_buysell_by_date extends Bks_Controller {
                                         ) AS st_end_amount,
 
                                         (
-                                            SELECT (stock_last_amount * stock_last_price) FROM stock_price x
+                                            SELECT (stock_last_amount * stock_last_price) FROM tr_stock_price x
                                             WHERE x.store_id = $this->store_id
                                             and x.stock_date = '$this->tr_date'
                                             and x.currency_id = tr_detail.currency_id
