@@ -16,19 +16,16 @@ if(text_celluler !== null && text_celluler !== ''){
  * Select Tipe Data
  */
 $(".perorangan").hide();
-$(".cnpwp").hide();
 $(".cfoto").hide();
 $('#customer_type_id').on('change',function(){
     if ($('#customer_type_id').val() !== null && $('#customer_type_id').val() !== ''){
         if ($('#customer_type_id').val() === '1'){
             $(".perorangan").show();
-            $(".cnpwp").hide();
             if ($('#customer_code').val() !== null && $('#customer_code').val() !== ''){
                 $(".cfoto").show();
             }    
         } else {
             $(".perorangan").hide();
-            $(".cnpwp").show();
             $(".cfoto").hide();
         }
     }   
@@ -168,12 +165,6 @@ $.validate({
 /**
  * Upload Foto
  */
-// $("#upload_foto").fileinput({
-//     showUpload: false,
-//     showCaption: false,
-//     browseClass: "btn btn-danger",
-//     fileType: "any"
-// });
 $('#upload_foto').on('change',function(e){
     e.preventDefault();    
     var files = $('#upload_foto')[0].files;
@@ -257,7 +248,7 @@ $('#upload_foto').on('change',function(e){
                                     if (exists) {
                                         var showfoto = '<a class="gallery-item" href="'+image_url+'" data-gallery>'+
                                                             '<div class="image">'+
-                                                                '<img src="'+image_url+'" alt="" style="height:325px;width:550px;"/>'+
+                                                                '<img src="'+image_url+'" alt="" style="height:100%; width:100%;"/>'+
                                                             '</div>'+
                                                         '</a>'
                                         document.getElementById("links").innerHTML = showfoto;
@@ -270,7 +261,6 @@ $('#upload_foto').on('change',function(e){
                             }
                         } else {
                             $(".perorangan").hide();
-                            $(".cnpwp").show();
                             $(".cfoto").hide();
                         }
                     } else {

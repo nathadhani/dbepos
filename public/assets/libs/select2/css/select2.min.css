@@ -4,6 +4,8 @@
     margin:0;
     position:relative;
     vertical-align:middle;
+    width: 100% !important;
+    padding: 0;
 }
 .select2-container .select2-selection--single{
     box-sizing:border-box;
@@ -301,8 +303,8 @@
     padding-left:6em;
 }
 .select2-container--default .select2-results__option--highlighted[aria-selected]{
-    /* background-color:#5897fb; */
-    background-color: #dcedc1;
+    background-color:#ffff00;
+    /* background-color: #dcedc1; */
     color:black;
 }
 .select2-container--default .select2-results__group{

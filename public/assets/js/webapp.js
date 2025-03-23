@@ -480,6 +480,11 @@ function StringtoFile(content, filename){
     return URL.revokeObjectURL(link.href);
 }
 
+function call_page_customer_new(){
+    var url = "transaction/customer/index/";
+    window.open(url,'_self');    
+}
+
 function call_page_task_buy(customer_id, id_log_a){
     var url = "transaction/transaction_buysell/index/"+customer_id+"/"+encrypt('buy')+"/"+id_log_a;
     return url;

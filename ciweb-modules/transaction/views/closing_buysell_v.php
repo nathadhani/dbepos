@@ -8,7 +8,6 @@
                     </h3>
                 </div>
                 <ul class="panel-controls">
-                    <button id="btn-submit" class="btn btn-info btn btn-sm" style="width:120px;">Closing</button>
                 </ul>    
             </div>            
             <div class="panel-body">
@@ -35,7 +34,12 @@
                         <div class="form-group">
                             <div class="col-lg-12">
                                 <label for="periode" style="display:block">Date</label>
-                                <input type="text" id="tr_date" name="tr_date" placeholder="Tanggal ..." class="form-control dp" data-date-format="DD MMMM YYYY" style="width:120px;" value="<?=date('d-m-Y');?>">
+                                <div class="input-group">
+                                    <input type="text" id="tr_date" name="tr_date" placeholder="Tanggal ..." class="form-control dp" data-date-format="DD MMMM YYYY" style="width:120px;" value="<?=date('d-m-Y');?>">
+                                    <span class="input-group-addon btn btn-info">                             
+                                        <span id="btn-submit" class="btn btn-info btn" style="width:120px;">Submit</span>
+                                    </span>
+                                </div>
                             </div>                            
                         </div>                            
                     </div>

@@ -30,8 +30,8 @@ class Summary_buysell_by_date extends Bks_Controller {
                                         tr_header.tr_date AS tr_date,
 
                                         (
-                                            SELECT stock_last_amount FROM tr_stock_price x
-                                            WHERE x.store_id = $this->store_id
+                                            SELECT SUM(stock_last_amount) FROM tr_stock_price x
+                                            WHERE x.store_id IN ($this->store_id)
                                             and x.stock_date < '$this->tr_date'
                                             and x.currency_id = tr_detail.currency_id
                                             ORDER BY x.stock_date DESC, x.id DESC
@@ -39,8 +39,8 @@ class Summary_buysell_by_date extends Bks_Controller {
                                         ) AS st_beginning_amount,                                        
 
                                         (
-                                            SELECT (stock_last_amount * stock_last_price) FROM tr_stock_price x
-                                            WHERE x.store_id = $this->store_id
+                                            SELECT (SUM(stock_last_amount) * stock_last_price) FROM tr_stock_price x
+                                            WHERE x.store_id IN ($this->store_id)
                                             and x.stock_date < '$this->tr_date'
                                             and x.currency_id = tr_detail.currency_id
                                             ORDER BY x.stock_date DESC, x.id DESC
@@ -54,8 +54,8 @@ class Summary_buysell_by_date extends Bks_Controller {
                                         SUM(IF( tr_header.tr_id = 2 AND tr_detail.status IN ( 3, 4 ), ( (tr_detail.nominal * tr_detail.sheet) * tr_detail.price ), 0 )) AS sell_equivalent,
 
                                         (
-                                            SELECT stock_last_amount FROM tr_stock_price x
-                                            WHERE x.store_id = $this->store_id
+                                            SELECT SUM(stock_last_amount) FROM tr_stock_price x
+                                            WHERE x.store_id IN ($this->store_id)
                                             and x.stock_date = '$this->tr_date'
                                             and x.currency_id = tr_detail.currency_id
                                             ORDER BY x.stock_date DESC, x.id DESC
@@ -63,8 +63,8 @@ class Summary_buysell_by_date extends Bks_Controller {
                                         ) AS st_end_amount,
 
                                         (
-                                            SELECT (stock_last_amount * stock_last_price) FROM tr_stock_price x
-                                            WHERE x.store_id = $this->store_id
+                                            SELECT (SUM(stock_last_amount) * stock_last_price) FROM tr_stock_price x
+                                            WHERE x.store_id IN ($this->store_id)
                                             and x.stock_date = '$this->tr_date'
                                             and x.currency_id = tr_detail.currency_id
                                             ORDER BY x.stock_date DESC, x.id DESC
@@ -74,7 +74,7 @@ class Summary_buysell_by_date extends Bks_Controller {
                                 FROM tr_detail
                                 JOIN tr_header ON tr_header.id = tr_detail.header_id 				
                                 JOIN m_currency ON tr_detail.currency_id = m_currency.id
-                                WHERE tr_header.store_id = $this->store_id
+                                WHERE tr_header.store_id IN ($this->store_id)
                                 AND tr_header.tr_date = '$this->tr_date'
                                 AND tr_detail.status IN (3,4) 
                                 GROUP BY
@@ -90,16 +90,20 @@ class Summary_buysell_by_date extends Bks_Controller {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
-        $this->store_id = $postData['store_id'];
+        $this->store_id = ( is_array($postData['store_id']) ? implode(',', $postData['store_id']) : $postData['store_id']) ;
         $this->tr_date = revDate($postData['period']);        
         echo json_encode($this->dbquery()->result(), true);
+        // echo $this->db->last_query();exit;
     }
     
     function exportpdf()
     {   
+        checkIfNotAjax();
         $this->libauth->check(__METHOD__);
-        $this->store_id = $this->uri->segment(4);;
-        $this->tr_date = revDate($this->uri->segment(5));        
+        $postData = $this->input->post();
+        $this->store_id = ( is_array($postData['store_id']) ? implode(',', $postData['store_id']) : $postData['store_id']) ;
+        $this->tr_date = revDate($postData['period']);        
+
         $profil_usaha = $this->Bksmdl->getprofilusaha($this->store_id);
 
         // Call Pdf libraries
@@ -132,8 +136,15 @@ class Summary_buysell_by_date extends Bks_Controller {
 
         // Add Title        
         $html_header = strtoupper(trim($profil_usaha[0]->store_name));
-        $html_header .= '<br>' . trim($profil_usaha[0]->store_address) . '</br>';
-        $html_header .= '<br>' . 'Summary Buy and Sell Period : ' . revDate($this->tr_date) . '</br><br></br><br></br>';
+        if(!is_array($postData['store_id'])){
+            $html_header .= '<br>' . trim($profil_usaha[0]->store_address) . '</br>';
+        }                 
+
+        if(!is_array($postData['store_id'])){
+            $html_header .= '<br>' . 'Rekap Transaksi Beli dan Jual Periode : ' . revDate($this->tr_date) . '</br><br></br><br></br>';
+        } else {
+            $html_header .= '<br>' . 'Konsolidasi Rekap Transaksi Beli dan Jual Periode : ' . revDate($this->tr_date) . '</br><br></br><br></br>';
+        }
         
         // Add Content Body
         $data_content = $this->dbquery()->result();
@@ -202,8 +213,17 @@ class Summary_buysell_by_date extends Bks_Controller {
 
             $pdf->Ln(4);
             $pdf->Cell(01, 01, 'Createdby,                       Spv,', 0, 1, 'L');
-        }        
-        $pdf->Output('Summary Buy and Sell Period ' . revDate($this->tr_date).'.pdf','I');
+        }
+
+        ob_start();
+        $pdf_output = $pdf->Output('Summary Buy and Sell Period ' . revDate($this->tr_date).'.pdf','S');
+        ob_end_clean();
+        echo json_encode(['pdf' => base64_encode($pdf_output)]); // Display Pdf in new tab
+        // $response =  array(
+        //     'op' => 'ok',
+        //     'file' => "data:application/pdf;base64,".base64_encode($pdf_output)
+        // );
+        // die(json_encode($response)); // download pdf
     }
 
     function excelcellColor($cells,$color){    
@@ -216,9 +236,12 @@ class Summary_buysell_by_date extends Bks_Controller {
     }
 
     function excel(){
+        checkIfNotAjax();
         $this->libauth->check(__METHOD__);
-        $this->store_id = $this->uri->segment(4);;
-        $this->tr_date = revDate($this->uri->segment(5));        
+        $postData = $this->input->post();
+        $this->store_id = ( is_array($postData['store_id']) ? implode(',', $postData['store_id']) : $postData['store_id']) ;
+        $this->tr_date = revDate($postData['period']);        
+
         $profil_usaha = $this->Bksmdl->getprofilusaha($this->store_id);
          
         if (!$this->dbquery())
@@ -241,13 +264,22 @@ class Summary_buysell_by_date extends Bks_Controller {
         
         // title column
         $this->excel->setActiveSheetIndex(0)->setCellValue('A1', strtoupper(trim($profil_usaha[0]->store_name))); 
-        $this->excel->setActiveSheetIndex(0)->setCellValue('A2', strtoupper(trim($profil_usaha[0]->store_address))); 
-        $this->excel->setActiveSheetIndex(0)->setCellValue('A3', 'Summary Buy and Sell Period ' . revDate($this->tr_date)); 
-        $this->excel->setActiveSheetIndex(0)->getStyle('A1:A3')->getFont()->setBold(TRUE);
-        $this->excel->setActiveSheetIndex(0)->getStyle('A1:A3')->getFont()->setSize(11);
-        $this->excel->setActiveSheetIndex(0)->mergeCells('A1:K1');
-        $this->excel->setActiveSheetIndex(0)->mergeCells('A2:K2');
-        $this->excel->setActiveSheetIndex(0)->mergeCells('A3:K3');
+        if(!is_array($postData['store_id'])){
+            $this->excel->setActiveSheetIndex(0)->setCellValue('A2', strtoupper(trim($profil_usaha[0]->store_address))); 
+            $this->excel->setActiveSheetIndex(0)->setCellValue('A3', 'Rekap Transaksi Beli dan Jual Periode ' . revDate($this->tr_date)); 
+            $this->excel->setActiveSheetIndex(0)->getStyle('A1:A3')->getFont()->setBold(TRUE);
+            $this->excel->setActiveSheetIndex(0)->getStyle('A1:A3')->getFont()->setSize(11);
+            $this->excel->setActiveSheetIndex(0)->mergeCells('A1:K1');
+            $this->excel->setActiveSheetIndex(0)->mergeCells('A2:K2');
+            $this->excel->setActiveSheetIndex(0)->mergeCells('A3:K3');    
+
+        } else {
+            $this->excel->setActiveSheetIndex(0)->setCellValue('A2', 'Konsolidasi Rekap Transaksi Beli dan Jual Periode ' . revDate($this->tr_date)); 
+            $this->excel->setActiveSheetIndex(0)->getStyle('A1:A2')->getFont()->setBold(TRUE);
+            $this->excel->setActiveSheetIndex(0)->getStyle('A1:A2')->getFont()->setSize(11);
+            $this->excel->setActiveSheetIndex(0)->mergeCells('A1:K1');
+            $this->excel->setActiveSheetIndex(0)->mergeCells('A2:K2');    
+        }
 
         $this->excel->setActiveSheetIndex(0)->setCellValue('A6', "#"); 
         $this->excel->setActiveSheetIndex(0)->setCellValue('B6', "Curr"); 
@@ -331,18 +363,17 @@ class Summary_buysell_by_date extends Bks_Controller {
         $this->excel->setActiveSheetIndex(0);        
 
         // Sending headers to force the user to download the file
-        $filename = 'Summary Buy and Sell Period ' . revDate($this->tr_date);
-        header("Pragma: public");
-        header("Expires: 0");
-        header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-        header("Content-Type: application/force-download");
-        header("Content-Type: application/octet-stream");
-        header("Content-Type: application/download");;
-        header("Content-Disposition: attachment;filename=$filename.xlsx");
-        header("Content-Transfer-Encoding: binary ");
+        ob_start();
         $objWriter = new PHPExcel_Writer_Excel2007($this->excel); 
-        $objWriter->setOffice2003Compatibility(true);
+        // $objWriter->setOffice2003Compatibility(true);
         $objWriter->save('php://output');
+        $xlsData = ob_get_contents();
+        ob_end_clean();
+        $response =  array(
+            'op' => 'ok',
+            'file' => "data:application/vnd.ms-excel;base64,".base64_encode($xlsData)
+        );
+        die(json_encode($response));
     }
     
 }

@@ -5,7 +5,7 @@
             bksfn.errMsg('Store Belum Dipilih!');
         } else {
             $.ajax({
-                url: baseUrl + 'stock/stock_calculate/generate_stock_pull',
+                url: baseUrl + 'stock/stock_calculate/generate_tr_stock_pull',
                 type: 'POST',
                 beforeSend: function(){
                     $(".ajax-loader").height($(document).height());
@@ -16,7 +16,7 @@
                 success: function(data){
                     alertify.success('Calculate stock done.!');
                     $.ajax({
-                        url: baseUrl + 'stock/stock_calculate/generate_stock_price',
+                        url: baseUrl + 'stock/stock_calculate/generate_tr_stock_price',
                         type: 'POST',
                         beforeSend: function(){
                             $(".ajax-loader").height($(document).height());

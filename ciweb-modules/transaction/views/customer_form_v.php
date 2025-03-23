@@ -26,9 +26,25 @@
                             <button id="btn-sell" class="btn btn-info btn" style="width:120px;font-weight:600;color:red;font-size:14px;margin-left:5px;">Sell / Jual</button>
                         </ul>
                     </div>                    
-                    <div class="panel-body">                        
+                    <div class="panel-body">
                         <div class="row">
-                            <div class="col-md-6">                                
+                            <div class="col-md-4 cfoto">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <div class="col-lg-2">
+                                                <a class="file-input-wrapper btn btn-info btn btn-sm"><span class="fa fa-upload"></span>
+                                                    <form id="form_foto" method="post" enctype="multipart/form-data">
+                                                        <input type="file" name="upload_foto" id="upload_foto" class="form-control" accept="image/*">
+                                                    </form>
+                                                </a>
+                                            </div>
+                                            <div id="links" class="col-lg-10"></div>
+                                        </div>    
+                                    </div>               
+                                </div>
+                            </div>
+                            <div class="col-md-8">
                                 <div class="form-group">
                                     <label for="form_name" class="control-label col-lg-4">Customer Code</label>
                                     <div class="col-lg-8">
@@ -71,7 +87,12 @@
                                     <div class="col-lg-8">
                                         <input type="text" id="customer_nick_name" name="customer_nick_name" class="form-control" placeholder="Nama Panggilan...">
                                     </div>
-                                </div>
+                                </div>                          
+                            </div>    
+                        </div>
+                        <br>
+                        <div class="row">                            
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="customer_type_id" class="control-label col-lg-4">Customer Type <strong style="color:red;font-weight:bold;font-size:18px;">**</strong></label>
                                     <div class="col-lg-8">
@@ -113,7 +134,9 @@
                                             <div class="input-group">
                                                 <input type="text" id="customer_data_number" name="customer_data_number" class="form-control" placeholder="Nomor Identitas...">
                                                 <span class="input-group-addon">                                                
-                                                    <a href="<?=$image_url;?>" target="_blank" title="Photo"><i class="fa fa-picture-o"></i></i></a>                                                
+                                                    <a href="<?=$image_url;?>" target="_blank" title="Photo">
+                                                        <i class="fa fa-picture-o"></i>
+                                                    </a>
                                                 </span>
                                             </div>
                                         <?php 
@@ -124,7 +147,13 @@
                                             }
                                         ?>                                  
                                     </div>                                    
-                                </div>                                                                    
+                                </div>
+                                <div class="form-group perorangan">
+                                    <label for="form_name" class="control-label col-lg-4">NPWP Number</label>
+                                    <div class="col-lg-8">
+                                        <input type="text" id="npwp_number" name="npwp_number" class="form-control" placeholder="No NPWP...">
+                                    </div>
+                                </div>
                                 <div class="form-group perorangan">
                                     <label for="form_name" class="control-label col-lg-4">Birth Place</label>
                                     <div class="col-lg-8">
@@ -136,9 +165,7 @@
                                     <div class="col-lg-8">
                                         <input type="text" id="bornday" name="bornday" placeholder="Tanggal Lahir ..." class="form-control dp" data-date-format="DD MMMM YYYY" style="width:100px;" value="<?=date('d-m-Y');?>">
                                     </div>
-                                </div>                                                                                                
-                            </div>
-                            <div class="col-md-6">                                                               
+                                </div>
                                 <div class="form-group perorangan">
                                     <label for="nationality_id" class="control-label col-lg-4">Nationality</label>
                                     <div class="col-lg-8">
@@ -170,7 +197,9 @@
                                         >
                                         </select>
                                     </div>                                    
-                                </div>
+                                </div>                                
+                            </div>     
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="form_name" class="control-label col-lg-4">Address <strong style="color:red;font-weight:bold;font-size:18px;">**</strong></label>
                                     <div class="col-lg-8">
@@ -210,13 +239,7 @@
                                             <option value="2">Perempuan</option>
                                         </select>
                                     </div>
-                                </div>
-                                <div class="form-group cnpwp">
-                                    <label for="form_name" class="control-label col-lg-4">NPWP Number</label>
-                                    <div class="col-lg-8">
-                                        <input type="text" id="npwp_number" name="npwp_number" class="form-control" placeholder="No NPWP...">
-                                    </div>
-                                </div>
+                                </div>                                
                                 <div class="form-group perorangan">
                                     <label for="form_name" class="control-label col-lg-4">Customer Nature / Character</label>
                                     <div class="col-lg-8">
@@ -240,38 +263,5 @@
                 </form>
             </div>
         </div>
-    </div>
-    <div class="row cfoto">
-        <div class="col-md-12">            
-            <div class="panel panel-default">
-                <div class="panel-heading ui-draggable-handle">
-                    <h3 class="panel-title">Photo</h3>
-                    <ul class="panel-controls">
-                        <a class="file-input-wrapper btn btn-info fileinput"><span>Upload</span>           
-                            <form id="form_foto" method="post" enctype="multipart/form-data">
-                                <input type="file" name="upload_foto" id="upload_foto" class="form-control" accept="image/*">
-                            </form>
-                        </a>
-                    </ul>
-                </div>
-                <div class="panel-body">                                                                        
-                    <div class="row">
-                        <div class="col-md-3">
-                        </div>
-                        <div class="col-md-6">
-                            <div class="galleryx" id="links" style="text-align:center; margin:auto; display:block;">                                
-                                <!-- <a class="gallery-item" href="<?=$image_url;?>" data-gallery="">
-                                    <div class="image">
-                                        <img src="<?=$image_url;?>" alt="" style="height:325px;width:550px;">
-                                    </div>
-                                </a> -->
-                            </div>                            
-                        </div>
-                        <div class="col-md-3">
-                        </div>
-                    </div>                    
-                </div>                                                                                                                    
-            </div>        
-        </div>
-    </div>
+    </div>    
 </div>

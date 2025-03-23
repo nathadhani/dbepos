@@ -8,7 +8,6 @@
                     </h3>
                 </div>
                 <ul class="panel-controls">
-                    <button id="btn-show" class="btn btn-info btn btn-sm" style="width:120px;">Show Data</button>
                     <button id="btn-generate" class="btn btn-info btn-sm" style="width:120px;">Generate Data</button>
                 </ul>    
             </div>            
@@ -36,7 +35,12 @@
                         <div class="form-group">
                             <div class="col-lg-12">
                                 <label for="periode" style="display:block">Date</label>
-                                <input type="text" id="tanggal" name="tanggal" placeholder="Tanggal ..." class="form-control dp" data-date-format="DD MMMM YYYY" style="width:120px;" value="<?=date('d-m-Y');?>">
+                                <div class="input-group">
+                                    <input type="text" id="tanggal" name="tanggal" placeholder="Tanggal ..." class="form-control dp" data-date-format="DD MMMM YYYY" style="width:120px;" value="<?=date('d-m-Y');?>">
+                                    <span class="input-group-addon btn btn-info">                             
+                                        <span id="btn-show" class="btn btn-info btn" style="width:120px;">Submit</span>
+                                    </span>
+                                </div>
                             </div>                            
                         </div>                            
                     </div>

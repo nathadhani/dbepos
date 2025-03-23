@@ -53,48 +53,8 @@ class Transaction_buysell extends Bks_Controller {
             }
         }
         return SUBSTR($thn,2,2) . $bln . $day . $storecode . $trcode . sprintf("%04d", $Number);
-    }
+    }  
    
-    function insert_header(){
-        checkIfNotAjax();
-        $this->libauth->check(__METHOD__);        
-        $postData = $this->input->post();
-
-        $tr_id = $postData['tr_id'];
-        $postData['store_id'] = $this->store_id;
-        
-        if(isset($postData['tr_date'])){
-            $postData['tr_date'] = revDate($postData['tr_date']);
-
-            $datetime = date('Y-m-d H:i:s');
-            $new_date = $postData['tr_date'];
-            $new_datetime = date('Y-m-d H:i:s', strtotime($new_date . ' ' . date('H:i:s', strtotime($datetime))));
-            $postData['created'] = $new_datetime;
-        } else {
-            $postData['tr_date'] = Date('Y-m-d');
-        }
-                
-        $postData['customer_source'] = ucwords(strtolower(trim($postData['customer_source'])));
-        $postData['customer_purpose'] = ucwords(strtolower(trim($postData['customer_purpose'])));
-        $postData['status'] = '1';
-        
-        $this->db->trans_begin();
-        $this->Bksmdl->table = 'tr_header';        
-        $response = $this->Bksmdl->insert($postData);
-        $id = $this->db->insert_id();
-        if ($this->db->trans_status() === FALSE) {
-            $this->db->trans_rollback();
-            $err = $this->db->error();
-            $json['msg'] = $err['code'] . '<br>' . $err['message'];
-            echo json_encode($json);
-        } else {
-            $this->db->trans_commit();
-            $json['id'] = $id;
-            $json['msg'] = '1';
-            echo json_encode($json);
-        }
-    }
-    
     function update_header(){
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);        
@@ -104,11 +64,7 @@ class Transaction_buysell extends Bks_Controller {
         $postData['store_id'] = $this->store_id;
         $postData['customer_source'] = ucwords(strtolower(trim($postData['customer_source'])));
         $postData['customer_purpose'] = ucwords(strtolower(trim($postData['customer_purpose'])));
-        $postData['status'] = '1';   
-
-        if(isset($postData['tr_date'])){
-            unset($postData['tr_date']);
-        }
+        $postData['status'] = '1';
 
         $this->db->trans_begin();
         $this->Bksmdl->table = 'tr_header';
@@ -129,25 +85,79 @@ class Transaction_buysell extends Bks_Controller {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);                
         $postData = $this->input->post();
-        $header_id = $postData['header_id'];
-        unset($postData['subtotal']);
-        if (strpos($postData['price'], ',') !== false) {
-            $postData['price'] = str_replace(',','.',$postData['price']);
+        $postDetail = $this->input->post();
+
+        /** Insert Header */
+        /** -------------------------------------------------------------------------------- */        
+        if( isset($postData['header_id']) ){
+            if(($postData['header_id'] == 'null' || $postData['header_id'] == '')) {            
+                unset($postData['header_id']);
+                unset($postData['currency_id']);
+                unset($postData['nominal']);
+                unset($postData['sheet']);
+                unset($postData['price']);
+                unset($postData['subtotal']);            
+                $postData['store_id'] = $this->store_id;        
+                if(isset($postData['tr_date'])){
+                    $postData['tr_date'] = revDate($postData['tr_date']);
+                    /**----------------------------------------------------- */
+                    $datetime = date('Y-m-d H:i:s');
+                    $new_date = $postData['tr_date'];
+                    $new_datetime = date('Y-m-d H:i:s', strtotime($new_date . ' ' . date('H:i:s', strtotime($datetime))));
+                    $postData['created'] = $new_datetime;
+                } else {
+                    $postData['tr_date'] = Date('Y-m-d');
+                }
+                        
+                $postData['status'] = '1';
+                
+                $this->db->trans_begin();
+                $this->Bksmdl->table = 'tr_header';        
+                $response = $this->Bksmdl->insert($postData);
+                $id_header = $this->db->insert_id();
+                if ($this->db->trans_status() === FALSE) {
+                    $this->db->trans_rollback();
+                    $err = $this->db->error();
+                    $json['msg'] = $err['code'] . '<br>' . $err['message'];
+                    echo json_encode($json);
+                } else {
+                    $this->db->trans_commit();
+                }
+            } else {
+                $id_header = (int) $postData['header_id'];
+            }
         }        
-        $postData['status'] = '1';
-        $this->db->trans_begin();
-        $this->Bksmdl->table = 'tr_detail';
-        $response = $this->Bksmdl->insert($postData);
-        if ($this->db->trans_status() === FALSE) {
-            $this->db->trans_rollback();
-            $err = $this->db->error();
-            $json['msg'] = $err['code'] . '<br>' . $err['message'];
-            echo json_encode($json);
-        } else {
-            $this->db->trans_commit();
-            $json['msg'] = '1';
-            echo json_encode($json);
+        /** End of Inser Header -------------------------------------------------------------------------------- */
+
+        /** Insert Detail */
+        /** -------------------------------------------------------------------------------- */
+        if( isset($id_header) && $id_header > 0 && ( $id_header != 'null' || $id_header !== '') ){
+            unset($postDetail['tr_id']);
+            unset($postDetail['tr_date']);
+            unset($postDetail['customer_id']);
+            unset($postDetail['subtotal']);
+
+            $postDetail['header_id'] = $id_header;
+            if (strpos($postDetail['price'], ',') !== false) {
+                $postDetail['price'] = str_replace(',','.',$postDetail['price']);
+            }        
+            $postDetail['status'] = '1';
+            $this->db->trans_begin();
+            $this->Bksmdl->table = 'tr_detail';
+            $response = $this->Bksmdl->insert($postDetail);
+            if ($this->db->trans_status() === FALSE) {
+                $this->db->trans_rollback();
+                $err = $this->db->error();
+                $json['msg'] = $err['code'] . '<br>' . $err['message'];
+                echo json_encode($json);
+            } else {
+                $this->db->trans_commit();
+                $json['msg'] = '1';
+                $json['id_header'] = $id_header;
+                echo json_encode($json);
+            }
         }
+        /** End of Inser Detail -------------------------------------------------------------------------------- */
     }
     
     function delete_detail(){
@@ -203,7 +213,7 @@ class Transaction_buysell extends Bks_Controller {
         $query = $this->db->query("SELECT nominal,
                                           last_stock_sheet, 
                                           IF(last_stock_sheet IS NOT NULL, (nominal * last_stock_sheet),0 ) AS last_stock_amount
-                                          FROM v_stock
+                                          FROM v_tr_stock_balance
                                    WHERE store_id = $this->store_id
                                    AND stock_year = $tahun 
                                    AND stock_month = $bulan
@@ -281,7 +291,7 @@ class Transaction_buysell extends Bks_Controller {
                     foreach($select->result_array() as $row) {
                         $currency_id = $row['currency_id'];
                         $nominal  = $row['nominal'];
-                        $this->Bksmdl->generate_stock($store_id, $tahun, $bulan, $currency_id, $nominal);
+                        $this->Bksmdl->generate_tr_stock($store_id, $tahun, $bulan, $currency_id, $nominal);
                     }
                 }
 

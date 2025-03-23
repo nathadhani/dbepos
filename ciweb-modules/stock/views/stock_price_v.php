@@ -3,7 +3,7 @@
         <div class="panel panel-default">
             <div class="panel-heading ui-draggable-handle">                                
                 <div class="panel-title-box">
-                    <h3>Stock - In Average Rate</h3>
+                    <h3>Stock - In Average Price</h3>
                 </div>
                 <ul class="panel-controls">
                     <button id="btn-submit" class="btn btn-info btn btn-sm" style="width:120px;">Submit</button>
@@ -22,7 +22,7 @@
                                         data-url="master_data/m_store/getregion/" 
                                         data-value="" 
                                         data-limit="100"                                                
-                                        id="store_id" placeholder="Region"
+                                        id="store_id" placeholder="Store"
                                         class='form-control select2'
                                         width="100%"
                                         >
@@ -44,7 +44,7 @@
                         <div class="form-group">
                             <div class="col-lg-12">
                                 <label for="periode" style="display:block">Month</label>
-                                <input style="width:100px;" type="text" data-inputmask="'mask': '[99-9999]'" class="form-control dpM" placeholder="Periode" name="periode" id="periode" value="<?=date('m-Y')?>">
+                                <input style="width:100px;" type="text" data-inputmask="'mask': '[99-9999]'" class="form-control dpM" placeholder="Periode" name="period" id="period" value="<?=date('m-Y')?>">
                             </div>
                         </div>                            
                     </div>

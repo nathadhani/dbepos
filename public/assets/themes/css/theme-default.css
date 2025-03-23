@@ -2260,8 +2260,8 @@ input[type=checkbox] {
 }
 .input-group-addon {
   /* border-color: #a7adba; */
-  border: 1px solid #D5D5D5;
-  background-color: #e8e8e8;
+  border: 0px solid #ffffff;
+  /* background-color: #e8e8e8; */
   
   /* background-color: #4e73df; */
   /* background-image: linear-gradient(180deg, #4e73df 10%, #224abe 100%); */

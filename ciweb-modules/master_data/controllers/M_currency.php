@@ -6,7 +6,8 @@ class M_currency extends Bks_Controller {
         $config = array('modules' => 'master_data', 'jsfiles' => array('m_currency'));
         parent::__construct($config);
         $this->Bksmdl->table = 'm_currency';
-        $this->auth = $this->session->userdata( 'auth' );        
+        $this->auth = $this->session->userdata( 'auth' );
+        $this->store_id = $this->auth['store_id'];
     }
     
     function index() {
@@ -110,10 +111,12 @@ class M_currency extends Bks_Controller {
     function getcurrencytrx() {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
-        $store_id = $this->input->post('store_id');
-        $tr_id = $this->input->post('tr_id');
+        $postData = $this->input->post();    
+        $this->store_id = $postData['store_id'];
+        $tr_id = $postData['tr_id'];
         if($tr_id === '2'){
-            $menus = $this->db->order_by('currency_id,nominal', 'ASC')->get_where('v_stock_sell', array('status' => '1', 'store_id' => $store_id))->result();        
+            $menus = $this->db->order_by('currency_id,nominal', 'ASC')
+                    ->get_where('v_stock_sell', array('status' => '1', 'store_id' => $this->store_id))->result();        
             if (count($menus) > 0){
                 $option ="<option selected value=''>Pilih...</option>";
                 foreach($menus as $row){

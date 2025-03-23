@@ -21,74 +21,41 @@
                             - <span id="ftitle" style="color:black;font-weight:600;font-size:16px;">Add</span>
                         </h3>
                     </div>
-                    <ul class="panel-controls">                       
+                    <ul class="panel-controls">
+                        <button id="btn-new" class="btn btn-info btn btn-sm" style="width:120px;" title="Back to Buy / Sell - New">New</button>
                         <button id="btn-confirm" class="btn btn-info btn btn-sm" style="width:120px;">Confirm</button>
                         <button id="btn-cancel" class="btn btn-info btn-sm" style="width:120px;">Cancel</button>
                     </ul>    
                 </div>                  
                 <div class="panel-body">                                       
-                    <form id="form_header" class="form-horizontal" autocomplete="off">
+                    <form class="form-horizontal" autocomplete="off">
                         <div class="row" style="margin-left:-5px;">                            
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <div class="col-lg-12">
                                         <label for=tr_date style="display:block">Date</label>
-                                        <input type="text" id="tr_date" name="tr_date" placeholder="Tanggal..." class="form-control dp" data-date-format="DD MMMM YYYY" value="<?=date('d-m-Y');?>" style="width:110px;">
+                                        <input type="text" id="tr_date" name="tr_date" placeholder="Tanggal..." class="form-control dp" data-date-format="DD MMMM YYYY" value="<?=date('d-m-Y');?>">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-8">
                                 <div class="form-group">                                
                                     <div class="col-lg-12">
-                                        <label for="customer_name" style="display:block">Customer ( Name / Address )</label>
-                                        <a href="#" id="customer_name"></a>                                        
+                                        <label for="customer_name" style="display:block">Customer Name ( Address )</label>
+                                        <div class="input-group">
+                                            <a href="#" id="customer_name"></a>
+                                            <a href="#" id="btn-customer-act-on" title="Attachment Customer" style="margin-left:5px;">
+                                                <i class="fa fa-paperclip"></i>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>                            
                         </div>
-                        <div class="row" style="margin-left:-5px;margin-top:15px;">
-                            <div class="col-md-3">
-                                <div class="form-group">                                
-                                    <div class="col-lg-12">
-                                        <label for="customer_act_on_id" style="display:block">Customer ( Act On )</label>
-                                        <select name="customer_act_on_id"
-                                                data-ajax="true" 
-                                                data-placeholder="-- Pilih --"
-                                                data-url="master_data/m_customer_act_on/getacton/" 
-                                                data-value="" 
-                                                data-limit="100"                                                
-                                                id="customer_act_on_id" placeholder="Bertindak atas"
-                                                class='form-control select2'
-                                                width="100%"
-                                                >
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">                                
-                                    <div class="col-lg-12">
-                                        <label for="store_id" style="display:block">Customer ( Source )</label>
-                                        <input type="text" autofocuse="" id="customer_source" name="customer_source" class="form-control" placeholder="Sumber Dana...">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">                                
-                                    <div class="col-lg-8">
-                                        <label for="store_id" style="display:block">Customer ( Purpose )</label>
-                                        <input type="text" autofocuse="" id="customer_purpose" name="customer_purpose" class="form-control" placeholder="Tujuan Transaksi...">
-                                    </div>
-                                    <div class="col-lg-4">                                        
-                                        <button id="btn-simpan-header" class="btn btn-info btn btn-sm" style="width:100px;">Create Task</button>
-                                    </div>
-                                </div>
-                            </div>                            
-                        </div>                        
                     </form>                    
-
-                    <!-- <hr style="margin-left:10px; border-top: 1px dotted #333;"> -->
-                    <hr style="border: 1px solid green;">
+                    
+                    <br>
+                    <!-- <hr style="border: 1px solid green;"> -->
 
                     <div class="row">                                                                                
                         <div class="col-md-12 table-responsive">                            
@@ -219,6 +186,74 @@
                                     </div>
                                 </div>
                             </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ModalCustomerActon" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body" style="max-height:500px; overflow-y:auto;">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading ui-draggable-handle">                        
+                                <div class="panel-title-box">
+                                    <h3>
+                                        Attachment Customer
+                                    </h3>
+                                </div>
+                                <ul class="panel-controls">
+                                    <button id="btn-modal-customer-act-on-close" class="btn btn-info btn btn-sm" style="width:120px;margin-left:5px;">Close</button>
+                                </ul>    
+                            </div>                            
+                            <div class="panel-body">
+                                <form id="form_modal_customer_act_on" class="form-horizontal" autocomplete="off">   
+                                    <div class="row" style="margin-left:-10px;">
+                                        <div class="col-md-3">
+                                            <div class="form-group">                                
+                                                <div class="col-lg-12">
+                                                    <label for="customer_act_on_id" style="display:block">Customer ( Act On )</label>
+                                                    <select name="customer_act_on_id"
+                                                            data-ajax="true" 
+                                                            data-placeholder="-- Pilih --"
+                                                            data-url="master_data/m_customer_act_on/getacton/" 
+                                                            data-value="" 
+                                                            data-limit="100"                                                
+                                                            id="customer_act_on_id" placeholder="Bertindak atas"
+                                                            class='form-control select2'
+                                                            width="100%"
+                                                            >
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">                                
+                                                <div class="col-lg-12">
+                                                    <label for="store_id" style="display:block">Customer ( Source )</label>
+                                                    <input type="text" autofocuse="" id="customer_source" name="customer_source" class="form-control" placeholder="Sumber Dana...">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">                                
+                                                <div class="col-lg-8">
+                                                    <label for="store_id" style="display:block">Customer ( Purpose )</label>
+                                                    <input type="text" autofocuse="" id="customer_purpose" name="customer_purpose" class="form-control" placeholder="Tujuan Transaksi...">
+                                                </div>
+                                                <div class="col-lg-4">                                        
+                                                    <button id="btn-modal-customer-act-on-save" class="btn btn-info btn btn-sm" style="width:100px;">Save</button>
+                                                </div>
+                                            </div>
+                                        </div>                                    
+                                    </div>
+                                </form>                                
+                            </div>                            
                         </div>
                     </div>
                 </div>

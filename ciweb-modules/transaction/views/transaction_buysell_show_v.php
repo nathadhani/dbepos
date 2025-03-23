@@ -59,11 +59,12 @@
                             Description : <span id="description_header"></span>
                         </div>    
                         <div class="col-md-6">                                
+                                Customer Name : <a href="#" id="customer_name"></a><br>
+                                Address : <a href="#" id="customer_address"></a><br>
                             <?php if( $auth['usergroup_id'] != '6'){ ?>
-                                Customer : <a href="#" id="customer_name"></a><br>
                                 Act on : <span id="customer_act_on"></span><br>
                                 Source : <span id="customer_source"></span><br>
-                                Purpose : <span id="customer_purpose"></span><br>
+                                Purpose : <span id="customer_purpose"></span>
                             <?php } ?>
                         </div>
                     </div>
@@ -196,13 +197,9 @@
     </div>
 </div>
 
-<div class="modal fade" id="ModalPayment" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="ModalPayment" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <!-- <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Payment</h4>
-            </div> -->
             <div class="modal-body" style="max-height:500px; overflow-y:auto;">
                 <div class="row">
                     <div class="col-md-12">
@@ -265,13 +262,21 @@
                                             <tbody>  
                                                 <form id="mainFormModalPayment" class="form-horizontal" autocomplete="off">     
                                                     <tr style="background:#ffffff;">
-                                                        <td width="20%">                                                    
-                                                            <select class="form-control" style="width: 100%" id="modal_payment_type" name="modal_payment_type">
-                                                                <option value="" />-- Pilih --
-                                                                <option value="1" />Cash
-                                                                <option value="2" />Transfer
+                                                        <td width="20%">
+                                                            <!-- Jika Search Tidak berfungsi, remove modal tabindex='-1' -->
+                                                            <select id="modal_payment_type"
+                                                                    name="modal_payment_type"
+                                                                    data-ajax="true"
+                                                                    data-placeholder="Pilih..."
+                                                                    data-url="master_data/m_payment_type/getpaymenttype/"
+                                                                    data-value=""
+                                                                    data-limit="100"                                          
+                                                                    placeholder="Pilih..."
+                                                                    class='form-control select2'
+                                                                    require
+                                                            >
                                                             </select>
-                                                        </td>                                                                                                
+                                                        </td>                                                                
                                                         <td width="55%">
                                                             <input type="text" id="modal_payment_description" name="modal_payment_description" class="form-control">
                                                         </td>

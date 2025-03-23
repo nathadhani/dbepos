@@ -64,7 +64,6 @@ function show_header(){
                 success: function(data){
                     if (data !== '[]' && data.length > 0){
                         var d = JSON.parse(data)[0];                                                
-                        $('#btn-add-row-detail').prop('disabled', false);
 
                         $("#created_by").html('Created by : '+d.createdby_name +' | '+d.created);
                         if(d.status == '2'){
@@ -74,6 +73,7 @@ function show_header(){
                         $("#tr_date").val(bksfn.revDate(d.tr_date));
                         $('#tr_date').prop('disabled', true);
 
+                        $("#btn-customer-act-on").show();
                         if (d.customer_act_on_id != null) {
                             $("#customer_act_on_id").html('<option value="' + d.customer_act_on_id + '">' + d.customer_act_on + '</option>').sel2dma();
                         } else {
@@ -82,18 +82,10 @@ function show_header(){
                         $("#customer_source").val(d.customer_source);
                         $("#customer_purpose").val(d.customer_purpose);                        
 
-                        $('#btn-simpan-header').html('Save Task');
                         $("#ftitle").html(d.status_name);
-                        if ($("#ftitle").html().substr(0, 3) == "Add") {
-                            $('#currency_id').prop('disabled', true);
-                            $("#currency_id").html('').sel2dma();
-                        } else {
-                            $('#currency_id').prop('disabled', false);
-                        }
                         show_detail(d.status);
                         switch(Number(d.status)) {
                             case 1:
-                                $("#btn-simpan-header").show();
                                 $(".form_detail_input").show();
                                 $("#btn-confirm").show();
                                 $("#btn-cancel").show();
@@ -102,7 +94,6 @@ function show_header(){
                                 back_to_page_show(d.id);
                                 break;
                             default:
-                                $("#btn-simpan-header").hide();
                                 $(".form_detail_input").hide();
                                 $("#btn-confirm").hide();
                                 $("#btn-cancel").hide();
@@ -111,8 +102,7 @@ function show_header(){
                         show_customer(d.customer_id);
                     } else{                        
                         reset_form_header();
-                        var url = "transaction/nasabah/index/";
-                        window.open(url,'_self');
+                        call_page_customer_new();
                     }               
                 },
                 error: function(xhr){
@@ -240,8 +230,9 @@ function delete_line_detail(id){
 }
 
 function add_item(){    
-    $.post('transaction/transaction_buysell/insert_detail', $("#form_detail").serialize() + "&header_id=" + id_header, function (obj) {
+    $.post('transaction/transaction_buysell/insert_detail', $("#form_detail").serialize() + "&header_id=" + id_header + "&tr_id=" + xtr_id + "&tr_date=" + $("#tr_date").val() + "&customer_id=" + customerId , function (obj) {
         if (obj.msg == 1) {
+            id_header = obj.id_header;
             reset_form_input();
             back_to_page_ini()
             window.scrollTo({ left: 0, top: document.body.scrollHeight, behavior: "smooth" });
@@ -292,59 +283,55 @@ function subtotal_input() {
 
 $("#btn-add-row-detail").on('click', function (e) {
     e.preventDefault();
-    if (id_header !== null && id_header !== '') {
-        if ( $("#currency_id").val() === null || $("#currency_id").val() === '' ){
-            bksfn.errMsg("mata uang belum di pilih!");
-            $("#currency_id").focus();
-        } else if( $("#nominal").val() === 0 || $("#nominal").val() === '' ) {
-            bksfn.errMsg("jumlah nominal mata uang belum di input!");
-            $("#nominal").focus();    
-        } else if( $("#sheet").val() === 0 || $("#sheet").val() === '' ) {
-            bksfn.errMsg("jumlah lembar mata uang belum di input!");
-            $("#sheet").focus();
-        } else if( $("#price").val() === 0 || $("#price").val() === '' ){
-            bksfn.errMsg("rate belum di input!");
-            $("#price").focus();
-        } else {
-            var cek_price = parseInt(formatRupiahtoNumber($('#price').val()));
-            var cek_price_asli = parseInt(formatRupiahtoNumber($('#price_asli').val()));
-            var cek_price_bot = parseInt(formatRupiahtoNumber($('#price_bot').val()));
-            var cek_price_top = parseInt(formatRupiahtoNumber($('#price_top').val()))
-
-            if( cek_price_asli > 0 && (cek_price < (cek_price_asli - cek_price_bot )) ){
-                alertify.alert('Rate tidak boleh kurang dari ' + formatRupiah((cek_price_asli - cek_price_bot).toString()) + ' !');
-                $("#price").val(cek_price_asli);
-                subtotal_input();
-            } else if( cek_price_asli > 0 && (cek_price > (cek_price_asli + cek_price_top )) ){
-                alertify.alert('Rate tidak boleh lebih dari ' + formatRupiah((cek_price_asli + cek_price_top).toString()) + ' !');
-                $("#price").val(cek_price_asli);
-                subtotal_input();
-            } else {
-                getstockbyid();
-                if(xtr_id == 1){ // Trx Buy                        
-                    add_item();
-                }
-                if(xtr_id == 2){ // Trx Sell
-                    if(sisa_stock_sheet > 0){
-                        var sheet_input = parseInt(formatRupiahtoNumber( ($("#sheet").val() == null || $("#sheet").val() == '' ? 0 : $("#sheet").val()) ));
-                        if( sisa_stock_sheet < sheet_input ){
-                            alertify.alert('Stok kurang, hanya tersedia ' + sisa_stock_sheet + ' lembar !');
-                            $("#sheet").val(sisa_stock_sheet);
-                            subtotal_input();
-                            return false;                                                                                                                                                            
-                        }
-                        if( sisa_stock_sheet >= sheet_input ){
-                            add_item();                                            
-                        }
-                    } else {
-                        alertify.alert('Stok kosong!');
-                        return false;
-                    }                    
-                }
-            }                                    
-        }
+    if ( $("#currency_id").val() === null || $("#currency_id").val() === '' ){
+        bksfn.errMsg("mata uang belum di pilih!");
+        $("#currency_id").focus();
+    } else if( $("#nominal").val() === 0 || $("#nominal").val() === '' ) {
+        bksfn.errMsg("jumlah nominal mata uang belum di input!");
+        $("#nominal").focus();    
+    } else if( $("#sheet").val() === 0 || $("#sheet").val() === '' ) {
+        bksfn.errMsg("jumlah lembar mata uang belum di input!");
+        $("#sheet").focus();
+    } else if( $("#price").val() === 0 || $("#price").val() === '' ){
+        bksfn.errMsg("rate belum di input!");
+        $("#price").focus();
     } else {
-        bksfn.errMsg("save data terlebih dahulu!");
+        var cek_price = parseInt(formatRupiahtoNumber($('#price').val()));
+        var cek_price_asli = parseInt(formatRupiahtoNumber($('#price_asli').val()));
+        var cek_price_bot = parseInt(formatRupiahtoNumber($('#price_bot').val()));
+        var cek_price_top = parseInt(formatRupiahtoNumber($('#price_top').val()))
+
+        if( cek_price_asli > 0 && (cek_price < (cek_price_asli - cek_price_bot )) ){
+            alertify.alert('Rate tidak boleh kurang dari ' + formatRupiah((cek_price_asli - cek_price_bot).toString()) + ' !');
+            $("#price").val(cek_price_asli);
+            subtotal_input();
+        } else if( cek_price_asli > 0 && (cek_price > (cek_price_asli + cek_price_top )) ){
+            alertify.alert('Rate tidak boleh lebih dari ' + formatRupiah((cek_price_asli + cek_price_top).toString()) + ' !');
+            $("#price").val(cek_price_asli);
+            subtotal_input();
+        } else {
+            getstockbyid();
+            if(xtr_id == 1){ // Trx Buy                        
+                add_item();
+            }
+            if(xtr_id == 2){ // Trx Sell
+                if(sisa_stock_sheet > 0){
+                    var sheet_input = parseInt(formatRupiahtoNumber( ($("#sheet").val() == null || $("#sheet").val() == '' ? 0 : $("#sheet").val()) ));
+                    if( sisa_stock_sheet < sheet_input ){
+                        alertify.alert('Stok kurang, hanya tersedia ' + sisa_stock_sheet + ' lembar !');
+                        $("#sheet").val(sisa_stock_sheet);
+                        subtotal_input();
+                        return false;                                                                                                                                                            
+                    }
+                    if( sisa_stock_sheet >= sheet_input ){
+                        add_item();                                            
+                    }
+                } else {
+                    alertify.alert('Stok kosong!');
+                    return false;
+                }                    
+            }
+        }                                    
     }    
 });
 
@@ -488,61 +475,6 @@ function getratebyid(){
     });
 }
 
-$('#btn-simpan-header').on('click', function (e) {
-    e.preventDefault();
-    alertify.confirm("are you sure, SAVE transaction ?", function (x) {
-        if (x) {
-            if ($("#ftitle").html().substr(0, 3) == "Add") {            
-                $.post('transaction/transaction_buysell/insert_header', $("#form_header").serialize() + "&customer_id=" + customerId + "&tr_id=" + xtr_id, function (obj) {
-                    if (obj.msg == 1) {              
-                        id_header = obj.id;      
-                        alertify.success("Insert Data Success");                    
-                        var url = '';
-                        if( xtr_id == 1 ){
-                            url = call_page_task_buy(customerId, id_header);
-                        } else {
-                            url = call_page_task_sell(customerId, id_header);
-                        }
-                        if(url !== ''){
-                            $.ajax({
-                                url: url,
-                                type: 'POST',
-                                success: function() {
-                                    window.open(url,'_self'); 
-                                },
-                                error: function(){
-                                    alertify.error("can't open page.!");
-                                }
-                            });    
-                        }                       
-                    } else {
-                        reset_form_header();
-                        reset_form_input();
-                        bksfn.errMsg(obj.msg);
-                    }
-                }, "json").fail(function (xhr) {                
-                    alertify.error("error");
-                    StringtoFile(xhr.responseText, 'error');
-                });
-            }
-            if (id_header !== null && id_header !== '') {
-                $.post('transaction/transaction_buysell/update_header', $("#form_header").serialize() + "&id=" + id_header, function (obj) {
-                    if (obj.msg == 1) {
-                        back_to_page_ini();
-                        alertify.success("Edit Data Success");
-                    } else {
-                        reset_form_input();
-                        bksfn.errMsg(obj.msg);
-                    }
-                }, "json").fail(function (xhr) {
-                    alertify.error("error");
-                    StringtoFile(xhr.responseText, 'error');
-                });
-            }            
-        }
-    });
-});
-
 $("#btn-confirm").on('click', function (e) {
     e.preventDefault();
     if( document.getElementById('table-detail').rows.length < 2 ) {
@@ -640,13 +572,40 @@ $("#customer_name").on('click', function (e) {
         }
     }); 
 });
+$("#btn-customer-act-on").on('click', function (e) {
+    e.preventDefault();
+    $(".modal-dialog").width('1200px');
+    $("#ModalCustomerActon").modal('show');       
+});
+$("#btn-modal-customer-act-on-close").on('click', function (e) {
+    e.preventDefault();
+    $("#ModalCustomerActon").modal('hide');
+});
+$('#btn-modal-customer-act-on-save').on('click', function (e) {
+    e.preventDefault();
+    alertify.confirm("are you sure, SAVE transaction ?", function (x) {
+        if (x) {            
+            if (id_header !== null && id_header !== '') {
+                $.post('transaction/transaction_buysell/update_header', $("#form_modal_customer_act_on").serialize() + "&id=" + id_header, function (obj) {
+                    if (obj.msg == 1) {
+                        alertify.success("Edit Data Success");
+                    } else {
+                        bksfn.errMsg(obj.msg);
+                    }
+                }, "json").fail(function (xhr) {
+                    alertify.error("error");
+                    StringtoFile(xhr.responseText, 'error');
+                });
+            }            
+        }
+    });
+});
 
 function back_to_page_ini(){
     $("#btn-confirm").hide();
     $("#btn-cancel").hide();    
     $('#tr_date').prop('disabled', true);
-    $('#currency_id').prop('disabled', true);
-    $('#btn-add-row-detail').prop('disabled', true);
+    $("#btn-customer-act-on").hide(); 
     $.ajax({
         url: baseUrl + "transaction/transaction_buysell/cekclosingtrx",
         type: 'POST',
@@ -659,7 +618,6 @@ function back_to_page_ini(){
                     $('#tr_date').val( bksfn.revDate(d.tr_date));
                     $("#btn-confirm").hide();
                     $("#btn-cancel").hide();
-                    $("#btn-simpan-header").hide();
                     $(".form_detail_input").hide(); 
                     alertify.alert("sistem belum closing, tanggal transaksi masih tanggal " + bksfn.revDate(d.tr_date));
                     var url = "transaction/closing_buysell/index/";
@@ -733,3 +691,14 @@ function back_to_page_ini(){
         }
     });    
 }
+
+$("#btn-new").on('click', function (e) {
+    e.preventDefault();
+    alertify.confirm("are you sure, back to Buy / Sell - New ?", function (x) {
+        if (x) {
+            call_page_customer_new();
+        } else {
+            back_to_page_ini();
+        }   
+    });          
+});

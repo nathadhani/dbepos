@@ -97,7 +97,8 @@ function show_header($id){
                             $("#cancel_by").html('Canceled by : '+d.updatedby_name +' - '+d.updated);
                         }                            
 
-                        $("#customer_name").html(d.customer_name.trim() + ' ( ' + d.customer_address.trim() + ' )');
+                        $("#customer_name").html(d.customer_name.trim());
+                        $("#customer_address").html(d.customer_address.trim());
                         $("#customer_act_on").html(d.customer_act_on);
                         $("#customer_source").html(d.customer_source);
                         $("#customer_purpose").html(d.customer_purpose);
@@ -261,7 +262,7 @@ function delete_line_detail_payment($id){
 }
 
 function reset_form_input_payment(){
-    $("#modal_payment_type").val('');
+    $("#modal_payment_type").html('').sel2dma();
     $('#modal_payment_description').val('');
     $("#modal_payment_amount").val('');
     $("#terbilang_modal_payment_amount").html('');
@@ -296,6 +297,8 @@ $("#modal_payment_type").on("change", function(e) {
         $("#modal_payment_amount").val( formatRupiahtoNumber($("#modal_remaining_payment_value").val()) );
         $("#terbilang_modal_payment_amount").html('<i>Payment Value</i> : ' + bksfn.terBilang( $("#modal_payment_amount").val( )));
         $("#modal_payment_amount").focus();
+    } else {
+        reset_form_input_payment();
     }    
 });
 $("#modal_payment_amount").keyup(function(e) {

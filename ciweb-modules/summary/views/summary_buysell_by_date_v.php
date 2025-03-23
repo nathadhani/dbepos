@@ -6,7 +6,6 @@
                     <h3>Summary Buy / Sell - by Date</h3>
                 </div>
                 <ul class="panel-controls">
-                    <button id="btn-submit" class="btn btn-info btn btn-sm" style="width:120px;">Submit</button>
                     <button id="btn-pdf" class="btn btn-info btn btn-sm" style="margin-left:5px;">pdf</button>
                     <button id="btn-excel" class="btn btn-info btn btn-sm" style="margin-left:5px;">Xlsx</button>
                 </ul>
@@ -14,20 +13,32 @@
             <div class="panel-body">
                 <div class="row">
                     <div class="col-md-8">
-                        <div class="form-group">                                
+                        <div class="form-group">
                             <div class="col-lg-12">
-                                <label for="store_id" style="display:block">Store</label>
-                                <select name="store_id"
-                                        data-ajax="true" 
-                                        data-placeholder="-- Pilih --"
-                                        data-url="master_data/m_store/getregion/" 
-                                        data-value="" 
-                                        data-limit="100"                                                
-                                        id="store_id" placeholder="Region"
-                                        class='form-control select2'
-                                        width="100%"
-                                        >
-                                </select>
+                                <label for="store_id" style="display:block">Store</label>                                
+                                <?php if( $auth['usergroup_id'] == '2'){ ?>
+                                    <select name="store_id[]"
+                                            data-ajax="true" 
+                                            data-placeholder="-- Pilih --"
+                                            data-url="master_data/m_store/getstore/" 
+                                            data-value="" 
+                                            data-limit="9"
+                                            multiple
+                                            id="store_id" placeholder="Store" class='form-control select2'>
+                                    </select>
+                                <?php } else { ?>    
+                                    <select name="store_id"
+                                            data-ajax="true" 
+                                            data-placeholder="-- Pilih --"
+                                            data-url="master_data/m_store/getregion/" 
+                                            data-value="" 
+                                            data-limit="100"                                                
+                                            id="store_id" placeholder="Store"
+                                            class='form-control select2'
+                                            width="100%"
+                                            >
+                                    </select>
+                                <?php } ?>    
                             </div>
                         </div>
                     </div>
@@ -35,7 +46,12 @@
                         <div class="form-group">
                             <div class="col-lg-12">
                                 <label for="periode" style="display:block">Period</label>
-                                <input type="text" name="period" id="period"  class="form-control dp" placeholder="Periode" data-date-format="DD MMMM YYYY" value="<?=date('d-m-Y');?>" style="width:100px;">
+                                <div class="input-group">
+                                    <input type="text" name="period" id="period"  class="form-control dp" placeholder="Periode" data-date-format="DD MMMM YYYY" value="<?=date('d-m-Y');?>" style="width:100px;">
+                                    <span class="input-group-addon btn btn-info">                             
+                                        <span id="btn-submit" class="btn btn-info btn" style="width:120px;">Submit</span>
+                                    </span>
+                                </div>                                
                             </div>
                         </div>                            
                     </div>                    

@@ -30,8 +30,8 @@ class Summary_buysell_by_year extends Bks_Controller {
                                         tr_header.tr_date AS tr_date,
 
                                         (
-                                            SELECT stock_last_amount FROM tr_stock_price x
-                                            WHERE x.store_id = $this->store_id
+                                            SELECT SUM(stock_last_amount) FROM tr_stock_price x
+                                            WHERE x.store_id IN ($this->store_id)
                                             and YEAR(x.stock_date) = $this->tr_year_old                                            
                                             and x.currency_id = tr_detail.currency_id
                                             ORDER BY x.stock_date DESC, x.id DESC
@@ -39,8 +39,8 @@ class Summary_buysell_by_year extends Bks_Controller {
                                         ) AS st_beginning_amount,                                        
 
                                         (
-                                            SELECT (stock_last_amount * stock_last_price) FROM tr_stock_price x
-                                            WHERE x.store_id = $this->store_id
+                                            SELECT (SUM(stock_last_amount) * stock_last_price) FROM tr_stock_price x
+                                            WHERE x.store_id IN ($this->store_id)
                                             and YEAR(x.stock_date) = $this->tr_year_old                                            
                                             and x.currency_id = tr_detail.currency_id
                                             ORDER BY x.stock_date DESC, x.id DESC
@@ -54,8 +54,8 @@ class Summary_buysell_by_year extends Bks_Controller {
                                         SUM(IF( tr_header.tr_id = 2 AND tr_detail.status IN ( 3, 4 ), ( (tr_detail.nominal * tr_detail.sheet) * tr_detail.price ), 0 )) AS sell_equivalent,
 
                                         (
-                                            SELECT stock_last_amount FROM tr_stock_price x
-                                            WHERE x.store_id = $this->store_id
+                                            SELECT SUM(stock_last_amount) FROM tr_stock_price x
+                                            WHERE x.store_id IN ($this->store_id)
                                             and YEAR(x.stock_date) = $this->tr_year                                            
                                             and x.currency_id = tr_detail.currency_id
                                             ORDER BY x.stock_date DESC, x.id DESC
@@ -63,8 +63,8 @@ class Summary_buysell_by_year extends Bks_Controller {
                                         ) AS st_end_amount,
 
                                         (
-                                            SELECT (stock_last_amount * stock_last_price) FROM tr_stock_price x
-                                            WHERE x.store_id = $this->store_id
+                                            SELECT (SUM(stock_last_amount) * stock_last_price) FROM tr_stock_price x
+                                            WHERE x.store_id IN ($this->store_id)
                                             and YEAR(x.stock_date) = $this->tr_year                                            
                                             and x.currency_id = tr_detail.currency_id
                                             ORDER BY x.stock_date DESC, x.id DESC
@@ -74,7 +74,7 @@ class Summary_buysell_by_year extends Bks_Controller {
                                 FROM tr_detail
                                 JOIN tr_header ON tr_header.id = tr_detail.header_id 				
                                 JOIN m_currency ON tr_detail.currency_id = m_currency.id
-                                WHERE tr_header.store_id = $this->store_id
+                                WHERE tr_header.store_id IN ($this->store_id)
                                 AND YEAR(tr_header.tr_date) = $this->tr_year                                
                                 AND tr_detail.status IN (3,4) 
                                 GROUP BY
@@ -90,7 +90,7 @@ class Summary_buysell_by_year extends Bks_Controller {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
-        $this->store_id = $postData['store_id'];        
+        $this->store_id = implode(',', $postData['store_id']);
         if(isset($postData['period'])){ 
             $this->tr_year = intval(SUBSTR($postData['period'],0,4));
             $this->tr_year_old = $this->tr_year-1;
@@ -101,7 +101,7 @@ class Summary_buysell_by_year extends Bks_Controller {
     function exportpdf()
     {
         $this->libauth->check(__METHOD__);
-        $this->store_id = $this->uri->segment(4);
+        $this->store_id = implode(',', $this->uri->segment(4));
         $this->tr_year = intval(SUBSTR($this->uri->segment(5),0,4));
         $this->tr_year_old = $this->tr_year-1;
         $profil_usaha = $this->Bksmdl->getprofilusaha($this->store_id);
@@ -221,7 +221,7 @@ class Summary_buysell_by_year extends Bks_Controller {
 
     function excel(){
         $this->libauth->check(__METHOD__);
-        $this->store_id = $this->uri->segment(4);;
+        $this->store_id = implode(',', $this->uri->segment(4));
         $this->tr_year = intval(SUBSTR($this->uri->segment(5),0,4));
         $this->tr_year_old = $this->tr_year-1;
         $profil_usaha = $this->Bksmdl->getprofilusaha($this->store_id);

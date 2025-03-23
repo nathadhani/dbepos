@@ -94,10 +94,17 @@
         <!-- </li> -->
 
         <?php 
-            if(!in_array($usergroup_id, array('1','2','6'))) {
+            if(in_array($usergroup_id, array('3','4','5'))) {
         ?>
             <span>
                 Logged in as : <?php echo $auth['fullname'] . ' | Store : ' . $auth['store_address'];?>
+            </span>            
+        <?php 
+            }
+            if(in_array($usergroup_id, array('2','6'))) {
+        ?>    
+            <span>
+                Logged in as : <?php echo $auth['fullname'];?>
             </span>            
         <?php 
             }

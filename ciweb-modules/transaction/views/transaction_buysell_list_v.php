@@ -6,37 +6,51 @@
                     <h3>Transaction - List</h3>
                 </div>
                 <ul class="panel-controls">
-                    <button id="btn-submit" class="btn btn-info btn btn-sm" style="width:120px;">Submit</button>
                     <button id="btn-excel" class="btn btn-info btn btn-sm" style="margin-left:5px;">Xlsx</button>
                 </ul>
             </div>
             <div class="panel-body">
                 <div class="row">
-                    <div class="col-md-8">
+                    <div class="col-md-7">
                         <div class="form-group">                                
                             <div class="col-lg-12">
                                 <label for="store_id" style="display:block">Store</label>
-                                <select name="store_id"
-                                        data-ajax="true" 
-                                        data-placeholder="-- Pilih --"
-                                        data-url="master_data/m_store/getregion/" 
-                                        data-value="" 
-                                        data-limit="100"                                                
-                                        id="store_id" placeholder="Region"
-                                        class='form-control select2'
-                                        width="100%"
-                                        >
-                                </select>
+                                <?php if( $auth['usergroup_id'] == '2'){ ?>
+                                    <select name="store_id[]"
+                                            data-ajax="true" 
+                                            data-placeholder="-- Pilih --"
+                                            data-url="master_data/m_store/getstore/" 
+                                            data-value="" 
+                                            data-limit="9"
+                                            multiple
+                                            id="store_id" placeholder="Store" class='form-control select2'>
+                                    </select>
+                                <?php } else { ?>    
+                                    <select name="store_id"
+                                            data-ajax="true" 
+                                            data-placeholder="-- Pilih --"
+                                            data-url="master_data/m_store/getregion/" 
+                                            data-value="" 
+                                            data-limit="100"                                                
+                                            id="store_id" placeholder="Store"
+                                            class='form-control select2'
+                                            width="100%"
+                                            >
+                                    </select>
+                                <?php } ?>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-5">
                         <div class="form-group">
-                            <div class="col-lg-12">
+                            <div class="col-lg-8">
                                 <label for="tr_date1" style="display:block">Period</label>
                                 <div class="input-group">
-                                    <input type="text" id="tr_date1" name="tr_date1" placeholder="Tanggal ..." class="form-control dp" data-date-format="DD MMMM YYYY" style="width:100px;" value="<?=date('d-m-Y');?>">
-                                    <input type="text" id="tr_date2" name="tr_date2" placeholder="Tanggal ..." class="form-control dp" data-date-format="DD MMMM YYYY" style="width:100px;margin-left:5px;" value="<?=date('d-m-Y');?>">
+                                    <input type="text" id="tr_date1" name="tr_date1" placeholder="Tanggal ..." class="form-control dp" data-date-format="DD MMMM YYYY" style="width:120px;" value="<?=date('d-m-Y');?>">
+                                    <span class="input-group-addon btn btn-info">                             
+                                        <input type="text" id="tr_date2" name="tr_date2" placeholder="Tanggal ..." class="form-control dp" data-date-format="DD MMMM YYYY" style="width:120px;" value="<?=date('d-m-Y');?>">
+                                        <span id="btn-submit" class="btn btn-info btn" style="width:120px;margin-left:10px;">Submit</span>
+                                    </span>
                                 </div>        
                             </div>
                         </div>                            
