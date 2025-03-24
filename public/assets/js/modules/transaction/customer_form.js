@@ -74,7 +74,7 @@ $.validate({
                                 if (obj.msg == 1) {                                
                                     $("body").data("text_search", '');
                                     alertify.success("Edit Data Success");     
-                                    back_to_page_ini();
+                                    back_to_page_ini();                                    
                                 } else {
                                     bksfn.errMsg(obj.msg);
                                 }
@@ -168,7 +168,7 @@ $.validate({
 $('#upload_foto').on('change',function(e){
     e.preventDefault();    
     var files = $('#upload_foto')[0].files;
-    var file_exist = files.length > 0 ? 1 : 0;
+    // var file_exist = files.length > 0 ? 1 : 0;
     var error = '';
     var formData = new FormData(document.getElementById("form_foto"));
     formData.append('CIF', $('#customer_code').val());
@@ -193,11 +193,9 @@ $('#upload_foto').on('change',function(e){
             async: false,
             processData: false,
             success: function (data) {
-                console.log(data);
                 $("#form_foto")[0].reset();
                 alertify.success('File has been uploaded');
-                // location.reload(true);
-                history.go(0);
+                history.go(0); // untuk memuat ulang halaman tanpa cache.
             },
             complete: function(){
                 $('.ajax-loader').css("visibility", "hidden");
@@ -370,6 +368,7 @@ function reset_form(){
  * redirect page
  */
 function back_to_page_ini(){
+    history.go(0); // untuk memuat ulang halaman tanpa cache.
     var url = "transaction/customer_form/index/"+$("body").data("id")+"/null";
     $.ajax({
         url: url,
@@ -377,7 +376,7 @@ function back_to_page_ini(){
         success: function() {
             window.open(url,'_self');           
         }
-    });
+    });    
 }
 
 /**

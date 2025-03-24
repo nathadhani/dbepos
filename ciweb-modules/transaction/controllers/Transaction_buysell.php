@@ -361,7 +361,7 @@ class Transaction_buysell extends Bks_Controller {
         } else {
             $this->db->trans_commit();
             $this->db->where(array('id' => $header_id));
-            $this->db->update('tr_header', array('cashierby' => $cashierby, 'updated' => date('Y-m-d H:i:s', time()), 'updatedby' => $this->userId) );
+            $this->db->update('tr_header', array('status' => 4, 'cashierby' => $cashierby, 'updated' => date('Y-m-d H:i:s', time()), 'updatedby' => $this->userId) );
             $json['msg'] = '1';
             echo json_encode($json);
         }

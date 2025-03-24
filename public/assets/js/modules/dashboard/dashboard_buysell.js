@@ -1,5 +1,5 @@
 var storeId =  $("#store_id").val();
-var title_tahun = $("#periode").val();
+var title_tahun = $("#period").val();
 
 $("#btn-submit").on('click', function (e) {
     e.preventDefault();
@@ -7,7 +7,7 @@ $("#btn-submit").on('click', function (e) {
         bksfn.errMsg('Store Belum Dipilih!');
     } else {        
         storeId = $("#store_id").val();
-        title_tahun = $('#periode').val();
+        title_tahun = $('#period').val();
         loaddata();
     }
 });
@@ -27,7 +27,7 @@ function getdatatable1(){
     $.ajax({
         url: baseUrl + 'dashboard/dashboard_buysell/getdatatable1',
         type: 'POST',
-        data: {'store_id' : storeId, 'periode' : $('#periode').val()},
+        data: {'store_id' : storeId, 'period' : $('#period').val()},
         dataType: 'json',
         success: function (data) {
             if (data !== '[]' && data.length > 0){
@@ -78,7 +78,7 @@ function getdatatable2(){
     $.ajax({
         url: baseUrl + 'dashboard/dashboard_buysell/getdatatable2',
         type: 'POST',
-        data: {'store_id' : storeId, 'periode' : $('#periode').val()},
+        data: {'store_id' : storeId, 'period' : $('#period').val()},
         dataType: 'json',
         success: function (data) {
             if (data !== '[]' && data.length > 0){
@@ -131,7 +131,7 @@ function getchart1(){
             $.ajax({
                 url: baseUrl + 'dashboard/dashboard_buysell/getchart1',
                 type: 'POST',
-                data: {'store_id' : storeId, 'periode' : $('#periode').val()},
+                data: {'store_id' : storeId, 'period' : $('#period').val()},
                 dataType: 'json',
                 success: function (data) {
                     if (data !== '[]' && data.length > 0){
@@ -182,7 +182,7 @@ function getchart2(){
             $.ajax({
                 url: baseUrl + 'dashboard/dashboard_buysell/getchart2',
                 type: 'POST',
-                data: {'store_id' : storeId, 'periode' : $('#periode').val()},
+                data: {'store_id' : storeId, 'period' : $('#period').val()},
                 dataType: 'json',
                 success: function (data) {
                     if (data !== '[]' && data.length > 0){

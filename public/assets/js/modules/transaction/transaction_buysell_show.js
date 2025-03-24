@@ -54,7 +54,7 @@ function show_header($id){
                         $("#btn-payment").hide();
                         $("#btn-submit").hide();
                         $("#btn-cancel").hide();
-                        $("#btn-pdf").hide();
+                        $("#btn-pdf").hide();                        
                         if(Number(d.createdby) === Number(userId)){
                             switch(Number(d.status)) {
                                 case 1:     
@@ -71,6 +71,14 @@ function show_header($id){
                                     break;
                                 case 3:
                                     if(Number(Apimethod) === 1){                                            
+                                        $("#btn-submit").show();
+                                    }
+                                    $("#btn-payment").show();
+                                    $("#btn-cancel").show();
+                                    $("#btn-pdf").show();              
+                                    break;
+                                case 4:
+                                    if(Number(Apimethod) === 1){                                          
                                         $("#btn-submit").show();
                                     }
                                     $("#btn-payment").show();
@@ -324,6 +332,7 @@ $("#btn-modal-add-row-payment").on('click', function (e) {
                 alertify.success('Data add success!');
                 reset_form_input_payment();
                 show_detail_payment(id_tr_header);
+                history.go(0); // untuk memuat ulang halaman tanpa cache.
             } else {
                 alertify.error("error");
                 StringtoFile(xhr.responseText, 'error');

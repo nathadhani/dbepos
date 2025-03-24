@@ -56,7 +56,7 @@
                                 $count = $this->db->query("SELECT COUNT(status) AS jumlah FROM v_tr_header
                                                         WHERE  store_id = $store_id
                                                         AND api_method = '1'
-                                                        AND status = '3'
+                                                        AND status IN (3,4)
                                                         LIMIT 1")->result();
                                 if(isset($count)) {
                         ?>

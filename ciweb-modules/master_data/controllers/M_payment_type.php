@@ -91,7 +91,7 @@ class M_payment_type extends Bks_Controller {
         $this->libauth->check(__METHOD__);
         $this->Bksmdl->table = 'm_payment_type';
         $this->Bksmdl->searchable = array('payment_type_name', 'id');
-        $this->Bksmdl->select2fields = array('id' => 'id', 'text' => "concat(payment_type_name,' [', id,']')");
+        $this->Bksmdl->select2fields = array('id' => 'id', 'text' => "payment_type_name");
         $result['results'] = $this->Bksmdl->getSelect2(array('status' => '1'));
         $result['more'] = true;
         echo json_encode($result);

@@ -32,16 +32,17 @@
                                 </div>
                             </div>
                         </div>                        
-                        <div class="col-md-2">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <div class="col-lg-8">
                                     <label for="periode" style="display:block">Period</label>
-                                    <input style="width:100px;" type="text" data-inputmask="'mask': '[9999]'" class="form-control dpY" placeholder="Periode" name="periode" id="periode" value="<?=date('Y')?>">
-                                </div>
-                                <div class="col-lg-4">
-                                    <label for="btn-submit" style="display:block"></label><br>
-                                    <a style="width:100px;display:block" id="btn-submit" title="Lihat Data" href="#" class="btn btn-primary">Submit</a>
-                                </div>
+                                    <div class="input-group">
+                                    <input type="text" name="period" id="period"  class="form-control dpY" data-inputmask="'mask': '[9999]'" placeholder="Periode" value="<?=date('Y')?>" style="width:100px;">
+                                        <span class="input-group-addon btn btn-info">                             
+                                            <span id="btn-submit" class="btn btn-info btn" style="width:120px;">Submit</span>
+                                        </span>
+                                    </div>
+                                </div>                                
                             </div>                            
                         </div>                        
                     </div>                    

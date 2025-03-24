@@ -6,7 +6,6 @@
                     <h3>Summary Buy / Sell - by Year</h3>
                 </div>
                 <ul class="panel-controls">
-                    <button id="btn-submit" class="btn btn-info btn btn-sm" style="width:120px;">Submit</button>
                     <button id="btn-pdf" class="btn btn-info btn btn-sm" style="margin-left:5px;">pdf</button>
                     <button id="btn-excel" class="btn btn-info btn btn-sm" style="margin-left:5px;">Xlsx</button>
                 </ul>
@@ -47,7 +46,12 @@
                         <div class="form-group">
                             <div class="col-lg-12">
                                 <label for="periode" style="display:block">Period</label>
-                                <input type="text" name="period" id="period"  class="form-control dpY" data-inputmask="'mask': '[9999]'" placeholder="Periode" value="<?=date('Y')?>" style="width:100px;">
+                                <div class="input-group">
+                                    <input type="text" name="period" id="period"  class="form-control dpY" data-inputmask="'mask': '[9999]'" placeholder="Periode" value="<?=date('Y')?>" style="width:100px;">
+                                    <span class="input-group-addon btn btn-info">                             
+                                        <span id="btn-submit" class="btn btn-info btn" style="width:120px;">Submit</span>
+                                    </span>
+                                </div>                                
                             </div>
                         </div>                            
                     </div>

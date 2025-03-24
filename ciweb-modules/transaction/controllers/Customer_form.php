@@ -136,7 +136,7 @@ class Customer_form extends Bks_Controller {
         $postData = $this->input->post();
         if (isset ($_FILES ['upload_foto'] ['name']) && !empty($_FILES ['upload_foto'] ['name'])) {
             $config['upload_path'] = FCPATH . 'assets/img/customer_form/';
-            $config['allowed_types'] = 'jpeg|jpg';
+            $config['allowed_types'] = 'gif|jpg|png|jpeg';
             $config['file_name'] = $postData['CIF'] . '.jpg';
             $config['overwrite'] = TRUE;
             $config['max_size'] = 15360; // 15MB
@@ -146,12 +146,12 @@ class Customer_form extends Bks_Controller {
             if (!$this->upload->do_upload('upload_foto')) {
                 $error = array('error' => $this->upload->display_errors());
                 echo $error["error"];
-            } else {
+            } else {                
                 $res_config['image_library'] = 'gd2';
                 $res_config['create_thumb'] = FALSE;
                 $res_config['maintain_ratio'] = FALSE;
-                $res_config['width'] = 850;
-                $res_config['height'] = 660;                
+                $res_config['width'] = 640;
+                $res_config['height'] = 480;                
                 $res_config['source_image'] = $filex;
                 $this->load->library('image_lib', $res_config);
                 $this->image_lib->initialize($res_config);

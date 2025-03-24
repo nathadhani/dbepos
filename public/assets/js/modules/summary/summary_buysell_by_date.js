@@ -137,7 +137,7 @@ $("#btn-excel").on('click', function (e) {
                     var $a = $("<a>");
                         $a.attr("href",data.file);
                         $("body").append($a);
-                        $a.attr("download","Summary Buy Sell by date " + $("#period").val() + ".xlsx");
+                        $a.attr("download","Summary Buy Sell Period " + $("#period").val() + ".xlsx");
                         $a[0].click();
                         $a.remove();
                 });                                    

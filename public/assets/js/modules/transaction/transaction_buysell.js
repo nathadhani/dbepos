@@ -601,7 +601,7 @@ $('#btn-modal-customer-act-on-save').on('click', function (e) {
     });
 });
 
-function back_to_page_ini(){
+function back_to_page_ini(){    
     $("#btn-confirm").hide();
     $("#btn-cancel").hide();    
     $('#tr_date').prop('disabled', true);
@@ -632,7 +632,7 @@ function back_to_page_ini(){
                         }
                     }); 
                 }            
-            } else {          
+            } else { 
                 if( typeof(id_header) != 'undefined' && id_header !== null && id_header !== '' ) {
                     if( typeof(customerId) !== 'undefined' && customerId !== null && customerId !== '') {
                         $("#btn-cancel").show();

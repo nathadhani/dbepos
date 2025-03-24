@@ -131,7 +131,7 @@ class Customer extends Bks_Controller {
             $row++;
         }
 
-        foreach (range('A', 'AC') as $columnID) {
+        foreach (range('A', 'AA') as $columnID) {
             $this->excel->getActiveSheet()->getColumnDimension($columnID)->setAutoSize(true);
         }
         $this->excel->setActiveSheetIndex(0);

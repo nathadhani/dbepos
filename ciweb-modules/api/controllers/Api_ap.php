@@ -95,9 +95,10 @@ class Api_ap extends Bks_Controller {
 
     public function ap_input_trx($url, $token, $method, $id){
         if($id !== null){
-            $status_trx = 3;
+            $status_trx = [3,4];
             $get_tr_header = $this->db->select('*')
-                                           ->where(array('id'=>$id, 'status' => $status_trx))
+                                           ->where(array('id'=>$id))
+                                           ->where_in('status', $status_trx)
                                            ->get('v_tr_header')
                                            ->result_array();
             if(count($get_tr_header) > 0){
@@ -215,10 +216,10 @@ class Api_ap extends Bks_Controller {
                                 if(($resp_status == '1' || $resp_status == true) || $resp_success_insert > 0){
                                     $this->db->trans_begin();
                                     $this->db->where(array('id' => $id));
-                                    $this->db->update('tr_header', array('status' => 3, 'updated' => date('Y-m-d H:i:s', time()), 'updatedby' => $this->userId) );
+                                    $this->db->update('tr_header', array('status' => 9, 'updated' => date('Y-m-d H:i:s', time()), 'updatedby' => $this->userId) );
                 
                                     $this->db->where(array('header_id' => $id));
-                                    $this->db->update('tr_detail', array('status' => 3, 'updated' => date('Y-m-d H:i:s', time()), 'updatedby' => $this->userId) );        
+                                    $this->db->update('tr_detail', array('status' => 9, 'updated' => date('Y-m-d H:i:s', time()), 'updatedby' => $this->userId) );        
                 
                                     if ($this->db->trans_status() === FALSE) {
                                         $this->db->trans_rollback();
@@ -253,7 +254,7 @@ class Api_ap extends Bks_Controller {
         if($id !== null){
             $get_tr_header = $this->db->select('*')
                                  ->where(array('id'=>$id))
-                                 ->where_in('status', ['3'])
+                                 ->where_in('status', [3,4])
                                  ->get('v_tr_header')->result_array();
             if(count($get_tr_header) > 0){
                 $store_id = $get_tr_header[0]['store_id'];
@@ -271,7 +272,7 @@ class Api_ap extends Bks_Controller {
                                                    price,
                                                    subtotal')
                                             ->where(array('header_id' => $id))
-                                            ->where_in('status', ['1','3'])
+                                            ->where_in('status', [1,3])
                                             ->get('v_tr_detail');
 
                     if(count($get_tr_detail) > 0){

@@ -34,8 +34,8 @@ class Api_ap_input extends Bks_Controller {
         $where[1]['sql']   = 'where';
 
         $where[2]['field'] = 'status';
-        $where[2]['data']  = 3;
-        $where[2]['sql']   = 'where';
+        $where[2]['data']  = ['3','4'];
+        $where[2]['sql']   = 'where_in';
 
         $cpData = $this->Bksmdl->getDataTable($where);
         $this->Bksmdl->outputToJson($cpData);

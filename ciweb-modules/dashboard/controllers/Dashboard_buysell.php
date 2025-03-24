@@ -31,13 +31,16 @@ class Dashboard_buysell extends Bks_Controller {
         // $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
         $store_id = $postData['store_id'];
-        $tahun = intval($postData['periode']);    
-        $query = $this->db->query("SELECT tr_month, SUM(buy_equivalent) AS buy_equivalent, SUM(sell_equivalent) AS sell_equivalent                                   
-                                   FROM v_summary_by_month
-                                   WHERE store_id = $store_id
-                                    AND tr_year = $tahun
-                                    GROUP BY tr_year,tr_month
-                                    ORDER BY tr_month ASC")->result();        
+        $tahun = intval($postData['period']);    
+        $query = $this->db->query("SELECT MONTH(tr_header.tr_date) AS tr_month,
+                                        SUM(IF((tr_detail.status IN ( 1, 3, 4 ) AND ( tr_header.tr_id = 1 )),((tr_detail.nominal * tr_detail.sheet) * tr_detail.price ),0)) AS buy_equivalent,
+                                        SUM(IF((tr_detail.status IN ( 1, 3, 4 ) AND ( tr_header.tr_id = 2 )),((tr_detail.nominal * tr_detail.sheet) * tr_detail.price),0)) AS sell_equivalent
+                                    FROM tr_detail
+                                    LEFT JOIN tr_header ON tr_detail.header_id = tr_header.id
+                                    WHERE tr_header.store_id = $store_id
+                                    AND YEAR(tr_header.tr_date) = $tahun
+                                    GROUP BY MONTH(tr_header.tr_date)
+                                    ORDER BY MONTH(tr_header.tr_date) ASC")->result();        
         echo json_encode($query, true);
     }
 
@@ -46,15 +49,16 @@ class Dashboard_buysell extends Bks_Controller {
         // $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
         $store_id = $postData['store_id'];
-        $tahun = intval($postData['periode']);
-        $query = $this->db->query("SELECT tr_month,
-                                        SUM( buy_equivalent ) AS buy_equivalent,
-                                        SUM( sell_equivalent ) AS sell_equivalent
-                                    FROM v_summary_by_month
-                                    WHERE store_id = $store_id
-                                    AND tr_year = $tahun
-                                    GROUP BY tr_month
-                                    ORDER BY tr_month ASC")->result();   
+        $tahun = intval($postData['period']);
+        $query = $this->db->query("SELECT MONTH(tr_header.tr_date) AS tr_month,
+                                        SUM(IF((tr_detail.status IN ( 1, 3, 4 ) AND ( tr_header.tr_id = 1 )),((tr_detail.nominal * tr_detail.sheet) * tr_detail.price ),0)) AS buy_equivalent,
+                                        SUM(IF((tr_detail.status IN ( 1, 3, 4 ) AND ( tr_header.tr_id = 2 )),((tr_detail.nominal * tr_detail.sheet) * tr_detail.price),0)) AS sell_equivalent
+                                    FROM tr_detail
+                                    LEFT JOIN tr_header ON tr_detail.header_id = tr_header.id
+                                    WHERE tr_header.store_id = $store_id
+                                    AND YEAR(tr_header.tr_date) = $tahun
+                                    GROUP BY MONTH(tr_header.tr_date)
+                                    ORDER BY MONTH(tr_header.tr_date) ASC")->result();   
         echo json_encode($query, true);
     }
 
@@ -63,7 +67,7 @@ class Dashboard_buysell extends Bks_Controller {
         // $this->libauth->check(__METHOD__);
         $postData = $this->input->post();        
         $store_id = $postData['store_id'];
-        $tahun = intval($postData['periode']);
+        $tahun = intval($postData['period']);
         $query = $this->db->query("SELECT 
                                     tr_detail.currency_id,
                                     m_currency.currency_code,
@@ -85,7 +89,7 @@ class Dashboard_buysell extends Bks_Controller {
         // $this->libauth->check(__METHOD__);
         $postData = $this->input->post();        
         $store_id = $postData['store_id'];
-        $tahun = intval($postData['periode']);
+        $tahun = intval($postData['period']);
 
         $query = $this->db->query("SELECT 
                                     tr_detail.currency_id,

@@ -103,7 +103,7 @@ class Summary_buysell_by_month extends Bks_Controller {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
-        $this->store_id = implode(',', $postData['store_id']);
+        $this->store_id = ( is_array($postData['store_id']) ? implode(',', $postData['store_id']) : $postData['store_id']);
         if(isset($postData['period'])){ 
             $this->tr_year = intval(SUBSTR($postData['period'],3,4));
             $this->tr_month = intval(SUBSTR($postData['period'],0,2));
@@ -119,16 +119,19 @@ class Summary_buysell_by_month extends Bks_Controller {
     
     function exportpdf()
     {   
+        checkIfNotAjax();
         $this->libauth->check(__METHOD__);
-        $this->store_id = implode(',', $this->uri->segment(4));
-        $this->tr_year = intval(SUBSTR($this->uri->segment(5),3,4));
-        $this->tr_month = intval(SUBSTR($this->uri->segment(5),0,2));
+        $postData = $this->input->post();
+        $this->store_id = ( is_array($postData['store_id']) ? implode(',', $postData['store_id']) : $postData['store_id']);
+        $this->tr_year = intval(SUBSTR($postData['period'],3,4));
+        $this->tr_month = intval(SUBSTR($postData['period'],0,2));
         $this->tr_year_old = $this->tr_year;
         $this->tr_month_old = $this->tr_month -1 ;
         if ( $this->tr_month == 1) {
             $this->tr_year_old = $this->tr_year-1;
             $this->tr_month_old = 12;
         }
+        
         $profil_usaha = $this->Bksmdl->getprofilusaha($this->store_id);
 
         // Call Pdf libraries
@@ -161,8 +164,12 @@ class Summary_buysell_by_month extends Bks_Controller {
 
         // Add Title        
         $html_header = strtoupper(trim($profil_usaha[0]->store_name));
-        $html_header .= '<br>' . trim($profil_usaha[0]->store_address) . '</br>';
-        $html_header .= '<br>' . 'Summary Buy and Sell Period ' . namabulan(sprintf("%02d", $this->tr_month)) . ' ' . sprintf("%04d", $this->tr_year) . '</br><br></br><br></br>';        
+        if(!is_array($postData['store_id'])){
+            $html_header .= '<br>' . trim($profil_usaha[0]->store_address) . '</br>';
+            $html_header .= '<br>' . 'Rekap Transaksi Beli dan Jual Periode : ' . namabulan(sprintf("%02d", $this->tr_month)) . ' ' . sprintf("%04d", $this->tr_year) . '</br><br></br><br></br>';
+        } else {
+            $html_header .= '<br>' . 'Konsolidasi Rekap Transaksi Beli dan Jual Periode : ' . namabulan(sprintf("%02d", $this->tr_month)) . ' ' . sprintf("%04d", $this->tr_year) . '</br><br></br><br></br>';
+        }       
         
         // Add Content Body
         $data_content = $this->dbquery()->result();
@@ -231,8 +238,11 @@ class Summary_buysell_by_month extends Bks_Controller {
 
             $pdf->Ln(4);
             $pdf->Cell(01, 01, 'Createdby,                       Spv,', 0, 1, 'L');
-        }        
-        $pdf->Output('Summary Buy and Sell Period ' . namabulan(sprintf("%02d", $this->tr_month)) . ' ' . sprintf("%04d", $this->tr_year) .'.pdf','I');
+        }                
+        ob_start();
+        $pdf_output = $pdf->Output('Summary Buy and Sell Period ' . namabulan(sprintf("%02d", $this->tr_month)) . ' ' . sprintf("%04d", $this->tr_year) .'.pdf','S');
+        ob_end_clean();
+        echo json_encode(['pdf' => base64_encode($pdf_output)]); // Display Pdf in new tab
     }
 
     function excelcellColor($cells,$color){    
@@ -245,10 +255,12 @@ class Summary_buysell_by_month extends Bks_Controller {
     }
 
     function excel(){
+        checkIfNotAjax();
         $this->libauth->check(__METHOD__);
-        $this->store_id = implode(',', $this->uri->segment(4));
-        $this->tr_year = intval(SUBSTR($this->uri->segment(5),3,4));
-        $this->tr_month = intval(SUBSTR($this->uri->segment(5),0,2));
+        $postData = $this->input->post();
+        $this->store_id = ( is_array($postData['store_id']) ? implode(',', $postData['store_id']) : $postData['store_id']);
+        $this->tr_year = intval(SUBSTR($postData['period'],3,4));
+        $this->tr_month = intval(SUBSTR($postData['period'],0,2));
         $this->tr_year_old = $this->tr_year;
         $this->tr_month_old = $this->tr_month -1 ;
         if ( $this->tr_month == 1) {
@@ -277,13 +289,22 @@ class Summary_buysell_by_month extends Bks_Controller {
         
         // title column
         $this->excel->setActiveSheetIndex(0)->setCellValue('A1', strtoupper(trim($profil_usaha[0]->store_name))); 
-        $this->excel->setActiveSheetIndex(0)->setCellValue('A2', strtoupper(trim($profil_usaha[0]->store_address))); 
-        $this->excel->setActiveSheetIndex(0)->setCellValue('A3', 'Summary Buy and Sell Period ' . namabulan(sprintf("%02d", $this->tr_month)) . ' ' . sprintf("%04d", $this->tr_year)  ); 
-        $this->excel->setActiveSheetIndex(0)->getStyle('A1:A3')->getFont()->setBold(TRUE);
-        $this->excel->setActiveSheetIndex(0)->getStyle('A1:A3')->getFont()->setSize(11);
-        $this->excel->setActiveSheetIndex(0)->mergeCells('A1:K1');
-        $this->excel->setActiveSheetIndex(0)->mergeCells('A2:K2');
-        $this->excel->setActiveSheetIndex(0)->mergeCells('A3:K3');
+        if(!is_array($postData['store_id'])){
+            $this->excel->setActiveSheetIndex(0)->setCellValue('A2', strtoupper(trim($profil_usaha[0]->store_address))); 
+            $this->excel->setActiveSheetIndex(0)->setCellValue('A3', 'Rekap Transaksi Beli dan Jual Periode ' . namabulan(sprintf("%02d", $this->tr_month)) . ' ' . sprintf("%04d", $this->tr_year)); 
+            $this->excel->setActiveSheetIndex(0)->getStyle('A1:A3')->getFont()->setBold(TRUE);
+            $this->excel->setActiveSheetIndex(0)->getStyle('A1:A3')->getFont()->setSize(11);
+            $this->excel->setActiveSheetIndex(0)->mergeCells('A1:K1');
+            $this->excel->setActiveSheetIndex(0)->mergeCells('A2:K2');
+            $this->excel->setActiveSheetIndex(0)->mergeCells('A3:K3');    
+
+        } else {
+            $this->excel->setActiveSheetIndex(0)->setCellValue('A2', 'Konsolidasi Rekap Transaksi Beli dan Jual Periode ' . namabulan(sprintf("%02d", $this->tr_month)) . ' ' . sprintf("%04d", $this->tr_year)); 
+            $this->excel->setActiveSheetIndex(0)->getStyle('A1:A2')->getFont()->setBold(TRUE);
+            $this->excel->setActiveSheetIndex(0)->getStyle('A1:A2')->getFont()->setSize(11);
+            $this->excel->setActiveSheetIndex(0)->mergeCells('A1:K1');
+            $this->excel->setActiveSheetIndex(0)->mergeCells('A2:K2');    
+        }
 
         $this->excel->setActiveSheetIndex(0)->setCellValue('A6', "#"); 
         $this->excel->setActiveSheetIndex(0)->setCellValue('B6', "Curr"); 
@@ -367,18 +388,17 @@ class Summary_buysell_by_month extends Bks_Controller {
         $this->excel->setActiveSheetIndex(0);        
 
         // Sending headers to force the user to download the file
-        $filename = 'Summary Buy and Sell Period ' . namabulan(sprintf("%02d", $this->tr_month)) . ' ' . sprintf("%04d", $this->tr_year)  ;
-        header("Pragma: public");
-        header("Expires: 0");
-        header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-        header("Content-Type: application/force-download");
-        header("Content-Type: application/octet-stream");
-        header("Content-Type: application/download");;
-        header("Content-Disposition: attachment;filename=$filename.xlsx");
-        header("Content-Transfer-Encoding: binary ");
+        ob_start();
         $objWriter = new PHPExcel_Writer_Excel2007($this->excel); 
-        $objWriter->setOffice2003Compatibility(true);
+        // $objWriter->setOffice2003Compatibility(true);
         $objWriter->save('php://output');
+        $xlsData = ob_get_contents();
+        ob_end_clean();
+        $response =  array(
+            'op' => 'ok',
+            'file' => "data:application/vnd.ms-excel;base64,".base64_encode($xlsData)
+        );
+        die(json_encode($response));
     }
         
 }

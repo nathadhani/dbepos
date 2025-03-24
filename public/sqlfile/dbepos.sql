@@ -1,7 +1,7 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : mySQL
+ Source Server         : MYSQL
  Source Server Type    : MySQL
  Source Server Version : 80030
  Source Host           : localhost:3306
@@ -11,7 +11,7 @@
  Target Server Version : 80030
  File Encoding         : 65001
 
- Date: 24/03/2025 06:11:23
+ Date: 24/03/2025 17:01:04
 */
 
 SET NAMES utf8mb4;
@@ -895,12 +895,12 @@ CREATE TABLE `auth_users`  (
 -- Records of auth_users
 -- ----------------------------
 INSERT INTO `auth_users` VALUES (1, '8989', 'f794bdbef7990b5112e526b5cd4ea67f4a35af21', NULL, 1, 1, 0, NULL, '', NULL, NULL, NULL, NULL, 1, '2025-02-23 13:58:46', NULL, NULL, NULL);
-INSERT INTO `auth_users` VALUES (2, 'konsolidasi', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 2, 1, 0, '1,2,3,4', 'Konsolidasi', '', '', '2025-03-24 05:35:44', NULL, 1, '2025-02-23 13:58:46', NULL, '2025-03-07 12:10:06', 1);
-INSERT INTO `auth_users` VALUES (3, 'admin', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 3, 1, 1, NULL, 'Admin', '', '', '2025-03-24 05:33:18', NULL, 1, '2025-02-23 13:58:46', NULL, '2025-03-07 12:10:19', 1);
-INSERT INTO `auth_users` VALUES (4, 'konter', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 4, 2, 1, NULL, 'Counter', '', '', '2025-03-21 16:08:42', NULL, 1, '2025-02-23 13:58:46', NULL, '2025-03-07 12:10:34', 1);
-INSERT INTO `auth_users` VALUES (5, 'kasir', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 5, 1, 1, NULL, 'Cashier', '', '', '2025-03-22 08:26:58', NULL, 1, '2025-03-06 13:05:41', 1, '2025-03-07 12:10:24', 1);
-INSERT INTO `auth_users` VALUES (6, 'ap1', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 6, 1, 0, '3,4', 'Angkasa Pura 1', '', '', '2025-03-21 19:47:57', NULL, 1, '2025-03-06 13:06:45', 1, '2025-03-07 12:10:12', 1);
-INSERT INTO `auth_users` VALUES (7, 'ap2', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 6, 1, 0, '1,2', 'Angkasa Pura 2', '', '', '2025-03-22 04:00:48', NULL, 1, '2025-03-06 13:06:45', 1, '2025-03-07 12:10:12', 1);
+INSERT INTO `auth_users` VALUES (2, 'konsolidasi', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 2, 1, 0, '1,2,3,4', 'Konsolidasi', '', '', '2025-03-24 16:26:02', NULL, 1, '2025-02-23 13:58:46', NULL, '2025-03-07 12:10:06', 1);
+INSERT INTO `auth_users` VALUES (3, 'admin', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 3, 1, 1, NULL, 'Admin', '', '', '2025-03-24 16:42:53', NULL, 1, '2025-02-23 13:58:46', NULL, '2025-03-07 12:10:19', 1);
+INSERT INTO `auth_users` VALUES (4, 'konter', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 4, 2, 1, NULL, 'Counter', '', '', '2025-03-24 16:01:09', NULL, 1, '2025-02-23 13:58:46', NULL, '2025-03-07 12:10:34', 1);
+INSERT INTO `auth_users` VALUES (5, 'kasir', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 5, 1, 1, NULL, 'Cashier', '', '', '2025-03-24 16:26:26', NULL, 1, '2025-03-06 13:05:41', 1, '2025-03-07 12:10:24', 1);
+INSERT INTO `auth_users` VALUES (6, 'ap1', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 6, 1, 0, '3,4', 'Angkasa Pura 1', '', '', '2025-03-24 09:42:31', NULL, 1, '2025-03-06 13:06:45', 1, '2025-03-07 12:10:12', 1);
+INSERT INTO `auth_users` VALUES (7, 'ap2', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 6, 1, 0, '1,2', 'Angkasa Pura 2', '', '', '2025-03-24 09:43:11', NULL, 1, '2025-03-06 13:06:45', 1, '2025-03-07 12:10:12', 1);
 
 -- ----------------------------
 -- Table structure for log_auth
@@ -1066,7 +1066,7 @@ CREATE TABLE `m_customer`  (
 -- ----------------------------
 -- Records of m_customer
 -- ----------------------------
-INSERT INTO `m_customer` VALUES (1, 1, '250314010001', '081395627817', '', 'Gede', 'Tejo', 'Jakarta', '011/013', 'Pela Mampang', 'Mampang Prapapatan', 'Jakarta Selatan', 'Lampung', '2025-03-14', 1, 8, 102, 1, '1234578900', '', NULL, 'Baik hati dan tidak sombong', 1, '2025-03-14 11:19:13', '2025-03-20 16:14:49', 3, 3);
+INSERT INTO `m_customer` VALUES (1, 1, '250314010001', '081395627817', '', 'Gede', '', 'Jakarta', '011/013', 'Pela Mampang', 'Mampang Prapapatan', 'Jakarta Selatan', 'Lampung', '2025-03-14', 1, 8, 102, 1, '1234578900', '', NULL, 'Baik hati dan tidak sombong', 1, '2025-03-14 11:19:13', '2025-03-24 16:11:12', 3, 3);
 
 -- ----------------------------
 -- Table structure for m_customer_act_on
@@ -2231,6 +2231,9 @@ INSERT INTO `tr_detail` VALUES (2, 1, 7, 50, 12, 13000.00, 3, '2025-03-23 09:00:
 INSERT INTO `tr_detail` VALUES (3, 1, 21, 500, 6, 0.50, 3, '2025-03-23 09:21:53', '2025-03-23 09:23:47', 3, 3);
 INSERT INTO `tr_detail` VALUES (4, 2, 10, 100, 300, 4100.00, 3, '2025-03-23 09:26:38', '2025-03-23 09:26:50', 3, 3);
 INSERT INTO `tr_detail` VALUES (5, 3, 11, 1, 4000, 3500.00, 3, '2025-03-23 09:31:39', '2025-03-23 10:12:38', 3, 3);
+INSERT INTO `tr_detail` VALUES (6, 4, 1, 100, 50, 16100.00, 3, '2025-03-24 14:48:06', '2025-03-24 16:02:46', 4, 4);
+INSERT INTO `tr_detail` VALUES (7, 5, 1, 500, 10, 13000.00, 3, '2025-03-24 14:48:35', '2025-03-24 14:48:46', 4, 4);
+INSERT INTO `tr_detail` VALUES (8, 6, 1, 100, 50, 13500.00, 3, '2025-03-24 16:25:08', '2025-03-24 16:25:36', 3, 3);
 
 -- ----------------------------
 -- Table structure for tr_header
@@ -2259,9 +2262,12 @@ CREATE TABLE `tr_header`  (
 -- ----------------------------
 -- Records of tr_header
 -- ----------------------------
-INSERT INTO `tr_header` VALUES (1, 1, 1, '2025-03-23', '25032301010001', 1, 2, 'Tabungan', 'Investasi', NULL, 3, '2025-03-23 08:59:36', '2025-03-23 09:24:02', 3, 3, 5);
-INSERT INTO `tr_header` VALUES (2, 1, 1, '2025-03-23', '25032301010002', 1, NULL, NULL, NULL, NULL, 3, '2025-03-23 09:26:38', '2025-03-23 09:26:50', 3, 3, NULL);
-INSERT INTO `tr_header` VALUES (3, 1, 1, '2025-03-23', '25032301010003', 1, NULL, NULL, NULL, NULL, 3, '2025-03-23 09:31:39', '2025-03-23 10:13:15', 3, 3, 5);
+INSERT INTO `tr_header` VALUES (1, 1, 1, '2025-03-23', '25032301010001', 1, 2, 'Tabungan', 'Investasi', NULL, 4, '2025-03-23 08:59:36', '2025-03-24 16:43:04', 3, 3, 5);
+INSERT INTO `tr_header` VALUES (2, 1, 1, '2025-03-23', '25032301010002', 1, NULL, NULL, NULL, NULL, 4, '2025-03-23 09:26:38', '2025-03-24 16:43:26', 3, 3, 5);
+INSERT INTO `tr_header` VALUES (3, 1, 1, '2025-03-23', '25032301010003', 1, NULL, NULL, NULL, NULL, 4, '2025-03-23 09:31:39', '2025-03-24 16:43:59', 3, 3, 5);
+INSERT INTO `tr_header` VALUES (4, 1, 1, '2025-03-24', '25032401010002', 1, NULL, NULL, NULL, NULL, 4, '2025-03-24 14:48:06', '2025-03-24 16:06:00', 4, 4, 5);
+INSERT INTO `tr_header` VALUES (5, 1, 1, '2025-03-24', '25032401010001', 1, NULL, NULL, NULL, NULL, 3, '2025-03-24 14:48:35', '2025-03-24 14:48:56', 4, 4, 5);
+INSERT INTO `tr_header` VALUES (6, 1, 2, '2025-03-24', '25032401020001', 1, NULL, NULL, NULL, NULL, 4, '2025-03-24 16:25:08', '2025-03-24 16:25:45', 3, 3, 5);
 
 -- ----------------------------
 -- Table structure for tr_log_api
@@ -2307,8 +2313,9 @@ CREATE TABLE `tr_payment`  (
 -- ----------------------------
 -- Records of tr_payment
 -- ----------------------------
-INSERT INTO `tr_payment` VALUES (1, 1, 1, 'Payment Cash [1]', 23801500.00, 1, '2025-03-23 09:24:02', NULL, 3, NULL);
-INSERT INTO `tr_payment` VALUES (2, 3, 1, 'Payment Cash [1]', 14000000.00, 1, '2025-03-23 10:13:14', NULL, 3, NULL);
+INSERT INTO `tr_payment` VALUES (1, 1, 1, 'Payment Cash', 23801500.00, 1, '2025-03-24 16:43:04', NULL, 3, NULL);
+INSERT INTO `tr_payment` VALUES (2, 2, 1, 'Payment Cash', 123000000.00, 1, '2025-03-24 16:43:26', NULL, 3, NULL);
+INSERT INTO `tr_payment` VALUES (3, 3, 1, 'Payment Cash', 14000000.00, 1, '2025-03-24 16:43:59', NULL, 3, NULL);
 
 -- ----------------------------
 -- Table structure for tr_stock
@@ -2328,21 +2335,23 @@ CREATE TABLE `tr_stock`  (
   `updated` datetime NULL DEFAULT NULL,
   `updatedby` bigint NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 31 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of tr_stock
 -- ----------------------------
-INSERT INTO `tr_stock` VALUES (21, 1, 1, 2025, 3, 100, 0, 1, '2025-03-23 21:30:09', 3, NULL, NULL);
-INSERT INTO `tr_stock` VALUES (22, 1, 1, 2025, 4, 100, 10, 1, '2025-03-23 21:30:09', 3, '2025-03-23 21:30:09', 3);
-INSERT INTO `tr_stock` VALUES (23, 7, 1, 2025, 3, 50, 0, 1, '2025-03-23 21:30:09', 3, NULL, NULL);
-INSERT INTO `tr_stock` VALUES (24, 7, 1, 2025, 4, 50, 12, 1, '2025-03-23 21:30:09', 3, '2025-03-23 21:30:09', 3);
-INSERT INTO `tr_stock` VALUES (25, 10, 1, 2025, 3, 100, 0, 1, '2025-03-23 21:30:09', 3, NULL, NULL);
-INSERT INTO `tr_stock` VALUES (26, 10, 1, 2025, 4, 100, 300, 1, '2025-03-23 21:30:09', 3, '2025-03-23 21:30:09', 3);
-INSERT INTO `tr_stock` VALUES (27, 11, 1, 2025, 3, 1, 0, 1, '2025-03-23 21:30:09', 3, NULL, NULL);
-INSERT INTO `tr_stock` VALUES (28, 11, 1, 2025, 4, 1, 4000, 1, '2025-03-23 21:30:09', 3, '2025-03-23 21:30:09', 3);
-INSERT INTO `tr_stock` VALUES (29, 21, 1, 2025, 3, 500, 0, 1, '2025-03-23 21:30:09', 3, NULL, NULL);
-INSERT INTO `tr_stock` VALUES (30, 21, 1, 2025, 4, 500, 6, 1, '2025-03-23 21:30:09', 3, '2025-03-23 21:30:09', 3);
+INSERT INTO `tr_stock` VALUES (51, 1, 1, 2025, 3, 100, 0, 1, '2025-03-24 10:01:58', 4, NULL, NULL);
+INSERT INTO `tr_stock` VALUES (52, 1, 1, 2025, 4, 100, 10, 1, '2025-03-24 10:01:58', 4, '2025-03-24 16:25:36', 3);
+INSERT INTO `tr_stock` VALUES (53, 7, 1, 2025, 3, 50, 0, 1, '2025-03-24 10:01:58', 4, NULL, NULL);
+INSERT INTO `tr_stock` VALUES (54, 7, 1, 2025, 4, 50, 12, 1, '2025-03-24 10:01:58', 4, '2025-03-24 10:01:58', 4);
+INSERT INTO `tr_stock` VALUES (55, 10, 1, 2025, 3, 100, 0, 1, '2025-03-24 10:01:58', 4, NULL, NULL);
+INSERT INTO `tr_stock` VALUES (56, 10, 1, 2025, 4, 100, 300, 1, '2025-03-24 10:01:58', 4, '2025-03-24 10:01:58', 4);
+INSERT INTO `tr_stock` VALUES (57, 11, 1, 2025, 3, 1, 0, 1, '2025-03-24 10:01:58', 4, NULL, NULL);
+INSERT INTO `tr_stock` VALUES (58, 11, 1, 2025, 4, 1, 4000, 1, '2025-03-24 10:01:58', 4, '2025-03-24 10:01:58', 4);
+INSERT INTO `tr_stock` VALUES (59, 21, 1, 2025, 3, 500, 0, 1, '2025-03-24 10:01:58', 4, NULL, NULL);
+INSERT INTO `tr_stock` VALUES (60, 21, 1, 2025, 4, 500, 6, 1, '2025-03-24 10:01:58', 4, '2025-03-24 10:01:58', 4);
+INSERT INTO `tr_stock` VALUES (61, 1, 1, 2025, 3, 500, 0, 1, '2025-03-24 14:48:46', 4, NULL, NULL);
+INSERT INTO `tr_stock` VALUES (62, 1, 1, 2025, 4, 500, 10, 1, '2025-03-24 14:48:46', 4, '2025-03-24 14:48:46', 4);
 
 -- ----------------------------
 -- Table structure for tr_stock_price
@@ -2375,11 +2384,11 @@ CREATE TABLE `tr_stock_price`  (
 -- ----------------------------
 -- Records of tr_stock_price
 -- ----------------------------
-INSERT INTO `tr_stock_price` VALUES (1, 1, '2025-03-23', 2025, 3, 1, 1, 1000, 16000, 16000000, NULL, 0, 0.00, 0.00, 0.00, 1000.00, 16000.00, 16000000.00, 0.00, '2025-03-23 21:30:09', 3);
-INSERT INTO `tr_stock_price` VALUES (1, 1, '2025-03-23', 2025, 3, 7, 1, 600, 13000, 7800000, NULL, 0, 0.00, 0.00, 0.00, 600.00, 13000.00, 7800000.00, 0.00, '2025-03-23 21:30:10', 3);
-INSERT INTO `tr_stock_price` VALUES (1, 1, '2025-03-23', 2025, 3, 10, 2, 30000, 4100, 123000000, NULL, 0, 0.00, 0.00, 0.00, 30000.00, 4100.00, 123000000.00, 0.00, '2025-03-23 21:30:10', 3);
-INSERT INTO `tr_stock_price` VALUES (1, 1, '2025-03-23', 2025, 3, 11, 3, 4000, 3500, 14000000, NULL, 0, 0.00, 0.00, 0.00, 4000.00, 3500.00, 14000000.00, 0.00, '2025-03-23 21:30:10', 3);
-INSERT INTO `tr_stock_price` VALUES (1, 1, '2025-03-23', 2025, 3, 21, 1, 3000, 1, 1500, NULL, 0, 0.00, 0.00, 0.00, 3000.00, 0.50, 1500.00, 0.00, '2025-03-23 21:30:10', 3);
+INSERT INTO `tr_stock_price` VALUES (1, 1, '2025-03-23', 2025, 3, 1, 1, 1000, 16000, 16000000, NULL, 0, 0.00, 0.00, 0.00, 1000.00, 16000.00, 16000000.00, 0.00, '2025-03-24 10:01:58', 4);
+INSERT INTO `tr_stock_price` VALUES (1, 1, '2025-03-23', 2025, 3, 7, 1, 600, 13000, 7800000, NULL, 0, 0.00, 0.00, 0.00, 600.00, 13000.00, 7800000.00, 0.00, '2025-03-24 10:01:59', 4);
+INSERT INTO `tr_stock_price` VALUES (1, 1, '2025-03-23', 2025, 3, 10, 2, 30000, 4100, 123000000, NULL, 0, 0.00, 0.00, 0.00, 30000.00, 4100.00, 123000000.00, 0.00, '2025-03-24 10:01:59', 4);
+INSERT INTO `tr_stock_price` VALUES (1, 1, '2025-03-23', 2025, 3, 11, 3, 4000, 3500, 14000000, NULL, 0, 0.00, 0.00, 0.00, 4000.00, 3500.00, 14000000.00, 0.00, '2025-03-24 10:01:59', 4);
+INSERT INTO `tr_stock_price` VALUES (1, 1, '2025-03-23', 2025, 3, 21, 1, 3000, 1, 1500, NULL, 0, 0.00, 0.00, 0.00, 3000.00, 0.50, 1500.00, 0.00, '2025-03-24 10:01:59', 4);
 
 -- ----------------------------
 -- View structure for v_auth_group_role
@@ -2463,7 +2472,7 @@ CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_tr_detail` AS select `
 -- View structure for v_tr_header
 -- ----------------------------
 DROP VIEW IF EXISTS `v_tr_header`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_tr_header` AS select `tr_header`.`id` AS `id`,`tr_header`.`store_id` AS `store_id`,`tr_header`.`tr_id` AS `tr_id`,`tr_header`.`tr_date` AS `tr_date`,`tr_header`.`tr_number` AS `tr_number`,`tr_header`.`customer_id` AS `customer_id`,`tr_header`.`customer_act_on_id` AS `customer_act_on_id`,`tr_header`.`customer_source` AS `customer_source`,`tr_header`.`customer_purpose` AS `customer_purpose`,`tr_header`.`description` AS `description`,`tr_header`.`status` AS `status`,`tr_header`.`created` AS `created`,`tr_header`.`updated` AS `updated`,`tr_header`.`createdby` AS `createdby`,`tr_header`.`updatedby` AS `updatedby`,`tr_header`.`cashierby` AS `cashierby`,`m_store`.`store_address` AS `store_address`,`m_store`.`api_method` AS `api_method`,`m_customer`.`customer_code` AS `customer_code`,`m_customer`.`customer_name` AS `customer_name`,`m_customer`.`customer_address` AS `customer_address`,`m_customer`.`customer_type_id` AS `customer_type_id`,`m_customer`.`job_id` AS `customer_job_id`,`m_customer`.`nationality_id` AS `customer_nationality_id`,`m_customer`.`customer_data_id` AS `customer_data_id`,`m_customer_act_on`.`customer_act_on` AS `customer_act_on`,`m_transaction`.`transaction_name` AS `tr_name`,`usr1`.`fullname` AS `createdby_name`,`usr2`.`fullname` AS `updatedby_name`,`usr3`.`fullname` AS `cashierby_name`,(select (case when (`tr_header`.`status` = 2) then 'Canceled' when (`tr_header`.`status` = 3) then 'Confirm' when (`tr_header`.`status` = 9) then 'Integrasi System ECSys (API)' else 'Task' end)) AS `status_name`,(select sum(((`tr_detail`.`nominal` * `tr_detail`.`sheet`) * `tr_detail`.`price`)) from `tr_detail` where (`tr_detail`.`header_id` = `tr_header`.`id`)) AS `total` from (((((((`tr_header` join `m_store` on((`tr_header`.`store_id` = `m_store`.`id`))) left join `m_transaction` on((`tr_header`.`tr_id` = `m_transaction`.`id`))) left join `m_customer` on((`tr_header`.`customer_id` = `m_customer`.`id`))) left join `m_customer_act_on` on((`tr_header`.`customer_act_on_id` = `m_customer_act_on`.`id`))) left join `auth_users` `usr1` on((`tr_header`.`createdby` = `usr1`.`id`))) left join `auth_users` `usr2` on((`tr_header`.`updatedby` = `usr2`.`id`))) left join `auth_users` `usr3` on((`tr_header`.`cashierby` = `usr3`.`id`)));
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_tr_header` AS select `tr_header`.`id` AS `id`,`tr_header`.`store_id` AS `store_id`,`tr_header`.`tr_id` AS `tr_id`,`tr_header`.`tr_date` AS `tr_date`,`tr_header`.`tr_number` AS `tr_number`,`tr_header`.`customer_id` AS `customer_id`,`tr_header`.`customer_act_on_id` AS `customer_act_on_id`,`tr_header`.`customer_source` AS `customer_source`,`tr_header`.`customer_purpose` AS `customer_purpose`,`tr_header`.`description` AS `description`,`tr_header`.`status` AS `status`,`tr_header`.`created` AS `created`,`tr_header`.`updated` AS `updated`,`tr_header`.`createdby` AS `createdby`,`tr_header`.`updatedby` AS `updatedby`,`tr_header`.`cashierby` AS `cashierby`,`m_store`.`store_address` AS `store_address`,`m_store`.`api_method` AS `api_method`,`m_customer`.`customer_code` AS `customer_code`,`m_customer`.`customer_name` AS `customer_name`,`m_customer`.`customer_address` AS `customer_address`,`m_customer`.`customer_type_id` AS `customer_type_id`,`m_customer`.`job_id` AS `customer_job_id`,`m_customer`.`nationality_id` AS `customer_nationality_id`,`m_customer`.`customer_data_id` AS `customer_data_id`,`m_customer_act_on`.`customer_act_on` AS `customer_act_on`,`m_transaction`.`transaction_name` AS `tr_name`,`usr1`.`fullname` AS `createdby_name`,`usr2`.`fullname` AS `updatedby_name`,`usr3`.`fullname` AS `cashierby_name`,(select (case when (`tr_header`.`status` = 2) then 'Canceled' when (`tr_header`.`status` = 3) then 'Confirm' when (`tr_header`.`status` = 4) then 'paid off' when (`tr_header`.`status` = 9) then 'Integrasi System ECSys (API)' else 'Task' end)) AS `status_name`,(select sum(((`tr_detail`.`nominal` * `tr_detail`.`sheet`) * `tr_detail`.`price`)) from `tr_detail` where (`tr_detail`.`header_id` = `tr_header`.`id`)) AS `total` from (((((((`tr_header` join `m_store` on((`tr_header`.`store_id` = `m_store`.`id`))) left join `m_transaction` on((`tr_header`.`tr_id` = `m_transaction`.`id`))) left join `m_customer` on((`tr_header`.`customer_id` = `m_customer`.`id`))) left join `m_customer_act_on` on((`tr_header`.`customer_act_on_id` = `m_customer_act_on`.`id`))) left join `auth_users` `usr1` on((`tr_header`.`createdby` = `usr1`.`id`))) left join `auth_users` `usr2` on((`tr_header`.`updatedby` = `usr2`.`id`))) left join `auth_users` `usr3` on((`tr_header`.`cashierby` = `usr3`.`id`)));
 
 -- ----------------------------
 -- View structure for v_tr_payment
