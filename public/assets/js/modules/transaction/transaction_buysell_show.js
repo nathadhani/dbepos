@@ -300,7 +300,7 @@ $("#btn-payment").on('click', function (e) {
 });
 $("#modal_payment_type").on("change", function(e) {
     e.preventDefault();
-    $("#modal_payment_description").val( 'Payment ' + $("#modal_payment_type option:selected").text() )
+    $("#modal_payment_description").val( 'Payment ' + $("#modal_payment_type option:selected").text() );
     if( formatRupiahtoNumber($("#modal_remaining_payment_value").val()) > 0) {
         $("#modal_payment_amount").val( formatRupiahtoNumber($("#modal_remaining_payment_value").val()) );
         $("#terbilang_modal_payment_amount").html('<i>Payment Value</i> : ' + bksfn.terBilang( $("#modal_payment_amount").val( )));

@@ -193,6 +193,7 @@ $('#upload_foto').on('change',function(e){
             async: false,
             processData: false,
             success: function (data) {
+                console.log(data);
                 $("#form_foto")[0].reset();
                 alertify.success('File has been uploaded');
                 history.go(0); // untuk memuat ulang halaman tanpa cache.

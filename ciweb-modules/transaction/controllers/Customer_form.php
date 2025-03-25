@@ -135,7 +135,7 @@ class Customer_form extends Bks_Controller {
     function add_foto(){
         $postData = $this->input->post();
         if (isset ($_FILES ['upload_foto'] ['name']) && !empty($_FILES ['upload_foto'] ['name'])) {
-            $config['upload_path'] = FCPATH . 'assets/img/customer_form/';
+            $config['upload_path'] = FCPATH . 'filex/images_customer_form/';
             $config['allowed_types'] = 'gif|jpg|png|jpeg';
             $config['file_name'] = $postData['CIF'] . '.jpg';
             $config['overwrite'] = TRUE;

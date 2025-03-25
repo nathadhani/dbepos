@@ -8,25 +8,26 @@
     $img_file = '';
     $image_url = '';
     if(isset($customer[0]->customer_code)) {
-        $img_file = "assets/img/customer_form/" . $customer[0]->customer_code . ".jpg";
+        $img_file = "filex/images_customer_form/" . $customer[0]->customer_code . ".jpg";
         $image_url = base_url($img_file);    
     }
 ?>
 <div class="page-content-wrap">            
+    <div class="row">        
+        <div class="panel-body">                        
+            <div class="col-md-12">
+                    <a class="file-input-wrapper btn btn-info btn btn-sm">
+                        <span class="fa fa-upload"> Upload ID Photo</span>
+                        <form id="form_foto" method="post" enctype="multipart/form-data">
+                            <input type="file" name="upload_foto" id="upload_foto" class="form-control" accept="image/*">
+                        </form>
+                    </a>
+            </div>        
+        </div>        
+    </div>    
     <div class="row">   
         <div class="col-md-12">
             <div class="panel panel-default">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="col-lg-2">
-                            <a class="file-input-wrapper btn btn-info btn btn-sm"><span class="fa fa-upload"></span>
-                                <form id="form_foto" method="post" enctype="multipart/form-data">
-                                    <input type="file" name="upload_foto" id="upload_foto" class="form-control" accept="image/*">
-                                </form>
-                            </a>
-                        </div>
-                    </div>
-                </div>
                 <form id="mainForm" class="form-horizontal" autocomplete="off">
                     <div class="panel-heading ui-draggable-handle">
                         <div class="panel-title-box">
@@ -295,7 +296,7 @@
                         </div>                            
                     </div>
                 </form>
-            </div>
+            </div>            
         </div>
     </div>    
 </div>

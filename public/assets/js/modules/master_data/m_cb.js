@@ -82,7 +82,6 @@
                 }
             },
             {data: 'tr_id', visible: false},
-            {data: 'transaction_name', visible: false},
         ],
         order: [[1, 'asc']]
     });
