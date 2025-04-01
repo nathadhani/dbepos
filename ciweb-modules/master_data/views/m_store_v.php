@@ -55,7 +55,7 @@
                                     <select name="tr_id[]"
                                             data-ajax="true" 
                                             data-placeholder="-- Pilih Multiple --"
-                                            data-url="master_data/m_trxlist/gettrxlist/" 
+                                            data-url="master_data/m_trxlist/gettrxlistbuysell/" 
                                             data-value="" 
                                             data-limit="100"
                                             multiple

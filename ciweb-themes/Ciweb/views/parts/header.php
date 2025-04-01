@@ -35,7 +35,8 @@
     </head>
     <body oncontextmenu="return true">
         <!-- START PAGE CONTAINER -->
-        <div class="page-container page-navigation-top-fixed">
+        <!-- <div class="page-container page-navigation-top-fixed"> -->
+        <div class="page-container page-navigation-top">
         <div class="ajax-loader">
             <img src="assets/img/loading1.gif" class="img-responsive"/>        
         </div>

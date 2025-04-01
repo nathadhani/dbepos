@@ -50,7 +50,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-md-12">                            
-                                <button type="submit" class="btn btn-primary btn-block">Login</button>
+                                <button type="submit" class="btn btn-info btn-block">Login</button>
                             </div>
                         </div>
                         <div class="login-footer">

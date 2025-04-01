@@ -22,9 +22,6 @@
                 {data: 'tr_date',  width: "10%", render: function (data, type, row, meta) {
                     return bksfn.revDate(data);
                 }},
-                {data: 'tr_number',  width: "10%", render: function (data, type, row, meta) {
-                    return data;                                        
-                }},                
                 {data: 'total', width: "8%", render: function (data, type, row, meta) {
                     return formatRupiah(data);
                 }},
@@ -37,7 +34,7 @@
                 {data: 'status_name', width: "10%", render: function (data, type, row, meta) {
                     return data;
                 }},          
-                {data: 'id', className: "dt-body-center", orderable: false, width: "10%", render: function (data, type, row, meta) {
+                {data: 'id', className: "dt-body-center", orderable: false, width: "5%", render: function (data, type, row, meta) {
                         if(Number(row.createdby) == Number(userId)){
                             return '<a title="Edit" href="#"><i class="fa fa-edit"></i></a>';
                         } else {
@@ -46,18 +43,19 @@
                     }
                 },                
                 {data: 'tr_id', visible: false},
+                {data: 'tr_number', visible: false},
                 {data: 'customer_id', visible: false},
                 {data: 'tr_name', visible: false},
                 {data: 'status', visible: false},
                 {data: 'createdby', visible: false},
             ],            
-            order: [[1, 'asc'],[3, 'asc'],[2, 'asc']]
+            order: [[1, 'asc'],[2, 'asc']]
         });
         t.draw();
 
         // Setup - add a text input to each header cell
         $('#searchid td').each(function () {
-            if ($(this).index() != 0 && $(this).index() != 4 && $(this).index() != 8) {
+            if ($(this).index() != 0 && $(this).index() != 3 && $(this).index() != 7) {
                 $(this).html('<input style="width:100%" type="text" placeholder="Search" data-id="' + $(this).index() + '" />');
             }            
             if ($(this).index() == 2) {
@@ -90,11 +88,7 @@
             var d = t.row(elm).data();
             var url = '';
             if(d.status == 1){                
-                if(Number(d.tr_id) == 1){
-                    url = call_page_task_buy(d.customer_id, d.id);
-                } else {
-                    url = call_page_task_sell(d.customer_id, d.id);
-                }
+                url = call_page_task_buysell(d.customer_id, d.id);
             }
             if(url !== ''){
                 $.ajax({

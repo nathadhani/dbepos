@@ -84,13 +84,14 @@ class Transaction_buysell extends Bks_Controller {
     function insert_detail(){
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);                
-        $postData = $this->input->post();
+        $postData = $this->input->post();        
         $postDetail = $this->input->post();
 
         /** Insert Header */
         /** -------------------------------------------------------------------------------- */        
         if( isset($postData['header_id']) ){
             if(($postData['header_id'] == 'null' || $postData['header_id'] == '')) {            
+                $customer_id = $postData['customer_id'];
                 unset($postData['header_id']);
                 unset($postData['currency_id']);
                 unset($postData['nominal']);
@@ -114,7 +115,7 @@ class Transaction_buysell extends Bks_Controller {
                 $this->db->trans_begin();
                 $this->Bksmdl->table = 'tr_header';        
                 $response = $this->Bksmdl->insert($postData);
-                $id_header = $this->db->insert_id();
+                $id_header = $this->db->insert_id();                
                 if ($this->db->trans_status() === FALSE) {
                     $this->db->trans_rollback();
                     $err = $this->db->error();
@@ -185,9 +186,8 @@ class Transaction_buysell extends Bks_Controller {
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
         $customer_id = json_decode($postData['customer_id']);
-        $tr_id = json_decode($postData['tr_id']);
         $id = json_decode($postData['id']);
-        $query = $this->db->query("SELECT * FROM v_tr_header WHERE customer_id = " . $customer_id . " AND tr_id = " . $tr_id . " AND  id= " . $id)->result();
+        $query = $this->db->query("SELECT * FROM v_tr_header WHERE customer_id = " . $customer_id . " AND  id= " . $id)->result();
         echo json_encode($query, true);
     }
     
@@ -196,9 +196,8 @@ class Transaction_buysell extends Bks_Controller {
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
         $customer_id = json_decode($postData['customer_id']);
-        $tr_id = json_decode($postData['tr_id']);
         $header_id = json_decode($postData['header_id']);
-        $query = $this->db->query("SELECT * FROM v_tr_detail WHERE customer_id = " . $customer_id . " AND tr_id = " . $tr_id . " AND header_id= " . $header_id ." ORDER BY currency_id, nominal, price ASC")->result();
+        $query = $this->db->query("SELECT * FROM v_tr_detail WHERE customer_id = " . $customer_id . " AND header_id= " . $header_id ." ORDER BY currency_id, nominal, price ASC")->result();
         echo json_encode($query, true);
     }  
         
@@ -258,12 +257,48 @@ class Transaction_buysell extends Bks_Controller {
         $query = $this->db->query("SELECT id, tr_id, customer_id FROM tr_header WHERE id = $id")->result();
         echo json_encode($query, true);
     }   
+
+    function getthreshold(){
+        checkIfNotAjax();
+        // $this->libauth->check(__METHOD__ISNUL();
+        $postData = $this->input->post();
+        $customer_id = $postData['customer_id'];
+        $tahun    = (int) Date('Y');
+        $bulan    = (int) Date('m');
+        $tr_date  =  Date('Y-m-d');
+        $query = $this->db->query("SELECT 
+                                          SUM(v_tr_detail.subtotal) AS subtotal,
+                                          (
+                                                SELECT COALESCE(x.exchange_rate_sell,0) FROM v_m_exchange_rate x
+                                                WHERE x.currency_code LIKE '%USD%'
+                                                AND x.exchange_rate_date = '$tr_date'
+                                                LIMIT 1
+                                          ) AS rate_price,
+                                          (
+                                            25000 * 
+                                            (
+                                                SELECT COALESCE(x.exchange_rate_sell,0) FROM v_m_exchange_rate x
+                                                WHERE x.currency_code LIKE '%USD%'
+                                                AND x.exchange_rate_date = '$tr_date'
+                                                LIMIT 1
+                                            )
+                                          ) as total_threshold                                          
+                                          FROM v_tr_detail
+                                          JOIN v_tr_header ON v_tr_detail.header_id = v_tr_header.id
+                                   WHERE v_tr_header.tr_id = 2 
+                                   AND v_tr_header.customer_id = $customer_id
+                                   AND year(v_tr_header.tr_date) = $tahun 
+                                   AND month(v_tr_header.tr_date) = $bulan
+                                   AND v_tr_header.status IN (1,3,4)")->result();
+        echo json_encode($query, true);
+    }
         
     function confirm_task() {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);                
         $postData = $this->input->post();
         $header_id = $postData['id'];
+        $tr_id = $postData['tr_id'];
         $this->db->trans_begin();
         if ($this->db->trans_status() === FALSE) {
             $this->db->trans_rollback();
@@ -274,12 +309,11 @@ class Transaction_buysell extends Bks_Controller {
             $get_header = $this->db->query("SELECT id, store_id, tr_id, tr_date, tr_number FROM tr_header WHERE id = $header_id")->result();                
             if(count($get_header > 0)){
                 $store_id = $get_header[0]->store_id;
-                $tr_id = $get_header[0]->tr_id;
-                $tr_date = $get_header[0]->tr_date;                
+                $tr_date = $get_header[0]->tr_date;
                 $tr_number = ($get_header[0]->tr_number !== '' &&  $get_header[0]->tr_number !== null ? $get_header[0]->tr_number : $this->generate_code_confirm($store_id, $tr_id, $tr_date));
 
                 $this->db->where(array('id' => $header_id));
-                $this->db->update('tr_header', array('tr_number' => $tr_number, 'status' => 3, 'updated' => date('Y-m-d H:i:s', time()), 'updatedby' => $this->userId) );
+                $this->db->update('tr_header', array('tr_id' => $tr_id,'tr_number' => $tr_number, 'status' => 3, 'updated' => date('Y-m-d H:i:s', time()), 'updatedby' => $this->userId) );
 
                 $this->db->where(array('header_id' => $header_id));
                 $this->db->update('tr_detail', array('status' => 3, 'updated' => date('Y-m-d H:i:s', time()), 'updatedby' => $this->userId) );
@@ -398,7 +432,7 @@ class Transaction_buysell extends Bks_Controller {
 
     function update_payment_cashierby(){
         checkIfNotAjax();
-        // $this->libauth->check(__METHOD__);
+        $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
         $header_id = json_decode($postData['id']);    
         $cashierby = $postData['cashierby'];    

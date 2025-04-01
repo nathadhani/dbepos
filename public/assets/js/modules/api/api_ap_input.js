@@ -83,12 +83,7 @@
             e.preventDefault();
             var elm = $(this).closest("tr");
             var d = t.row(elm).data();          
-            var url = '';
-            if(Number(d.tr_id) == 1){
-                url = call_page_show_buy(d.customer_id, d.id);
-            } else {
-                url = call_page_show_sell(d.customer_id, d.id);
-            }
+            url = call_page_show_buysell(d.customer_id, d.id);
             if(url !== ''){
                 $.ajax({
                     url: url,

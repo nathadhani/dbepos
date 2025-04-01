@@ -11,7 +11,7 @@
             </div>
             <div class="panel-body">
                 <div class="row">
-                    <div class="col-md-7">
+                    <div class="col-md-8">
                         <div class="form-group">                                
                             <div class="col-lg-12">
                                 <label for="store_id" style="display:block">Store</label>
@@ -29,9 +29,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-5">
+                    <div class="col-md-4">
                         <div class="form-group">
-                            <div class="col-lg-8">
+                            <div class="col-lg-4">
                                 <label for="tr_date1" style="display:block">Period</label>
                                 <div class="input-group">
                                     <input type="text" id="period" name="period" placeholder="Tanggal ..." class="form-control dp" data-date-format="DD MMMM YYYY" style="width:120px;" value="<?=date('d-m-Y');?>">

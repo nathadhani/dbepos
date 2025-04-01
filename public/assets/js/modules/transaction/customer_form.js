@@ -1,10 +1,7 @@
-/**
- * Page Init
- */
-window.scroll(0,0);
-$("#btn-buy").hide();
-$("#btn-sell").hide();
+$("#btn-buysell").hide();
+$(".perorangan").hide();
 reset_form();
+
 if(text_celluler !== null && text_celluler !== ''){
     var choice = text_celluler;
     if (choice.substr(0,2) === '08'){
@@ -12,38 +9,23 @@ if(text_celluler !== null && text_celluler !== ''){
     }
 }
 
-/**
- * Select Tipe Data
- */
-$(".perorangan").hide();
-$(".cfoto").hide();
 $('#customer_type_id').on('change',function(){
     if ($('#customer_type_id').val() !== null && $('#customer_type_id').val() !== ''){
         if ($('#customer_type_id').val() === '1'){
             $(".perorangan").show();
-            if ($('#customer_code').val() !== null && $('#customer_code').val() !== ''){
-                $(".cfoto").show();
-            }    
         } else {
             $(".perorangan").hide();
-            $(".cfoto").hide();
         }
     }   
 });
 
-/**
- * Form Submit
- */
+
 $("#mainForm").submit(function (e) {
     e.preventDefault();
     $(':submit', this).attr('disabled', true);
 }).on('reset', function (e) {
     reset_form();
 });
-
-/**
- * Validasi Form
- */
 $.validate({
     form: "#mainForm",
     validateOnBlur: false,
@@ -53,28 +35,35 @@ $.validate({
     },
     onSuccess: function () {
         if( $("#customer_type_id").val() === '' || $("#customer_type_id").val() === null){
-            bksfn.errMsg("input tipe customer **");
+            bksfn.errMsg("input tipe pelanggan **");
+            window.scrollTo({ left: 0, top: 10, behavior: "smooth" });
+            $("#customer_type_id").focus();
         } else if( $("#customer_name").val() === '' || $("#customer_name").val() === null){
             bksfn.errMsg("input nama lengkap **");
+            window.scrollTo({ left: 0, top: 10, behavior: "smooth" });
+            $("#customer_name").focus();
         } else if( $("#customer_handphone").val() === '' || $("#customer_handphone").val() === null){
             bksfn.errMsg("input nomor handphone **");                        
+            window.scrollTo({ left: 0, top: 0, behavior: "smooth" });
+            $("#customer_handphone").focus();
         } else if( $("#customer_address").val() === '' || $("#customer_address").val() === null){
             bksfn.errMsg("input alamat **");                        
+            window.scrollTo({ left: 0, top: 0, behavior: "smooth" });
+            $("#customer_address").focus();
         } else {           
             if ($('#customer_type_id').val() === '1'){ // Pelanggan Per Orangan
                 if ($("#ftitle").html().substr(0, 4) == "Edit") {
-                    var image_url = baseUrl + "assets/img/customer_form/" + $("#customer_code").val() + ".jpg";
+                    var image_url = baseUrl + "assets/filex/images_customer_form/" + $("#customer_code").val() + ".jpg";
                     $.ajax({
                         url:image_url,
                         type:'HEAD',
                         error: function() {
                             //file not exists                            
-                            //--- Edit
                             $.post('transaction/customer_form/update', $("#mainForm").serialize() + "&id=" + $("body").data("id"), function (obj) {
                                 if (obj.msg == 1) {                                
                                     $("body").data("text_search", '');
                                     alertify.success("Edit Data Success");     
-                                    back_to_page_ini();                                    
+                                    reset_form();
                                 } else {
                                     bksfn.errMsg(obj.msg);
                                 }
@@ -95,12 +84,11 @@ $.validate({
                             } else if( $("#nationality_id").val() === '' || $("#nationality_id").val() === null){
                                 bksfn.errMsg("input warga negara");
                             } else {
-                                //--- Edit
                                 $.post('transaction/customer_form/update', $("#mainForm").serialize() + "&id=" + $("body").data("id"), function (obj) {
                                     if (obj.msg == 1) {                                
                                         $("body").data("text_search", '');
                                         alertify.success("Edit Data Success");     
-                                        back_to_page_ini();
+                                        reset_form();
                                     } else {
                                         bksfn.errMsg(obj.msg);
                                     }
@@ -111,14 +99,14 @@ $.validate({
                         }
                     });                          
                 } else {
-                    //--- Insert
                     $.post('transaction/customer_form/insert', $("#mainForm").serialize(), function (obj) {
                         if (obj.msg == 1) {                            
                             $("body").data("id", '');
                             $("body").data("text_search", '');
                             $("body").data("id", obj.id);     
-                            alertify.success("Insert Data Success");                
-                            back_to_page_ini();
+                            $("#ftitle").html('Edit');
+                            alertify.success("Insert Data Success");       
+                            reset_form();
                         } else {
                             bksfn.errMsg(obj.msg);
                         }
@@ -132,7 +120,7 @@ $.validate({
                     $.post('transaction/customer_form/update', $("#mainForm").serialize() + "&id=" + $("body").data("id") , function (obj) {
                         if (obj.msg == 1) {                            
                             $("body").data("text_search", '');
-                            back_to_page_ini();
+                            reset_form();
                             alertify.success("Edit Data Success");     
                         } else {
                             bksfn.errMsg(obj.msg);
@@ -144,11 +132,10 @@ $.validate({
                     //--- Insert
                     $.post('transaction/customer_form/insert', $("#mainForm").serialize(), function (obj) {
                         if (obj.msg == 1) {                            
-                            $("body").data("id", '');
                             $("body").data("text_search", '');
                             $("body").data("id", obj.id);     
                             alertify.success("Insert Data Success");
-                            back_to_page_ini();
+                            reset_form();
                         } else {
                             bksfn.errMsg(obj.msg);
                         }
@@ -157,20 +144,16 @@ $.validate({
                     });
                 }
             }
-            // window.scrollTo({ left: 0, top: document.body.scrollHeight, behavior: "smooth" });
         }
     }
 });
 
-/**
- * Upload Foto
- */
 $('#upload_foto').on('change',function(e){
     e.preventDefault();    
     var files = $('#upload_foto')[0].files;
     // var file_exist = files.length > 0 ? 1 : 0;
     var error = '';
-    var formData = new FormData(document.getElementById("form_foto"));
+    var formData = new FormData(document.getElementById("mainForm"));
     formData.append('CIF', $('#customer_code').val());
     var name = files[0].name;
     var extension = name.split('.').pop().toLowerCase();    
@@ -193,10 +176,13 @@ $('#upload_foto').on('change',function(e){
             async: false,
             processData: false,
             success: function (data) {
-                console.log(data);
-                $("#form_foto")[0].reset();
-                alertify.success('File has been uploaded');
-                history.go(0); // untuk memuat ulang halaman tanpa cache.
+                if(data.length > 0){
+                    alertify.error(data);
+                } else {
+                    alertify.success('File has been uploaded');
+                }  
+                reset_form()              
+                // history.go(0); // untuk memuat ulang halaman tanpa cache.
             },
             complete: function(){
                 $('.ajax-loader').css("visibility", "hidden");
@@ -207,13 +193,10 @@ $('#upload_foto').on('change',function(e){
         });
     } else {
         bksfn.errMsg(error);
-        $("#form_foto")[0].reset();
+        // $("#form_foto")[0].reset();
     }            
 });
 
-/**
- * Tampil Data
- */
  function tampil_data(){
     if( typeof($("body").data("id")) !== 'undefined') {
         if($("body").data("id") !== null && $("body").data("id") !== '') {
@@ -229,38 +212,16 @@ $('#upload_foto').on('change',function(e){
                     $("body").data("id", d.id);
 
                     if(d.status !== '1'){
-                        $("#btn-buy").hide();
-                        $("#btn-sell").hide();
+                        $("#btn-buysell").hide();
                     }
 
                     $("#customer_code").val(d.customer_code);                    
-                    document.getElementById("links").innerHTML = "";
                     if (d.customer_type_id != 0 && d.customer_type_id != null && d.customer_type_id != '') {
                         $("#customer_type_id").html('<option value="' + d.customer_type_id + '">' + d.customer_type_name + ' [' + d.customer_type_id + ']'  + '</option>').sel2dma();
                         if(d.customer_type_id === '1'){
                             $(".perorangan").show();
-                            $(".cfoto").show();
-                            if ($('#customer_code').val() !== null && $('#customer_code').val() !== ''){   
-                                var image_url = baseUrl + "assets/img/customer_form/" + d.customer_code + ".jpg";
-                                var url = "assets/img/customer_form/" + d.customer_code + ".jpg";
-                                cekFileExists(url).then(exists => {
-                                    if (exists) {
-                                        var showfoto = '<a class="gallery-item" href="'+image_url+'" data-gallery>'+
-                                                            '<div class="image">'+
-                                                                '<img src="'+image_url+'" alt="" style="height:100%; width:100%;"/>'+
-                                                            '</div>'+
-                                                        '</a>'
-                                        document.getElementById("links").innerHTML = showfoto;
-                                        $("#links").show();
-                                    } else {
-                                        document.getElementById("links").innerHTML = "";
-                                        $("#links").hide();
-                                    }
-                                });                                
-                            }
                         } else {
                             $(".perorangan").hide();
-                            $(".cfoto").hide();
                         }
                     } else {
                         $("#customer_type_id").html('').sel2dma();
@@ -308,8 +269,7 @@ $('#upload_foto').on('change',function(e){
                     $("#customerprofil").val(d.customerprofil);    
                     $("#status").iCheck(d.status == 1 ? 'check' : 'uncheck');                     
                     
-                    $("#btn-buy").show();
-                    $("#btn-sell").show();
+                    $("#btn-buysell").show();                    
                     // window.scrollTo({ left: 0, top: document.body.scrollHeight, behavior: "smooth" });
                 },
                 error: function(xhr){
@@ -320,9 +280,6 @@ $('#upload_foto').on('change',function(e){
     }    
 }
 
-/**
- * Reset Form
- */
 function reset_form(){    
     $("#ftitle").html('Add');
     $("body").data("text_search", '');
@@ -357,33 +314,13 @@ function reset_form(){
 
     $(':submit').removeAttr('disabled');
 
-    document.getElementById("links").innerHTML = "";
-    $("#links").hide();
     $(".perorangan").hide();
     if( $("body").data("id") !== null && $("body").data("id") !== '' ){
         tampil_data();
     }
 }
 
-/**
- * redirect page
- */
-function back_to_page_ini(){
-    history.go(0); // untuk memuat ulang halaman tanpa cache.
-    var url = "transaction/customer_form/index/"+$("body").data("id")+"/null";
-    $.ajax({
-        url: url,
-        type: 'POST',
-        success: function() {
-            window.open(url,'_self');           
-        }
-    });    
-}
-
-/**
- * button buy/beli
- */
-$("#btn-buy").click(function (e) {
+$("#btn-buysell").click(function (e) {
     e.preventDefault();    
     if($("#customer_data_number").val() !== '' && $("#customer_data_number").val() !== null){
         $.ajax({
@@ -396,8 +333,7 @@ $("#btn-buy").click(function (e) {
                     if (data !== '[]' && data.length > 0){
                         var d = JSON.parse(data)[0];
                         alertify.alert('Peringatan, Pelanggan ini Terdaftar di list DTTOT PPATK...!\n' + d.deskripsi.trim());
-                        $("#btn-buy").hide();
-                        $("#btn-sell").hide();
+                        $("#btn-buysell").hide();
                     } else {
                         $.ajax({
                             url: baseUrl + 'transaction/customer_form/getcustomerbyid',
@@ -410,20 +346,16 @@ $("#btn-buy").click(function (e) {
                                 if(d.status === '0'){ // Non Active
                                     bksfn.errMsg("status data tidak aktif!");
                                 } else {
-                                    alertify.confirm("Transaction Buy / Beli ?", function (x) {    
-                                        if (x) {                                   
-                                            var url = call_page_task_buy($("body").data("id"), null);
-                                            if(url !== ''){
-                                                $.ajax({
-                                                    url: url,
-                                                    type: 'POST',
-                                                    success: function() {
-                                                        window.open(url,'_self'); 
-                                                    }
-                                                });
-                                            }                        
-                                        }    
-                                    });                
+                                    var url = call_page_task_buysell($("body").data("id"), null);
+                                    if(url !== ''){
+                                        $.ajax({
+                                            url: url,
+                                            type: 'POST',
+                                            success: function() {
+                                                window.open(url,'_self'); 
+                                            }
+                                        });
+                                    }                
                                 }
                             },
                             error: function(xhr){
@@ -451,20 +383,16 @@ $("#btn-buy").click(function (e) {
                 if(d.status === '0'){ // Non Active
                     bksfn.errMsg("status data tidak aktif!");
                 } else {
-                    alertify.confirm("Transaction Buy / Beli ?", function (x) {    
-                        if (x) {                                   
-                            var url = call_page_task_buy($("body").data("id"), null);
-                            if(url !== ''){
-                                $.ajax({
-                                    url: url,
-                                    type: 'POST',
-                                    success: function() {
-                                        window.open(url,'_self'); 
-                                    }
-                                });
-                            }                        
-                        }    
-                    });                
+                    var url = call_page_task_buysell($("body").data("id"), null);
+                    if(url !== ''){
+                        $.ajax({
+                            url: url,
+                            type: 'POST',
+                            success: function() {
+                                window.open(url,'_self'); 
+                            }
+                        });
+                    }                
                 }
             },
             error: function(xhr){
@@ -472,101 +400,6 @@ $("#btn-buy").click(function (e) {
             }
         });
     }                  
-});
-
-/**
- * button sell/jual
- */
-$("#btn-sell").click(function (e) {
-    e.preventDefault();
-    if($("#customer_data_number").val() !== '' && $("#customer_data_number").val() !== null){
-        $.ajax({
-            url: baseUrl + 'transaction/customer_form/ceknikdttot',
-            type: 'POST',
-            data: {'nik' : $("#customer_data_number").val()},
-            datatype: 'json',
-            success: function(data){
-                try {
-                    if (data !== '[]' && data.length > 0){
-                        var d = JSON.parse(data)[0];
-                        alertify.alert('Peringatan, Pelanggan ini Terdaftar di list DTTOT PPATK...!\n' + d.deskripsi.trim());
-                        $("#btn-buy").hide();
-                        $("#btn-sell").hide();                    
-                    
-                    } else {
-                        $.ajax({
-                            url: baseUrl + 'transaction/customer_form/getcustomerbyid',
-                            type: 'POST',
-                            data: {'id' : $("body").data("id")},
-                            datatype: 'json',
-                            success: function(data){
-                                var d = JSON.parse(data)[0];            
-                                $("#customer_code").val(d.customer_code);        
-                                if(d.status === '0'){ // Non Active
-                                    bksfn.errMsg("status data tidak aktif!");
-                                } else {
-                                    alertify.confirm("Transaction Sell / Jual ?", function (x) {    
-                                        if (x) {           
-                                            var url = call_page_task_sell($("body").data("id"), null);
-                                            if(url !== ''){
-                                                $.ajax({
-                                                    url: url,
-                                                    type: 'POST',
-                                                    success: function() {
-                                                        window.open(url,'_self'); 
-                                                    }
-                                                });
-                                            }                        
-                                        }    
-                                    });                
-                                }
-                            },
-                            error: function(xhr){
-                                alertify.error(xhr.responseText);
-                            }
-                        });
-                    }
-                } catch (error) {
-                    console.error('Error parsing JSON:', error.message);
-                }                            
-            },
-            error: function(xhr){
-                alertify.error(xhr.responseText);
-            }
-        });
-    } else {
-        $.ajax({
-            url: baseUrl + 'transaction/customer_form/getcustomerbyid',
-            type: 'POST',
-            data: {'id' : $("body").data("id")},
-            datatype: 'json',
-            success: function(data){
-                var d = JSON.parse(data)[0];            
-                $("#customer_code").val(d.customer_code);        
-                if(d.status === '0'){ // Non Active
-                    bksfn.errMsg("status data tidak aktif!");
-                } else {
-                    alertify.confirm("Transaction Sell / Jual ?", function (x) {    
-                        if (x) {           
-                            var url = call_page_task_sell($("body").data("id"), null);
-                            if(url !== ''){
-                                $.ajax({
-                                    url: url,
-                                    type: 'POST',
-                                    success: function() {
-                                        window.open(url,'_self'); 
-                                    }
-                                });
-                            }                        
-                        }    
-                    });                
-                }
-            },
-            error: function(xhr){
-                alertify.error(xhr.responseText);
-            }
-        });
-    }          
 });
 
 const inputElement = document.getElementById('customer_data_number');
@@ -582,8 +415,7 @@ inputElement.addEventListener('change', function(e) {
                 var d = JSON.parse(data)[0];
                 if(d.deskripsi !== null && d.deskripsi !== ''){
                     alertify.alert('Peringatan, Pelanggan ini Terdaftar di list DTTOT PPATK...!');
-                    $("#btn-buy").hide();
-                    $("#btn-sell").hide();
+                    $("#btn-buysell").hide();
                 }
             } catch (error) {
                 console.error('Error parsing JSON:', error.message);

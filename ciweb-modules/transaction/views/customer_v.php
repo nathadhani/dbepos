@@ -51,12 +51,12 @@
                                 <table id="mainTable" style="width:100%" class="table table-bordered table-condensed table-hover table-striped dataTable">
                                     <thead>
                                         <tr>
-                                            <th style="text-align:center; vertical-align: middle">Customer Name</th>
-                                            <th style="text-align:center; vertical-align: middle">Address</th>
-                                            <th style="text-align:center; vertical-align: middle">Celluler</th>
-                                            <th style="text-align:center; vertical-align: middle">Identity Type</th>
-                                            <th style="text-align:center; vertical-align: middle">Identity Type Number</th>
-                                            <th style="text-align:center; vertical-align: middle">Status</th>
+                                            <th style="text-align:left; vertical-align: middle">Customer Name</th>
+                                            <th style="text-align:left; vertical-align: middle">Address</th>
+                                            <th style="text-align:left; vertical-align: middle">Celluler</th>
+                                            <th style="text-align:left; vertical-align: middle">Identity Type</th>
+                                            <th style="text-align:left; vertical-align: middle">Identity Type Number</th>
+                                            <th style="text-align:left; vertical-align: middle">Status</th>
                                         </tr>
                                     </thead>                 
                                     <tbody></tbody>

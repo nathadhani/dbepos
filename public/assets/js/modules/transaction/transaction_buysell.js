@@ -1,10 +1,23 @@
+back_to_page_ini();
 var sisa_stock_amount = 0;
 var sisa_stock_sheet = 0;
-var xtr_id = (decrypt(tr_uri_code) === 'buy' ? 1 : decrypt(tr_uri_code) === 'sell' ? 2 : 0);
-back_to_page_ini();
+var xtr_id = $("#tr_id").val();
+$('#tr_id').on('change',function(e){
+    e.preventDefault()
+    if($(this).val() != null && $(this).val() != ''){
+        xtr_id = $("#tr_id").val();
+        if(xtr_id === '1'){
+            $("#trx_name").html('<span style="color:blue;font-weight:800;font-size:14px;">Buy / Beli</span> - ');
+        }
+        if(xtr_id === '2'){
+            $("#trx_name").html('<span style="color:red;font-weight:800;font-size:14px;">Sell / Jual</span> - ');
+        }
+        $('#tr_id').prop('disabled', true);
+        $('#currency_id').focus();
+    }
+});
 
 function reset_form_header(){    
-    $("#customer_name").html('');
     $("#customer_act_on_id").html('').sel2dma();
     $("#customer_soure").html('');
     $("#customer_purpose").html('');
@@ -26,6 +39,8 @@ function reset_form_input(){
 
 function show_customer($id){
     if($id !== null && $id !== '') {
+        $("#customer_name").html('');
+        $("#customer_address").html('');    
         $.ajax({
             url: baseUrl + 'transaction/customer_form/getcustomerbyid',
             type: 'POST',
@@ -35,7 +50,8 @@ function show_customer($id){
                 try {
                     if (data !== '[]' && data.length > 0){
                         var d = JSON.parse(data)[0];
-                        $("#customer_name").html(d.customer_name.trim() + ' ( ' + d.customer_address.trim() + ' )');
+                        $("#customer_name").html(d.customer_name.trim());
+                        $("#customer_address").html(' / ' + d.customer_address.trim());
                     } else {
                         return 'data customer not found';
                     }  
@@ -59,15 +75,30 @@ function show_header(){
             $.ajax({
                 url: baseUrl + "transaction/transaction_buysell/show_header",
                 type: 'POST',
-                data: {'customer_id' : customerId, 'tr_id' : xtr_id, 'id' : id_header},
+                data: {'customer_id' : customerId, 'id' : id_header},
                 datatype: 'json',
                 success: function(data){
                     if (data !== '[]' && data.length > 0){
                         var d = JSON.parse(data)[0];                                                
 
-                        $("#created_by").html('Created by : '+d.createdby_name +' | '+d.created);
+                        $("#created_by").html('Created by : ' + d.createdby_name + '  ' + d.created);
                         if(d.status == '2'){
-                            $("#cancel_by").html('Canceled by : '+d.updatedby_name +' | '+d.updated);
+                            $("#cancel_by").html(' | Canceled by : ' + d.updatedby_name + '  ' + d.updated);
+                        }
+
+                        if (d.tr_id != 0 && d.tr_id != null && d.tr_id != '') {
+                            $("#tr_id").html('<option value="' + d.tr_id + '">' + d.tr_name + '</option>').sel2dma();
+
+                            xtr_id = d.tr_id;
+                            if(xtr_id === '1'){
+                                $("#trx_name").html('<span style="color:blue;font-weight:800;font-size:14px;">Buy / Beli</span> - ');
+                            }
+                            if(xtr_id === '2'){
+                                $("#trx_name").html('<span style="color:red;font-weight:800;font-size:14px;">Sell / Jual</span> - ');
+                            }                    
+                            $('#tr_id').prop('disabled', true);
+                        } else {
+                            $("#tr_id").html('').sel2dma();
                         }
 
                         $("#tr_date").val(bksfn.revDate(d.tr_date));
@@ -87,6 +118,7 @@ function show_header(){
                         switch(Number(d.status)) {
                             case 1:
                                 $(".form_detail_input").show();
+                                $(".dropbtn").show();
                                 $("#btn-confirm").show();
                                 $("#btn-cancel").show();
                                 break;
@@ -95,11 +127,11 @@ function show_header(){
                                 break;
                             default:
                                 $(".form_detail_input").hide();
+                                $(".dropbtn").hide();
                                 $("#btn-confirm").hide();
                                 $("#btn-cancel").hide();
                                 break;
-                        }
-                        show_customer(d.customer_id);
+                        }                       
                     } else{                        
                         reset_form_header();
                         call_page_customer_new();
@@ -122,7 +154,7 @@ function show_detail($statusTrx){
         $.ajax({
             url: baseUrl + 'transaction/transaction_buysell/show_detail',
             type: 'POST',
-            data: {'customer_id' : customerId, 'tr_id' : xtr_id, 'header_id' : id_header},
+            data: {'customer_id' : customerId, 'header_id' : id_header},
             dataType: 'json',
             success: function (data) {                
                 if (data !== '[]' && data.length > 0){
@@ -185,9 +217,9 @@ function show_detail($statusTrx){
                     });
                     var rowsx =`<tr>
                                     <td colspan="6" style='vertical-align:middle;text-align:center;background-color:#e3e4e6;font-weight:bold;font-size:14px;'>
-                                    <i>Say</i> : ` + bksfn.terBilang(totalpricex) + `
+                                        <i>Say</i> : ` + bksfn.terBilang(totalpricex) + ` Rupiah
                                     </td>
-                                    <td style='text-align:left;background-color:#f1f5f9;font-weight:bold;font-size:15px;'>
+                                    <td style='text-align:left;font-weight:bold;font-size:15px;'>
                                         Rp. ` + formatRupiah(totalpricex) + `
                                     </td>                         
                                 </tr>`
@@ -197,7 +229,8 @@ function show_detail($statusTrx){
                         $("#btn-cancel").show();
                     }
                 }else{
-                    reset_form_input();
+                    reset_form_input()
+                    $(".dropbtn").hide();
                     $("#btn-confirm").hide();
                     $("#btn-cancel").show();
                 }
@@ -218,7 +251,7 @@ function delete_line_detail(id){
             data: {'id' : id },
             datatype: 'json',
             success: function(data){
-                back_to_page_ini();
+                show_header();
                 alertify.success("Delete Item Success");
             },
             error: function(xhr){                
@@ -230,13 +263,29 @@ function delete_line_detail(id){
 }
 
 function add_item(){    
-    $.post('transaction/transaction_buysell/insert_detail', $("#form_detail").serialize() + "&header_id=" + id_header + "&tr_id=" + xtr_id + "&tr_date=" + $("#tr_date").val() + "&customer_id=" + customerId , function (obj) {
-        if (obj.msg == 1) {
-            id_header = obj.id_header;
+    $.post('transaction/transaction_buysell/insert_detail', $("#form_detail").serialize() + "&header_id=" + id_header + "&customer_id=" + customerId + "&tr_id=" + xtr_id + "&tr_date=" + $("#tr_date").val() + "&customer_id=" + customerId , function (obj) {
+        if (obj.msg == 1) {            
             reset_form_input();
-            back_to_page_ini()
-            window.scrollTo({ left: 0, top: document.body.scrollHeight, behavior: "smooth" });
-            alertify.success("Insert Data Item Success");                
+            if(id_header == null || id_header == ''){
+                id_header = obj.id_header;            
+                url = call_page_task_buysell(customerId, id_header);
+                if(url !== ''){
+                    $.ajax({
+                        url: url,
+                        type: 'POST',
+                        success: function() {
+                            window.open(url,'_self'); 
+                        },
+                        error: function(){
+                            alertify.error("can't open page.!");
+                        }
+                    });    
+                }
+            } else {
+                show_header();
+            }            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            alertify.success("Insert Data Item Success");                        
         } else {
             bksfn.errMsg(obj.msg);
         }
@@ -262,16 +311,22 @@ $("#nominal").keyup(function(e) {
 
 $("#sheet").keyup(function(e) {
     e.preventDefault();
-    $(this).val($(this).val());
-    subtotal_input();
-    getstockbyid();
-    getratebyid();
+    if($(this).val() != null && $(this).val() != ''){
+        $(this).val($(this).val());
+        subtotal_input();
+        getstockbyid();
+        getratebyid();
+    } else {
+        $('#price').val('');
+    }
 });    
 
 $("#price").keyup(function(e) {
     e.preventDefault();
-    $(this).val($(this).val());
-    subtotal_input();
+    if($(this).val() != null && $(this).val() != ''){
+        $(this).val($(this).val());
+        subtotal_input();
+    }
 });
 
 function subtotal_input() {
@@ -283,7 +338,10 @@ function subtotal_input() {
 
 $("#btn-add-row-detail").on('click', function (e) {
     e.preventDefault();
-    if ( $("#currency_id").val() === null || $("#currency_id").val() === '' ){
+    if ( $("#tr_id").val() === null || $("#tr_id").val() === '' ){
+        bksfn.errMsg("trx belum di pilih!");
+        $("#currency_id").focus();
+    } else if ( $("#currency_id").val() === null || $("#currency_id").val() === '' ){
         bksfn.errMsg("mata uang belum di pilih!");
         $("#currency_id").focus();
     } else if( $("#nominal").val() === 0 || $("#nominal").val() === '' ) {
@@ -402,11 +460,7 @@ function back_to_page_show($id){
                     let xcustomer_id = d[0].customer_id;
                     if(xcustomer_id !== null && xcustomer_id !== '' && xcustomer_id !== null && xcustomer_id !== ''){
                         var url = '';
-                        if(Number(xtr_id) == 1){
-                            url = call_page_show_buy(xcustomer_id, xid);
-                        } else {
-                            url = call_page_show_sell(xcustomer_id, xid);
-                        }
+                        url = call_page_show_buysell(xcustomer_id, xid);
                         if(url !== ''){
                             console.log(url);
                             $.ajax({
@@ -440,86 +494,42 @@ function back_to_page_show($id){
 
 
 function getratebyid(){
-    $("#price").val(0);
-    $("#price_asli").val(0);                
-    $("#price_bot").val(0);
-    $.ajax({
-        url: baseUrl + 'transaction/transaction_buysell/getratebyid',
-        type: 'POST',
-        data: {'currency_id' : $("#currency_id").val(), 'tr_id' : xtr_id},
-        datatype: 'json',
-        success: function(data){
-            if (data !== undefined) {
-                if (data !== '[]' && data.length > 0){
-                    var d = JSON.parse(data)[0];
-                    var xrate_today = (d.rate_today === null ? 0 : d.rate_today);
-                    var xrate_today_bot = (d.rate_today_bot === null ? 0 : d.rate_today_bot);
-                    var xrate_today_top = (d.rate_today_top === null ? 0 : d.rate_today_top);
-                    if(Number(xrate_today) > 0){
-                        $("#price").val(xrate_today);
-                        $("#price_asli").val(xrate_today);           
-                        if(Number(xrate_today_bot) > 0){
-                            $("#price_bot").val(xrate_today_bot);
-                        }
-                        if(Number(xrate_today_top) > 0){
-                            $("#price_top").val(xrate_today_top);
-                        }
-                    }                 
-                }
-            }    
-        },
-        error: function(xhr){
-            alertify.error("error");
-            StringtoFile(xhr.responseText, 'error');
-        }
-    });
-}
-
-$("#btn-confirm").on('click', function (e) {
-    e.preventDefault();
-    if( document.getElementById('table-detail').rows.length < 2 ) {
-        bksfn.errMsg("Mata uang belum diinput!");        
-    } else {
-        alertify.confirm("are you sure, CONFIRM transaction ?", function (x) {
-            if (x) {
-                $.ajax({
-                    url: baseUrl + 'transaction/transaction_buysell/confirm_task',
-                    type: 'POST',
-                    data: {'id' : id_header},
-                    datatype: 'json',
-                    success: function(data) {
-                        if(data.length > 0){
-                            if(Number(Apimethod) == 1){
-                                try {
-                                    var d = JSON.parse(data);
-                                    if(d.tr_header_id !== null && d.tr_header_id !== ''){
-                                        var id_tr_header = d.tr_header_id;
-                                        back_to_page_show(id_header);                                        
-                                    } else {
-                                        back_to_page_task();
-                                    }
-                                } catch (e) {
-                                    alertify.error("Error parsing JSON"+e);
-                                    console.error('Error parsing JSON:', e);
-                                    back_to_page_task();
-                                }                                
-                            } else {
-                                back_to_page_show(id_header);
-                            }    
-                            alertify.success('confirm transaction success!');
-                        } else {
-                            back_to_page_task();
-                        }                        
-                    },
-                    error: function(xhr){
-                        alertify.error("error");
-                        StringtoFile(xhr.responseText, 'error');
+    if ( $("#currency_id").val() !== null || $("#currency_id").val() !== '' ){
+        $("#price").val(0);
+        $("#price_asli").val(0);                
+        $("#price_bot").val(0);
+        $.ajax({
+            url: baseUrl + 'transaction/transaction_buysell/getratebyid',
+            type: 'POST',
+            data: {'currency_id' : $("#currency_id").val(), 'tr_id' : xtr_id},
+            datatype: 'json',
+            success: function(data){
+                if (data !== undefined) {
+                    if (data !== '[]' && data.length > 0){
+                        var d = JSON.parse(data)[0];
+                        var xrate_today = (d.rate_today === null ? 0 : d.rate_today);
+                        var xrate_today_bot = (d.rate_today_bot === null ? 0 : d.rate_today_bot);
+                        var xrate_today_top = (d.rate_today_top === null ? 0 : d.rate_today_top);
+                        if(Number(xrate_today) > 0){
+                            $("#price").val(xrate_today);
+                            $("#price_asli").val(xrate_today);           
+                            if(Number(xrate_today_bot) > 0){
+                                $("#price_bot").val(xrate_today_bot);
+                            }
+                            if(Number(xrate_today_top) > 0){
+                                $("#price_top").val(xrate_today_top);
+                            }
+                        }                 
                     }
-                });
+                }    
+            },
+            error: function(xhr){
+                alertify.error("error");
+                StringtoFile(xhr.responseText, 'error');
             }
         });
-    }        
-});
+    }
+}
 
 $("#btn-cancel").on('click', function (e) {
     e.preventDefault();
@@ -565,7 +575,7 @@ $("#customer_name").on('click', function (e) {
         url: url,
         type: 'POST',
         success: function() {            
-            window.open(url,'_blank'); 
+            window.open(url,'_self'); 
         },
         error: function(){            
             alertify.error("can't open page.!");
@@ -601,11 +611,13 @@ $('#btn-modal-customer-act-on-save').on('click', function (e) {
     });
 });
 
-function back_to_page_ini(){    
+function back_to_page_ini(){ 
+    $(".dropbtn").hide();   
     $("#btn-confirm").hide();
     $("#btn-cancel").hide();    
     $('#tr_date').prop('disabled', true);
     $("#btn-customer-act-on").hide(); 
+    show_customer(customerId);
     $.ajax({
         url: baseUrl + "transaction/transaction_buysell/cekclosingtrx",
         type: 'POST',
@@ -616,6 +628,7 @@ function back_to_page_ini(){
                 var d = JSON.parse(data);                                                            
                 if(d.msg == 1){
                     $('#tr_date').val( bksfn.revDate(d.tr_date));
+                    $(".dropbtn").hide();
                     $("#btn-confirm").hide();
                     $("#btn-cancel").hide();
                     $(".form_detail_input").hide(); 
@@ -632,56 +645,19 @@ function back_to_page_ini(){
                         }
                     }); 
                 }            
-            } else { 
+            } else {
                 if( typeof(id_header) != 'undefined' && id_header !== null && id_header !== '' ) {
                     if( typeof(customerId) !== 'undefined' && customerId !== null && customerId !== '') {
-                        $("#btn-cancel").show();
-                        let url = '';
-                        if( xtr_id == 1 ){
-                            url = call_page_task_buy(customerId, id_header);
-                        } else {
-                            url = call_page_task_sell(customerId, id_header);
-                        }    
-                        if(url !== ''){
-                            $.ajax({
-                                url: url,
-                                type: 'POST',
-                                success: function(data) {            
-                                    if (data !== '[]') {          
-                                        show_header();
-                                    }
-                                },
-                                error: function(xhr){
-                                    alertify.error("error");
-                                    StringtoFile(xhr.responseText, 'error');
-                                }
-                            });
-                        }                        
+                        $("#btn-cancel").show();                        
+                        show_header();                        
                     }
                 } else {
                     reset_form_header();
                     reset_form_input();
-                    $("#ftitle").html('Add');
-                    var url = '';
-                    if( xtr_id == 1 ){
-                        url = call_page_task_buy(customerId, null);
-                    } else {
-                        url = call_page_task_sell(customerId, null);
-                    }
-                    if(url !== ''){
-                        $.ajax({
-                            url: url,
-                            type: 'POST',
-                            success: function() {                
-                                // show_header();
-                                show_customer(customerId);
-                            },
-                            error: function(xhr){
-                                alertify.error("error");
-                                StringtoFile(xhr.responseText, 'error');
-                            }
-                        });
-                    }
+                    $(".dropbtn").hide();
+                    $("#btn-confirm").hide();
+                    $("#btn-cancel").hide();
+                    $("#ftitle").html('New');
                 }                
             }               
         },
@@ -692,13 +668,83 @@ function back_to_page_ini(){
     });    
 }
 
-$("#btn-new").on('click', function (e) {
+$("#btn-confirm").on('click', function (e) {
     e.preventDefault();
-    alertify.confirm("are you sure, back to Buy / Sell - New ?", function (x) {
-        if (x) {
-            call_page_customer_new();
+    if( document.getElementById('table-detail').rows.length < 2 ) {
+        bksfn.errMsg("Mata uang belum diinput!");        
+    } else {
+        if(xtr_id === '2' && (customerId !== null || customerId !== '')){
+            $.ajax({
+                url: baseUrl + 'transaction/transaction_buysell/getthreshold',
+                type: 'POST',
+                data: {'customer_id' : customerId},
+                datatype: 'json',
+                success: function(data){
+                    if (data !== undefined) {
+                        if (data !== '[]' && data.length > 0){
+                            var d = JSON.parse(data)[0];
+                            total_trx = (d.subtotal === null ? 0 : Number(d.subtotal));
+                            total_theshold = (d.total_threshold === null ? 0 : Number(d.total_threshold));                            
+                            if(total_trx > total_theshold) {
+                                alertify.alert('Transaksi bulan ini senilai ' + formatRupiah(total_trx) + ' rupiah sudah melebihi nilai threshold USD perbulan 25000 * ' + formatRupiah(d.rate_price) + ' senilai ' + formatRupiah(total_theshold) + ' rupiah');
+                                alertconfirmtrx();
+                            } else {
+                                alertconfirmtrx();
+                            }
+                        } else {
+                            alertconfirmtrx();
+                        }
+                    }
+                },
+                error: function(xhr){
+                    alertify.error("error");
+                    StringtoFile(xhr.responseText, 'error');
+                }
+            });
         } else {
-            back_to_page_ini();
-        }   
-    });          
+            alertconfirmtrx();
+        }        
+    }        
 });
+
+function alertconfirmtrx(){
+    alertify.confirm("are you sure, CONFIRM transaction ?", function (x) {
+        if (x) {
+            $.ajax({
+                url: baseUrl + 'transaction/transaction_buysell/confirm_task',
+                type: 'POST',
+                data: {'id' : id_header, 'tr_id' : $("#tr_id").val()},
+                datatype: 'json',
+                success: function(data) {
+                    if(data.length > 0){
+                        if(Number(Apimethod) == 1){
+                            try {
+                                var d = JSON.parse(data);
+                                if(d.tr_header_id !== null && d.tr_header_id !== ''){
+                                    back_to_page_show(d.tr_header_id);
+                                } else {
+                                    back_to_page_task();
+                                }
+                            } catch (e) {
+                                alertify.error("Error parsing JSON"+e);
+                                console.error('Error parsing JSON:', e);
+                                back_to_page_task();
+                            }                                
+                        } else {
+                            back_to_page_show(id_header);
+                        }    
+                        alertify.success('confirm transaction success!');
+                    } else {
+                        back_to_page_task();
+                    }                        
+                },
+                error: function(xhr){
+                    alertify.error("error");
+                    StringtoFile(xhr.responseText, 'error');
+                }
+            });
+        } else {
+            $('#tr_id').prop('disabled', false);
+        }
+    });
+}

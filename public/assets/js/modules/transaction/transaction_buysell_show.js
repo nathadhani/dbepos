@@ -1,6 +1,7 @@
-var xtr_id = (decrypt(tr_uri_code) === 'buy' ? 1 : decrypt(tr_uri_code) === 'sell' ? 2 : 0);
+var xtr_id = 0;
 var xcashierby = 0;
 var xcashierby_name = '';
+$(".dropbtn").hide();
 $("#btn-submit").hide();
 $("#btn-cancel").hide();
 $("#btn-pdf").hide();
@@ -22,7 +23,13 @@ function show_header($id){
                 success: function(data){
                     if (data !== '[]'){
                         var d = JSON.parse(data)[0];
-
+                        xtr_id = d.tr_id;
+                        if(xtr_id === '1'){
+                            $("#trx_name").html('<span style="color:blue;font-weight:800;font-size:14px;">Buy / Beli</span>');
+                        }
+                        if(xtr_id === '2'){
+                            $("#trx_name").html('<span style="color:red;font-weight:800;font-size:14px;">Sell / Jual</span>');
+                        }
                         if(Number(d.status) === 1){ // back to task
                             if(Number(d.tr_id) === 1){
                                 url = call_page_task_buy(d.customer_id,d.id);
@@ -51,6 +58,7 @@ function show_header($id){
                         $("#ftitle").html(d.status == 2 ? '<span style="color:red;font-weight:bolder;">'+d.status_name+'</span>' : d.status_name);
                         $("#description_header").html(d.description);                        
                         
+                        $(".dropbtn").hide();
                         $("#btn-payment").hide();
                         $("#btn-submit").hide();
                         $("#btn-cancel").hide();
@@ -58,18 +66,21 @@ function show_header($id){
                         if(Number(d.createdby) === Number(userId)){
                             switch(Number(d.status)) {
                                 case 1:     
+                                    $(".dropbtn").hide();
                                     $("#btn-payment").hide();           
                                     $("#btn-submit").hide();
                                     $("#btn-cancel").show();
                                     $("#btn-pdf").hide();
                                     break;
                                 case 2:
+                                    $(".dropbtn").hide();
                                     $("#btn-payment").hide();
                                     $("#btn-submit").hide();
                                     $("#btn-cancel").hide();
                                     $("#btn-pdf").show();
                                     break;
                                 case 3:
+                                    $(".dropbtn").show();
                                     if(Number(Apimethod) === 1){                                            
                                         $("#btn-submit").show();
                                     }
@@ -78,6 +89,7 @@ function show_header($id){
                                     $("#btn-pdf").show();              
                                     break;
                                 case 4:
+                                    $(".dropbtn").show();
                                     if(Number(Apimethod) === 1){                                          
                                         $("#btn-submit").show();
                                     }
@@ -86,12 +98,14 @@ function show_header($id){
                                     $("#btn-pdf").show();              
                                     break;
                                 case 9:
+                                    $(".dropbtn").hide();
                                     $("#btn-payment").hide();
                                     $("#btn-submit").hide();   
                                     $("#btn-cancel").show();
                                     $("#btn-pdf").show();                                           
                                     break;
                                 default:
+                                    $(".dropbtn").hide();
                                     $("#btn-payment").hide();
                                     $("#btn-submit").hide();
                                     $("#btn-cancel").hide();
@@ -102,7 +116,7 @@ function show_header($id){
                                                 
                         $("#created_by").html('Created by : '+d.createdby_name +' - '+d.created);
                         if(d.status == '2'){
-                            $("#cancel_by").html('Canceled by : '+d.updatedby_name +' - '+d.updated);
+                            $("#cancel_by").html(' Canceled by : '+d.updatedby_name +' - '+d.updated);
                         }                            
 
                         $("#customer_name").html(d.customer_name.trim());
@@ -174,7 +188,7 @@ function show_detail($header_id){
                                     <td colspan="6" style='vertical-align:middle;text-align:center;background-color:#e3e4e6;font-weight:bold;font-size:14px;'>
                                     <i>Say</i> : ` + bksfn.terBilang(totalpricex) + `
                                     </td>
-                                    <td style='text-align:left;background-color:#f1f5f9;font-weight:bold;font-size:15px;'>
+                                    <td style='text-align:left;font-weight:bold;font-size:15px;'>
                                         Rp. ` + formatRupiah(totalpricex) + `
                                     </td>                         
                                 </tr>`   
@@ -216,12 +230,9 @@ function show_detail_payment($header_id){
                                             ` + d.payment_type_name +`
                                             <a style="color:red; cursor:pointer" title="hapus" onClick="delete_line_detail_payment(` + d.id + `)"> / <i>remove<i></a>
                                         </td>
-                                        <td width="45%" style='text-align:left;'>
+                                        <td width="60%" style='text-align:left;'>
                                             ` + d.payment_description.trim() + `
-                                        </td>
-                                        <td width="15%" style='text-align:left;'>
-                                            ` + (d.updated == null ? d.created : d.updated) + `
-                                        </td>                       
+                                        </td>                                        
                                         <td width="15%" style='text-align:left;'>
                                             ` + (isDecimal(d.amount) ? formatDecimal(d.amount,2) : formatRupiah(d.amount) ) + `
                                         </td>
@@ -230,10 +241,10 @@ function show_detail_payment($header_id){
                     counter++;
                 });
                 var rowsx =`<tr>
-                                <td colspan="4" style='vertical-align:middle;text-align:center;font-weight:bold;background-color:#f1f5f9;color:#56688A;font-size:13px;'>
+                                <td colspan="3" style='vertical-align:middle;text-align:center;background-color:#e3e4e6;font-weight:bold;font-size:14px;'>
                                     Total Payment Value
                                 </td>
-                                <td style='text-align:left;font-weight:bold;'>
+                                <td style='text-align:left;font-weight:bold;font-size:15px;'>
                                     Rp. ` + formatRupiah(totalpaymentx) + `
                                 </td>                         
                             </tr>`   
@@ -278,7 +289,7 @@ function reset_form_input_payment(){
 
 $("#btn-payment").on('click', function (e) {
     e.preventDefault();
-    $(".modal-dialog").width('1200px');
+    $(".modal-dialog").width('1000px');
     $("#ModalPayment").modal('show');
     $("#modal_cashierby").empty();
     if(xcashierby !== 0){
@@ -331,8 +342,8 @@ $("#btn-modal-add-row-payment").on('click', function (e) {
             if (obj.msg == 1) {
                 alertify.success('Data add success!');
                 reset_form_input_payment();
-                show_detail_payment(id_tr_header);
-                history.go(0); // untuk memuat ulang halaman tanpa cache.
+                show_detail_payment(id_tr_header);                
+                back_to_page_show();
             } else {
                 alertify.error("error");
                 StringtoFile(xhr.responseText, 'error');
@@ -374,6 +385,7 @@ $("#btn-modal-cancel").on('click', function (e) {
                             api_ap_adjustment_trx(id_tr_header);
                         } else {
                             back_to_page_show();
+                            // history.go(0); // untuk memuat ulang halaman tanpa cache.
                             alertify.success('CANCEL Transaction Success!');
                         }         
                         $("#ModalCancel").modal('hide');                
@@ -389,26 +401,6 @@ $("#btn-modal-cancel").on('click', function (e) {
             }   
         });            
     }          
-});    
-
-$("#btn-pdf").on('click', function (e) {
-    e.preventDefault();
-    // alertify.confirm("export to Pdf Trx. No " + document.getElementById('tr_number').innerText + " ?", function (e) {    
-    //     if (e) {                
-            var url = "transaction/transaction_buysell_show/printnota/" + id_tr_header + "/" + xtr_id;
-            $.ajax({
-                url: url,
-                type: 'POST',
-                success: function(resp){
-                    window.open(url,'blank');                                                                             
-                },
-                error: function(xhr){
-                    alertify.error("error can't print");
-                    StringtoFile(xhr.responseText, 'error');
-                }
-            });                                       
-    //     }    
-    // });  
 });
 
 $("#btn-submit").on('click', function (e) {
@@ -428,7 +420,7 @@ $("#customer_name").on('click', function (e) {
             url: url,
             type: 'POST',
             success: function() {            
-                window.open(url,'_blank'); 
+                window.open(url,'_self'); 
             },
             error: function(){
                 alertify.error("can't open page");
@@ -449,6 +441,7 @@ $("#btn_cashier_save").on('click', function (e) {
             datatype: 'json',
             success: function() {
                 back_to_page_show();
+                history.go(0); // untuk memuat ulang halaman tanpa cache.
                 alertify.success('Save Success!');                
             },
             error: function(xhr){
@@ -457,4 +450,26 @@ $("#btn_cashier_save").on('click', function (e) {
             }
         });           
     }          
-}); 
+});
+
+$("#btn-pdf").on('click', function (e) {
+    e.preventDefault();
+    // alertify.confirm("export to Pdf Trx. No " + document.getElementById('tr_number').innerText + " ?", function (e) {    
+    //     if (e) {                
+            var url = "transaction/transaction_buysell_show/printnota/" + id_tr_header + "/" + xtr_id;
+            $.ajax({
+                url: url,
+                type: 'POST',
+                success: function(resp){
+                    // window.open(url,'_self').contentWindow.print();;
+                    // window.print();            
+                    document.location.href = url; 
+                },
+                error: function(xhr){
+                    alertify.error("error can't print");
+                    StringtoFile(xhr.responseText, 'error');
+                }
+            });                                       
+    //     }    
+    // });  
+});

@@ -485,23 +485,13 @@ function call_page_customer_new(){
     window.open(url,'_self');    
 }
 
-function call_page_task_buy(customer_id, id_log_a){
-    var url = "transaction/transaction_buysell/index/"+customer_id+"/"+encrypt('buy')+"/"+id_log_a;
+function call_page_task_buysell(customer_id, id_tr_header){
+    var url = "transaction/transaction_buysell/index/"+customer_id+"/"+id_tr_header;
     return url;
 }
 
-function call_page_task_sell(customer_id, id_log_a){
-    var url = "transaction/transaction_buysell/index/"+customer_id+"/"+encrypt('sell')+"/"+id_log_a;
-    return url;
-}
-
-function call_page_show_buy(customer_id, id_tr_header){
-    var url = "transaction/transaction_buysell_show/index/"+customer_id+"/"+encrypt('buy')+"/"+id_tr_header;
-    return url;
-}
-
-function call_page_show_sell(customer_id, id_tr_header){
-    var url = "transaction/transaction_buysell_show/index/"+customer_id+"/"+encrypt('sell')+"/"+id_tr_header;
+function call_page_show_buysell(customer_id, id_tr_header){
+    var url = "transaction/transaction_buysell_show/index/"+customer_id+"/"+id_tr_header;
     return url;
 }
 

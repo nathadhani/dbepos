@@ -153,7 +153,7 @@ function default_row(){
                     <td></td>
                     <td></td>
                 </tr>`;
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < 5; i++) {
         $('#mainTable tbody').append(rows);
     }
 }
@@ -181,13 +181,7 @@ function select_row(){
     t.on('click', 'tbody tr', function (e) {
         e.preventDefault();
         let data = t.row(this).data();
-        alertify.confirm('Customer Name : ' + data.customer_name +'<br> Customer Address : ' + data.customer_address, function (x) {    
-            if (x) {           
-                edit_data(data.id, arrdata.push(data));       
-            } else {
-                return;
-            }    
-        }); 
+        edit_data(data.id, arrdata.push(data));
     });
 }
 

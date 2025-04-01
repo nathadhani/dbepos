@@ -17,7 +17,7 @@
                                     <select name="tr_id"
                                             data-ajax="true" 
                                             data-placeholder="-- Pilih --"
-                                            data-url="master_data/m_trxlist/gettrxlist/" 
+                                            data-url="master_data/m_trxlist/gettrxlistcashbank/" 
                                             data-value="" 
                                             data-limit="100"                                                
                                             id="tr_id" placeholder="Trx"

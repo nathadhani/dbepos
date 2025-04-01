@@ -118,16 +118,37 @@ class Menu extends Bks_Controller {
         }
     }
 
-    function _createmenuaplikasi($group_id = null, $pid = 0) {
-        $query = $this->db->query("SELECT * FROM menu WHERE link = '#' ORDER BY menu")->result_array();
+    function _createmenu_top($group_id = null, $pid = 0) {
+        $query = $this->db->order_by("menuorder")->get_where('v_auth_menu_group_create', array('usergroup_id' => $group_id, 'parent_id' => $pid, 'status' => '1'))->result_array();
         if (count($query) > 0) {
             foreach ($query as $val) {
-                $c2 = '<span>' . $val['menu'] . '</span>';
-                echo '<li>
-                        <a href="' . $val['link'] . '"><span class="' . $val['icon'] . '"></span> ' . $c2 . '</a>
-                      </li>';
-            }
+                if ($val['h_child'] == 1) {
+                    $c1 = 'xn-openable';
+                    if ($val['parent'] == NULL) {
+                        $c2 = '<span class="xn-text">' . $val['menu'] . '</span>';
+                    } else {
+                        $c2 = '<span>' . $val['menu'] . '</span>';
+                    }
+                    
+                    $c3 = '<ul>';
+                } else {
+                    $c1 = '';
+                    if ($val['parent'] == NULL) {
+                        $c2 = '<span class="xn-text">' . $val['menu'] . '</span>';
+                    } else {
+                        $c2 = '<span>' . $val['menu'] . '</span>';
+                    }
+                    $c3 = '</li>';
+                }
+                echo '<li class="' . $c1 . '">
+                        <a href="' . $val['link'] . '"><span class="' . $val['icon'] . '"></span> ' . $c2 . '</a>';
+                echo $c3;
+                if ($val['h_child'] == 1) {
+                    $this->_createmenu_top($group_id, $val['menu_id']);
+                    echo '</ul></li>';
+                }
+            }            
         }
-    }
+    }    
 
 }

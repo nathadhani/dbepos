@@ -23,9 +23,8 @@ class Transaction_buysell_show extends Bks_Controller {
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
         $customer_id = json_decode($postData['customer_id']);
-        $tr_id = json_decode($postData['tr_id']);
         $id = json_decode($postData['id']);
-        $query = $this->db->query("SELECT * FROM v_tr_header WHERE customer_id = " . $customer_id . " AND tr_id = " . $tr_id . " AND  id= " . $id)->result();
+        $query = $this->db->query("SELECT * FROM v_tr_header WHERE customer_id = " . $customer_id . " AND  id= " . $id)->result();
         echo json_encode($query, true);
     }
     
@@ -36,7 +35,7 @@ class Transaction_buysell_show extends Bks_Controller {
         $customer_id = json_decode($postData['customer_id']);
         $tr_id = json_decode($postData['tr_id']);
         $header_id = json_decode($postData['header_id']);
-        $query = $this->db->query("SELECT * FROM v_tr_detail WHERE customer_id = " . $customer_id . " AND tr_id = " . $tr_id . " AND header_id= " . $header_id ." ORDER BY currency_id, nominal, price ASC")->result();
+        $query = $this->db->query("SELECT * FROM v_tr_detail WHERE customer_id = " . $customer_id . " AND header_id= " . $header_id ." ORDER BY currency_id, nominal, price ASC")->result();
         echo json_encode($query, true);
     }     
     
@@ -108,13 +107,13 @@ class Transaction_buysell_show extends Bks_Controller {
 
                     $pdf->SetFont('', '', 9);
                     $pdf->Cell(01, 01, "------------------------------------------------------------------------------------", 0, 1, 'L');
-                    $pdf->Cell(01, 01, 'Date : ' . $tr_date . '         ' . ucwords(strtolower($tr_name)) . ' No. : ' . trim($tr_number), 0, 1, 'L');
-                    $pdf->Cell(01, 01, 'CIF : ' . trim($profil_customer[0]->customer_code) . '     ID No. : ' . $profil_customer[0]->customer_data_number, 0, 1, 'L');
-                    $pdf->Cell(01, 01, 'Name : ' . SUBSTR(trim($profil_customer[0]->customer_name),0,45), 0, 1, 'L');
-                    $pdf->Cell(01, 01, 'Address : ' . SUBSTR(trim($profil_customer[0]->customer_address),0,45), 0, 1, 'L');
-                    $pdf->Cell(01, 01, 'Phone : ' . $profil_customer[0]->customer_handphone . '     Job : ' . $profil_customer[0]->customer_job_name, 0, 1, 'L');
-                    $pdf->Cell(01, 01, 'Source : ' . SUBSTR(trim($customer_source),0,50), 0, 1, 'L');
-                    $pdf->Cell(01, 01, 'Purpose : ' . SUBSTR(trim($customer_puprpose),0,50), 0, 1, 'L');
+                    $pdf->Cell(01, 01, 'Date        : ' . $tr_date . '         ' . ucwords(strtolower($tr_name)) . ' No. : ' . trim($tr_number), 0, 1, 'L');
+                    $pdf->Cell(01, 01, 'CIF          :  ' . trim($profil_customer[0]->customer_code) . '     ID No. : ' . $profil_customer[0]->customer_data_number, 0, 1, 'L');
+                    $pdf->Cell(01, 01, 'Name      : ' . SUBSTR(trim($profil_customer[0]->customer_name),0,45), 0, 1, 'L');
+                    $pdf->Cell(01, 01, 'Address  : ' . SUBSTR(trim($profil_customer[0]->customer_address),0,45), 0, 1, 'L');
+                    $pdf->Cell(01, 01, 'Phone     : ' . $profil_customer[0]->customer_handphone . '     Job : ' . $profil_customer[0]->customer_job_name, 0, 1, 'L');
+                    $pdf->Cell(01, 01, 'Source    : ' . SUBSTR(trim($customer_source),0,50), 0, 1, 'L');
+                    $pdf->Cell(01, 01, 'Purpose  : ' . SUBSTR(trim($customer_puprpose),0,50), 0, 1, 'L');
                     $pdf->SetAutoPageBreak(true, 0);
             
                     // Add Header Column

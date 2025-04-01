@@ -8,43 +8,32 @@
     $img_file = '';
     $image_url = '';
     if(isset($customer[0]->customer_code)) {
-        $img_file = "filex/images_customer_form/" . $customer[0]->customer_code . ".jpg";
+        $img_file = "assets/filex/images_customer_form/" . $customer[0]->customer_code . ".jpg";
         $image_url = base_url($img_file);    
     }
 ?>
-<div class="page-content-wrap">            
-    <div class="row">        
-        <div class="panel-body">                        
+<div class="page-content-wrap">    
+    <form id="mainForm" method="post" class="form-horizontal" autocomplete="off" enctype="multipart/form-data">
+        <div class="row">   
             <div class="col-md-12">
-                    <a class="file-input-wrapper btn btn-info btn btn-sm">
-                        <span class="fa fa-upload"> Upload ID Photo</span>
-                        <form id="form_foto" method="post" enctype="multipart/form-data">
-                            <input type="file" name="upload_foto" id="upload_foto" class="form-control" accept="image/*">
-                        </form>
-                    </a>
-            </div>        
-        </div>        
-    </div>    
-    <div class="row">   
-        <div class="col-md-12">
-            <div class="panel panel-default">
-                <form id="mainForm" class="form-horizontal" autocomplete="off">
+                <div class="panel panel-default">                
                     <div class="panel-heading ui-draggable-handle">
                         <div class="panel-title-box">
                             <h3>Customer Form / <strong id="ftitle"></strong></h3>
                         </div>
                         <ul class="panel-controls">
-                            <button id="btn-buy" class="btn btn-info btn" style="width:120px;font-weight:600;color:blue;font-size:14px;">Buy / Beli</button>
-                            <button id="btn-sell" class="btn btn-info btn" style="width:120px;font-weight:600;color:red;font-size:14px;margin-left:5px;">Sell / Jual</button>
+                            <button type="submit" class="btn btn-info btn btn-sm" style="width:140px;margin-left:10px;">Submit</button>
+                            <button type="reset" class="btn btn-info btn btn-sm" style="width:140px;margin-left:10px;">Reset</button>
+                            <button id="btn-buysell" class="btn btn-info btn" style="width:140px;margin-left:10px;">Buy / Sell - New</button>
                         </ul>
                     </div>                    
-                    <div class="panel-body">                        
+                    <div class="panel-body"> 
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <table class="table" cellspacing="0" cellpadding="0" border="0" width="100%" style="border-top-style: hidden;">
                                     <tr>    
                                         <td width="28%" style="border-bottom-style: hidden;">
-                                            Customer Code
+                                            CIF
                                         </td>
                                         <td width="72%" style="border-bottom-style: hidden;">    
                                             <div class="input-group">                                        
@@ -54,6 +43,41 @@
                                                 <input type="text" id="customer_code" name="customer_code" class="form-control" style="width:150px;" readonly>
                                             </div>
                                         </td>                                        
+                                    </tr>
+                                    <tr>    
+                                        <td width="28%" style="border-bottom-style: hidden;">
+                                            Type <strong style="color:red;font-weight:bold;font-size:18px;">**</strong>
+                                        </td>
+                                        <td width="78%" style="border-bottom-style: hidden;">                                            
+                                            <select id="customer_type_id" 
+                                                    name="customer_type_id"
+                                                    data-ajax="true" 
+                                                    data-placeholder="Tipe Pelanggan..."
+                                                    data-url="master_data/m_customer_type/getType/" 
+                                                    data-value="" 
+                                                    data-limit="100"                                                
+                                                    placeholder="Tipe Nasabah"  
+                                                    class='form-control select2'
+                                                    data-validation="required"
+                                            >
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>    
+                                        <td width="28%" style="border-bottom-style: hidden;">
+                                            Full Name <strong style="color:red;font-weight:bold;font-size:18px;">**</strong>
+                                        </td>
+                                        <td width="72%" style="border-bottom-style: hidden;">                                            
+                                            <input type="text" id="customer_name" name="customer_name" class="form-control" placeholder="Nama Lengkap..." data-validation="required">
+                                        </td>
+                                    </tr>
+                                    <tr class="perorangan">    
+                                        <td width="28%" style="border-bottom-style: hidden;">
+                                            Call Name
+                                        </td>
+                                        <td width="72%" style="border-bottom-style: hidden;">                                            
+                                            <input type="text" id="customer_nick_name" name="customer_nick_name" class="form-control" placeholder="Nama Panggilan...">
+                                        </td>
                                     </tr> 
                                     <tr>    
                                         <td width="28%" style="border-bottom-style: hidden;">
@@ -70,42 +94,20 @@
                                         <td width="72%" style="border-bottom-style: hidden;">                                            
                                             <input type="text" id="customer_phone" name="customer_phone" class="form-control" placeholder="No Telpon Rumah / Kantor...">
                                         </td>
-                                    </tr>
-                                    <tr>    
+                                    </tr>                                    
+                                    <tr class="perorangan">    
                                         <td width="28%" style="border-bottom-style: hidden;">
-                                            Full Name <strong style="color:red;font-weight:bold;font-size:18px;">**</strong>
+                                            Character
                                         </td>
-                                        <td width="72%" style="border-bottom-style: hidden;">                                            
-                                            <input type="text" id="customer_name" name="customer_name" class="form-control" placeholder="Nama Lengkap...">
-                                        </td>
-                                    </tr>
-                                    <tr>    
-                                        <td width="28%" style="border-bottom-style: hidden;">
-                                            Call Name
-                                        </td>
-                                        <td width="72%" style="border-bottom-style: hidden;">                                            
-                                            <input type="text" id="customer_nick_name" name="customer_nick_name" class="form-control" placeholder="Nama Panggilan...">
-                                        </td>
-                                    </tr>
-                                    <tr>    
-                                        <td width="28%" style="border-bottom-style: hidden;">
-                                            Customer Type <strong style="color:red;font-weight:bold;font-size:18px;">**</strong>
-                                        </td>
-                                        <td width="78%" style="border-bottom-style: hidden;">                                            
-                                            <select id="customer_type_id" 
-                                                    name="customer_type_id"
-                                                    data-ajax="true" 
-                                                    data-placeholder="Tipe Pelanggan..."
-                                                    data-url="master_data/m_customer_type/getType/" 
-                                                    data-value="" 
-                                                    data-limit="100"                                                
-                                                    placeholder="Tipe Nasabah"  
-                                                    class='form-control select2'                                                
-                                            >
-                                            </select>
-                                        </td>
-                                    </tr>
-                                    <tr>    
+                                        <td width="72%" style="border-bottom-style: hidden;">
+                                            <textarea rows="1" cols="50" id="customerprofil" name="customerprofil" class="form-control" placeholder="Sifat Nasabah..."></textarea>                                             
+                                        </td>                                        
+                                    </tr>                                                                       
+                                </table> 
+                            </div> 
+                            <div class="col-md-4 perorangan">
+                                <table class="table" cellspacing="0" cellpadding="0" border="0" width="100%" style="border-top-style: hidden;">
+                                    <tr class="perorangan">    
                                         <td width="28%" style="border-bottom-style: hidden;">
                                             Identity Type
                                         </td>
@@ -122,30 +124,24 @@
                                             >
                                             </select>
                                         </td>
-                                    </tr>
+                                    </tr>              
                                     <tr>    
                                         <td width="28%" style="border-bottom-style: hidden;">
                                             Identity Number
                                         </td>
-                                        <td width="72%" style="border-bottom-style: hidden;">                                            
-                                            <?php
-                                                if (file_exists($img_file)) {
-                                            ?>
-                                                <div class="input-group">
-                                                    <input type="text" id="customer_data_number" name="customer_data_number" class="form-control" placeholder="Nomor Identitas...">
+                                        <td width="72%" style="border-bottom-style: hidden;">                                                                                        
+                                            <div class="input-group">
+                                                <input type="text" id="customer_data_number" name="customer_data_number" class="form-control" placeholder="Nomor Identitas...">
+                                                <?php
+                                                    if (file_exists($img_file)) {
+                                                ?>
                                                     <span class="input-group-addon"> 
                                                         <a href="<?=$image_url;?>" target="_blank" title="ID photo">
                                                             <span class="fa fa-picture-o"></span>
                                                         </a>
                                                     </span>
-                                                </div>
-                                            <?php 
-                                                } else {
-                                            ?>
-                                                <input type="text" id="customer_data_number" name="customer_data_number" class="form-control" placeholder="Nomor Identitas...">
-                                            <?php 
-                                                }
-                                            ?>
+                                                <?php } ?>
+                                            </div>
                                         </td>
                                     </tr>
                                     <tr>    
@@ -155,23 +151,7 @@
                                         <td width="72%" style="border-bottom-style: hidden;">                                            
                                             <input type="text" id="npwp_number" name="npwp_number" class="form-control" placeholder="Nomor NPWP...">
                                         </td>
-                                    </tr>
-                                    <tr>    
-                                        <td width="28%" style="border-bottom-style: hidden;">
-                                            Birth Place
-                                        </td>
-                                        <td width="72%" style="border-bottom-style: hidden;">                                            
-                                            <input type="text" id="placeofbirth" name="placeofbirth" class="form-control" placeholder="Tempat Lahir...">
-                                        </td>
-                                    </tr>
-                                    <tr>    
-                                        <td width="28%" style="border-bottom-style: hidden;">
-                                            Birth Date
-                                        </td>
-                                        <td width="72%" style="border-bottom-style: hidden;">                                            
-                                            <input type="text" id="bornday" name="bornday" placeholder="Tanggal Lahir ..." class="form-control dp" data-date-format="DD MMMM YYYY" style="width:100px;" value="<?=date('d-m-Y');?>">
-                                        </td>
-                                    </tr>
+                                    </tr>                      
                                     <tr>    
                                         <td width="28%" style="border-bottom-style: hidden;">
                                             Nationality
@@ -207,60 +187,28 @@
                                             >
                                             </select>
                                         </td>
-                                    </tr>                                                                                                         
+                                    </tr>                                                  
+                                    <tr>    
+                                        <td width="28%" style="border-bottom-style: hidden;">
+                                            Birth Place
+                                        </td>
+                                        <td width="72%" style="border-bottom-style: hidden;">                                            
+                                            <input type="text" id="placeofbirth" name="placeofbirth" class="form-control" placeholder="Tempat Lahir...">
+                                        </td>
+                                    </tr>
+                                    <tr>    
+                                        <td width="28%" style="border-bottom-style: hidden;">
+                                            Birth Date
+                                        </td>
+                                        <td width="72%" style="border-bottom-style: hidden;">                                            
+                                            <input type="text" id="bornday" name="bornday" placeholder="Tanggal Lahir ..." class="form-control dp" data-date-format="DD MMMM YYYY" style="width:100px;" value="<?=date('d-m-Y');?>">
+                                        </td>
+                                    </tr>                                                                        
                                 </table> 
-                            </div> 
-                            <div class="col-md-6">
+                            </div>              
+                            <div class="col-md-4">
                                 <table class="table" cellspacing="0" cellpadding="0" border="0" width="100%" style="border-top-style: hidden;">
-                                    <tr>
-                                        <td width="28%" style="border-bottom-style: hidden;">
-                                            ID photo
-                                        </td>
-                                        <td width="72%" style="border-bottom-style: hidden;">
-                                            <div id="links" class="col-lg-10"></div>                                            
-                                        </td>
-                                    </tr>
-                                    <tr>    
-                                        <td width="28%" style="border-bottom-style: hidden;">
-                                            Address <strong style="color:red;font-weight:bold;font-size:18px;">**</strong>
-                                        </td>
-                                        <td width="72%" style="border-bottom-style: hidden;">    
-                                            <textarea rows="2" cols="50" id="customer_address" name="customer_address" class="form-control" placeholder="Alamat..." data-validation="required"></textarea>
-                                        </td>                                        
-                                    </tr>
-                                    <tr>    
-                                        <td width="28%" style="border-bottom-style: hidden;">
-                                            RT / RW
-                                        </td>
-                                        <td width="72%" style="border-bottom-style: hidden;">    
-                                            <input type="text" id="rt_rw" name="rt_rw" class="form-control" placeholder="RT / RW...">
-                                        </td>                                        
-                                    </tr>
-                                    <tr>    
-                                        <td width="28%" style="border-bottom-style: hidden;">
-                                            Subdistrict / Village
-                                        </td>
-                                        <td width="72%" style="border-bottom-style: hidden;">    
-                                            <input type="text" id="village" name="village" class="form-control" placeholder="Kelurahan / Desa...">
-                                        </td>                                        
-                                    </tr>
-                                    <tr>    
-                                        <td width="28%" style="border-bottom-style: hidden;">
-                                            Subdistrict
-                                        </td>
-                                        <td width="72%" style="border-bottom-style: hidden;">    
-                                            <input type="text" id="sub_district" name="sub_district" class="form-control" placeholder="Kecamatan...">
-                                        </td>                                        
-                                    </tr>
-                                    <tr>    
-                                        <td width="28%" style="border-bottom-style: hidden;">
-                                            Regency / City
-                                        </td>
-                                        <td width="72%" style="border-bottom-style: hidden;">    
-                                            <input type="text" id="city" name="city" class="form-control" placeholder="Kabupaten / Kota...">
-                                        </td>                                        
-                                    </tr>
-                                    <tr>    
+                                    <tr class="perorangan">    
                                         <td width="28%" style="border-bottom-style: hidden;">
                                             Gender
                                         </td>
@@ -274,29 +222,61 @@
                                     </tr>
                                     <tr>    
                                         <td width="28%" style="border-bottom-style: hidden;">
-                                            Customer Nature / Character
+                                            Address <strong style="color:red;font-weight:bold;font-size:18px;">**</strong>
                                         </td>
-                                        <td width="72%" style="border-bottom-style: hidden;">
-                                            <textarea rows="2" cols="50" id="customerprofil" name="customerprofil" class="form-control" placeholder="Sifat Nasabah..."></textarea>                                             
+                                        <td width="72%" style="border-bottom-style: hidden;">    
+                                            <textarea rows="2" cols="50" id="customer_address" name="customer_address" class="form-control" placeholder="Alamat..." data-validation="required"></textarea>
                                         </td>                                        
-                                    </tr>                                                                                                                                                                                  
-                                </table> 
-                            </div>                               
-                        </div>                                             
-                        <hr style="border: 1px solid green;">
-                    </div>
-                    <!--.end panel-body -->
-                    
-                    <div class="panel-body" style="margin-top:-35px;">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <button type="reset" class="btn btn-info btn btn-sm pull-right" style="width:120px;margin-left:10px;">Reset</button>
-                                <button type="submit" class="btn btn-info btn btn-sm pull-right" style="width:120px;">Submit</button>
-                            </div>
-                        </div>                            
-                    </div>
-                </form>
-            </div>            
-        </div>
-    </div>    
+                                    </tr>
+                                    <tr class="perorangan">    
+                                        <td width="28%" style="border-bottom-style: hidden;">
+                                            RT / RW
+                                        </td>
+                                        <td width="72%" style="border-bottom-style: hidden;">    
+                                            <input type="text" id="rt_rw" name="rt_rw" class="form-control" placeholder="RT / RW...">
+                                        </td>                                        
+                                    </tr>
+                                    <tr class="perorangan">    
+                                        <td width="28%" style="border-bottom-style: hidden;">
+                                            Village
+                                        </td>
+                                        <td width="72%" style="border-bottom-style: hidden;">    
+                                            <input type="text" id="village" name="village" class="form-control" placeholder="Kelurahan / Desa...">
+                                        </td>                                        
+                                    </tr>
+                                    <tr class="perorangan">    
+                                        <td width="28%" style="border-bottom-style: hidden;">
+                                            Subdistrict
+                                        </td>
+                                        <td width="72%" style="border-bottom-style: hidden;">    
+                                            <input type="text" id="sub_district" name="sub_district" class="form-control" placeholder="Kecamatan...">
+                                        </td>                                        
+                                    </tr>
+                                    <tr class="perorangan">    
+                                        <td width="28%" style="border-bottom-style: hidden;">
+                                            City
+                                        </td>
+                                        <td width="72%" style="border-bottom-style: hidden;">    
+                                            <input type="text" id="city" name="city" class="form-control" placeholder="Kabupaten / Kota...">
+                                        </td>                                        
+                                    </tr>                                                                        
+                                </table>
+                            </div>                 
+                        </div>           
+                        <br>      
+                        <div class="row perorangan">
+                            <div class="col-md-3">
+                                <a class="file-input-wrapper btn btn-info btn">
+                                    <span class="fa fa-upload"></span>
+                                    <input type="file" id="upload_foto" name="upload_foto" class="form-control" accept="image/*">
+                                    Upload ID Photo
+                                </a>
+                            </div>      
+                        </div>                                                     
+                    </div>                    
+                    <!--.end panel-body -->                    
+                </div>                
+            </div>
+        </div>        
+    </form>    
 </div>

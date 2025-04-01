@@ -285,7 +285,7 @@ function reset_form_input_new(){
 }
 
 function show_detail($header_id){
-    // $('#table-modal-new tbody').empty();
+    $('#table-modal-new tbody').empty();
     let tbody = document.getElementById("table-modal-new");
     let rowCount = tbody.rows.length;
     for (let i = rowCount - 1; i >= 1; i--) {
@@ -300,55 +300,58 @@ function show_detail($header_id){
         success: function (data) {
             if (data !== '[]' && data.length > 0){
                 var totalamountx = 0;
+                var rows = '';
                 $.each(data, function (i, d) {                 
                     totalamountx += Number(d.amount);
                     if(Number(d.status) === 3){
-                        var rows =`<tr id="` + counter + `">
-                                        <td width="5%" style="text-align:center;vertical-align:middle">
-                                            ` + counter + `
-                                        </td>
-                                        <td width="10%" style="vertical-align: middle;color:black">
-                                            ` + d.cb_name.trim() +`
-                                            <a style="color:red; cursor:pointer" title="hapus" onClick="delete_line_detail(` + d.id + `)"> / <i>remove<i></a>
-                                        </td>
-                                        <td width="20%" style="vertical-align: middle;color:black">
-                                            ` + d.cb_pos_name +`
-                                        </td>
-                                        <td width="45%" style='text-align:left;'>
-                                            ` + d.cb_description.trim() + ` - ` + d.description.trim() + `
-                                        </td>
-                                        <td width="15%" style='text-align:left;'>
-                                            ` + (isDecimal(d.amount) ? formatDecimal(d.amount,2) : formatRupiah(d.amount) ) + `
-                                        </td>
-                                    </tr>`
-                        $('#table-modal-new tbody').append(rows);   
+                        rows =`<tr id="` + counter + `">
+                                    <td width="5%" style="text-align:center;vertical-align:middle">
+                                        ` + counter + `
+                                    </td>
+                                    <td width="10%" style="vertical-align: middle;color:black">
+                                        ` + d.cb_name.trim() +`
+                                        <a style="color:red; cursor:pointer" title="hapus" onClick="delete_line_detail(` + d.id + `)"> / <i>remove<i></a>
+                                    </td>
+                                    <td width="20%" style="vertical-align: middle;color:black">
+                                        ` + d.cb_pos_name +`
+                                    </td>
+                                    <td width="45%" style='text-align:left;'>
+                                        ` + d.description.trim() + `
+                                    </td>
+                                    <td width="15%" style='text-align:left;'>
+                                        ` + (isDecimal(d.amount) ? formatDecimal(d.amount,2) : formatRupiah(d.amount) ) + `
+                                    </td>
+                                </tr>`                        
                     } else {
-                        var rows =`<tr id="` + counter + `">
-                                        <td width="5%" style="text-align:center;vertical-align:middle">
-                                            ` + counter + `
-                                        </td>
-                                        <td width="10%" style="vertical-align: middle;color:black">
-                                            ` + d.cb_name.trim() +`
-                                        </td>
-                                        <td width="20%" style="vertical-align: middle;color:black">
-                                            ` + d.cb_pos_name +`
-                                        </td>
-                                        <td width="45%" style='text-align:left;'>
-                                            ` + d.cb_description.trim() + ` - ` + d.description.trim() + `
-                                        </td>
-                                        <td width="15%" style='text-align:left;'>
-                                            ` + (isDecimal(d.amount) ? formatDecimal(d.amount,2) : formatRupiah(d.amount) ) + `
-                                        </td>
-                                    </tr>`
-                        $('#table-modal-new tbody').append(rows);
+                        rows =`<tr id="` + counter + `">
+                                    <td width="5%" style="text-align:center;vertical-align:middle">
+                                        ` + counter + `
+                                    </td>
+                                    <td width="10%" style="vertical-align: middle;color:black">
+                                        ` + d.cb_name.trim() +`
+                                    </td>
+                                    <td width="20%" style="vertical-align: middle;color:black">
+                                        ` + d.cb_pos_name +`
+                                    </td>
+                                    <td width="45%" style='text-align:left;'>
+                                        ` + d.description.trim() + `
+                                    </td>
+                                    <td width="15%" style='text-align:left;'>
+                                        ` + (isDecimal(d.amount) ? formatDecimal(d.amount,2) : formatRupiah(d.amount) ) + `
+                                    </td>
+                                </tr>`                        
                     }                    
-                    counter++;
+                    if(rows.length > 0){
+                        $('#table-modal-new tbody').append(rows);   
+                        rows = '';
+                        counter++;
+                    }                    
                 });
                 var rowsx =`<tr>
-                                <td colspan="4" style='vertical-align:middle;text-align:center;font-weight:bold;background-color:#f1f5f9;color:#56688A;font-size:13px;'>
+                                <td colspan="4" style='vertical-align:middle;text-align:center;background-color:#e3e4e6;font-weight:bold;font-size:13px;'>
                                     Total
                                 </td>
-                                <td style='text-align:left;font-weight:bold;'>
+                                <td style='text-align:left;font-weight:bold;font-size:15px;'>
                                     Rp. ` + formatRupiah(totalamountx) + `
                                 </td>                         
                             </tr>`   
@@ -398,7 +401,8 @@ $("#btn-generate-buysell").on('click', function (e) {
                     data: {'store_id' : $('#store_id').val(), 'period1' : $("#tr_date1").val(), 'period2' : $("#tr_date2").val() },
                     datatype: 'json',
                     success: function() {
-                        alertify.success("Generate Done!");
+                        alertify.success("Generate Buy / Sell Done!");
+                        $('#table-modal-new tbody').empty();
                         history.go(0); // untuk memuat ulang halaman tanpa cache.
                     },
                     error: function(xhr){
