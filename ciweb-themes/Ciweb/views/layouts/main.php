@@ -44,62 +44,55 @@
         <?php 
         
             if(in_array($usergroup_id, array('3','4'))) {
-        ?>           
-                <li class="xn-icon-button">
-                    <a href="transaction/transaction_buysell_task" title="Buy / Sell - Task" data-toggle="tooltip" data-placement="bottom"><span class="fa fa-comment"></span></a>
-                    <?php 
-                        if($store_id != null){
-                            $count = $this->db->query("SELECT COUNT(status) AS jumlah FROM tr_header
-                                                    WHERE store_id = $store_id
-                                                    AND status = '1' 
-                                                    LIMIT 1")->result();
-                            if(isset($count) && (int) $count > 0) {
-                    ?>
-                        <div class="informer informer-warning" style="font-size:14px;font-weight:bold;"><?php echo $count[0]->jumlah; ?></div>
-                    <?php
-                        } else {
-                    ?>
-                        <div class="informer informer-warning">0</div>
-                    <?php 
-                            } 
-                        } 
-                    ?>        
-                </li>
-
+        ?>        
                 <li class="xn-icon-button">
                     <a href="transaction/transaction_buysell_list" title="Buy / Sell - List" data-toggle="tooltip" data-placement="bottom"><span class="fa fa-list-alt"></span></a>
                 </li>
 
-                <?php if($api_method === '1'){ ?>            
-                    <li class="xn-icon-button">
-                        <a href="api/api_ap_input" title="Integrasi ECSys ( Pending )" data-toggle="tooltip" data-placement="bottom">
-                            <span class="fa fa-comment"></span>
-                        </a>
-                        <?php
-                            if($store_id != null){
-                                $count = $this->db->query("SELECT COUNT(status) AS jumlah FROM v_tr_header
-                                                        WHERE  store_id = $store_id
-                                                        AND api_method = '1'
-                                                        AND status IN (3,4)
-                                                        LIMIT 1")->result();
-                                if(isset($count) && (int) $count > 0) {
-                        ?>
-                            <div class="informer informer-warning" style="font-size:14px;font-weight:bold;"><?php echo $count[0]->jumlah; ?></div>
-                        <?php
-                            } else {
-                        ?>
-                            <div class="informer informer-warning">0</div>
-                        <?php 
-                                } 
-                            } 
-                        ?>        
-                    </li>
-                <?php } ?>     
                 <li class="xn-icon-button">
-                    <a href="dashboard/dashboard_buysell" title="Buy / Sell Chart" data-toggle="tooltip" data-placement="bottom">
+                    <a href="dashboard/dashboard_buysell" title="Buy / Sell - Chart" data-toggle="tooltip" data-placement="bottom">
                         <span class="fa fa-area-chart" style="font-size:14px;font-weight:bold;"></span>
                     </a>
                 </li>                
+   
+                <?php 
+                    if($store_id != null){
+                        $count = $this->db->query("SELECT COUNT(status) AS jumlah FROM tr_header
+                                                WHERE store_id = $store_id
+                                                AND status = '1' 
+                                                LIMIT 1")->result();
+                        if(isset($count) && ((int) $count[0]->jumlah) > 0) {
+                ?>
+                    <li class="xn-icon-button">
+                        <a href="transaction/transaction_buysell_task" title="Buy / Sell - Task" data-toggle="tooltip" data-placement="bottom"><span class="fa fa-comment"></span></a>
+                        <div class="informer informer-warning" style="font-size:14px;font-weight:bold;"><?php echo $count[0]->jumlah; ?></div>
+                    </li>
+                <?php 
+                        } 
+                    } 
+                ?>
+
+                <?php if($api_method === '1'){ ?>            
+                    <?php
+                        if($store_id != null){
+                            $count = $this->db->query("SELECT COUNT(status) AS jumlah FROM v_tr_header
+                                                    WHERE  store_id = $store_id
+                                                    AND api_method = '1'
+                                                    AND status IN (3,4)
+                                                    LIMIT 1")->result();
+                            if(isset($count) && ((int) $count[0]->jumlah) > 0) {
+                    ?>
+                        <li class="xn-icon-button">
+                            <a href="api/api_ap_input" title="Integrasi ECSys ( Pending )" data-toggle="tooltip" data-placement="bottom">
+                                <span class="fa fa-comment"></span>
+                            </a>
+                            <div class="informer informer-warning" style="font-size:14px;font-weight:bold;"><?php echo $count[0]->jumlah; ?></div>
+                        </li>
+                    <?php 
+                            } 
+                        } 
+                    ?>
+                <?php } ?>     
         <?php } ?>        
         <!-- End For Admin & Counter -->
 

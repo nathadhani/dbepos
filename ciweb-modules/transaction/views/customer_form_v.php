@@ -146,7 +146,7 @@
                                     </tr>
                                     <tr>    
                                         <td width="28%" style="border-bottom-style: hidden;">
-                                            NPWP Number
+                                            NPWP
                                         </td>
                                         <td width="72%" style="border-bottom-style: hidden;">                                            
                                             <input type="text" id="npwp_number" name="npwp_number" class="form-control" placeholder="Nomor NPWP...">
