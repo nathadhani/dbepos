@@ -19,9 +19,9 @@
                         <h3>Buy / Sell - New</h3>
                     </div>
                     <ul class="panel-controls">
-                        <button id="btn_add" name="btn_add" class="btn btn-info btn btn-sm" style="width:120px;">Add New Data</button>
-                        <button id="btn-excel" class="btn btn-info btn btn-sm" style="margin-left:5px;">Xlsx</button>
-                    </ul>
+                        <button id="btn-excel" class="btn btn-info btn-sm pull-right" style="width:140px;margin-left:10px;">Export to Xlsx</button>
+                        <button id="btn_add" class="btn btn-success btn-sm pull-right" style="width:140px;margin-left:10px;">Add New Data</button>
+                    </ul>                   
                 </div>
                 <div class="panel-body">
                     <form class="form-horizontal" autocomplete="off">
@@ -29,7 +29,7 @@
                             <div class="col-md-12">                  
                                 <p>Look for data first, before inputting new data. so there's no double data!</p>              
                                 <div class="form-group">
-                                    <div class="col-md-10">
+                                    <div class="col-md-12">
                                         <div class="input-group">
                                             <div class="input-group-addon">
                                                 <span id="btn_search" name="btn_search" for="text_search" class="fa fa-search"></span>                                                
@@ -40,11 +40,10 @@
                                                 <button class="btn btn-primary btn btn-sm" id="btn_search" name="btn_search" style="width:120px;margin-left:10px;">Submit</button>
                                             </div> -->
                                         </div>
-                                    </div>
+                                    </div>                                    
                                 </div>
                             </div>                                              
                         </div>
-                        <br>
                         <div class="row">
                             <div class="col-md-12 table-responsive">                                      
                                 <span id="task-table">*) click row to edit data</span>
@@ -54,15 +53,15 @@
                                             <th style="text-align:left; vertical-align: middle">Customer Name</th>
                                             <th style="text-align:left; vertical-align: middle">Address</th>
                                             <th style="text-align:left; vertical-align: middle">Celluler</th>
-                                            <th style="text-align:left; vertical-align: middle">Identity Type</th>
-                                            <th style="text-align:left; vertical-align: middle">Identity Type Number</th>
+                                            <th style="text-align:left; vertical-align: middle">Identity</th>
+                                            <th style="text-align:left; vertical-align: middle">Identity Number</th>
                                             <th style="text-align:left; vertical-align: middle">Status</th>
                                         </tr>
                                     </thead>                 
                                     <tbody></tbody>
                                 </table>
                             </div>
-                        </div>
+                        </div>                        
                     </form>
                 </div>
             </div>

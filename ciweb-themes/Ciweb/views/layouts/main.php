@@ -15,8 +15,8 @@
     <ul class="x-navigation x-navigation-horizontal">
         <li class="xn-logo">
             <a href="." title="Back to main">
-                <span class="fa fa-home" style="font-size:12px;font-weight:bold;"></span>
-                <span style="font-size:13px;font-weight:bold;margin-left:-6px;">
+                <span class="fa fa-home" style="font-size:14px;font-weight:bold;"></span>
+                <span style="font-size:14px;font-weight:bold;margin-left:-6px;">
                     Home
                 </span>                
             </a>
@@ -29,8 +29,8 @@
         ?>
             <li class="xn-logo">
                 <a href="#" title="Menu">
-                    <span class="fa fa-list" style="font-size:12px;font-weight:bold;"></span>
-                    <span style="font-size:13px;font-weight:bold;margin-left:-6px;">              
+                    <span class="fa fa-list" style="font-size:14px;font-weight:bold;"></span>
+                    <span style="font-size:14px;font-weight:bold;margin-left:-6px;">              
                         Menu
                     </span>                
                 </a>
@@ -65,7 +65,7 @@
                 ?>
                     <li class="xn-icon-button">
                         <a href="transaction/transaction_buysell_task" title="Buy / Sell - Task" data-toggle="tooltip" data-placement="bottom"><span class="fa fa-comment"></span></a>
-                        <div class="informer informer-warning" style="font-size:14px;font-weight:bold;"><?php echo $count[0]->jumlah; ?></div>
+                        <div class="informer informer-danger" style="font-size:12px;font-weight:bold;"><?php echo $count[0]->jumlah; ?></div>
                     </li>
                 <?php 
                         } 
@@ -86,7 +86,7 @@
                             <a href="api/api_ap_input" title="Integrasi ECSys ( Pending )" data-toggle="tooltip" data-placement="bottom">
                                 <span class="fa fa-comment"></span>
                             </a>
-                            <div class="informer informer-warning" style="font-size:14px;font-weight:bold;"><?php echo $count[0]->jumlah; ?></div>
+                            <div class="informer informer-danger" style="font-size:12px;font-weight:bold;"><?php echo $count[0]->jumlah; ?></div>
                         </li>
                     <?php 
                             } 
@@ -104,7 +104,7 @@
 
     <!-- START BREADCRUMB -->
     <ul class="breadcrumb">
-        <span style="font-size:12px;">
+        <span>
             <?php 
                 if(in_array($usergroup_id, array('3','4','5'))) {
             ?>

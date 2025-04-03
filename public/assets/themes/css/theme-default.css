@@ -107,7 +107,8 @@ body {
 .page-container .page-content {
   min-height: 100%;
   margin-left: 230px;
-  background: #f5f5f5 url('../img/bg.png') left top repeat;  
+  /* background: #f5f5f5 url('../img/bg.png') left top repeat;   */
+  background: #e8e8e8;
   position: relative;
   zoom: 1;
 }
@@ -336,7 +337,8 @@ body.page-container-boxed .page-container {
   color: #ff0000;
 }
 .x-navigation li > ul {
-  background: #f5f5f5;
+  /* background: #f5f5f5; */
+  background: #FFFFFF;
   max-height: 0px;
   -webkit-transition: all 200ms ease;
   -moz-transition: all 200ms ease;
@@ -446,7 +448,7 @@ body.page-container-boxed .page-container {
 }
 .x-navigation.x-navigation-horizontal {
   height: 50px;    
-  background-color: #e3e4e6; /*#045498*/
+  background-color:#FFFFFF
 }
 .x-navigation.x-navigation-horizontal .xn-logo a {
   border-bottom: 0px;
@@ -978,7 +980,7 @@ body.page-container-boxed .page-container {
   color:black;
 }
 .x-navigation .informer.informer-danger {
-  background: #E04B4A;
+  background: #ff0000;
 }
 .x-navigation li li .informer {
   top: 12px;
@@ -1183,7 +1185,8 @@ body.page-container-boxed .page-container {
 .breadcrumb {
   float: left;
   width: 100%;
-  background: #e8e8e8;
+  /* background: #e8e8e8; */
+  background: #f5f5f5;
   margin-bottom: 10px;
   padding: 6px 15px 7px;
   -moz-border-radius: 0px;
@@ -1194,7 +1197,15 @@ body.page-container-boxed .page-container {
 .breadcrumb li a {
   font-size: 11px;
   line-height: 12px;
-  color: #4d5669;
+  /* color: #4d5669; */
+  color: #000;
+  text-decoration: none;
+}
+.breadcrumb span {
+  font-size: 14px;
+  /* line-height: 12px; */
+  /* color: #4d5669; */
+  color: #000;
   text-decoration: none;
 }
 .breadcrumb li:hover,
@@ -1514,6 +1525,8 @@ a.list-group-item:focus {
 .panel .panel-heading,
 .panel .panel-footer,
 .panel .panel-body {
+  background: #FFFFFF;
+  color: #000;
   float: left;
   width: 100%;
 }
@@ -2233,7 +2246,7 @@ input[type=checkbox] {
 }
 .form-control {
   height: 30px;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 18px;
   -moz-box-shadow: none;
   -webkit-box-shadow: none;
@@ -2241,23 +2254,24 @@ input[type=checkbox] {
   -webkit-appearance: none;
   border: 1px solid #D5D5D5;
   background: #F9F9F9;
+  color:#000
 }
-.form-control:focus {
-  border-color: #C5C5C5;
+.form-control:focus {  
   -moz-box-shadow: none;
   -webkit-box-shadow: none;
   box-shadow: none;
   border-color: #C1C1C1;
-  background: #FFF;
+  background: #FFF;  
+  color:#000
 }
 .form-control[disabled],
 .form-control[readonly] {
-  color: #555;
+  color: #000;
 }
 .form-control[disabled]:focus,
 .form-control[readonly]:focus {
   background: #F9F9F9;
-  color: #555;
+  color: #000;
   border-color: #D5D5D5;
 }
 .input-group-addon {
@@ -3124,8 +3138,10 @@ blockquote.pull-right {
 }
 .table > thead > tr > th {
   background:#e3e4e6;
-  color: #22262e;
+  /* color: #22262e; */
+  color: #000;
   font-size: 14px;
+  font-weight: 600;
 }
 .panel-body.panel-body-table {
   padding: 0px;
@@ -3745,7 +3761,7 @@ background: #1caf9a !important;
   color: #1caf9a;
 }
 .tile .informer.informer-danger {
-  color: #E04B4A;
+  color: #FFFFFF;
 }
 .tile .informer .fa {
   font-size: 14px;
@@ -3908,7 +3924,7 @@ background: #1caf9a !important;
   /* background: url(../../img/bg-login.jpg) no-repeat center center fixed; */
 }
 .login-container .login-box {
-  width: 300px;
+  width: 270px;
   margin: 10px auto;
   padding-top: 120px;
 }
@@ -3946,12 +3962,21 @@ background: #1caf9a !important;
   height: 50px;
 }
 .login-container .login-box .login-body .form-control {
-  border: 0px;
-  background: rgba(0, 0, 0, 0.1);
+  /* border: 1px;  
+  background: rgba(255, 255, 255, 0.4);
   padding: 5px 10px;
   color: #333;
+  line-height: 5px; */
+  /* height: auto; */
+  height: 30px;
+  font-size: 12px;
   line-height: 5px;
-  height: auto;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  -webkit-appearance: none;
+  border: 1px solid #D5D5D5;
+  background: #FFFFFF;
 }
 .login-container .login-box .login-body .btn-link {
   color: #FFF;
@@ -4003,6 +4028,8 @@ background: #1caf9a !important;
   float: left;
   padding: 0px;
   color: #FFF;
+  font-size: 12px;
+  font-weight: bolder;
 }
 .login-container .login-box .login-footer a {
   color: #FFF;

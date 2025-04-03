@@ -145,7 +145,25 @@ class Transaction_buysell extends Bks_Controller {
             $postDetail['status'] = '1';
             $this->db->trans_begin();
             $this->Bksmdl->table = 'tr_detail';
-            $response = $this->Bksmdl->insert($postDetail);
+
+            $currency_id = $postDetail['currency_id'];
+            $nominal = $postDetail['nominal'];
+            $price = $postDetail['price'];
+            $cek_curr = $this->db->query("SELECT id, header_id, currency_id, nominal 
+                                          FROM tr_detail
+                                          WHERE header_id = $id_header 
+                                          AND currency_id = $currency_id
+                                          AND nominal = $nominal
+                                          AND price = $price")->result();
+            if( count($cek_curr) == 0){
+                $response = $this->Bksmdl->insert($postDetail);
+            } else {
+                if($cek_curr[0]->id != null){
+                    $id = $cek_curr[0]->id;
+                    $postDetailupdate['sheet'] = $postDetail['sheet'];
+                    $response = $this->Bksmdl->update($postDetailupdate, 'id=' . $id);
+                }
+            }            
             if ($this->db->trans_status() === FALSE) {
                 $this->db->trans_rollback();
                 $err = $this->db->error();

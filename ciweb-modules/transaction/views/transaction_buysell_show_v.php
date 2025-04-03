@@ -62,24 +62,22 @@
                 <?php } ?>
                 <div class="panel-body">   
                     <div class="row">
-                        <div class="col-md-4">
-                            <span>Store      </span><span style="margin-left:42px;"> : </span><span id="store_address"></span><br>
-                            <span>Date       </span><span style="margin-left:45px;"> : </span><span id="tr_date"></span><br>
-                            <span>Number     </span><span style="margin-left:26px;"> : </span><span id="tr_number"></span><br>
-                            <span>Status     </span><span style="margin-left:36px;"> : </span><span id="ftitle"></span><br>
-                            <span>Description</span><span style="margin-left:6px;"> : </span><span id="description_header"></span>
+                        <div class="col-md-6">
+                            <span>Store : </span><span id="store_address"></span><br>
+                            <span>Date : </span><span id="tr_date"></span><br>
+                            <span>Number : </span><span id="tr_number"></span><br>
+                            <span>Status : </span><span id="ftitle"></span><br>
+                            <span>Description : </span><span id="description_header"></span><br>
+                            <span id="created_by"></span>
                         </div>    
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <span>Name : </span><a href="#" id="customer_name"></a><br>
                             <span>Address : </span><span id="customer_address"></span><br>
                             <?php if( $auth['usergroup_id'] != '6'){ ?>
                                 <span>Act On  : </span><span id="customer_act_on"></span><br>
                                 <span>Source  : </span><span id="customer_source"></span><br>
-                                <span>Purpose : </span><span id="customer_purpose"></span>
+                                <span>Purpose : </span><span id="customer_purpose"></span><br>
                             <?php } ?>
-                        </div>
-                        <div class="col-md-4">
-                            <span id="created_by"></span><br>
                             <span id="cancel_by"></span>
                         </div>
                     </div>

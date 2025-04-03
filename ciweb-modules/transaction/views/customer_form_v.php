@@ -22,9 +22,9 @@
                             <h3>Customer Form / <strong id="ftitle"></strong></h3>
                         </div>
                         <ul class="panel-controls">
-                            <button type="submit" class="btn btn-info btn btn-sm" style="width:140px;margin-left:10px;">Submit</button>
-                            <button type="reset" class="btn btn-info btn btn-sm" style="width:140px;margin-left:10px;">Reset</button>
-                            <button id="btn-buysell" class="btn btn-info btn" style="width:140px;margin-left:10px;">Buy / Sell - New</button>
+                            <button type="submit" class="btn btn-info" style="width:140px;margin-left:10px;">Submit</button>
+                            <button type="reset" class="btn btn-info" style="width:140px;margin-left:10px;">Reset</button>
+                            <button id="btn-buysell" class="btn btn-info" style="width:140px;margin-left:10px;">Buy / Sell - New</button>
                         </ul>
                     </div>                    
                     <div class="panel-body"> 
@@ -262,11 +262,10 @@
                                     </tr>                                                                        
                                 </table>
                             </div>                 
-                        </div>           
-                        <br>      
+                        </div>
                         <div class="row perorangan">
-                            <div class="col-md-3">
-                                <a class="file-input-wrapper btn btn-info btn">
+                            <div class="col-md-2">
+                                <a class="file-input-wrapper btn btn-info">
                                     <span class="fa fa-upload"></span>
                                     <input type="file" id="upload_foto" name="upload_foto" class="form-control" accept="image/*">
                                     Upload ID Photo

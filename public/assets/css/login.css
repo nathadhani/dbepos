@@ -18,9 +18,9 @@ img.avatar {
 .field-icon {
     float: right;
     margin-left: -25px;
-    margin-top: -20px;
+    margin-top: -23px;
     margin-right: 5px;
-    size:100px;
+    size:200px;
     position: relative;
     z-index: 2;
 }  

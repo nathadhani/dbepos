@@ -72,6 +72,8 @@ function fetch_data(){
         scrollY: true,
         scrollX: true,
         scrollCollapse: true,
+        dom: '<"top"i>rt<"bottom"flp><"clear">',
+        info: false,
         lengthMenu: [[8, 25, 50, 100, -1], [8, 25, 50, 100, "All"]],
         ajax: {
             url: "transaction/customer/getdata",
@@ -123,6 +125,7 @@ function fetch_data(){
             var table = $('#mainTable').DataTable();
             var table_length = table.data().count();
             if(Number(table_length) <= 0){   
+                alertify.error('data not found.!');
                 $('#btn_add').show();
                 $("#task-table").show();
             }
