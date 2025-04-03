@@ -108,9 +108,9 @@ function fetch_data(){
                     }
                 }
             },             
-            {data: 'customer_handphone'},       
             {data: 'customer_data_name'},
             {data: 'customer_data_number'},
+            {data: 'customer_handphone'},
             {data: 'status', className: "dt-body-center", width: "5%", render: function (data, type, row, meta) {
                     var act = (data == '1') ? '<span class="label label-success"><i class="fa fa-check"></i></span>' : '<span class="label label-danger"><i class="fa fa-times"></i></span>';
                     return act;
@@ -126,9 +126,9 @@ function fetch_data(){
             var table_length = table.data().count();
             if(Number(table_length) <= 0){   
                 alertify.error('data not found.!');
-                $('#btn_add').show();
-                $("#task-table").show();
+                $('#btn_add').show();                                
             }
+            $("#task-table").show();
             $('.ajax-loader').css("visibility", "hidden");
         }
     });

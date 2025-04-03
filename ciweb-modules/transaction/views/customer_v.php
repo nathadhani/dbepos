@@ -1,3 +1,8 @@
+<?php
+    $auth = $this->session->userdata('auth');
+    $usergroup_id = $auth['usergroup_id'];
+    $store_id = $auth['store_id'];
+?>
 <style>
     #mainTable_filter{display:none;}    
     .field-icon {
@@ -16,11 +21,25 @@
             <div class="panel panel-default"> 
                 <div class="panel-heading ui-draggable-handle">                                
                     <div class="panel-title-box">
-                        <h3>Buy / Sell - New</h3>
+                        <h3>Buy / Sell - New Customer</h3>
                     </div>
                     <ul class="panel-controls">
-                        <button id="btn-excel" class="btn btn-info btn-sm pull-right" style="width:140px;margin-left:10px;">Export to Xlsx</button>
-                        <button id="btn_add" class="btn btn-success btn-sm pull-right" style="width:140px;margin-left:10px;">Add New Data</button>
+                        <button id="btn_add" class="btn btn-success" style="width:140px;margin-left:10px;">Add New Data</button>
+                        <?php 
+                            if($store_id != null){
+                                $count = $this->db->query("SELECT COUNT(m_customer.id) AS jumlah 
+                                                       FROM m_customer
+                                                       JOIN tr_header ON m_customer.id = tr_header.customer_id                                                       
+                                                       WHERE tr_header.store_id = $store_id
+                                                       AND tr_header.status IN (1,3,4,9)
+                                                       LIMIT 1")->result();
+                                if(isset($count) && ((int) $count[0]->jumlah) > 0) {
+                        ?>    
+                            <!-- <button id="btn-excel" class="btn btn-info" style="width:140px;margin-left:10px;">Export to Xlsx</button> -->
+                        <?php 
+                                } 
+                            } 
+                        ?>
                     </ul>                   
                 </div>
                 <div class="panel-body">
@@ -46,21 +65,21 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12 table-responsive">                                      
-                                <span id="task-table">*) click row to edit data</span>
                                 <table id="mainTable" style="width:100%" class="table table-bordered table-condensed table-hover table-striped dataTable">
                                     <thead>
                                         <tr>
-                                            <th style="text-align:left; vertical-align: middle">Customer Name</th>
-                                            <th style="text-align:left; vertical-align: middle">Address</th>
-                                            <th style="text-align:left; vertical-align: middle">Celluler</th>
+                                            <th style="text-align:left; vertical-align: middle">Name</th>
+                                            <th style="text-align:left; vertical-align: middle">Address</th>                                            
                                             <th style="text-align:left; vertical-align: middle">Identity</th>
                                             <th style="text-align:left; vertical-align: middle">Identity Number</th>
+                                            <th style="text-align:left; vertical-align: middle">Celluler</th>
                                             <th style="text-align:left; vertical-align: middle">Status</th>
                                         </tr>
                                     </thead>                 
                                     <tbody></tbody>
                                 </table>
                             </div>
+                            <span id="task-table">*) <i>click row to select data customer</i></span>
                         </div>                        
                     </form>
                 </div>

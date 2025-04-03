@@ -165,14 +165,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
-                <div class="row">
-                    <form id="mainFormCancel" class="form-horizontal" autocomplete="off">
-                        <div class="col-md-12">
-                            <label for=modal-cancel-description style="display:block">Reason Cancel</label>
-                            <input type="text" autofocuse="" id="modal-cancel-description" name="modal-cancel-description" class="form-control" placeholder="Alasan Batal..." required>
-                        </div>
-                    </form>
-                </div>                
+                <input type="text" autofocuse="" id="modal-cancel-description" name="modal-cancel-description" class="form-control" placeholder="Alasan Batal..." required>
             </div>
             <div class="modal-footer">
                 <button id="btn-modal-cancel" class="btn btn-info btn btn-sm" style="width:120px;margin-left:5px;">Submit</button>

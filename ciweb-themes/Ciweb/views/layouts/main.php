@@ -26,6 +26,11 @@
         <?php 
         
             if(!in_array($usergroup_id, array('6'))) {
+                $count = $this->db->query("SELECT COUNT(id) AS jumlah FROM auth_menu_group
+                                        WHERE usergroup_id = $usergroup_id
+                                        AND status = '1' 
+                                        LIMIT 1")->result();
+                if(isset($count) && ((int) $count[0]->jumlah) > 0) {
         ?>
             <li class="xn-logo">
                 <a href="#" title="Menu">
@@ -38,7 +43,29 @@
                     <?php echo Modules::run('menu/_createmenu_top', $auth['usergroup_id']) ?>
                 </ul>
             </li>
+        <?php 
+                } 
+            }
+        ?>
+
+        <?php        
+            if(in_array($usergroup_id, array('2','3','4','5'))) {
+        ?>
+            <li class="xn-icon-button">
+                <a href="user/change_pass" title="Change Password" data-toggle="tooltip" data-placement="bottom"><span class="fa fa-unlock"></span></a>
+            </li>
         <?php } ?>
+
+        <!-- For Cashier -->
+        <?php         
+            if(in_array($usergroup_id, array('5'))) {
+        ?>      
+            <li class="xn-icon-button">
+                <a href="cb/cb_balance" title="Cash / Bank - Balance" data-toggle="tooltip" data-placement="bottom"><span class="fa fa-calculator"></span></a>
+            </li>
+        <?php } ?>
+        <!-- End For Cashier -->
+
 
         <!-- For Admin & Counter -->
         <?php 
@@ -47,6 +74,14 @@
         ?>        
                 <li class="xn-icon-button">
                     <a href="transaction/transaction_buysell_list" title="Buy / Sell - List" data-toggle="tooltip" data-placement="bottom"><span class="fa fa-list-alt"></span></a>
+                </li>
+
+                <li class="xn-icon-button">
+                    <a href="stock/stock_calculate" title="Stock - Calculate" data-toggle="tooltip" data-placement="bottom"><span class="fa fa-calculator"></span></a>
+                </li>
+
+                <li class="xn-icon-button">
+                    <a href="transaction/closing_buysell" title=" Buysell - Closing" data-toggle="tooltip" data-placement="bottom"><span class="fa fa-calendar-check-o"></span></a>
                 </li>
 
                 <li class="xn-icon-button">

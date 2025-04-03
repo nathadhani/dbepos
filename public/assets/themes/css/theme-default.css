@@ -1507,6 +1507,8 @@ a.list-group-item:focus {
 }
 .panel .panel-heading .panel-title-box {
   float: left;
+  margin: auto;
+  padding: 5px;
 }
 .panel .panel-heading .panel-title-box h3 {
   font-size: 14px;
