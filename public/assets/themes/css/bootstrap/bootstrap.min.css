@@ -2210,7 +2210,7 @@ th {
  border-bottom-width:2px
 }
 .table-striped>tbody>tr:nth-child(odd) {
- background-color:#f9f9f9
+ background-color:#f9f9f9 
 }
 .table-hover>tbody>tr:hover {
  color:#000;
@@ -3063,11 +3063,14 @@ fieldset[disabled] .btn-success.active {
  background-color:#fff
 }
 .btn-info {
-    color:#333;
-    background-color:#fff;
+    color:#000;
+    background-color:#e8e8e8;
     border-color:#ccc
 }
-.btn-info:hover,
+.btn-info:hover{
+    color:#000;
+    font-weight: 600;
+}
 .btn-info:focus,
 .btn-info.focus,
 .btn-info:active,

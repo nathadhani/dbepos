@@ -108,9 +108,9 @@ function fetch_data(){
                     }
                 }
             },             
+            {data: 'customer_handphone'},
             {data: 'customer_data_name'},
             {data: 'customer_data_number'},
-            {data: 'customer_handphone'},
             {data: 'status', className: "dt-body-center", width: "5%", render: function (data, type, row, meta) {
                     var act = (data == '1') ? '<span class="label label-success"><i class="fa fa-check"></i></span>' : '<span class="label label-danger"><i class="fa fa-times"></i></span>';
                     return act;

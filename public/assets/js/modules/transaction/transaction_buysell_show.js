@@ -16,7 +16,7 @@ function show_header($id){
     if( typeof(customerId) !== 'undefined') {
         if(customerId !== null && customerId !== '') {
             $.ajax({
-                url: baseUrl + "transaction/transaction_buysell_show/show_header",
+                url: baseUrl + "transaction/transaction_buysell/show_header",
                 type: 'POST',
                 data: {'customer_id' : customerId, 'tr_id' : xtr_id, 'id' : $id},
                 datatype: 'json',
@@ -25,10 +25,10 @@ function show_header($id){
                         var d = JSON.parse(data)[0];
                         xtr_id = d.tr_id;
                         if(xtr_id === '1'){
-                            $("#trx_name").html('<span style="color:blue;font-weight:800;font-size:14px;">Buy / Beli</span>');
+                            $("#trx_name").html('<span style="color:blue;font-weight:bold;font-size:16px;">Buy / Beli</span>');
                         }
                         if(xtr_id === '2'){
-                            $("#trx_name").html('<span style="color:red;font-weight:800;font-size:14px;">Sell / Jual</span>');
+                            $("#trx_name").html('<span style="color:red;font-weight:bold;font-size:16px;">Sell / Jual</span>');
                         }
                         if(Number(d.status) === 1){ // back to task
                             if(Number(d.tr_id) === 1){
@@ -149,7 +149,7 @@ function show_detail($header_id){
             $('#table-detail tbody').empty();
             var counter = document.getElementById('table-detail').rows.length;
             $.ajax({
-                url: baseUrl + 'transaction/transaction_buysell_show/show_detail',
+                url: baseUrl + 'transaction/transaction_buysell/show_detail',
                 type: 'POST',
                 data: {'customer_id' : customerId, 'tr_id' : xtr_id, 'header_id' : $header_id},
                 dataType: 'json',
@@ -282,14 +282,13 @@ function delete_line_detail_payment($id){
 
 function reset_form_input_payment(){
     $("#modal_payment_type").html('').sel2dma();
-    $('#modal_payment_description').val('');
     $("#modal_payment_amount").val('');
     $("#terbilang_modal_payment_amount").html('');
 }   
 
 $("#btn-payment").on('click', function (e) {
     e.preventDefault();
-    $(".modal-dialog").width('1000px');
+    $(".modal-dialog").width('1200px');
     $("#ModalPayment").modal('show');
     $("#modal_cashierby").empty();
     if(xcashierby !== 0){
@@ -311,7 +310,6 @@ $("#btn-payment").on('click', function (e) {
 });
 $("#modal_payment_type").on("change", function(e) {
     e.preventDefault();
-    $("#modal_payment_description").val( 'Payment ' + $("#modal_payment_type option:selected").text() );
     if( formatRupiahtoNumber($("#modal_remaining_payment_value").val()) > 0) {
         $("#modal_payment_amount").val( formatRupiahtoNumber($("#modal_remaining_payment_value").val()) );
         $("#terbilang_modal_payment_amount").html('<i>Payment Value</i> : ' + bksfn.terBilang( $("#modal_payment_amount").val( )));
@@ -320,6 +318,28 @@ $("#modal_payment_type").on("change", function(e) {
         reset_form_input_payment();
     }    
 });
+
+$('#cb_id').on('change',function(e){
+    e.preventDefault()
+    if($(this).val() != null && $(this).val() != ''){
+        $('#cb_pos_id').html('').sel2dma();
+        $('#cb_pos_id').prop('disabled', false);
+        $('#cb_pos_id').focus()
+        $.ajax({
+            url : baseUrl +  'master_data/m_cb_pos/getmcbpos',
+            type: 'POST',
+            data: {'cb_id' : $(this).val()},
+            datatype: 'json',
+            success: function(data){
+                $('#cb_pos_id').html(data);
+            },
+            error: function(){
+                alert("can't get store");  
+            }
+        });
+    }
+});
+
 $("#modal_payment_amount").keyup(function(e) {
     e.preventDefault();
     $(this).val($(this).val());
@@ -333,8 +353,6 @@ $("#btn-modal-add-row-payment").on('click', function (e) {
         bksfn.errMsg('Kasir belum diinput!');
     } else if( $("#modal_payment_type").val() === '' || $("#modal_payment_type").val() === null) {
         bksfn.errMsg('tipe pembayaran belum diinput!');
-    } else if( $("#modal_payment_description").val() === '' || $("#modal_payment_description").val() === null) {
-        bksfn.errMsg('keterangan pembayaran belum diinput!');    
     } else if( $("#modal_payment_amount").val() === '' || $("#modal_payment_amount").val() === null || Number($("#modal_payment_amount").val()) <= 0) {
         bksfn.errMsg('jumlah pembayaran belum diinput!');
     } else {
@@ -456,7 +474,7 @@ $("#btn-pdf").on('click', function (e) {
     e.preventDefault();
     // alertify.confirm("export to Pdf Trx. No " + document.getElementById('tr_number').innerText + " ?", function (e) {    
     //     if (e) {                
-            var url = "transaction/transaction_buysell_show/printnota/" + id_tr_header + "/" + xtr_id;
+            var url = "transaction/transaction_buysell/printnota/" + id_tr_header + "/" + xtr_id;
             $.ajax({
                 url: url,
                 type: 'POST',

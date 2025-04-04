@@ -491,7 +491,7 @@ function call_page_task_buysell(customer_id, id_tr_header){
 }
 
 function call_page_show_buysell(customer_id, id_tr_header){
-    var url = "transaction/transaction_buysell_show/index/"+customer_id+"/"+id_tr_header;
+    var url = "transaction/transaction_buysell/indexs/"+customer_id+"/"+id_tr_header;
     return url;
 }
 

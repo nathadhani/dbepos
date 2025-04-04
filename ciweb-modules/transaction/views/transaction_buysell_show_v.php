@@ -168,8 +168,8 @@
                 <input type="text" autofocuse="" id="modal-cancel-description" name="modal-cancel-description" class="form-control" placeholder="Alasan Batal..." required>
             </div>
             <div class="modal-footer">
-                <button id="btn-modal-cancel" class="btn btn-info btn btn-sm" style="width:120px;margin-left:5px;">Submit</button>
-                <button id="btn-modal-cancel-close" class="btn btn-info btn btn-sm" style="width:120px;margin-left:5px;">Close</button>
+                <button id="btn-modal-cancel" class="btn btn-info btn btn-sm" style="width:120px;margin-left:5px;background:#008000;color:white;font-weight:600;">Submit</button>
+                <button id="btn-modal-cancel-close" class="btn btn-info btn btn-sm" style="width:120px;margin-left:5px;background:red;color:white;font-weight:600;">Close</button>
             </div>
         </div>
     </div>
@@ -217,7 +217,8 @@
                             <thead>
                                 <tr>
                                     <th style='vertical-align:middle;text-align:left;'>Type</th>
-                                    <th style='vertical-align:middle;text-align:left;'>Description</th>
+                                    <th style='vertical-align:middle;text-align:left;'>Source</th>
+                                    <th style='vertical-align:middle;text-align:left;'>Purpose</th>
                                     <th style='vertical-align:middle;text-align:left;'>Value</th>
                                     <th id="act-title" style='vertical-align:middle;text-align:center;' width="50px">Action</th>
                                 </tr>
@@ -239,15 +240,33 @@
                                                     require
                                             >
                                             </select>
-                                        </td>                                                                
-                                        <td width="55%">
-                                            <input type="text" id="modal_payment_description" name="modal_payment_description" class="form-control">
+                                        </td>  
+                                        <td width="30%">
+                                            <!-- Jika Search Tidak berfungsi, remove modal tabindex='-1' -->
+                                            <select id="cb_id"
+                                                    name="cb_id"
+                                                    data-ajax="true"
+                                                    data-placeholder="Pilih..."
+                                                    data-url="master_data/m_cb/getmcb/"
+                                                    data-value=""
+                                                    data-limit="100"                                          
+                                                    placeholder="Pilih..."
+                                                    class='form-control select2'
+                                                    require
+                                            >
+                                            </select>
+                                        </td>
+                                        <td width="35%">
+                                            <!-- Jika Search Tidak berfungsi, remove modal tabindex='-1' -->
+                                            <select class='form-control select2' name="cb_pos_id" id="cb_pos_id" disabled="true">
+                                                <option value="">Pilih...</option>
+                                            </select>
                                         </td>
                                         <td width="15%">
                                             <input type="text" onkeypress="validasiAngka(event)" autofocuse="" id="modal_payment_amount" name="modal_payment_amount" class="form-control" style='text-align:right;'>
                                         </td>
                                         <td width="10%" style='text-align:center'>
-                                            <button id="btn-modal-add-row-payment" class="btn btn-info btn btn-sm" style="width:90px;">Add</button>
+                                            <button id="btn-modal-add-row-payment" class="btn btn-info btn btn-sm" style="width:90px;background:#008000;color:white;font-weight:600;">Add</button>
                                         </td>                
                                     </tr>
                                     <tr>
@@ -266,7 +285,8 @@
                                 <tr style="background:#f1f5f9;">
                                     <td style='vertical-align: middle;text-align:center;'>#</td>
                                     <th style='vertical-align:middle;text-align:left;'>Type</th>
-                                    <th style='vertical-align:middle;text-align:left;'>Description</th>
+                                    <th style='vertical-align:middle;text-align:left;'>Source</th>
+                                    <th style='vertical-align:middle;text-align:left;'>Purpose</th>
                                     <th style='vertical-align:middle;text-align:left;'>Value</th>
                                 </tr>
                             </thead>
@@ -277,7 +297,7 @@
                 </div>
             </div>
             <div class="modal-footer">                
-                <button id="btn-modal-payment-close" class="btn btn-info btn btn-sm" style="width:120px;margin-left:5px;">Close</button>
+                <button id="btn-modal-payment-close" class="btn btn-info btn btn-sm" style="width:120px;background:red;color:white;font-weight:600;">Close</button>
             </div>
         </div>
     </div>

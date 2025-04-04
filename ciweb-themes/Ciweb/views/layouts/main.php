@@ -52,7 +52,7 @@
             if(in_array($usergroup_id, array('2','3','4','5'))) {
         ?>
             <li class="xn-icon-button">
-                <a href="user/change_pass" title="Change Password" data-toggle="tooltip" data-placement="bottom"><span class="fa fa-unlock"></span></a>
+                <a href="user/change_pass" title="Change Password" data-toggle="tooltip" data-placement="bottom"><span class="fa fa-unlock" style="font-size:16px;font-weight:bold;"></span></a>
             </li>
         <?php } ?>
 
@@ -61,7 +61,7 @@
             if(in_array($usergroup_id, array('5'))) {
         ?>      
             <li class="xn-icon-button">
-                <a href="cb/cb_balance" title="Cash / Bank - Balance" data-toggle="tooltip" data-placement="bottom"><span class="fa fa-calculator"></span></a>
+                <a href="cb/cb_balance" title="Cash / Bank - Balance" data-toggle="tooltip" data-placement="bottom"><span class="fa fa-calculator" style="font-size:16px;font-weight:bold;"></span></a>
             </li>
         <?php } ?>
         <!-- End For Cashier -->
@@ -73,20 +73,20 @@
             if(in_array($usergroup_id, array('3','4'))) {
         ?>        
                 <li class="xn-icon-button">
-                    <a href="transaction/transaction_buysell_list" title="Buy / Sell - List" data-toggle="tooltip" data-placement="bottom"><span class="fa fa-list-alt"></span></a>
+                    <a href="transaction/transaction_buysell_list" title="Buy / Sell - List" data-toggle="tooltip" data-placement="bottom"><span class="fa fa-list-alt" style="font-size:16px;font-weight:bold;"></span></a>
                 </li>
 
                 <li class="xn-icon-button">
-                    <a href="stock/stock_calculate" title="Stock - Calculate" data-toggle="tooltip" data-placement="bottom"><span class="fa fa-calculator"></span></a>
+                    <a href="stock/stock_calculate" title="Stock - Calculate" data-toggle="tooltip" data-placement="bottom"><span class="fa fa-calculator" style="font-size:16px;font-weight:bold;"></span></a>
                 </li>
 
                 <li class="xn-icon-button">
-                    <a href="transaction/closing_buysell" title=" Buysell - Closing" data-toggle="tooltip" data-placement="bottom"><span class="fa fa-calendar-check-o"></span></a>
+                    <a href="transaction/closing_buysell" title=" Buysell - Closing" data-toggle="tooltip" data-placement="bottom"><span class="fa fa-calendar-check-o" style="font-size:16px;font-weight:bold;"></span></a>
                 </li>
 
                 <li class="xn-icon-button">
                     <a href="dashboard/dashboard_buysell" title="Buy / Sell - Chart" data-toggle="tooltip" data-placement="bottom">
-                        <span class="fa fa-area-chart" style="font-size:14px;font-weight:bold;"></span>
+                        <span class="fa fa-area-chart" style="font-size:16px;font-weight:bold;"></span>
                     </a>
                 </li>                
    
@@ -99,7 +99,7 @@
                         if(isset($count) && ((int) $count[0]->jumlah) > 0) {
                 ?>
                     <li class="xn-icon-button">
-                        <a href="transaction/transaction_buysell_task" title="Buy / Sell - Task" data-toggle="tooltip" data-placement="bottom"><span class="fa fa-comment"></span></a>
+                        <a href="transaction/transaction_buysell_task" title="Buy / Sell - Task" data-toggle="tooltip" data-placement="bottom"><span class="fa fa-comment" style="font-size:16px;font-weight:bold;"></span></a>
                         <div class="informer informer-danger" style="font-size:12px;font-weight:bold;"><?php echo $count[0]->jumlah; ?></div>
                     </li>
                 <?php 
@@ -119,7 +119,7 @@
                     ?>
                         <li class="xn-icon-button">
                             <a href="api/api_ap_input" title="Integrasi ECSys ( Pending )" data-toggle="tooltip" data-placement="bottom">
-                                <span class="fa fa-comment"></span>
+                                <span class="fa fa-comment" style="font-size:16px;font-weight:bold;"></span>
                             </a>
                             <div class="informer informer-danger" style="font-size:12px;font-weight:bold;"><?php echo $count[0]->jumlah; ?></div>
                         </li>
@@ -132,7 +132,7 @@
         <!-- End For Admin & Counter -->
 
         <li class="xn-icon-button pull-right">
-            <a href="auth/logout" title='Sign Out' style="margin-right: 30px;"><span class="fa fa-sign-out" style="font-size:18px;font-weight:bold;"></span></a>
+            <a href="auth/logout" title='Sign Out' style="margin-right: 30px;"><span class="fa fa-sign-out" style="font-size:20px;font-weight:bold;"></span></a>
         </li>        
     </ul>
     <!-- END X-NAVIGATION VERTICAL -->                      

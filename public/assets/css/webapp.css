@@ -122,7 +122,8 @@ nav i.fa-plus-square {
 }
 
 .x-navigation li>ul li.active>a {
-    background: #f5f5f5;
+    /* background: #f5f5f5; */
+    background: #5CB85C;
     color: #000000;
 }
 
@@ -136,9 +137,14 @@ nav i.fa-plus-square {
 }
 
 .btn-info {
-    color:#333;
-    background-color:#fff;
+    color:#000;
+    background-color:#e8e8e8;
     border-color:#ccc
+}
+
+.btn-info:hover{
+    color:#000;
+    font-weight: 600;
 }
 
 .clrbg-green {

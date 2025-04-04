@@ -1,6 +1,6 @@
 document.onkeydown = function(e) {
 	if(event.keyCode == 123) {
-		return true;
+		return false;
 	}
 	if(e.ctrlKey && e.keyCode == 'C'.charCodeAt(0)){
 		return true;

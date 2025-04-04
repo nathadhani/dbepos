@@ -6,7 +6,7 @@
                     <h3>Transaction - List</h3>
                 </div>
                 <ul class="panel-controls">
-                    <button id="btn-excel" class="btn btn-info btn btn-sm" style="margin-left:5px;">Xlsx</button>
+                    <button id="btn-excel" class="btn btn-info" style="width:140px;margin-left:10px;">Export to Xlsx</button>
                 </ul>
             </div>
             <div class="panel-body">

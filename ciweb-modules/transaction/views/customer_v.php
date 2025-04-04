@@ -21,7 +21,7 @@
             <div class="panel panel-default"> 
                 <div class="panel-heading ui-draggable-handle">                                
                     <div class="panel-title-box">
-                        <h3>Buy / Sell - New Customer</h3>
+                        <h3>Data - Customer</h3>
                     </div>
                     <ul class="panel-controls">
                         <button id="btn_add" class="btn btn-success" style="width:140px;margin-left:10px;">Add New Data</button>
@@ -70,9 +70,9 @@
                                         <tr>
                                             <th style="text-align:left; vertical-align: middle">Name</th>
                                             <th style="text-align:left; vertical-align: middle">Address</th>                                            
+                                            <th style="text-align:left; vertical-align: middle">Celluler</th>                                            
                                             <th style="text-align:left; vertical-align: middle">Identity</th>
                                             <th style="text-align:left; vertical-align: middle">Identity Number</th>
-                                            <th style="text-align:left; vertical-align: middle">Celluler</th>
                                             <th style="text-align:left; vertical-align: middle">Status</th>
                                         </tr>
                                     </thead>                 

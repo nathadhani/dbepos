@@ -20,45 +20,47 @@
         <!-- EOF CSS INCLUDE -->    
 
     </head>
-    <body oncontextmenu="return true">        
+    <body oncontextmenu="return false">        
         <div class="login-container">
-            <div class="login-box animated">
-                <div class="login-body">                    
-                    <!-- <div class="imgcontainer">
-                        <img src="assets/img/avatar.png" alt="Avatar" class="avatar">                        
-                    </div> -->
-                    <div class="login-title" style="text-align:left">                        
-                        <h2 style="color:green; font-weight:bold; font-size:22px; font-family:'Arial Black';">
-                            INDOCEV
-                            <!-- <small style="color:#000;">Application</small> -->
-                        </h2> 
-                        <p style="color: #33414e; font-size: 14px; font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;margin-top: -15px;">
-                            PT. Indonesia Central Valutamas <br>
-                        </p>                        
+            <div class="layer">
+                <div class="login-box animated">
+                    <div class="login-body">                    
+                        <!-- <div class="imgcontainer">
+                            <img src="assets/img/avatar.png" alt="Avatar" class="avatar">                        
+                        </div> -->
+                        <div class="login-title" style="text-align:left">                        
+                            <h2 style="color:green; font-weight:bold; font-size:22px; font-family:'Arial Black';">
+                                INDOCEV
+                                <!-- <small style="color:#000;">Application</small> -->
+                            </h2> 
+                            <p style="color: #33414e; font-size: 14px; font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;margin-top: -15px;">
+                                PT. Indonesia Central Valutamas <br>
+                            </p>                        
+                        </div>
+                        <form class="form-horizontal" id="frmLogin" autocomplete="off">
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <input type="text" id="username" autofocus="" name="username" class="form-control" placeholder="Username"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <input type="password" id="password" name="password"  class="form-control" placeholder="Password"/>
+                                    <span toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-12">                            
+                                    <button type="submit" class="btn btn-info btn-block">Login</button>
+                                </div>
+                            </div>
+                            <div class="login-footer">
+                                <div>
+                                    <font style='color:#000;'> &copy; 2025 - All Rights Reserved</font>
+                                </div>
+                            </div>
+                        </form>
                     </div>
-                    <form class="form-horizontal" id="frmLogin" autocomplete="off">
-                        <div class="form-group">
-                            <div class="col-md-12">
-                                <input type="text" id="username" autofocus="" name="username" class="form-control" placeholder="Username"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-12">
-                                <input type="password" id="password" name="password"  class="form-control" placeholder="Password"/>
-                                <span toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password"></span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-12">                            
-                                <button type="submit" class="btn btn-info btn-block">Login</button>
-                            </div>
-                        </div>
-                        <div class="login-footer">
-                            <div>
-                                <font style='color:#000;'> &copy; 2025 - All Rights Reserved</font>
-                            </div>
-                        </div>
-                    </form>
                 </div>
             </div>
         </div>

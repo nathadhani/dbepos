@@ -91,10 +91,10 @@ function show_header(){
 
                             xtr_id = d.tr_id;
                             if(xtr_id === '1'){
-                                $("#trx_name").html('<span style="color:blue;font-weight:800;font-size:14px;">Buy / Beli</span> - ');
+                                $("#trx_name").html('<span style="color:blue;font-weight:bold;font-size:16px;">Buy / Beli</span> - ');
                             }
                             if(xtr_id === '2'){
-                                $("#trx_name").html('<span style="color:red;font-weight:800;font-size:14px;">Sell / Jual</span> - ');
+                                $("#trx_name").html('<span style="color:red;font-weight:bold;font-size:16px;">Sell / Jual</span> - ');
                             }                    
                             $('#tr_id').prop('disabled', true);
                         } else {
@@ -684,13 +684,17 @@ $("#btn-confirm").on('click', function (e) {
                         if (data !== '[]' && data.length > 0){
                             var d = JSON.parse(data)[0];
                             total_trx = (d.subtotal === null ? 0 : Number(d.subtotal));
-                            total_theshold = (d.total_threshold === null ? 0 : Number(d.total_threshold));                            
-                            if(total_trx > total_theshold) {
-                                alertify.alert('Transaksi bulan ini senilai ' + formatRupiah(total_trx) + ' rupiah sudah melebihi nilai threshold USD perbulan 25000 * ' + formatRupiah(d.rate_price) + ' senilai ' + formatRupiah(total_theshold) + ' rupiah');
-                                alertconfirmtrx();
+                            total_theshold = (d.total_threshold === null ? 0 : Number(d.total_threshold));
+                            if(total_theshold > 0) {
+                                if(total_trx > total_theshold) {
+                                    alertify.alert('Transaksi bulan ini senilai ' + formatRupiah(total_trx) + ' rupiah sudah melebihi nilai threshold USD perbulan 25000 * ' + formatRupiah(d.rate_price) + ' senilai ' + formatRupiah(total_theshold) + ' rupiah');
+                                    alertconfirmtrx();
+                                } else {
+                                    alertconfirmtrx();
+                                }
                             } else {
-                                alertconfirmtrx();
-                            }
+                                alertconfirmtrx();  
+                            }                                                     
                         } else {
                             alertconfirmtrx();
                         }
