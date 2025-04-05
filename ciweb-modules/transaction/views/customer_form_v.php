@@ -36,12 +36,7 @@
                                             CIF
                                         </td>
                                         <td width="72%" style="border-bottom-style: hidden;">    
-                                            <div class="input-group">                                        
-                                                <span class="input-group-addon">
-                                                    <input type="checkbox" name="status" id="status" class="icheckbox_minimal-grey checked" checked/>
-                                                </span>
-                                                <input type="text" id="customer_code" name="customer_code" class="form-control" style="width:150px;" readonly>
-                                            </div>
+                                            <input type="text" id="customer_code" name="customer_code" class="form-control" readonly>
                                         </td>                                        
                                     </tr>
                                     <tr>    
@@ -109,7 +104,7 @@
                                 <table class="table" cellspacing="0" cellpadding="0" border="0" width="100%" style="border-top-style: hidden;">
                                     <tr class="perorangan">    
                                         <td width="28%" style="border-bottom-style: hidden;">
-                                            Identity Type
+                                            Identity Type <strong style="color:red;font-weight:bold;font-size:18px;">**</strong>
                                         </td>
                                         <td width="72%" style="border-bottom-style: hidden;">                                            
                                             <select id="customer_data_id"
@@ -130,18 +125,7 @@
                                             Identity Number
                                         </td>
                                         <td width="72%" style="border-bottom-style: hidden;">                                                                                        
-                                            <div class="input-group">
-                                                <input type="text" id="customer_data_number" name="customer_data_number" class="form-control" placeholder="Nomor Identitas...">
-                                                <?php
-                                                    if (file_exists($img_file)) {
-                                                ?>
-                                                    <span class="input-group-addon"> 
-                                                        <a href="<?=$image_url;?>" target="_blank" title="ID photo">
-                                                            <span class="fa fa-picture-o"></span>
-                                                        </a>
-                                                    </span>
-                                                <?php } ?>
-                                            </div>
+                                            <input type="text" id="customer_data_number" name="customer_data_number" class="form-control" placeholder="Nomor Identitas...">                                                
                                         </td>
                                     </tr>
                                     <tr>    
@@ -260,6 +244,19 @@
                                             <input type="text" id="city" name="city" class="form-control" placeholder="Kabupaten / Kota...">
                                         </td>                                        
                                     </tr>                                                                        
+                                    <tr>    
+                                        <td width="28%" style="border-bottom-style: hidden;">
+                                            Status
+                                        </td>
+                                        <td width="72%" style="border-bottom-style: hidden;">    
+                                            <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    <input type="checkbox" name="status" id="status" class="icheckbox_minimal-grey checked" checked/>
+                                                </span>
+                                                <span class="form-control">Active</span>
+                                            </div>
+                                        </td>                                        
+                                    </tr>
                                 </table>
                             </div>                 
                         </div>
@@ -271,8 +268,18 @@
                                     Upload ID Photo
                                 </a>
                             </div>      
-                        </div>                                                     
-                    </div>                    
+                            <?php
+                                if (file_exists($img_file)) {
+                            ?>
+                                <div class="col-md-1" style="margin-left:-40px;">
+                                    <a href="<?=$image_url;?>" target="_self" title="ID photo" class="btn btn-info">
+                                        <span class="fa fa-picture-o"></span>
+                                        Show ID Photo
+                                    </a>
+                                </div>
+                            <?php } ?>
+                        </div>
+                    </div>              
                     <!--.end panel-body -->                    
                 </div>                
             </div>

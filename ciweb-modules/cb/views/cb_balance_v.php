@@ -6,7 +6,7 @@
                     <h3>Cash / Bank - Balance</h3>
                 </div>
                 <ul class="panel-controls">
-                    <button id="btn-calculate" class="btn btn-info btn btn-sm" style="width:150px; margin-left:5px;">Calculate</button>
+                    <button id="btn-calculate" class="btn btn-info" style="width:150px; margin-left:5px;">Calculate</button>
                 </ul>
             </div>
             <div class="panel-body">
@@ -35,8 +35,8 @@
                                 <label for="tr_date1" style="display:block">Period</label>
                                 <div class="input-group">
                                     <input type="text" id="period" name="period" placeholder="Tanggal ..." class="form-control dp" data-date-format="DD MMMM YYYY" style="width:120px;" value="<?=date('d-m-Y');?>">
-                                    <span class="input-group-addon btn btn-info">                             
-                                        <span id="btn-submit" class="btn btn-info btn" style="width:120px;margin-left:10px;">Submit</span>
+                                    <span class="input-group-addon">                             
+                                        <span id="btn-submit" class="btn btn-info" style="width:120px;margin-left:10px;">Submit</span>
                                     </span>
                                 </div>        
                             </div>

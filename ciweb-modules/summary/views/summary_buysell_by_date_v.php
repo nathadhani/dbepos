@@ -6,8 +6,8 @@
                     <h3>Summary Buy / Sell - by Date</h3>
                 </div>
                 <ul class="panel-controls">
-                    <button id="btn-pdf" class="btn btn-info btn btn-sm" style="margin-left:5px;">pdf</button>
-                    <button id="btn-excel" class="btn btn-info btn btn-sm" style="margin-left:5px;">Xlsx</button>
+                    <button id="btn-pdf" class="btn btn-info" style="margin-left:5px;">pdf</button>
+                    <button id="btn-excel" class="btn btn-info" style="margin-left:5px;">Xlsx</button>
                 </ul>
             </div>
             <div class="panel-body">
@@ -48,8 +48,8 @@
                                 <label for="periode" style="display:block">Period</label>
                                 <div class="input-group">
                                     <input type="text" name="period" id="period"  class="form-control dp" placeholder="Periode" data-date-format="DD MMMM YYYY" value="<?=date('d-m-Y');?>" style="width:100px;">
-                                    <span class="input-group-addon btn btn-info">                             
-                                        <span id="btn-submit" class="btn btn-info btn" style="width:120px;">Submit</span>
+                                    <span class="input-group-addon">                             
+                                        <span id="btn-submit" class="btn btn-info" style="width:120px;">Submit</span>
                                     </span>
                                 </div>                                
                             </div>

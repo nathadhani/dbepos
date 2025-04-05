@@ -89,7 +89,7 @@ nav i.fa-plus-square {
 }*/
 
 .x-navigation > li.xn-logo > a:first-child {    
-    background-color: #FFFFFF;
+    background-color: #003BDE;
 }
 .x-navigation > li.xn-logo > a:first-child:hover {
     color: #000;
@@ -102,7 +102,7 @@ nav i.fa-plus-square {
 
 .x-navigation li>ul li>a:hover,
 .x-navigation li>a:hover {
-    background: #ffff00 !important;
+    background: #f5f5f5 !important;
     color: #000000;
     font-weight:600;
 }

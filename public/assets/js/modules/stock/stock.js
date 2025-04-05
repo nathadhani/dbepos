@@ -97,13 +97,13 @@ function fethdata(){
         ],            
         fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
             if (Number(aData.buy_sheet) > 0) {
-                $(nRow).find('td:eq(6)').css('color','#0000ff');
+                $(nRow).find('td:eq(4)').css('color','#0000ff');
             }
             if (Number(aData.sell_sheet) > 0) {
-                $(nRow).find('td:eq(7)').css('color','#ff0000');
+                $(nRow).find('td:eq(5)').css('color','#ff0000');
             }
             if (Number(aData.sell_alocation_sheet) > 0) {
-                $(nRow).find('td:eq(8)').css('color','#ff0000');
+                $(nRow).find('td:eq(6)').css('color','#ff0000');
             }                
         },  
         order: [[8, 'asc']]

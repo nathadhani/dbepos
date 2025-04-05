@@ -38,8 +38,8 @@
                                     <label for="periode" style="display:block">Period</label>
                                     <div class="input-group">
                                     <input type="text" name="period" id="period"  class="form-control dpY" data-inputmask="'mask': '[9999]'" placeholder="Periode" value="<?=date('Y')?>" style="width:100px;">
-                                        <span class="input-group-addon btn btn-info">                             
-                                            <span id="btn-submit" class="btn btn-info btn" style="width:120px;">Submit</span>
+                                        <span class="input-group-addon">                             
+                                            <span id="btn-submit" class="btn btn-info" style="width:120px;">Submit</span>
                                         </span>
                                     </div>
                                 </div>                                

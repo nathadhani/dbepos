@@ -547,11 +547,11 @@ class Transaction_buysell extends Bks_Controller {
 
                     $pdf->SetFont('', '', 9);
                     $pdf->Cell(01, 01, "------------------------------------------------------------------------------------", 0, 1, 'L');
-                    $pdf->Cell(01, 01, 'Date        : ' . $tr_date . '         ' . ucwords(strtolower($tr_name)) . ' No. : ' . trim($tr_number), 0, 1, 'L');
-                    $pdf->Cell(01, 01, 'CIF          :  ' . trim($profil_customer[0]->customer_code) . '     ID No. : ' . $profil_customer[0]->customer_data_number, 0, 1, 'L');
+                    $pdf->Cell(01, 01, 'Date        : ' . $tr_date . '           ' . 'Number : ' . trim($tr_number), 0, 1, 'L');
+                    $pdf->Cell(01, 01, 'CIF          :  ' . trim($profil_customer[0]->customer_code) . '    ID No     : ' . $profil_customer[0]->customer_data_number, 0, 1, 'L');
+                    $pdf->Cell(01, 01, 'Phone     : ' . $profil_customer[0]->customer_handphone . '     Job         : ' . $profil_customer[0]->customer_job_name, 0, 1, 'L');
                     $pdf->Cell(01, 01, 'Name      : ' . SUBSTR(trim($profil_customer[0]->customer_name),0,45), 0, 1, 'L');
                     $pdf->Cell(01, 01, 'Address  : ' . SUBSTR(trim($profil_customer[0]->customer_address),0,45), 0, 1, 'L');
-                    $pdf->Cell(01, 01, 'Phone     : ' . $profil_customer[0]->customer_handphone . '     Job : ' . $profil_customer[0]->customer_job_name, 0, 1, 'L');
                     $pdf->Cell(01, 01, 'Source    : ' . SUBSTR(trim($customer_source),0,50), 0, 1, 'L');
                     $pdf->Cell(01, 01, 'Purpose  : ' . SUBSTR(trim($customer_puprpose),0,50), 0, 1, 'L');
                     $pdf->SetAutoPageBreak(true, 0);

@@ -3,5 +3,3 @@
     $usergroup_id = $auth['usergroup_id'];
     $userlevel_id = $auth['userlevel_id'];
 ?>
-<div class="page-content-wrap">    
-</div>

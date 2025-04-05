@@ -36,8 +36,8 @@
                                 <label for="periode" style="display:block">Date</label>
                                 <div class="input-group">
                                     <input type="text" id="tr_date" name="tr_date" placeholder="Tanggal ..." class="form-control dp" data-date-format="DD MMMM YYYY" style="width:120px;" value="<?=date('d-m-Y');?>">
-                                    <span class="input-group-addon btn btn-info">                             
-                                        <span id="btn-submit" class="btn btn-info btn" style="width:120px;">Submit</span>
+                                    <span class="input-group-addon">                             
+                                        <span id="btn-submit" class="btn btn-info" style="width:120px;">Submit</span>
                                     </span>
                                 </div>
                             </div>                            

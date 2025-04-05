@@ -38,10 +38,10 @@ class Home extends Bks_Controller {
             $data['auth'] = $this->auth;
             $this->template->build('transaction/transaction_buysell_list_v', $data);
         } else {
-            $data['user_information'] = $this->Bksmdl->get_user_information($this->userid);
             $this->template->title('Home');
             $this->template->set('tsmall', 'Home');
             $this->template->set('icon', 'fa fa-home');
+            $data['auth'] = $this->auth;
             $this->template->build('home/home_v',$data);
         }        
     }   

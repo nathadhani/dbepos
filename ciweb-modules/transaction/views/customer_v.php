@@ -24,7 +24,7 @@
                         <h3>Data - Customer</h3>
                     </div>
                     <ul class="panel-controls">
-                        <button id="btn_add" class="btn btn-success" style="width:140px;margin-left:10px;">Add New Data</button>
+                        <button id="btn_add" class="btn btn-info" style="width:140px;margin-left:10px;">Add New Data</button>
                         <?php 
                             if($store_id != null){
                                 $count = $this->db->query("SELECT COUNT(m_customer.id) AS jumlah 

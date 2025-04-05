@@ -6,8 +6,8 @@
                     <h3>Cash / Bank - List</h3>
                 </div>
                 <ul class="panel-controls">
-                    <button id="btn-new" class="btn btn-info btn btn-sm" style="width:120px; margin-left:5px;">New</button>
-                    <button id="btn-generate-buysell" class="btn btn-info btn btn-sm" style="width:150px; margin-left:5px;">Generate Buy / Sell</button>
+                    <button id="btn-new" class="btn btn-info" style="width:120px; margin-left:5px;">New</button>
+                    <button id="btn-generate-buysell" class="btn btn-info" style="width:150px; margin-left:5px;">Generate Buy / Sell</button>
                     <!-- <button id="btn-excel" class="btn btn-info btn btn-sm" style="margin-left:5px;">Xlsx</button> -->
                 </ul>
             </div>
@@ -37,9 +37,9 @@
                                 <label for="tr_date1" style="display:block">Period</label>
                                 <div class="input-group">
                                     <input type="text" id="tr_date1" name="tr_date1" placeholder="Tanggal ..." class="form-control dp" data-date-format="DD MMMM YYYY" style="width:120px;" value="<?=date('d-m-Y');?>">
-                                    <span class="input-group-addon btn btn-info">                             
+                                    <span class="input-group-addon">                             
                                         <input type="text" id="tr_date2" name="tr_date2" placeholder="Tanggal ..." class="form-control dp" data-date-format="DD MMMM YYYY" style="width:120px;" value="<?=date('d-m-Y');?>">
-                                        <span id="btn-submit" class="btn btn-info btn" style="width:120px;margin-left:10px;">Submit</span>
+                                        <span id="btn-submit" class="btn btn-info" style="width:120px;margin-left:10px;">Submit</span>
                                     </span>
                                 </div>        
                             </div>

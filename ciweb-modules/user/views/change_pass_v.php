@@ -4,9 +4,6 @@
             <div class="panel panel-default">
                 <div class="panel-heading ui-draggable-handle">
                     <h3 class="panel-title"><i class="fa fa-edit"></i>&nbsp;<strong id="ftitle">Change</strong> Password</h3>
-                    <ul class="panel-controls">
-                        <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
-                    </ul>
                 </div>
                 <div class="panel-body">                                                                        
                     <div class="row">
@@ -37,8 +34,8 @@
                     </div>
                 </div>
                 <div class="panel-footer">
-                    <button type="submit" class="btn btn-info btn btn-sm" style="width:120px;">Submit</button>
-                    <button type="reset" class="btn btn-info btn btn-sm" style="width:120px;">Reset</button>
+                    <button type="submit" class="btn btn-info" style="width:120px;">Submit</button>
+                    <button type="reset" class="btn btn-info" style="width:120px;">Reset</button>
                 </div>
             </div>
         </form>

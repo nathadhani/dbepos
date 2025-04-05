@@ -34,7 +34,7 @@
         ?>
             <li class="xn-logo">
                 <a href="#" title="Menu">
-                    <span class="fa fa-list" style="font-size:14px;font-weight:bold;"></span>
+                    <span class="fa fa-minus-square-o" style="font-size:14px;font-weight:bold;"></span>
                     <span style="font-size:14px;font-weight:bold;margin-left:-6px;">              
                         Menu
                     </span>                
@@ -54,7 +54,9 @@
             <li class="xn-icon-button">
                 <a href="user/change_pass" title="Change Password" data-toggle="tooltip" data-placement="bottom"><span class="fa fa-unlock" style="font-size:16px;font-weight:bold;"></span></a>
             </li>
-        <?php } ?>
+        <?php 
+            } 
+        ?>
 
         <!-- For Cashier -->
         <?php         
@@ -63,7 +65,9 @@
             <li class="xn-icon-button">
                 <a href="cb/cb_balance" title="Cash / Bank - Balance" data-toggle="tooltip" data-placement="bottom"><span class="fa fa-calculator" style="font-size:16px;font-weight:bold;"></span></a>
             </li>
-        <?php } ?>
+        <?php 
+            } 
+        ?>
         <!-- End For Cashier -->
 
 
@@ -73,11 +77,11 @@
             if(in_array($usergroup_id, array('3','4'))) {
         ?>        
                 <li class="xn-icon-button">
-                    <a href="transaction/transaction_buysell_list" title="Buy / Sell - List" data-toggle="tooltip" data-placement="bottom"><span class="fa fa-list-alt" style="font-size:16px;font-weight:bold;"></span></a>
+                    <a href="stock/stock_calculate" title="Stock - Calculate" data-toggle="tooltip" data-placement="bottom"><span class="fa fa-calculator" style="font-size:16px;font-weight:bold;"></span></a>
                 </li>
 
                 <li class="xn-icon-button">
-                    <a href="stock/stock_calculate" title="Stock - Calculate" data-toggle="tooltip" data-placement="bottom"><span class="fa fa-calculator" style="font-size:16px;font-weight:bold;"></span></a>
+                    <a href="transaction/transaction_buysell_list" title="Buy / Sell - List" data-toggle="tooltip" data-placement="bottom"><span class="fa fa-list-alt" style="font-size:16px;font-weight:bold;"></span></a>
                 </li>
 
                 <li class="xn-icon-button">

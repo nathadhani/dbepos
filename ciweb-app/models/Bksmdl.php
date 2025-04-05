@@ -20,22 +20,7 @@ class Bksmdl extends Bks_Model {
             return $result;
         }
     }
-
-    public function get_user_information($id)
-    {
-        if($id !== null && $id !== ''){
-            $result = $this->db->get_where('v_auth_users', array('id' => $id));
-            if($result->num_rows() > 0){
-                return $result->result();
-            }
-            else{
-                exit("User not found");
-            }
-        } else {
-            exit("User not found");
-        }
-    }
-
+    
     public function getprofilusaha($id){
         if($id !== null && $id !== ''){
             $result = $this->db->get_where('v_m_store2', array('id' => $id));

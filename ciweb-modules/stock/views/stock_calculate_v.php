@@ -7,9 +7,6 @@
                         Stock - Calculate
                     </h3>
                 </div>
-                <ul class="panel-controls">
-                    <button id="btn-submit" class="btn btn-info btn btn-sm" style="width:120px;">Calculate</button>
-                </ul>    
             </div>            
             <div class="panel-body">
                 <div class="row">                                        
@@ -35,7 +32,13 @@
                         <div class="form-group">
                             <div class="col-lg-12">
                                 <label for="periode" style="display:block">Period</label>
-                                <input style="width:100px;" type="text" data-inputmask="'mask': '[99-9999]'" class="form-control dpM" placeholder="Periode" name="period" id="period" value="<?=date('m-Y')?>">
+                                <div class="input-group">
+                                    <input style="width:100px;" type="text" data-inputmask="'mask': '[99-9999]'" class="form-control dpM" placeholder="Periode" name="period" id="period" value="<?=date('m-Y')?>">
+                                    <span class="input-group-addon">                             
+                                        <button id="btn-submit" class="btn btn-info" style="width:120px;">Calculate</button>
+                                    </span>
+                                </div>
+
                             </div>                            
                         </div>                            
                     </div>

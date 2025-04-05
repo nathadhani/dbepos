@@ -203,7 +203,7 @@ body {
 }
 .page-container .page-content .page-content-wrap {
   float: left;
-  width: 100%;
+  width: 100%;  
 }
 .page-container.page-container-wide .page-content {
   margin-left: 50px;
@@ -271,7 +271,7 @@ body.page-container-boxed .page-container {
   z-index: 3;
 }
 .x-navigation {
-  background: #f5f5f5;
+  background: #003BDE;
   /* NAV LIST ELEMENT */
   /* END NAV LIST ELEMENT */
   /* NAV LIST FIRST ELEMENT */
@@ -448,7 +448,7 @@ body.page-container-boxed .page-container {
 }
 .x-navigation.x-navigation-horizontal {
   height: 50px;    
-  background-color:#FFFFFF
+  background-color:#003BDE
 }
 .x-navigation.x-navigation-horizontal .xn-logo a {
   border-bottom: 0px;
@@ -475,7 +475,7 @@ body.page-container-boxed .page-container {
 }
 .x-navigation.x-navigation-horizontal > li > a .fa,
 .x-navigation.x-navigation-horizontal > li > a .glyphicon {  
-  color:#000;
+  color:#FFF;
 }
 .x-navigation.x-navigation-horizontal > li.active > a {
   background: #282d36;
@@ -644,7 +644,7 @@ body.page-container-boxed .page-container {
 .x-navigation.x-navigation-horizontal .xn-icon-button > a {
   padding: 15px 10px;
   text-align: center;
-  width: 50px;  
+  width: 50px;
 }
 .x-navigation.x-navigation-horizontal .xn-icon-button > a .fa,
 .x-navigation.x-navigation-horizontal .xn-icon-button > a .glyphicon {
@@ -908,14 +908,14 @@ body.page-container-boxed .page-container {
 }
 .x-navigation > li.xn-logo > a {
   border-bottom: 0px;  
-  color: #000;
+  color: #FFF;
   /* background-color: #045498; */
-  background-color: #e3e4e6;
+  background-color: #003BDE;
 }
 .x-navigation > li.xn-logo > a:first-child {
  font-size: 15px;
  border-bottom: 0px;
- color: #000
+ color: #FFF
  height: 50px;
  text-align: left;
  /* background-color:#045498;  */
@@ -1191,7 +1191,7 @@ body.page-container-boxed .page-container {
   padding: 6px 15px 7px;
   -moz-border-radius: 0px;
   -webkit-border-radius: 0px;
-  border-radius: 0px;
+  border-radius: 0px;  
 }
 .breadcrumb li,
 .breadcrumb li a {
@@ -2277,18 +2277,9 @@ input[type=checkbox] {
   border-color: #D5D5D5;
 }
 .input-group-addon {
-  /* border-color: #a7adba; */
-  border: 0px solid #ffffff;
-  /* background-color: #e8e8e8; */
-  
-  /* background-color: #4e73df; */
-  /* background-image: linear-gradient(180deg, #4e73df 10%, #224abe 100%); */
-  /* background-size: cover; */
-
   font-size: 13px;
   padding: 0px 10px;
   line-height: 28px;
-  color: #555;
   text-align: center;
   min-width: 36px;
 }
@@ -3930,7 +3921,7 @@ background: #1caf9a !important;
 }
 
 .login-container .layer {
-  background-color: rgba(0,255,0, 0.15);
+  background-color: rgba(240,240,240, 0.15);
   position: absolute;
   top: 0;
   left: 0;
