@@ -1,5 +1,6 @@
 $("#btn-buysell").hide();
 $(".perorangan").hide();
+$(".non-perorangan").hide();
 reset_form();
 
 if(text_celluler !== null && text_celluler !== ''){
@@ -13,8 +14,10 @@ $('#customer_type_id').on('change',function(){
     if ($('#customer_type_id').val() !== null && $('#customer_type_id').val() !== ''){
         if ($('#customer_type_id').val() === '1'){
             $(".perorangan").show();
+            $(".non-perorangan").hide();
         } else {
             $(".perorangan").hide();
+            $(".non-perorangan").show();
         }
     }   
 });
@@ -74,15 +77,21 @@ $.validate({
                         success: function() {
                             //file exists
                             if( $("#customer_data_id").val() === '' || $("#customer_data_id").val() === null){
-                                bksfn.errMsg("input jenis identitas");
+                                bksfn.errMsg("input tipe identitas");
                                 $("#customer_data_id").focus();
                             } else if( $("#customer_data_number").val() === '' || $("#customer_data_number").val() === null){
                                 bksfn.errMsg("input nomor identitas"); 
                                 $("#customer_data_number").focus();
-                            } else if( $("#job_id").val() === '' || $("#job_id").val() === null){
-                                bksfn.errMsg("input pekerjaan");
                             } else if( $("#nationality_id").val() === '' || $("#nationality_id").val() === null){
                                 bksfn.errMsg("input warga negara");
+                            } else if( $("#job_id").val() === '' || $("#job_id").val() === null){
+                                bksfn.errMsg("input pekerjaan");
+                            } else if( $("#gender_id").val() === '' || $("#gender_id").val() === null){
+                                bksfn.errMsg("input jenis kelamin");
+                            } else if( $("#placeofbirth").val() === '' || $("#placeofbirth").val() === null){
+                                bksfn.errMsg("input tempat lahir");
+                            } else if( $("#bornday").val() === '' || $("#bornday").val() === null){
+                                bksfn.errMsg("input tanggal lahir");
                             } else {
                                 $.post('transaction/customer_form/update', $("#mainForm").serialize() + "&id=" + $("body").data("id"), function (obj) {
                                     if (obj.msg == 1) {                                
@@ -101,11 +110,11 @@ $.validate({
                 } else {
                     $.post('transaction/customer_form/insert', $("#mainForm").serialize(), function (obj) {
                         if (obj.msg == 1) {                            
-                            $("body").data("id", '');
                             $("body").data("text_search", '');
                             $("body").data("id", obj.id);     
                             $("#ftitle").html('Edit');
                             alertify.success("Insert Data Success");       
+                            call_page_customer_edit(obj.id);
                             reset_form();
                         } else {
                             bksfn.errMsg(obj.msg);
@@ -120,8 +129,11 @@ $.validate({
                     $.post('transaction/customer_form/update', $("#mainForm").serialize() + "&id=" + $("body").data("id") , function (obj) {
                         if (obj.msg == 1) {                            
                             $("body").data("text_search", '');
+                            $("body").data("id", obj.id);     
+                            $("#ftitle").html('Edit');
+                            alertify.success("Insert Data Success");       
+                            call_page_customer_edit(obj.id);
                             reset_form();
-                            alertify.success("Edit Data Success");     
                         } else {
                             bksfn.errMsg(obj.msg);
                         }
@@ -182,7 +194,7 @@ $('#upload_foto').on('change',function(e){
                     alertify.success('File has been uploaded');
                 }  
                 reset_form()              
-                // history.go(0); // untuk memuat ulang halaman tanpa cache.
+                history.go(0); // untuk memuat ulang halaman tanpa cache.
             },
             complete: function(){
                 $('.ajax-loader').css("visibility", "hidden");
@@ -220,8 +232,10 @@ $('#upload_foto').on('change',function(e){
                         $("#customer_type_id").html('<option value="' + d.customer_type_id + '">' + d.customer_type_name + ' [' + d.customer_type_id + ']'  + '</option>').sel2dma();
                         if(d.customer_type_id === '1'){
                             $(".perorangan").show();
+                            $(".non-perorangan").hide();
                         } else {
                             $(".perorangan").hide();
+                            $(".non-perorangan").show();
                         }
                     } else {
                         $("#customer_type_id").html('').sel2dma();
@@ -229,7 +243,11 @@ $('#upload_foto').on('change',function(e){
 
                     $("#customer_name").val(d.customer_name).focus();  
                     $("#customer_nick_name").val(d.customer_nick_name);                    
-                    
+
+                    $("#permit_number").val(d.permit_number);                    
+                    $("#permit_date_start").val(bksfn.revDate(d.permit_date_start));
+                    $("#permit_date_end").val(bksfn.revDate(d.permit_date_end));
+
                     $("#customer_handphone").val(d.customer_handphone);
                     $("#customer_phone").val(d.customer_phone);
                     $("#customer_address").val(d.customer_address);
@@ -285,35 +303,33 @@ function reset_form(){
     $("body").data("text_search", '');
 
     $("#customer_code").html('');
-    
-    $("#customer_type_id").html('').sel2dma();
-
-    $("#customer_name").html('').focus();  
-    $("#customer_nick_name").html();
-        
-    $("#status").iCheck('check');
-    $("#customer_handphone").html('');  
+    $("#customer_type_id").html('').sel2dma().focus();
+    $("#customer_name").html('');
+    $("#customer_nick_name").html();  
+    $("#customer_handphone").html('');
     $("#customer_phone").html('');
+    $("#permit_number").val('');                    
+    $("#permit_date_start").val('');
+    $("#permit_date_end").val('');
+
     $("#customer_address").html('');
+    $("#rt_rw").html('');
+    $("#village").html('');
+    $("#sub_district").html('');
+    $("#city").html('');        
+    $("#customerprofil").html('');
+    $("#status").iCheck('check');
 
     $("#customer_data_id").html('').sel2dma();    
     $("#customer_data_number").html('');      
-    $("#npwp_number").html('');   
-    
+    $("#npwp_number").html('');       
+    $("#nationality_id").html('').sel2dma();
     $("#job_id").html('').sel2dma();
     $("#placeofbirth").html('');
     $("#bornday").html('');    
     $("#gender_id").val('');
 
-    $("#nationality_id").html('').sel2dma();
-    $("#rt_rw").html('');
-    $("#village").html('');
-    $("#sub_district").html('');
-    $("#city").html('');        
-    $("#customerprofil").html('');   
-
     $(':submit').removeAttr('disabled');
-
     $(".perorangan").hide();
     if( $("body").data("id") !== null && $("body").data("id") !== '' ){
         tampil_data();

@@ -107,6 +107,12 @@ function fethdata(){
             {data: 'status', visible: false},
             {data: 'reason_cancel', visible: false},
         ],            
+        fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+            if (Number(aData.status) == 2) {
+                $(nRow).find('td:eq(7)').css('color','#FF0000');
+                $(nRow).find('td:eq(7)').css('font-weight','bold');
+            }                    
+        },            
         order: [[1, 'asc'],[3, 'asc'],[2, 'asc']]
     });
     t.draw();
@@ -240,7 +246,7 @@ $("#modal_new_amount").keyup(function(e) {
     e.preventDefault();
     $(this).val($(this).val());
     if( Number($(this).val()) > 0 ){
-        $("#terbilang_modal_new_amount").html('<i>Amount</i> : ' + bksfn.terBilang($(this).val()));
+        $("#terbilang_modal_new_amount").html('<i>Value</i> : ' + bksfn.terBilang($(this).val()));
     }
 });
 $("#btn-modal-add-new").on('click', function (e) {

@@ -131,4 +131,38 @@ class M_cb_pos extends Bks_Controller {
         }
     }
 
+    function getmcbpospayment() {
+        checkIfNotAjax();
+        $this->libauth->check(__METHOD__);
+        $postData = $this->input->post();    
+        $cb_id = $postData['cb_id'];
+        $tr_id = $postData['tr_id'];
+        $paymenttype_id = $postData['paymenttype_id'];        
+        if($cb_id != null && $cb_id != '' && $tr_id != null && $tr_id != '' && $paymenttype_id != null && $paymenttype_id != ''){
+            if($tr_id == '1' && $paymenttype_id == '1') {
+                $menus = $this->db->order_by('id', 'ASC')
+                ->get_where('m_cb_pos', array('status' => '1', 'id' => 2))->result();        
+            } else if($tr_id == '1' && $paymenttype_id == '2') {
+                $menus = $this->db->order_by('id', 'ASC')
+                ->get_where('m_cb_pos', array('status' => '1', 'id' => 9))->result();
+            } else if($tr_id == '2' && $paymenttype_id == '1') {
+                $menus = $this->db->order_by('id', 'ASC')
+                ->get_where('m_cb_pos', array('status' => '1', 'id' => 5))->result();        
+            } else if($tr_id == '2' && $paymenttype_id == '2') {
+                $menus = $this->db->order_by('id', 'ASC')
+                ->get_where('m_cb_pos', array('status' => '1', 'id' => 12))->result();
+            } else {
+                $menus = $this->db->order_by('id', 'ASC')
+                ->get_where('m_cb_pos', array('status' => '1', 'cb_id' => $cb_id))->result();        
+            }            
+            if (isset($menus) && count($menus) > 0){
+                $option ="<option selected value=''>Pilih...</option>";
+                foreach($menus as $row){
+                    $option.="<option value='".$row->id."'>" . $row->cb_pos_name ."</option>";
+                }
+                echo $option;
+            }    
+        } 
+    }
+
 }

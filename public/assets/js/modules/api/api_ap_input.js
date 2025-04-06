@@ -46,6 +46,12 @@
                 {data: 'status', visible: false},
                 {data: 'createdby', visible: false},
             ],            
+            fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                if (Number(aData.status) == 2) {
+                    $(nRow).find('td:eq(7)').css('color','#FF0000');
+                    $(nRow).find('td:eq(7)').css('font-weight','bold');
+                }                                    
+            },                       
             order: [[1, 'asc'],[3, 'asc'],[2, 'asc']]
         });
         t.draw();

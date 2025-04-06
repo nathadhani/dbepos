@@ -114,9 +114,11 @@ function show_header($id){
                             }
                         }                      
                                                 
-                        $("#created_by").html('Created by : '+d.createdby_name +' - '+d.created);
+                        $("#created").html(d.created);
+                        $("#created_by").html(d.createdby_name.trim());
                         if(d.status == '2'){
-                            $("#cancel_by").html(' Canceled by : '+d.updatedby_name +' - '+d.updated);
+                            $("#updated").html(d.updated);
+                            $("#updated_by").html(d.updatedby_name.trim());
                         }                            
 
                         $("#customer_name").html(d.customer_name.trim());
@@ -230,8 +232,11 @@ function show_detail_payment($header_id){
                                             ` + d.payment_type_name +`
                                             <a style="color:red; cursor:pointer" title="hapus" onClick="delete_line_detail_payment(` + d.id + `)"> / <i>remove<i></a>
                                         </td>
-                                        <td width="60%" style='text-align:left;'>
-                                            ` + d.payment_description.trim() + `
+                                        <td width="30%" style='text-align:left;'>
+                                            ` + d.cb_name.trim() + `
+                                        </td>                                        
+                                        <td width="30%" style='text-align:left;'>
+                                            ` + d.cb_pos_name.trim() + `
                                         </td>                                        
                                         <td width="15%" style='text-align:left;'>
                                             ` + (isDecimal(d.amount) ? formatDecimal(d.amount,2) : formatRupiah(d.amount) ) + `
@@ -241,7 +246,7 @@ function show_detail_payment($header_id){
                     counter++;
                 });
                 var rowsx =`<tr>
-                                <td colspan="3" style='vertical-align:middle;text-align:center;background-color:#e3e4e6;font-weight:bold;font-size:14px;'>
+                                <td colspan="4" style='vertical-align:middle;text-align:center;background-color:#e3e4e6;font-weight:bold;font-size:14px;'>
                                     Total Payment Value
                                 </td>
                                 <td style='text-align:left;font-weight:bold;font-size:15px;'>
@@ -282,6 +287,8 @@ function delete_line_detail_payment($id){
 
 function reset_form_input_payment(){
     $("#modal_payment_type").html('').sel2dma();
+    $("#cb_id").html('').sel2dma();
+    $("#cb_pos_id").html('').sel2dma();
     $("#modal_payment_amount").val('');
     $("#terbilang_modal_payment_amount").html('');
 }   
@@ -313,7 +320,22 @@ $("#modal_payment_type").on("change", function(e) {
     if( formatRupiahtoNumber($("#modal_remaining_payment_value").val()) > 0) {
         $("#modal_payment_amount").val( formatRupiahtoNumber($("#modal_remaining_payment_value").val()) );
         $("#terbilang_modal_payment_amount").html('<i>Payment Value</i> : ' + bksfn.terBilang( $("#modal_payment_amount").val( )));
-        $("#modal_payment_amount").focus();
+
+        $('#cb_id').html('').sel2dma();
+        $('#cb_id').prop('disabled', false);
+        $('#cb_id').focus()
+        $.ajax({
+            url : baseUrl +  'master_data/m_cb/getmcbpayment',
+            type: 'POST',
+            data: {'cb_id' : $(this).val()},
+            datatype: 'json',
+            success: function(data){
+                $('#cb_id').html(data);
+            },
+            error: function(){
+                alert("can't get store");  
+            }
+        });        
     } else {
         reset_form_input_payment();
     }    
@@ -326,9 +348,9 @@ $('#cb_id').on('change',function(e){
         $('#cb_pos_id').prop('disabled', false);
         $('#cb_pos_id').focus()
         $.ajax({
-            url : baseUrl +  'master_data/m_cb_pos/getmcbpos',
+            url : baseUrl +  'master_data/m_cb_pos/getmcbpospayment',
             type: 'POST',
-            data: {'cb_id' : $(this).val()},
+            data: {'cb_id' : $(this).val(), 'tr_id' : xtr_id, 'paymenttype_id' : $("#modal_payment_type").val()},
             datatype: 'json',
             success: function(data){
                 $('#cb_pos_id').html(data);

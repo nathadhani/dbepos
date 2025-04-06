@@ -180,32 +180,7 @@ class Cb_list extends Bks_Controller {
         $objWriter = new PHPExcel_Writer_Excel2007($this->excel); 
         $objWriter->setOffice2003Compatibility(true);
         $objWriter->save('php://output');
-    }
-
-    function generate_code($store_id, $cb_id, $cb_pos_id, $tr_date) {
-        $Number = 1;
-        $thn = SUBSTR($tr_date,0,4);
-        $bln = SUBSTR($tr_date,5,2);
-        $day = SUBSTR($tr_date,8,2);
-        $storecode  =sprintf("%02d", $store_id);
-        $cbcode = sprintf("%02d", $cb_id);
-        $cbposcode = sprintf("%02d", $cb_pos_id);
-        $sql = $this->db->query("SELECT max(right(tr_number,4)) as id
-                                 FROM tr_cb_header 
-                                 WHERE store_id = $store_id
-                                 AND cb_id = $cb_id
-                                 AND cb_pos_id = $cb_pos_id
-                                 AND YEAR(tr_date) = $thn 
-                                 AND MONTH(tr_date) = $bln
-                                 AND DAY(tr_date) = $day
-                                 ")->result();
-        if (count($sql) > 0) {
-            foreach ($sql as $data) {
-                $Number = intval($data->id) + 1;
-            }
-        }
-        return SUBSTR($thn,2,2) . $bln . $day . $storecode . $cbcode . $cbposcode . sprintf("%04d", $Number);
-    }
+    }    
 
     function insert_detail(){
         checkIfNotAjax();
@@ -228,7 +203,7 @@ class Cb_list extends Bks_Controller {
                 } else {
                     $postData['tr_date'] = Date('Y-m-d');
                 }
-                $postData['tr_number'] = $this->generate_code($this->store_id, $postData['cb_id'], $postData['cb_pos_id'], $postData['tr_date']);
+                $postData['tr_number'] = $this->Bksmdl->generate_code_cb($this->store_id, $postData['cb_id'], $postData['cb_pos_id'], $postData['tr_date']);
                 $postData['status'] = '3';
 
                 unset($postData['header_id']);
@@ -362,105 +337,10 @@ class Cb_list extends Bks_Controller {
         for($date = $start; $date <= $end; $date->modify('+1 day')){
             $tr_date = $date->format('Y-m-d');
             echo $tr_date . '<br>';
-
-            $get_payment = $this->db->select('*')
-                        ->where(array('store_id' => $store_id, 'tr_date' => $tr_date))
-                        ->where_in('tr_header_status', [3,4])
-                        ->where('cb_id IS NOT NULL',NULL,FALSE)
-                        ->get('v_tr_payment');
-
-            if(count($get_payment) > 0){
-                unset($postData['period1']);
-                unset($postData['period2']);
-                foreach($get_payment->result_array() as $r) {
-                    // Insert Header
-                    $buysell_id = $r['header_id'];
-                    $buysell_payment_type = $r['payment_type'];
-                    $cb_id = $r['cb_id'];
-                    $cb_pos_id = $r['cb_pos_id'];
-                    $description_detail = $r['tr_number'] . ' - ' . $r['customer_name'];
-                    $buysell_amount = $r['amount'];
-                    $qinsert = $this->db->query("SELECT id, buysell_id FROM tr_cb_header WHERE buysell_id = $buysell_id AND buysell_payment_type = $buysell_payment_type LIMIT 1")->result();
-
-                    /** Insert Header */
-                    /** -------------------------------------------------------------------------------- */
-                    if(count($qinsert) > 0){
-                        $id_header = $qinsert[0]->id;
-                    }
-                    if(count($qinsert) == 0){
-                        $postData['tr_date'] = $tr_date;
-                        $datetime = date('Y-m-d H:i:s');
-                        $new_date = $postData['tr_date'];
-                        $new_datetime = date('Y-m-d H:i:s', strtotime($new_date . ' ' . date('H:i:s', strtotime($datetime))));
-                        $postData['created'] = $new_datetime;
-                        $postData['cb_id'] = $cb_id;
-                        $postData['cb_pos_id'] = $cb_pos_id;
-                        $postData['tr_number'] = $this->generate_code($store_id, $postData['cb_id'], $postData['cb_pos_id'], $postData['tr_date']);
-                        $postData['buysell_id'] = $buysell_id;
-                        $postData['buysell_payment_type'] = $buysell_payment_type;
-                        $postData['status'] = '3';
-       
-                        $this->db->trans_begin();
-                        $this->Bksmdl->table = 'tr_cb_header';
-                        $response = $this->Bksmdl->insert($postData);
-                        $id_header = $this->db->insert_id();
-                        if ($this->db->trans_status() === FALSE) {
-                            $this->db->trans_rollback();
-                            $err = $this->db->error();
-                            $json['msg'] = $err['code'] . '<br>' . $err['message'];
-                            echo json_encode($json);
-                        } else {
-                            $this->db->trans_commit();
-                        }
-                    }
-                    /** End of Inser Header -------------------------------------------------------------------------------- */
-
-                    /** Insert Detail */
-                    /** -------------------------------------------------------------------------------- */
-                    if( isset($id_header) && $id_header > 0 && ( $id_header != 'null' || $id_header !== '') ){
-                        $qinsert = $this->db->query("SELECT id, header_id FROM tr_cb_detail WHERE header_id = $id_header AND description = '$description_detail' AND amount = $buysell_amount LIMIT 1")->result();                        
-                        if(count($qinsert) < 1){
-                            $postDetail['header_id'] = $id_header;
-                            $postDetail['description'] = $description_detail;
-                            $postDetail['amount'] = $buysell_amount;
-                            $postDetail['status'] = '3';
-                            $this->db->trans_begin();
-                            $this->Bksmdl->table = 'tr_cb_detail';
-                            $response = $this->Bksmdl->insert($postDetail);
-                            if ($this->db->trans_status() === FALSE) {
-                                $this->db->trans_rollback();
-                                $err = $this->db->error();
-                                $json['msg'] = $err['code'] . '<br>' . $err['message'];
-                                echo json_encode($json);
-                            } else {
-                                $this->db->trans_commit();
-                                $json['msg'] = '1';
-                                echo json_encode($json);
-                            }
-                        } else {
-                            $id = $qinsert[0]->id;
-                            $postDetail['header_id'] = $id_header;
-                            $postDetail['description'] = $description_detail;
-                            $postDetail['amount'] = $buysell_amount;
-                            $postDetail['status'] = '3';
-                            $this->db->trans_begin();
-                            $this->Bksmdl->table = 'tr_cb_detail';
-                            $response = $this->Bksmdl->update($postDetail, 'id=' . $id);
-                            if ($this->db->trans_status() === FALSE) {
-                                $this->db->trans_rollback();
-                                $err = $this->db->error();
-                                $json['msg'] = $err['code'] . '<br>' . $err['message'];
-                                echo json_encode($json);
-                            } else {
-                                $this->db->trans_commit();
-                                $json['msg'] = '1';
-                                echo json_encode($json);
-                            }
-                        }                        
-                    }
-                    /** End of Inser Detail -------------------------------------------------------------------------------- */
-                }
-            }
+            $data['store_id'] = $store_id;
+            $data['tr_date'] = $tr_date;
+            $data['buysell_id'] = null;        
+            $this->Bksmdl->generate_payment_cb($data);
         }
     }
 

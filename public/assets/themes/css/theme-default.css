@@ -2379,7 +2379,7 @@ input[type=checkbox] {
   border-color: #E04B4A;
 }
 label {
-  font-weight: 600;
+  font-weight: 400;
 }
 label.error,
 label.valid {

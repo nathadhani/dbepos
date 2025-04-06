@@ -17,7 +17,7 @@ class Customer_form extends Bks_Controller {
         $this->template->set('icon', 'fa fa-edit');
         $data['auth'] = $this->auth;
         $id = $this->uri->segment(4);
-        $data['customer'] = $this->db->query("SELECT customer_code FROM m_customer WHERE id = $id")->result();
+        $data['data_customer'] = $this->db->query("SELECT customer_code FROM m_customer WHERE id = $id LIMIT 1")->result();
         $this->template->build('transaction/customer_form_v', $data);
     }
     
@@ -49,6 +49,13 @@ class Customer_form extends Bks_Controller {
         $postData['bornday'] = revDate($postData['bornday']);
         $postData['status'] = '1';
 
+        if(isset($postData['permit_date_start'])){
+            $postData['permit_date_start'] = revDate($postData['permit_date_start']);
+        }
+        if(isset($postData['permit_date_end'])){
+            $postData['permit_date_end'] = revDate($postData['permit_date_end']);
+        }        
+
         $this->db->trans_begin();
         $status = $this->Bksmdl->insert($postData);
         if ($this->db->trans_status() === FALSE) {
@@ -74,6 +81,13 @@ class Customer_form extends Bks_Controller {
         $postData['bornday'] = revDate($postData['bornday']);
         $postData['status'] = cekStatus($postData);
         unset($postData['id']);      
+
+        if(isset($postData['permit_date_start'])){
+            $postData['permit_date_start'] = revDate($postData['permit_date_start']);
+        }
+        if(isset($postData['permit_date_end'])){
+            $postData['permit_date_end'] = revDate($postData['permit_date_end']);
+        }
         
         $this->db->trans_begin();
         $status = $this->Bksmdl->update($postData, 'id=' . $id);

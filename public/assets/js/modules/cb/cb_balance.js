@@ -40,10 +40,10 @@ function fethdata(){
                                         <td width="15%" style='text-align:left;'>
                                             ` + (isDecimal(d.beginning_saldo) ? formatDecimal(d.beginning_saldo,2) : formatRupiah(d.beginning_saldo) ) + `
                                         </td>
-                                        <td width="15%" style='text-align:left;'>
+                                        <td width="15%" style='text-align:left;color:#008744;'>
                                             ` + (isDecimal(d.cbs_in) ? formatDecimal(d.cbs_in,2) : formatRupiah(d.cbs_in) ) + `
                                         </td>
-                                        <td width="15%" style='text-align:left;'>
+                                        <td width="15%" style='text-align:left;color:#800080;'>
                                             ` + (isDecimal(d.cbs_out) ? formatDecimal(d.cbs_out,2) : formatRupiah(d.cbs_out) ) + `
                                         </td>
                                         <td width="15%" style='text-align:left;'>
@@ -55,20 +55,20 @@ function fethdata(){
                 });
                 var total_balancex = totalbeginningx + totalinx - totaloutx;
                 var rowsx =`<tr>
-                                <td colspan="2" style='vertical-align:middle;text-align:center;font-weight:bold;background-color:#f1f5f9;color:#56688A;font-size:12px;'>
+                                <td colspan="2" style='vertical-align:middle;text-align:center;font-weight:bold;background-color:#F5F5F5;color:#000;font-size:14px;'>
                                     Total
                                 </td>
                                 <td style='text-align:left;font-weight:bold;'>
-                                    Rp. ` + formatRupiah(totalbeginningx) + `
+                                    <i>Rp.</i> ` + formatRupiah(totalbeginningx) + `
+                                </td>                         
+                                <td style='text-align:left;font-weight:bold;color:#008744;'>
+                                    <i>Rp.</i> ` + formatRupiah(totalinx) + `
+                                </td>                         
+                                <td style='text-align:left;font-weight:bold;color:#800080;'>
+                                    <i>Rp.</i> ` + formatRupiah(totaloutx) + `
                                 </td>                         
                                 <td style='text-align:left;font-weight:bold;'>
-                                    Rp. ` + formatRupiah(totalinx) + `
-                                </td>                         
-                                <td style='text-align:left;font-weight:bold;'>
-                                    Rp. ` + formatRupiah(totaloutx) + `
-                                </td>                         
-                                <td style='text-align:left;font-weight:bold;'>
-                                    Rp. ` + formatRupiah(total_balancex) + `
+                                    <i>Rp.</i> ` + formatRupiah(total_balancex) + `
                                 </td>                         
                             </tr>`   
                 $('#mainTable tbody').append(rowsx); 

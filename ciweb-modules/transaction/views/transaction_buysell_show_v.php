@@ -63,22 +63,24 @@
                 <div class="panel-body">   
                     <div class="row">
                         <div class="col-md-6">
-                            <span>Store : </span><span id="store_address"></span><br>
-                            <span>Date : </span><span id="tr_date"></span><br>
-                            <span>Number : </span><span id="tr_number"></span><br>
-                            <span>Status : </span><span id="ftitle"></span><br>
-                            <span>Description : </span><span id="description_header"></span><br>
-                            <span id="created_by"></span>
+                            <span class="span_text_fixed_85px">Store</span> : <span id="store_address"></span><br>
+                            <span class="span_text_fixed_85px">Date</span>  : <span id="tr_date"></span><br>
+                            <span class="span_text_fixed_85px">Number</span> : <span id="tr_number"></span><br>
+                            <span class="span_text_fixed_85px">Created </span> : <span id="created"></span><br>    
+                            <span class="span_text_fixed_85px">Created by </span> : <span id="created_by"></span><br>    
+                            <span class="span_text_fixed_85px">Updated</span> : <span id="updated"></span><br>
+                            <span class="span_text_fixed_85px">Updated by</span> : <span id="updated_by"></span>
                         </div>    
                         <div class="col-md-6">
-                            <span>Name : </span><a href="#" id="customer_name"></a><br>
-                            <span>Address : </span><span id="customer_address"></span><br>
+                            <span class="span_text_fixed_85px">Name</span> : <a href="#" id="customer_name"></a><br>
+                            <span class="span_text_fixed_85px">Address</span> : <span id="customer_address"></span><br>
                             <?php if( $auth['usergroup_id'] != '6'){ ?>
-                                <span>Act On  : </span><span id="customer_act_on"></span><br>
-                                <span>Source  : </span><span id="customer_source"></span><br>
-                                <span>Purpose : </span><span id="customer_purpose"></span><br>
+                                <span class="span_text_fixed_85px">Act On</span> : <span id="customer_act_on"></span><br>
+                                <span class="span_text_fixed_85px">Source</span> : <span id="customer_source"></span><br>
+                                <span class="span_text_fixed_85px">Purpose</span> : <span id="customer_purpose"></span><br>
                             <?php } ?>
-                            <span id="cancel_by"></span>
+                            <span class="span_text_fixed_85px">Description</span> : <span id="description_header"></span><br>
+                            <span class="span_text_fixed_85px">Status</span> : <span id="ftitle"></span>
                         </div>
                     </div>
 
@@ -212,69 +214,68 @@
                 </div>     
 
                 <div class="row">
-                    <div class="col-md-12">
-                        <table class="table table-bordered" cellspacing="0" width="100%">
-                            <thead>
-                                <tr>
-                                    <th style='vertical-align:middle;text-align:left;'>Type</th>
-                                    <th style='vertical-align:middle;text-align:left;'>Source</th>
-                                    <th style='vertical-align:middle;text-align:left;'>Purpose</th>
-                                    <th style='vertical-align:middle;text-align:left;'>Value</th>
-                                    <th id="act-title" style='vertical-align:middle;text-align:center;' width="50px">Action</th>
-                                </tr>
-                            </thead>                                                
-                            <tbody>  
-                                <form id="mainFormModalPayment" class="form-horizontal" autocomplete="off">     
-                                    <tr style="background:#ffffff;">
-                                        <td width="20%">
-                                            <!-- Jika Search Tidak berfungsi, remove modal tabindex='-1' -->
-                                            <select id="modal_payment_type"
-                                                    name="modal_payment_type"
-                                                    data-ajax="true"
-                                                    data-placeholder="Pilih..."
-                                                    data-url="master_data/m_payment_type/getpaymenttype/"
-                                                    data-value=""
-                                                    data-limit="100"                                          
-                                                    placeholder="Pilih..."
-                                                    class='form-control select2'
-                                                    require
-                                            >
-                                            </select>
-                                        </td>  
-                                        <td width="30%">
-                                            <!-- Jika Search Tidak berfungsi, remove modal tabindex='-1' -->
-                                            <select id="cb_id"
-                                                    name="cb_id"
-                                                    data-ajax="true"
-                                                    data-placeholder="Pilih..."
-                                                    data-url="master_data/m_cb/getmcb/"
-                                                    data-value=""
-                                                    data-limit="100"                                          
-                                                    placeholder="Pilih..."
-                                                    class='form-control select2'
-                                                    require
-                                            >
-                                            </select>
-                                        </td>
-                                        <td width="35%">
-                                            <!-- Jika Search Tidak berfungsi, remove modal tabindex='-1' -->
-                                            <select class='form-control select2' name="cb_pos_id" id="cb_pos_id" disabled="true">
-                                                <option value="">Pilih...</option>
-                                            </select>
-                                        </td>
-                                        <td width="15%">
-                                            <input type="text" onkeypress="validasiAngka(event)" autofocuse="" id="modal_payment_amount" name="modal_payment_amount" class="form-control" style='text-align:right;'>
-                                        </td>
-                                        <td width="10%" style='text-align:center'>
+                    <form id="mainFormModalPayment" class="form-horizontal" autocomplete="off">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <div class="col-lg-12">
+                                    <label for=modal_payment_type style="display:block">Type</label>
+                                    <!-- Jika Search Tidak berfungsi, remove modal tabindex='-1' -->
+                                    <select id="modal_payment_type"
+                                            name="modal_payment_type"
+                                            data-ajax="true"
+                                            data-placeholder="Pilih..."
+                                            data-url="master_data/m_payment_type/getpaymenttype/"
+                                            data-value=""
+                                            data-limit="100"                                          
+                                            placeholder="Pilih..."
+                                            class='form-control select2'
+                                            require
+                                    >
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <div class="col-lg-12">
+                                    <label for=cb_id style="display:block">Source</label>
+                                    <!-- Jika Search Tidak berfungsi, remove modal tabindex='-1' -->
+                                    <select class='form-control select2' name="cb_id" id="cb_id" disabled="true">
+                                        <option value="">Pilih...</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <div class="col-lg-12">
+                                    <label for=cb_pos_id style="display:block">Purpose</label>
+                                    <!-- Jika Search Tidak berfungsi, remove modal tabindex='-1' -->
+                                    <select class='form-control select2' name="cb_pos_id" id="cb_pos_id" disabled="true">
+                                        <option value="">Pilih...</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <div class="col-lg-12">
+                                    <label for=modal_payment_amount style="display:block">Payment Value</label>
+                                    <div class="input-group">
+                                        <input type="text" onkeypress="validasiAngka(event)" autofocuse="" id="modal_payment_amount" name="modal_payment_amount" class="form-control" style='text-align:right;'>
+                                        <span class="input-group-addon">
                                             <button id="btn-modal-add-row-payment" class="btn btn-info btn btn-sm" style="width:90px;background:#008000;color:white;font-weight:600;">Add</button>
-                                        </td>                
-                                    </tr>
-                                    <tr>
-                                        <td id="terbilang_modal_payment_amount" colspan=4></td>
-                                    </tr>
-                                </form>
-                            </tbody>
-                        </table>
+                                        </span>    
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>                                       
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <span id="terbilang_modal_payment_amount"></span>
                     </div>
                 </div>
                 
@@ -287,7 +288,7 @@
                                     <th style='vertical-align:middle;text-align:left;'>Type</th>
                                     <th style='vertical-align:middle;text-align:left;'>Source</th>
                                     <th style='vertical-align:middle;text-align:left;'>Purpose</th>
-                                    <th style='vertical-align:middle;text-align:left;'>Value</th>
+                                    <th style='vertical-align:middle;text-align:left;'>Payment Value</th>
                                 </tr>
                             </thead>
                             <tbody>                                                

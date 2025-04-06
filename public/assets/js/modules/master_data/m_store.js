@@ -18,7 +18,7 @@
         $("#api_store_id").val();
         $("#api_store_name").val();
 
-        $("#tr_id").html('').sel2dma();
+        $("#ap_tr_id").html('').sel2dma();
 
         $("#status").iCheck('check');
         $(':submit').removeAttr('disabled');
@@ -87,18 +87,17 @@
 
         if (d.tr_id_object != null) {
             tr_id_object = JSON.parse(d.tr_id_object);
-            console.log(tr_id_object);    
-            $("#tr_id").html('').sel2dma();    
+            $("#ap_tr_id").html('').sel2dma();    
             $.each(tr_id_object, function (i, val) {
-                $("#tr_id").append(`<option value="${val.id}">${val.tr_name} [${val.id}]</option>`);    
-                $("#tr_id-container").find("span.select2-container ul.select2-selection__rendered").append(`<li class="select2-selection__choice" title="${val.tr_name} [${val.id}]"><span class="select2-selection__choice__remove" role="presentation">×</span>${val.tr_name} [${val.id}]</li>`);
+                $("#ap_tr_id").append(`<option value="${val.id}">${val.tr_name} [${val.id}]</option>`);    
+                $("#ap_tr_id-container").find("span.select2-container ul.select2-selection__rendered").append(`<li class="select2-selection__choice" title="${val.tr_name} [${val.id}]"><span class="select2-selection__choice__remove" role="presentation">×</span>${val.tr_name} [${val.id}]</li>`);
             });    
             $("input.select2-search__field").attr('placeholder', '');
             $("input.select2-search__field").css("width", "0");
             $("ul.select2-selection__rendered").append('<span class="select2-selection__clear">×</span>');
         }    
-        if (d.tr_id != null) {
-            $("#tr_id").val(d.tr_id_object.split(','));
+        if (d.ap_tr_id != null) {
+            $("#ap_tr_id").val(d.tr_id_object.split(','));
         }
 
         $("#status").iCheck(d.status == 1 ? 'check' : 'uncheck');
@@ -140,7 +139,7 @@
             {data: 'api_username', visible: false},
             {data: 'api_password', visible: false},
             {data: 'api_store_name', visible: false},
-            {data: 'tr_id', visible: false},
+            {data: 'ap_tr_id', visible: false},
             {data: 'tr_id_object', visible: false},
             {data: 'user_limits', visible: false},
         ],

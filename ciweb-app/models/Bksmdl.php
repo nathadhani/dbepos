@@ -568,4 +568,148 @@ class Bksmdl extends Bks_Model {
         }
     }
 
+    function generate_code_cb($store_id, $cb_id, $cb_pos_id, $tr_date) {
+        $Number = 1;
+        $thn = SUBSTR($tr_date,0,4);
+        $bln = SUBSTR($tr_date,5,2);
+        $day = SUBSTR($tr_date,8,2);
+        $storecode  =sprintf("%02d", $store_id);
+        $cbcode = sprintf("%02d", $cb_id);
+        $cbposcode = sprintf("%02d", $cb_pos_id);
+        $sql = $this->db->query("SELECT max(right(tr_number,4)) as id
+                                 FROM tr_cb_header 
+                                 WHERE store_id = $store_id
+                                 AND cb_id = $cb_id
+                                 AND cb_pos_id = $cb_pos_id
+                                 AND YEAR(tr_date) = $thn 
+                                 AND MONTH(tr_date) = $bln
+                                 AND DAY(tr_date) = $day
+                                 ")->result();
+        if (count($sql) > 0) {
+            foreach ($sql as $data) {
+                $Number = intval($data->id) + 1;
+            }
+        }
+        return SUBSTR($thn,2,2) . $bln . $day . $storecode . $cbcode . $cbposcode . sprintf("%04d", $Number);
+    }
+
+    public function generate_payment_cb($data = array()){
+        if(count($data) > 0) {
+            $store_id = $data['store_id'];
+            $tr_date = $data['tr_date'];
+            $buysell_id = $data['buysell_id'];
+            if($buysell_id != null){
+                $get_payment = $this->db->select('*')
+                            ->where(array('store_id' => $store_id, 'tr_date' => $tr_date, 'header_id' => $buysell_id))
+                            ->where_in('tr_header_status', [3,4])
+                            ->where('cb_id IS NOT NULL',NULL,FALSE)                        
+                            ->get('v_tr_payment');
+            } else {
+                $get_payment = $this->db->select('*')
+                            ->where(array('store_id' => $store_id, 'tr_date' => $tr_date))
+                            ->where_in('tr_header_status', [3,4])
+                            ->where('cb_id IS NOT NULL',NULL,FALSE)
+                            ->get('v_tr_payment');
+            }
+            if(isset($get_payment) && count($get_payment) > 0){
+                foreach($get_payment->result_array() as $r) {
+                    // Insert Header
+                    $buysell_id = $r['header_id'];
+                    $buysell_payment_type = $r['payment_type'];
+                    $cb_id = $r['cb_id'];
+                    $cb_pos_id = $r['cb_pos_id'];
+                    $description_detail = $r['tr_number'] . ' - ' . $r['customer_name'];
+                    $buysell_amount = $r['amount'];
+
+                    $qinsert = $this->db->query("SELECT id, buysell_id FROM tr_cb_header WHERE buysell_id = $buysell_id AND buysell_payment_type = $buysell_payment_type AND status <> 2 LIMIT 1")->result();
+
+                    /** Insert Header */
+                    /** -------------------------------------------------------------------------------- */
+                    $postHeader['store_id'] = $store_id;
+                    $postHeader['tr_date'] = $tr_date;
+                    $datetime = date('Y-m-d H:i:s');
+                    $new_date = $postHeader['tr_date'];
+                    $new_datetime = date('Y-m-d H:i:s', strtotime($new_date . ' ' . date('H:i:s', strtotime($datetime))));
+                    $postHeader['cb_id'] = $cb_id;
+                    $postHeader['cb_pos_id'] = $cb_pos_id;
+                    $postHeader['buysell_id'] = $buysell_id;
+                    $postHeader['buysell_payment_type'] = $buysell_payment_type;
+                    $postHeader['status'] = '3';
+                    if(count($qinsert) > 0){
+                        $id_header = $qinsert[0]->id;
+                    }
+                    if(count($qinsert) == 0){                     
+                        $this->db->trans_begin();
+                        $postHeader['tr_number'] = $this->generate_code_cb($store_id, $postHeader['cb_id'], $postHeader['cb_pos_id'], $postHeader['tr_date']);
+                        $postHeader['created'] = $new_datetime;
+                        $this->Bksmdl->table = 'tr_cb_header';
+                        $response = $this->Bksmdl->insert($postHeader);
+                        $id_header = $this->db->insert_id();
+                        if ($this->db->trans_status() === FALSE) {
+                            $this->db->trans_rollback();
+                            $err = $this->db->error();
+                            echo $err['code'] . '<br>' . $err['message'];                            
+                        } else {
+                            $this->db->trans_commit();
+                        }
+                    }
+                    /** End of Inser Header -------------------------------------------------------------------------------- */
+
+                    /** Insert Detail */
+                    /** -------------------------------------------------------------------------------- */
+                    if( isset($id_header) && $id_header > 0 && ( $id_header != 'null' || $id_header !== '') ){
+                        $qinsert = $this->db->query("SELECT id, header_id FROM tr_cb_detail WHERE header_id = $id_header AND description = '$description_detail' AND amount = $buysell_amount LIMIT 1")->result();                        
+                        if(count($qinsert) < 1){
+                            $postDetail['header_id'] = $id_header;
+                            $postDetail['description'] = $description_detail;
+                            $postDetail['amount'] = $buysell_amount;
+                            $postDetail['status'] = '3';
+                            $this->db->trans_begin();
+                            $this->Bksmdl->table = 'tr_cb_detail';
+                            $response = $this->Bksmdl->insert($postDetail);
+                            if ($this->db->trans_status() === FALSE) {
+                                $this->db->trans_rollback();
+                                $err = $this->db->error();
+                                echo $err['code'] . '<br>' . $err['message'];                                
+                            } else {
+                                $this->db->trans_commit();
+                            }
+                        } else {
+                            $id = $qinsert[0]->id;
+                            $postDetail['header_id'] = $id_header;
+                            $postDetail['description'] = $description_detail;
+                            $postDetail['amount'] = $buysell_amount;
+                            $postDetail['status'] = '3';
+                            $this->db->trans_begin();
+                            $this->Bksmdl->table = 'tr_cb_detail';
+                            $response = $this->Bksmdl->update($postDetail, 'id=' . $id);
+                            if ($this->db->trans_status() === FALSE) {
+                                $this->db->trans_rollback();
+                                $err = $this->db->error();
+                                echo $err['code'] . '<br>' . $err['message'];                                
+                            } else {
+                                $this->db->trans_commit();
+
+                                /** Update header */
+                                $this->db->trans_begin();
+                                $postHeader['updated'] = $new_datetime;
+                                $this->Bksmdl->table = 'tr_cb_header';
+                                $response = $this->Bksmdl->update($postHeader, 'id=' . $id_header);
+                                if ($this->db->trans_status() === FALSE) {
+                                    $this->db->trans_rollback();
+                                    $err = $this->db->error();
+                                    echo $err['code'] . '<br>' . $err['message'];                                    
+                                } else {
+                                    $this->db->trans_commit();
+                                }                            }
+                        }                        
+                    }
+                    /** End of Inser Detail -------------------------------------------------------------------------------- */
+                }
+            }
+        } else {
+            echo 'empty parameter';
+        }
+    }
+
 }

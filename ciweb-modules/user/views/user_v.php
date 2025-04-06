@@ -169,11 +169,11 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Store</th>
                                 <th>User Name</th>
                                 <th>Full Name</th>
                                 <th>Level</th>
-                                <th>Last Log</th>
+                                <th>Store</th>
+                                <th>Last Log</th>                                
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>

@@ -485,6 +485,11 @@ function call_page_customer_new(){
     window.open(url,'_self');    
 }
 
+function call_page_customer_edit(id){
+    var url = "transaction/customer_form/index/"+id;
+    window.open(url,'_self');    
+}
+
 function call_page_task_buysell(customer_id, id_tr_header){
     var url = "transaction/transaction_buysell/index/"+customer_id+"/"+id_tr_header;
     return url;

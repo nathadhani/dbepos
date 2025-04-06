@@ -33,17 +33,12 @@ table.dataTable tbody tr {
     cursor: pointer;
 }
 
-.pinggiran {
-    border: 1px #ccc dashed;
-    padding: 10px;
+.batas-kiri {
+    border-left: 1px #333 dashed;
 }
 
-.mandatory {
-    border-left: 5px #1CAF9A solid;
-}
-
-.pinggir-kanan {
-    border-right: 1px #ccc dashed;
+.batas-kanan {
+    border-right: 1px #333 dashed;
 }
 
 li.nav-dropdown.open>a {
@@ -233,4 +228,9 @@ nav i.fa-plus-square {
   
 .dropdown:hover .dropbtn {
     background-color: #ff0000;
+}
+
+.span_text_fixed_85px{
+    display: inline-block;
+    width: 85px;    
 }

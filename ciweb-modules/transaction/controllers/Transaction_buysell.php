@@ -398,9 +398,9 @@ class Transaction_buysell extends Bks_Controller {
         $this->libauth->check(__METHOD__);                
         $postData = $this->input->post();
         $header_id = $postData['header_id'];
+        $payment_type = $postData['modal_payment_type'];
         $cashierby = $postData['cashierby'];
         $postData['payment_type'] = $postData['modal_payment_type'];
-        $postData['payment_description'] = $postData['modal_payment_description'];
         $postData['amount'] = $postData['modal_payment_amount'];
         if (strpos($postData['modal_payment_amount'], ',') !== false) {
             $postData['amount'] = str_replace(',','.',$postData['modal_payment_amount']);
@@ -408,24 +408,41 @@ class Transaction_buysell extends Bks_Controller {
         $postData['status'] = '1';      
         
         unset($postData['modal_payment_type']);
-        unset($postData['modal_payment_description']);
         unset($postData['modal_payment_amount']);
         unset($postData['cashierby']);
 
-        $this->db->trans_begin();
-        $this->Bksmdl->table = 'tr_payment';
-        $response = $this->Bksmdl->insert($postData);
-        if ($this->db->trans_status() === FALSE) {
-            $this->db->trans_rollback();
-            $err = $this->db->error();
-            $json['msg'] = $err['code'] . '<br>' . $err['message'];
-            echo json_encode($json);
+        $get_tr_payment = $this->db->query("SELECT id,header_id FROM tr_payment WHERE header_id = $header_id AND payment_type = $payment_type LIMIT 1")->result();
+        if(count($get_tr_payment) == 0){
+            $this->db->trans_begin();
+            $this->Bksmdl->table = 'tr_payment';
+            $response = $this->Bksmdl->insert($postData);
+            if ($this->db->trans_status() === FALSE) {
+                $this->db->trans_rollback();
+                $err = $this->db->error();
+                $json['msg'] = $err['code'] . '<br>' . $err['message'];
+                echo json_encode($json);
+            } else {
+                /** update tr_header */
+                $this->db->where(array('id' => $header_id));
+                $this->db->update('tr_header', array('status' => 4, 'cashierby' => $cashierby, 'updated' => date('Y-m-d H:i:s', time()), 'updatedby' => $this->userId) );
+
+                /** insert cash_bank */
+                $get_tr_header = $this->db->query("SELECT id, store_id, tr_date FROM tr_header WHERE id = $header_id LIMIT 1")->result();
+                if(isset($get_tr_header) && $get_tr_header[0]->store_id != null && $get_tr_header[0]->store_id != ''){
+                    $data['store_id'] = $get_tr_header[0]->store_id;
+                    $data['tr_date'] = $get_tr_header[0]->tr_date;
+                    $data['buysell_id'] = $get_tr_header[0]->id;
+                    $this->Bksmdl->generate_payment_cb($data);
+                }
+
+                $this->db->trans_commit();
+                $json['msg'] = '1';
+                echo json_encode($json);
+            }
         } else {
-            $this->db->trans_commit();
-            $this->db->where(array('id' => $header_id));
-            $this->db->update('tr_header', array('status' => 4, 'cashierby' => $cashierby, 'updated' => date('Y-m-d H:i:s', time()), 'updatedby' => $this->userId) );
-            $json['msg'] = '1';
-            echo json_encode($json);
+            $id = $get_tr_payment[0]->id;
+            $this->db->where(array('id' => $id));
+            $this->db->update('tr_payment', $postData );
         }
     }
 
@@ -490,6 +507,8 @@ class Transaction_buysell extends Bks_Controller {
         $tr_date = revDate($data_header[0]->tr_date);
         $customer_source = $data_header[0]->customer_source;
         $customer_puprpose = $data_header[0]->customer_purpose;
+        $customer_permit_number = $data_header[0]->permit_number;
+        $customer_permit_date = revDate($data_header[0]->permit_date_start) . ' s/d ' . revDate($data_header[0]->permit_date_end) ;
         $tr_time =  date('H:i:s',strtotime($data_header[0]->created));        
         $counter_name = $data_header[0]->createdby_name;
         $status = $data_header[0]->status;
@@ -547,13 +566,23 @@ class Transaction_buysell extends Bks_Controller {
 
                     $pdf->SetFont('', '', 9);
                     $pdf->Cell(01, 01, "------------------------------------------------------------------------------------", 0, 1, 'L');
-                    $pdf->Cell(01, 01, 'Date        : ' . $tr_date . '           ' . 'Number : ' . trim($tr_number), 0, 1, 'L');
-                    $pdf->Cell(01, 01, 'CIF          :  ' . trim($profil_customer[0]->customer_code) . '    ID No     : ' . $profil_customer[0]->customer_data_number, 0, 1, 'L');
-                    $pdf->Cell(01, 01, 'Phone     : ' . $profil_customer[0]->customer_handphone . '     Job         : ' . $profil_customer[0]->customer_job_name, 0, 1, 'L');
-                    $pdf->Cell(01, 01, 'Name      : ' . SUBSTR(trim($profil_customer[0]->customer_name),0,45), 0, 1, 'L');
-                    $pdf->Cell(01, 01, 'Address  : ' . SUBSTR(trim($profil_customer[0]->customer_address),0,45), 0, 1, 'L');
-                    $pdf->Cell(01, 01, 'Source    : ' . SUBSTR(trim($customer_source),0,50), 0, 1, 'L');
-                    $pdf->Cell(01, 01, 'Purpose  : ' . SUBSTR(trim($customer_puprpose),0,50), 0, 1, 'L');
+                    if($data_header[0]->customer_type_id == '1'){
+                        $pdf->Cell(01, 01, 'Date        : ' . $tr_date . '           ' . 'Number : ' . trim($tr_number), 0, 1, 'L');
+                        $pdf->Cell(01, 01, 'CIF          : ' . trim($profil_customer[0]->customer_code) . '    ID No     : ' . $profil_customer[0]->customer_data_number, 0, 1, 'L');
+                        $pdf->Cell(01, 01, 'Phone     : ' . $profil_customer[0]->customer_handphone . '     Job         : ' . $profil_customer[0]->customer_job_name, 0, 1, 'L');
+                        $pdf->Cell(01, 01, 'Name      : ' . SUBSTR(trim($profil_customer[0]->customer_name),0,45), 0, 1, 'L');
+                        $pdf->Cell(01, 01, 'Address  : ' . SUBSTR(trim($profil_customer[0]->customer_address),0,45), 0, 1, 'L');
+                        $pdf->Cell(01, 01, 'Source    : ' . SUBSTR(trim($customer_source),0,50), 0, 1, 'L');
+                        $pdf->Cell(01, 01, 'Purpose  : ' . SUBSTR(trim($customer_puprpose),0,50), 0, 1, 'L');    
+                    } else {
+                        $pdf->Cell(01, 01, 'Date             : ' . $tr_date . '           ' . 'Number : ' . trim($tr_number), 0, 1, 'L');
+                        $pdf->Cell(01, 01, 'CIF               : ' . trim($profil_customer[0]->customer_code), 0, 1, 'L');
+                        $pdf->Cell(01, 01, 'Phone          : ' . $profil_customer[0]->customer_handphone, 0, 1, 'L');
+                        $pdf->Cell(01, 01, 'Name           : ' . SUBSTR(trim($profil_customer[0]->customer_name),0,45), 0, 1, 'L');
+                        $pdf->Cell(01, 01, 'Address       : ' . SUBSTR(trim($profil_customer[0]->customer_address),0,45), 0, 1, 'L');
+                        $pdf->Cell(01, 01, 'Licensi No    : ' . SUBSTR(trim($customer_permit_number),0,50), 0, 1, 'L');
+                        $pdf->Cell(01, 01, 'Licensi Date : ' . SUBSTR(trim($customer_permit_date),0,50), 0, 1, 'L');    
+                    }
                     $pdf->SetAutoPageBreak(true, 0);
             
                     // Add Header Column

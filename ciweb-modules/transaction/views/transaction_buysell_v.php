@@ -50,17 +50,27 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-md-6">
                                 <div class="form-group">                                
                                     <div class="col-lg-12">
-                                        <label for="customer_name" style="display:block">Name / Address</label>
-                                        <div class="input-group">
-                                            <a href="#" id="customer_name"></a>
-                                            <span id="customer_address"></span>
-                                            <a href="#" id="btn-customer-act-on" title="Attachment Customer" style="margin-left:5px;">
+                                        <label for="customer_name" style="display:block">
+                                            Name / address / cct on
+                                            <a href="#" id="btn-customer-act-on" title="Attachment Customer" style="margin-left:2px;">
                                                 <i class="fa fa-paperclip"></i>
                                             </a>
+                                        </label>
+                                        <div class="input-group">
+                                            <a href="#" id="customer_name"></a>
+                                            <span id="customer_address"></span>                                            
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <div class="col-lg-12">
+                                        <label for="created_by" style="display:block">Created / by</label>
+                                        <span id="created_by"></span>
                                     </div>
                                 </div>
                             </div>
@@ -127,10 +137,13 @@
                     </div>
                     
                     <div class="row form_detail_input" style="margin-top:-15px;">
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <label for="">Stock Available : Nominal ( </label> <span id="stock_nominal"></span> )
                             <label for="">Sheet</label> ( <span id="stock_sheet"></span> )
                             <label for="">Amount</label> ( <span id="stock_amount"></span> )
+                        </div>
+                        <div class="col-md-6">
+                            <span id="terbilang_price" class="pull-right"></span>
                         </div>
                     </div>
                     
@@ -153,15 +166,6 @@
                                     </tbody>
                                 </table>
                             </div>
-                            
-                            <!-- <hr style="border: 1px solid green;margin-top:0px;"> -->
-
-                            <div class="row" style="margin-top:-10px;">
-                                <div class="col-md-12">                            
-                                    <span id="created_by"></span>
-                                    <span id="cancel_by"></span>                                
-                                </div>
-                            </div>                            
                         </div>
                     </div>                    
                 </div>

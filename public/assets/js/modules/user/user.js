@@ -127,13 +127,13 @@
         },
         columns: [
             {data: "#", className: "dt-body-center", width: "5%", orderable: false, searchable: false},
-            {data: 'store_address'},
             {data: 'username', render: function (data, type, row, meta) {                    
                     return data;                    
                 }
             },            
             {data: 'fullname'},    
             {data: 'userlevelname'},
+            {data: 'store_address'},
             {data: 'userlevel_id', render: function (data, type, row, meta) {
                 var act = (row.lastlog !== null) ? row.lastlog : '';
                 return act;
@@ -173,7 +173,7 @@
         if ($(this).index() != 0 && $(this).index() < 8) {
             $(this).html('<input style="width:100%" type="text" placeholder="Search" data-id="' + $(this).index() + '" />');
         }
-        if ($(this).index() == 8) {
+        if ($(this).index() == 6) {
             $(this).html('<select style="width:100%" type="text"><option value="">-</option><option value="1">Active</option><option value="0">Not Active</option><select/>');
         }
     });
@@ -181,7 +181,7 @@
         t.columns($(this).data('id')).search(this.value).draw();
     });
     $('#searchid select').change(function () {
-        t.columns(8).search(this.value).draw();
+        t.columns(6).search(this.value).draw();
     });
     $(".clrs").click(function () {
         $('#searchid input').val('');

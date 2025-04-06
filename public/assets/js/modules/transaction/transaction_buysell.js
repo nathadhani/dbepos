@@ -2,6 +2,7 @@ back_to_page_ini();
 var sisa_stock_amount = 0;
 var sisa_stock_sheet = 0;
 var xtr_id = $("#tr_id").val();
+var customertypeId = 0;
 $('#tr_id').on('change',function(e){
     e.preventDefault()
     if($(this).val() != null && $(this).val() != ''){
@@ -35,6 +36,8 @@ function reset_form_input(){
     $("#stock_nominal").html('');
     $("#stock_sheet").html('');
     $("#stock_amount").html('');
+
+    $("#terbilang_price").html('');    
 }
 
 function show_customer($id){
@@ -52,6 +55,7 @@ function show_customer($id){
                         var d = JSON.parse(data)[0];
                         $("#customer_name").html(d.customer_name.trim());
                         $("#customer_address").html(' / ' + d.customer_address.trim());
+                        customertypeId = d.customer_type_id;
                     } else {
                         return 'data customer not found';
                     }  
@@ -79,12 +83,7 @@ function show_header(){
                 datatype: 'json',
                 success: function(data){
                     if (data !== '[]' && data.length > 0){
-                        var d = JSON.parse(data)[0];                                                
-
-                        $("#created_by").html('Created by : ' + d.createdby_name + '  ' + d.created);
-                        if(d.status == '2'){
-                            $("#cancel_by").html(' | Canceled by : ' + d.updatedby_name + '  ' + d.updated);
-                        }
+                        var d = JSON.parse(data)[0];
 
                         if (d.tr_id != 0 && d.tr_id != null && d.tr_id != '') {
                             $("#tr_id").html('<option value="' + d.tr_id + '">' + d.tr_name + '</option>').sel2dma();
@@ -112,6 +111,8 @@ function show_header(){
                         }                
                         $("#customer_source").val(d.customer_source);
                         $("#customer_purpose").val(d.customer_purpose);                        
+
+                        $("#created_by").html(d.created + ' / ' + d.createdby_name);
 
                         $("#ftitle").html(d.status_name);
                         show_detail(d.status);
@@ -163,10 +164,10 @@ function show_detail($statusTrx){
                         totalpricex += Number(d.subtotal);
                         if(d.status === '1'){                            
                             var rows =`<tr id="` + counter + `">
-                                        <td width="5%" style="text-align:center;vertical-align:middle">
+                                        <td width="3%" style="text-align:center;vertical-align:middle">
                                             ` + counter + `
                                         </td>
-                                        <td width="35%" style="vertical-align: middle;color:black">
+                                        <td width="27%" style="vertical-align: middle;color:black">
                                             ` + d.currency_code + ' - ' + d.currency_name +`
                                             <a style="color:red; cursor:pointer" title="hapus" onClick="delete_line_detail(` + d.id + `)"> / <i>remove<i></a>
                                         </td>
@@ -182,7 +183,7 @@ function show_detail($statusTrx){
                                         <td width="15%" style='text-align:left;'>
                                             ` + (isDecimal(d.price) ? formatDecimal(d.price,2) : formatRupiah(d.price) ) + `
                                         </td>
-                                        <td width="15%" style='text-align:left;'>
+                                        <td width="25%" style='text-align:left;'>
                                             ` + formatRupiah(d.subtotal) + `
                                         </td>                         
                                     </tr>`
@@ -297,7 +298,7 @@ function add_item(){
 
 $('#currency_id').on('change',function(){
     if($(this).val() != null && $(this).val() != ''){
-        getratebyid();
+        getratebyid();        
     } else {
         $('#price').val('');
     }
@@ -325,6 +326,7 @@ $("#price").keyup(function(e) {
     e.preventDefault();
     if($(this).val() != null && $(this).val() != ''){
         $(this).val($(this).val());
+        $("#terbilang_price").html('<i>Exchange Rate</i> : ' + bksfn.terBilang( $(this).val() ));
         subtotal_input();
     }
 });
@@ -519,6 +521,7 @@ function getratebyid(){
                             if(Number(xrate_today_top) > 0){
                                 $("#price_top").val(xrate_today_top);
                             }
+                            $("#terbilang_price").html('<i>Exchange Rate</i> : ' + bksfn.terBilang( Number(xrate_today) ));
                         }                 
                     }
                 }    
@@ -673,38 +676,42 @@ $("#btn-confirm").on('click', function (e) {
     if( document.getElementById('table-detail').rows.length < 2 ) {
         bksfn.errMsg("Mata uang belum diinput!");        
     } else {
-        if(xtr_id === '2' && (customerId !== null || customerId !== '')){
-            $.ajax({
-                url: baseUrl + 'transaction/transaction_buysell/getthreshold',
-                type: 'POST',
-                data: {'customer_id' : customerId},
-                datatype: 'json',
-                success: function(data){
-                    if (data !== undefined) {
-                        if (data !== '[]' && data.length > 0){
-                            var d = JSON.parse(data)[0];
-                            total_trx = (d.subtotal === null ? 0 : Number(d.subtotal));
-                            total_theshold = (d.total_threshold === null ? 0 : Number(d.total_threshold));
-                            if(total_theshold > 0) {
-                                if(total_trx > total_theshold) {
-                                    alertify.alert('Transaksi bulan ini senilai ' + formatRupiah(total_trx) + ' rupiah sudah melebihi nilai threshold USD perbulan 25000 * ' + formatRupiah(d.rate_price) + ' senilai ' + formatRupiah(total_theshold) + ' rupiah');
-                                    alertconfirmtrx();
+        if(xtr_id === '2'){
+            if( (customerId !== null || customerId !== '') && customertypeId === '1' ){ // Per Orangan
+                $.ajax({
+                    url: baseUrl + 'transaction/transaction_buysell/getthreshold',
+                    type: 'POST',
+                    data: {'customer_id' : customerId},
+                    datatype: 'json',
+                    success: function(data){
+                        if (data !== undefined) {
+                            if (data !== '[]' && data.length > 0){
+                                var d = JSON.parse(data)[0];
+                                total_trx = (d.subtotal === null ? 0 : Number(d.subtotal));
+                                total_theshold = (d.total_threshold === null ? 0 : Number(d.total_threshold));
+                                if(total_theshold > 0) {
+                                    if(total_trx > total_theshold) {
+                                        alertify.alert('Transaksi bulan ini senilai ' + formatRupiah(total_trx) + ' rupiah sudah melebihi nilai threshold USD perbulan 25000 * ' + formatRupiah(d.rate_price) + ' senilai ' + formatRupiah(total_theshold) + ' rupiah');
+                                        alertconfirmtrx();
+                                    } else {
+                                        alertconfirmtrx();
+                                    }
                                 } else {
-                                    alertconfirmtrx();
-                                }
+                                    alertconfirmtrx();  
+                                }                                                     
                             } else {
-                                alertconfirmtrx();  
-                            }                                                     
-                        } else {
-                            alertconfirmtrx();
+                                alertconfirmtrx();
+                            }
                         }
+                    },
+                    error: function(xhr){
+                        alertify.error("error");
+                        StringtoFile(xhr.responseText, 'error');
                     }
-                },
-                error: function(xhr){
-                    alertify.error("error");
-                    StringtoFile(xhr.responseText, 'error');
-                }
-            });
+                });
+            } else {
+                alertconfirmtrx();
+            }            
         } else {
             alertconfirmtrx();
         }        

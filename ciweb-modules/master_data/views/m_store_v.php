@@ -49,17 +49,17 @@
                             </div><!-- /.form-group -->                                                        
                         </div>
                         <div class="col-lg-6">         
-                            <div class="form-group row" id="tr_id-container">
-                                <label for="tr_id" class="control-label col-lg-4">AP Trx List</label>
+                            <div class="form-group row" id="ap_tr_id-container">
+                                <label for="ap_tr_id" class="control-label col-lg-4">AP Trx List</label>
                                 <div class="col-lg-8">
-                                    <select name="tr_id[]"
+                                    <select name="ap_tr_id[]"
                                             data-ajax="true" 
-                                            data-placeholder="-- Pilih Multiple --"
+                                            data-placeholder="Pilih..."
                                             data-url="master_data/m_trxlist/gettrxlistbuysell/" 
                                             data-value="" 
                                             data-limit="100"
                                             multiple
-                                            id="tr_id" placeholder="Trx Name" class='form-control select2'>
+                                            id="ap_tr_id" placeholder="Trx Name" class='form-control select2'>
                                     </select>
                                 </div>
                             </div>                          

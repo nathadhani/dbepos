@@ -119,4 +119,22 @@ class M_cb extends Bks_Controller {
         echo json_encode($result);
     }
 
+    function getmcbpayment() {
+        checkIfNotAjax();
+        $this->libauth->check(__METHOD__);
+        $postData = $this->input->post();    
+        $cb_id = $postData['cb_id'];
+        if($cb_id != null && $cb_id != ''){
+            $menus = $this->db->order_by('id', 'ASC')
+                    ->get_where('m_cb', array('status' => '1', 'id' => $cb_id))->result();        
+            if (count($menus) > 0){
+                $option ="<option selected value=''>Pilih...</option>";
+                foreach($menus as $row){
+                    $option.="<option value='".$row->id."'>" . $row->cb_name ."</option>";
+                }
+                echo $option;
+            }            
+        }
+    }
+
 }

@@ -81,12 +81,12 @@
                 </li>
 
                 <li class="xn-icon-button">
-                    <a href="transaction/transaction_buysell_list" title="Buy / Sell - List" data-toggle="tooltip" data-placement="bottom"><span class="fa fa-list-alt" style="font-size:16px;font-weight:bold;"></span></a>
+                    <a href="transaction/closing_buysell" title=" Buysell - Closing" data-toggle="tooltip" data-placement="bottom"><span class="fa fa-calendar-check-o" style="font-size:16px;font-weight:bold;"></span></a>
                 </li>
 
                 <li class="xn-icon-button">
-                    <a href="transaction/closing_buysell" title=" Buysell - Closing" data-toggle="tooltip" data-placement="bottom"><span class="fa fa-calendar-check-o" style="font-size:16px;font-weight:bold;"></span></a>
-                </li>
+                    <a href="transaction/transaction_buysell_list" title="Buy / Sell - List" data-toggle="tooltip" data-placement="bottom"><span class="fa fa-list-alt" style="font-size:16px;font-weight:bold;"></span></a>
+                </li>                
 
                 <li class="xn-icon-button">
                     <a href="dashboard/dashboard_buysell" title="Buy / Sell - Chart" data-toggle="tooltip" data-placement="bottom">

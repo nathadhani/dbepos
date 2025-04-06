@@ -23,16 +23,14 @@ class M_store extends Bks_Controller {
         $postData = $this->input->post();
         $postData['store_name'] = trim($postData['store_name']);
         $postData['status'] = cekStatus($postData);
-        if(isset($postData['tr_id'])){
-            $postData['tr_id'] = implode(',', $postData['tr_id']);
-            $mystring = $postData['tr_id'];
+        if(isset($postData['ap_tr_id'])){
+            $postData['ap_tr_id'] = implode(',', $postData['ap_tr_id']);
+            $mystring = $postData['ap_tr_id'];
             $findme   = ',';
             $pos = strpos($mystring, $findme);
             if($pos === false) {
-                $postData['tr_id'] = (int) $postData['tr_id'];                                     
+                $postData['ap_tr_id'] = (int) $postData['ap_tr_id'];                                     
             }
-        } else {
-            $postData['tr_id'] = Null;
         }        
 
         $this->db->trans_begin();
@@ -55,16 +53,14 @@ class M_store extends Bks_Controller {
         $postData = $this->input->post();
         $postData['store_name'] = trim($postData['store_name']);
         $postData['status'] = cekStatus($postData);
-        if(isset($postData['tr_id'])){
-            $postData['tr_id'] = implode(',', $postData['tr_id']);
+        if(isset($postData['ap_tr_id'])){
+            $postData['ap_tr_id'] = implode(',', $postData['ap_tr_id']);
             // $mystring = $postData['tr_id'];
             // $findme   = ',';
             // $pos = strpos($mystring, $findme);
             // if($pos === false) {
             //     $postData['tr_id'] = (int) $postData['tr_id'];
             // }
-        } else {
-            $postData['tr_id'] = Null;
         }
         $id = $postData['id'];
         unset($postData['id']);

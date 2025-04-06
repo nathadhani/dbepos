@@ -105,7 +105,7 @@ class Cb_balance extends Bks_Controller {
                 $id = 0;
                 $cb_id = $row['cb_id'];                
 
-                /** Get Beginning Stock */
+                /** Get Beginning */
                 /***************************************************************************************************************** */
                 $select_max_date = $this->db->query("SELECT MAX(cbs_date) AS max_date
                                                      FROM tr_cb_saldo 
