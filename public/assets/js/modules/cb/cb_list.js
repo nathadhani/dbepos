@@ -30,16 +30,7 @@ $("#btn-generate-buysell").on('click', function (e) {
     }    
 });
 
-$("#btn-submit").on('click', function (e) {
-    e.preventDefault();
-    if($('#store_id').val() === null || $('#store_id').val() === ''){
-        bksfn.errMsg('Store Belum Dipilih!');
-    } else {
-        $("#btn-excel").show();
-        fethdata();
-    }        
-});
-
+$(".dropdown").hide();
 $("#btn-excel").hide();
 $("#btn-excel").on('click', function (e) {
     e.preventDefault();
@@ -48,17 +39,15 @@ $("#btn-excel").on('click', function (e) {
     } else {
         alertify.confirm("export xlsx ?", function (e) {    
             if (e) {
-                var url = "cb/cb_list/excel/"+$('#store_id').val()+"/"+$('#tr_date1').val()+"/"+$('#tr_date2').val();
+                var url = "cb/cb_list/excel/";
                 $.ajax({
                     url: url,
                     type: 'POST',
-                    data: {},
+                    data: {'store_id' : $("#store_id").val(), 'period1' : $('#tr_date1').val(), 'period2' : $('#tr_date2').val()},
+                    dataType: 'json',
                     beforeSend: function(){
                         $(".ajax-loader").height($(document).height());
                         $('.ajax-loader').css("visibility", "visible");
-                    },
-                    success: function() {
-                        window.open(url,'_self'); 
                     },
                     complete: function(){
                         $('.ajax-loader').css("visibility", "hidden");
@@ -67,7 +56,7 @@ $("#btn-excel").on('click', function (e) {
                     var $a = $("<a>");
                         $a.attr("href",data.file);
                         $("body").append($a);
-                        $a.attr("download","cash bank list.xlsx");
+                        $a.attr("download","Transaction Cash Bank " + bksfn.revDate($("#tr_date1").val()) + ' - ' + bksfn.revDate($("#tr_date2").val()) + ".xlsx");
                         $a[0].click();
                         $a.remove();
                 });                                    
@@ -75,6 +64,18 @@ $("#btn-excel").on('click', function (e) {
         });
     }              
 });
+
+$("#btn-submit").on('click', function (e) {
+    e.preventDefault();
+    if($('#store_id').val() === null || $('#store_id').val() === ''){
+        bksfn.errMsg('Store Belum Dipilih!');
+    } else {
+        $(".dropdown").show();
+        $("#btn-excel").show();
+        fethdata();
+    }        
+});
+
 
 function fethdata(){
     var t = $('#mainTable table').DataTable({

@@ -40,10 +40,10 @@ function fethdata(){
                                         <td width="15%" style='text-align:left;'>
                                             ` + (isDecimal(d.beginning_saldo) ? formatDecimal(d.beginning_saldo,2) : formatRupiah(d.beginning_saldo) ) + `
                                         </td>
-                                        <td width="15%" style='text-align:left;color:#008744;'>
+                                        <td width="15%" style='text-align:left;'>
                                             ` + (isDecimal(d.cbs_in) ? formatDecimal(d.cbs_in,2) : formatRupiah(d.cbs_in) ) + `
                                         </td>
-                                        <td width="15%" style='text-align:left;color:#800080;'>
+                                        <td width="15%" style='text-align:left;'>
                                             ` + (isDecimal(d.cbs_out) ? formatDecimal(d.cbs_out,2) : formatRupiah(d.cbs_out) ) + `
                                         </td>
                                         <td width="15%" style='text-align:left;'>
@@ -61,10 +61,10 @@ function fethdata(){
                                 <td style='text-align:left;font-weight:bold;'>
                                     <i>Rp.</i> ` + formatRupiah(totalbeginningx) + `
                                 </td>                         
-                                <td style='text-align:left;font-weight:bold;color:#008744;'>
+                                <td style='text-align:left;font-weight:bold;'>
                                     <i>Rp.</i> ` + formatRupiah(totalinx) + `
                                 </td>                         
-                                <td style='text-align:left;font-weight:bold;color:#800080;'>
+                                <td style='text-align:left;font-weight:bold;'>
                                     <i>Rp.</i> ` + formatRupiah(totaloutx) + `
                                 </td>                         
                                 <td style='text-align:left;font-weight:bold;'>

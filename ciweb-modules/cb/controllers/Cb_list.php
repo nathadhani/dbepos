@@ -59,67 +59,63 @@ class Cb_list extends Bks_Controller {
 
         $cpData = $this->Bksmdl->getDataTable($where, $where2);
         $this->Bksmdl->outputToJson($cpData);
-    }
+    }    
 
     function excel(){
+        checkIfNotAjax();
         $this->libauth->check(__METHOD__);
-        $store_id = $this->uri->segment(4);
-        $tanggal1 = revDate($this->uri->segment(5));
-        $tanggal2 = revDate($this->uri->segment(6));
-       
-        $query = "SELECT
+        $postData = $this->input->post();
+        $this->store_id = ( is_array($postData['store_id']) ? implode(',', $postData['store_id']) : $postData['store_id']) ;
+        $this->tr_date1 = revDate($postData['period1']);        
+        $this->tr_date2 = revDate($postData['period1']);        
+
+        $profil_usaha = $this->Bksmdl->getprofilusaha($this->store_id);
+
+        $dbquery = "SELECT
+                    tr_cb_detail.id AS id,
+                    tr_cb_detail.header_id AS header_id,
+                    tr_cb_header.store_id AS store_id,
+                    tr_cb_header.tr_number AS tr_number,
+                    tr_cb_header.tr_date AS tr_date,
+                    tr_cb_header.cb_id AS cb_id,
+                    m_cb.cb_code AS cb_code,
+                    m_cb.cb_name AS cb_name,
+                    m_cb.description AS cb_description,
+                    tr_cb_header.cb_pos_id AS cb_pos_id,
+                    m_cb_pos.cb_pos_code AS cb_pos_code,
+                    m_cb_pos.cb_pos_name AS cb_pos_name,
+                    m_cb_pos.cb_pos_in_out AS cb_pos_in_out,
+                    tr_cb_detail.description AS description,
+                    tr_cb_detail.amount AS amount,
+                    tr_cb_detail.status AS status,
                     (
                         SELECT
-                            ( CASE WHEN ( tr_header.tr_id = 1 ) THEN 'Buy/Beli' WHEN ( tr_header.tr_id = 2 ) THEN 'Sell/Jual' ELSE '' END )
-                    ) AS trx_name,
-                    tr_header.tr_date,
-                    tr_header.tr_number,
-                    (
-                        SELECT
-                        ( CASE WHEN ( tr_header.status IN ( 2 )) THEN 'Canceled' WHEN ( tr_header.status IN ( 3 )) THEN 'Confirm' WHEN ( tr_header.status = 4 ) THEN 'Integrasi System ECSys (API)' ELSE 'Task' 
+                        ( 
+                        CASE 
+                            WHEN ( tr_cb_header.status = 2 ) THEN 'Canceled'
+                            WHEN ( tr_cb_header.status = 3 ) THEN 'Confirm'
                         END
                         )
                     ) AS status_name,
-                    CONCAT(m_currency.currency_code,' - ',m_currency.currency_name) AS currency_name,
-                    tr_detail.nominal AS nominal,
-                    tr_detail.sheet AS sheet,
-                    (tr_detail.nominal * tr_detail.sheet) AS amount,
-                    tr_detail.price AS exchange_rate,
-                    ((tr_detail.nominal * tr_detail.sheet) * tr_detail.price)  AS subtotal,
-                    m_store.store_name,
-                    m_store.store_address,
-                    tr_header.description,
-                    tr_detail.created AS created,
-                    tr_detail.updated AS updated,
+                    tr_cb_detail.created AS created,
+                    tr_cb_detail.updated AS updated,
+                    tr_cb_detail.createdby AS createdby,
+                    tr_cb_detail.updatedby AS updatedby,
                     usr1.fullname AS createdby_name,
-                    usr2.fullname AS updated_name
-                FROM tr_detail
-                JOIN tr_header ON tr_detail.header_id = tr_header.id 				
-                JOIN m_currency ON tr_detail.currency_id = m_currency.id
-                JOIN m_store ON m_store.id = tr_header.store_id
-                JOIN auth_users usr1 ON usr1.id = tr_header.createdby
-                LEFT JOIN auth_users usr2 ON usr2.id = tr_header.updatedby"; 
-
-        if( $ap_tr_id !== null && strlen($ap_tr_id) > 0){
-            $query .= " WHERE tr_header.store_id = $store_id
-                    AND tr_header.tr_id IN ($ap_tr_id)
-                    AND tr_header.tr_date >= '$tanggal1'
-                    AND tr_header.tr_date <= '$tanggal2'
-                    AND tr_detail.status IN (2,3,4)                    
-                    ORDER BY tr_header.tr_date ASC, tr_header.tr_id ASC, tr_header.tr_number ASC, tr_detail.currency_id ASC, tr_detail.nominal ASC, tr_detail.sheet ASC";
-        } else {
-            $query .= " WHERE tr_header.store_id = $store_id
-                    AND tr_header.tr_date >= '$tanggal1'
-                    AND tr_header.tr_date <= '$tanggal2'
-                    AND tr_detail.status IN (2,3,4)
-                    ORDER BY tr_header.tr_date ASC, tr_header.tr_id ASC, tr_header.tr_number ASC, tr_detail.currency_id ASC, tr_detail.nominal ASC, tr_detail.sheet ASC";
-        }
-        
-        if (!$this->db->query($query))
+                    usr2.fullname AS updatedby_name 
+                    FROM tr_cb_detail
+                    JOIN tr_cb_header ON tr_cb_detail.header_id = tr_cb_header.id
+                    JOIN m_cb ON tr_cb_header.cb_id = m_cb.id
+                    JOIN m_cb_pos ON tr_cb_header.cb_pos_id = m_cb_pos.id
+                    LEFT JOIN auth_users usr1 ON tr_cb_header.createdby = usr1.id
+                    LEFT JOIN auth_users usr2 ON tr_cb_header.updatedby = usr2.id
+                ";
+         
+        if (!$dbquery())
         return false;
 
-        $fields = $this->db->query($query)->list_fields();
-        $totcol = $this->db->query($query)->num_rows();
+        $fields = $this->dbquery()->list_fields();
+        $totcol = $this->dbquery()->num_rows();
         $maxrow = $totcol+1;
 
         // echo $this->db->last_query();exit;
@@ -129,78 +125,122 @@ class Cb_list extends Bks_Controller {
         $this->excel->setActiveSheetIndex(0);
         $this->excel->getActiveSheet()->setTitle("temp");
 
-        $bold = array('font' => array('bold' => true));
-        $fontcolor = array('font' => array('color' => array('rgb' => 'ff0000')));
-        $title = array('font' => array('color' => array('rgb' => 'ffffff'), 'bold' => true), 
-                       'fill' => array('type' => PHPExcel_Style_Fill::FILL_SOLID, 'color' => array('rgb' => '337AB7')));
-
         // Field names in the first row
-        $fields = $this->db->query($query)->list_fields();
+        $fields = $this->dbquery()->list_fields();
         $col = 0;
-
+        
         // title column
-        $judul = array('Trx',                            
-                        'Date',
-                        'Number',
-                        'Status',                        
-                        'Currency',
-                        'Nominal',
-                        'Sheet',
-                        'Amount',
-                        'Exchange Rate',
-                        'Equivalent',
-                        'Store Name',
-                        'Store Address',
-                        'Description',
-                        'Created',
-                        'Updated',
-                        'Created by Name',
-                        'Updated by Name');
+        $this->excel->setActiveSheetIndex(0)->setCellValue('A1', strtoupper(trim($profil_usaha[0]->store_name))); 
+        if(!is_array($postData['store_id'])){
+            $this->excel->setActiveSheetIndex(0)->setCellValue('A2', strtoupper(trim($profil_usaha[0]->store_address))); 
+            $this->excel->setActiveSheetIndex(0)->setCellValue('A3', 'Rekap Transaksi Beli dan Jual Periode ' . revDate($this->tr_date)); 
+            $this->excel->setActiveSheetIndex(0)->getStyle('A1:A3')->getFont()->setBold(TRUE);
+            $this->excel->setActiveSheetIndex(0)->getStyle('A1:A3')->getFont()->setSize(11);
+            $this->excel->setActiveSheetIndex(0)->mergeCells('A1:K1');
+            $this->excel->setActiveSheetIndex(0)->mergeCells('A2:K2');
+            $this->excel->setActiveSheetIndex(0)->mergeCells('A3:K3');    
 
-
-        foreach ($fields as $key => $field) {
-            $this->excel->getActiveSheet()->setCellValueByColumnAndRow($col, 1, $judul[$key]);
-            $this->excel->getActiveSheet()->getStyleByColumnAndRow($col, 1)->applyFromArray($title);
-            $col++;
+        } else {
+            $this->excel->setActiveSheetIndex(0)->setCellValue('A2', 'Konsolidasi Rekap Transaksi Beli dan Jual Periode ' . revDate($this->tr_date)); 
+            $this->excel->setActiveSheetIndex(0)->getStyle('A1:A2')->getFont()->setBold(TRUE);
+            $this->excel->setActiveSheetIndex(0)->getStyle('A1:A2')->getFont()->setSize(11);
+            $this->excel->setActiveSheetIndex(0)->mergeCells('A1:K1');
+            $this->excel->setActiveSheetIndex(0)->mergeCells('A2:K2');    
         }
+
+        $this->excel->setActiveSheetIndex(0)->setCellValue('A6', "#"); 
+        $this->excel->setActiveSheetIndex(0)->setCellValue('B6', "Curr"); 
+        
+        $this->excel->setActiveSheetIndex(0)->setCellValue('C5', "Awal"); 
+        $this->excel->setActiveSheetIndex(0)->mergeCells('C5:D5');
+        $this->excel->setActiveSheetIndex(0)->setCellValue('C6', "Qty"); 
+        $this->excel->setActiveSheetIndex(0)->setCellValue('D6', "Rupiah"); 
+
+        $this->excel->setActiveSheetIndex(0)->setCellValue('E5', "Beli"); 
+        $this->excel->setActiveSheetIndex(0)->mergeCells('E5:F5');
+        $this->excel->setActiveSheetIndex(0)->setCellValue('E6', "Qty"); 
+        $this->excel->setActiveSheetIndex(0)->setCellValue('F6', "Rupiah"); 
+
+        $this->excel->setActiveSheetIndex(0)->setCellValue('G5', "Jual"); 
+        $this->excel->setActiveSheetIndex(0)->mergeCells('G5:H5');
+        $this->excel->setActiveSheetIndex(0)->setCellValue('G6', "Qty"); 
+        $this->excel->setActiveSheetIndex(0)->setCellValue('H6', "Rupiah"); 
+
+        $this->excel->setActiveSheetIndex(0)->setCellValue('I5', "Akhir"); 
+        $this->excel->setActiveSheetIndex(0)->mergeCells('I5:J5');
+        $this->excel->setActiveSheetIndex(0)->setCellValue('I6', "Qty"); 
+        $this->excel->setActiveSheetIndex(0)->setCellValue('J6', "Rupiah"); 
+
+        $this->excel->setActiveSheetIndex(0)->setCellValue('K6', "Keterangan");
+
+
+        $this->excelcellColor('A6:K6', 'FFFF00');
+        $this->excel->setActiveSheetIndex(0)->getStyle('A5:K6')->getFont()->setBold(TRUE);
+        $this->excel->setActiveSheetIndex(0)->getStyle('A5:K6')->getFont()->setSize(11);
+        $this->excel->setActiveSheetIndex(0)->getStyle('C5:K5')->getBorders()
+                                                            ->getAllBorders()
+                                                            ->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN)
+                                                            ->getColor()
+                                                            ->setRGB('DDDDDD');
+        $this->excel->setActiveSheetIndex(0)->getStyle('A6:L6')->getBorders()
+                                                            ->getAllBorders()
+                                                            ->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN)
+                                                            ->getColor()
+                                                            ->setRGB('DDDDDD');                                                            
+        $this->excel->setActiveSheetIndex(0)->getStyle('A5:L6')->getAlignment()->applyFromArray(
+                                                                    array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+                                                                          'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER,)
+                                                                );
 
         // Fetching the table data
-        $row = 2;
-        foreach ($this->db->query($query)->result_array() as $data) {
-            $col = 0;
-            foreach ($fields as $field) {
-                $this->excel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $data[$field]); // Retreive Data Value
-                $this->excel->getActiveSheet()->getStyle('F'.$row.':'.'H'.$row)->getNumberFormat()->setFormatCode('#,##0'); // Number Format
-                $this->excel->getActiveSheet()->getStyle('J'.$row.':'.'J'.$row)->getNumberFormat()->setFormatCode('#,##0'); // Number Format                
-                if($field == 'exchange_rate'){
-                    if( $this->Bksmdl->cekdecimalgreaterthenzero($data[$field]) > 0){
-                        $this->excel->getActiveSheet()->getStyle('I'.$row.':'.'I'.$row)->getNumberFormat()->setFormatCode('#,##0.00'); // Number Format Decimal
-                    } else {
-                        $this->excel->getActiveSheet()->getStyle('I'.$row.':'.'I'.$row)->getNumberFormat()->setFormatCode('#,##0'); // Number Format Decimal                        
-                    }
-                }
-                $col++;
-            }
-            $row++;
+        $row = 7; $no = 1;
+        foreach ($this->dbquery()->result_array() as $data) {            
+            $this->excel->setActiveSheetIndex(0)->setCellValue('A'.$row, $no);
+            $this->excel->setActiveSheetIndex(0)->setCellValue('B'.$row, $data['currency_code']);
+
+            $this->excel->setActiveSheetIndex(0)->setCellValue('C'.$row, $data['st_beginning_amount']);
+            $this->excel->setActiveSheetIndex(0)->setCellValue('D'.$row, $data['st_beginning_equivalent']);
+
+            $this->excel->setActiveSheetIndex(0)->setCellValue('E'.$row, $data['buy_amount']);
+            $this->excel->setActiveSheetIndex(0)->setCellValue('F'.$row, $data['buy_equivalent']);
+
+            $this->excel->setActiveSheetIndex(0)->setCellValue('G'.$row, $data['sell_amount']);
+            $this->excel->setActiveSheetIndex(0)->setCellValue('H'.$row, $data['sell_equivalent']);
+
+            $this->excel->setActiveSheetIndex(0)->setCellValue('I'.$row, $data['st_end_amount']);
+            $this->excel->setActiveSheetIndex(0)->setCellValue('J'.$row, $data['st_end_equivalent']);
+
+            $this->excel->setActiveSheetIndex(0)->setCellValue('K'.$row, ucwords(strtolower(trim($data['currency_name']))) );
+
+            $this->excel->setActiveSheetIndex(0)->getStyle('C'.$row.':'.'J'.$row)->getNumberFormat()->setFormatCode('_(* #,##0_);_(* (#,##0);_(* "-"??_);_(@_)'); // Number Format
+            $this->excel->setActiveSheetIndex(0)->getStyle('A'.$row.':'.'L'.$row)->getBorders()
+                                                                                ->getAllBorders()
+                                                                                ->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN)
+                                                                                ->getColor()
+                                                                                ->setRGB('DDDDDD');
+            $this->excel->setActiveSheetIndex(0)->getStyle('A'.$row.':'.'L'.$row)->getAlignment()->applyFromArray(
+                                                                                        array('vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER,)
+                                                                                    );
+            $row++; $no++;
         }
-        foreach (range('A', 'Q') as $columnID) {
+
+        foreach (range('A', 'L') as $columnID) {
             $this->excel->getActiveSheet()->getColumnDimension($columnID)->setAutoSize(true);
         }
         $this->excel->setActiveSheetIndex(0);        
 
         // Sending headers to force the user to download the file
-        $filename = 'Transaction Period ' . revDate($tanggal1) . ' sd ' .  revDate($tanggal2);
-        header("Pragma: public");
-        header("Expires: 0");
-        header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-        header("Content-Type: application/force-download");
-        header("Content-Type: application/octet-stream");
-        header("Content-Type: application/download");;
-        header("Content-Disposition: attachment;filename=$filename.xlsx");
-        header("Content-Transfer-Encoding: binary ");
+        ob_start();
         $objWriter = new PHPExcel_Writer_Excel2007($this->excel); 
-        $objWriter->setOffice2003Compatibility(true);
+        // $objWriter->setOffice2003Compatibility(true);
         $objWriter->save('php://output');
+        $xlsData = ob_get_contents();
+        ob_end_clean();
+        $response =  array(
+            'op' => 'ok',
+            'file' => "data:application/vnd.ms-excel;base64,".base64_encode($xlsData)
+        );
+        die(json_encode($response));
     }       
 
 }

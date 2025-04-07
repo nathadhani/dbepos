@@ -120,7 +120,7 @@ class Cb_list_new extends Bks_Controller {
 
     function show_header(){
         checkIfNotAjax();
-        // $this->libauth->check(__METHOD__);
+        $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
         $header_id = $postData['header_id'];
         $query = $this->db->query("SELECT * FROM v_tr_cb_header WHERE id = " . $header_id . " LIMIT 1")->result();
@@ -165,6 +165,9 @@ class Cb_list_new extends Bks_Controller {
             $json['msg'] = '1';
             echo json_encode($json);
         }            
-    }    
+    }
+
+    
+
 
 }

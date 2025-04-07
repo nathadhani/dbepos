@@ -13,12 +13,7 @@
                             <h3>Cash / Bank - <strong id="ftitle"></strong></h3>
                         </div>
                         <ul class="panel-controls">
-                            <div class="dropdown">
-                                <button class="dropbtn" style="width:100px;">Action</button>
-                                <div class="dropdown-content">
-                                    <a href="#" id="btn-cancel">Cancel</a>
-                                </div>
-                            </div>
+                            <button id="btn-cancel" class="btn btn-danger" style="width:120px;margin-left:5px;">Cancel</button>
                         </ul>
                     </div>                    
                     <div class="panel-body"> 
@@ -120,7 +115,16 @@
                                     </tbody>
                                 </table>                                        
                             </div>
-                        </div>                      
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2">
+                                <a class="file-input-wrapper btn btn-info">
+                                    <span class="fa fa-upload"></span>
+                                    <input type="file" id="upload_foto" name="upload_foto" class="form-control" accept="image/*">
+                                    <label for="">Attachment</label>
+                                </a>
+                            </div>
+                        </div>                     
                     </div>              
                     <!--.end panel-body -->                    
                 </div>                

@@ -1,6 +1,6 @@
 reset_form_input_header()
 reset_form_input_new();
-$(".dropdown").hide();
+$("#btn-cancel").hide();
 if( $("body").data("id") !== null && $("body").data("id") !== '' ){
     show_header();
     show_detail();
@@ -146,7 +146,7 @@ function show_header(){
     if( typeof($("body").data("id")) !== 'undefined') {
         if($("body").data("id") !== null && $("body").data("id") !== '') {
             $("#ftitle").html('Edit');
-            $(".dropdown").show();
+            $("#btn-cancel").show();
             $.ajax({
                 url: baseUrl + "cb/cb_list_new/show_header",
                 type: 'POST',
@@ -175,12 +175,13 @@ function show_header(){
 
                         $("#reason_cancel").html(d.status == 2 ? d.cb_pos_name + ' - '+ d.reason_cancel : d.cb_pos_name);
                         $("#fstatus").html(d.status == 2 ? '<span style="color:red;font-weight:bolder;">'+d.status_name+'</span>' : d.status_name);
-                        if(d.status == '2'){
-                            $("#ftitle").html('Canceled');
-                            $(".dropdown").hide();
+
+                        if(d.status == '2' || $("body").data("usergroup_id") == '2'){
+                            $("#ftitle").html(d.status == 2 ? '<span style="color:red;font-weight:bolder;">'+d.status_name+'</span>' : d.status_name);
                             $(".input-detail").hide();
                             $("#updated").html(d.updated);
                             $("#updated_by").html(d.updatedby_name);                            
+                            $("#btn-cancel").hide();
                         }
                     } else{
                         return false;
