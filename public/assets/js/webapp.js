@@ -11,7 +11,7 @@ var bksfn = ({
         }
     },
     errMsg: function (err) {
-        err = (err == undefined) ? "Error Connection" : "Error : " + err;
+        err = (err == undefined) ? "Error Connection" : "message : " + err;
         alertify.error(err);
         $(':submit').removeAttr('disabled');
     },    
@@ -478,6 +478,16 @@ function StringtoFile(content, filename){
     link.download = filename + ".txt";
     link.click();
     return URL.revokeObjectURL(link.href);
+}
+
+function call_page_cb_new(){
+    var url = "cb/cb_list_new/index/null";
+    window.open(url,'_self');
+}
+
+function call_page_cb_edit(id){
+    var url = "cb/cb_list_new/index/"+id;
+    window.open(url,'_self');    
 }
 
 function call_page_customer_new(){

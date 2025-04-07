@@ -8,7 +8,7 @@
     $img_file = '';
     $image_url = '';
     if(isset($data_customer[0]->customer_code)) {
-        $img_file = "assets/filex/images_customer_form/" . $data_customer[0]->customer_code . ".jpg";
+        $img_file = "assets/img/customer/" . $data_customer[0]->customer_code . ".jpg";
         $image_url = base_url($img_file);
     }
 ?>
@@ -191,7 +191,7 @@
                                     </tr>
                                 </table>
                             </div>
-                            <div class="col-md-4 batas-kiri">
+                            <div class="col-md-4 batas-kiri perorangan">
                                 <table class="table" cellspacing="0" cellpadding="0" border="0" width="100%" style="border-top-style: hidden;">
                                     <?php
                                         if (file_exists($img_file)) {
@@ -232,10 +232,10 @@
                                         </td>
                                     </tr>              
                                     <tr class="perorangan">    
-                                        <td width="35%" style="border-bottom-style: hidden;">
+                                        <td width="38%" style="border-bottom-style: hidden;">
                                             Identity Number <strong style="color:red;font-weight:bold;font-size:18px;">**</strong>
                                         </td>
-                                        <td width="65%" style="border-bottom-style: hidden;">                                                                                        
+                                        <td width="62%" style="border-bottom-style: hidden;">                                                                                        
                                             <input type="text" id="customer_data_number" name="customer_data_number" class="form-control" placeholder="Nomor Identitas...">                                                
                                         </td>
                                     </tr>

@@ -1,5 +1,34 @@
-var id_tr_header = '';
-$("#btn-excel").hide();     
+$("#btn-new").on('click', function (e) {
+    e.preventDefault();
+    call_page_cb_new();
+});
+
+$("#btn-generate-buysell").on('click', function (e) {
+    e.preventDefault();
+    if($('#store_id').val() === null || $('#store_id').val() === ''){
+        bksfn.errMsg('Store Belum Dipilih!');
+    } else {
+        alertify.confirm("are you sure, Generate Buy / Sell transaction ?", function (x) {
+            if (x) {
+                $.ajax({
+                    url: baseUrl + 'cb/cb_list/generate_cb_buysell',
+                    type: 'POST',
+                    data: {'store_id' : $('#store_id').val(), 'period1' : $("#tr_date1").val(), 'period2' : $("#tr_date2").val() },
+                    datatype: 'json',
+                    success: function() {
+                        alertify.success("Generate Buy / Sell Done!");
+                        $('#table-modal-new tbody').empty();
+                        history.go(0); // untuk memuat ulang halaman tanpa cache.
+                    },
+                    error: function(xhr){
+                        alertify.error("error");
+                        StringtoFile(xhr.responseText, 'error');
+                    }
+                });
+            }
+        });
+    }    
+});
 
 $("#btn-submit").on('click', function (e) {
     e.preventDefault();
@@ -11,6 +40,7 @@ $("#btn-submit").on('click', function (e) {
     }        
 });
 
+$("#btn-excel").hide();
 $("#btn-excel").on('click', function (e) {
     e.preventDefault();
     if($('#store_id').val() === null || $('#store_id').val() === ''){
@@ -46,7 +76,6 @@ $("#btn-excel").on('click', function (e) {
     }              
 });
 
-//--- Datatables
 function fethdata(){
     var t = $('#mainTable table').DataTable({
         retrieve: true,
@@ -148,275 +177,7 @@ function fethdata(){
     $('#mainTable').on('click', 'a[title^=Detail]', function (e) {
         e.preventDefault();
         var elm = $(this).closest("tr");
-        var d = t.row(elm).data();
-        $(".modal-dialog").width('1200px');
-        $("#ModalNew").modal('show');
-        reset_form_input_header();
-        reset_form_input_new();
-        id_tr_header = d.id;
-        show_detail(id_tr_header);
-        $("#modal_new_tr_date").val(bksfn.revDate(d.tr_date));
-        $('#modal_new_tr_date').prop('disabled', true);
-        if (d.cb_id != null) {
-            $("#cb_id").html('<option value="' + d.cb_id + '">' + d.cb_name + '</option>').sel2dma();
-        } else {
-            $("#cb_id").html('').sel2dma();
-        }
-        if (d.cb_pos_id != null) {
-            $("#cb_pos_id").html('<option value="' + d.cb_pos_id + '">' + d.cb_pos_name + '</option>').sel2dma();
-        } else {
-            $("#cb_pos_id").html('').sel2dma();
-        }
+        var d = t.row(elm).data();       
+        call_page_cb_edit(d.id);
     });
 }
-
-$("#btn-modal-new-cancel").on('click', function (e) {
-    e.preventDefault();
-    $("#ModalNew").modal('hide');
-    $(".modal-dialog").width('1200px');
-    $("#ModalCancel").modal('show');
-});
-$("#btn-modal-cancel-close").on('click', function (e) {
-    e.preventDefault();
-    $("#ModalCancel").modal('hide');
-});
-$("#btn-modal-cancel").on('click', function (e) {
-    e.preventDefault();
-    if($("#modal-cancel-description").val() === '' || $("#modal-cancel-description").val() === null ){
-        bksfn.errMsg('Alasan batal belum di input!');
-    } else {
-        alertify.confirm("are you sure, CANCEL transaction ?", function (x) {
-            if (x) {
-                $.ajax({
-                    url: baseUrl + 'cb/cb_list/cancel_trx',
-                    type: 'POST',
-                    data: {'id' : id_tr_header, 'description' : $("#modal-cancel-description").val()},
-                    datatype: 'json',
-                    success: function() {
-                        $("#ModalCancel").modal('hide');        
-                        history.go(0); // untuk memuat ulang halaman tanpa cache.
-                    },
-                    error: function(xhr){
-                        alertify.error("error");
-                        StringtoFile(xhr.responseText, 'error');
-                    }
-                });
-            }
-        });
-    }    
-});
-
-
-$("#btn-new").on('click', function (e) {
-    e.preventDefault();
-    $(".modal-dialog").width('1200px');
-    $("#ModalNew").modal('show');
-    reset_form_input_header();
-    reset_form_input_new();
-});
-$("#btn-modal-new-close").on('click', function (e) {
-    e.preventDefault();
-    $("#ModalNew").modal('hide');
-});
-$('#cb_id').on('change',function(e){
-    e.preventDefault()
-    if($(this).val() != null && $(this).val() != ''){
-        $('#cb_pos_id').html('').sel2dma();
-        $('#cb_pos_id').prop('disabled', false);
-        $('#cb_pos_id').focus()
-        $.ajax({
-            url : baseUrl +  'master_data/m_cb_pos/getmcbpos',
-            type: 'POST',
-            data: {'cb_id' : $(this).val()},
-            datatype: 'json',
-            success: function(data){
-                $('#cb_pos_id').html(data);
-            },
-            error: function(){
-                alert("can't get store");  
-            }
-        });
-    }
-});
-$("#cb_pos_id").on("change", function(e) {
-    e.preventDefault();
-    $("#modal_new_description").val( $("#cb_pos_id option:selected").text() );
-});
-$("#modal_new_amount").keyup(function(e) {
-    e.preventDefault();
-    $(this).val($(this).val());
-    if( Number($(this).val()) > 0 ){
-        $("#terbilang_modal_new_amount").html('<i>Value</i> : ' + bksfn.terBilang($(this).val()));
-    }
-});
-$("#btn-modal-add-new").on('click', function (e) {
-    e.preventDefault();
-    if( $("#cb_id").val() === '' || $("#cb_id").val() === null) {
-        bksfn.errMsg('Source belum diinput!');
-    } else if( $("#cb_pos_id").val() === '' || $("#cb_pos_id").val() === null) {
-        bksfn.errMsg('purpose belum diinput!');
-    } else if( $("#modal_new_description").val() === '' || $("#modal_new_description").val() === null) {
-        bksfn.errMsg('keterangan belum diinput!');    
-    } else if( $("#modal_new_amount").val() === '' || $("#modal_new_amount").val() === null || Number($("#modal_new_amount").val()) <= 0) {
-        bksfn.errMsg('jumlah belum diinput!');
-    } else {
-        $.post(baseUrl + 'cb/cb_list/insert_detail', $("#mainFormModalNew").serialize() + "&header_id=" + id_tr_header, function (obj) {
-            if (obj.msg == 1) {
-                alertify.success('Data add success!');
-                reset_form_input_new();
-                id_tr_header = obj.id_header;
-                show_detail(id_tr_header);
-            } else {
-                alertify.error("error");
-                StringtoFile(xhr.responseText, 'error');
-            }
-        }, "json").fail(function (xhr) {        
-            alertify.error("error");
-            StringtoFile(xhr.responseText, 'error');
-        });
-    }
-});
-
-function reset_form_input_header(){
-    $('#cb_id').html('').sel2dma();
-    $("#cb_pos_id").html('').sel2dma();
-    $('#cb_id').prop('disabled', false);
-    $('#cb_pos_id').prop('disabled', true);
-}
-
-function reset_form_input_new(){
-    $('#modal_new_description').val('');
-    $("#modal_new_amount").val('');
-    $("#terbilang_modal_new_amount").html('');
-}
-
-function show_detail($header_id){
-    $('#table-modal-new tbody').empty();
-    let tbody = document.getElementById("table-modal-new");
-    let rowCount = tbody.rows.length;
-    for (let i = rowCount - 1; i >= 1; i--) {
-        tbody.deleteRow(i);
-    }
-    var counter = document.getElementById('table-modal-new').rows.length;
-    $.ajax({
-        url: baseUrl + 'cb/cb_list/show_detail',
-        type: 'POST',
-        data: {'header_id' : $header_id},
-        dataType: 'json',
-        success: function (data) {
-            if (data !== '[]' && data.length > 0){
-                var totalamountx = 0;
-                var rows = '';
-                $.each(data, function (i, d) {                 
-                    totalamountx += Number(d.amount);
-                    if(Number(d.status) === 3){
-                        rows =`<tr id="` + counter + `">
-                                    <td width="5%" style="text-align:center;vertical-align:middle">
-                                        ` + counter + `
-                                    </td>
-                                    <td width="10%" style="vertical-align: middle;color:black">
-                                        ` + d.cb_name.trim() +`
-                                        <a style="color:red; cursor:pointer" title="hapus" onClick="delete_line_detail(` + d.id + `)"> / <i>remove<i></a>
-                                    </td>
-                                    <td width="20%" style="vertical-align: middle;color:black">
-                                        ` + d.cb_pos_name +`
-                                    </td>
-                                    <td width="45%" style='text-align:left;'>
-                                        ` + d.description.trim() + `
-                                    </td>
-                                    <td width="15%" style='text-align:left;'>
-                                        ` + (isDecimal(d.amount) ? formatDecimal(d.amount,2) : formatRupiah(d.amount) ) + `
-                                    </td>
-                                </tr>`                        
-                    } else {
-                        rows =`<tr id="` + counter + `">
-                                    <td width="5%" style="text-align:center;vertical-align:middle">
-                                        ` + counter + `
-                                    </td>
-                                    <td width="10%" style="vertical-align: middle;color:black">
-                                        ` + d.cb_name.trim() +`
-                                    </td>
-                                    <td width="20%" style="vertical-align: middle;color:black">
-                                        ` + d.cb_pos_name +`
-                                    </td>
-                                    <td width="45%" style='text-align:left;'>
-                                        ` + d.description.trim() + `
-                                    </td>
-                                    <td width="15%" style='text-align:left;'>
-                                        ` + (isDecimal(d.amount) ? formatDecimal(d.amount,2) : formatRupiah(d.amount) ) + `
-                                    </td>
-                                </tr>`                        
-                    }                    
-                    if(rows.length > 0){
-                        $('#table-modal-new tbody').append(rows);   
-                        rows = '';
-                        counter++;
-                    }                    
-                });
-                var rowsx =`<tr>
-                                <td colspan="4" style='vertical-align:middle;text-align:center;background-color:#e3e4e6;font-weight:bold;font-size:13px;'>
-                                    Total
-                                </td>
-                                <td style='text-align:left;font-weight:bold;font-size:15px;'>
-                                    Rp. ` + formatRupiah(totalamountx) + `
-                                </td>                         
-                            </tr>`   
-                $('#table-modal-new tbody').append(rowsx); 
-                $('#cb_id').prop('disabled', true);
-                $('#cb_pos_id').prop('disabled', true);
-            }else{
-                return false;
-            }
-        },
-        error: function(xhr){
-            alertify.error("error");
-            StringtoFile(xhr.responseText, 'error');
-        }
-    });
-}
-
-function delete_line_detail($id){
-    if( typeof($id) != 'undefined' && $id !== null && $id !== '' ) {
-        $.ajax({
-            url : baseUrl +  'cb/cb_list/delete_detail',
-            type: 'POST',
-            data: {'id' : $id },
-            datatype: 'json',
-            success: function(data){
-                show_detail(id_tr_header);
-                alertify.success("Delete Item Success");
-            },
-            error: function(xhr){                
-                alertify.error("error");
-                StringtoFile(xhr.responseText, 'error');
-            }
-        });
-    }       
-}
-
-$("#btn-generate-buysell").on('click', function (e) {
-    e.preventDefault();
-    if($('#store_id').val() === null || $('#store_id').val() === ''){
-        bksfn.errMsg('Store Belum Dipilih!');
-    } else {
-        alertify.confirm("are you sure, Generate Buy / Sell transaction ?", function (x) {
-            if (x) {
-                $.ajax({
-                    url: baseUrl + 'cb/cb_list/generate_cb_buysell',
-                    type: 'POST',
-                    data: {'store_id' : $('#store_id').val(), 'period1' : $("#tr_date1").val(), 'period2' : $("#tr_date2").val() },
-                    datatype: 'json',
-                    success: function() {
-                        alertify.success("Generate Buy / Sell Done!");
-                        $('#table-modal-new tbody').empty();
-                        history.go(0); // untuk memuat ulang halaman tanpa cache.
-                    },
-                    error: function(xhr){
-                        alertify.error("error");
-                        StringtoFile(xhr.responseText, 'error');
-                    }
-                });
-            }
-        });
-    }    
-});

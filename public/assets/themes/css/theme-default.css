@@ -2017,11 +2017,17 @@ ul.panel-controls > li > .dropdown-menu:before {
   border-color: #DDD;
 }
 .btn-danger {
-  background-color: #E04B4A;
-  border-color: #E04B4A;
+  background-color: #ff0000;
+  border-color: #DDD;
   font-weight: bolder;
+  color:#fff;
 }
-.btn-danger:hover,
+.btn-danger:hover{
+  background-color: #003BDE;
+  border-color: #DDD;
+  font-weight: bolder;
+  color: #FFF;
+},
 .btn-danger:focus,
 .btn-danger:active,
 .btn-danger.active,
@@ -2056,7 +2062,12 @@ ul.panel-controls > li > .dropdown-menu:before {
   border-color: #088400;
   font-weight: bolder;
 }
-.btn-success:hover,
+.btn-success:hover{
+  background-color: #003BDE;
+  border-color: #DDD;
+  font-weight: bolder;
+  color: #FFF;
+},
 .btn-success:focus,
 .btn-success:active,
 .btn-success.active,
@@ -2092,7 +2103,12 @@ ul.panel-controls > li > .dropdown-menu:before {
 .btn-info {
   border-color: #DDD;
 }
-.btn-info:hover,
+.btn-info:hover{
+  background-color: #F5F5F5;
+  border-color: #DDD;
+  font-weight: bolder;
+  color: #000;
+},
 .btn-info:focus,
 .btn-info:active,
 .btn-info.active,

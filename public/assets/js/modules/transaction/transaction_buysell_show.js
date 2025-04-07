@@ -230,7 +230,9 @@ function show_detail_payment($header_id){
                                         </td>
                                         <td width="20%" style="vertical-align: middle;color:black">
                                             ` + d.payment_type_name +`
-                                            <a style="color:red; cursor:pointer" title="hapus" onClick="delete_line_detail_payment(` + d.id + `)"> / <i>remove<i></a>
+                                            <a style="color:red; cursor:pointer" title="hapus" onClick="delete_line_detail_payment(` + d.id + `)"> 
+                                                <i>remove<i>
+                                            </a>
                                         </td>
                                         <td width="30%" style='text-align:left;'>
                                             ` + d.cb_name.trim() + `
@@ -480,9 +482,8 @@ $("#btn_cashier_save").on('click', function (e) {
             data: {'id' : id_tr_header, 'cashierby' : $("#modal_cashierby").val()},
             datatype: 'json',
             success: function() {
-                back_to_page_show();
-                history.go(0); // untuk memuat ulang halaman tanpa cache.
-                alertify.success('Save Success!');                
+                show_header(id_tr_header);
+                alertify.success('Edit Success!');
             },
             error: function(xhr){
                 alertify.error("error");

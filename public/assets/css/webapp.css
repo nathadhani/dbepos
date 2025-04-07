@@ -34,11 +34,11 @@ table.dataTable tbody tr {
 }
 
 .batas-kiri {
-    border-left: 1px #333 dashed;
+    border-left: 2px #fa0000 solid;
 }
 
 .batas-kanan {
-    border-right: 1px #333 dashed;
+    border-right: 1px #333 solid;
 }
 
 li.nav-dropdown.open>a {
@@ -131,7 +131,7 @@ nav i.fa-plus-square {
     color: #555;
 }
 
-.btn-info {
+/* .btn-info {
     color:#000;
     background-color:#e8e8e8;
     border-color:#ccc
@@ -140,7 +140,7 @@ nav i.fa-plus-square {
 .btn-info:hover{
     color:#000;
     font-weight: 600;
-}
+} */
 
 .clrbg-green {
     background: #5CB85C;

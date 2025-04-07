@@ -2,6 +2,9 @@ $("#btn-buysell").hide();
 $(".perorangan").hide();
 $(".non-perorangan").hide();
 reset_form();
+if( $("body").data("id") !== null && $("body").data("id") !== '' ){
+    tampil_data();
+}
 
 if(text_celluler !== null && text_celluler !== ''){
     var choice = text_celluler;
@@ -19,7 +22,10 @@ $('#customer_type_id').on('change',function(){
             $(".perorangan").hide();
             $(".non-perorangan").show();
         }
-    }   
+    } else {
+        $(".perorangan").hide();
+        $(".non-perorangan").hide();
+    }  
 });
 
 
@@ -34,29 +40,29 @@ $.validate({
     validateOnBlur: false,
     onError: function () {
         $('.help-block').remove();
-        bksfn.errMsg("input data dengan lengkap tanda **");
+        bksfn.errMsg("input data dengan lengkap tanda *");
     },
     onSuccess: function () {
         if( $("#customer_type_id").val() === '' || $("#customer_type_id").val() === null){
-            bksfn.errMsg("input tipe pelanggan **");
+            bksfn.errMsg("input tipe pelanggan *");
             window.scrollTo({ left: 0, top: 10, behavior: "smooth" });
             $("#customer_type_id").focus();
         } else if( $("#customer_name").val() === '' || $("#customer_name").val() === null){
-            bksfn.errMsg("input nama lengkap **");
+            bksfn.errMsg("input nama lengkap *");
             window.scrollTo({ left: 0, top: 10, behavior: "smooth" });
             $("#customer_name").focus();
         } else if( $("#customer_handphone").val() === '' || $("#customer_handphone").val() === null){
-            bksfn.errMsg("input nomor handphone **");                        
+            bksfn.errMsg("input nomor handphone *");                        
             window.scrollTo({ left: 0, top: 0, behavior: "smooth" });
             $("#customer_handphone").focus();
         } else if( $("#customer_address").val() === '' || $("#customer_address").val() === null){
-            bksfn.errMsg("input alamat **");                        
+            bksfn.errMsg("input alamat *");                        
             window.scrollTo({ left: 0, top: 0, behavior: "smooth" });
             $("#customer_address").focus();
         } else {           
             if ($('#customer_type_id').val() === '1'){ // Pelanggan Per Orangan
                 if ($("#ftitle").html().substr(0, 4) == "Edit") {
-                    var image_url = baseUrl + "assets/filex/images_customer_form/" + $("#customer_code").val() + ".jpg";
+                    var image_url = baseUrl + "assets/img/customer/" + $("#customer_code").val() + ".jpg";
                     $.ajax({
                         url:image_url,
                         type:'HEAD',
@@ -66,7 +72,7 @@ $.validate({
                                 if (obj.msg == 1) {                                
                                     $("body").data("text_search", '');
                                     alertify.success("Edit Data Success");     
-                                    reset_form();
+                                    tampil_data();
                                 } else {
                                     bksfn.errMsg(obj.msg);
                                 }
@@ -97,7 +103,7 @@ $.validate({
                                     if (obj.msg == 1) {                                
                                         $("body").data("text_search", '');
                                         alertify.success("Edit Data Success");     
-                                        reset_form();
+                                        tampil_data();
                                     } else {
                                         bksfn.errMsg(obj.msg);
                                     }
@@ -115,7 +121,7 @@ $.validate({
                             $("#ftitle").html('Edit');
                             alertify.success("Insert Data Success");       
                             call_page_customer_edit(obj.id);
-                            reset_form();
+                            tampil_data();
                         } else {
                             bksfn.errMsg(obj.msg);
                         }
@@ -133,7 +139,7 @@ $.validate({
                             $("#ftitle").html('Edit');
                             alertify.success("Insert Data Success");       
                             call_page_customer_edit(obj.id);
-                            reset_form();
+                            tampil_data();
                         } else {
                             bksfn.errMsg(obj.msg);
                         }
@@ -147,7 +153,7 @@ $.validate({
                             $("body").data("text_search", '');
                             $("body").data("id", obj.id);     
                             alertify.success("Insert Data Success");
-                            reset_form();
+                            tampil_data();
                         } else {
                             bksfn.errMsg(obj.msg);
                         }
@@ -193,8 +199,8 @@ $('#upload_foto').on('change',function(e){
                 } else {
                     alertify.success('File has been uploaded');
                 }  
-                reset_form()              
                 history.go(0); // untuk memuat ulang halaman tanpa cache.
+                tampil_data();
             },
             complete: function(){
                 $('.ajax-loader').css("visibility", "hidden");
@@ -296,6 +302,7 @@ $('#upload_foto').on('change',function(e){
             });
         }    
     }    
+    $(':submit').removeAttr('disabled');
 }
 
 function reset_form(){    
@@ -331,9 +338,7 @@ function reset_form(){
 
     $(':submit').removeAttr('disabled');
     $(".perorangan").hide();
-    if( $("body").data("id") !== null && $("body").data("id") !== '' ){
-        tampil_data();
-    }
+    $(".non-perorangan").hide();
 }
 
 $("#btn-buysell").click(function (e) {

@@ -30,7 +30,7 @@
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <div class="col-lg-12">
-                                        <label for=tr_id style="display:block">Trx</label>
+                                        <label for=tr_id style="display:block">Transaction</label>
                                         <select name="tr_id"
                                                 data-ajax="true" 
                                                 data-placeholder="Pilih...."
@@ -127,7 +127,7 @@
                                                 <input type="text" autofocuse="" id="subtotal" name="subtotal" class="form-control" style='text-align:right;' value="0" readonly>
                                             </td>                                                                
                                             <td width="10%" style='text-align:center'>
-                                                <button id="btn-add-row-detail" class="btn btn-info btn btn-sm" style="width:90px;background:red;color:white;font-weight:600;">Add</button>
+                                                <button id="btn-add-row-detail" class="btn btn-danger" style="width:90px;">Add</button>
                                             </td>                
                                         </tr>                                         
                                     </tbody>                                       
@@ -182,8 +182,8 @@
                 <input type="text" autofocuse="" id="modal-cancel-description" name="modal-cancel-description" class="form-control" placeholder="Alasan Batal..." required>
             </div>
             <div class="modal-footer">
-                <button id="btn-modal-cancel" class="btn btn-info btn btn-sm" style="width:120px;margin-left:5px;">Submit</button>
-                <button id="btn-modal-cancel-close" class="btn btn-info btn btn-sm" style="width:120px;margin-left:5px;">Close</button>
+                <button id="btn-modal-cancel" class="btn btn-success" style="width:120px;margin-left:5px;">Submit</button>
+                <button id="btn-modal-cancel-close" class="btn btn-danger" style="width:120px;margin-left:5px;">Close</button>
             </div>
         </div>
     </div>
@@ -233,8 +233,8 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button id="btn-modal-customer-act-on-save" class="btn btn-info btn btn-sm" style="width:100px;">Save</button>
-                <button id="btn-modal-customer-act-on-close" class="btn btn-info btn btn-sm" style="width:120px;margin-left:5px;">Close</button>
+                <button id="btn-modal-customer-act-on-save" class="btn btn-success" style="width:120px;">Submit</button>
+                <button id="btn-modal-customer-act-on-close" class="btn btn-danger" style="width:120px;margin-left:5px;">Close</button>
             </div>
         </div>
     </div>

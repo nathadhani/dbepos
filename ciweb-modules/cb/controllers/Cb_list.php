@@ -18,6 +18,27 @@ class Cb_list extends Bks_Controller {
         $data['auth'] = $this->auth;
         $this->template->build('cb/cb_list_v', $data);
     }
+
+    function generate_cb_buysell(){
+        checkIfNotAjax();
+        $this->libauth->check(__METHOD__);
+        $postData = $this->input->post();
+        
+        $store_id  = $postData['store_id'];    
+        $startDate = revDate($postData['period1']);
+        $endDate = revDate($postData['period2']) + 1;
+
+        $start = new DateTime($startDate);
+        $end = new DateTime($endDate);
+        for($date = $start; $date <= $end; $date->modify('+1 day')){
+            $tr_date = $date->format('Y-m-d');
+            echo $tr_date . '<br>';
+            $data['store_id'] = $store_id;
+            $data['tr_date'] = $tr_date;
+            $data['buysell_id'] = null;        
+            $this->Bksmdl->generate_payment_cb($data);
+        }
+    }
     
     function getdata() {
         checkIfNotAjax();
@@ -180,168 +201,6 @@ class Cb_list extends Bks_Controller {
         $objWriter = new PHPExcel_Writer_Excel2007($this->excel); 
         $objWriter->setOffice2003Compatibility(true);
         $objWriter->save('php://output');
-    }    
-
-    function insert_detail(){
-        checkIfNotAjax();
-        $this->libauth->check(__METHOD__);                
-        $postData = $this->input->post();
-        $postDetail = $this->input->post();
-
-        /** Insert Header */
-        /** -------------------------------------------------------------------------------- */        
-        if( isset($postData['header_id']) ){
-            if(($postData['header_id'] == 'null' || $postData['header_id'] == '')) {            
-                $postData['store_id'] = $this->store_id;        
-                if(isset($postData['modal_new_tr_date'])){
-                    $postData['tr_date'] = revDate($postData['modal_new_tr_date']);
-                    /**----------------------------------------------------- */
-                    $datetime = date('Y-m-d H:i:s');
-                    $new_date = $postData['tr_date'];
-                    $new_datetime = date('Y-m-d H:i:s', strtotime($new_date . ' ' . date('H:i:s', strtotime($datetime))));
-                    $postData['created'] = $new_datetime;
-                } else {
-                    $postData['tr_date'] = Date('Y-m-d');
-                }
-                $postData['tr_number'] = $this->Bksmdl->generate_code_cb($this->store_id, $postData['cb_id'], $postData['cb_pos_id'], $postData['tr_date']);
-                $postData['status'] = '3';
-
-                unset($postData['header_id']);
-                unset($postData['modal_new_tr_date']);
-                unset($postData['modal_new_description']);
-                unset($postData['modal_new_amount']);
-
-                $this->db->trans_begin();
-                $this->Bksmdl->table = 'tr_cb_header';
-                $response = $this->Bksmdl->insert($postData);
-                $id_header = $this->db->insert_id();
-                if ($this->db->trans_status() === FALSE) {
-                    $this->db->trans_rollback();
-                    $err = $this->db->error();
-                    $json['msg'] = $err['code'] . '<br>' . $err['message'];
-                    echo json_encode($json);
-                } else {
-                    $this->db->trans_commit();
-                }
-            } else {
-                $id_header = (int) $postData['header_id'];
-            }
-        }
-        /** End of Inser Header -------------------------------------------------------------------------------- */
-
-        /** Insert Detail */
-        /** -------------------------------------------------------------------------------- */
-        if( isset($id_header) && $id_header > 0 && ( $id_header != 'null' || $id_header !== '') ){
-            $postDetail['header_id'] = $id_header;
-            $postDetail['description'] = $postDetail['modal_new_description'];
-            $postDetail['amount'] = $postDetail['modal_new_amount'];
-            if (strpos($postDetail['amount'], ',') !== false) {
-                $postDetail['amount'] = str_replace(',','.',$postDetail['amount']);
-            }        
-            $postDetail['status'] = '3';
-
-            unset($postDetail['cb_id']);
-            unset($postDetail['cb_pos_id']);
-            unset($postDetail['modal_new_tr_date']);
-            unset($postDetail['modal_new_description']);
-            unset($postDetail['modal_new_amount']);
-
-            $this->db->trans_begin();
-            $this->Bksmdl->table = 'tr_cb_detail';
-            $response = $this->Bksmdl->insert($postDetail);
-            if ($this->db->trans_status() === FALSE) {
-                $this->db->trans_rollback();
-                $err = $this->db->error();
-                $json['msg'] = $err['code'] . '<br>' . $err['message'];
-                echo json_encode($json);
-            } else {
-                $this->db->trans_commit();
-                $json['msg'] = '1';
-                $json['id_header'] = $id_header;
-                echo json_encode($json);
-            }
-        }
-        /** End of Inser Detail -------------------------------------------------------------------------------- */
-    }
-    
-    function delete_detail(){
-        checkIfNotAjax();
-        $this->libauth->check(__METHOD__);        
-        $postData = $this->input->post();
-        $id = json_decode($postData['id']);        
-        $this->db->trans_begin();
-        $this->Bksmdl->table = 'tr_cb_detail';
-        $status = $this->Bksmdl->delete('id', $id);        
-        if ($this->db->trans_status() === FALSE) {
-            $this->db->trans_rollback();
-            $err = $this->db->error();
-            $json['msg'] = $err['code'] . '<br>' . $err['message'];
-            echo json_encode($json);
-        } else {
-            $this->db->trans_commit();
-            $json['msg'] = '1';
-            echo json_encode($json);
-        }
-    }
-
-    function show_detail(){
-        checkIfNotAjax();
-        $this->libauth->check(__METHOD__);
-        $postData = $this->input->post();
-        $header_id = $postData['header_id'];
-        $query = $this->db->query("SELECT * FROM v_tr_cb_detail WHERE header_id = " . $header_id ." ORDER BY cb_id, cb_pos_id, id ASC")->result();
-        // echo $this->db->last_query();exit;
-        echo json_encode($query, true);
-    }
-
-    function cancel_trx(){
-        checkIfNotAjax();
-        $this->libauth->check(__METHOD__);
-        $postData = $this->input->post();
-        $header_id = json_decode($postData['id']);        
-        if( isset($postData['description']) ){
-            $postData['reason_cancel'] = ucwords(strtolower(trim($postData['description']))); 
-        } else {
-            $postData['reason_cancel'] = 'Canceled';
-        }
-        unset($postData['description']);
-        $this->db->trans_begin();
-        $this->db->where(array('id' => $header_id));
-        $this->db->update('tr_cb_header', array('status' => 2, 'reason_cancel' => $postData['reason_cancel'], 'updated' => date('Y-m-d H:i:s', time()), 'updatedby' => $this->userId) );
-        if ($this->db->trans_status() === FALSE) {
-            $this->db->trans_rollback();
-            $err = $this->db->error();
-            $json['msg'] = $err['code'] . '<br>' . $err['message'];
-            echo json_encode($json);
-        } else {
-            $this->db->where(array('header_id' => $header_id));
-            $this->db->update('tr_cb_detail', array('status' => 2, 'updated' => date('Y-m-d H:i:s', time()), 'updatedby' => $this->userId) );
-
-            $this->db->trans_commit();
-            $json['msg'] = '1';
-            echo json_encode($json);
-        }            
-    }
-
-    function generate_cb_buysell(){
-        checkIfNotAjax();
-        $this->libauth->check(__METHOD__);
-        $postData = $this->input->post();
-        
-        $store_id  = $postData['store_id'];    
-        $startDate = revDate($postData['period1']);
-        $endDate = revDate($postData['period2']) + 1;
-
-        $start = new DateTime($startDate);
-        $end = new DateTime($endDate);
-        for($date = $start; $date <= $end; $date->modify('+1 day')){
-            $tr_date = $date->format('Y-m-d');
-            echo $tr_date . '<br>';
-            $data['store_id'] = $store_id;
-            $data['tr_date'] = $tr_date;
-            $data['buysell_id'] = null;        
-            $this->Bksmdl->generate_payment_cb($data);
-        }
-    }
+    }       
 
 }

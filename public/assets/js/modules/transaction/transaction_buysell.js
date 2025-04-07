@@ -169,7 +169,9 @@ function show_detail($statusTrx){
                                         </td>
                                         <td width="27%" style="vertical-align: middle;color:black">
                                             ` + d.currency_code + ' - ' + d.currency_name +`
-                                            <a style="color:red; cursor:pointer" title="hapus" onClick="delete_line_detail(` + d.id + `)"> / <i>remove<i></a>
+                                            <a style="cursor:pointer;font-weight:400;color:red;" title="hapus" onClick="delete_line_detail(` + d.id + `)"> 
+                                                <i>remove</i>
+                                            </a>
                                         </td>
                                         <td width="10%" style='text-align:left;'>
                                             ` + formatRupiah(d.nominal) + `
@@ -341,7 +343,7 @@ function subtotal_input() {
 $("#btn-add-row-detail").on('click', function (e) {
     e.preventDefault();
     if ( $("#tr_id").val() === null || $("#tr_id").val() === '' ){
-        bksfn.errMsg("trx belum di pilih!");
+        bksfn.errMsg("Transaksi Beli / Jual belum di pilih!");
         $("#currency_id").focus();
     } else if ( $("#currency_id").val() === null || $("#currency_id").val() === '' ){
         bksfn.errMsg("mata uang belum di pilih!");

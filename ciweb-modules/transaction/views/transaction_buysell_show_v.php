@@ -170,8 +170,8 @@
                 <input type="text" autofocuse="" id="modal-cancel-description" name="modal-cancel-description" class="form-control" placeholder="Alasan Batal..." required>
             </div>
             <div class="modal-footer">
-                <button id="btn-modal-cancel" class="btn btn-info btn btn-sm" style="width:120px;margin-left:5px;background:#008000;color:white;font-weight:600;">Submit</button>
-                <button id="btn-modal-cancel-close" class="btn btn-info btn btn-sm" style="width:120px;margin-left:5px;background:red;color:white;font-weight:600;">Close</button>
+                <button id="btn-modal-cancel" class="btn btn-success" style="width:120px;margin-left:5px;">Submit</button>
+                <button id="btn-modal-cancel-close" class="btn btn-danger" style="width:120px;margin-left:5px;">Close</button>
             </div>
         </div>
     </div>
@@ -264,7 +264,7 @@
                                     <div class="input-group">
                                         <input type="text" onkeypress="validasiAngka(event)" autofocuse="" id="modal_payment_amount" name="modal_payment_amount" class="form-control" style='text-align:right;'>
                                         <span class="input-group-addon">
-                                            <button id="btn-modal-add-row-payment" class="btn btn-info btn btn-sm" style="width:90px;background:#008000;color:white;font-weight:600;">Add</button>
+                                            <button id="btn-modal-add-row-payment" class="btn btn-success" style="width:90px;">Add</button>
                                         </span>    
                                     </div>
                                 </div>
@@ -298,7 +298,7 @@
                 </div>
             </div>
             <div class="modal-footer">                
-                <button id="btn-modal-payment-close" class="btn btn-info btn btn-sm" style="width:120px;background:red;color:white;font-weight:600;">Close</button>
+                <button id="btn-modal-payment-close" class="btn btn-danger" style="width:120px;margin-left:5px;">Close</button>
             </div>
         </div>
     </div>

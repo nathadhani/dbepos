@@ -123,12 +123,12 @@
 	border: 1px solid #BCE8F1;
 }
 	.alertify-log-error {
-		color: #FFF/*#B94A48*/;
-		background: #DD4B39/*#F2DEDE*/;
+		color: #FFF;
+		background: #CC0000;
 		border: 1px solid #EED3D7;
 	}
 	.alertify-log-success {
-		color: #FFF/*#468847*/;
-		background: #00A65A/*#DFF0D8*/;
+		color: #FFF;
+		background: #008000;
 		border: 1px solid #D6E9C6;
 	}
