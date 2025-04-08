@@ -105,8 +105,9 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-12">
-                                <span id="terbilang_amount" class="pull-right"></span>
+                            <div class="col-md-8"></div>
+                            <div class="col-md-4">
+                                <span id="terbilang_amount"></span>
                             </div>
                         </div>
                         <div class="row">

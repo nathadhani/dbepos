@@ -159,7 +159,7 @@ class Cb_list extends Bks_Controller {
         $this->excel->setActiveSheetIndex(0)->setCellValue('A1', strtoupper(trim($profil_usaha[0]->store_name))); 
         if(!is_array($postData['store_id'])){
             $this->excel->setActiveSheetIndex(0)->setCellValue('A2', strtoupper(trim($profil_usaha[0]->store_address))); 
-            $this->excel->setActiveSheetIndex(0)->setCellValue('A3', 'Transaction Cash / Bank Period ' . revDate($this->tr_date1) . ' s/d ' . revDate($this->tr_date2));
+            $this->excel->setActiveSheetIndex(0)->setCellValue('A3', 'Transaction Cash Bank Period ' . revDate($this->tr_date1) . ' s/d ' . revDate($this->tr_date2));
             $this->excel->setActiveSheetIndex(0)->getStyle('A1:A3')->getFont()->setBold(TRUE);
             $this->excel->setActiveSheetIndex(0)->getStyle('A1:A3')->getFont()->setSize(11);
             $this->excel->setActiveSheetIndex(0)->mergeCells('A1:O1');

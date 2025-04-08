@@ -99,7 +99,129 @@
                                         </td>
                                     </tr>
                                 </table> 
-                            </div>                                          
+                            </div>                            
+                            <div class="col-md-4 batas-kiri perorangan">
+                                <table class="table" cellspacing="0" cellpadding="0" border="0" width="100%" style="border-top-style: hidden;">
+                                    <tr class="perorangan">
+                                        <td width="28%" style="border-bottom-style: hidden;">
+                                            ID photo
+                                        </td>
+                                        <td width="72%" style="border-bottom-style: hidden;">
+                                            <div class="col-md-2" style="margin-left:-12px;">
+                                                <a class="file-input-wrapper btn btn-info">
+                                                    <span class="fa fa-upload"></span>
+                                                    <input type="file" id="upload_foto" name="upload_foto" class="form-control" accept="image/*">
+                                                </a>               
+                                            </div>
+                                            <?php
+                                                if (file_exists($img_file)) {
+                                            ?>            
+                                                <div class="col-md-10">
+                                                    <div id="links" class="col-lg-12">
+                                                        <a class="gallery-item" href="<?=$image_url?>" data-gallery>
+                                                            <div class="image">
+                                                                <img src="<?=$image_url?>" alt="" style="height:100%; width:100%;"/>
+                                                            </div>
+                                                        </a>
+                                                    </div>                 
+                                                </div>
+                                            <?php 
+                                                }
+                                            ?>                                            
+                                        </td>
+                                    </tr>
+                                    <tr class="perorangan">    
+                                        <td width="28%" style="border-bottom-style: hidden;">
+                                            ID Type <strong style="color:red;font-weight:bold;font-size:18px;">**</strong>
+                                        </td>
+                                        <td width="72%" style="border-bottom-style: hidden;">                                            
+                                            <select id="customer_data_id"
+                                                    name="customer_data_id"
+                                                    data-ajax="true" 
+                                                    data-placeholder="Tipe Identitas..."
+                                                    data-url="master_data/m_customer_data/getIdentitas/"
+                                                    data-value="" 
+                                                    data-limit="100"                                                 
+                                                    placeholder="Jenis Identitas"  
+                                                    class='form-control select2'                                                
+                                            >
+                                            </select>
+                                        </td>
+                                    </tr>              
+                                    <tr class="perorangan">    
+                                        <td width="28%" style="border-bottom-style: hidden;">
+                                            ID Number <strong style="color:red;font-weight:bold;font-size:18px;">**</strong>
+                                        </td>
+                                        <td width="72%" style="border-bottom-style: hidden;">                                                                                        
+                                            <input type="text" id="customer_data_number" name="customer_data_number" class="form-control" placeholder="Nomor Identitas...">                                                
+                                        </td>
+                                    </tr>
+                                    <tr class="perorangan">    
+                                        <td width="28%" style="border-bottom-style: hidden;">
+                                            Nationality <strong style="color:red;font-weight:bold;font-size:18px;">**</strong>
+                                        </td>
+                                        <td width="72%" style="border-bottom-style: hidden;">                                            
+                                            <select name="nationality_id"
+                                                    data-ajax="true" 
+                                                    data-placeholder="Kebangsaan..."
+                                                    data-url="master_data/m_nationality/getNationality/"
+                                                    data-value="" 
+                                                    data-limit="100"
+                                                    id="nationality_id"
+                                                    placeholder="Kebangsaan"
+                                                    class='form-control select2'                                                
+                                            >
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr class="perorangan">    
+                                        <td width="28%" style="border-bottom-style: hidden;">
+                                            Job <strong style="color:red;font-weight:bold;font-size:18px;">*</strong>
+                                        </td>
+                                        <td width="72%" style="border-bottom-style: hidden;">                                            
+                                            <select id="job_id"
+                                                    name="job_id"
+                                                    data-ajax="true" 
+                                                    data-placeholder="Pekerjaan..."
+                                                    data-url="master_data/m_customer_job/getJob/"
+                                                    data-value=""
+                                                    data-limit="100"                                                
+                                                    placeholder="Pekerjaan"  
+                                                    class='form-control select2'                                               
+                                            >
+                                            </select>
+                                        </td>
+                                    </tr>                                                  
+                                    <tr class="perorangan">    
+                                        <td width="28%" style="border-bottom-style: hidden;">
+                                            Gender <strong style="color:red;font-weight:bold;font-size:18px;">**</strong>
+                                        </td>
+                                        <td width="72%" style="border-bottom-style: hidden;">    
+                                            <select id="gender_id" name="gender_id" placeholder="Pilih Jenis Kelamin" class="form-control">
+                                                <option value="" selected="">Jenis Kelamin...</option>
+                                                <option value="1">Laki - Laki</option>
+                                                <option value="2">Perempuan</option>
+                                            </select>
+                                        </td>                                        
+                                    </tr>
+                                    <tr class="perorangan">    
+                                        <td width="28%" style="border-bottom-style: hidden;">
+                                            Birth Place <strong style="color:red;font-weight:bold;font-size:18px;">**</strong>
+                                        </td>
+                                        <td width="72%" style="border-bottom-style: hidden;">                                            
+                                            <input type="text" id="placeofbirth" name="placeofbirth" class="form-control" placeholder="Tempat Lahir...">
+                                        </td>
+                                    </tr>
+                                    <tr class="perorangan">    
+                                        <td width="28%" style="border-bottom-style: hidden;">
+                                            Birth Date <strong style="color:red;font-weight:bold;font-size:18px;">**</strong>
+                                        </td>
+                                        <td width="72%" style="border-bottom-style: hidden;">                                            
+                                            <input type="text" id="bornday" name="bornday" placeholder="Tanggal Lahir ..." class="form-control dp" data-date-format="DD MMMM YYYY" style="width:100px;" value="">
+                                        </td>
+                                    </tr>                                                                                                           
+                                </table> 
+                            </div>
                             <div class="col-md-4 batas-kiri">
                                 <table class="table" cellspacing="0" cellpadding="0" border="0" width="100%" style="border-top-style: hidden;">                                    
                                     <tr class="non-perorangan">    
@@ -190,131 +312,7 @@
                                         </td>                                        
                                     </tr>
                                 </table>
-                            </div>
-                            <div class="col-md-4 batas-kiri perorangan">
-                                <table class="table" cellspacing="0" cellpadding="0" border="0" width="100%" style="border-top-style: hidden;">
-                                    <?php
-                                        if (file_exists($img_file)) {
-                                    ?>            
-                                        <tr class="perorangan">
-                                            <td width="28%" style="border-bottom-style: hidden;">
-                                                ID photo
-                                            </td>
-                                            <td width="72%" style="border-bottom-style: hidden;">
-                                                <div id="links" class="col-lg-12">
-                                                    <a class="gallery-item" href="<?=$image_url?>" data-gallery>
-                                                        <div class="image">
-                                                            <img src="<?=$image_url?>" alt="" style="height:100%; width:100%;"/>
-                                                        </div>
-                                                    </a>
-                                                </div>                                            
-                                            </td>
-                                        </tr>
-                                    <?php 
-                                        }
-                                    ?>
-                                    <tr class="perorangan">    
-                                        <td width="30%" style="border-bottom-style: hidden;">
-                                            Identity Type <strong style="color:red;font-weight:bold;font-size:18px;">**</strong>
-                                        </td>
-                                        <td width="70%" style="border-bottom-style: hidden;">                                            
-                                            <select id="customer_data_id"
-                                                    name="customer_data_id"
-                                                    data-ajax="true" 
-                                                    data-placeholder="Tipe Identitas..."
-                                                    data-url="master_data/m_customer_data/getIdentitas/"
-                                                    data-value="" 
-                                                    data-limit="100"                                                 
-                                                    placeholder="Jenis Identitas"  
-                                                    class='form-control select2'                                                
-                                            >
-                                            </select>
-                                        </td>
-                                    </tr>              
-                                    <tr class="perorangan">    
-                                        <td width="38%" style="border-bottom-style: hidden;">
-                                            Identity Number <strong style="color:red;font-weight:bold;font-size:18px;">**</strong>
-                                        </td>
-                                        <td width="62%" style="border-bottom-style: hidden;">                                                                                        
-                                            <input type="text" id="customer_data_number" name="customer_data_number" class="form-control" placeholder="Nomor Identitas...">                                                
-                                        </td>
-                                    </tr>
-                                    <tr class="perorangan">    
-                                        <td width="30%" style="border-bottom-style: hidden;">
-                                            Nationality <strong style="color:red;font-weight:bold;font-size:18px;">**</strong>
-                                        </td>
-                                        <td width="70%" style="border-bottom-style: hidden;">                                            
-                                            <select name="nationality_id"
-                                                    data-ajax="true" 
-                                                    data-placeholder="Kebangsaan..."
-                                                    data-url="master_data/m_nationality/getNationality/"
-                                                    data-value="" 
-                                                    data-limit="100"
-                                                    id="nationality_id"
-                                                    placeholder="Kebangsaan"
-                                                    class='form-control select2'                                                
-                                            >
-                                            </select>
-                                        </td>
-                                    </tr>
-                                    <tr class="perorangan">    
-                                        <td width="30%" style="border-bottom-style: hidden;">
-                                            Job <strong style="color:red;font-weight:bold;font-size:18px;">**</strong>
-                                        </td>
-                                        <td width="70%" style="border-bottom-style: hidden;">                                            
-                                            <select id="job_id"
-                                                    name="job_id"
-                                                    data-ajax="true" 
-                                                    data-placeholder="Pekerjaan..."
-                                                    data-url="master_data/m_customer_job/getJob/"
-                                                    data-value=""
-                                                    data-limit="100"                                                
-                                                    placeholder="Pekerjaan"  
-                                                    class='form-control select2'                                               
-                                            >
-                                            </select>
-                                        </td>
-                                    </tr>                                                  
-                                    <tr class="perorangan">    
-                                        <td width="30%" style="border-bottom-style: hidden;">
-                                            Gender <strong style="color:red;font-weight:bold;font-size:18px;">**</strong>
-                                        </td>
-                                        <td width="70%" style="border-bottom-style: hidden;">    
-                                            <select id="gender_id" name="gender_id" placeholder="Pilih Jenis Kelamin" class="form-control">
-                                                <option value="" selected="">Jenis Kelamin...</option>
-                                                <option value="1">Laki - Laki</option>
-                                                <option value="2">Perempuan</option>
-                                            </select>
-                                        </td>                                        
-                                    </tr>
-                                    <tr class="perorangan">    
-                                        <td width="30%" style="border-bottom-style: hidden;">
-                                            Birth Place <strong style="color:red;font-weight:bold;font-size:18px;">**</strong>
-                                        </td>
-                                        <td width="70%" style="border-bottom-style: hidden;">                                            
-                                            <input type="text" id="placeofbirth" name="placeofbirth" class="form-control" placeholder="Tempat Lahir...">
-                                        </td>
-                                    </tr>
-                                    <tr class="perorangan">    
-                                        <td width="30%" style="border-bottom-style: hidden;">
-                                            Birth Date <strong style="color:red;font-weight:bold;font-size:18px;">**</strong>
-                                        </td>
-                                        <td width="70%" style="border-bottom-style: hidden;">                                            
-                                            <input type="text" id="bornday" name="bornday" placeholder="Tanggal Lahir ..." class="form-control dp" data-date-format="DD MMMM YYYY" style="width:100px;" value="">
-                                        </td>
-                                    </tr>                                                                                                           
-                                </table> 
                             </div>                 
-                        </div>
-                        <div class="row perorangan">
-                            <div class="col-md-8"></div>
-                            <div class="col-md-2">
-                                <a class="file-input-wrapper btn btn-info">
-                                    <span class="fa fa-upload"></span>
-                                    <input type="file" id="upload_foto" name="upload_foto" class="form-control" accept="image/*">
-                                    Upload ID Photo
-                                </a>
-                            </div>      
                         </div>
                     </div>              
                     <!--.end panel-body -->                    

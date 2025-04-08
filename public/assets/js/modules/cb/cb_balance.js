@@ -112,14 +112,14 @@ $("#btn-calculate").on('click', function (e) {
     }
 });
 
-$("#btn-pdf").on('click', function (e) {
+$("#btn-pdf-rekap").on('click', function (e) {
     e.preventDefault();    
     if($('#store_id').val() === null || $('#store_id').val() === ''){
         bksfn.errMsg('Store Belum Dipilih!');
     } else {
         alertify.confirm("export pdf ?", function (e) {    
             if (e) {                
-                var url = "cb/cb_balance/exportpdf/";
+                var url = "cb/cb_balance/exportpdf_rekap/";
                 $.ajax({
                     url: url,
                     type: 'POST',
@@ -141,7 +141,45 @@ $("#btn-pdf").on('click', function (e) {
                 //     var $a = $("<a>");
                 //         $a.attr("href",data.file);
                 //         $("body").append($a);
-                //         $a.attr("download","Rekap Kas Bank Periode " + $("#period").val() + ".pdf");
+                //         $a.attr("download","Saldo Kas Bank Periode " + $("#period").val() + ".pdf");
+                //         $a[0].click();
+                //         $a.remove();
+                // });
+            }    
+        });
+    }
+});
+
+$("#btn-pdf-detail").on('click', function (e) {
+    e.preventDefault();    
+    if($('#store_id').val() === null || $('#store_id').val() === ''){
+        bksfn.errMsg('Store Belum Dipilih!');
+    } else {
+        alertify.confirm("export pdf ?", function (e) {    
+            if (e) {                
+                var url = "cb/cb_balance/exportpdf_detail/";
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: {'store_id' : $("#store_id").val(), 'period' : $('#period').val()},
+                    dataType: 'json',            
+                    success: function(resp){
+                        const pdfBase64 = resp.pdf;
+                        setTimeout(() => {
+                                            const pdfWindow = window.open();
+                                            pdfWindow.document.write(`<iframe width="100%" height="100%" src="data:application/pdf;base64,${pdfBase64}"></iframe>`);
+                                        }, 100);
+                    },
+                    error: function(xhr){
+                        alertify.error("error can't print");
+                        StringtoFile(xhr.responseText, 'error');
+                    }
+                });
+                // done(function(data){
+                //     var $a = $("<a>");
+                //         $a.attr("href",data.file);
+                //         $("body").append($a);
+                //         $a.attr("download","Saldo Kas Bank Periode " + $("#period").val() + ".pdf");
                 //         $a[0].click();
                 //         $a.remove();
                 // });

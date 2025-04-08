@@ -59,6 +59,10 @@ $.validate({
             bksfn.errMsg("input alamat *");                        
             window.scrollTo({ left: 0, top: 0, behavior: "smooth" });
             $("#customer_address").focus();
+        } else if( $("#job_id").val() === '' || $("#job_id").val() === null){
+            bksfn.errMsg("input Pekerjaan *");                        
+            window.scrollTo({ left: 0, top: 0, behavior: "smooth" });
+            $("#job_id").focus();
         } else {           
             if ($('#customer_type_id').val() === '1'){ // Pelanggan Per Orangan
                 if ($("#ftitle").html().substr(0, 4) == "Edit") {

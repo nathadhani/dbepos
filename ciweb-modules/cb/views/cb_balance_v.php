@@ -6,8 +6,14 @@
                     <h3>Cash / Bank - Balance</h3>
                 </div>
                 <ul class="panel-controls">
-                    <button id="btn-calculate" class="btn btn-info" style="width:150px; margin-left:5px;">Calculate</button>
-                    <button id="btn-pdf" class="btn btn-info" style="margin-left:5px;">pdf</button>
+                    <div class="dropdown">
+                        <button class="dropbtn" style="width:100px;">Action</button>
+                        <div class="dropdown-content">
+                            <a href="#" id="btn-calculate">Calculate</a>
+                            <a href="#" id="btn-pdf-rekap">Balance Summary</a>
+                            <a href="#" id="btn-pdf-detail">Balance Detail</a>                            
+                        </div>
+                    </div>
                 </ul>
             </div>
             <div class="panel-body">
