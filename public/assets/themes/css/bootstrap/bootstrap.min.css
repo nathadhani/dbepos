@@ -2214,9 +2214,8 @@ th {
 }
 .table-hover>tbody>tr:hover {
  color:#000;
- background-color:#ffff32;
- /* background-color:#baffc9; */
- /* background-color: #ffcc5c; */ 
+ font-weight: bold;
+ background-color:#ff0;
 }
 .table-hover2>tbody>tr:hover {
  background-color:#e6ffe6

@@ -1,6 +1,8 @@
 reset_form_input_header()
 reset_form_input_new();
 $("#btn-cancel").hide();
+$(".input-edit").hide();
+$(".input-file").hide();
 if( $("body").data("id") !== null && $("body").data("id") !== '' ){
     show_header();
     show_detail();
@@ -108,6 +110,53 @@ $("#btn-modal-cancel").on('click', function (e) {
     }    
 });
 
+$('#upload_file').on('change',function(e){
+    e.preventDefault();  
+    var files = $('#upload_file')[0].files;
+    // var file_exist = files.length > 0 ? 1 : 0;
+    var error = '';
+    var formData = new FormData(document.getElementById("mainForm"));
+    formData.append('tr_number', document.getElementById('tr_number').innerHTML);
+    var name = files[0].name;
+    var extension = name.split('.').pop().toLowerCase();    
+
+    if ($.inArray(extension, ['pdf']) == -1) {
+        error += "Invalid File";
+    }
+
+    if (error == '') {
+        $.ajax({
+            url: 'cb/cb_list_new/add_file',
+            method: 'POST',
+            beforeSend: function(){
+                $(".ajax-loader").height($(document).height());
+                $('.ajax-loader').css("visibility", "visible");
+            },
+            data: formData,
+            contentType: false,
+            cache: false,
+            async: false,
+            processData: false,
+            success: function (data) {
+                if(data.length > 0){
+                    alertify.error(data);
+                } else {
+                    history.go(0); // untuk memuat ulang halaman tanpa cache.
+                    alertify.success('File has been uploaded');
+                }
+            },
+            complete: function(){
+                $('.ajax-loader').css("visibility", "hidden");
+            },
+            error: function(xhr){
+                alertify.alert(xhr.responseText);
+            }
+        });
+    } else {
+        bksfn.errMsg(error);
+    }            
+});
+
 function delete_line_detail($id){
     if( typeof($id) != 'undefined' && $id !== null && $id !== '' ) {
         $.ajax({
@@ -147,6 +196,8 @@ function show_header(){
         if($("body").data("id") !== null && $("body").data("id") !== '') {
             $("#ftitle").html('Edit');
             $("#btn-cancel").show();
+            $(".input-edit").show();
+            $(".input-file").show();
             $.ajax({
                 url: baseUrl + "cb/cb_list_new/show_header",
                 type: 'POST',
@@ -173,7 +224,7 @@ function show_header(){
                             $("#cb_pos_id").html('').sel2dma();
                         }
 
-                        $("#reason_cancel").html(d.status == 2 ? d.cb_pos_name + ' - '+ d.reason_cancel : d.cb_pos_name);
+                        $("#reason_cancel").html(d.status == 2 ? d.cb_pos_name + ' - '+ d.reason_cancel : d.cb_name + ' - ' + d.cb_pos_name);
                         $("#fstatus").html(d.status == 2 ? '<span style="color:red;font-weight:bolder;">'+d.status_name+'</span>' : d.status_name);
 
                         if(d.status == '2' || $("body").data("usergroup_id") == '2'){
@@ -182,6 +233,7 @@ function show_header(){
                             $("#updated").html(d.updated);
                             $("#updated_by").html(d.updatedby_name);                            
                             $("#btn-cancel").hide();
+                            $(".input-file").hide();
                         }
                     } else{
                         return false;
@@ -209,10 +261,12 @@ function show_detail(){
                 dataType: 'json',
                 success: function (data) {
                     if (data !== '[]' && data.length > 0){
-                        var totalamountx = 0;
+                        var totalamount_inx = 0;
+                        var totalamount_outx = 0;
                         var rows = '';
                         $.each(data, function (i, d) {      
-                            totalamountx += Number(d.amount);
+                            totalamount_inx += Number(d.amount_in);
+                            totalamount_outx += Number(d.amount_out);
                             if(Number(d.status) === 3){
                                 rows =`<tr id="` + counter + `">
                                             <td width="5%" style="text-align:center;vertical-align:middle">
@@ -225,11 +279,14 @@ function show_detail(){
                                             <td width="20%" style="vertical-align: middle;color:black">
                                                 ` + d.cb_pos_name +`
                                             </td>
-                                            <td width="45%" style='text-align:left;'>
+                                            <td width="30%" style='text-align:left;'>
                                                 ` + d.description.trim() + `
                                             </td>
                                             <td width="15%" style='text-align:left;'>
-                                                ` + (isDecimal(d.amount) ? formatDecimal(d.amount,2) : formatRupiah(d.amount) ) + `
+                                                ` + (isDecimal(d.amount_in) ? formatDecimal(d.amount_in,2) : formatRupiah(d.amount_in) ) + `
+                                            </td>
+                                            <td width="15%" style='text-align:left;'>
+                                                ` + (isDecimal(d.amount_out) ? formatDecimal(d.amount_out,2) : formatRupiah(d.amount_out) ) + `
                                             </td>
                                         </tr>`                        
                             } else {
@@ -243,11 +300,14 @@ function show_detail(){
                                             <td width="20%" style="vertical-align: middle;color:black">
                                                 ` + d.cb_pos_name +`
                                             </td>
-                                            <td width="45%" style='text-align:left;'>
+                                            <td width="30%" style='text-align:left;'>
                                                 ` + d.description.trim() + `
                                             </td>
                                             <td width="15%" style='text-align:left;'>
-                                                ` + (isDecimal(d.amount) ? formatDecimal(d.amount,2) : formatRupiah(d.amount) ) + `
+                                                ` + (isDecimal(d.amount_in) ? formatDecimal(d.amount_in,2) : formatRupiah(d.amount_in) ) + `
+                                            </td>
+                                            <td width="15%" style='text-align:left;'>
+                                                ` + (isDecimal(d.amount_out) ? formatDecimal(d.amount_out,2) : formatRupiah(d.amount_out) ) + `
                                             </td>
                                         </tr>`                        
                             }                    
@@ -259,10 +319,13 @@ function show_detail(){
                         });
                         var rowsx =`<tr>
                                         <td colspan="4" style='vertical-align:middle;text-align:center;background-color:#e3e4e6;font-weight:bold;font-size:14px;'>
-                                            <i> Say : </i> ` + bksfn.terBilang(totalamountx) + `
+                                            Total
                                         </td>
                                         <td style='text-align:left;font-weight:bold;font-size:15px;'>
-                                            Rp. ` + formatRupiah(totalamountx) + `
+                                            Rp. ` + formatRupiah(totalamount_inx) + `
+                                        </td>
+                                        <td style='text-align:left;font-weight:bold;font-size:15px;'>
+                                            Rp. ` + formatRupiah(totalamount_outx) + `
                                         </td>                         
                                     </tr>`   
                         $('#table-detail tbody').append(rowsx); 

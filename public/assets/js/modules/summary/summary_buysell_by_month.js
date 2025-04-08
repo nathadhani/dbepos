@@ -32,7 +32,7 @@ function fethdata(){
                                 <td width="5%" style="text-align:center;">
                                     ` + counter + `
                                 </td>
-                                <td width="5%" style='font-weight:600;'>
+                                <td width="5%">
                                     ` + d.currency_code +`                       
                                 </td>
                                 <td width="10%" style='text-align:left;font-weight:600;'>

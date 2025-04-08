@@ -7,6 +7,7 @@
                 </div>
                 <ul class="panel-controls">
                     <button id="btn-calculate" class="btn btn-info" style="width:150px; margin-left:5px;">Calculate</button>
+                    <button id="btn-pdf" class="btn btn-info" style="margin-left:5px;">pdf</button>
                 </ul>
             </div>
             <div class="panel-body">

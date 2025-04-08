@@ -16,17 +16,19 @@ class Cb_list_new extends Bks_Controller {
         $this->template->set('tsmall', 'Cash Bank');
         $this->template->set('icon', 'fa fa-edit');
         $data['auth'] = $this->auth;
+        $id = $this->uri->segment(4);
+        $data['data_cb'] = $this->db->query("SELECT tr_number FROM tr_cb_header WHERE id = $id LIMIT 1")->result();
         $this->template->build('cb/cb_list_new_v', $data);
     }  
     
     function insert(){
         checkIfNotAjax();
-        $this->libauth->check(__METHOD__);                
+        $this->libauth->check(__METHOD__);        
         $postHeader = $this->input->post();
         $postDetail = $this->input->post();
 
         /** Insert Header */
-        /** -------------------------------------------------------------------------------- */        
+        /** -------------------------------------------------------------------------------- */       
         if( isset($postHeader['header_id']) ){
             if(($postHeader['header_id'] == 'null' || $postHeader['header_id'] == '')) {            
                 $postHeader['store_id'] = $this->store_id;        
@@ -165,6 +167,27 @@ class Cb_list_new extends Bks_Controller {
             $json['msg'] = '1';
             echo json_encode($json);
         }            
+    }
+
+    public function add_file()
+    {
+        $postData = $this->input->post();
+        if (isset ($_FILES ['upload_file'] ['name']) && !empty($_FILES ['upload_file'] ['name'])) {
+            $config['upload_path'] = FCPATH . 'assets/arsip/cash_bank/';
+            $config['allowed_types'] = 'pdf';
+            $config['file_name'] = $postData['tr_number'] . '.pdf';
+            $config['overwrite'] = TRUE;
+            $config['max_size'] = 15360; // 15MB
+            $this->load->library('upload',$config);
+            $this->upload->initialize($config);            
+            $filex = $config['upload_path'] . $config['file_name'];
+            if (!$this->upload->do_upload('upload_file')) {
+                $error = array('error' => $this->upload->display_errors());
+                echo $error["error"];
+            } else {                
+                echo 'File has been uploaded';
+            }
+        }       
     }
 
     

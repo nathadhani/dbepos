@@ -3,6 +3,16 @@
     $("body").data("user_id", <?php echo $auth['id'];?>);
     $("body").data("usergroup_id", <?php echo $auth['usergroup_id'];?>);    
 </script>
+<?php 
+    $file = '';
+    $file_url = '';
+    $tr_number = '';
+    if(isset($data_cb[0]->tr_number)) {
+        $tr_number = $data_cb[0]->tr_number;
+        $file = "assets/arsip/cash_bank/" . $tr_number . ".pdf";
+        $file_url = base_url($file);        
+    }
+?>
 <div class="page-content-wrap">    
     <form id="mainForm" method="post" class="form-horizontal" autocomplete="off" enctype="multipart/form-data">
         <div class="row">   
@@ -17,7 +27,7 @@
                         </ul>
                     </div>                    
                     <div class="panel-body"> 
-                        <div class="row">
+                        <div class="row input-edit">
                             <div class="col-md-6">
                                 <span class="span_text_fixed_85px">Store</span> : <span id="store_address"></span><br>
                                 <span class="span_text_fixed_85px">Number</span> : <span id="tr_number"></span><br>
@@ -108,7 +118,8 @@
                                             <th style='vertical-align:middle;text-align:left;'>Source</th>
                                             <th style='vertical-align:middle;text-align:left;'>Purpose</th>
                                             <th style='vertical-align:middle;text-align:left;'>Description</th>                                                    
-                                            <th style='vertical-align:middle;text-align:left;'>Value</th>
+                                            <th style='vertical-align:middle;text-align:left;'>Value In</th>
+                                            <th style='vertical-align:middle;text-align:left;'>Value Out</th>
                                         </tr>
                                     </thead>
                                     <tbody>                                                
@@ -116,14 +127,23 @@
                                 </table>                                        
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-2">
-                                <a class="file-input-wrapper btn btn-info">
+                        <div class="row input-file">
+                            <div class="col-md-3">
+                                <a class="file-input-wrapper btn btn-info btn-sm">
                                     <span class="fa fa-upload"></span>
-                                    <input type="file" id="upload_foto" name="upload_foto" class="form-control" accept="image/*">
-                                    <label for="">Attachment</label>
+                                    <input type="file" id="upload_file" name="upload_file" class="form-control" accept=".pdf">
+                                    <label for="">upload PDF file attachments</label>
                                 </a>
-                            </div>
+                            </div>                            
+                            <?php
+                                if (file_exists($file)) {
+                            ?>
+                                <div class="col-md-6">
+                                    <i>File attachments </i> : <span><a href="<?=$file_url?>" target="_self" style="color:red;"><?=$tr_number;?>.pdf</a></span>
+                                </div>
+                            <?php 
+                                }
+                            ?>
                         </div>                     
                     </div>              
                     <!--.end panel-body -->                    

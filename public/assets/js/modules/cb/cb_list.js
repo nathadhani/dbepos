@@ -56,7 +56,7 @@ $("#btn-excel").on('click', function (e) {
                     var $a = $("<a>");
                         $a.attr("href",data.file);
                         $("body").append($a);
-                        $a.attr("download","Transaction Cash Bank " + bksfn.revDate($("#tr_date1").val()) + ' - ' + bksfn.revDate($("#tr_date2").val()) + ".xlsx");
+                        $a.attr("download","Transaction Cash Bank " + $("#tr_date1").val() + ' - ' + $("#tr_date2").val() + ".xlsx");
                         $a[0].click();
                         $a.remove();
                 });                                    
@@ -112,9 +112,6 @@ function fethdata(){
             {data: 'tr_number',  width: "10%", render: function (data, type, row, meta) {
                 return data;
             }},
-            {data: 'total', width: "8%", render: function (data, type, row, meta) {
-                return formatRupiah(data);
-            }},
             {data: 'cb_pos_name',  width: "35%", render: function (data, type, row, meta) {
                 if(row.reason_cancel !== null && row.reason_cancel !== ''){
                     return data + ' - ' + row.reason_cancel;
@@ -122,6 +119,12 @@ function fethdata(){
                     return data;
                 }                
             }},
+            {data: 'total_in', width: "8%", render: function (data, type, row, meta) {
+                return (Number(data) !== 0 ? formatRupiah(data) : '-');
+            }},
+            {data: 'total_out', width: "8%", render: function (data, type, row, meta) {
+                return (Number(data) !== 0 ? formatRupiah(data) : '-');
+            }},            
             {data: 'createdby_name',  width: "15%", render: function (data, type, row, meta) {
                     return data;
             }},
@@ -139,17 +142,17 @@ function fethdata(){
         ],            
         fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
             if (Number(aData.status) == 2) {
-                $(nRow).find('td:eq(7)').css('color','#FF0000');
-                $(nRow).find('td:eq(7)').css('font-weight','bold');
+                $(nRow).find('td:eq(8)').css('color','#FF0000');
+                $(nRow).find('td:eq(8)').css('font-weight','bold');
             }                    
         },            
-        order: [[1, 'asc'],[3, 'asc'],[2, 'asc']]
+        order: [[1, 'asc'],[2, 'asc'],[3, 'asc']]
     });
     t.draw();
 
     // Setup - add a text input to each header cell
     $('#searchid td').each(function () {
-        if ($(this).index() != 0 && $(this).index() != 4 && $(this).index() != 8 ) {
+        if ($(this).index() != 0 && $(this).index() != 5 && $(this).index() != 6 && $(this).index() != 9 ) {
             $(this).html('<input style="width:100%" type="text" placeholder="Search" data-id="' + $(this).index() + '" />');
         }            
         if ($(this).index() == 2) {

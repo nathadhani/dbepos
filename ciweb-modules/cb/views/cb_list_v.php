@@ -17,7 +17,7 @@
                             <?php         
                                 if(in_array($usergroup_id, array('5'))) {
                             ?>
-                                <a href="#" id="btn-new">New</a>
+                                <a href="#" id="btn-new">New Transaction</a>
                                 <a href="#" id="btn-generate-buysell">Generate Buy / Sell</a>
                             <?php 
                                 } 
@@ -82,8 +82,9 @@
                                     <th style="vertical-align:middle;text-align:center;">Trx</th>
                                     <th style="vertical-align:middle;text-align:center;">Date</th>
                                     <th style="vertical-align:middle;text-align:center;">Number</th>
-                                    <th style="vertical-align:middle;text-align:center;">Value</th>
                                     <th style="vertical-align:middle;text-align:center;">Description</th>
+                                    <th style="vertical-align:middle;text-align:center;">In</th>
+                                    <th style="vertical-align:middle;text-align:center;">Out</th>
                                     <th style="vertical-align:middle;text-align:center;">Created by</th>
                                     <th style="vertical-align:middle;text-align:center;">Status</th>
                                     <th style="vertical-align:middle;text-align:center;">Action</th>
@@ -92,6 +93,7 @@
                             <thead id="searchid">
                                 <tr>
                                     <td><button class="clrs btn btn-info btn-sm btn-line">Clear</button></td>
+                                    <td></td>
                                     <td></td>
                                     <td></td>
                                     <td></td>

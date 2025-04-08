@@ -59,7 +59,24 @@ class Cb_list extends Bks_Controller {
 
         $cpData = $this->Bksmdl->getDataTable($where, $where2);
         $this->Bksmdl->outputToJson($cpData);
-    }    
+    }
+
+    function excelcellColor($cells,$color){    
+        $this->excel->getActiveSheet(0)->getStyle($cells)
+                    ->applyFromArray( 
+                        array(
+                            'font'  => array(
+                                'bold'  => true,
+                                'color' => array('rgb' => 'FFFFFF')
+                            ))
+                    )
+                    ->getFill()->applyFromArray(
+                        array(
+                                'type' => PHPExcel_Style_Fill::FILL_SOLID,
+                                'startcolor' => array('rgb' => $color)
+                            )
+                    );
+    }
 
     function excel(){
         checkIfNotAjax();
@@ -67,55 +84,64 @@ class Cb_list extends Bks_Controller {
         $postData = $this->input->post();
         $this->store_id = ( is_array($postData['store_id']) ? implode(',', $postData['store_id']) : $postData['store_id']) ;
         $this->tr_date1 = revDate($postData['period1']);        
-        $this->tr_date2 = revDate($postData['period1']);        
+        $this->tr_date2 = revDate($postData['period2']);        
 
         $profil_usaha = $this->Bksmdl->getprofilusaha($this->store_id);
 
-        $dbquery = "SELECT
-                    tr_cb_detail.id AS id,
-                    tr_cb_detail.header_id AS header_id,
-                    tr_cb_header.store_id AS store_id,
-                    tr_cb_header.tr_number AS tr_number,
-                    tr_cb_header.tr_date AS tr_date,
-                    tr_cb_header.cb_id AS cb_id,
-                    m_cb.cb_code AS cb_code,
-                    m_cb.cb_name AS cb_name,
-                    m_cb.description AS cb_description,
-                    tr_cb_header.cb_pos_id AS cb_pos_id,
-                    m_cb_pos.cb_pos_code AS cb_pos_code,
-                    m_cb_pos.cb_pos_name AS cb_pos_name,
-                    m_cb_pos.cb_pos_in_out AS cb_pos_in_out,
-                    tr_cb_detail.description AS description,
-                    tr_cb_detail.amount AS amount,
-                    tr_cb_detail.status AS status,
-                    (
+        $query = "SELECT
+                m_cb.cb_name AS cb_name,
+                m_cb_pos.cb_pos_name AS cb_pos_name,
+                tr_cb_header.tr_number AS tr_number,
+                tr_cb_header.tr_date AS tr_date,
+                tr_cb_detail.description AS description,
+                (
+                    SELECT
+                    CASE
+                        WHEN  m_cb_pos.cb_pos_in_out = 'I' THEN tr_cb_detail.amount
+                    END
+                ) AS amount_in,
+
+                (
+                    SELECT
+                    CASE
+                        WHEN  m_cb_pos.cb_pos_in_out = 'O' THEN tr_cb_detail.amount
+                    END
+                ) AS amount_out,
+
+                tr_cb_detail.status AS status,
+                (
                         SELECT
                         ( 
                         CASE 
-                            WHEN ( tr_cb_header.status = 2 ) THEN 'Canceled'
-                            WHEN ( tr_cb_header.status = 3 ) THEN 'Confirm'
+                                WHEN ( tr_cb_header.status = 2 ) THEN 'Canceled'
+                                WHEN ( tr_cb_header.status = 3 ) THEN 'Confirm'
                         END
                         )
-                    ) AS status_name,
-                    tr_cb_detail.created AS created,
-                    tr_cb_detail.updated AS updated,
-                    tr_cb_detail.createdby AS createdby,
-                    tr_cb_detail.updatedby AS updatedby,
-                    usr1.fullname AS createdby_name,
-                    usr2.fullname AS updatedby_name 
-                    FROM tr_cb_detail
-                    JOIN tr_cb_header ON tr_cb_detail.header_id = tr_cb_header.id
-                    JOIN m_cb ON tr_cb_header.cb_id = m_cb.id
-                    JOIN m_cb_pos ON tr_cb_header.cb_pos_id = m_cb_pos.id
-                    LEFT JOIN auth_users usr1 ON tr_cb_header.createdby = usr1.id
-                    LEFT JOIN auth_users usr2 ON tr_cb_header.updatedby = usr2.id
-                ";
-         
-        if (!$dbquery())
-        return false;
+                ) AS status_name,
+                tr_cb_detail.created AS created,
+                tr_cb_detail.updated AS updated,
+                usr1.fullname AS createdby_name,
+                usr2.fullname AS updatedby_name,
+                m_store.store_name,
+                m_store.store_address
 
-        $fields = $this->dbquery()->list_fields();
-        $totcol = $this->dbquery()->num_rows();
+                FROM tr_cb_detail
+                JOIN tr_cb_header ON tr_cb_detail.header_id = tr_cb_header.id
+                JOIN m_store ON tr_cb_header.store_id = m_store.id
+                JOIN m_cb ON tr_cb_header.cb_id = m_cb.id
+                JOIN m_cb_pos ON tr_cb_header.cb_pos_id = m_cb_pos.id
+                LEFT JOIN auth_users usr1 ON tr_cb_header.createdby = usr1.id
+                LEFT JOIN auth_users usr2 ON tr_cb_header.updatedby = usr2.id
+                WHERE tr_cb_header.store_id = $this->store_id
+                AND tr_cb_header.tr_date >= '$this->tr_date1'
+                AND tr_cb_header.tr_date <= '$this->tr_date2'
+                ORDER BY tr_cb_header.cb_id, tr_cb_header.cb_pos_id, tr_cb_header.tr_date ASC";
+         
+        if (!$this->db->query($query))
+        return false;        
+
+        $fields = $this->db->query($query)->list_fields();
+        $totcol = $this->db->query($query)->num_rows();
         $maxrow = $totcol+1;
 
         // echo $this->db->last_query();exit;
@@ -126,105 +152,78 @@ class Cb_list extends Bks_Controller {
         $this->excel->getActiveSheet()->setTitle("temp");
 
         // Field names in the first row
-        $fields = $this->dbquery()->list_fields();
+        $fields = $this->db->query($query)->list_fields();
         $col = 0;
         
         // title column
         $this->excel->setActiveSheetIndex(0)->setCellValue('A1', strtoupper(trim($profil_usaha[0]->store_name))); 
         if(!is_array($postData['store_id'])){
             $this->excel->setActiveSheetIndex(0)->setCellValue('A2', strtoupper(trim($profil_usaha[0]->store_address))); 
-            $this->excel->setActiveSheetIndex(0)->setCellValue('A3', 'Rekap Transaksi Beli dan Jual Periode ' . revDate($this->tr_date)); 
+            $this->excel->setActiveSheetIndex(0)->setCellValue('A3', 'Transaction Cash / Bank Period ' . revDate($this->tr_date1) . ' s/d ' . revDate($this->tr_date2));
             $this->excel->setActiveSheetIndex(0)->getStyle('A1:A3')->getFont()->setBold(TRUE);
             $this->excel->setActiveSheetIndex(0)->getStyle('A1:A3')->getFont()->setSize(11);
-            $this->excel->setActiveSheetIndex(0)->mergeCells('A1:K1');
-            $this->excel->setActiveSheetIndex(0)->mergeCells('A2:K2');
-            $this->excel->setActiveSheetIndex(0)->mergeCells('A3:K3');    
+            $this->excel->setActiveSheetIndex(0)->mergeCells('A1:O1');
+            $this->excel->setActiveSheetIndex(0)->mergeCells('A2:O2');
+            $this->excel->setActiveSheetIndex(0)->mergeCells('A3:O3');    
 
         } else {
-            $this->excel->setActiveSheetIndex(0)->setCellValue('A2', 'Konsolidasi Rekap Transaksi Beli dan Jual Periode ' . revDate($this->tr_date)); 
+            $this->excel->setActiveSheetIndex(0)->setCellValue('A2', 'Transaction Cash / Bank Period ' . revDate($this->tr_date1) . ' s/d ' . revDate($this->tr_date2));
             $this->excel->setActiveSheetIndex(0)->getStyle('A1:A2')->getFont()->setBold(TRUE);
             $this->excel->setActiveSheetIndex(0)->getStyle('A1:A2')->getFont()->setSize(11);
-            $this->excel->setActiveSheetIndex(0)->mergeCells('A1:K1');
-            $this->excel->setActiveSheetIndex(0)->mergeCells('A2:K2');    
+            $this->excel->setActiveSheetIndex(0)->mergeCells('A1:O1');
+            $this->excel->setActiveSheetIndex(0)->mergeCells('A2:O2');    
         }
 
-        $this->excel->setActiveSheetIndex(0)->setCellValue('A6', "#"); 
-        $this->excel->setActiveSheetIndex(0)->setCellValue('B6', "Curr"); 
-        
-        $this->excel->setActiveSheetIndex(0)->setCellValue('C5', "Awal"); 
-        $this->excel->setActiveSheetIndex(0)->mergeCells('C5:D5');
-        $this->excel->setActiveSheetIndex(0)->setCellValue('C6', "Qty"); 
-        $this->excel->setActiveSheetIndex(0)->setCellValue('D6', "Rupiah"); 
-
-        $this->excel->setActiveSheetIndex(0)->setCellValue('E5', "Beli"); 
-        $this->excel->setActiveSheetIndex(0)->mergeCells('E5:F5');
-        $this->excel->setActiveSheetIndex(0)->setCellValue('E6', "Qty"); 
-        $this->excel->setActiveSheetIndex(0)->setCellValue('F6', "Rupiah"); 
-
-        $this->excel->setActiveSheetIndex(0)->setCellValue('G5', "Jual"); 
-        $this->excel->setActiveSheetIndex(0)->mergeCells('G5:H5');
-        $this->excel->setActiveSheetIndex(0)->setCellValue('G6', "Qty"); 
-        $this->excel->setActiveSheetIndex(0)->setCellValue('H6', "Rupiah"); 
-
-        $this->excel->setActiveSheetIndex(0)->setCellValue('I5', "Akhir"); 
-        $this->excel->setActiveSheetIndex(0)->mergeCells('I5:J5');
-        $this->excel->setActiveSheetIndex(0)->setCellValue('I6', "Qty"); 
-        $this->excel->setActiveSheetIndex(0)->setCellValue('J6', "Rupiah"); 
-
-        $this->excel->setActiveSheetIndex(0)->setCellValue('K6', "Keterangan");
+        $this->excel->setActiveSheetIndex(0)->setCellValue('A5', "#"); 
+        $this->excel->setActiveSheetIndex(0)->setCellValue('B5', "Source");         
+        $this->excel->setActiveSheetIndex(0)->setCellValue('C5', "Purpose"); 
+        $this->excel->setActiveSheetIndex(0)->setCellValue('D5', "Date"); 
+        $this->excel->setActiveSheetIndex(0)->setCellValue('E5', "Number"); 
+        $this->excel->setActiveSheetIndex(0)->setCellValue('F5', "Description"); 
+        $this->excel->setActiveSheetIndex(0)->setCellValue('G5', "Value In"); 
+        $this->excel->setActiveSheetIndex(0)->setCellValue('H5', "Value Out");
+        $this->excel->setActiveSheetIndex(0)->setCellValue('I5', "Status"); 
+        $this->excel->setActiveSheetIndex(0)->setCellValue('J5', "Created"); 
+        $this->excel->setActiveSheetIndex(0)->setCellValue('K5', "Updated");
+        $this->excel->setActiveSheetIndex(0)->setCellValue('L5', "Created by"); 
+        $this->excel->setActiveSheetIndex(0)->setCellValue('M5', "Updated by");         
+        $this->excel->setActiveSheetIndex(0)->setCellValue('N5', "Store Name");
+        $this->excel->setActiveSheetIndex(0)->setCellValue('O5', "Store Address");
 
 
-        $this->excelcellColor('A6:K6', 'FFFF00');
-        $this->excel->setActiveSheetIndex(0)->getStyle('A5:K6')->getFont()->setBold(TRUE);
-        $this->excel->setActiveSheetIndex(0)->getStyle('A5:K6')->getFont()->setSize(11);
-        $this->excel->setActiveSheetIndex(0)->getStyle('C5:K5')->getBorders()
-                                                            ->getAllBorders()
-                                                            ->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN)
-                                                            ->getColor()
-                                                            ->setRGB('DDDDDD');
-        $this->excel->setActiveSheetIndex(0)->getStyle('A6:L6')->getBorders()
-                                                            ->getAllBorders()
-                                                            ->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN)
-                                                            ->getColor()
-                                                            ->setRGB('DDDDDD');                                                            
-        $this->excel->setActiveSheetIndex(0)->getStyle('A5:L6')->getAlignment()->applyFromArray(
-                                                                    array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
-                                                                          'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER,)
-                                                                );
+        $this->excelcellColor('A5:O5', '337AB7');
+        $this->excel->setActiveSheetIndex(0)->getStyle('A5:O5')->getFont()->setBold(TRUE);
+        $this->excel->setActiveSheetIndex(0)->getStyle('A5:O5')->getFont()->setSize(11);
 
         // Fetching the table data
-        $row = 7; $no = 1;
-        foreach ($this->dbquery()->result_array() as $data) {            
+        $row = 6; $no = 1;
+        foreach ($this->db->query($query)->result_array() as $data) {            
             $this->excel->setActiveSheetIndex(0)->setCellValue('A'.$row, $no);
-            $this->excel->setActiveSheetIndex(0)->setCellValue('B'.$row, $data['currency_code']);
+            $this->excel->setActiveSheetIndex(0)->setCellValue('B'.$row, $data['cb_name']);
+            $this->excel->setActiveSheetIndex(0)->setCellValue('C'.$row, $data['cb_pos_name']);
+            $this->excel->setActiveSheetIndex(0)->setCellValue('D'.$row, revDate($data['tr_date']));
+            $this->excel->setActiveSheetIndex(0)->setCellValue('E'.$row, "'".$data['tr_number']);
+            $this->excel->setActiveSheetIndex(0)->setCellValue('F'.$row, ucwords(strtolower(trim($data['description']))) );
+            $this->excel->setActiveSheetIndex(0)->setCellValue('G'.$row, $data['amount_in']);
+            $this->excel->setActiveSheetIndex(0)->setCellValue('H'.$row, $data['amount_out']);
+            $this->excel->setActiveSheetIndex(0)->setCellValue('I'.$row, $data['status_name']);
+            $this->excel->setActiveSheetIndex(0)->setCellValue('J'.$row, $data['created']);
+            $this->excel->setActiveSheetIndex(0)->setCellValue('K'.$row, $data['updated']);
+            $this->excel->setActiveSheetIndex(0)->setCellValue('L'.$row, $data['createdby_name']);
+            $this->excel->setActiveSheetIndex(0)->setCellValue('M'.$row, $data['updatedby_name']);
+            $this->excel->setActiveSheetIndex(0)->setCellValue('N'.$row, $data['store_name']);
+            $this->excel->setActiveSheetIndex(0)->setCellValue('O'.$row, $data['store_address']);
 
-            $this->excel->setActiveSheetIndex(0)->setCellValue('C'.$row, $data['st_beginning_amount']);
-            $this->excel->setActiveSheetIndex(0)->setCellValue('D'.$row, $data['st_beginning_equivalent']);
 
-            $this->excel->setActiveSheetIndex(0)->setCellValue('E'.$row, $data['buy_amount']);
-            $this->excel->setActiveSheetIndex(0)->setCellValue('F'.$row, $data['buy_equivalent']);
-
-            $this->excel->setActiveSheetIndex(0)->setCellValue('G'.$row, $data['sell_amount']);
-            $this->excel->setActiveSheetIndex(0)->setCellValue('H'.$row, $data['sell_equivalent']);
-
-            $this->excel->setActiveSheetIndex(0)->setCellValue('I'.$row, $data['st_end_amount']);
-            $this->excel->setActiveSheetIndex(0)->setCellValue('J'.$row, $data['st_end_equivalent']);
-
-            $this->excel->setActiveSheetIndex(0)->setCellValue('K'.$row, ucwords(strtolower(trim($data['currency_name']))) );
-
-            $this->excel->setActiveSheetIndex(0)->getStyle('C'.$row.':'.'J'.$row)->getNumberFormat()->setFormatCode('_(* #,##0_);_(* (#,##0);_(* "-"??_);_(@_)'); // Number Format
-            $this->excel->setActiveSheetIndex(0)->getStyle('A'.$row.':'.'L'.$row)->getBorders()
-                                                                                ->getAllBorders()
-                                                                                ->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN)
-                                                                                ->getColor()
-                                                                                ->setRGB('DDDDDD');
-            $this->excel->setActiveSheetIndex(0)->getStyle('A'.$row.':'.'L'.$row)->getAlignment()->applyFromArray(
+            $this->excel->setActiveSheetIndex(0)->getStyle('G'.$row.':'.'H'.$row)->getNumberFormat()->setFormatCode('_(* #,##0_);_(* (#,##0);_(* "-"??_);_(@_)'); // Number Format
+            
+            $this->excel->setActiveSheetIndex(0)->getStyle('A'.$row.':'.'O'.$row)->getAlignment()->applyFromArray(
                                                                                         array('vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER,)
                                                                                     );
             $row++; $no++;
         }
 
-        foreach (range('A', 'L') as $columnID) {
+        foreach (range('A', 'P') as $columnID) {
             $this->excel->getActiveSheet()->getColumnDimension($columnID)->setAutoSize(true);
         }
         $this->excel->setActiveSheetIndex(0);        

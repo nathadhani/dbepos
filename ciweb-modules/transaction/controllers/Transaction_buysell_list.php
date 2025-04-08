@@ -153,9 +153,15 @@ class Transaction_buysell_list extends Bks_Controller {
         foreach ($this->db->query($query)->result_array() as $data) {
             $col = 0;
             foreach ($fields as $field) {
-                $this->excel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $data[$field]); // Retreive Data Value
+                if($field == 'tr_number'){
+                    if($data[$field] != '' && $data[$field] != null){
+                        $this->excel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, "'".$data[$field]); // Retreive Data Value
+                    }
+                } else {
+                    $this->excel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $data[$field]); // Retreive Data Value                    
+                }
                 $this->excel->getActiveSheet()->getStyle('F'.$row.':'.'H'.$row)->getNumberFormat()->setFormatCode('#,##0'); // Number Format
-                $this->excel->getActiveSheet()->getStyle('J'.$row.':'.'J'.$row)->getNumberFormat()->setFormatCode('#,##0'); // Number Format                
+                $this->excel->getActiveSheet()->getStyle('J'.$row.':'.'J'.$row)->getNumberFormat()->setFormatCode('#,##0'); // Number Format             
                 if($field == 'exchange_rate'){
                     if( $this->Bksmdl->cekdecimalgreaterthenzero($data[$field]) > 0){
                         $this->excel->getActiveSheet()->getStyle('I'.$row.':'.'I'.$row)->getNumberFormat()->setFormatCode('#,##0.00'); // Number Format Decimal

@@ -62,7 +62,7 @@ $.validate({
         } else {           
             if ($('#customer_type_id').val() === '1'){ // Pelanggan Per Orangan
                 if ($("#ftitle").html().substr(0, 4) == "Edit") {
-                    var image_url = baseUrl + "assets/img/customer/" + $("#customer_code").val() + ".jpg";
+                    var image_url = baseUrl + "assets/arsip/customer/" + $("#customer_code").val() + ".jpg";
                     $.ajax({
                         url:image_url,
                         type:'HEAD',

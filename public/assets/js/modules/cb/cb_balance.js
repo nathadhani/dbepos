@@ -34,7 +34,7 @@ function fethdata(){
                                         <td width="5%" style="text-align:center;vertical-align:middle">
                                             ` + counter + `
                                         </td>
-                                        <td width="10%" style="vertical-align: middle;color:black">
+                                        <td width="30%" style="vertical-align: middle;color:black">
                                             ` + d.cb_name.trim() +`
                                         </td>
                                         <td width="15%" style='text-align:left;'>
@@ -109,5 +109,43 @@ $("#btn-calculate").on('click', function (e) {
                 StringtoFile(xhr.response.text(), 'error');
             }
         });                        
+    }
+});
+
+$("#btn-pdf").on('click', function (e) {
+    e.preventDefault();    
+    if($('#store_id').val() === null || $('#store_id').val() === ''){
+        bksfn.errMsg('Store Belum Dipilih!');
+    } else {
+        alertify.confirm("export pdf ?", function (e) {    
+            if (e) {                
+                var url = "cb/cb_balance/exportpdf/";
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: {'store_id' : $("#store_id").val(), 'period' : $('#period').val()},
+                    dataType: 'json',            
+                    success: function(resp){
+                        const pdfBase64 = resp.pdf;
+                        setTimeout(() => {
+                                            const pdfWindow = window.open();
+                                            pdfWindow.document.write(`<iframe width="100%" height="100%" src="data:application/pdf;base64,${pdfBase64}"></iframe>`);
+                                        }, 100);
+                    },
+                    error: function(xhr){
+                        alertify.error("error can't print");
+                        StringtoFile(xhr.responseText, 'error');
+                    }
+                });
+                // done(function(data){
+                //     var $a = $("<a>");
+                //         $a.attr("href",data.file);
+                //         $("body").append($a);
+                //         $a.attr("download","Rekap Kas Bank Periode " + $("#period").val() + ".pdf");
+                //         $a[0].click();
+                //         $a.remove();
+                // });
+            }    
+        });
     }
 });

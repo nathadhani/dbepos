@@ -8,7 +8,7 @@
     $img_file = '';
     $image_url = '';
     if(isset($data_customer[0]->customer_code)) {
-        $img_file = "assets/img/customer/" . $data_customer[0]->customer_code . ".jpg";
+        $img_file = "assets/arsip/customer/" . $data_customer[0]->customer_code . ".jpg";
         $image_url = base_url($img_file);
     }
 ?>

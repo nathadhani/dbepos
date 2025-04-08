@@ -175,8 +175,8 @@ class Cb_balance extends Bks_Controller {
                     $tr_date = $tahun.'-'.sprintf("%02d", $bulan).'-'. sprintf("%02d", $tgl);
                     /***************************************************************************************************************** */
                     $trxcb = $this->db->select('tr_date, cb_id, 
-                                                  SUM(IF( cb_pos_in_out = "I" AND status IN ( 3, 4 ), (amount), 0 )) AS amount_in,
-                                                  SUM(IF( cb_pos_in_out = "O" AND status IN ( 3, 4 ), (amount), 0 )) AS amount_out
+                                                  SUM(amount_in) AS amount_in,
+                                                  SUM(amount_out) AS amount_out
                                                 ')
                                     ->where(array('store_id' => $store_id, 'tr_date' => $tr_date, 'cb_id' => $cb_id))
                                     ->where_in('status', ['3','4'])
@@ -250,6 +250,133 @@ class Cb_balance extends Bks_Controller {
             }
         }             
 
+    }
+
+    function exportpdf()
+    {   
+        checkIfNotAjax();
+        // $this->libauth->check(__METHOD__);
+        $postData = $this->input->post();
+        $this->store_id = ( is_array($postData['store_id']) ? implode(',', $postData['store_id']) : $postData['store_id']);
+        $this->tr_date = revDate($postData['period']);        
+
+        $profil_usaha = $this->Bksmdl->getprofilusaha($this->store_id);
+
+        // Call Pdf libraries
+        $pdf = new Pdf();
+        
+        // Call before the addPage() method
+        $pdf->SetPrintHeader(false);
+        $pdf->SetPrintFooter(false);
+
+        // set font
+        $pdf->SetFont('times', '', 12);
+        $pdf->AddPage('P', 'A4');
+        
+        $style = '
+                <style>
+                    table {
+                        border-collapse: collapse;
+                        border: 1px solid #333;                        
+                    }
+                    th{ 
+                        padding: 8px;
+                        text-align: center;                        
+                        background-color:#FFFF00;
+                    }
+                    td {                       
+                        padding: 8px;
+                        text-align: left;                     
+                    }
+                </style>';
+
+        // Add Title        
+        $html_header = strtoupper(trim($profil_usaha[0]->store_name));
+        if(!is_array($postData['store_id'])){
+            $html_header .= '<br>' . trim($profil_usaha[0]->store_address) . '</br>';
+            $html_header .= '<br>' . 'Report Kas Bank  Periode : ' . revDate($this->tr_date) . '</br><br></br><br></br>';
+        } else {
+            $html_header .= '<br>' . 'Konsolidasi Report Kas Bank  Periode : ' . revDate($this->tr_date) . '</br><br></br><br></br>';
+        }
+        
+        // Add Content Body
+        // $data_content = $this->dbquery()->result();
+        // if(count($data_content) > 0) {
+        //     $no = 0;
+        //     $totalbuy = 0;
+        //     $totalsell = 0;
+        //     $pageno = 0;
+
+        //     $html_table = '<table border="1" width="100%">';
+        //     $html_table .= '<tr>';
+        //         $html_table .= '<th width="2%" rowspan="2">#</th>';
+        //         $html_table .= '<th width="5%" rowspan="2">Curr</th>';
+        //         $html_table .= '<th width="15%" colspan="2">Awal</th>';
+        //         $html_table .= '<th width="15%" colspan="2">Beli</th>';
+        //         $html_table .= '<th width="15%" colspan="2">Jual</th>';
+        //         $html_table .= '<th width="15%" colspan="2">Akhir</th>';
+        //         $html_table .= '<th width="33%" rowspan="2">Keterangan</th>';
+        //     $html_table .= '</tr>'; 
+        //     $html_table .= '<tr>';  
+        //         $html_table .= '<th width="5%">Qty</th>'; 
+        //         $html_table .= '<th width="10%">Rupiah</th>'; 
+        //         $html_table .= '<th width="5%">Qty</th>'; 
+        //         $html_table .= '<th width="10%">Rupiah</th>'; 
+        //         $html_table .= '<th width="5%">Qty</th>'; 
+        //         $html_table .= '<th width="10%">Rupiah</th>'; 
+        //         $html_table .= '<th width="5%">Qty</th>'; 
+        //         $html_table .= '<th width="10%">Rupiah</th>'; 
+        //     $html_table .= '</tr>';               
+
+        //     $pdf->SetFont('', 'B', 9);
+        //     foreach($data_content as $r){
+        //         $no++;
+        //         $totalbuy = $totalbuy + (int) $r->buy_equivalent;
+        //         $totalsell = $totalsell + (int) $r->sell_equivalent;
+
+        //         $html_table .= '<tr>';
+        //         $html_table .= '<td>' . $no . '</td>';
+        //         $html_table .= '<td>' . $r->currency_code . '</td>';
+                
+        //         $html_table .= '<td>' .  ( (int) $r->st_beginning_amount > 0 ? number_format($r->st_beginning_amount, "0", ".", ",") : '-' ). '</td>';
+        //         $html_table .= '<td>' .  ( (int) $r->st_beginning_equivalent > 0 ? number_format($r->st_beginning_equivalent, "0", ".", ",") : '-' ). '</td>';
+                
+        //         $html_table .= '<td>' . ( (int) $r->buy_amount > 0 ? number_format($r->buy_amount, "0", ".", ",") : '-' ) . '</td>';
+        //         $html_table .= '<td>' . ( (int) $r->buy_equivalent > 0 ? number_format($r->buy_equivalent, "0", ".", ",") : '-' ) . '</td>';
+
+        //         $html_table .= '<td>' . ( (int) $r->sell_amount > 0 ? number_format($r->sell_amount, "0", ".", ",") : '-' ) . '</td>';
+        //         $html_table .= '<td>' . ( (int) $r->sell_equivalent > 0 ? number_format($r->sell_equivalent, "0", ".", ",") : '-' ) . '</td>';
+
+        //         $html_table .= '<td>' . ( (int) $r->st_end_amount > 0 ? number_format($r->st_end_amount, "0", ".", ",") : '-' ) . '</td>';
+        //         $html_table .= '<td>' . ( (int) $r->st_end_equivalent > 0 ? number_format($r->st_end_equivalent, "0", ".", ",") : '-' ) . '</td>';
+
+        //         $html_table .= '<td>' . ucwords(strtolower(trim($r->currency_name))) . '</td>';
+
+        //         $html_table .= '</tr>';                
+        //         $pdf->Ln(4);
+        //     }
+        //     $html_table .= '</table>';
+        //     $html_table .= '<br></br><br>Total Buy Equivalent Rp. ' . number_format($totalbuy, "0", ".", ",") . '</br>';
+        //     $html_table .= '<br>Total Sell Equivalent Rp. ' . number_format($totalsell, "0", ".", ",") . '</br>';
+
+            $html = $style . $html_header; //. $html_table;
+            $pdf->SetX(10); // Mengatur posisi top menjadi 10 mm dari kiri halaman
+            $pdf->SetY(10); // Mengatur posisi top menjadi 10 mm dari atas halaman
+            $pdf->writeHTML($html, true, false, true, false, '');
+
+            $pdf->Ln(4);
+            $pdf->Cell(01, 01, 'Createdby,                       Spv,', 0, 1, 'L');
+        // }
+
+        ob_start();
+        $pdf_output = $pdf->Output('Report Kas Bank  Periode ' . revDate($this->tr_date).'.pdf','S');
+        ob_end_clean();
+        echo json_encode(['pdf' => base64_encode($pdf_output)]); // Display Pdf in new tab
+        // $response =  array(
+        //     'op' => 'ok',
+        //     'file' => "data:application/pdf;base64,".base64_encode($pdf_output)
+        // );
+        // die(json_encode($response)); // download pdf
     }
 
 
