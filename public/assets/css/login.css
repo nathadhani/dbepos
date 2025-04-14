@@ -1,0 +1,26 @@
+.login-body {
+    box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.55);
+    border-radius: 25px;
+    -moz-border-radius: 25px;
+}
+
+.imgcontainer {
+    text-align: center;
+    margin: 2px 0 6px 0;
+    position: relative;    
+  }
+  
+img.avatar {
+    width: 50%;
+    border-radius: 50%;
+}
+
+.field-icon {
+    float: right;
+    margin-left: -25px;
+    margin-top: -23px;
+    margin-right: 5px;
+    size:200px;
+    position: relative;
+    z-index: 2;
+}  
