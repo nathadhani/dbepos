@@ -10,7 +10,7 @@
                 <form id="form_export_data" class="form-horizontal" autocomplete="off">
                     <div class="panel-body">
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <div class="form-group">                                
                                     <div class="col-lg-12">
                                         <label for="export_id" style="display:block">Select List</label>                                        
@@ -18,11 +18,13 @@
                                             <option value="" selected="">Pilih...</option>
                                             <option value="1">Data Customer</option>
                                             <option value="2">Data Sipesat</option>
+                                            <option value="3">Data Summary Transaction By Currency</option>
+                                            <option value="4">Data Summary Transaction By Job Customer</option>
                                         </select>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-5 store_id">
+                            <div class="col-md-4 store_id">
                                 <div class="form-group">                                
                                     <div class="col-lg-12">
                                         <label for="store_id" style="display:block">Store</label>

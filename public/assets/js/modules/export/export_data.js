@@ -3,6 +3,7 @@ function hide_parameter(){
     $(".period_year").hide();
     $(".triwulan_ke").hide();
 }
+
 hide_parameter();
 $('#export_id').on('change',function(e){
     e.preventDefault()
@@ -17,6 +18,16 @@ $('#export_id').on('change',function(e){
             $(".store_id").hide();
             $(".period_year").show();
             $(".triwulan_ke").show();
+        }
+        if(export_id === '3'){ // Data Summary Transaction By Currency
+            $(".store_id").show();
+            $(".period_year").show();
+            $(".triwulan_ke").hide();
+        }
+        if(export_id === '4'){ // Data Summary Transaction By Job Customer
+            $(".store_id").show();
+            $(".period_year").show();
+            $(".triwulan_ke").hide();
         }
     }
 });
@@ -83,6 +94,54 @@ $.validate({
                     });
                 }
             }  
+
+            // Export - Data Summary Transaction By Currency
+            if(export_id === '3'){
+                if($('#store_id').val() === null || $('#store_id').val() === ''){
+                    bksfn.errMsg('Lokasi Belum Dipilih!');
+                } else {
+                    $.post('export/export_data/export_data', $("#form_export_data").serialize(), function (obj) {
+                        if (obj.file) {
+                            alertify.success("Export Data Success");
+                            $(':submit').removeAttr('disabled');
+                            var $a = $("<a>");
+                                    $a.attr("href",obj.file);
+                                    $("body").append($a);
+                                    $a.attr("download","Export -  Data Summary Transaction By Currency " + $("#period_year").val() + ".xlsx");
+                                    $a[0].click();
+                                    $a.remove();
+                        } else {
+                            bksfn.errMsg(obj.msg);
+                        }
+                    }, "json").fail(function () {
+                        bksfn.errMsg();
+                    });
+                }
+            }
+
+            // Export - Data Summary Transaction By Job Customer
+            if(export_id === '4'){
+                if($('#store_id').val() === null || $('#store_id').val() === ''){
+                    bksfn.errMsg('Lokasi Belum Dipilih!');
+                } else {
+                    $.post('export/export_data/export_data', $("#form_export_data").serialize(), function (obj) {
+                        if (obj.file) {
+                            alertify.success("Export Data Success");
+                            $(':submit').removeAttr('disabled');
+                            var $a = $("<a>");
+                                    $a.attr("href",obj.file);
+                                    $("body").append($a);
+                                    $a.attr("download","Export -  Data Summary Transaction By Job Customer " + $("#period_year").val() + ".xlsx");
+                                    $a[0].click();
+                                    $a.remove();
+                        } else {
+                            bksfn.errMsg(obj.msg);
+                        }
+                    }, "json").fail(function () {
+                        bksfn.errMsg();
+                    });
+                }
+            }
             
             
         }           

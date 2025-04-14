@@ -45,6 +45,24 @@ class Export_data extends Bks_Controller {
         }
         if(isset($postData['triwulan_ke'])){
             $triwulan_ke = $postData['triwulan_ke'];
+            $bulan_ke1 = '';
+            $bulan_ke3 = '';
+            if($triwulan_ke == '1'){
+                $bulan_ke1 = 1;
+                $bulan_ke3 = 3;    
+            }
+            if($triwulan_ke == '2'){
+                $bulan_ke1 = 4;
+                $bulan_ke3 = 6;    
+            }
+            if($triwulan_ke == '3'){
+                $bulan_ke1 = 7;
+                $bulan_ke3 = 9;    
+            }
+            if($triwulan_ke == '4'){
+                $bulan_ke1 = 10;
+                $bulan_ke3 = 12;    
+            }            
         }
 
         /** Export - Data Customer */
@@ -153,7 +171,7 @@ class Export_data extends Bks_Controller {
                 
             }
             foreach (range('A', 'AA') as $columnID) {
-                $this->excel->getActiveSheet()->getColumnDimension($columnID)->setAutoSize(true);
+                $this->excel->getActiveSheet(0)->getColumnDimension($columnID)->setAutoSize(true);
             }
             $this->excel->setActiveSheetIndex(0);
         }
@@ -181,9 +199,13 @@ class Export_data extends Bks_Controller {
 
                     NULL as no_id,
                     customer_code,
-                    npwp_number
+                    npwp_number,
+                    created
                 FROM v_m_customer
                 WHERE  customer_type_id IN (1)
+                AND YEAR(created) = $year
+                AND MONTH(created) >= $bulan_ke1
+                AND MONTH(created) <= $bulan_ke3
                 ORDER BY customer_code ASC";
          
             if (!$this->db->query($query))
@@ -204,10 +226,11 @@ class Export_data extends Bks_Controller {
             $this->excel->setActiveSheetIndex(0)->setCellValue('H1', "no_id");
             $this->excel->setActiveSheetIndex(0)->setCellValue('I1', "no_cif"); 
             $this->excel->setActiveSheetIndex(0)->setCellValue('J1', "npwp");
+            $this->excel->setActiveSheetIndex(0)->setCellValue('K1', "created");
 
-            $this->excelcellColor('A1:J1', '337AB7');
-            $this->excel->setActiveSheetIndex(0)->getStyle('A1:J1')->getFont()->setBold(TRUE);
-            $this->excel->setActiveSheetIndex(0)->getStyle('A1:J1')->getFont()->setSize(11);
+            $this->excelcellColor('A1:K1', '337AB7');
+            $this->excel->setActiveSheetIndex(0)->getStyle('A1:K1')->getFont()->setBold(TRUE);
+            $this->excel->setActiveSheetIndex(0)->getStyle('A1:K1')->getFont()->setSize(11);
 
             $row = 1;
             foreach ($this->db->query($query)->result_array() as $data) {
@@ -222,12 +245,169 @@ class Export_data extends Bks_Controller {
                 $this->excel->setActiveSheetIndex(0)->setCellValue('H'.$row, $data['customer_data_number_other']);
                 $this->excel->setActiveSheetIndex(0)->setCellValue('I'.$row, $data['customer_code']);
                 $this->excel->setActiveSheetIndex(0)->setCellValue('J'.$row, $data['npwp_number']);           
+                $this->excel->setActiveSheetIndex(0)->setCellValue('K'.$row, $data['created']);           
+                $this->excel->setActiveSheetIndex(0)->getStyle('A'.$row.':'.'K'.$row)->getAlignment()->applyFromArray(
+                                                                                            array('vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER,)                                                                                  );
+                
+            }
+            foreach (range('A', 'L') as $columnID) {
+                $this->excel->getActiveSheet(0)->getColumnDimension($columnID)->setAutoSize(true);
+            }
+            $this->excel->setActiveSheetIndex(0);
+        }
+
+        /** Export - Data Summary Transaction By Currency */
+        /************************************************************************************************************************************************************/
+        if($export_id == '3'){
+            $query = "SELECT
+                    year(tr_header.tr_date) AS tr_year,
+                    month(tr_header.tr_date) AS tr_month,
+
+                    m_currency.currency_code,
+
+                    SUM(IF(tr_header.tr_id = 1 AND tr_detail.status IN (3,4,9), (tr_detail.nominal * tr_detail.sheet),0)) AS buy_amount,
+                    SUM(IF(tr_header.tr_id = 1 AND tr_detail.status IN (3,4,9), (tr_detail.nominal * tr_detail.sheet) * tr_detail.price,0)) AS buy_equivalent,
+
+                    SUM(IF(tr_header.tr_id = 2 AND tr_detail.status IN (3,4,9), (tr_detail.nominal * tr_detail.sheet),0)) AS sell_amount,
+                    SUM(IF(tr_header.tr_id = 2 AND tr_detail.status IN (3,4,9), (tr_detail.nominal * tr_detail.sheet) * tr_detail.price,0)) AS sell_equivalent,
+
+                    m_currency.currency_name
+
+                    FROM tr_detail
+                    JOIN tr_header ON tr_detail.header_id = tr_header.id
+                    JOIN m_currency ON tr_detail.currency_id = m_currency.id
+                    WHERE tr_header.store_id =  $store_id
+                    AND year(tr_header.tr_date) = $year
+                    AND tr_detail.status IN (3,4,9)
+                    GROUP BY year(tr_header.tr_date), month(tr_header.tr_date), m_currency.currency_code, m_currency.currency_name
+                    ORDER BY m_currency.id ASC";
+         
+            if (!$this->db->query($query))
+            return false;
+
+            $this->load->library('excel');
+            $this->excel->getProperties()->setTitle("export")->setDescription("none");
+            $this->excel->setActiveSheetIndex(0);
+            $this->excel->getActiveSheet()->setTitle("temp");
+            
+            $this->excel->setActiveSheetIndex(0)->setCellValue('A1', "Year");
+            $this->excel->setActiveSheetIndex(0)->setCellValue('B1', "Month"); 
+            $this->excel->setActiveSheetIndex(0)->setCellValue('C1', "Currency");
+            $this->excel->setActiveSheetIndex(0)->setCellValue('D1', "Buy - Amount");
+            $this->excel->setActiveSheetIndex(0)->setCellValue('E1', "Buy - Equivalent"); 
+            $this->excel->setActiveSheetIndex(0)->setCellValue('F1', "Sell - Amount");
+            $this->excel->setActiveSheetIndex(0)->setCellValue('G1', "Sell - Equivalent"); 
+            $this->excel->setActiveSheetIndex(0)->setCellValue('H1', "Description");
+
+            $this->excelcellColor('A1:H1', '337AB7');
+            $this->excel->setActiveSheetIndex(0)->getStyle('A1:H1')->getFont()->setBold(TRUE);
+            $this->excel->setActiveSheetIndex(0)->getStyle('A1:H1')->getFont()->setSize(11);
+
+            $row = 1;
+            foreach ($this->db->query($query)->result_array() as $data) {
+                $row++;
+                $this->excel->setActiveSheetIndex(0)->setCellValue('A'.$row, $data['tr_year']);
+                $this->excel->setActiveSheetIndex(0)->setCellValue('B'.$row, $data['tr_month']);
+                $this->excel->setActiveSheetIndex(0)->setCellValue('C'.$row, $data['currency_code']);
+                $this->excel->setActiveSheetIndex(0)->setCellValue('D'.$row, $data['buy_amount']);
+                $this->excel->setActiveSheetIndex(0)->setCellValue('E'.$row, $data['buy_equivalent']);
+                $this->excel->setActiveSheetIndex(0)->setCellValue('F'.$row, $data['sell_amount']);
+                $this->excel->setActiveSheetIndex(0)->setCellValue('G'.$row, $data['sell_equivalent']);
+                $this->excel->setActiveSheetIndex(0)->setCellValue('H'.$row, $data['currency_name']);
+                $this->excel->setActiveSheetIndex(0)->getStyle('A'.$row.':'.'I'.$row)->getAlignment()->applyFromArray(
+                                                                                            array('vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER,)                                                                                  );
+                
+            }
+            foreach (range('A', 'I') as $columnID) {
+                $this->excel->getActiveSheet(0)->getColumnDimension($columnID)->setAutoSize(true);
+            }
+            $this->excel->setActiveSheetIndex(0);
+        }
+
+        /** Export - Data Summary Transaction By Job Customer */
+        /************************************************************************************************************************************************************/
+        if($export_id == '4'){
+            $query = "SELECT
+                    year(tr_header.tr_date) AS tr_year,
+                    month(tr_header.tr_date) AS tr_month,
+
+                    m_customer_job.customer_job_name,
+
+                    COUNT(IF(tr_header.tr_id = 1 AND tr_detail.status IN (3,4,9), (m_customer_job.customer_job_name),0)) AS buy_count,
+                    SUM(IF(tr_header.tr_id = 1 AND tr_detail.status IN (3,4,9), (tr_detail.nominal * tr_detail.sheet),0)) AS buy_amount,
+                    SUM(IF(tr_header.tr_id = 1 AND tr_detail.status IN (3,4,9), (tr_detail.nominal * tr_detail.sheet) * tr_detail.price,0)) AS buy_equivalent,
+
+                    COUNT(IF(tr_header.tr_id = 2 AND tr_detail.status IN (3,4,9), (m_customer_job.customer_job_name),0)) AS sell_count,
+                    SUM(IF(tr_header.tr_id = 2 AND tr_detail.status IN (3,4,9), (tr_detail.nominal * tr_detail.sheet),0)) AS sell_amount,
+                    SUM(IF(tr_header.tr_id = 2 AND tr_detail.status IN (3,4,9), (tr_detail.nominal * tr_detail.sheet) * tr_detail.price,0)) AS sell_equivalent,
+
+                    (
+                        SELECT 
+                        CASE 
+                            WHEN m_customer_job.risk_category = 1 THEN 'Biasa'
+                            WHEN m_customer_job.risk_category = 2 THEN 'Sedang'
+                            WHEN m_customer_job.risk_category = 3 THEN 'Pep'
+                        END
+                    ) as risk_category
+
+                    FROM tr_header
+                    JOIN tr_detail ON tr_detail.header_id = tr_header.id
+                    JOIN m_customer ON tr_header.customer_id = m_customer.id
+					JOIN m_customer_job ON m_customer.job_id = m_customer_job.id
+                    WHERE tr_header.store_id =  $store_id
+                    AND year(tr_header.tr_date) = $year
+                    AND tr_header.status IN (3,4,9)
+                    GROUP BY year(tr_header.tr_date), month(tr_header.tr_date), m_customer_job.customer_job_name
+                    ORDER BY tr_header.customer_id ASC";
+         
+            if (!$this->db->query($query))
+            return false;
+
+            $this->load->library('excel');
+            $this->excel->getProperties()->setTitle("export")->setDescription("none");
+            $this->excel->setActiveSheetIndex(0);
+            $this->excel->getActiveSheet()->setTitle("temp");
+            
+            $this->excel->setActiveSheetIndex(0)->setCellValue('A1', "Year");
+            $this->excel->setActiveSheetIndex(0)->setCellValue('B1', "Month"); 
+            $this->excel->setActiveSheetIndex(0)->setCellValue('C1', "Job Name");
+            
+            $this->excel->setActiveSheetIndex(0)->setCellValue('D1', "Buy - Count");
+            $this->excel->setActiveSheetIndex(0)->setCellValue('E1', "Buy - Amount");
+            $this->excel->setActiveSheetIndex(0)->setCellValue('F1', "Buy - Equivalent"); 
+
+            $this->excel->setActiveSheetIndex(0)->setCellValue('G1', "Sell - Count");
+            $this->excel->setActiveSheetIndex(0)->setCellValue('H1', "Sell - Amount");
+            $this->excel->setActiveSheetIndex(0)->setCellValue('I1', "Sell - Equivalent"); 
+
+            $this->excel->setActiveSheetIndex(0)->setCellValue('J1', "Description");
+
+            $this->excelcellColor('A1:J1', '337AB7');
+            $this->excel->setActiveSheetIndex(0)->getStyle('A1:J1')->getFont()->setBold(TRUE);
+            $this->excel->setActiveSheetIndex(0)->getStyle('A1:J1')->getFont()->setSize(11);
+
+            $row = 1;
+            foreach ($this->db->query($query)->result_array() as $data) {
+                $row++;
+                $this->excel->setActiveSheetIndex(0)->setCellValue('A'.$row, $data['tr_year']);
+                $this->excel->setActiveSheetIndex(0)->setCellValue('B'.$row, $data['tr_month']);
+                $this->excel->setActiveSheetIndex(0)->setCellValue('C'.$row, $data['customer_job_name']);
+
+                $this->excel->setActiveSheetIndex(0)->setCellValue('D'.$row, $data['buy_count']);
+                $this->excel->setActiveSheetIndex(0)->setCellValue('E'.$row, $data['buy_amount']);
+                $this->excel->setActiveSheetIndex(0)->setCellValue('F'.$row, $data['buy_equivalent']);
+                
+                $this->excel->setActiveSheetIndex(0)->setCellValue('G'.$row, $data['sell_count']);
+                $this->excel->setActiveSheetIndex(0)->setCellValue('H'.$row, $data['sell_amount']);
+                $this->excel->setActiveSheetIndex(0)->setCellValue('I'.$row, $data['sell_equivalent']);
+                
+                $this->excel->setActiveSheetIndex(0)->setCellValue('J'.$row, $data['risk_category']);
                 $this->excel->setActiveSheetIndex(0)->getStyle('A'.$row.':'.'J'.$row)->getAlignment()->applyFromArray(
                                                                                             array('vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER,)                                                                                  );
                 
             }
-            foreach (range('A', 'K') as $columnID) {
-                $this->excel->getActiveSheet()->getColumnDimension($columnID)->setAutoSize(true);
+            foreach (range('A', 'J') as $columnID) {
+                $this->excel->getActiveSheet(0)->getColumnDimension($columnID)->setAutoSize(true);
             }
             $this->excel->setActiveSheetIndex(0);
         }

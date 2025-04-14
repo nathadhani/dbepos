@@ -1,7 +1,7 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : MYSQL
+ Source Server         : mySQL
  Source Server Type    : MySQL
  Source Server Version : 80030
  Source Host           : localhost:3306
@@ -11,7 +11,7 @@
  Target Server Version : 80030
  File Encoding         : 65001
 
- Date: 14/04/2025 16:31:32
+ Date: 15/04/2025 05:28:38
 */
 
 SET NAMES utf8mb4;
@@ -33,7 +33,7 @@ CREATE TABLE `auth_group_role`  (
   `updated` datetime NULL DEFAULT NULL,
   `updatedby` bigint NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 860 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 861 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of auth_group_role
@@ -476,7 +476,7 @@ CREATE TABLE `auth_listmethod`  (
   `created` datetime NULL DEFAULT NULL,
   `createdby` bigint NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 229 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 232 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of auth_listmethod
@@ -728,7 +728,7 @@ CREATE TABLE `auth_menu`  (
   `updated` datetime NULL DEFAULT NULL,
   `updatedby` bigint NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 58 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 59 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of auth_menu
@@ -799,7 +799,7 @@ CREATE TABLE `auth_menu_group`  (
   `updated` datetime NULL DEFAULT NULL,
   `updatedby` bigint NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 116 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 117 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of auth_menu_group
@@ -937,9 +937,9 @@ CREATE TABLE `auth_users`  (
 -- Records of auth_users
 -- ----------------------------
 INSERT INTO `auth_users` VALUES (1, 'Developer', '8989', 'f794bdbef7990b5112e526b5cd4ea67f4a35af21', NULL, 1, 1, 0, NULL, NULL, NULL, NULL, 1, '2025-02-23 13:58:46', NULL, NULL, NULL, NULL);
-INSERT INTO `auth_users` VALUES (2, 'Konsolidasi', 'konsolidasi', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 2, 1, 0, '1,2,3,4', '', '', NULL, 1, '2025-02-23 13:58:46', NULL, '2025-03-07 12:10:06', 1, '2025-04-14 13:16:24');
+INSERT INTO `auth_users` VALUES (2, 'Konsolidasi', 'konsolidasi', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 2, 1, 0, '1,2,3,4', '', '', NULL, 1, '2025-02-23 13:58:46', NULL, '2025-03-07 12:10:06', 1, '2025-04-15 05:11:46');
 INSERT INTO `auth_users` VALUES (3, 'Admin', 'admin', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 3, 1, 1, NULL, '', '', NULL, 1, '2025-02-23 13:58:46', NULL, '2025-03-07 12:10:19', 1, '2025-04-06 07:45:39');
-INSERT INTO `auth_users` VALUES (4, 'Counter', 'konter', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 4, 2, 1, NULL, '', '', NULL, 1, '2025-02-23 13:58:46', NULL, '2025-03-07 12:10:34', 1, '2025-04-14 11:36:46');
+INSERT INTO `auth_users` VALUES (4, 'Counter', 'konter', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 4, 2, 1, NULL, '', '', NULL, 1, '2025-02-23 13:58:46', NULL, '2025-03-07 12:10:34', 1, '2025-04-15 04:50:33');
 INSERT INTO `auth_users` VALUES (5, 'Cashier', 'kasir', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 5, 2, 1, NULL, '', '', NULL, 1, '2025-03-06 13:05:41', 1, '2025-03-07 12:10:24', 1, '2025-04-13 22:09:40');
 INSERT INTO `auth_users` VALUES (6, 'Angkasa Pura 1', 'ap1', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 6, 2, 0, '3,4', '', '', NULL, 1, '2025-03-06 13:06:45', 1, '2025-03-07 12:10:12', 1, '2025-03-28 08:04:45');
 INSERT INTO `auth_users` VALUES (7, 'Angkasa Pura 2', 'ap2', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 6, 2, 0, '1,2', '', '', NULL, 1, '2025-03-06 13:06:45', 1, '2025-03-07 12:10:12', 1, '2025-04-04 16:05:44');
@@ -958,14 +958,6 @@ CREATE TABLE `log_auth`  (
 -- ----------------------------
 -- Records of log_auth
 -- ----------------------------
-INSERT INTO `log_auth` VALUES (4, 'login', '2025-04-14 09:06:19', '::1');
-INSERT INTO `log_auth` VALUES (2, 'login', '2025-04-14 09:31:07', '::1');
-INSERT INTO `log_auth` VALUES (4, 'login', '2025-04-14 09:33:36', '::1');
-INSERT INTO `log_auth` VALUES (2, 'login', '2025-04-14 09:33:45', '::1');
-INSERT INTO `log_auth` VALUES (2, 'login', '2025-04-14 09:39:59', '::1');
-INSERT INTO `log_auth` VALUES (4, 'login', '2025-04-14 11:36:46', '::1');
-INSERT INTO `log_auth` VALUES (2, 'login', '2025-04-14 11:37:08', '::1');
-INSERT INTO `log_auth` VALUES (2, 'login', '2025-04-14 13:16:24', '::1');
 
 -- ----------------------------
 -- Table structure for log_auth_sessions
@@ -981,7 +973,6 @@ CREATE TABLE `log_auth_sessions`  (
 -- ----------------------------
 -- Records of log_auth_sessions
 -- ----------------------------
-INSERT INTO `log_auth_sessions` VALUES ('v9ta76jj7ndvepsl8sn3g5p5uvefpsjq', '::1', 1744622987, '');
 
 -- ----------------------------
 -- Table structure for m_cb
@@ -1133,10 +1124,10 @@ CREATE TABLE `m_customer`  (
 -- Records of m_customer
 -- ----------------------------
 INSERT INTO `m_customer` VALUES (1, 1, '250405010001', '081395627817', '', 'Gede Suteja', '', 'Jakarta Selatan', '', '', '', '', 'Lampung', '2025-04-05', 1, 8, 102, 1, '043489829923939393', '', NULL, '', '2025-04-05', '2025-04-05', '', 1, '2025-04-05 17:08:47', '2025-04-09 05:20:11', 4, 4);
-INSERT INTO `m_customer` VALUES (2, 1, '250405010002', '0813782390049', '', 'Vivi Muharmi', '', 'Jakarta Timur', '', '', '', '', 'Lampung', '1990-04-01', 1, 8, 102, 1, '03426173637373737', '', NULL, '', '2025-04-05', '2025-04-05', '', 1, '2025-04-05 17:21:10', '2025-04-05 17:25:42', 4, 4);
+INSERT INTO `m_customer` VALUES (2, 1, '250405010002', '0813782390049', '', 'Vivi Muharmi', '', 'Jakarta Timur', '', '', '', '', 'Lampung', '1990-04-01', 1, 6, 102, 1, '03426173637373737', '', NULL, '', '2025-04-05', '2025-04-05', '', 1, '2025-04-05 17:21:10', '2025-04-15 04:51:30', 4, 4);
 INSERT INTO `m_customer` VALUES (3, 2, '250406010001', '087844949999', '', 'PT. PERMATA VALAS UTAMA', '', 'ITC Permata Hijau', '', '', '', '', '', NULL, 0, NULL, NULL, NULL, '', '', NULL, 'GBI/JKT/XI/2024', '2024-12-01', '2025-12-31', '', 1, '2025-04-06 08:26:01', NULL, 4, NULL);
-INSERT INTO `m_customer` VALUES (4, 1, '250407010001', '0813541000005', '', 'Cintya', '', 'Jakarta Pusat', '', '', '', '', '', NULL, 0, NULL, NULL, NULL, '', '', NULL, '', NULL, NULL, '', 1, '2025-04-07 12:47:58', NULL, 4, NULL);
-INSERT INTO `m_customer` VALUES (5, 1, '250407010002', '0813251000152', '', 'Veronica', '', 'Jakarta Timur', '', '', '', '', '', NULL, 0, NULL, NULL, NULL, '', '', NULL, '', NULL, NULL, '', 1, '2025-04-07 12:53:25', NULL, 4, NULL);
+INSERT INTO `m_customer` VALUES (4, 1, '250407010001', '0813541000005', '', 'Cintya', '', 'Jakarta Pusat', '', '', '', '', '', NULL, 0, 1, NULL, NULL, '', '', NULL, '', NULL, NULL, '', 1, '2025-04-07 12:47:58', '2025-04-15 04:50:46', 4, 4);
+INSERT INTO `m_customer` VALUES (5, 1, '250407010002', '0813251000152', '', 'Veronica', '', 'Jakarta Timur', '', '', '', '', '', NULL, 0, 12, NULL, NULL, '', '', NULL, '', NULL, NULL, '', 1, '2025-04-07 12:53:25', '2025-04-15 04:51:17', 4, 4);
 
 -- ----------------------------
 -- Table structure for m_customer_act_on
@@ -1190,6 +1181,7 @@ DROP TABLE IF EXISTS `m_customer_job`;
 CREATE TABLE `m_customer_job`  (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `customer_job_name` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL DEFAULT '',
+  `risk_category` smallint NULL DEFAULT NULL,
   `status` smallint NULL DEFAULT NULL,
   `created` datetime NULL DEFAULT NULL,
   `updated` datetime NULL DEFAULT NULL,
@@ -1201,24 +1193,24 @@ CREATE TABLE `m_customer_job`  (
 -- ----------------------------
 -- Records of m_customer_job
 -- ----------------------------
-INSERT INTO `m_customer_job` VALUES (1, 'Ibu Rumah Tangga', 1, '2024-04-01 10:00:00', '2025-03-04 10:17:39', 3, 3);
-INSERT INTO `m_customer_job` VALUES (2, 'Korporasi', 1, '2024-04-01 10:00:00', NULL, 3, NULL);
-INSERT INTO `m_customer_job` VALUES (3, 'Lainnya', 1, '2024-04-01 10:00:00', NULL, 3, NULL);
-INSERT INTO `m_customer_job` VALUES (4, 'Pegawai Bank', 1, '2024-04-01 10:00:00', NULL, 3, NULL);
-INSERT INTO `m_customer_job` VALUES (5, 'Pegawai BUMD', 1, '2024-04-01 10:00:00', NULL, 3, NULL);
-INSERT INTO `m_customer_job` VALUES (6, 'Pegawai BUMN', 1, '2024-04-01 10:00:00', NULL, 3, NULL);
-INSERT INTO `m_customer_job` VALUES (7, 'Pegawai KUPVA BB', 1, '2024-04-01 10:00:00', NULL, 3, NULL);
-INSERT INTO `m_customer_job` VALUES (8, 'Pegawai Swasta', 1, '2024-04-01 10:00:00', NULL, 3, NULL);
-INSERT INTO `m_customer_job` VALUES (9, 'Pengurus Parpol', 1, '2024-04-01 10:00:00', NULL, 3, NULL);
-INSERT INTO `m_customer_job` VALUES (10, 'Pengusaha', 1, '2024-04-01 10:00:00', NULL, 3, NULL);
-INSERT INTO `m_customer_job` VALUES (11, 'Pensiunan PNS', 1, '2024-04-01 10:00:00', NULL, 3, NULL);
-INSERT INTO `m_customer_job` VALUES (12, 'PNS Aktif', 1, '2024-04-01 10:00:00', NULL, 3, NULL);
-INSERT INTO `m_customer_job` VALUES (13, 'Profesional', 1, '2024-04-01 10:00:00', NULL, 3, NULL);
-INSERT INTO `m_customer_job` VALUES (14, 'TKI/TKW', 1, '2024-04-01 10:00:00', NULL, 3, NULL);
-INSERT INTO `m_customer_job` VALUES (15, 'Yayasan/Pengurus Yayasan', 1, '2024-04-01 10:00:00', NULL, 3, NULL);
-INSERT INTO `m_customer_job` VALUES (16, 'TNI', 1, '2024-04-01 10:00:00', NULL, 3, NULL);
-INSERT INTO `m_customer_job` VALUES (17, 'Polisi', 1, '2024-04-01 10:00:00', NULL, 3, NULL);
-INSERT INTO `m_customer_job` VALUES (18, 'Wartawan', 1, '2024-04-01 10:00:00', NULL, 3, NULL);
+INSERT INTO `m_customer_job` VALUES (1, 'Ibu Rumah Tangga', 1, 1, '2024-04-01 10:00:00', '2025-03-04 10:17:39', 3, 3);
+INSERT INTO `m_customer_job` VALUES (2, 'Korporasi', 1, 1, '2024-04-01 10:00:00', NULL, 3, NULL);
+INSERT INTO `m_customer_job` VALUES (3, 'Lainnya', 1, 1, '2024-04-01 10:00:00', NULL, 3, NULL);
+INSERT INTO `m_customer_job` VALUES (4, 'Pegawai Bank', 2, 1, '2024-04-01 10:00:00', NULL, 3, NULL);
+INSERT INTO `m_customer_job` VALUES (5, 'Pegawai BUMD', 3, 1, '2024-04-01 10:00:00', NULL, 3, NULL);
+INSERT INTO `m_customer_job` VALUES (6, 'Pegawai BUMN', 3, 1, '2024-04-01 10:00:00', NULL, 3, NULL);
+INSERT INTO `m_customer_job` VALUES (7, 'Pegawai KUPVA BB', 2, 1, '2024-04-01 10:00:00', NULL, 3, NULL);
+INSERT INTO `m_customer_job` VALUES (8, 'Pegawai Swasta', 1, 1, '2024-04-01 10:00:00', NULL, 3, NULL);
+INSERT INTO `m_customer_job` VALUES (9, 'Pengurus Parpol', 3, 1, '2024-04-01 10:00:00', NULL, 3, NULL);
+INSERT INTO `m_customer_job` VALUES (10, 'Pengusaha', 1, 1, '2024-04-01 10:00:00', NULL, 3, NULL);
+INSERT INTO `m_customer_job` VALUES (11, 'Pensiunan PNS', 3, 1, '2024-04-01 10:00:00', NULL, 3, NULL);
+INSERT INTO `m_customer_job` VALUES (12, 'PNS Aktif', 3, 1, '2024-04-01 10:00:00', NULL, 3, NULL);
+INSERT INTO `m_customer_job` VALUES (13, 'Profesional', 1, 1, '2024-04-01 10:00:00', NULL, 3, NULL);
+INSERT INTO `m_customer_job` VALUES (14, 'TKI/TKW', 1, 1, '2024-04-01 10:00:00', NULL, 3, NULL);
+INSERT INTO `m_customer_job` VALUES (15, 'Yayasan/Pengurus Yayasan', 1, 1, '2024-04-01 10:00:00', NULL, 3, NULL);
+INSERT INTO `m_customer_job` VALUES (16, 'TNI', 3, 1, '2024-04-01 10:00:00', NULL, 3, NULL);
+INSERT INTO `m_customer_job` VALUES (17, 'Polisi', 3, 1, '2024-04-01 10:00:00', NULL, 3, NULL);
+INSERT INTO `m_customer_job` VALUES (18, 'Wartawan', 1, 1, '2024-04-01 10:00:00', NULL, 3, NULL);
 
 -- ----------------------------
 -- Table structure for m_customer_type
@@ -2519,7 +2511,7 @@ CREATE TABLE `tr_stock`  (
   `updated` datetime NULL DEFAULT NULL,
   `updatedby` bigint NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of tr_stock
