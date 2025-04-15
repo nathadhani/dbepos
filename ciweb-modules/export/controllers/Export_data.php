@@ -333,12 +333,20 @@ class Export_data extends Bks_Controller {
 
                     m_customer_job.customer_job_name,
 
-                    COUNT(IF(tr_header.tr_id = 1 AND tr_detail.status IN (3,4,9), (m_customer_job.customer_job_name),0)) AS buy_count,
-                    SUM(IF(tr_header.tr_id = 1 AND tr_detail.status IN (3,4,9), (tr_detail.nominal * tr_detail.sheet),0)) AS buy_amount,
+                    COUNT(
+                            IF(tr_header.tr_id = 1 
+                               AND tr_header.status IN (3,4,9) 
+                               AND m_customer.job_id = m_customer_job.id
+                               , tr_header.customer_id, 0)
+                        ) AS buy_count,                  
                     SUM(IF(tr_header.tr_id = 1 AND tr_detail.status IN (3,4,9), (tr_detail.nominal * tr_detail.sheet) * tr_detail.price,0)) AS buy_equivalent,
 
-                    COUNT(IF(tr_header.tr_id = 2 AND tr_detail.status IN (3,4,9), (m_customer_job.customer_job_name),0)) AS sell_count,
-                    SUM(IF(tr_header.tr_id = 2 AND tr_detail.status IN (3,4,9), (tr_detail.nominal * tr_detail.sheet),0)) AS sell_amount,
+                    COUNT(
+                            IF(tr_header.tr_id = 2
+                               AND tr_header.status IN (3,4,9) 
+                               AND m_customer.job_id = m_customer_job.id
+                               , tr_header.customer_id, 0)
+                        ) AS sell_count, 
                     SUM(IF(tr_header.tr_id = 2 AND tr_detail.status IN (3,4,9), (tr_detail.nominal * tr_detail.sheet) * tr_detail.price,0)) AS sell_equivalent,
 
                     (
@@ -373,18 +381,16 @@ class Export_data extends Bks_Controller {
             $this->excel->setActiveSheetIndex(0)->setCellValue('C1', "Job Name");
             
             $this->excel->setActiveSheetIndex(0)->setCellValue('D1', "Buy - Count");
-            $this->excel->setActiveSheetIndex(0)->setCellValue('E1', "Buy - Amount");
-            $this->excel->setActiveSheetIndex(0)->setCellValue('F1', "Buy - Equivalent"); 
+            $this->excel->setActiveSheetIndex(0)->setCellValue('E1', "Buy - Equivalent"); 
 
-            $this->excel->setActiveSheetIndex(0)->setCellValue('G1', "Sell - Count");
-            $this->excel->setActiveSheetIndex(0)->setCellValue('H1', "Sell - Amount");
-            $this->excel->setActiveSheetIndex(0)->setCellValue('I1', "Sell - Equivalent"); 
+            $this->excel->setActiveSheetIndex(0)->setCellValue('F1', "Sell - Count");
+            $this->excel->setActiveSheetIndex(0)->setCellValue('G1', "Sell - Equivalent"); 
 
-            $this->excel->setActiveSheetIndex(0)->setCellValue('J1', "Description");
+            $this->excel->setActiveSheetIndex(0)->setCellValue('H1', "Description");
 
-            $this->excelcellColor('A1:J1', '337AB7');
-            $this->excel->setActiveSheetIndex(0)->getStyle('A1:J1')->getFont()->setBold(TRUE);
-            $this->excel->setActiveSheetIndex(0)->getStyle('A1:J1')->getFont()->setSize(11);
+            $this->excelcellColor('A1:H1', '337AB7');
+            $this->excel->setActiveSheetIndex(0)->getStyle('A1:H1')->getFont()->setBold(TRUE);
+            $this->excel->setActiveSheetIndex(0)->getStyle('A1:H1')->getFont()->setSize(11);
 
             $row = 1;
             foreach ($this->db->query($query)->result_array() as $data) {
@@ -394,19 +400,17 @@ class Export_data extends Bks_Controller {
                 $this->excel->setActiveSheetIndex(0)->setCellValue('C'.$row, $data['customer_job_name']);
 
                 $this->excel->setActiveSheetIndex(0)->setCellValue('D'.$row, $data['buy_count']);
-                $this->excel->setActiveSheetIndex(0)->setCellValue('E'.$row, $data['buy_amount']);
-                $this->excel->setActiveSheetIndex(0)->setCellValue('F'.$row, $data['buy_equivalent']);
+                $this->excel->setActiveSheetIndex(0)->setCellValue('E'.$row, $data['buy_equivalent']);
                 
-                $this->excel->setActiveSheetIndex(0)->setCellValue('G'.$row, $data['sell_count']);
-                $this->excel->setActiveSheetIndex(0)->setCellValue('H'.$row, $data['sell_amount']);
-                $this->excel->setActiveSheetIndex(0)->setCellValue('I'.$row, $data['sell_equivalent']);
+                $this->excel->setActiveSheetIndex(0)->setCellValue('F'.$row, $data['sell_count']);
+                $this->excel->setActiveSheetIndex(0)->setCellValue('G'.$row, $data['sell_equivalent']);
                 
-                $this->excel->setActiveSheetIndex(0)->setCellValue('J'.$row, $data['risk_category']);
-                $this->excel->setActiveSheetIndex(0)->getStyle('A'.$row.':'.'J'.$row)->getAlignment()->applyFromArray(
+                $this->excel->setActiveSheetIndex(0)->setCellValue('H'.$row, $data['risk_category']);
+                $this->excel->setActiveSheetIndex(0)->getStyle('A'.$row.':'.'H'.$row)->getAlignment()->applyFromArray(
                                                                                             array('vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER,)                                                                                  );
                 
             }
-            foreach (range('A', 'J') as $columnID) {
+            foreach (range('A', 'H') as $columnID) {
                 $this->excel->getActiveSheet(0)->getColumnDimension($columnID)->setAutoSize(true);
             }
             $this->excel->setActiveSheetIndex(0);

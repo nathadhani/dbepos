@@ -1,7 +1,7 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : mySQL
+ Source Server         : MYSQL
  Source Server Type    : MySQL
  Source Server Version : 80030
  Source Host           : localhost:3306
@@ -11,7 +11,7 @@
  Target Server Version : 80030
  File Encoding         : 65001
 
- Date: 15/04/2025 05:28:38
+ Date: 15/04/2025 16:42:55
 */
 
 SET NAMES utf8mb4;
@@ -937,10 +937,10 @@ CREATE TABLE `auth_users`  (
 -- Records of auth_users
 -- ----------------------------
 INSERT INTO `auth_users` VALUES (1, 'Developer', '8989', 'f794bdbef7990b5112e526b5cd4ea67f4a35af21', NULL, 1, 1, 0, NULL, NULL, NULL, NULL, 1, '2025-02-23 13:58:46', NULL, NULL, NULL, NULL);
-INSERT INTO `auth_users` VALUES (2, 'Konsolidasi', 'konsolidasi', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 2, 1, 0, '1,2,3,4', '', '', NULL, 1, '2025-02-23 13:58:46', NULL, '2025-03-07 12:10:06', 1, '2025-04-15 05:11:46');
+INSERT INTO `auth_users` VALUES (2, 'Konsolidasi', 'konsolidasi', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 2, 1, 0, '1,2,3,4', '', '', NULL, 1, '2025-02-23 13:58:46', NULL, '2025-03-07 12:10:06', 1, '2025-04-15 13:04:47');
 INSERT INTO `auth_users` VALUES (3, 'Admin', 'admin', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 3, 1, 1, NULL, '', '', NULL, 1, '2025-02-23 13:58:46', NULL, '2025-03-07 12:10:19', 1, '2025-04-06 07:45:39');
-INSERT INTO `auth_users` VALUES (4, 'Counter', 'konter', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 4, 2, 1, NULL, '', '', NULL, 1, '2025-02-23 13:58:46', NULL, '2025-03-07 12:10:34', 1, '2025-04-15 04:50:33');
-INSERT INTO `auth_users` VALUES (5, 'Cashier', 'kasir', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 5, 2, 1, NULL, '', '', NULL, 1, '2025-03-06 13:05:41', 1, '2025-03-07 12:10:24', 1, '2025-04-13 22:09:40');
+INSERT INTO `auth_users` VALUES (4, 'Counter', 'konter', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 4, 2, 1, NULL, '', '', NULL, 1, '2025-02-23 13:58:46', NULL, '2025-03-07 12:10:34', 1, '2025-04-15 13:30:28');
+INSERT INTO `auth_users` VALUES (5, 'Cashier', 'kasir', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 5, 2, 1, NULL, '', '', NULL, 1, '2025-03-06 13:05:41', 1, '2025-03-07 12:10:24', 1, '2025-04-15 13:30:07');
 INSERT INTO `auth_users` VALUES (6, 'Angkasa Pura 1', 'ap1', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 6, 2, 0, '3,4', '', '', NULL, 1, '2025-03-06 13:06:45', 1, '2025-03-07 12:10:12', 1, '2025-03-28 08:04:45');
 INSERT INTO `auth_users` VALUES (7, 'Angkasa Pura 2', 'ap2', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 6, 2, 0, '1,2', '', '', NULL, 1, '2025-03-06 13:06:45', 1, '2025-03-07 12:10:12', 1, '2025-04-04 16:05:44');
 
@@ -1123,11 +1123,6 @@ CREATE TABLE `m_customer`  (
 -- ----------------------------
 -- Records of m_customer
 -- ----------------------------
-INSERT INTO `m_customer` VALUES (1, 1, '250405010001', '081395627817', '', 'Gede Suteja', '', 'Jakarta Selatan', '', '', '', '', 'Lampung', '2025-04-05', 1, 8, 102, 1, '043489829923939393', '', NULL, '', '2025-04-05', '2025-04-05', '', 1, '2025-04-05 17:08:47', '2025-04-09 05:20:11', 4, 4);
-INSERT INTO `m_customer` VALUES (2, 1, '250405010002', '0813782390049', '', 'Vivi Muharmi', '', 'Jakarta Timur', '', '', '', '', 'Lampung', '1990-04-01', 1, 6, 102, 1, '03426173637373737', '', NULL, '', '2025-04-05', '2025-04-05', '', 1, '2025-04-05 17:21:10', '2025-04-15 04:51:30', 4, 4);
-INSERT INTO `m_customer` VALUES (3, 2, '250406010001', '087844949999', '', 'PT. PERMATA VALAS UTAMA', '', 'ITC Permata Hijau', '', '', '', '', '', NULL, 0, NULL, NULL, NULL, '', '', NULL, 'GBI/JKT/XI/2024', '2024-12-01', '2025-12-31', '', 1, '2025-04-06 08:26:01', NULL, 4, NULL);
-INSERT INTO `m_customer` VALUES (4, 1, '250407010001', '0813541000005', '', 'Cintya', '', 'Jakarta Pusat', '', '', '', '', '', NULL, 0, 1, NULL, NULL, '', '', NULL, '', NULL, NULL, '', 1, '2025-04-07 12:47:58', '2025-04-15 04:50:46', 4, 4);
-INSERT INTO `m_customer` VALUES (5, 1, '250407010002', '0813251000152', '', 'Veronica', '', 'Jakarta Timur', '', '', '', '', '', NULL, 0, 12, NULL, NULL, '', '', NULL, '', NULL, NULL, '', 1, '2025-04-07 12:53:25', '2025-04-15 04:51:17', 4, 4);
 
 -- ----------------------------
 -- Table structure for m_customer_act_on
@@ -1682,8 +1677,8 @@ CREATE TABLE `m_transaction_date`  (
 -- ----------------------------
 -- Records of m_transaction_date
 -- ----------------------------
-INSERT INTO `m_transaction_date` VALUES (2, 1, 2, '2025-04-12', 1, '2025-03-05 16:03:58', '2025-04-12 22:01:35', 1, 4);
-INSERT INTO `m_transaction_date` VALUES (3, 1, 1, '2025-04-12', 1, '2025-03-05 16:06:33', '2025-04-12 22:01:35', 1, 4);
+INSERT INTO `m_transaction_date` VALUES (2, 1, 2, '2025-04-15', 1, '2025-03-05 16:03:58', '2025-04-15 12:36:56', 1, 4);
+INSERT INTO `m_transaction_date` VALUES (3, 1, 1, '2025-04-15', 1, '2025-03-05 16:06:33', '2025-04-15 12:36:56', 1, 4);
 
 -- ----------------------------
 -- Table structure for ppatk_dttot
@@ -2268,9 +2263,6 @@ CREATE TABLE `tr_cb_detail`  (
 -- ----------------------------
 -- Records of tr_cb_detail
 -- ----------------------------
-INSERT INTO `tr_cb_detail` VALUES (1, 1, '25041201010001 - Cintya', 16501500.00, 3, '2025-04-12 22:03:01', NULL, 4, NULL);
-INSERT INTO `tr_cb_detail` VALUES (2, 2, '25041301010001 - Veronica', 14400000.00, 3, '2025-04-13 22:05:52', '2025-04-13 22:11:30', 4, 5);
-INSERT INTO `tr_cb_detail` VALUES (3, 3, 'Saldo Awal Kas', 250000000.00, 3, '2025-04-13 22:14:27', NULL, 5, NULL);
 
 -- ----------------------------
 -- Table structure for tr_cb_header
@@ -2297,9 +2289,6 @@ CREATE TABLE `tr_cb_header`  (
 -- ----------------------------
 -- Records of tr_cb_header
 -- ----------------------------
-INSERT INTO `tr_cb_header` VALUES (1, 1, 1, 2, '2025-04-12', '2504120101020001', 1, 1, NULL, 3, '2025-04-12 22:03:01', NULL, 4, NULL);
-INSERT INTO `tr_cb_header` VALUES (2, 1, 1, 2, '2025-04-13', '2504130101020001', 2, 1, NULL, 3, '2025-04-13 22:05:52', '2025-04-13 22:11:30', 4, 5);
-INSERT INTO `tr_cb_header` VALUES (3, 1, 1, 1, '2025-04-13', '2504130101010001', NULL, NULL, NULL, 3, '2025-04-13 22:14:27', NULL, 5, NULL);
 
 -- ----------------------------
 -- Table structure for tr_cb_saldo
@@ -2326,66 +2315,6 @@ CREATE TABLE `tr_cb_saldo`  (
 -- ----------------------------
 -- Records of tr_cb_saldo
 -- ----------------------------
-INSERT INTO `tr_cb_saldo` VALUES (61, 1, 1, '2025-04-01', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-13 22:15:42', NULL, 5, NULL);
-INSERT INTO `tr_cb_saldo` VALUES (62, 1, 1, '2025-04-02', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-13 22:15:42', NULL, 5, NULL);
-INSERT INTO `tr_cb_saldo` VALUES (63, 1, 1, '2025-04-03', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-13 22:15:42', NULL, 5, NULL);
-INSERT INTO `tr_cb_saldo` VALUES (64, 1, 1, '2025-04-04', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-13 22:15:42', NULL, 5, NULL);
-INSERT INTO `tr_cb_saldo` VALUES (65, 1, 1, '2025-04-05', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-13 22:15:42', NULL, 5, NULL);
-INSERT INTO `tr_cb_saldo` VALUES (66, 1, 1, '2025-04-06', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-13 22:15:42', NULL, 5, NULL);
-INSERT INTO `tr_cb_saldo` VALUES (67, 1, 1, '2025-04-07', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-13 22:15:42', NULL, 5, NULL);
-INSERT INTO `tr_cb_saldo` VALUES (68, 1, 1, '2025-04-08', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-13 22:15:42', NULL, 5, NULL);
-INSERT INTO `tr_cb_saldo` VALUES (69, 1, 1, '2025-04-09', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-13 22:15:42', NULL, 5, NULL);
-INSERT INTO `tr_cb_saldo` VALUES (70, 1, 1, '2025-04-10', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-13 22:15:42', NULL, 5, NULL);
-INSERT INTO `tr_cb_saldo` VALUES (71, 1, 1, '2025-04-11', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-13 22:15:42', NULL, 5, NULL);
-INSERT INTO `tr_cb_saldo` VALUES (72, 1, 1, '2025-04-12', 2025, 4, NULL, 16501500.00, -16501500.00, 0, '2025-04-13 22:15:42', NULL, 5, NULL);
-INSERT INTO `tr_cb_saldo` VALUES (73, 1, 1, '2025-04-13', 2025, 4, 250000000.00, 14400000.00, 219098500.00, 0, '2025-04-13 22:15:42', NULL, 5, NULL);
-INSERT INTO `tr_cb_saldo` VALUES (74, 1, 1, '2025-04-14', 2025, 4, 0.00, 0.00, 219098500.00, 0, '2025-04-13 22:15:42', NULL, 5, NULL);
-INSERT INTO `tr_cb_saldo` VALUES (75, 1, 1, '2025-04-15', 2025, 4, 0.00, 0.00, 219098500.00, 0, '2025-04-13 22:15:42', NULL, 5, NULL);
-INSERT INTO `tr_cb_saldo` VALUES (76, 1, 1, '2025-04-16', 2025, 4, 0.00, 0.00, 219098500.00, 0, '2025-04-13 22:15:42', NULL, 5, NULL);
-INSERT INTO `tr_cb_saldo` VALUES (77, 1, 1, '2025-04-17', 2025, 4, 0.00, 0.00, 219098500.00, 0, '2025-04-13 22:15:42', NULL, 5, NULL);
-INSERT INTO `tr_cb_saldo` VALUES (78, 1, 1, '2025-04-18', 2025, 4, 0.00, 0.00, 219098500.00, 0, '2025-04-13 22:15:42', NULL, 5, NULL);
-INSERT INTO `tr_cb_saldo` VALUES (79, 1, 1, '2025-04-19', 2025, 4, 0.00, 0.00, 219098500.00, 0, '2025-04-13 22:15:42', NULL, 5, NULL);
-INSERT INTO `tr_cb_saldo` VALUES (80, 1, 1, '2025-04-20', 2025, 4, 0.00, 0.00, 219098500.00, 0, '2025-04-13 22:15:42', NULL, 5, NULL);
-INSERT INTO `tr_cb_saldo` VALUES (81, 1, 1, '2025-04-21', 2025, 4, 0.00, 0.00, 219098500.00, 0, '2025-04-13 22:15:42', NULL, 5, NULL);
-INSERT INTO `tr_cb_saldo` VALUES (82, 1, 1, '2025-04-22', 2025, 4, 0.00, 0.00, 219098500.00, 0, '2025-04-13 22:15:42', NULL, 5, NULL);
-INSERT INTO `tr_cb_saldo` VALUES (83, 1, 1, '2025-04-23', 2025, 4, 0.00, 0.00, 219098500.00, 0, '2025-04-13 22:15:42', NULL, 5, NULL);
-INSERT INTO `tr_cb_saldo` VALUES (84, 1, 1, '2025-04-24', 2025, 4, 0.00, 0.00, 219098500.00, 0, '2025-04-13 22:15:42', NULL, 5, NULL);
-INSERT INTO `tr_cb_saldo` VALUES (85, 1, 1, '2025-04-25', 2025, 4, 0.00, 0.00, 219098500.00, 0, '2025-04-13 22:15:42', NULL, 5, NULL);
-INSERT INTO `tr_cb_saldo` VALUES (86, 1, 1, '2025-04-26', 2025, 4, 0.00, 0.00, 219098500.00, 0, '2025-04-13 22:15:42', NULL, 5, NULL);
-INSERT INTO `tr_cb_saldo` VALUES (87, 1, 1, '2025-04-27', 2025, 4, 0.00, 0.00, 219098500.00, 0, '2025-04-13 22:15:42', NULL, 5, NULL);
-INSERT INTO `tr_cb_saldo` VALUES (88, 1, 1, '2025-04-28', 2025, 4, 0.00, 0.00, 219098500.00, 0, '2025-04-13 22:15:42', NULL, 5, NULL);
-INSERT INTO `tr_cb_saldo` VALUES (89, 1, 1, '2025-04-29', 2025, 4, 0.00, 0.00, 219098500.00, 0, '2025-04-13 22:15:42', NULL, 5, NULL);
-INSERT INTO `tr_cb_saldo` VALUES (90, 1, 1, '2025-04-30', 2025, 4, 0.00, 0.00, 219098500.00, 0, '2025-04-13 22:15:42', NULL, 5, NULL);
-INSERT INTO `tr_cb_saldo` VALUES (91, 1, 2, '2025-04-01', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-13 22:15:42', NULL, 5, NULL);
-INSERT INTO `tr_cb_saldo` VALUES (92, 1, 2, '2025-04-02', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-13 22:15:42', NULL, 5, NULL);
-INSERT INTO `tr_cb_saldo` VALUES (93, 1, 2, '2025-04-03', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-13 22:15:42', NULL, 5, NULL);
-INSERT INTO `tr_cb_saldo` VALUES (94, 1, 2, '2025-04-04', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-13 22:15:42', NULL, 5, NULL);
-INSERT INTO `tr_cb_saldo` VALUES (95, 1, 2, '2025-04-05', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-13 22:15:42', NULL, 5, NULL);
-INSERT INTO `tr_cb_saldo` VALUES (96, 1, 2, '2025-04-06', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-13 22:15:42', NULL, 5, NULL);
-INSERT INTO `tr_cb_saldo` VALUES (97, 1, 2, '2025-04-07', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-13 22:15:42', NULL, 5, NULL);
-INSERT INTO `tr_cb_saldo` VALUES (98, 1, 2, '2025-04-08', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-13 22:15:42', NULL, 5, NULL);
-INSERT INTO `tr_cb_saldo` VALUES (99, 1, 2, '2025-04-09', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-13 22:15:42', NULL, 5, NULL);
-INSERT INTO `tr_cb_saldo` VALUES (100, 1, 2, '2025-04-10', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-13 22:15:42', NULL, 5, NULL);
-INSERT INTO `tr_cb_saldo` VALUES (101, 1, 2, '2025-04-11', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-13 22:15:42', NULL, 5, NULL);
-INSERT INTO `tr_cb_saldo` VALUES (102, 1, 2, '2025-04-12', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-13 22:15:42', NULL, 5, NULL);
-INSERT INTO `tr_cb_saldo` VALUES (103, 1, 2, '2025-04-13', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-13 22:15:42', NULL, 5, NULL);
-INSERT INTO `tr_cb_saldo` VALUES (104, 1, 2, '2025-04-14', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-13 22:15:42', NULL, 5, NULL);
-INSERT INTO `tr_cb_saldo` VALUES (105, 1, 2, '2025-04-15', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-13 22:15:42', NULL, 5, NULL);
-INSERT INTO `tr_cb_saldo` VALUES (106, 1, 2, '2025-04-16', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-13 22:15:42', NULL, 5, NULL);
-INSERT INTO `tr_cb_saldo` VALUES (107, 1, 2, '2025-04-17', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-13 22:15:42', NULL, 5, NULL);
-INSERT INTO `tr_cb_saldo` VALUES (108, 1, 2, '2025-04-18', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-13 22:15:42', NULL, 5, NULL);
-INSERT INTO `tr_cb_saldo` VALUES (109, 1, 2, '2025-04-19', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-13 22:15:42', NULL, 5, NULL);
-INSERT INTO `tr_cb_saldo` VALUES (110, 1, 2, '2025-04-20', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-13 22:15:42', NULL, 5, NULL);
-INSERT INTO `tr_cb_saldo` VALUES (111, 1, 2, '2025-04-21', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-13 22:15:42', NULL, 5, NULL);
-INSERT INTO `tr_cb_saldo` VALUES (112, 1, 2, '2025-04-22', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-13 22:15:42', NULL, 5, NULL);
-INSERT INTO `tr_cb_saldo` VALUES (113, 1, 2, '2025-04-23', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-13 22:15:42', NULL, 5, NULL);
-INSERT INTO `tr_cb_saldo` VALUES (114, 1, 2, '2025-04-24', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-13 22:15:42', NULL, 5, NULL);
-INSERT INTO `tr_cb_saldo` VALUES (115, 1, 2, '2025-04-25', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-13 22:15:42', NULL, 5, NULL);
-INSERT INTO `tr_cb_saldo` VALUES (116, 1, 2, '2025-04-26', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-13 22:15:42', NULL, 5, NULL);
-INSERT INTO `tr_cb_saldo` VALUES (117, 1, 2, '2025-04-27', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-13 22:15:42', NULL, 5, NULL);
-INSERT INTO `tr_cb_saldo` VALUES (118, 1, 2, '2025-04-28', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-13 22:15:42', NULL, 5, NULL);
-INSERT INTO `tr_cb_saldo` VALUES (119, 1, 2, '2025-04-29', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-13 22:15:42', NULL, 5, NULL);
-INSERT INTO `tr_cb_saldo` VALUES (120, 1, 2, '2025-04-30', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-13 22:15:42', NULL, 5, NULL);
 
 -- ----------------------------
 -- Table structure for tr_detail
@@ -2409,9 +2338,6 @@ CREATE TABLE `tr_detail`  (
 -- ----------------------------
 -- Records of tr_detail
 -- ----------------------------
-INSERT INTO `tr_detail` VALUES (1, 1, 1, 1, 1000, 16500.00, 2, '2025-04-12 22:02:05', '2025-04-13 00:09:57', 4, 4);
-INSERT INTO `tr_detail` VALUES (2, 1, 21, 500, 6, 0.50, 2, '2025-04-12 22:02:21', '2025-04-13 00:09:57', 4, 4);
-INSERT INTO `tr_detail` VALUES (3, 2, 7, 1, 1200, 12000.00, 3, '2025-04-13 22:05:28', '2025-04-13 22:05:37', 4, 4);
 
 -- ----------------------------
 -- Table structure for tr_header
@@ -2440,8 +2366,6 @@ CREATE TABLE `tr_header`  (
 -- ----------------------------
 -- Records of tr_header
 -- ----------------------------
-INSERT INTO `tr_header` VALUES (1, 1, 1, '2025-04-12', '25041201010001', 4, NULL, NULL, NULL, 'Trial Input Data', 2, '2025-04-12 22:02:05', '2025-04-13 00:09:57', 4, 4, 5);
-INSERT INTO `tr_header` VALUES (2, 1, 1, '2025-04-13', '25041301010001', 5, NULL, NULL, NULL, NULL, 4, '2025-04-13 22:05:28', '2025-04-13 22:05:52', 4, 4, 5);
 
 -- ----------------------------
 -- Table structure for tr_log_api
@@ -2465,8 +2389,6 @@ CREATE TABLE `tr_log_api`  (
 -- ----------------------------
 -- Records of tr_log_api
 -- ----------------------------
-INSERT INTO `tr_log_api` VALUES (1, 1, 'inputtrx', '1', 0, 2, NULL, '2025-04-12 22:57:24', 4, '2025-04-13 00:05:16', 4);
-INSERT INTO `tr_log_api` VALUES (3, 1, 'adjustmenttrx', '1', 2, 0, 'void transaction, need confirmation from commercial', '2025-04-13 00:09:57', 4, '2025-04-13 00:09:57', 4);
 
 -- ----------------------------
 -- Table structure for tr_payment
@@ -2490,8 +2412,6 @@ CREATE TABLE `tr_payment`  (
 -- ----------------------------
 -- Records of tr_payment
 -- ----------------------------
-INSERT INTO `tr_payment` VALUES (1, 1, 1, 1, 2, 16501500.00, 1, '2025-04-12 22:03:01', NULL, 4, NULL);
-INSERT INTO `tr_payment` VALUES (2, 2, 1, 1, 2, 14400000.00, 1, '2025-04-13 22:05:52', NULL, 4, NULL);
 
 -- ----------------------------
 -- Table structure for tr_stock
@@ -2516,8 +2436,6 @@ CREATE TABLE `tr_stock`  (
 -- ----------------------------
 -- Records of tr_stock
 -- ----------------------------
-INSERT INTO `tr_stock` VALUES (7, 7, 1, 2025, 4, 1, 0, 1, '2025-04-14 09:33:41', 4, NULL, NULL);
-INSERT INTO `tr_stock` VALUES (8, 7, 1, 2025, 5, 1, 1200, 1, '2025-04-14 09:33:41', 4, '2025-04-14 09:33:41', 4);
 
 -- ----------------------------
 -- Table structure for tr_stock_price
@@ -2550,7 +2468,6 @@ CREATE TABLE `tr_stock_price`  (
 -- ----------------------------
 -- Records of tr_stock_price
 -- ----------------------------
-INSERT INTO `tr_stock_price` VALUES (1, 1, '2025-04-13', 2025, 4, 7, 2, 1200, 12000, 14400000, NULL, 0, 0.00, 0.00, 0.00, 1200.00, 12000.00, 14400000.00, 0.00, '2025-04-14 09:33:41', 4);
 
 -- ----------------------------
 -- View structure for v_auth_group_role

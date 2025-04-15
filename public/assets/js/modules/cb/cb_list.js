@@ -30,7 +30,6 @@ $("#btn-generate-buysell").on('click', function (e) {
     }    
 });
 
-$("#btn-excel").hide();
 $("#btn-excel").on('click', function (e) {
     e.preventDefault();
     if($('#store_id').val() === null || $('#store_id').val() === ''){
@@ -64,6 +63,8 @@ $("#btn-excel").on('click', function (e) {
     }              
 });
 
+$(".dropdown").hide();
+$("#btn-excel").hide();
 $("#btn-submit").on('click', function (e) {
     e.preventDefault();
     if($('#store_id').val() === null || $('#store_id').val() === ''){
