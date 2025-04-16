@@ -46,8 +46,8 @@ body {
   margin: 0px;
   background: #f5f5f5 url('../img/bg.png') left top repeat;
   position: relative;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 15px;
+  font-family: 'Arial', sans-serif;
+  font-size: 14px;
   color: #22262e;  
   overflow-x: hidden;
 }
@@ -271,7 +271,7 @@ body.page-container-boxed .page-container {
   z-index: 3;
 }
 .x-navigation {
-  background: #003BDE;
+  background: RGB(4,84,152);
   /* NAV LIST ELEMENT */
   /* END NAV LIST ELEMENT */
   /* NAV LIST FIRST ELEMENT */
@@ -447,8 +447,8 @@ body.page-container-boxed .page-container {
   border-bottom: 0px;
 }
 .x-navigation.x-navigation-horizontal {
-  height: 50px;    
-  background-color:#003BDE
+  height: 51px;    
+  background-color:rgba(4,84,152);  
 }
 .x-navigation.x-navigation-horizontal .xn-logo a {
   border-bottom: 0px;
@@ -485,7 +485,7 @@ body.page-container-boxed .page-container {
   color: #697b92;
 }
 .x-navigation.x-navigation-horizontal > li ul {
-  width: 245px;
+  width: 265px;
   position: absolute;
   overflow: visible;
   display: none;
@@ -498,7 +498,7 @@ body.page-container-boxed .page-container {
   z-index: 3;
 }
 .x-navigation.x-navigation-horizontal > li ul ul.xn-drop-white:after {
-  border-right-color: #FFF;
+  border-right-color: #FFF;  
 }
 .x-navigation.x-navigation-horizontal > li > ul {
   top: 60px;
@@ -910,7 +910,7 @@ body.page-container-boxed .page-container {
   border-bottom: 0px;  
   color: #FFF;
   /* background-color: #045498; */
-  background-color: #003BDE;
+  background-color: rgba(4,84,152);
 }
 .x-navigation > li.xn-logo > a:first-child {
  font-size: 15px;
@@ -1202,9 +1202,8 @@ body.page-container-boxed .page-container {
   text-decoration: none;
 }
 .breadcrumb span {
-  font-size: 14px;
-  /* line-height: 12px; */
-  /* color: #4d5669; */
+  font-size: 12px;
+  font-weight: 300;
   color: #000;
   text-decoration: none;
 }
@@ -3140,8 +3139,10 @@ blockquote.pull-right {
 .table > tfoot > tr > td {
   border-color: #E5E5E5;  
   border-width: 1px;
-  color:#000;
-  font-weight: 400;
+  /* color:#000; */
+  /* font-size: 14px; */
+  /* font-family: 'Verdana', sans-serif; */
+  /* font-weight: 300; */
 }
 .table-striped > tbody > tr:nth-child(odd) > td,
 .table-striped > tbody > tr:nth-child(odd) > th {
@@ -3937,7 +3938,7 @@ background: #1caf9a !important;
 }
 
 .login-container .layer {
-  background-color: rgba(240,240,240, 0.15);
+  background-color: rgba(4,84,152, 50%);
   position: absolute;
   top: 0;
   left: 0;
@@ -3966,8 +3967,8 @@ background: #1caf9a !important;
 .login-container .login-box .login-body {
   width: 100%;
   float: left;    
-  /* background: rgba(255, 255, 255, 0.90); */
-  background-color: #FAFAFA;
+  background: rgba(240,240,240, 50%);
+  /* background-color: #FAFAFA; */
   padding: 20px;
   -moz-border-radius: 0px;
   -webkit-border-radius: 0px;

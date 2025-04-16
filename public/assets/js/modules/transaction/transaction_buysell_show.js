@@ -187,14 +187,14 @@ function show_detail($header_id){
                             counter++;
                         });
                         var rowsx =`<tr>
-                                    <td colspan="6" style='vertical-align:middle;text-align:center;background-color:#e3e4e6;font-weight:bold;font-size:14px;'>
-                                    <i>Say</i> : ` + bksfn.terBilang(totalpricex) + `
-                                    </td>
+                                    <td colspan="6" style='vertical-align:middle;text-align:center;background-color:#FFFFFF;font-weight:bold;font-size:14px;'>
+                                    Total </td>
                                     <td style='text-align:left;font-weight:bold;font-size:15px;'>
                                         Rp. ` + formatRupiah(totalpricex) + `
                                     </td>                         
                                 </tr>`   
                         $('#table-detail tbody').append(rowsx);     
+                        $("#total_transaction_terbilang").html('Say Total : ' + bksfn.terBilang(totalpricex) + ' Rupiah');
                         $("#modal_total_value").val(formatRupiah(totalpricex));
                     }else{
                         var url = "transaction/customer/index/";
@@ -248,14 +248,15 @@ function show_detail_payment($header_id){
                     counter++;
                 });
                 var rowsx =`<tr>
-                                <td colspan="4" style='vertical-align:middle;text-align:center;background-color:#e3e4e6;font-weight:bold;font-size:14px;'>
-                                    Total Payment Value
+                                <td colspan="4" style='vertical-align:middle;text-align:center;background-color:#FFFFFF;font-weight:bold;font-size:14px;'>
+                                    Total
                                 </td>
                                 <td style='text-align:left;font-weight:bold;font-size:15px;'>
                                     Rp. ` + formatRupiah(totalpaymentx) + `
                                 </td>                         
                             </tr>`   
                 $('#table-modal-payment tbody').append(rowsx); 
+                $("#total_payment_terbilang").html('Say Total : ' + bksfn.terBilang(totalpaymentx) + ' Rupiah');
                 $("#modal_remaining_payment_value").val(formatRupiah( formatRupiahtoNumber($("#modal_total_value").val()) - (totalpaymentx) ));
             }else{
                 return false;

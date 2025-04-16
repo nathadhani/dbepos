@@ -98,7 +98,7 @@ $.validate({
             // Export - Data Summary Transaction By Currency
             if(export_id === '3'){
                 if($('#store_id').val() === null || $('#store_id').val() === ''){
-                    bksfn.errMsg('Lokasi Belum Dipilih!');
+                    bksfn.errMsg('Store Belum Dipilih!');
                 } else {
                     $.post('export/export_data/export_data', $("#form_export_data").serialize(), function (obj) {
                         if (obj.file) {
@@ -122,7 +122,7 @@ $.validate({
             // Export - Data Summary Transaction By Job Customer
             if(export_id === '4'){
                 if($('#store_id').val() === null || $('#store_id').val() === ''){
-                    bksfn.errMsg('Lokasi Belum Dipilih!');
+                    bksfn.errMsg('Store Belum Dipilih!');
                 } else {
                     $.post('export/export_data/export_data', $("#form_export_data").serialize(), function (obj) {
                         if (obj.file) {

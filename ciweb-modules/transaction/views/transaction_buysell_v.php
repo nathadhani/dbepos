@@ -6,31 +6,18 @@
 <div class="page-content-wrap">    
     <div class="row">
         <div class="col-md-12">
-            <div class="panel panel-default">    
-                <div class="panel-heading ui-draggable-handle">                                
-                    <div class="panel-title-box">
-                        <h3>
-                            <span id="trx_name"></span>
-                            <span id="ftitle" style="color:black;font-weight:600;font-size:13px;">New</span>
-                        </h3>
-                    </div>
-                    <ul class="panel-controls">
-                        <div class="dropdown">
-                            <button class="dropbtn" style="width:100px;">Action</button>
-                            <div class="dropdown-content">
-                                <a href="#" id="btn-confirm">Confirm</a>
-                                <a href="#" id="btn-cancel">Cancel</a>
-                            </div>
-                        </div>
-                    </ul>    
-                </div>                  
+            <div class="panel panel-default">                                 
                 <div class="panel-body">                                       
                     <div class="row">                            
                         <form class="form-horizontal" autocomplete="off">
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <div class="col-lg-12">
-                                        <label for=tr_id style="display:block">Transaction</label>
+                                        <label for=tr_id style="display:block">
+                                            Transaction
+                                            <span id="trx_name"></span>
+                                            <span id="ftitle" style="color:black;font-weight:600;font-size:13px;">New</span>
+                                        </label>
                                         <select name="tr_id"
                                                 data-ajax="true" 
                                                 data-placeholder="Pilih...."
@@ -73,8 +60,19 @@
                                         <span id="created_by"></span>
                                     </div>
                                 </div>
-                            </div>
+                            </div>                                                     
                         </form>                    
+                    </div>
+
+                    <div class="row form_detail_input">
+                        <div class="col-md-6">
+                            <label for="">Stock Available : Nominal ( </label> <span id="stock_nominal"></span> )
+                            <label for="">Sheet</label> ( <span id="stock_sheet"></span> )
+                            <label for="">Amount</label> ( <span id="stock_amount"></span> )
+                        </div>
+                        <div class="col-md-6">
+                            <span id="terbilang_price" class="pull-right"></span>
+                        </div>
                     </div>
 
                     <div class="row form_detail_input">
@@ -127,7 +125,7 @@
                                                 <input type="text" autofocuse="" id="subtotal" name="subtotal" class="form-control" style='text-align:right;' value="0" readonly>
                                             </td>                                                                
                                             <td width="10%" style='text-align:center'>
-                                                <button id="btn-add-row-detail" class="btn btn-danger" style="width:90px;">Add</button>
+                                                <button id="btn-add-row-detail" class="btn btn-info" style="width:90px;">Add</button>
                                             </td>                
                                         </tr>                                         
                                     </tbody>                                       
@@ -136,20 +134,9 @@
                         </div>
                     </div>
                     
-                    <div class="row form_detail_input" style="margin-top:-15px;">
-                        <div class="col-md-6">
-                            <label for="">Stock Available : Nominal ( </label> <span id="stock_nominal"></span> )
-                            <label for="">Sheet</label> ( <span id="stock_sheet"></span> )
-                            <label for="">Amount</label> ( <span id="stock_amount"></span> )
-                        </div>
-                        <div class="col-md-6">
-                            <span id="terbilang_price" class="pull-right"></span>
-                        </div>
-                    </div>
-                    
-                    <div class="row">                                                                                
-                        <div class="col-md-12 table-responsive">                            
-                            <div class="row">
+                    <div class="row" style="margin-top:-15px;">                                                                                
+                        <div class="col-md-12">                            
+                            <div class="row table-responsive">
                                 <table class="table table-bordered table-condensed table-hover" cellspacing="0" width="100%" id="table-detail">
                                     <thead>
                                         <tr>
@@ -164,9 +151,14 @@
                                     </thead>
                                     <tbody>                                                
                                     </tbody>
-                                </table>
-                            </div>
+                                </table>               
+                                <p id="total_transaction_terbilang"></p>                                                                    
+                            </div>                            
                         </div>
+                    </div>
+                    <div class="row">
+                        <button id="btn-confirm" class="btn btn-success" style="width:120px;margin-left:5px;">Confirm</button>
+                        <button id="btn-cancel" class="btn btn-danger" style="width:120px;margin-left:5px;">Cancel</button>
                     </div>                    
                 </div>
                 <!--.end panel-body -->

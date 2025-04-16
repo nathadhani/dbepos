@@ -15,7 +15,7 @@
     <ul class="x-navigation x-navigation-horizontal">
         <li class="xn-logo">
             <a href="." title="Back to main">
-                <span class="fa fa-home" style="font-size:14px;font-weight:bold;"></span>
+                <span class="fa fa-home" style="font-size:12px;font-weight:bold;"></span>
                 <span style="font-size:14px;font-weight:bold;margin-left:-6px;">
                     Home
                 </span>                
@@ -34,7 +34,7 @@
         ?>
             <li class="xn-logo">
                 <a href="#" title="Menu">
-                    <span class="fa fa-minus-square-o" style="font-size:14px;font-weight:bold;"></span>
+                    <span class="fa fa-minus-square-o" style="font-size:12px;font-weight:bold;"></span>
                     <span style="font-size:14px;font-weight:bold;margin-left:-6px;">              
                         Menu
                     </span>                
@@ -57,6 +57,18 @@
         <?php 
             } 
         ?>
+
+        <!-- Exchange Rate -->
+        <?php         
+            if(in_array($usergroup_id, array('3'))) {
+        ?>      
+            <li class="xn-icon-button">
+                <a href="master_data/m_exchange_rate" title="Buy / Sell - Exchange Rate" data-toggle="tooltip" data-placement="bottom"><span class="fa fa-exchange" style="font-size:16px;font-weight:bold;"></span></a>
+            </li>
+        <?php 
+            } 
+        ?>
+        <!-- End Exchange Rate -->
 
         <!-- For Cashier -->
         <?php         

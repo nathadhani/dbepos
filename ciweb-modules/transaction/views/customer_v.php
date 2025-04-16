@@ -53,18 +53,14 @@
                                 <table id="mainTable" style="width:100%" class="table table-bordered table-condensed table-hover table-striped dataTable">
                                     <thead>
                                         <tr>
-                                            <th style="text-align:left; vertical-align: middle">Name</th>
-                                            <th style="text-align:left; vertical-align: middle">Address</th>                                            
-                                            <th style="text-align:left; vertical-align: middle">Celluler</th>                                            
-                                            <th style="text-align:left; vertical-align: middle">Identity</th>
-                                            <th style="text-align:left; vertical-align: middle">Identity Number</th>
+                                            <th style="text-align:left; vertical-align: middle">Customer Name</th>
+                                            <th style="text-align:left; vertical-align: middle">Address</th> 
                                             <th style="text-align:left; vertical-align: middle">Status</th>
                                         </tr>
                                     </thead>                 
                                     <tbody></tbody>
                                 </table>
                             </div>
-                            <span id="task-table">*) <i>click row to select data customer</i></span>
                         </div>                        
                     </form>
                 </div>

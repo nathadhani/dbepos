@@ -8,10 +8,10 @@ $('#tr_id').on('change',function(e){
     if($(this).val() != null && $(this).val() != ''){
         xtr_id = $("#tr_id").val();
         if(xtr_id === '1'){
-            $("#trx_name").html('<span style="color:blue;font-weight:800;font-size:14px;">Buy / Beli</span> - ');
+            $("#trx_name").html('<span style="color:blue;font-weight:800;font-size:14px;">Buy / Beli</span>');
         }
         if(xtr_id === '2'){
-            $("#trx_name").html('<span style="color:red;font-weight:800;font-size:14px;">Sell / Jual</span> - ');
+            $("#trx_name").html('<span style="color:red;font-weight:800;font-size:14px;">Sell / Jual</span>');
         }
         $('#tr_id').prop('disabled', true);
         $('#currency_id').focus();
@@ -90,10 +90,10 @@ function show_header(){
 
                             xtr_id = d.tr_id;
                             if(xtr_id === '1'){
-                                $("#trx_name").html('<span style="color:blue;font-weight:bold;font-size:16px;">Buy / Beli</span> - ');
+                                $("#trx_name").html('<span style="color:blue;font-weight:bold;font-size:16px;">Buy / Beli</span>');
                             }
                             if(xtr_id === '2'){
-                                $("#trx_name").html('<span style="color:red;font-weight:bold;font-size:16px;">Sell / Jual</span> - ');
+                                $("#trx_name").html('<span style="color:red;font-weight:bold;font-size:16px;">Sell / Jual</span>');
                             }                    
                             $('#tr_id').prop('disabled', true);
                         } else {
@@ -219,14 +219,15 @@ function show_detail($statusTrx){
                         counter++;
                     });
                     var rowsx =`<tr>
-                                    <td colspan="6" style='vertical-align:middle;text-align:center;background-color:#e3e4e6;font-weight:bold;font-size:14px;'>
-                                        <i>Say</i> : ` + bksfn.terBilang(totalpricex) + ` Rupiah
+                                    <td colspan="6" style='vertical-align:middle;text-align:center;background-color:#FFFFFF;font-weight:bold;font-size:14px;'>
+                                        Total
                                     </td>
                                     <td style='text-align:left;font-weight:bold;font-size:15px;'>
                                         Rp. ` + formatRupiah(totalpricex) + `
                                     </td>                         
                                 </tr>`
                     $('#table-detail tbody').append(rowsx);
+                    $("#total_transaction_terbilang").html('Say Total : ' + bksfn.terBilang(totalpricex) + ' Rupiah');
                     if($statusTrx === '1') {
                         $("#btn-confirm").show();
                         $("#btn-cancel").show();

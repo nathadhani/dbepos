@@ -24,48 +24,10 @@
     <div class="row">
         <div class="col-md-12">            
             <div class="panel panel-default">
-                <?php if( $auth['usergroup_id'] != '6'){ ?>
-                    <div class="panel-heading ui-draggable-handle">                        
-                        <div class="panel-title-box">
-                            <h3 id="trx_name">
-                            </h3>
-                        </div>                        
-                        <ul class="panel-controls">
-                            <div class="dropdown">
-                                <button class="dropbtn" style="width:100px;">Action</button>
-                                <div class="dropdown-content">
-                                    <a href="#" id="btn-payment">Payment</a>
-                                    <a href="#" id="btn-cancel">Cancel</a>
-                                    <a href="#" id="btn-pdf">Print</a>
-                                    <?php                                        
-                                        if($api_method === '1') {              
-                                    ?>
-                                        <a href="#" id="btn-submit">Submit to ECSys</a>
-                                    <?php
-                                            
-                                        }
-                                    ?>
-                                </div>
-                            </div>
-                            <!-- <button id="btn-payment" class="btn btn-info btn btn-sm" style="width:130px;">Payment</button>
-                            <button id="btn-cancel" class="btn btn-info btn btn-sm" style="width:130px;">Cancel</button>
-                            <?php
-                                $store_id = $auth['store_id'];
-                                $get_AP = $this->db->query("SELECT api_angkasapura, api_method FROM m_store WHERE id = $store_id ")->result(); 
-                                if($get_AP){                                                                          
-                                    if($get_AP[0]->api_method === '1') {              
-                            ?>
-                                <button id="btn-submit" class="btn btn-info btn btn-sm" style="width:130px;">Submit to ECSys</button>
-                            <?php
-                                    }
-                                }
-                            ?> -->
-                        </ul>    
-                    </div>
-                <?php } ?>
                 <div class="panel-body">   
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-5">
+                            <span class="span_text_fixed_85px">Transaction</span> : <span id="trx_name"></span><br>
                             <span class="span_text_fixed_85px">Store</span> : <span id="store_address"></span><br>
                             <span class="span_text_fixed_85px">Date</span>  : <span id="tr_date"></span><br>
                             <span class="span_text_fixed_85px">Number</span> : <span id="tr_number"></span><br>
@@ -74,7 +36,7 @@
                             <span class="span_text_fixed_85px">Updated</span> : <span id="updated"></span><br>
                             <span class="span_text_fixed_85px">Updated by</span> : <span id="updated_by"></span>
                         </div>    
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <span class="span_text_fixed_85px">Name</span> : <a href="#" id="customer_name"></a><br>
                             <span class="span_text_fixed_85px">Address</span> : <span id="customer_address"></span><br>
                             <?php if( $auth['usergroup_id'] != '6'){ ?>
@@ -85,7 +47,29 @@
                             <span class="span_text_fixed_85px">Description</span> : <span id="description_header"></span><br>
                             <span class="span_text_fixed_85px">Status</span> : <span id="ftitle"></span>
                         </div>
+                        <?php if( $auth['usergroup_id'] != '6'){ ?>
+                            <div class="col-md-2">
+                                <ul class="panel-controls">                            
+                                    <div class="dropdown">
+                                        <button class="dropbtn" style="width:80px;">Action <i class="fa fa-caret-down" aria-hidden="true"></i></button>
+                                        <div class="dropdown-content">
+                                            <a href="#" id="btn-payment">Payment</a>
+                                            <a href="#" id="btn-cancel">Cancel</a>
+                                            <a href="#" id="btn-pdf">Print</a>
+                                            <?php                                        
+                                                if($api_method === '1') {              
+                                            ?>
+                                                <a href="#" id="btn-submit">Submit to ECSys</a>
+                                            <?php                                            
+                                                }
+                                            ?>
+                                        </div>
+                                    </div>                        
+                                </ul>
+                            </div>
+                        <?php } ?>
                     </div>
+                    <!--.end row -->
 
                     <div class="row">
                         <div class="col-md-12 table-responsive">
@@ -104,6 +88,7 @@
                                 <tbody>                                                
                                 </tbody>
                             </table>
+                            <p id="total_transaction_terbilang"></p>
                         </div>
                     </div>
                     <!--.end row -->
@@ -162,6 +147,7 @@
                                         ?>
                                     </div>
                                 </div>
+                                <!--.end row -->
                         <?php                                             
                             }
                         ?>                                                                  
@@ -223,6 +209,7 @@
                         </div>                                        
                     </div>
                 </div>     
+                <!--.end row -->
 
                 <div class="row">
                     <form id="mainFormModalPayment" class="form-horizontal" autocomplete="off">
@@ -283,12 +270,14 @@
                         </div>
                     </form>                                       
                 </div>
+                <!--.end row -->
 
                 <div class="row">
                     <div class="col-md-12">
                         <span id="terbilang_modal_payment_amount"></span>
                     </div>
                 </div>
+                <!--.end row -->
                 
                 <div class="row">
                     <div class="col-md-12 table-responsive">
@@ -304,9 +293,11 @@
                             </thead>
                             <tbody>                                                
                             </tbody>
-                        </table>                                        
+                        </table>
+                        <p id="total_payment_terbilang"></p>                                        
                     </div>
                 </div>
+                <!--.end row -->
             </div>
             <div class="modal-footer">                
                 <button id="btn-modal-payment-close" class="btn btn-danger" style="width:120px;margin-left:5px;">Close</button>

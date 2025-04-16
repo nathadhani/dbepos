@@ -2,8 +2,6 @@ var arrdata = [];
 var t = '';
 default_row();
 $('#btn_add').hide();
-$("#task-table").hide();
-
 $('#text_search').on('keyup',function(){
     $('.toggle-close').show();
 });
@@ -15,6 +13,8 @@ input.addEventListener('keydown', function(event) {
         if (xtext_search == '' || xtext_search == null ) {
             bksfn.errMsg("Ketik kata yang mau di cari");
             $('#text_search').val('').focus();
+            $('#mainTable').dataTable().fnClearTable();
+            $('#mainTable').DataTable().destroy();
             return false;    
         } else {
             if ( $.fn.dataTable.isDataTable('#mainTable') ) {
@@ -34,7 +34,6 @@ $('.toggle-close').hide();
 $(".toggle-close").click(function() {
     $('.toggle-close').hide();
     $('#btn_add').hide();
-    $("#task-table").hide();
     $('#text_search').val('').focus();
     $('#mainTable').dataTable().fnClearTable();
     $('#mainTable').DataTable().destroy();
@@ -67,14 +66,15 @@ function fetch_data(){
         //     { orderable: false, targets: 0 }
         // ],
         // order: [[ 0, 'asc' ]],
+        paging:false,
         ordering:false,
+        info: true,
         responsive: true,
         scrollY: true,
         scrollX: true,
         scrollCollapse: true,
         dom: '<"top"i>rt<"bottom"flp><"clear">',
-        info: false,
-        lengthMenu: [[8, 25, 50, 100, -1], [8, 25, 50, 100, "All"]],
+        lengthMenu: [[50, 100, -1], [50, 100, "All"]],
         ajax: {
             url: "transaction/customer/getdata",
             type: "POST",
@@ -89,7 +89,7 @@ function fetch_data(){
             {data: 'customer_name', render: function (data, type, row, meta) {                   
                     if(data === 'NaN' || data === '' || data === null){
                         return '';
-                    } else {
+                    } else {                       
                         str = data.toLowerCase().replace(/\b[a-z]/g, function(letter) {
                             return letter.toUpperCase();
                         });
@@ -107,10 +107,7 @@ function fetch_data(){
                         return str.trim();
                     }
                 }
-            },             
-            {data: 'customer_handphone'},
-            {data: 'customer_data_name'},
-            {data: 'customer_data_number'},
+            }, 
             {data: 'status', className: "dt-body-center", width: "5%", render: function (data, type, row, meta) {
                     var act = (data == '1') ? '<span class="label label-success"><i class="fa fa-check"></i></span>' : '<span class="label label-danger"><i class="fa fa-times"></i></span>';
                     return act;
@@ -128,7 +125,6 @@ function fetch_data(){
                 alertify.error('data not found.!');
                 $('#btn_add').show();                                
             }
-            $("#task-table").show();
             $('.ajax-loader').css("visibility", "hidden");
         }
     });
@@ -144,17 +140,14 @@ function fetch_data(){
                 return;
             }    
         });        
-    });
+    });    
 }
 
 function default_row(){
     var rows =`<tr style="height:22px;">
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td width='25%'></td>
+                    <td width='70%'></td>
+                    <td width='5%'></td>
                 </tr>`;
     for (let i = 0; i < 5; i++) {
         $('#mainTable tbody').append(rows);

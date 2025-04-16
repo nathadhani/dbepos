@@ -469,7 +469,7 @@ class Bksmdl extends Bks_Model {
         }
 
         // update saldo awal table tr_stock bulan berjalan
-        $qlast_stock = $this->db->query("SELECT last_stock_sheet FROM v_tr_stock_balance
+        $qlast_stock = $this->db->query("SELECT last_stock_sheet FROM v_tr_stock_balance_sheet
                                     WHERE store_id = $store_id
                                     AND stock_year = $tahun1
                                     AND stock_month = $bulan1
@@ -522,7 +522,7 @@ class Bksmdl extends Bks_Model {
         }
 
         // update saldo awal table stock bulan berikutnya
-        $qlast_stock = $this->db->query("SELECT last_stock_sheet FROM v_tr_stock_balance
+        $qlast_stock = $this->db->query("SELECT last_stock_sheet FROM v_tr_stock_balance_sheet
                                     WHERE store_id = $store_id                                        
                                     AND stock_year = $tahun
                                     AND stock_month = $bulan
