@@ -56,81 +56,79 @@
                 <br>                
                 <div class="row">
                     <div class="col-md-12">                      
-                        <form class="form-horizontal">                                                            
-                            <div class="panel panel-default tabs">                            
-                                <ul class="nav nav-tabs" role="tablist">
-                                    <li class="active"><a href="#tab-first" role="tab" data-toggle="tab">Stock - In Total</a></li>
-                                    <li><a href="#tab-second" role="tab" data-toggle="tab">Stock - In Sheet</a></li>
-                                </ul>
-                                <div class="panel-body tab-content">
-                                    <div class="tab-pane active" id="tab-first">
-                                        <div class="row table-responsive" id="mainTable1">
-                                            <table class="table table-bordered table-condensed table-hover table-striped dataTable" width="100%">
-                                                <thead>
-                                                    <tr style="vertical-align:middle;">
-                                                        <th style="vertical-align:middle;text-align:center;">#</th>
-                                                        <th style="vertical-align:middle;text-align:center;">Currency</th>
-                                                        <th style="vertical-align:middle;text-align:center;">Beginning</th>
-                                                        <th style="vertical-align:middle;text-align:center;">Buy</th>                          
-                                                        <th style="vertical-align:middle;text-align:center;">Sell</th>
-                                                        <th style="vertical-align:middle;text-align:center;">Task</th>
-                                                        <th style="vertical-align:middle;text-align:center;">Balance</th>
-                                                    </tr>
-                                                </thead>
-                                                <thead id="searchid1">
-                                                    <tr>
-                                                        <td><button class="clrs1 btn btn-info btn-sm btn-line">Clear</button></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                    </tr>
-                                                </thead>
-                                                <tbody></tbody>
-                                            </table>
-                                        </div>
+                        <div class="panel panel-default tabs">                            
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li class="active"><a href="#tab-first" role="tab" data-toggle="tab">Stock - In Total</a></li>
+                                <li><a href="#tab-second" role="tab" data-toggle="tab">Stock - In Sheet</a></li>
+                            </ul>
+                            <div class="panel-body tab-content">
+                                <div class="tab-pane active" id="tab-first">
+                                    <div class="row table-responsive" id="mainTable1">
+                                        <table class="table table-bordered table-condensed table-hover table-striped dataTable" width="100%">
+                                            <thead>
+                                                <tr style="vertical-align:middle;">
+                                                    <th style="vertical-align:middle;text-align:center;">#</th>
+                                                    <th style="vertical-align:middle;text-align:center;">Currency</th>
+                                                    <th style="vertical-align:middle;text-align:center;">Beginning</th>
+                                                    <th style="vertical-align:middle;text-align:center;">Buy</th>                          
+                                                    <th style="vertical-align:middle;text-align:center;">Sell</th>
+                                                    <th style="vertical-align:middle;text-align:center;">Task</th>
+                                                    <th style="vertical-align:middle;text-align:center;">Balance</th>
+                                                </tr>
+                                            </thead>
+                                            <thead id="searchid1">
+                                                <tr>
+                                                    <td><button class="clrs1 btn btn-info btn-sm btn-line">Clear</button></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
                                     </div>
-                                    <div class="tab-pane" id="tab-second">
-                                        <div class="row table-responsive" id="mainTable2">
-                                            <table class="table table-bordered table-condensed table-hover table-striped dataTable" width="100%">
-                                                <thead>
-                                                    <tr style="vertical-align:middle;">
-                                                        <th rowspan="2" style="vertical-align:middle;text-align:center;">#</th>
-                                                        <th rowspan="2" style="vertical-align:middle;text-align:center;">Currency</th>
-                                                        <th rowspan="2" style="vertical-align:middle;text-align:center;">Nominal</th>
-                                                        <th colspan="5" style="vertical-align:middle;text-align:center;">In Sheet</th>
-                                                        <th rowspan="2" style="vertical-align:middle;text-align:center;">Balance Amount</th>
-                                                    </tr>
-                                                    <tr>
-                                                        <th style="vertical-align:middle;text-align:center;">Beginning</th>                                   
-                                                        <th style="vertical-align:middle;text-align:center;">Buy</th>                                
-                                                        <th style="vertical-align:middle;text-align:center;">Sell</th>
-                                                        <th style="vertical-align:middle;text-align:center;">Task</th>
-                                                        <th style="vertical-align:middle;text-align:center;">Balance</th>
-                                                    </tr>
-                                                </thead>
-                                                <thead id="searchid2">
-                                                    <tr>
-                                                        <td><button class="clrs2 btn btn-info btn-sm btn-line">Clear</button></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                    </tr>
-                                                </thead>
-                                                <tbody></tbody>
-                                            </table>
-                                        </div>        
-                                    </div>    
                                 </div>
+                                <div class="tab-pane" id="tab-second">
+                                    <div class="row table-responsive" id="mainTable2">
+                                        <table class="table table-bordered table-condensed table-hover table-striped dataTable" width="100%">
+                                            <thead>
+                                                <tr style="vertical-align:middle;">
+                                                    <th rowspan="2" style="vertical-align:middle;text-align:center;">#</th>
+                                                    <th rowspan="2" style="vertical-align:middle;text-align:center;">Currency</th>
+                                                    <th rowspan="2" style="vertical-align:middle;text-align:center;">Nominal</th>
+                                                    <th colspan="5" style="vertical-align:middle;text-align:center;">In Sheet</th>
+                                                    <th rowspan="2" style="vertical-align:middle;text-align:center;">Balance Amount</th>
+                                                </tr>
+                                                <tr>
+                                                    <th style="vertical-align:middle;text-align:center;">Beginning</th>                                   
+                                                    <th style="vertical-align:middle;text-align:center;">Buy</th>                                
+                                                    <th style="vertical-align:middle;text-align:center;">Sell</th>
+                                                    <th style="vertical-align:middle;text-align:center;">Task</th>
+                                                    <th style="vertical-align:middle;text-align:center;">Balance</th>
+                                                </tr>
+                                            </thead>
+                                            <thead id="searchid2">
+                                                <tr>
+                                                    <td><button class="clrs2 btn btn-info btn-sm btn-line">Clear</button></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>        
+                                </div>    
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>

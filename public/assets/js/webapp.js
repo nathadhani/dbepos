@@ -319,7 +319,8 @@ var bksfn = ({
     $.defaultPage = '.';
     url = window.location.pathname.replace(/^#/, '');
     if (url != '') {
-        setUpUrl(url.substring(1));
+        // setUpUrl(url.substring(1));
+        
     } else {
         setUpUrl($.defaultPage);
     }

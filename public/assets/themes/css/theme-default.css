@@ -301,8 +301,8 @@ body.page-container-boxed .page-container {
   float: left;
   width: 100%;
   line-height: 19px;
-  color: #616161;
-  font-size: 14px;
+  color: #000;
+  font-size: 15px;
   font-weight: 400;
   padding: 15px 10px 15px 15px;
   text-decoration: none;

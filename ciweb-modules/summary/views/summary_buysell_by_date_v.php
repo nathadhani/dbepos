@@ -56,7 +56,16 @@
                         </div>                            
                     </div>                    
                 </div>
-                <br>
+
+                <div class="row">
+                    <div class="col-md-3">
+                        <h5>Total Buy - Equivalent Rp. <span id="totalbuy" style='text-align:left;font-weight:600;'></span></h5>
+                    </div>
+                    <div class="col-md-3">
+                        <h5>Total Sell - Equivalent Rp. <span id="totalsell" style='text-align:left;font-weight:600;'></span></h5>
+                    </div>
+                </div>
+
                 <div class="row" style="height:270px;">
                     <table class="table table-bordered table-condensed table-striped table-hover table-responsive" width="100%" id="table-detail">
                         <thead>
@@ -78,16 +87,7 @@
                         </thead>                            
                         <tbody></tbody>
                     </table>                   
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-md-3">
-                        <h5>Total Buy Rp. <span id="totalbuy" style='text-align:left;color:blue;font-weight:600;'></span></h5>
-                    </div>
-                    <div class="col-md-3">
-                        <h5>Total Sell Rp. <span id="totalsell" style='text-align:left;color:red;font-weight:600;'></span></h5>
-                    </div>
-                </div>
+                </div>                
             </div>
         </div>
     </div>

@@ -6,13 +6,13 @@
 <div class="row">
     <div class="col-md-12">
         <div class="panel panel-default">
-            <div class="panel-heading ui-draggable-handle">                                
+            <div class="panel-heading ui-draggable-handle">                               
                 <div class="panel-title-box">
                     <h3>Cash / Bank - List</h3>
                 </div>
                 <ul class="panel-controls">
                     <div class="dropdown">
-                        <button class="dropbtn" style="width:100px;">Action</button>
+                        <button class="dropbtn" style="width:80px;">Action <i class="fa fa-caret-down" aria-hidden="true"></i></button>
                         <div class="dropdown-content">
                             <?php         
                                 if(in_array($usergroup_id, array('5'))) {

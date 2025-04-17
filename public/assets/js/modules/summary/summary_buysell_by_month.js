@@ -35,22 +35,22 @@ function fethdata(){
                                 <td width="5%">
                                     ` + d.currency_code +`                       
                                 </td>
-                                <td width="10%" style='text-align:left;font-weight:600;'>
+                                <td width="10%" style='text-align:left;'>
                                     ` + (d.st_beginning_amount !== null && Number(d.st_beginning_amount) > 0 ? formatRupiah(d.st_beginning_amount) : '-') + `
                                 </td>
-                                <td width="10%" style='text-align:left;color:blue;font-weight:600;'>
+                                <td width="10%" style='text-align:left;'>
                                     ` + (d.buy_amount !== null && Number(d.buy_amount) > 0 ? formatRupiah(d.buy_amount) : '-')  + `
                                 </td>
-                                <td width="10%" style='text-align:left;color:blue;font-weight:600;'>
+                                <td width="10%" style='text-align:left;'>
                                     ` + (d.buy_equivalent !== null && Number(d.buy_equivalent) > 0 ? formatRupiah(d.buy_equivalent) : '-') + `
                                 </td>
-                                <td width="10%" style='text-align:left;color:red;font-weight:600;'>
+                                <td width="10%" style='text-align:left;'>
                                     ` + (d.sell_amount !== null && Number(d.sell_amount) > 0 ? formatRupiah(d.sell_amount) : '-') + `
                                 </td>
-                                <td width="10%" style='text-align:left;color:red;font-weight:600;'>
+                                <td width="10%" style='text-align:left;'>
                                     ` + (d.sell_equivalent !== null && Number(d.sell_equivalent) > 0 ? formatRupiah(d.sell_equivalent) : '-') + `
                                 </td>
-                                <td width="10%" style='text-align:left;font-weight:600;'>
+                                <td width="10%" style='text-align:left;'>
                                     ` + (d.st_end_amount !== null && Number(d.st_end_amount) > 0 ? formatRupiah(d.st_end_amount) : '-') + `
                                 </td>
                                 <td width="30%">

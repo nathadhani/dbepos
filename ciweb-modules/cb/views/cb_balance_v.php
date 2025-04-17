@@ -7,7 +7,7 @@
                 </div>
                 <ul class="panel-controls">
                     <div class="dropdown">
-                        <button class="dropbtn" style="width:100px;">Action</button>
+                        <button class="dropbtn" style="width:80px;">Action <i class="fa fa-caret-down" aria-hidden="true"></i></button>
                         <div class="dropdown-content">
                             <a href="#" id="btn-calculate">Calculate</a>
                             <a href="#" id="btn-pdf-rekap">Balance Summary</a>

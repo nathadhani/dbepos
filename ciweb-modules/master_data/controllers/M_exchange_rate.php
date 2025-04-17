@@ -20,12 +20,12 @@ class M_exchange_rate extends Bks_Controller {
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
         $store_id = $postData['store_id'];
-        $tanggal = revDate($postData['periode']);
-        $tanggalx = date('Y-m-d', strtotime("-1 day", strtotime($postData['periode'])));        
+        $tr_date = revDate($postData['tr_date']);
+        $tr_datex = date('Y-m-d', strtotime("-1 day", strtotime($postData['tr_date'])));        
 
         $this->db->trans_begin();
         // $this->db->truncate($this->Bksmdl->table);
-        $this->db->where('exchange_rate_date =', $tanggal);
+        $this->db->where('exchange_rate_date =', $tr_date);
         $this->db->delete($this->Bksmdl->table);
 
         $hsl = $this->db->query("SELECT id, currency_code, currency_name
@@ -34,7 +34,7 @@ class M_exchange_rate extends Bks_Controller {
                                  AND NOT EXISTS
                                 ( SELECT 1 FROM m_exchange_rate AS p 
                                   WHERE p.store_id = $store_id
-                                  AND p.exchange_rate_date = '$tanggal'                                  
+                                  AND p.exchange_rate_date = '$tr_date'
                                   AND p.currency_id = m_currency.id
                                 )
                                 GROUP BY id
@@ -45,7 +45,7 @@ class M_exchange_rate extends Bks_Controller {
                 $data = [                    
                     'store_id' => $store_id,
                     'currency_id' => $val->id,
-                    'exchange_rate_date' => $tanggal,
+                    'exchange_rate_date' => $tr_date,
                     'status' => 1,
                     'created' => date('Y-m-d H:i:s', time()),
                     'createdby' => $this->auth['id']
@@ -69,14 +69,14 @@ class M_exchange_rate extends Bks_Controller {
                                             price_sell_top            
                                     FROM m_exchange_rate
                                     WHERE store_id = $store_id
-                                    AND exchange_rate_date = '$tanggalx'                                    
+                                    AND exchange_rate_date = '$tr_datex'                                    
                                     AND status = 1
                                     AND ( exchange_rate_buy > 0 OR  exchange_rate_sell > 0 ) 
                                     AND EXISTS
                                     ( 
                                         SELECT id FROM m_exchange_rate AS p 
                                         WHERE p.store_id = $store_id                                        
-                                        AND p.exchange_rate_date = '$tanggal'
+                                        AND p.exchange_rate_date = '$tr_date'
                                         AND p.currency_id = m_exchange_rate.currency_id 
                                     )
                                     GROUP BY id
@@ -95,7 +95,7 @@ class M_exchange_rate extends Bks_Controller {
                         'price_sell_bot' => ($val->price_sell_bot == null ? 0 : $val->price_sell_bot),
                         'price_sell_top' => ($val->price_sell_top == null ? 0 : $val->price_sell_top)
                     ];
-                    $where = array('store_id' => $store_id, 'exchange_rate_date' => $tanggal, 'currency_id' => $val->currency_id);  
+                    $where = array('store_id' => $store_id, 'exchange_rate_date' => $tr_date, 'currency_id' => $val->currency_id);
                     $this->db->where($where);
                     $this->db->update('m_exchange_rate',$data_upd);                    
                     // echo $this->db->last_query(); exit;
@@ -134,7 +134,7 @@ class M_exchange_rate extends Bks_Controller {
         $postData = $this->input->post();
 
         $store_id = $postData['store_id'];
-        $tanggalx = date('Y-m-d', strtotime("-1 day", strtotime($postData['exchange_rate_date'])));
+        $tr_datex = date('Y-m-d', strtotime("-1 day", strtotime($postData['exchange_rate_date'])));
 
         $postData['status'] = cekStatus($postData);
         $id = $postData['id'];
@@ -145,7 +145,7 @@ class M_exchange_rate extends Bks_Controller {
         $cek = $this->db->query("SELECT exchange_rate_buy 
                                  FROM m_exchange_rate 
                                  WHERE store_id = $store_id 
-                                 AND exchange_rate_date = '$tanggalx' 
+                                 AND exchange_rate_date = '$tr_datex' 
                                  AND currency_id = $currency_id")->row();
         if(isset($cek)){
             if($cek->exchange_rate_buy > 0) {
@@ -160,7 +160,7 @@ class M_exchange_rate extends Bks_Controller {
         $cek = $this->db->query("SELECT exchange_rate_sell 
                                  FROM m_exchange_rate 
                                  WHERE store_id = $store_id
-                                 AND exchange_rate_date = '$tanggalx' 
+                                 AND exchange_rate_date = '$tr_datex' 
                                  AND currency_id = $currency_id")->row();
         if(isset($cek)){
             if($cek->exchange_rate_sell > 0) {
@@ -216,7 +216,7 @@ class M_exchange_rate extends Bks_Controller {
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
         $store_id = $postData['store_id'];
-        $tanggal = revDate($postData['periode']);
+        $tr_date = revDate($postData['tr_date']);
         $this->Bksmdl->table = 'v_m_exchange_rate';               
 
         $where[0]['field'] = 'store_id';
@@ -224,11 +224,124 @@ class M_exchange_rate extends Bks_Controller {
         $where[0]['sql']   = 'where';
 
         $where[1]['field'] = 'exchange_rate_date';
-        $where[1]['data']  = $tanggal;
+        $where[1]['data']  = $tr_date;
         $where[1]['sql']   = 'where';
 
         $cpData = $this->Bksmdl->getDataTable($where);
         $this->Bksmdl->outputToJson($cpData);
-    }    
+    }
+    
+    function exportpdf()
+    {   
+        checkIfNotAjax();
+        // $this->libauth->check(__METHOD__);
+        $postData = $this->input->post();
+        $store_id = $postData['store_id'];
+        $tr_date = revDate($postData['tr_date']);
+
+        $profil_usaha = $this->Bksmdl->getprofilusaha($store_id);
+
+        // Call Pdf libraries
+        $pdf = new Pdf();
+        
+        // Call before the addPage() method
+        $pdf->SetPrintHeader(false);
+        $pdf->SetPrintFooter(false);
+
+        // set font
+        $pdf->SetFont('times', '', 12);
+        $pdf->AddPage('P', 'A4');
+        
+        $style = '
+                <style>
+                    table {
+                        border-collapse: collapse;
+                        border: 1px solid #333;                        
+                    }
+                    th{ 
+                        padding: 8px;
+                        text-align: center;                        
+                        background-color:#bae1ff;
+                    }
+                    td {                       
+                        padding: 8px;
+                        text-align: left;                     
+                    }
+                    h3{
+                        text-align: center;
+                    }
+                </style>';
+
+        // Add Title        
+        $html_header = '<h3> KERTAS KERJA PENETAPAN KURS'  . '</h3></br><br></br>';
+        $html_header .= 'Kantor  : ' . strtoupper(trim($profil_usaha[0]->store_name)). '<br>';
+        $html_header .= 'Alamat  :' . trim($profil_usaha[0]->store_address) . '<br>';
+        $data_jam = $this->db->query("SELECT TIME(created) AS jam FROM m_exchange_rate WHERE m_exchange_rate.store_id = $store_id AND m_exchange_rate.exchange_rate_date = '$tr_date' LIMIT 1")->result();
+        $html_header .= 'Tanggal : ' . revDate($tr_date) . ' Jam : ' . $data_jam[0]->jam . '<br><br></br>';
+
+        
+        // Add Content Body
+        $data_rate = $this->db->query("SELECT 
+                                        m_currency.currency_code,
+                                        m_exchange_rate.exchange_rate_buy,
+                                        m_exchange_rate.exchange_rate_sell,
+                                        (m_exchange_rate.exchange_rate_sell - m_exchange_rate.exchange_rate_buy) AS margin_rate,
+                                        source_rate
+                                        FROM m_exchange_rate
+                                        JOIN m_currency ON m_exchange_rate.currency_id = m_currency.id
+                                        WHERE m_exchange_rate.store_id = $store_id
+                                        AND m_exchange_rate.exchange_rate_date = '$tr_date'
+                                        ORDER BY m_currency.id ASC")->result();
+        if(count($data_rate) > 0) {
+            $no = 0;
+            $pageno = 0;
+
+            $pdf->SetFont('', 'B', 9);
+            $saldo = 0;
+            $html_table = '<table border="1" width="100%">';
+            $html_table .= '<tr>';
+                $html_table .= '<th width="5%">#</th>';
+                $html_table .= '<th width="10%">Mata Uang</th>';
+                $html_table .= '<th width="15%">Kurs Beli</th>';
+                $html_table .= '<th width="15%">Kurs Jual</th>';
+                $html_table .= '<th width="15%">Margin</th>';
+                $html_table .= '<th width="40%">Sumber Kurs</th>';
+            $html_table .= '</tr>';             
+            foreach($data_rate as $r){
+                $no++;
+                $html_table .= '<tr>';  
+                    $html_table .= '<td> ' . $no . '</td>';
+                    $html_table .= '<td> ' . $r->currency_code . '</td>';
+                    $html_table .= '<td>' .  ( (int) $r->exchange_rate_buy > 0 ? number_format($r->exchange_rate_buy, "0", ".", ",") : '-' ). '</td>';
+                    $html_table .= '<td>' .  ( (int) $r->exchange_rate_sell > 0 ? number_format($r->exchange_rate_sell, "0", ".", ",") : '-' ). '</td>';
+                    $html_table .= '<td>' .  ( (int) $r->margin_rate > 0 ? number_format($r->margin_rate, "0", ".", ",") : '-' ). '</td>';
+                    $html_table .= '<td> ' . $r->source_rate . '</td>';
+                $html_table .= '</tr>';
+                $pdf->Ln(4);
+            }
+            $html_table .= '</table>';
+
+            $html = $style. $html_header . $html_table;
+            $pdf->SetX(10); // Mengatur posisi top menjadi 10 mm dari kiri halaman
+            $pdf->SetY(10); // Mengatur posisi top menjadi 10 mm dari atas halaman
+            $pdf->writeHTML($html, true, false, true, false, '');
+
+            $pdf->Ln(4);
+            $pdf->Cell(01, 01, 'Otorisasi : ', 0, 1, 'L');
+
+            $pdf->Ln(1);
+            $pdf->Cell(01, 01, 'Disusun Oleh,                             Diverifikasi Oleh,                                   Disetujui Oleh', 0, 1, 'L');
+        }
+
+        ob_start();
+        $pdf_output = $pdf->Output('Exchange Rate ' . revDate($tr_date).'.pdf','S');
+        ob_end_clean();
+        echo json_encode(['pdf' => base64_encode($pdf_output)]); // Display Pdf in new tab
+        // $response =  array(
+        //     'op' => 'ok',
+        //     'file' => "data:application/pdf;base64,".base64_encode($pdf_output)
+        // );
+        // die(json_encode($response)); // download pdf
+    }
 
 }

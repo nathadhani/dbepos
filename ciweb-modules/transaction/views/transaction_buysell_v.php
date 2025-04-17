@@ -14,9 +14,9 @@
                                 <div class="form-group">
                                     <div class="col-lg-12">
                                         <label for=tr_id style="display:block">
-                                            Transaction
-                                            <span id="trx_name"></span>
-                                            <span id="ftitle" style="color:black;font-weight:600;font-size:13px;">New</span>
+                                            <span id="ftitle">New</span>
+                                             - Trx
+                                            <span id="trx_name"></span>                                            
                                         </label>
                                         <select name="tr_id"
                                                 data-ajax="true" 
@@ -69,6 +69,9 @@
                             <label for="">Stock Available : Nominal ( </label> <span id="stock_nominal"></span> )
                             <label for="">Sheet</label> ( <span id="stock_sheet"></span> )
                             <label for="">Amount</label> ( <span id="stock_amount"></span> )
+                            <a href="#" id="btn-stock" title="Stock" style="margin-left:2px;">
+                                <i class="fa fa-eye"></i>
+                            </a>
                         </div>
                         <div class="col-md-6">
                             <span id="terbilang_price" class="pull-right"></span>
@@ -227,6 +230,53 @@
             <div class="modal-footer">
                 <button id="btn-modal-customer-act-on-save" class="btn btn-success" style="width:120px;">Submit</button>
                 <button id="btn-modal-customer-act-on-close" class="btn btn-danger" style="width:120px;margin-left:5px;">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ModalStock" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body" style="max-height:500px; overflow-y:auto;">
+                <div class="row table-responsive" id="mainTableStock">
+                    <table class="table table-bordered table-condensed table-hover table-striped dataTable" width="100%">
+                        <thead>
+                            <tr style="vertical-align:middle;">
+                                <th rowspan="2" style="vertical-align:middle;text-align:center;">#</th>
+                                <th rowspan="2" style="vertical-align:middle;text-align:center;">Currency</th>
+                                <th rowspan="2" style="vertical-align:middle;text-align:center;">Nominal</th>
+                                <th colspan="5" style="vertical-align:middle;text-align:center;">In Sheet</th>
+                                <th rowspan="2" style="vertical-align:middle;text-align:center;">Balance Amount</th>
+                            </tr>
+                            <tr>
+                                <th style="vertical-align:middle;text-align:center;">Beginning</th>                                   
+                                <th style="vertical-align:middle;text-align:center;">Buy</th>                                
+                                <th style="vertical-align:middle;text-align:center;">Sell</th>
+                                <th style="vertical-align:middle;text-align:center;">Task</th>
+                                <th style="vertical-align:middle;text-align:center;">Balance</th>
+                            </tr>
+                        </thead>
+                        <thead id="searchid">
+                            <tr>
+                                <td><button class="clrs btn btn-info btn-sm btn-line">Clear</button></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <!--.end row -->
+            </div>
+            <div class="modal-footer">                
+                <button id="btn-modal-stock-close" class="btn btn-danger" style="width:120px;margin-left:5px;">Close</button>
             </div>
         </div>
     </div>

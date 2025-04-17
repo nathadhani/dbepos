@@ -138,12 +138,6 @@ function fethdata(){
             {data: 'created', visible: false},
         ],            
         fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-            if (aData.buy_tr_number !== null) {
-                $(nRow).find('td:eq(2)').css('color','#0000ff');
-            }
-            if (aData.sell_tr_number !== null) {
-                $(nRow).find('td:eq(6)').css('color','#ff0000');
-            }
             if (Number(aData.profit) > 0) {
                 $(nRow).find('td:eq(13)').css('color','#000');
                 $(nRow).find('td:eq(13)').css('background-color','#adff00');

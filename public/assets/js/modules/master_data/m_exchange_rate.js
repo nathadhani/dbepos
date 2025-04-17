@@ -6,7 +6,7 @@
         if($('#store_id').val() === null || $('#store_id').val() === ''){
             bksfn.errMsg('Store Belum Dipilih!');
         } else {
-            alertify.confirm("Generate Data " + $("#tanggal").val() + " ?", function (e) {
+            alertify.confirm("Generate Data " + $("#tr_date").val() + " ?", function (e) {
                 if (e) {
                     $.ajax({
                         url: 'master_data/m_exchange_rate/insert',
@@ -15,7 +15,7 @@
                             $(".ajax-loader").height($(document).height());
                             $('.ajax-loader').css("visibility", "visible");
                         },
-                        data: { 'store_id' :  $('#store_id').val(), 'periode' :  $('#tanggal').val() },
+                        data: { 'store_id' :  $('#store_id').val(), 'tr_date' :  $('#tr_date').val() },
                         success: function(msg) {   
                             if (msg = '1') {
                                 fetch_date();
@@ -34,6 +34,44 @@
                 }    
             });
         }  
+    });
+
+    $("#btn-export-pdf").on('click', function (e) {
+        e.preventDefault();    
+        if($('#store_id').val() === null || $('#store_id').val() === ''){
+            bksfn.errMsg('Store Belum Dipilih!');
+        } else {
+            alertify.confirm("Export data " + $("#tr_date").val() + " ?", function (e) {
+                if (e) {                
+                    var url = "master_data/m_exchange_rate/exportpdf";
+                    $.ajax({
+                        url: url,
+                        type: 'POST',
+                        data: { 'store_id' :  $('#store_id').val(), 'tr_date' :  $('#tr_date').val() },
+                        dataType: 'json',            
+                        success: function(resp){
+                            const pdfBase64 = resp.pdf;
+                            setTimeout(() => {
+                                                const pdfWindow = window.open();
+                                                pdfWindow.document.write(`<iframe width="100%" height="100%" src="data:application/pdf;base64,${pdfBase64}"></iframe>`);
+                                            }, 100);
+                        },
+                        error: function(xhr){
+                            alertify.error("error can't export");
+                            StringtoFile(xhr.responseText, 'error');
+                        }
+                    });
+                    // done(function(data){
+                    //     var $a = $("<a>");
+                    //         $a.attr("href",data.file);
+                    //         $("body").append($a);
+                    //         $a.attr("download","Saldo Kas Bank " + $("#tr_date").val() + ".pdf");
+                    //         $a[0].click();
+                    //         $a.remove();
+                    // });
+                }    
+            });
+        }
     });
 
     //--- Refresh Button  
@@ -85,6 +123,7 @@
         $("body").data("id",'');
         $("body").data("store_id",'');
         $("body").data("currency_id",'');
+        $("#source_rate").val('');
         $("#exchange_rate_buy").val( 0 );
         $("#difference_buy").val( 0 );
         $("#exchange_rate_sell").val( 0 );
@@ -95,37 +134,7 @@
         $("#price_sell_top").val( 0 );
         $("#status").iCheck('checked');
         $(':submit').removeAttr('disabled');
-    });
-
-    /**
-     * Button Print Pdf
-    */
-    $(".print-pdf").on('click', function (e) {
-        e.preventDefault();
-        alertify.confirm("Print Tanggal " + $("#tanggal").val() + " ?", function (e) {
-            if (e) {
-                var url = "master_data/m_exchange_rate/print_Pdf/" + $("#store_id").val() + "/" + $("#tanggal").val();
-                $.ajax({
-                    url: url,
-                    type: 'POST',
-                    beforeSend: function(){
-                        $(".ajax-loader").height($(document).height());
-                        $('.ajax-loader').css("visibility", "visible");
-                    },
-                    success: function(data, textStatus, jqXHR){
-                        // alertify.success('Data Sudah DIcetak Ke Printer');
-                        window.open(url, 'top=25, left=250, toolbar=no, width=1000, height=600'); 
-                    },
-                    complete: function(){
-                        $('.ajax-loader').css("visibility", "hidden");
-                    },
-                    error: function(xhr){
-                        alertify.error(xhr.responseText);
-                    }
-                });                                           
-            }    
-        });  
-    });
+    });    
 
     function fetch_date(){
          //--- Datatables
@@ -144,7 +153,7 @@
                 // },
                 data: function(d) {                
                     d.store_id = $('#store_id').val();
-                    d.periode = $('#tanggal').val();
+                    d.tr_date = $('#tr_date').val();
                 },
                 // complete: function(){
                 //     $('.ajax-loader').css("visibility", "hidden");
@@ -192,6 +201,7 @@
                 {data: 'id', visible: false},                
                 {data: 'store_id', visible: false},
                 {data: 'exchange_rate_date', visible: false},
+                {data: 'source_rate', visible: false},
             ],
             fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
                 // Color Beli
@@ -268,6 +278,8 @@
 
             $('#currency_code').val(d.currency_code);
             $('#currency_name').val(d.currency_name);
+            $('#source_rate').val(d.source_rate);
+
             $('#exchange_rate_date').val(d.exchange_rate_date);
             $("#status").iCheck(d.status == 1 ? 'check' : 'uncheck');
             

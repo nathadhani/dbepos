@@ -25,7 +25,9 @@ class Stock extends Bks_Controller {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();    
-        $this->store_id = ( is_array($postData['store_id']) ? implode(',', $postData['store_id']) : $postData['store_id']);
+        if(isset($postData['store_id'])){
+            $this->store_id = ( is_array($postData['store_id']) ? implode(',', $postData['store_id']) : $postData['store_id']);
+        }        
         $tahun = date('Y');
         $bulan = date('m');
         if(isset($postData['period'])){
@@ -54,7 +56,9 @@ class Stock extends Bks_Controller {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();    
-        $this->store_id = ( is_array($postData['store_id']) ? implode(',', $postData['store_id']) : $postData['store_id']);
+        if(isset($postData['store_id'])){
+            $this->store_id = ( is_array($postData['store_id']) ? implode(',', $postData['store_id']) : $postData['store_id']);
+        }
         $tahun = date('Y');
         $bulan = date('m');
         if(isset($postData['period'])){

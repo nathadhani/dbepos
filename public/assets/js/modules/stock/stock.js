@@ -48,16 +48,11 @@ function fethdata1(){
             {data: 'id', visible: false},
             {data: 'currency_code', visible: false},
             {data: 'currency_name', visible: false},
+            {data: 'last_stock', visible: false},
             {data: 'created', visible: false},
             {data: 'updated', visible: false},
         ],            
         fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-            if (Number(aData.buy) > 0) {
-                $(nRow).find('td:eq(3)').css('color','#0000ff');
-            }
-            if (Number(aData.sell) > 0) {
-                $(nRow).find('td:eq(4)').css('color','#ff0000');
-            }
             if (Number(aData.sell_alocation) > 0) {
                 $(nRow).find('td:eq(5)').css('color','#ff0000');
             }                
@@ -134,12 +129,6 @@ function fethdata2(){
             {data: 'updated', visible: false},
         ],            
         fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-            if (Number(aData.buy_sheet) > 0) {
-                $(nRow).find('td:eq(4)').css('color','#0000ff');
-            }
-            if (Number(aData.sell_sheet) > 0) {
-                $(nRow).find('td:eq(5)').css('color','#ff0000');
-            }
             if (Number(aData.sell_alocation_sheet) > 0) {
                 $(nRow).find('td:eq(6)').css('color','#ff0000');
             }                

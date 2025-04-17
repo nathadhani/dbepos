@@ -90,10 +90,10 @@ function show_header(){
 
                             xtr_id = d.tr_id;
                             if(xtr_id === '1'){
-                                $("#trx_name").html('<span style="color:blue;font-weight:bold;font-size:16px;">Buy / Beli</span>');
+                                $("#trx_name").html('<span style="color:blue;font-weight:bold;font-size:16px;">Buy / Beli </span>');
                             }
                             if(xtr_id === '2'){
-                                $("#trx_name").html('<span style="color:red;font-weight:bold;font-size:16px;">Sell / Jual</span>');
+                                $("#trx_name").html('<span style="color:red;font-weight:bold;font-size:16px;">Sell / Jual </span>');
                             }                    
                             $('#tr_id').prop('disabled', true);
                         } else {
@@ -762,3 +762,83 @@ function alertconfirmtrx(){
         }
     });
 }
+
+$("#btn-stock").on('click', function (e) {
+    e.preventDefault();
+    $(".modal-dialog").width('1200px');
+    $("#ModalStock").modal('show');
+    var t = $('#mainTableStock table').DataTable({
+        retrieve: true,
+        serverSide: true,
+        processing: true,
+        autoWidth: false,
+        lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],            
+        sDom: 'it<"row"lp>',
+        ajax: {
+            url: baseUrl + 'stock/stock/getData2',
+            type: 'POST',
+            data: {}
+        },
+        columns: [
+            {data: "#", className: "dt-body-center" , width: "5%", orderable: false, searchable: false},            
+            {data: 'currency_code',  width: "25%", render: function (data, type, row, meta) {
+                return data + ' - ' + row.currency_name;
+            }},
+            {data: 'nominal', className: "dt-body-center" ,  width: "10%", render: function (data, type, row, meta) {
+                return ( data == 0 || data == null ? '-' : formatRupiah(data));
+            }},
+
+            {data: 'beginning_stock_sheet', className: "dt-body-center" ,  width: "10%", render: function (data, type, row, meta) {
+                return ( data == 0 || data == null ? '-' : formatRupiah(data));
+            }},
+            {data: 'buy_sheet', className: "dt-body-center" ,  width: "10%", render: function (data, type, row, meta) {
+                return ( data == 0 || data == null ? '-' : formatRupiah(data));
+            }},
+            {data: 'sell_sheet', className: "dt-body-center" ,  width: "10%", render: function (data, type, row, meta) {
+                return ( data == 0 || data == null ? '-' : formatRupiah(data));
+            }},
+            {data: 'sell_alocation_sheet', className: "dt-body-center" ,  width: "10%", render: function (data, type, row, meta) {
+                return ( data == 0 || data == null ? '-' : formatRupiah(data));
+            }},
+            {data: 'last_stock_sheet', className: "dt-body-center" ,  width: "10%", render: function (data, type, row, meta) {
+                return ( data == 0 || data == null ? '-' : formatRupiah(data));
+            }},                 
+            {data: 'currency_id', className: "dt-body-center" ,  width: "10%", render: function (data, type, row, meta) {
+                return ( row.last_stock_sheet == 0 || row.last_stock_sheet == null ? '-' : formatRupiah(row.last_stock_sheet * row.nominal));
+            }},
+            {data: 'id', visible: false},
+            {data: 'currency_code', visible: false},
+            {data: 'currency_name', visible: false},
+            {data: 'created', visible: false},
+            {data: 'updated', visible: false},
+        ],            
+        fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+            if (Number(aData.sell_alocation_sheet) > 0) {
+                $(nRow).find('td:eq(6)').css('color','#ff0000');
+            }                
+        },  
+        order: [[8, 'asc']]
+    });
+    t.draw();
+
+    // Setup - add a text input to each header cell
+    $('#searchid td').each(function () {
+        if ($(this).index() != 0 && ( $(this).index() <= 1 ) ) {
+            $(this).html('<input style="width:100%" type="text" placeholder="Search" data-id="' + $(this).index() + '" />');
+        }
+    });
+    $('#searchid input').keyup(function () {
+        t.columns($(this).data('id')).search(this.value).draw();
+    });
+    $(".clrs").click(function () {
+        $('#searchid input').val('');
+        $('#searchid select').val('');
+        t.search('')
+        t.columns().search('').draw();
+    });    
+});
+
+$("#btn-modal-stock-close").on('click', function (e) {
+    e.preventDefault();
+    $("#ModalStock").modal('hide');
+});

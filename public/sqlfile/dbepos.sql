@@ -11,7 +11,7 @@
  Target Server Version : 80030
  File Encoding         : 65001
 
- Date: 16/04/2025 16:53:42
+ Date: 17/04/2025 16:44:04
 */
 
 SET NAMES utf8mb4;
@@ -33,7 +33,7 @@ CREATE TABLE `auth_group_role`  (
   `updated` datetime NULL DEFAULT NULL,
   `updatedby` bigint NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 861 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 887 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of auth_group_role
@@ -921,10 +921,10 @@ CREATE TABLE `auth_users`  (
 -- Records of auth_users
 -- ----------------------------
 INSERT INTO `auth_users` VALUES (1, 'Developer', '8989', 'f794bdbef7990b5112e526b5cd4ea67f4a35af21', NULL, 1, 1, 0, NULL, NULL, NULL, NULL, 1, '2025-02-23 13:58:46', NULL, NULL, NULL, NULL);
-INSERT INTO `auth_users` VALUES (2, 'Konsolidasi', 'konsolidasi', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 2, 1, 0, '1,2,3,4', '', '', NULL, 1, '2025-02-23 13:58:46', NULL, '2025-03-07 12:10:06', 1, '2025-04-16 08:25:33');
-INSERT INTO `auth_users` VALUES (3, 'Admin', 'admin', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 3, 1, 1, NULL, '', '', NULL, 1, '2025-02-23 13:58:46', NULL, '2025-03-07 12:10:19', 1, '2025-04-16 09:31:53');
-INSERT INTO `auth_users` VALUES (4, 'Counter', 'konter', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 4, 2, 1, NULL, '', '', NULL, 1, '2025-02-23 13:58:46', NULL, '2025-03-07 12:10:34', 1, '2025-04-16 12:51:03');
-INSERT INTO `auth_users` VALUES (5, 'Cashier', 'kasir', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 5, 2, 1, NULL, '', '', NULL, 1, '2025-03-06 13:05:41', 1, '2025-03-07 12:10:24', 1, '2025-04-15 16:45:26');
+INSERT INTO `auth_users` VALUES (2, 'Konsolidasi', 'konsolidasi', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 2, 1, 0, '1,2,3,4', '', '', NULL, 1, '2025-02-23 13:58:46', NULL, '2025-03-07 12:10:06', 1, '2025-04-17 16:18:52');
+INSERT INTO `auth_users` VALUES (3, 'Admin', 'admin', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 3, 1, 1, NULL, '', '', NULL, 1, '2025-02-23 13:58:46', NULL, '2025-03-07 12:10:19', 1, '2025-04-17 16:09:04');
+INSERT INTO `auth_users` VALUES (4, 'Counter', 'konter', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 4, 2, 1, NULL, '', '', NULL, 1, '2025-02-23 13:58:46', NULL, '2025-03-07 12:10:34', 1, '2025-04-17 16:27:10');
+INSERT INTO `auth_users` VALUES (5, 'Cashier', 'kasir', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 5, 2, 1, NULL, '', '', NULL, 1, '2025-03-06 13:05:41', 1, '2025-03-07 12:10:24', 1, '2025-04-17 16:11:42');
 INSERT INTO `auth_users` VALUES (6, 'Angkasa Pura 1', 'ap1', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 6, 2, 0, '3,4', '', '', NULL, 1, '2025-03-06 13:06:45', 1, '2025-03-07 12:10:12', 1, '2025-03-28 08:04:45');
 INSERT INTO `auth_users` VALUES (7, 'Angkasa Pura 2', 'ap2', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 6, 2, 0, '1,2', '', '', NULL, 1, '2025-03-06 13:06:45', 1, '2025-03-07 12:10:12', 1, '2025-04-04 16:05:44');
 
@@ -1102,7 +1102,7 @@ CREATE TABLE `m_customer`  (
   `createdby` bigint NULL DEFAULT NULL,
   `updatedby` bigint NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of m_customer
@@ -1233,6 +1233,7 @@ CREATE TABLE `m_exchange_rate`  (
   `price_buy_top` decimal(12, 2) NULL DEFAULT 0.00,
   `price_sell_bot` decimal(12, 2) NULL DEFAULT 0.00,
   `price_sell_top` decimal(12, 2) NULL DEFAULT 0.00,
+  `source_rate` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `status` smallint NULL DEFAULT NULL,
   `created` datetime NULL DEFAULT NULL,
   `updated` datetime NULL DEFAULT NULL,
@@ -1244,58 +1245,84 @@ CREATE TABLE `m_exchange_rate`  (
 -- ----------------------------
 -- Records of m_exchange_rate
 -- ----------------------------
-INSERT INTO `m_exchange_rate` VALUES (27, 1, 1, '2025-03-30', 16000.00, 0.00, 16200.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-03-30 06:54:09', '2025-03-30 06:54:26', 3, 3);
-INSERT INTO `m_exchange_rate` VALUES (28, 1, 2, '2025-03-30', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-03-30 06:54:09', NULL, 3, NULL);
-INSERT INTO `m_exchange_rate` VALUES (29, 1, 3, '2025-03-30', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-03-30 06:54:09', NULL, 3, NULL);
-INSERT INTO `m_exchange_rate` VALUES (30, 1, 4, '2025-03-30', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-03-30 06:54:09', NULL, 3, NULL);
-INSERT INTO `m_exchange_rate` VALUES (31, 1, 5, '2025-03-30', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-03-30 06:54:09', NULL, 3, NULL);
-INSERT INTO `m_exchange_rate` VALUES (32, 1, 6, '2025-03-30', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-03-30 06:54:09', NULL, 3, NULL);
-INSERT INTO `m_exchange_rate` VALUES (33, 1, 7, '2025-03-30', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-03-30 06:54:09', NULL, 3, NULL);
-INSERT INTO `m_exchange_rate` VALUES (34, 1, 8, '2025-03-30', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-03-30 06:54:09', NULL, 3, NULL);
-INSERT INTO `m_exchange_rate` VALUES (35, 1, 9, '2025-03-30', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-03-30 06:54:09', NULL, 3, NULL);
-INSERT INTO `m_exchange_rate` VALUES (36, 1, 10, '2025-03-30', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-03-30 06:54:09', NULL, 3, NULL);
-INSERT INTO `m_exchange_rate` VALUES (37, 1, 11, '2025-03-30', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-03-30 06:54:09', NULL, 3, NULL);
-INSERT INTO `m_exchange_rate` VALUES (38, 1, 12, '2025-03-30', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-03-30 06:54:09', NULL, 3, NULL);
-INSERT INTO `m_exchange_rate` VALUES (39, 1, 13, '2025-03-30', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-03-30 06:54:09', NULL, 3, NULL);
-INSERT INTO `m_exchange_rate` VALUES (40, 1, 14, '2025-03-30', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-03-30 06:54:09', NULL, 3, NULL);
-INSERT INTO `m_exchange_rate` VALUES (41, 1, 15, '2025-03-30', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-03-30 06:54:09', NULL, 3, NULL);
-INSERT INTO `m_exchange_rate` VALUES (42, 1, 16, '2025-03-30', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-03-30 06:54:09', NULL, 3, NULL);
-INSERT INTO `m_exchange_rate` VALUES (43, 1, 17, '2025-03-30', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-03-30 06:54:09', NULL, 3, NULL);
-INSERT INTO `m_exchange_rate` VALUES (44, 1, 18, '2025-03-30', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-03-30 06:54:09', NULL, 3, NULL);
-INSERT INTO `m_exchange_rate` VALUES (45, 1, 19, '2025-03-30', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-03-30 06:54:09', NULL, 3, NULL);
-INSERT INTO `m_exchange_rate` VALUES (46, 1, 20, '2025-03-30', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-03-30 06:54:09', NULL, 3, NULL);
-INSERT INTO `m_exchange_rate` VALUES (47, 1, 21, '2025-03-30', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-03-30 06:54:09', NULL, 3, NULL);
-INSERT INTO `m_exchange_rate` VALUES (48, 1, 22, '2025-03-30', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-03-30 06:54:09', NULL, 3, NULL);
-INSERT INTO `m_exchange_rate` VALUES (49, 1, 23, '2025-03-30', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-03-30 06:54:09', NULL, 3, NULL);
-INSERT INTO `m_exchange_rate` VALUES (50, 1, 24, '2025-03-30', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-03-30 06:54:09', NULL, 3, NULL);
-INSERT INTO `m_exchange_rate` VALUES (51, 1, 25, '2025-03-30', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-03-30 06:54:09', NULL, 3, NULL);
-INSERT INTO `m_exchange_rate` VALUES (52, 1, 26, '2025-03-30', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-03-30 06:54:09', NULL, 3, NULL);
-INSERT INTO `m_exchange_rate` VALUES (53, 1, 1, '2025-04-06', 16000.00, 0.00, 16300.00, 0.00, 100.00, 100.00, 50.00, 50.00, 1, '2025-04-06 07:45:53', '2025-04-06 07:46:15', 3, 3);
-INSERT INTO `m_exchange_rate` VALUES (54, 1, 2, '2025-04-06', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-04-06 07:45:53', NULL, 3, NULL);
-INSERT INTO `m_exchange_rate` VALUES (55, 1, 3, '2025-04-06', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-04-06 07:45:53', NULL, 3, NULL);
-INSERT INTO `m_exchange_rate` VALUES (56, 1, 4, '2025-04-06', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-04-06 07:45:53', NULL, 3, NULL);
-INSERT INTO `m_exchange_rate` VALUES (57, 1, 5, '2025-04-06', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-04-06 07:45:53', NULL, 3, NULL);
-INSERT INTO `m_exchange_rate` VALUES (58, 1, 6, '2025-04-06', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-04-06 07:45:53', NULL, 3, NULL);
-INSERT INTO `m_exchange_rate` VALUES (59, 1, 7, '2025-04-06', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-04-06 07:45:53', NULL, 3, NULL);
-INSERT INTO `m_exchange_rate` VALUES (60, 1, 8, '2025-04-06', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-04-06 07:45:53', NULL, 3, NULL);
-INSERT INTO `m_exchange_rate` VALUES (61, 1, 9, '2025-04-06', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-04-06 07:45:53', NULL, 3, NULL);
-INSERT INTO `m_exchange_rate` VALUES (62, 1, 10, '2025-04-06', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-04-06 07:45:53', NULL, 3, NULL);
-INSERT INTO `m_exchange_rate` VALUES (63, 1, 11, '2025-04-06', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-04-06 07:45:53', NULL, 3, NULL);
-INSERT INTO `m_exchange_rate` VALUES (64, 1, 12, '2025-04-06', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-04-06 07:45:53', NULL, 3, NULL);
-INSERT INTO `m_exchange_rate` VALUES (65, 1, 13, '2025-04-06', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-04-06 07:45:53', NULL, 3, NULL);
-INSERT INTO `m_exchange_rate` VALUES (66, 1, 14, '2025-04-06', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-04-06 07:45:53', NULL, 3, NULL);
-INSERT INTO `m_exchange_rate` VALUES (67, 1, 15, '2025-04-06', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-04-06 07:45:53', NULL, 3, NULL);
-INSERT INTO `m_exchange_rate` VALUES (68, 1, 16, '2025-04-06', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-04-06 07:45:53', NULL, 3, NULL);
-INSERT INTO `m_exchange_rate` VALUES (69, 1, 17, '2025-04-06', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-04-06 07:45:53', NULL, 3, NULL);
-INSERT INTO `m_exchange_rate` VALUES (70, 1, 18, '2025-04-06', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-04-06 07:45:53', NULL, 3, NULL);
-INSERT INTO `m_exchange_rate` VALUES (71, 1, 19, '2025-04-06', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-04-06 07:45:53', NULL, 3, NULL);
-INSERT INTO `m_exchange_rate` VALUES (72, 1, 20, '2025-04-06', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-04-06 07:45:53', NULL, 3, NULL);
-INSERT INTO `m_exchange_rate` VALUES (73, 1, 21, '2025-04-06', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-04-06 07:45:53', NULL, 3, NULL);
-INSERT INTO `m_exchange_rate` VALUES (74, 1, 22, '2025-04-06', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-04-06 07:45:53', NULL, 3, NULL);
-INSERT INTO `m_exchange_rate` VALUES (75, 1, 23, '2025-04-06', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-04-06 07:45:53', NULL, 3, NULL);
-INSERT INTO `m_exchange_rate` VALUES (76, 1, 24, '2025-04-06', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-04-06 07:45:53', NULL, 3, NULL);
-INSERT INTO `m_exchange_rate` VALUES (77, 1, 25, '2025-04-06', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-04-06 07:45:53', NULL, 3, NULL);
-INSERT INTO `m_exchange_rate` VALUES (78, 1, 26, '2025-04-06', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1, '2025-04-06 07:45:53', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (27, 1, 1, '2025-03-30', 16000.00, 0.00, 16200.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-03-30 06:54:09', '2025-03-30 06:54:26', 3, 3);
+INSERT INTO `m_exchange_rate` VALUES (28, 1, 2, '2025-03-30', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-03-30 06:54:09', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (29, 1, 3, '2025-03-30', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-03-30 06:54:09', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (30, 1, 4, '2025-03-30', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-03-30 06:54:09', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (31, 1, 5, '2025-03-30', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-03-30 06:54:09', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (32, 1, 6, '2025-03-30', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-03-30 06:54:09', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (33, 1, 7, '2025-03-30', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-03-30 06:54:09', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (34, 1, 8, '2025-03-30', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-03-30 06:54:09', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (35, 1, 9, '2025-03-30', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-03-30 06:54:09', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (36, 1, 10, '2025-03-30', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-03-30 06:54:09', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (37, 1, 11, '2025-03-30', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-03-30 06:54:09', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (38, 1, 12, '2025-03-30', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-03-30 06:54:09', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (39, 1, 13, '2025-03-30', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-03-30 06:54:09', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (40, 1, 14, '2025-03-30', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-03-30 06:54:09', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (41, 1, 15, '2025-03-30', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-03-30 06:54:09', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (42, 1, 16, '2025-03-30', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-03-30 06:54:09', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (43, 1, 17, '2025-03-30', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-03-30 06:54:09', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (44, 1, 18, '2025-03-30', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-03-30 06:54:09', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (45, 1, 19, '2025-03-30', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-03-30 06:54:09', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (46, 1, 20, '2025-03-30', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-03-30 06:54:09', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (47, 1, 21, '2025-03-30', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-03-30 06:54:09', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (48, 1, 22, '2025-03-30', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-03-30 06:54:09', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (49, 1, 23, '2025-03-30', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-03-30 06:54:09', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (50, 1, 24, '2025-03-30', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-03-30 06:54:09', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (51, 1, 25, '2025-03-30', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-03-30 06:54:09', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (52, 1, 26, '2025-03-30', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-03-30 06:54:09', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (53, 1, 1, '2025-04-06', 16000.00, 0.00, 16300.00, 0.00, 100.00, 100.00, 50.00, 50.00, NULL, 1, '2025-04-06 07:45:53', '2025-04-06 07:46:15', 3, 3);
+INSERT INTO `m_exchange_rate` VALUES (54, 1, 2, '2025-04-06', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-04-06 07:45:53', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (55, 1, 3, '2025-04-06', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-04-06 07:45:53', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (56, 1, 4, '2025-04-06', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-04-06 07:45:53', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (57, 1, 5, '2025-04-06', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-04-06 07:45:53', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (58, 1, 6, '2025-04-06', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-04-06 07:45:53', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (59, 1, 7, '2025-04-06', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-04-06 07:45:53', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (60, 1, 8, '2025-04-06', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-04-06 07:45:53', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (61, 1, 9, '2025-04-06', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-04-06 07:45:53', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (62, 1, 10, '2025-04-06', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-04-06 07:45:53', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (63, 1, 11, '2025-04-06', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-04-06 07:45:53', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (64, 1, 12, '2025-04-06', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-04-06 07:45:53', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (65, 1, 13, '2025-04-06', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-04-06 07:45:53', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (66, 1, 14, '2025-04-06', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-04-06 07:45:53', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (67, 1, 15, '2025-04-06', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-04-06 07:45:53', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (68, 1, 16, '2025-04-06', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-04-06 07:45:53', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (69, 1, 17, '2025-04-06', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-04-06 07:45:53', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (70, 1, 18, '2025-04-06', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-04-06 07:45:53', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (71, 1, 19, '2025-04-06', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-04-06 07:45:53', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (72, 1, 20, '2025-04-06', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-04-06 07:45:53', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (73, 1, 21, '2025-04-06', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-04-06 07:45:53', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (74, 1, 22, '2025-04-06', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-04-06 07:45:53', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (75, 1, 23, '2025-04-06', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-04-06 07:45:53', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (76, 1, 24, '2025-04-06', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-04-06 07:45:53', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (77, 1, 25, '2025-04-06', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-04-06 07:45:53', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (78, 1, 26, '2025-04-06', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-04-06 07:45:53', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (79, 1, 1, '2025-04-17', 16000.00, 0.00, 16300.00, 0.00, 0.00, 0.00, 0.00, 0.00, 'VIP Money Changer', 1, '2025-04-17 13:03:26', '2025-04-17 13:37:24', 3, 3);
+INSERT INTO `m_exchange_rate` VALUES (80, 1, 2, '2025-04-17', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-04-17 13:03:26', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (81, 1, 3, '2025-04-17', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-04-17 13:03:26', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (82, 1, 4, '2025-04-17', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-04-17 13:03:26', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (83, 1, 5, '2025-04-17', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-04-17 13:03:26', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (84, 1, 6, '2025-04-17', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-04-17 13:03:26', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (85, 1, 7, '2025-04-17', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-04-17 13:03:26', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (86, 1, 8, '2025-04-17', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-04-17 13:03:26', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (87, 1, 9, '2025-04-17', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-04-17 13:03:26', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (88, 1, 10, '2025-04-17', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-04-17 13:03:26', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (89, 1, 11, '2025-04-17', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-04-17 13:03:26', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (90, 1, 12, '2025-04-17', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-04-17 13:03:26', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (91, 1, 13, '2025-04-17', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-04-17 13:03:26', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (92, 1, 14, '2025-04-17', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-04-17 13:03:26', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (93, 1, 15, '2025-04-17', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-04-17 13:03:26', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (94, 1, 16, '2025-04-17', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-04-17 13:03:26', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (95, 1, 17, '2025-04-17', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-04-17 13:03:26', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (96, 1, 18, '2025-04-17', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-04-17 13:03:26', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (97, 1, 19, '2025-04-17', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-04-17 13:03:26', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (98, 1, 20, '2025-04-17', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-04-17 13:03:26', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (99, 1, 21, '2025-04-17', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-04-17 13:03:26', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (100, 1, 22, '2025-04-17', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-04-17 13:03:26', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (101, 1, 23, '2025-04-17', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-04-17 13:03:26', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (102, 1, 24, '2025-04-17', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-04-17 13:03:26', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (103, 1, 25, '2025-04-17', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-04-17 13:03:26', NULL, 3, NULL);
+INSERT INTO `m_exchange_rate` VALUES (104, 1, 26, '2025-04-17', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, NULL, 1, '2025-04-17 13:03:26', NULL, 3, NULL);
 
 -- ----------------------------
 -- Table structure for m_nationality
@@ -1663,8 +1690,8 @@ CREATE TABLE `m_transaction_date`  (
 -- ----------------------------
 -- Records of m_transaction_date
 -- ----------------------------
-INSERT INTO `m_transaction_date` VALUES (2, 1, 2, '2025-04-15', 1, '2025-03-05 16:03:58', '2025-04-15 12:36:56', 1, 4);
-INSERT INTO `m_transaction_date` VALUES (3, 1, 1, '2025-04-15', 1, '2025-03-05 16:06:33', '2025-04-15 12:36:56', 1, 4);
+INSERT INTO `m_transaction_date` VALUES (2, 1, 2, '2025-04-17', 1, '2025-03-05 16:03:58', '2025-04-17 09:05:10', 1, 4);
+INSERT INTO `m_transaction_date` VALUES (3, 1, 1, '2025-04-17', 1, '2025-03-05 16:06:33', '2025-04-17 09:05:10', 1, 4);
 
 -- ----------------------------
 -- Table structure for ppatk_dttot
@@ -2305,6 +2332,66 @@ CREATE TABLE `tr_cb_saldo`  (
 -- ----------------------------
 -- Records of tr_cb_saldo
 -- ----------------------------
+INSERT INTO `tr_cb_saldo` VALUES (61, 1, 1, '2025-04-01', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-17 16:14:48', NULL, 5, NULL);
+INSERT INTO `tr_cb_saldo` VALUES (62, 1, 1, '2025-04-02', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-17 16:14:48', NULL, 5, NULL);
+INSERT INTO `tr_cb_saldo` VALUES (63, 1, 1, '2025-04-03', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-17 16:14:48', NULL, 5, NULL);
+INSERT INTO `tr_cb_saldo` VALUES (64, 1, 1, '2025-04-04', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-17 16:14:48', NULL, 5, NULL);
+INSERT INTO `tr_cb_saldo` VALUES (65, 1, 1, '2025-04-05', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-17 16:14:48', NULL, 5, NULL);
+INSERT INTO `tr_cb_saldo` VALUES (66, 1, 1, '2025-04-06', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-17 16:14:48', NULL, 5, NULL);
+INSERT INTO `tr_cb_saldo` VALUES (67, 1, 1, '2025-04-07', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-17 16:14:48', NULL, 5, NULL);
+INSERT INTO `tr_cb_saldo` VALUES (68, 1, 1, '2025-04-08', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-17 16:14:48', NULL, 5, NULL);
+INSERT INTO `tr_cb_saldo` VALUES (69, 1, 1, '2025-04-09', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-17 16:14:48', NULL, 5, NULL);
+INSERT INTO `tr_cb_saldo` VALUES (70, 1, 1, '2025-04-10', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-17 16:14:48', NULL, 5, NULL);
+INSERT INTO `tr_cb_saldo` VALUES (71, 1, 1, '2025-04-11', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-17 16:14:48', NULL, 5, NULL);
+INSERT INTO `tr_cb_saldo` VALUES (72, 1, 1, '2025-04-12', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-17 16:14:48', NULL, 5, NULL);
+INSERT INTO `tr_cb_saldo` VALUES (73, 1, 1, '2025-04-13', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-17 16:14:48', NULL, 5, NULL);
+INSERT INTO `tr_cb_saldo` VALUES (74, 1, 1, '2025-04-14', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-17 16:14:48', NULL, 5, NULL);
+INSERT INTO `tr_cb_saldo` VALUES (75, 1, 1, '2025-04-15', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-17 16:14:48', NULL, 5, NULL);
+INSERT INTO `tr_cb_saldo` VALUES (76, 1, 1, '2025-04-16', 2025, 4, NULL, 915000000.00, -915000000.00, 0, '2025-04-17 16:14:48', NULL, 5, NULL);
+INSERT INTO `tr_cb_saldo` VALUES (77, 1, 1, '2025-04-17', 2025, 4, 0.00, 0.00, -915000000.00, 0, '2025-04-17 16:14:48', NULL, 5, NULL);
+INSERT INTO `tr_cb_saldo` VALUES (78, 1, 1, '2025-04-18', 2025, 4, 0.00, 0.00, -915000000.00, 0, '2025-04-17 16:14:48', NULL, 5, NULL);
+INSERT INTO `tr_cb_saldo` VALUES (79, 1, 1, '2025-04-19', 2025, 4, 0.00, 0.00, -915000000.00, 0, '2025-04-17 16:14:48', NULL, 5, NULL);
+INSERT INTO `tr_cb_saldo` VALUES (80, 1, 1, '2025-04-20', 2025, 4, 0.00, 0.00, -915000000.00, 0, '2025-04-17 16:14:48', NULL, 5, NULL);
+INSERT INTO `tr_cb_saldo` VALUES (81, 1, 1, '2025-04-21', 2025, 4, 0.00, 0.00, -915000000.00, 0, '2025-04-17 16:14:48', NULL, 5, NULL);
+INSERT INTO `tr_cb_saldo` VALUES (82, 1, 1, '2025-04-22', 2025, 4, 0.00, 0.00, -915000000.00, 0, '2025-04-17 16:14:48', NULL, 5, NULL);
+INSERT INTO `tr_cb_saldo` VALUES (83, 1, 1, '2025-04-23', 2025, 4, 0.00, 0.00, -915000000.00, 0, '2025-04-17 16:14:48', NULL, 5, NULL);
+INSERT INTO `tr_cb_saldo` VALUES (84, 1, 1, '2025-04-24', 2025, 4, 0.00, 0.00, -915000000.00, 0, '2025-04-17 16:14:48', NULL, 5, NULL);
+INSERT INTO `tr_cb_saldo` VALUES (85, 1, 1, '2025-04-25', 2025, 4, 0.00, 0.00, -915000000.00, 0, '2025-04-17 16:14:48', NULL, 5, NULL);
+INSERT INTO `tr_cb_saldo` VALUES (86, 1, 1, '2025-04-26', 2025, 4, 0.00, 0.00, -915000000.00, 0, '2025-04-17 16:14:48', NULL, 5, NULL);
+INSERT INTO `tr_cb_saldo` VALUES (87, 1, 1, '2025-04-27', 2025, 4, 0.00, 0.00, -915000000.00, 0, '2025-04-17 16:14:48', NULL, 5, NULL);
+INSERT INTO `tr_cb_saldo` VALUES (88, 1, 1, '2025-04-28', 2025, 4, 0.00, 0.00, -915000000.00, 0, '2025-04-17 16:14:48', NULL, 5, NULL);
+INSERT INTO `tr_cb_saldo` VALUES (89, 1, 1, '2025-04-29', 2025, 4, 0.00, 0.00, -915000000.00, 0, '2025-04-17 16:14:48', NULL, 5, NULL);
+INSERT INTO `tr_cb_saldo` VALUES (90, 1, 1, '2025-04-30', 2025, 4, 0.00, 0.00, -915000000.00, 0, '2025-04-17 16:14:48', NULL, 5, NULL);
+INSERT INTO `tr_cb_saldo` VALUES (91, 1, 2, '2025-04-01', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-17 16:14:48', NULL, 5, NULL);
+INSERT INTO `tr_cb_saldo` VALUES (92, 1, 2, '2025-04-02', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-17 16:14:48', NULL, 5, NULL);
+INSERT INTO `tr_cb_saldo` VALUES (93, 1, 2, '2025-04-03', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-17 16:14:48', NULL, 5, NULL);
+INSERT INTO `tr_cb_saldo` VALUES (94, 1, 2, '2025-04-04', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-17 16:14:48', NULL, 5, NULL);
+INSERT INTO `tr_cb_saldo` VALUES (95, 1, 2, '2025-04-05', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-17 16:14:48', NULL, 5, NULL);
+INSERT INTO `tr_cb_saldo` VALUES (96, 1, 2, '2025-04-06', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-17 16:14:48', NULL, 5, NULL);
+INSERT INTO `tr_cb_saldo` VALUES (97, 1, 2, '2025-04-07', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-17 16:14:48', NULL, 5, NULL);
+INSERT INTO `tr_cb_saldo` VALUES (98, 1, 2, '2025-04-08', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-17 16:14:48', NULL, 5, NULL);
+INSERT INTO `tr_cb_saldo` VALUES (99, 1, 2, '2025-04-09', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-17 16:14:48', NULL, 5, NULL);
+INSERT INTO `tr_cb_saldo` VALUES (100, 1, 2, '2025-04-10', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-17 16:14:48', NULL, 5, NULL);
+INSERT INTO `tr_cb_saldo` VALUES (101, 1, 2, '2025-04-11', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-17 16:14:48', NULL, 5, NULL);
+INSERT INTO `tr_cb_saldo` VALUES (102, 1, 2, '2025-04-12', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-17 16:14:48', NULL, 5, NULL);
+INSERT INTO `tr_cb_saldo` VALUES (103, 1, 2, '2025-04-13', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-17 16:14:48', NULL, 5, NULL);
+INSERT INTO `tr_cb_saldo` VALUES (104, 1, 2, '2025-04-14', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-17 16:14:48', NULL, 5, NULL);
+INSERT INTO `tr_cb_saldo` VALUES (105, 1, 2, '2025-04-15', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-17 16:14:49', NULL, 5, NULL);
+INSERT INTO `tr_cb_saldo` VALUES (106, 1, 2, '2025-04-16', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-17 16:14:49', NULL, 5, NULL);
+INSERT INTO `tr_cb_saldo` VALUES (107, 1, 2, '2025-04-17', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-17 16:14:49', NULL, 5, NULL);
+INSERT INTO `tr_cb_saldo` VALUES (108, 1, 2, '2025-04-18', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-17 16:14:49', NULL, 5, NULL);
+INSERT INTO `tr_cb_saldo` VALUES (109, 1, 2, '2025-04-19', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-17 16:14:49', NULL, 5, NULL);
+INSERT INTO `tr_cb_saldo` VALUES (110, 1, 2, '2025-04-20', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-17 16:14:49', NULL, 5, NULL);
+INSERT INTO `tr_cb_saldo` VALUES (111, 1, 2, '2025-04-21', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-17 16:14:49', NULL, 5, NULL);
+INSERT INTO `tr_cb_saldo` VALUES (112, 1, 2, '2025-04-22', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-17 16:14:49', NULL, 5, NULL);
+INSERT INTO `tr_cb_saldo` VALUES (113, 1, 2, '2025-04-23', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-17 16:14:49', NULL, 5, NULL);
+INSERT INTO `tr_cb_saldo` VALUES (114, 1, 2, '2025-04-24', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-17 16:14:49', NULL, 5, NULL);
+INSERT INTO `tr_cb_saldo` VALUES (115, 1, 2, '2025-04-25', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-17 16:14:49', NULL, 5, NULL);
+INSERT INTO `tr_cb_saldo` VALUES (116, 1, 2, '2025-04-26', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-17 16:14:49', NULL, 5, NULL);
+INSERT INTO `tr_cb_saldo` VALUES (117, 1, 2, '2025-04-27', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-17 16:14:49', NULL, 5, NULL);
+INSERT INTO `tr_cb_saldo` VALUES (118, 1, 2, '2025-04-28', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-17 16:14:49', NULL, 5, NULL);
+INSERT INTO `tr_cb_saldo` VALUES (119, 1, 2, '2025-04-29', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-17 16:14:49', NULL, 5, NULL);
+INSERT INTO `tr_cb_saldo` VALUES (120, 1, 2, '2025-04-30', 2025, 4, 0.00, 0.00, 0.00, 0, '2025-04-17 16:14:49', NULL, 5, NULL);
 
 -- ----------------------------
 -- Table structure for tr_detail
@@ -2323,7 +2410,7 @@ CREATE TABLE `tr_detail`  (
   `createdby` bigint NOT NULL,
   `updatedby` bigint NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of tr_detail
@@ -2356,7 +2443,7 @@ CREATE TABLE `tr_header`  (
   `updatedby` bigint NULL DEFAULT NULL,
   `cashierby` bigint NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of tr_header
@@ -2405,7 +2492,7 @@ CREATE TABLE `tr_payment`  (
   `createdby` bigint NOT NULL,
   `updatedby` bigint NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of tr_payment
@@ -2431,19 +2518,19 @@ CREATE TABLE `tr_stock`  (
   `updated` datetime NULL DEFAULT NULL,
   `updatedby` bigint NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 21 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of tr_stock
 -- ----------------------------
-INSERT INTO `tr_stock` VALUES (5, 1, 1, 2025, 4, 1, 0, 1, '2025-04-16 09:20:01', 3, NULL, NULL);
-INSERT INTO `tr_stock` VALUES (6, 1, 1, 2025, 5, 1, 1000, 1, '2025-04-16 09:20:01', 3, '2025-04-16 09:20:01', 3);
-INSERT INTO `tr_stock` VALUES (7, 7, 1, 2025, 4, 1, 0, 1, '2025-04-16 09:20:01', 3, NULL, NULL);
-INSERT INTO `tr_stock` VALUES (8, 7, 1, 2025, 5, 1, 15000, 1, '2025-04-16 09:20:01', 3, '2025-04-16 09:20:01', 3);
-INSERT INTO `tr_stock` VALUES (9, 11, 1, 2025, 4, 500, 0, 1, '2025-04-16 12:52:05', 4, NULL, NULL);
-INSERT INTO `tr_stock` VALUES (10, 11, 1, 2025, 5, 500, 50, 1, '2025-04-16 12:52:05', 4, '2025-04-16 12:52:05', 4);
-INSERT INTO `tr_stock` VALUES (11, 11, 1, 2025, 4, 100, 0, 1, '2025-04-16 12:52:05', 4, NULL, NULL);
-INSERT INTO `tr_stock` VALUES (12, 11, 1, 2025, 5, 100, 1500, 1, '2025-04-16 12:52:05', 4, '2025-04-16 12:52:05', 4);
+INSERT INTO `tr_stock` VALUES (21, 1, 1, 2025, 4, 1, 0, 1, '2025-04-17 16:11:38', 3, NULL, NULL);
+INSERT INTO `tr_stock` VALUES (22, 1, 1, 2025, 5, 1, 500, 1, '2025-04-17 16:11:38', 3, '2025-04-17 16:11:38', 3);
+INSERT INTO `tr_stock` VALUES (23, 7, 1, 2025, 4, 1, 0, 1, '2025-04-17 16:11:38', 3, NULL, NULL);
+INSERT INTO `tr_stock` VALUES (24, 7, 1, 2025, 5, 1, 15000, 1, '2025-04-17 16:11:38', 3, '2025-04-17 16:11:38', 3);
+INSERT INTO `tr_stock` VALUES (25, 11, 1, 2025, 4, 100, 0, 1, '2025-04-17 16:11:38', 3, NULL, NULL);
+INSERT INTO `tr_stock` VALUES (26, 11, 1, 2025, 5, 100, 1500, 1, '2025-04-17 16:11:38', 3, '2025-04-17 16:11:38', 3);
+INSERT INTO `tr_stock` VALUES (27, 11, 1, 2025, 4, 500, 0, 1, '2025-04-17 16:11:38', 3, NULL, NULL);
+INSERT INTO `tr_stock` VALUES (28, 11, 1, 2025, 5, 500, 50, 1, '2025-04-17 16:11:38', 3, '2025-04-17 16:11:38', 3);
 
 -- ----------------------------
 -- Table structure for tr_stock_price
@@ -2476,8 +2563,9 @@ CREATE TABLE `tr_stock_price`  (
 -- ----------------------------
 -- Records of tr_stock_price
 -- ----------------------------
-INSERT INTO `tr_stock_price` VALUES (1, 1, '2025-04-16', 2025, 4, 1, 1, 1000, 16000, 16000000, NULL, 0, 0.00, 0.00, 0.00, 1000.00, 16000.00, 16000000.00, 0.00, '2025-04-16 09:20:02', 3);
-INSERT INTO `tr_stock_price` VALUES (1, 1, '2025-04-16', 2025, 4, 7, 1, 15000, 12100, 181500000, NULL, 0, 0.00, 0.00, 0.00, 15000.00, 12100.00, 181500000.00, 0.00, '2025-04-16 09:20:02', 3);
+INSERT INTO `tr_stock_price` VALUES (1, 1, '2025-04-16', 2025, 4, 1, 1, 1000, 16000, 16000000, NULL, 0, 0.00, 0.00, 0.00, 1000.00, 16000.00, 16000000.00, 0.00, '2025-04-17 16:11:38', 3);
+INSERT INTO `tr_stock_price` VALUES (1, 1, '2025-04-16', 2025, 4, 7, 1, 15000, 12100, 181500000, NULL, 0, 0.00, 0.00, 0.00, 15000.00, 12100.00, 181500000.00, 0.00, '2025-04-17 16:11:38', 3);
+INSERT INTO `tr_stock_price` VALUES (1, 1, '2025-04-16', 2025, 4, 11, 2, 775000, 4100, 3177500000, NULL, 0, 0.00, 0.00, 0.00, 775000.00, 4100.00, 3177500000.00, 0.00, '2025-04-17 16:11:38', 3);
 
 -- ----------------------------
 -- View structure for v_auth_group_role
@@ -2525,7 +2613,7 @@ CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_m_customer` AS select 
 -- View structure for v_m_exchange_rate
 -- ----------------------------
 DROP VIEW IF EXISTS `v_m_exchange_rate`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_m_exchange_rate` AS select `m_exchange_rate`.`id` AS `id`,`m_exchange_rate`.`store_id` AS `store_id`,`m_exchange_rate`.`currency_id` AS `currency_id`,`m_currency`.`currency_code` AS `currency_code`,`m_currency`.`currency_name` AS `currency_name`,`m_exchange_rate`.`exchange_rate_date` AS `exchange_rate_date`,`m_exchange_rate`.`exchange_rate_buy` AS `exchange_rate_buy`,`m_exchange_rate`.`difference_buy` AS `difference_buy`,`m_exchange_rate`.`exchange_rate_sell` AS `exchange_rate_sell`,`m_exchange_rate`.`difference_sell` AS `difference_sell`,`m_exchange_rate`.`price_buy_bot` AS `price_buy_bot`,`m_exchange_rate`.`price_buy_top` AS `price_buy_top`,`m_exchange_rate`.`price_sell_bot` AS `price_sell_bot`,`m_exchange_rate`.`price_sell_top` AS `price_sell_top`,`m_store`.`store_name` AS `store_name`,`m_store`.`store_address` AS `store_address`,`m_exchange_rate`.`status` AS `status`,`m_exchange_rate`.`created` AS `created`,`m_exchange_rate`.`updated` AS `updated`,`m_exchange_rate`.`createdby` AS `createdby`,`usr1`.`fullname` AS `createdby_name`,`m_exchange_rate`.`updatedby` AS `updatedby`,`usr2`.`fullname` AS `updatedby_name` from ((((`m_exchange_rate` left join `m_currency` on((`m_exchange_rate`.`currency_id` = `m_currency`.`id`))) left join `m_store` on((`m_exchange_rate`.`store_id` = `m_store`.`id`))) left join `auth_users` `usr1` on((`m_exchange_rate`.`createdby` = `usr1`.`id`))) left join `auth_users` `usr2` on((`m_exchange_rate`.`updatedby` = `usr2`.`id`)));
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_m_exchange_rate` AS select `m_exchange_rate`.`id` AS `id`,`m_exchange_rate`.`store_id` AS `store_id`,`m_exchange_rate`.`currency_id` AS `currency_id`,`m_currency`.`currency_code` AS `currency_code`,`m_currency`.`currency_name` AS `currency_name`,`m_exchange_rate`.`exchange_rate_date` AS `exchange_rate_date`,`m_exchange_rate`.`exchange_rate_buy` AS `exchange_rate_buy`,`m_exchange_rate`.`difference_buy` AS `difference_buy`,`m_exchange_rate`.`exchange_rate_sell` AS `exchange_rate_sell`,`m_exchange_rate`.`difference_sell` AS `difference_sell`,`m_exchange_rate`.`price_buy_bot` AS `price_buy_bot`,`m_exchange_rate`.`price_buy_top` AS `price_buy_top`,`m_exchange_rate`.`price_sell_bot` AS `price_sell_bot`,`m_exchange_rate`.`price_sell_top` AS `price_sell_top`,`m_store`.`store_name` AS `store_name`,`m_store`.`store_address` AS `store_address`,`m_exchange_rate`.`source_rate` AS `source_rate`,`m_exchange_rate`.`status` AS `status`,`m_exchange_rate`.`created` AS `created`,`m_exchange_rate`.`updated` AS `updated`,`m_exchange_rate`.`createdby` AS `createdby`,`usr1`.`fullname` AS `createdby_name`,`m_exchange_rate`.`updatedby` AS `updatedby`,`usr2`.`fullname` AS `updatedby_name` from ((((`m_exchange_rate` left join `m_currency` on((`m_exchange_rate`.`currency_id` = `m_currency`.`id`))) left join `m_store` on((`m_exchange_rate`.`store_id` = `m_store`.`id`))) left join `auth_users` `usr1` on((`m_exchange_rate`.`createdby` = `usr1`.`id`))) left join `auth_users` `usr2` on((`m_exchange_rate`.`updatedby` = `usr2`.`id`)));
 
 -- ----------------------------
 -- View structure for v_m_store1
@@ -2609,6 +2697,6 @@ CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_tr_stock_balance_total
 -- View structure for v_tr_stock_sell
 -- ----------------------------
 DROP VIEW IF EXISTS `v_tr_stock_sell`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_tr_stock_sell` AS select `v_tr_stock_balance`.`store_id` AS `store_id`,`v_tr_stock_balance`.`currency_id` AS `currency_id`,`m_currency`.`currency_code` AS `currency_code`,`m_currency`.`currency_name` AS `currency_name`,`v_tr_stock_balance`.`nominal` AS `nominal`,`m_currency`.`status` AS `status` from (`v_tr_stock_balance` join `m_currency` on((`v_tr_stock_balance`.`currency_id` = `m_currency`.`id`))) where ((`v_tr_stock_balance`.`last_stock_sheet` > 0) and (`v_tr_stock_balance`.`stock_year` = year(curdate())) and (`v_tr_stock_balance`.`stock_month` = month(curdate()))) group by `v_tr_stock_balance`.`store_id`,`v_tr_stock_balance`.`currency_id`,`v_tr_stock_balance`.`nominal`;
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_tr_stock_sell` AS select `v_tr_stock_balance_sheet`.`store_id` AS `store_id`,`v_tr_stock_balance_sheet`.`currency_id` AS `currency_id`,`m_currency`.`currency_code` AS `currency_code`,`m_currency`.`currency_name` AS `currency_name`,`v_tr_stock_balance_sheet`.`nominal` AS `nominal`,`m_currency`.`status` AS `status` from (`v_tr_stock_balance_sheet` join `m_currency` on((`v_tr_stock_balance_sheet`.`currency_id` = `m_currency`.`id`))) where ((`v_tr_stock_balance_sheet`.`last_stock_sheet` > 0) and (`v_tr_stock_balance_sheet`.`stock_year` = year(curdate())) and (`v_tr_stock_balance_sheet`.`stock_month` = month(curdate()))) group by `v_tr_stock_balance_sheet`.`store_id`,`v_tr_stock_balance_sheet`.`currency_id`,`v_tr_stock_balance_sheet`.`nominal`;
 
 SET FOREIGN_KEY_CHECKS = 1;

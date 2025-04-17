@@ -15,7 +15,7 @@
     <ul class="x-navigation x-navigation-horizontal">
         <li class="xn-logo">
             <a href="." title="Back to main">
-                <span class="fa fa-home" style="font-size:12px;font-weight:bold;"></span>
+                <!-- <i class="fa fa-home" style="font-size:12px;font-weight:bold;"></i> -->
                 <span style="font-size:14px;font-weight:bold;margin-left:-6px;">
                     Home
                 </span>                
@@ -33,11 +33,11 @@
                 if(isset($count) && ((int) $count[0]->jumlah) > 0) {
         ?>
             <li class="xn-logo">
-                <a href="#" title="Menu">
-                    <span class="fa fa-minus-square-o" style="font-size:12px;font-weight:bold;"></span>
+                <a href="#" title="Menu">                    
                     <span style="font-size:14px;font-weight:bold;margin-left:-6px;">              
                         Menu
-                    </span>                
+                    </span>     
+                    <!-- <i class="fa fa-caret-down" aria-hidden="true" style="font-size:12px;font-weight:bold;"></i>           -->
                 </a>
                 <ul>
                     <?php echo Modules::run('menu/_createmenu_top', $auth['usergroup_id']) ?>
@@ -93,7 +93,7 @@
                 </li>
 
                 <li class="xn-icon-button">
-                    <a href="transaction/closing_buysell" title=" Buysell - Closing" data-toggle="tooltip" data-placement="bottom"><span class="fa fa-calendar-check-o" style="font-size:16px;font-weight:bold;"></span></a>
+                    <a href="transaction/closing_buysell" title=" Buy / Sell - Closing" data-toggle="tooltip" data-placement="bottom"><span class="fa fa-calendar-check-o" style="font-size:16px;font-weight:bold;"></span></a>
                 </li>
 
                 <li class="xn-icon-button">
@@ -134,7 +134,7 @@
                             if(isset($count) && ((int) $count[0]->jumlah) > 0) {
                     ?>
                         <li class="xn-icon-button">
-                            <a href="api/api_ap_input" title="Integrasi ECSys ( Pending )" data-toggle="tooltip" data-placement="bottom">
+                            <a href="api/api_ap_input" title="Buy / Sell - Integrasi ECSys" data-toggle="tooltip" data-placement="bottom">
                                 <span class="fa fa-comment" style="font-size:16px;font-weight:bold;"></span>
                             </a>
                             <div class="informer informer-danger" style="font-size:12px;font-weight:bold;"><?php echo $count[0]->jumlah; ?></div>
