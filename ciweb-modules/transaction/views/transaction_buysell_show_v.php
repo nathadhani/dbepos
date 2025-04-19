@@ -31,10 +31,8 @@
                             <span class="span_text_fixed_85px">Store</span> : <span id="store_address"></span><br>
                             <span class="span_text_fixed_85px">Date</span>  : <span id="tr_date"></span><br>
                             <span class="span_text_fixed_85px">Number</span> : <span id="tr_number"></span><br>
-                            <span class="span_text_fixed_85px">Created </span> : <span id="created"></span><br>    
-                            <span class="span_text_fixed_85px">Created by </span> : <span id="created_by"></span><br>    
-                            <span class="span_text_fixed_85px">Updated</span> : <span id="updated"></span><br>
-                            <span class="span_text_fixed_85px">Updated by</span> : <span id="updated_by"></span>
+                            <span class="span_text_fixed_85px">Created / by</span> : <span id="created"></span> / <span id="created_by"></span><br>    
+                            <span class="span_text_fixed_85px">Updated / by</span> : <span id="updated"></span> <span id="updated_by"></span>
                         </div>    
                         <div class="col-md-5">
                             <span class="span_text_fixed_85px">Name</span> : <a href="#" id="customer_name"></a><br>
@@ -44,8 +42,7 @@
                                 <span class="span_text_fixed_85px">Source</span> : <span id="customer_source"></span><br>
                                 <span class="span_text_fixed_85px">Purpose</span> : <span id="customer_purpose"></span><br>
                             <?php } ?>
-                            <span class="span_text_fixed_85px">Description</span> : <span id="description_header"></span><br>
-                            <span class="span_text_fixed_85px">Status</span> : <span id="ftitle"></span>
+                            <span class="span_text_fixed_85px">Status</span> : <span id="ftitle"></span> <span id="description_header"></span>
                         </div>
                         <?php if( $auth['usergroup_id'] != '6'){ ?>
                             <div class="col-md-2">
@@ -88,7 +85,11 @@
                                 <tbody>                                                
                                 </tbody>
                             </table>
-                            <p id="total_transaction_terbilang"></p>
+                            <span>
+                                <div class="col-md-12">
+                                    <span id="total_transaction_terbilang" class="pull-right"></span>
+                                </div>
+                            </span>                            
                         </div>
                     </div>
                     <!--.end row -->
@@ -239,7 +240,7 @@
                                     <label for=cb_id style="display:block">Source</label>
                                     <!-- Jika Search Tidak berfungsi, remove modal tabindex='-1' -->
                                     <select class='form-control select2' name="cb_id" id="cb_id" disabled="true">
-                                        <option value="">Pilih...</option>
+                                        <option value=""></option>
                                     </select>
                                 </div>
                             </div>
@@ -250,7 +251,7 @@
                                     <label for=cb_pos_id style="display:block">Purpose</label>
                                     <!-- Jika Search Tidak berfungsi, remove modal tabindex='-1' -->
                                     <select class='form-control select2' name="cb_pos_id" id="cb_pos_id" disabled="true">
-                                        <option value="">Pilih...</option>
+                                        <option value=""></option>
                                     </select>
                                 </div>
                             </div>

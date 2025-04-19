@@ -1,3 +1,7 @@
+<?php
+    $auth = $this->session->userdata('auth');
+    $usergroup_id = $auth['usergroup_id'];
+?>
 <div class="row">
     <div class="col-md-12">
         <div class="panel panel-default">
@@ -6,6 +10,13 @@
                     <h3>Summary Buy / Sell - by Date</h3>
                 </div>
                 <ul class="panel-controls">
+                    <?php         
+                        if(in_array($usergroup_id, array('3','4'))) {
+                    ?>
+                        <button id="btn-closing" class="btn btn-info" style="width:160px;margin-left:5px;">Closing Transaction</button>
+                    <?php 
+                        }
+                    ?>
                     <button id="btn-pdf" class="btn btn-info" style="margin-left:5px;">pdf</button>
                     <button id="btn-excel" class="btn btn-info" style="margin-left:5px;">Xlsx</button>
                 </ul>
@@ -59,10 +70,10 @@
 
                 <div class="row">
                     <div class="col-md-3">
-                        <h5>Total Buy - Equivalent Rp. <span id="totalbuy" style='text-align:left;font-weight:600;'></span></h5>
+                        <h5>Total Buy Rp. <span id="totalbuy" style='text-align:left;font-weight:600;'></span></h5>
                     </div>
                     <div class="col-md-3">
-                        <h5>Total Sell - Equivalent Rp. <span id="totalsell" style='text-align:left;font-weight:600;'></span></h5>
+                        <h5>Total Sell Rp. <span id="totalsell" style='text-align:left;font-weight:600;'></span></h5>
                     </div>
                 </div>
 

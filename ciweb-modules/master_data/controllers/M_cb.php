@@ -123,10 +123,10 @@ class M_cb extends Bks_Controller {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();    
-        $cb_id = $postData['cb_id'];
-        if($cb_id != null && $cb_id != ''){
+        $payment_type_id = $postData['payment_type_id'];
+        if($payment_type_id != null && $payment_type_id != ''){
             $menus = $this->db->order_by('id', 'ASC')
-                    ->get_where('m_cb', array('status' => '1', 'id' => $cb_id))->result();        
+                    ->get_where('m_cb', array('status' => '1', 'payment_type_id' => $payment_type_id))->result();        
             if (count($menus) > 0){
                 $option ="<option selected value=''>Pilih...</option>";
                 foreach($menus as $row){

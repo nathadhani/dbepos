@@ -31,7 +31,7 @@
                                         <select name="tr_id"
                                                 data-ajax="true" 
                                                 data-placeholder="Select Transaksi..."
-                                                data-url="master_data/m_trxlist/getTransactionId/" 
+                                                data-url="master_data/m_trxlist/gettrxlist/" 
                                                 data-value="" 
                                                 data-limit="100"
                                                 id="tr_id" placeholder="Ketegori"  class='form-control select2'>
@@ -90,7 +90,6 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Store Name</th>
                                 <th>Store Address</th>                                                            
                                 <th>Transaction</th>
                                 <th>Date</th>
@@ -102,7 +101,6 @@
                         <thead id="searchid">
                             <tr>
                                 <td><button class="clrs btn btn-sm btn-info btn-line">Clear</button></td>
-                                <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>

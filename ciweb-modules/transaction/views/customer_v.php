@@ -8,8 +8,8 @@
     .field-icon {
         float: right;
         margin-left: -25px;
-        margin-top: 10px;
-        margin-right: 5px;
+        margin-top: -22px;
+        margin-right: 25px;
         size:100px;
         position: relative;
         z-index: 2;
@@ -34,16 +34,16 @@
                                 <p>Look for data first, before inputting new data. so there's no double data!</p>              
                                 <div class="form-group">
                                     <div class="col-md-12">
-                                        <div class="input-group">
-                                            <div class="input-group-addon">
-                                                <span id="btn_search" name="btn_search" for="text_search" class="fa fa-search"></span>                                                
-                                            </div>
+                                        <!-- <div class="input-group"> -->
                                             <input type="text" id="text_search" name="text_search" class="form-control" placeholder="Ketik kata yang mau di cari" data-validation="required"/>
-                                            <span class="fa fa-fw fa-close field-icon toggle-close"></span>
+                                            <i class="fa fa-fw fa-close field-icon toggle-close"></i>
+                                            <!-- <div class="input-group-addon">
+                                                <span id="btn_search" name="btn_search" for="text_search" class="fa fa-search" style="font-size:18px;"></span>
+                                            </div> -->
                                             <!-- <div class="input-group-btn">
                                                 <button class="btn btn-primary btn btn-sm" id="btn_search" name="btn_search" style="width:120px;margin-left:10px;">Submit</button>
                                             </div> -->
-                                        </div>
+                                        <!-- </div> -->
                                     </div>                                    
                                 </div>
                             </div>                                              

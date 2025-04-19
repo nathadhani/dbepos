@@ -5,6 +5,9 @@
                 <div class="panel-title-box">
                     <h3>Stock</h3>
                 </div>
+                <ul class="panel-controls">
+                    <button id="btn-stock-calculate" class="btn btn-info" style="width:120px;">Calculate</button>
+                </ul>
             </div>
             <div class="panel-body">
                 <div class="row">

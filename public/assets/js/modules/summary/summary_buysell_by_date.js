@@ -1,3 +1,4 @@
+$("#btn-closing").hide();
 $("#btn-pdf").hide();
 $("#btn-excel").hide();
 $("#btn-submit").on('click', function (e) {
@@ -62,6 +63,7 @@ function fethdata(){
                 });                
                 $("#totalbuy").html(formatRupiah(totalbuy));
                 $("#totalsell").html(formatRupiah(totalsell));
+                $("#btn-closing").show();
                 $("#btn-pdf").show();
                 $("#btn-excel").show();
             }else{
@@ -144,4 +146,75 @@ $("#btn-excel").on('click', function (e) {
             }    
         });
     }              
+});
+
+$("#btn-closing").on('click', function (e) {
+    e.preventDefault();
+    if($('#store_id').val() === null || $('#store_id').val() === ''){
+        bksfn.errMsg('Store Belum Dipilih!');
+    } else {
+        $.ajax({
+            url: baseUrl + 'stock/stock/generate_tr_stock_pull',
+            type: 'POST',
+            beforeSend: function(){
+                $(".ajax-loader").height($(document).height());
+                $('.ajax-loader').css("visibility", "visible");
+            },
+            data: {'store_id' : $('#store_id').val(), 'tr_date' : $('#period').val()},
+            datatype: 'json',
+            success: function(data){
+                alertify.success('Calculate stock in total and sheet done.!');
+                $.ajax({
+                    url: baseUrl + 'stock/stock/generate_tr_stock_price',
+                    type: 'POST',
+                    beforeSend: function(){
+                        $(".ajax-loader").height($(document).height());
+                        $('.ajax-loader').css("visibility", "visible");
+                    },
+                    data: {'store_id' : $('#store_id').val(), 'tr_date' : $('#period').val()},
+                    datatype: 'json',
+                    success: function(data){
+                        alertify.success('Calculate stock by currency done.!');
+                        $.ajax({
+                            url: baseUrl + 'summary/summary_buysell_by_date/closing_trxdate',
+                            type: 'POST',
+                            beforeSend: function(){
+                                $(".ajax-loader").height($(document).height());
+                                $('.ajax-loader').css("visibility", "visible");
+                            },
+                            data: {'store_id' : $('#store_id').val(), 'tr_date' : $('#period').val()},
+                            datatype: 'json',
+                            success: function(data){
+                                alertify.success('Closing transaction buy / sell done.!');
+                            },
+                            complete: function(){
+                                $('.ajax-loader').css("visibility", "hidden");
+                            },
+                            error: function(xhr){
+                                $('.ajax-loader').css("visibility", "hidden");
+                                alertify.error("error losing transaction buy / sell.!");
+                                StringtoFile(xhr.response.text(), 'error');
+                            }
+                        });
+                    },
+                    complete: function(){
+                        $('.ajax-loader').css("visibility", "hidden");
+                    },
+                    error: function(xhr){
+                        $('.ajax-loader').css("visibility", "hidden");
+                        alertify.error("error calculate stock by currency.!");
+                        StringtoFile(xhr.response.text(), 'error');
+                    }
+                });
+            },
+            complete: function(){
+                $('.ajax-loader').css("visibility", "hidden");
+            },
+            error: function(xhr){
+                $('.ajax-loader').css("visibility", "hidden");
+                alertify.error("error calculate stock in total and sheet.!");
+                StringtoFile(xhr.response.text(), 'error');
+            }
+        });                        
+    }
 });

@@ -90,6 +90,17 @@ class M_trxlist extends Bks_Controller {
         $this->Bksmdl->outputToJson($cpData);
     }
     
+    function gettrxlist() {
+        checkIfNotAjax();
+        // $this->libauth->check(__METHOD__);
+        $this->Bksmdl->table = 'm_transaction';
+        $this->Bksmdl->searchable = array('description', 'transaction_name', 'id');
+        $this->Bksmdl->select2fields = array('id' => 'id', 'text' => 'transaction_name');
+        $result['results'] = $this->Bksmdl->getSelect2(array('status' => '1'));
+        $result['more'] = true;
+        echo json_encode($result);
+    }
+
     function gettrxlistbuysell() {
         checkIfNotAjax();
         // $this->libauth->check(__METHOD__);

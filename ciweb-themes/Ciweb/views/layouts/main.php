@@ -89,18 +89,6 @@
             if(in_array($usergroup_id, array('3','4'))) {
         ?>        
                 <li class="xn-icon-button">
-                    <a href="stock/stock_calculate" title="Stock - Calculate" data-toggle="tooltip" data-placement="bottom"><span class="fa fa-calculator" style="font-size:16px;font-weight:bold;"></span></a>
-                </li>
-
-                <li class="xn-icon-button">
-                    <a href="transaction/closing_buysell" title=" Buy / Sell - Closing" data-toggle="tooltip" data-placement="bottom"><span class="fa fa-calendar-check-o" style="font-size:16px;font-weight:bold;"></span></a>
-                </li>
-
-                <li class="xn-icon-button">
-                    <a href="transaction/transaction_buysell_list" title="Buy / Sell - List" data-toggle="tooltip" data-placement="bottom"><span class="fa fa-list-alt" style="font-size:16px;font-weight:bold;"></span></a>
-                </li>                
-
-                <li class="xn-icon-button">
                     <a href="dashboard/dashboard_buysell" title="Buy / Sell - Chart" data-toggle="tooltip" data-placement="bottom">
                         <span class="fa fa-area-chart" style="font-size:16px;font-weight:bold;"></span>
                     </a>

@@ -137,6 +137,7 @@
                 {data: 'customer_id', visible: false},
                 {data: 'tr_name', visible: false},
                 {data: 'status', visible: false},
+                {data: 'createdby', visible: false},
             ],            
             fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
                 if (Number(aData.status) == 2) {
@@ -181,7 +182,11 @@
             var elm = $(this).closest("tr");
             var d = t.row(elm).data();
             var url = '';
-            url = call_page_show_buysell(d.customer_id, d.id);
+            if(Number(d.status) === 1 && Number(d.createdby) === userId){ // back to task
+                url = call_page_task_buysell(d.customer_id,d.id);
+            } else {
+                url = call_page_show_buysell(d.customer_id, d.id);
+            }
             if(url !== ''){
                 $.ajax({
                     url: url,

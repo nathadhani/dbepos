@@ -4,6 +4,12 @@
     $store_id = $auth['store_id']; 
     $api_method = $auth['api_method'];
 ?>
+<script type="text/javascript">
+    var userId = <?php echo $auth['id'];?>;
+    var usergroupId = <?php echo $auth['usergroup_id'];?>;
+    var Apimethod = <?php echo ($auth['api_method'] == null ? 0 : $auth['api_method']) ;?>;
+    var ApiAP = "<?php echo $auth['api_angkasapura'];?>";    
+</script>
 <div class="row">
     <div class="col-md-12">
         <div class="panel panel-default">

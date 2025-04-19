@@ -30,34 +30,16 @@ function show_header($id){
                         if(xtr_id === '2'){
                             $("#trx_name").html('<span style="color:red;font-weight:bold;font-size:16px;">Sell / Jual</span>');
                         }
-                        if(Number(d.status) === 1){ // back to task
-                            if(Number(d.tr_id) === 1){
-                                url = call_page_task_buy(d.customer_id,d.id);
-                            }
-                            if(Number(d.tr_id) === 2){
-                                url = call_page_task_sell(d.customer_id,d.id);
-                            }         
-                            if(url !== ''){
-                                $.ajax({
-                                    url: url,
-                                    type: 'POST',
-                                    success: function() {
-                                        window.open(url,'_self'); 
-                                    },
-                                    error: function(){
-                                        alertify.error("can't open page.!");
-                                    }
-                                });    
-                            }                       
-                        }
 
                         $("body").data("id", d.id);
                         $("#store_address").html(d.store_address);
                         $("#tr_number").html(d.tr_number);
                         $("#tr_date").html(bksfn.revDate(d.tr_date));  
                         $("#ftitle").html(d.status == 2 ? '<span style="color:red;font-weight:bolder;">'+d.status_name+'</span>' : d.status_name);
-                        $("#description_header").html(d.description);                        
-                        
+                        if(d.description !== null && d.description !== ''){
+                            $("#description_header").html(' - ' + d.description);
+                        }                        
+                    
                         $(".dropbtn").hide();
                         $("#btn-payment").hide();
                         $("#btn-submit").hide();
@@ -116,9 +98,13 @@ function show_header($id){
                                                 
                         $("#created").html(d.created);
                         $("#created_by").html(d.createdby_name.trim());
+                        $("#span_updated").hide();
+                        $("#span_updated_by").hide();
                         if(d.status == '2'){
-                            $("#updated").html(d.updated);
-                            $("#updated_by").html(d.updatedby_name.trim());
+                            $("#updated").html( ' : ' + d.updated);
+                            $("#updated_by").html( ' : ' + d.updatedby_name.trim());
+                            $("#span_updated").show();
+                            $("#span_updated_by").show();
                         }                            
 
                         $("#customer_name").html(d.customer_name.trim());
@@ -194,7 +180,7 @@ function show_detail($header_id){
                                     </td>                         
                                 </tr>`   
                         $('#table-detail tbody').append(rowsx);     
-                        $("#total_transaction_terbilang").html('Say Total : ' + bksfn.terBilang(totalpricex) + ' Rupiah');
+                        $("#total_transaction_terbilang").html('Say : ' + bksfn.terBilang(totalpricex) + ' Rupiah');
                         $("#modal_total_value").val(formatRupiah(totalpricex));
                     }else{
                         var url = "transaction/customer/index/";
@@ -330,7 +316,7 @@ $("#modal_payment_type").on("change", function(e) {
         $.ajax({
             url : baseUrl +  'master_data/m_cb/getmcbpayment',
             type: 'POST',
-            data: {'cb_id' : $(this).val()},
+            data: {'payment_type_id' : $(this).val()},
             datatype: 'json',
             success: function(data){
                 $('#cb_id').html(data);
@@ -378,6 +364,8 @@ $("#btn-modal-add-row-payment").on('click', function (e) {
         bksfn.errMsg('Kasir belum diinput!');
     } else if( $("#modal_payment_type").val() === '' || $("#modal_payment_type").val() === null) {
         bksfn.errMsg('tipe pembayaran belum diinput!');
+    } else if( $("#cb_id").val() === '' || $("#cb_id").val() === null) {
+        bksfn.errMsg('source belum diinput!');
     } else if( $("#modal_payment_amount").val() === '' || $("#modal_payment_amount").val() === null || Number($("#modal_payment_amount").val()) <= 0) {
         bksfn.errMsg('jumlah pembayaran belum diinput!');
     } else {

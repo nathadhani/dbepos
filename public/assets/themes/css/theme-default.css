@@ -60,7 +60,7 @@ body {
 .row {
   margin-left: 0px;
   margin-right: 0px;
-  margin-bottom: 10px;
+  margin-bottom: 2px;
 }
 .row [class^='col-xs-'],
 .row [class^='col-sm-'],
@@ -3938,7 +3938,7 @@ background: #1caf9a !important;
 }
 
 .login-container .layer {
-  background-color: rgba(4,84,152, 50%);
+  background-color: rgba(255,255,255, 20%);
   position: absolute;
   top: 0;
   left: 0;

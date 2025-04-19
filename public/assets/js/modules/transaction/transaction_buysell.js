@@ -147,7 +147,7 @@ function show_header(){
     }        
 }
 
-function show_detail($statusTrx){
+function show_detail(statusTrx){
     reset_form_input();
     if( typeof(customerId) !== 'undefined' && customerId !== null && customerId !== '') {    
         $('#table-detail tbody').empty();
@@ -227,8 +227,8 @@ function show_detail($statusTrx){
                                     </td>                         
                                 </tr>`
                     $('#table-detail tbody').append(rowsx);
-                    $("#total_transaction_terbilang").html('Say Total : ' + bksfn.terBilang(totalpricex) + ' Rupiah');
-                    if($statusTrx === '1') {
+                    $("#total_transaction_terbilang").html('Say : ' + bksfn.terBilang(totalpricex) + ' Rupiah');
+                    if(statusTrx === '1') {
                         $("#btn-confirm").show();
                         $("#btn-cancel").show();
                     }
@@ -267,7 +267,7 @@ function delete_line_detail(id){
 }
 
 function add_item(){    
-    $.post('transaction/transaction_buysell/insert_detail', $("#form_detail").serialize() + "&header_id=" + id_header + "&customer_id=" + customerId + "&tr_id=" + xtr_id + "&tr_date=" + $("#tr_date").val() + "&customer_id=" + customerId , function (obj) {
+    $.post('transaction/transaction_buysell/insert_detail', $("#mainForm").serialize() + "&header_id=" + id_header + "&customer_id=" + customerId + "&tr_id=" + xtr_id + "&tr_date=" + $("#tr_date").val() + "&customer_id=" + customerId , function (obj) {
         if (obj.msg == 1) {            
             reset_form_input();
             if(id_header == null || id_header == ''){
@@ -310,7 +310,14 @@ $('#currency_id').on('change',function(){
 $("#nominal").keyup(function(e) {
     e.preventDefault();
     $(this).val($(this).val());    
-    subtotal_input();    
+    if($(this).val() != null && $(this).val() != ''){
+        $(this).val($(this).val());
+        subtotal_input();
+        getstockbyid();
+        getratebyid();
+    } else {
+        $('#price').val('');
+    }
 });
 
 $("#sheet").keyup(function(e) {
@@ -639,7 +646,7 @@ function back_to_page_ini(){
                     $("#btn-cancel").hide();
                     $(".form_detail_input").hide(); 
                     alertify.alert("sistem belum closing, tanggal transaksi masih tanggal " + bksfn.revDate(d.tr_date));
-                    var url = "transaction/closing_buysell/index/";
+                    var url = "summary/summary_buysell_by_date/index/";
                     $.ajax({
                         url: url,
                         type: 'POST',
@@ -781,23 +788,10 @@ $("#btn-stock").on('click', function (e) {
         },
         columns: [
             {data: "#", className: "dt-body-center" , width: "5%", orderable: false, searchable: false},            
-            {data: 'currency_code',  width: "25%", render: function (data, type, row, meta) {
-                return data + ' - ' + row.currency_name;
+            {data: 'currency_code',  width: "8%", render: function (data, type, row, meta) {
+                return data;
             }},
             {data: 'nominal', className: "dt-body-center" ,  width: "10%", render: function (data, type, row, meta) {
-                return ( data == 0 || data == null ? '-' : formatRupiah(data));
-            }},
-
-            {data: 'beginning_stock_sheet', className: "dt-body-center" ,  width: "10%", render: function (data, type, row, meta) {
-                return ( data == 0 || data == null ? '-' : formatRupiah(data));
-            }},
-            {data: 'buy_sheet', className: "dt-body-center" ,  width: "10%", render: function (data, type, row, meta) {
-                return ( data == 0 || data == null ? '-' : formatRupiah(data));
-            }},
-            {data: 'sell_sheet', className: "dt-body-center" ,  width: "10%", render: function (data, type, row, meta) {
-                return ( data == 0 || data == null ? '-' : formatRupiah(data));
-            }},
-            {data: 'sell_alocation_sheet', className: "dt-body-center" ,  width: "10%", render: function (data, type, row, meta) {
                 return ( data == 0 || data == null ? '-' : formatRupiah(data));
             }},
             {data: 'last_stock_sheet', className: "dt-body-center" ,  width: "10%", render: function (data, type, row, meta) {
@@ -806,18 +800,15 @@ $("#btn-stock").on('click', function (e) {
             {data: 'currency_id', className: "dt-body-center" ,  width: "10%", render: function (data, type, row, meta) {
                 return ( row.last_stock_sheet == 0 || row.last_stock_sheet == null ? '-' : formatRupiah(row.last_stock_sheet * row.nominal));
             }},
-            {data: 'id', visible: false},
-            {data: 'currency_code', visible: false},
+            {data: 'currency_name',  width: "67%", render: function (data, type, row, meta) {
+                return data
+            }},
+            {data: 'id', visible: false},            
             {data: 'currency_name', visible: false},
             {data: 'created', visible: false},
             {data: 'updated', visible: false},
         ],            
-        fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-            if (Number(aData.sell_alocation_sheet) > 0) {
-                $(nRow).find('td:eq(6)').css('color','#ff0000');
-            }                
-        },  
-        order: [[8, 'asc']]
+        order: [[4, 'asc']]
     });
     t.draw();
 

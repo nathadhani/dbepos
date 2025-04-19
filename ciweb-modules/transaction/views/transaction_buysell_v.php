@@ -5,94 +5,70 @@
 </script>
 <div class="page-content-wrap">    
     <div class="row">
-        <div class="col-md-12">
-            <div class="panel panel-default">                                 
-                <div class="panel-body">                                       
-                    <div class="row">                            
-                        <form class="form-horizontal" autocomplete="off">
+        <form id="mainForm" class="form-horizontal" autocomplete="off">
+            <div class="col-md-12">
+                <div class="panel panel-default">                                 
+                    <div class="panel-body">
+                        <div class="row">                            
                             <div class="col-md-2">
-                                <div class="form-group">
-                                    <div class="col-lg-12">
-                                        <label for=tr_id style="display:block">
-                                            <span id="ftitle">New</span>
-                                             - Trx
-                                            <span id="trx_name"></span>                                            
-                                        </label>
-                                        <select name="tr_id"
-                                                data-ajax="true" 
-                                                data-placeholder="Pilih...."
-                                                data-url="master_data/m_trxlist/gettrxlistbuysell/" 
-                                                data-value="" 
-                                                data-limit="2"
-                                                id="tr_id" placeholder="Trx Name" class='form-control select2'>
-                                        </select>
-                                    </div>
+                                <label for=tr_id style="display:block">
+                                    <span id="ftitle">New</span> - <span id="trx_name"></span>                                            
+                                </label>
+                                <select name="tr_id"
+                                        data-ajax="true" 
+                                        data-placeholder="Pilih...."
+                                        data-url="master_data/m_trxlist/gettrxlistbuysell/" 
+                                        data-value="" 
+                                        data-limit="2"
+                                        id="tr_id" placeholder="Trx Name" class='form-control select2'>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <label for=tr_date style="display:block">Date</label>
+                                <input type="text" id="tr_date" name="tr_date" placeholder="Tanggal..." class="form-control dp" data-date-format="DD MMMM YYYY" value="<?=date('d-m-Y');?>">
+                            </div>
+                            <div class="col-md-8">
+                                <label for="customer_name" style="display:block">
+                                    Customer Name / address / cct on
+                                    <a href="#" id="btn-customer-act-on" title="Attachment Customer" style="margin-left:2px;">
+                                        <i class="fa fa-paperclip"></i>
+                                    </a>
+                                </label>
+                                <div class="input-group">
+                                    <a href="#" id="customer_name"></a>
+                                    <span id="customer_address"></span>                                            
                                 </div>
                             </div>
-                            <div class="col-md-1">
-                                <div class="form-group">
-                                    <div class="col-lg-12">
-                                        <label for=tr_date style="display:block">Date</label>
-                                        <input type="text" id="tr_date" name="tr_date" placeholder="Tanggal..." class="form-control dp" data-date-format="DD MMMM YYYY" value="<?=date('d-m-Y');?>">
-                                    </div>
-                                </div>
+                        </div>
+
+                        <div class="row form_detail_input">
+                            <div class="col-md-6">
+                                <label for="">Stock Available : Nominal ( </label> <span id="stock_nominal"></span> )
+                                <label for="">Sheet</label> ( <span id="stock_sheet"></span> )
+                                <label for="">Amount</label> ( <span id="stock_amount"></span> )
+                                <a href="#" id="btn-stock" title="Stock" style="margin-left:2px;">
+                                    <i class="fa fa-eye"></i>
+                                </a>
                             </div>
                             <div class="col-md-6">
-                                <div class="form-group">                                
-                                    <div class="col-lg-12">
-                                        <label for="customer_name" style="display:block">
-                                            Name / address / cct on
-                                            <a href="#" id="btn-customer-act-on" title="Attachment Customer" style="margin-left:2px;">
-                                                <i class="fa fa-paperclip"></i>
-                                            </a>
-                                        </label>
-                                        <div class="input-group">
-                                            <a href="#" id="customer_name"></a>
-                                            <span id="customer_address"></span>                                            
-                                        </div>
-                                    </div>
-                                </div>
+                                <span id="terbilang_price" class="pull-right"></span>
                             </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <div class="col-lg-12">
-                                        <label for="created_by" style="display:block">Created / by</label>
-                                        <span id="created_by"></span>
-                                    </div>
-                                </div>
-                            </div>                                                     
-                        </form>                    
-                    </div>
-
-                    <div class="row form_detail_input">
-                        <div class="col-md-6">
-                            <label for="">Stock Available : Nominal ( </label> <span id="stock_nominal"></span> )
-                            <label for="">Sheet</label> ( <span id="stock_sheet"></span> )
-                            <label for="">Amount</label> ( <span id="stock_amount"></span> )
-                            <a href="#" id="btn-stock" title="Stock" style="margin-left:2px;">
-                                <i class="fa fa-eye"></i>
-                            </a>
                         </div>
-                        <div class="col-md-6">
-                            <span id="terbilang_price" class="pull-right"></span>
-                        </div>
-                    </div>
 
-                    <div class="row form_detail_input">
-                        <div class="col-md-12 table-responsive">                        
-                            <table class="table table-bordered table-condensed" cellspacing="0" width="100%">
-                                <thead>
-                                    <tr>
-                                        <th style='vertical-align:middle;text-align:left;'>Currency</th>
-                                        <th style='vertical-align:middle;text-align:left;'>Nominal</th>
-                                        <th style='vertical-align:middle;text-align:left;'>Sheet</th>
-                                        <th style='vertical-align:middle;text-align:left;'>Amount</th>
-                                        <th style='vertical-align:middle;text-align:left;'>Exchange Rate</th>
-                                        <th style='vertical-align:middle;text-align:left;'>Equivalent</th>
-                                        <th id="act-title" style='vertical-align:middle;text-align:center;' width="50px">Action</th>
-                                    </tr>
-                                </thead>
-                                <form id="form_detail" class="form-horizontal" autocomplete="off">
+                        <div class="row form_detail_input">
+                            <div class="col-md-12 table-responsive">                        
+                                <table class="table table-bordered table-condensed" cellspacing="0" width="100%">
+                                    <thead>
+                                        <tr>
+                                            <th style='vertical-align:middle;text-align:left;'>Currency</th>
+                                            <th style='vertical-align:middle;text-align:left;'>Nominal</th>
+                                            <th style='vertical-align:middle;text-align:left;'>Sheet</th>
+                                            <th style='vertical-align:middle;text-align:left;'>Amount</th>
+                                            <th style='vertical-align:middle;text-align:left;'>Exchange Rate</th>
+                                            <th style='vertical-align:middle;text-align:left;'>Equivalent</th>
+                                            <th id="act-title" style='vertical-align:middle;text-align:center;' width="50px">Action</th>
+                                        </tr>
+                                    </thead>
                                     <tbody>       
                                         <tr>
                                             <td width="30%">                                                    
@@ -132,14 +108,12 @@
                                             </td>                
                                         </tr>                                         
                                     </tbody>                                       
-                                </form>    
-                            </table>
+                                </table>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <div class="row" style="margin-top:-15px;">                                                                                
-                        <div class="col-md-12">                            
-                            <div class="row table-responsive">
+                        
+                        <div class="row">
+                            <div class="col-md-12 table-responsive">
                                 <table class="table table-bordered table-condensed table-hover" cellspacing="0" width="100%" id="table-detail">
                                     <thead>
                                         <tr>
@@ -155,18 +129,26 @@
                                     <tbody>                                                
                                     </tbody>
                                 </table>               
-                                <p id="total_transaction_terbilang"></p>                                                                    
-                            </div>                            
-                        </div>
+                            </div>
+                            <span>
+                                <div class="col-md-7">
+                                    Created / by : <span id="created_by"></span>
+                                </div>                                                     
+                                <div class="col-md-5">
+                                    <span id="total_transaction_terbilang" class="pull-right"></span>
+                                </div>
+                            </span>
+                        </div>                       
+
+                        <div class="row">
+                            <button id="btn-confirm" class="btn btn-success" style="width:120px;margin-left:5px;">Confirm</button>
+                            <button id="btn-cancel" class="btn btn-danger" style="width:120px;margin-left:5px;">Cancel</button>
+                        </div>                    
                     </div>
-                    <div class="row">
-                        <button id="btn-confirm" class="btn btn-success" style="width:120px;margin-left:5px;">Confirm</button>
-                        <button id="btn-cancel" class="btn btn-danger" style="width:120px;margin-left:5px;">Cancel</button>
-                    </div>                    
+                    <!--.end panel-body -->
                 </div>
-                <!--.end panel-body -->
             </div>
-        </div>
+        </form>
     </div>   
 </div>
 
@@ -243,26 +225,17 @@
                     <table class="table table-bordered table-condensed table-hover table-striped dataTable" width="100%">
                         <thead>
                             <tr style="vertical-align:middle;">
-                                <th rowspan="2" style="vertical-align:middle;text-align:center;">#</th>
-                                <th rowspan="2" style="vertical-align:middle;text-align:center;">Currency</th>
-                                <th rowspan="2" style="vertical-align:middle;text-align:center;">Nominal</th>
-                                <th colspan="5" style="vertical-align:middle;text-align:center;">In Sheet</th>
-                                <th rowspan="2" style="vertical-align:middle;text-align:center;">Balance Amount</th>
-                            </tr>
-                            <tr>
-                                <th style="vertical-align:middle;text-align:center;">Beginning</th>                                   
-                                <th style="vertical-align:middle;text-align:center;">Buy</th>                                
-                                <th style="vertical-align:middle;text-align:center;">Sell</th>
-                                <th style="vertical-align:middle;text-align:center;">Task</th>
-                                <th style="vertical-align:middle;text-align:center;">Balance</th>
+                                <th style="vertical-align:middle;text-align:center;">#</th>
+                                <th style="vertical-align:middle;text-align:center;">Currency</th>
+                                <th style="vertical-align:middle;text-align:center;">Nominal</th>
+                                <th style="vertical-align:middle;text-align:center;">Sheet</th>
+                                <th style="vertical-align:middle;text-align:center;">Amount</th>
+                                <th style="vertical-align:middle;text-align:center;">Description</th>
                             </tr>
                         </thead>
                         <thead id="searchid">
                             <tr>
                                 <td><button class="clrs btn btn-info btn-sm btn-line">Clear</button></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>

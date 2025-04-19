@@ -59,10 +59,10 @@
                 
                 <div class="row">
                     <div class="col-md-3">
-                        <h5>Total Buy - Equivalent Rp. <span id="totalbuy" style='text-align:left;font-weight:600;'></span></h5>
+                        <h5>Total Buy Rp. <span id="totalbuy" style='text-align:left;font-weight:600;'></span></h5>
                     </div>
                     <div class="col-md-3">
-                        <h5>Total Sell - Equivalent Rp. <span id="totalsell" style='text-align:left;font-weight:600;'></span></h5>
+                        <h5>Total Sell Rp. <span id="totalsell" style='text-align:left;font-weight:600;'></span></h5>
                     </div>
                 </div>
 

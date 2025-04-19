@@ -22,6 +22,32 @@ class Summary_buysell_by_date extends Bks_Controller {
         $this->template->build('summary/summary_buysell_by_date_v', $data);
     }
 
+    function closing_trxdate(){
+        checkIfNotAjax();
+        $this->libauth->check(__METHOD__);
+        $postData = $this->input->post();
+        $store_id = $postData['store_id'];
+        if(isset($postData['tr_date'])){
+            $tr_date = revDate($postData['tr_date']);
+        } else {                        
+            $tr_date = date('Y-m-d', strtotime('-1 day', strtotime(date('Y-m-d'))));
+        }
+        $this->db->trans_begin();
+        if ($this->db->trans_status() === FALSE) {
+            $this->db->trans_rollback();
+            $err = $this->db->error();
+            $json['msg'] = $err['code'] . '<br>' . $err['message'];
+            echo json_encode($json);
+        } else {
+            $this->db->where_in(tr_id,['1','2']);
+            $this->db->where(array('store_id' => $store_id));
+            $this->db->update('m_transaction_date', array('tr_date' => $tr_date, 'status' => 1, 'updated' => date('Y-m-d H:i:s', time()), 'updatedby' => $this->userId) );
+            $this->db->trans_commit();
+            $json['msg'] = '1';
+            echo json_encode($json);
+        }
+    }
+
     function dbquery(){
         return $this->db->query("SELECT tr_header.store_id AS store_id,
                                         tr_detail.currency_id AS currency_id,

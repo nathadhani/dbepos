@@ -49,7 +49,7 @@
                 <!-- <hr style="border: 1px solid green;"> -->
             </div>
             
-            <div class="panel-body" style="margin-top:-20px;">
+            <div class="panel-body">
                 <div class="box-body table-responsive" id="mainTable">
                     <div style="padding: 0 20px 10px 20px" class="row">
                         <button class="btn btn-default toggle-selected" title="Toggle Selected" data-toggle="tooltip" data-placement="bottom"><i class="fa  fa-align-justify"></i></button>
