@@ -8,7 +8,7 @@
         <div class="panel panel-default">
             <div class="panel-heading ui-draggable-handle">                               
                 <div class="panel-title-box">
-                    <h3>Cash / Bank - List</h3>
+                    <h3>Cash / Bank - List Transaction</h3>
                 </div>
                 <ul class="panel-controls">
                     <div class="dropdown">
@@ -79,7 +79,7 @@
                             <thead>
                                 <tr>
                                     <th style="vertical-align:middle;text-align:center;">#</th>                                    
-                                    <th style="vertical-align:middle;text-align:center;">Trx</th>
+                                    <th style="vertical-align:middle;text-align:center;">Transaction</th>
                                     <th style="vertical-align:middle;text-align:center;">Date</th>
                                     <th style="vertical-align:middle;text-align:center;">Number</th>
                                     <th style="vertical-align:middle;text-align:center;">Description</th>

@@ -369,7 +369,7 @@ $("#btn-modal-add-row-payment").on('click', function (e) {
     } else if( $("#modal_payment_amount").val() === '' || $("#modal_payment_amount").val() === null || Number($("#modal_payment_amount").val()) <= 0) {
         bksfn.errMsg('jumlah pembayaran belum diinput!');
     } else {
-        $.post(baseUrl + 'transaction/transaction_buysell/insert_payment', $("#mainFormModalPayment").serialize() + "&header_id=" + id_tr_header + "&cashierby=" + $("#modal_cashierby").val(), function (obj) {
+        $.post(baseUrl + 'transaction/transaction_buysell/insert_payment', $("#mainFormModalPayment").serialize() + "&header_id=" + id_tr_header + "&tr_id=" + xtr_id + "&cashierby=" + $("#modal_cashierby").val(), function (obj) {
             if (obj.msg == 1) {
                 alertify.success('Data add success!');
                 reset_form_input_payment();

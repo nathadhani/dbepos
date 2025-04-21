@@ -70,13 +70,16 @@
                                         <table class="table table-bordered table-condensed table-hover table-striped dataTable" width="100%">
                                             <thead>
                                                 <tr style="vertical-align:middle;">
-                                                    <th style="vertical-align:middle;text-align:center;">#</th>
-                                                    <th style="vertical-align:middle;text-align:center;">Currency</th>
+                                                    <th rowspan="2" style="vertical-align:middle;text-align:center;">#</th>
+                                                    <th rowspan="2" style="vertical-align:middle;text-align:center;">Currency</th>
+                                                    <th colspan="5" style="vertical-align:middle;text-align:center;background-color:#FFFF00;">In Total</th>
+                                                </tr>
+                                                <tr>
                                                     <th style="vertical-align:middle;text-align:center;">Beginning</th>
                                                     <th style="vertical-align:middle;text-align:center;">Buy</th>                          
                                                     <th style="vertical-align:middle;text-align:center;">Sell</th>
                                                     <th style="vertical-align:middle;text-align:center;">Task</th>
-                                                    <th style="vertical-align:middle;text-align:center;">Ending Balance</th>
+                                                    <th style="vertical-align:middle;text-align:center;">Ending</th>
                                                 </tr>
                                             </thead>
                                             <thead id="searchid1">
@@ -101,16 +104,16 @@
                                                 <tr style="vertical-align:middle;">
                                                     <th rowspan="2" style="vertical-align:middle;text-align:center;">#</th>
                                                     <th rowspan="2" style="vertical-align:middle;text-align:center;">Currency</th>
-                                                    <th rowspan="2" style="vertical-align:middle;text-align:center;">Nominal</th>
-                                                    <th colspan="5" style="vertical-align:middle;text-align:center;">In Sheet</th>
-                                                    <th rowspan="2" style="vertical-align:middle;text-align:center;">Ending Balance Amount</th>
+                                                    <th colspan="7" style="vertical-align:middle;text-align:center;background-color:#FFFF00;">In Sheet</th>                                                    
                                                 </tr>
                                                 <tr>
-                                                    <th style="vertical-align:middle;text-align:center;">Beginning</th>                                   
-                                                    <th style="vertical-align:middle;text-align:center;">Buy</th>                                
+                                                    <th style="vertical-align:middle;text-align:center;">Nominal</th>
+                                                    <th style="vertical-align:middle;text-align:center;">Beginning</th>
+                                                    <th style="vertical-align:middle;text-align:center;">Buy</th>
                                                     <th style="vertical-align:middle;text-align:center;">Sell</th>
                                                     <th style="vertical-align:middle;text-align:center;">Task</th>
-                                                    <th style="vertical-align:middle;text-align:center;">Balance</th>
+                                                    <th style="vertical-align:middle;text-align:center;">Ending</th>
+                                                    <th style="vertical-align:middle;text-align:center;">Amount</th>
                                                 </tr>
                                             </thead>
                                             <thead id="searchid2">

@@ -59,10 +59,10 @@
                                 <tr>
                                     <th style="vertical-align:middle;text-align:center;">#</th>                                    
                                     <th style="vertical-align:middle;text-align:center;">List</th>
-                                    <th style="vertical-align:middle;text-align:center;">Beginning</th>
+                                    <th style="vertical-align:middle;text-align:center;">Beginning Balance</th>
                                     <th style="vertical-align:middle;text-align:center;">In</th>
                                     <th style="vertical-align:middle;text-align:center;">Out</th>
-                                    <th style="vertical-align:middle;text-align:center;">Balance</th>
+                                    <th style="vertical-align:middle;text-align:center;">Ending Balance</th>
                                     <!-- <th style="vertical-align:middle;text-align:center;">Action</th> -->
                                 </tr>
                             </thead>

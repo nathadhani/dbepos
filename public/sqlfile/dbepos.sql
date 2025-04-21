@@ -1,7 +1,7 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : MYSQL
+ Source Server         : mySQL
  Source Server Type    : MySQL
  Source Server Version : 80030
  Source Host           : localhost:3306
@@ -11,7 +11,7 @@
  Target Server Version : 80030
  File Encoding         : 65001
 
- Date: 21/04/2025 16:36:39
+ Date: 22/04/2025 06:51:27
 */
 
 SET NAMES utf8mb4;
@@ -33,7 +33,7 @@ CREATE TABLE `auth_group_role`  (
   `updated` datetime NULL DEFAULT NULL,
   `updatedby` bigint NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 895 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 913 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of auth_group_role
@@ -488,7 +488,7 @@ CREATE TABLE `auth_listmethod`  (
   `created` datetime NULL DEFAULT NULL,
   `createdby` bigint NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 231 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 233 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of auth_listmethod
@@ -803,7 +803,7 @@ CREATE TABLE `auth_menu_group`  (
   `updated` datetime NULL DEFAULT NULL,
   `updatedby` bigint NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 121 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 123 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of auth_menu_group
@@ -941,8 +941,8 @@ CREATE TABLE `auth_users`  (
 INSERT INTO `auth_users` VALUES (1, 'Developer', '8989', 'f794bdbef7990b5112e526b5cd4ea67f4a35af21', NULL, 1, 1, 0, NULL, NULL, NULL, NULL, 1, '2025-02-23 13:58:46', NULL, NULL, NULL, NULL);
 INSERT INTO `auth_users` VALUES (2, 'Konsolidasi', 'konsolidasi', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 2, 1, 0, '1,2,3,4', '', '', NULL, 1, '2025-02-23 13:58:46', NULL, '2025-03-07 12:10:06', 1, '2025-04-21 15:32:01');
 INSERT INTO `auth_users` VALUES (3, 'Admin', 'admin', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 3, 1, 1, NULL, '', '', NULL, 1, '2025-02-23 13:58:46', NULL, '2025-03-07 12:10:19', 1, '2025-04-21 15:23:35');
-INSERT INTO `auth_users` VALUES (4, 'Counter', 'konter', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 4, 2, 1, NULL, '', '', NULL, 1, '2025-02-23 13:58:46', NULL, '2025-03-07 12:10:34', 1, '2025-04-21 16:22:30');
-INSERT INTO `auth_users` VALUES (5, 'Cashier', 'kasir', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 5, 2, 1, NULL, '', '', NULL, 1, '2025-03-06 13:05:41', 1, '2025-03-07 12:10:24', 1, '2025-04-19 06:58:51');
+INSERT INTO `auth_users` VALUES (4, 'Counter', 'konter', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 4, 2, 1, NULL, '', '', NULL, 1, '2025-02-23 13:58:46', NULL, '2025-03-07 12:10:34', 1, '2025-04-22 06:34:52');
+INSERT INTO `auth_users` VALUES (5, 'Cashier', 'kasir', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 5, 2, 1, NULL, '', '', NULL, 1, '2025-03-06 13:05:41', 1, '2025-03-07 12:10:24', 1, '2025-04-22 06:15:13');
 INSERT INTO `auth_users` VALUES (6, 'Angkasa Pura 1', 'ap1', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 6, 2, 0, '3,4', '', '', NULL, 1, '2025-03-06 13:06:45', 1, '2025-03-07 12:10:12', 1, '2025-04-19 06:59:41');
 INSERT INTO `auth_users` VALUES (7, 'Angkasa Pura 2', 'ap2', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 6, 2, 0, '1,2', '', '', NULL, 1, '2025-03-06 13:06:45', 1, '2025-03-07 12:10:12', 1, '2025-04-04 16:05:44');
 
@@ -994,7 +994,7 @@ CREATE TABLE `m_cb`  (
   `createdby` smallint NULL DEFAULT NULL,
   `updatedby` smallint NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of m_cb
@@ -2378,15 +2378,11 @@ CREATE TABLE `tr_detail`  (
   `createdby` bigint NOT NULL,
   `updatedby` bigint NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of tr_detail
 -- ----------------------------
-INSERT INTO `tr_detail` VALUES (1, 1, 1, 100, 1000, 16000.00, 3, '2025-04-21 15:05:52', '2025-04-21 15:06:11', 4, 4);
-INSERT INTO `tr_detail` VALUES (2, 1, 7, 1, 15000, 12100.00, 3, '2025-04-21 15:06:00', '2025-04-21 15:06:11', 4, 4);
-INSERT INTO `tr_detail` VALUES (3, 2, 1, 100, 500, 16800.00, 3, '2025-04-21 15:06:38', '2025-04-21 15:07:01', 4, 4);
-INSERT INTO `tr_detail` VALUES (4, 2, 1, 100, 300, 16500.00, 3, '2025-04-21 15:06:57', '2025-04-21 15:07:01', 4, 4);
 
 -- ----------------------------
 -- Table structure for tr_header
@@ -2410,13 +2406,11 @@ CREATE TABLE `tr_header`  (
   `updatedby` bigint NULL DEFAULT NULL,
   `cashierby` bigint NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of tr_header
 -- ----------------------------
-INSERT INTO `tr_header` VALUES (1, 1, 1, '2025-04-21', '25042101010001', 2, NULL, NULL, NULL, NULL, 3, '2025-04-21 15:05:52', '2025-04-21 15:06:11', 4, 4, NULL);
-INSERT INTO `tr_header` VALUES (2, 1, 2, '2025-04-21', '25042101020001', 1, NULL, NULL, NULL, NULL, 3, '2025-04-21 15:06:38', '2025-04-21 15:07:01', 4, 4, NULL);
 
 -- ----------------------------
 -- Table structure for tr_log_api
@@ -2482,15 +2476,11 @@ CREATE TABLE `tr_stock`  (
   `updated` datetime NULL DEFAULT NULL,
   `updatedby` bigint NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of tr_stock
 -- ----------------------------
-INSERT INTO `tr_stock` VALUES (5, 1, 1, 2025, 4, 100, 0, 1, '2025-04-21 15:07:06', 4, NULL, NULL);
-INSERT INTO `tr_stock` VALUES (6, 1, 1, 2025, 5, 100, 200, 1, '2025-04-21 15:07:06', 4, '2025-04-21 15:07:06', 4);
-INSERT INTO `tr_stock` VALUES (7, 7, 1, 2025, 4, 1, 0, 1, '2025-04-21 15:07:06', 4, NULL, NULL);
-INSERT INTO `tr_stock` VALUES (8, 7, 1, 2025, 5, 1, 15000, 1, '2025-04-21 15:07:06', 4, '2025-04-21 15:07:06', 4);
 
 -- ----------------------------
 -- Table structure for tr_stock_price
@@ -2523,10 +2513,6 @@ CREATE TABLE `tr_stock_price`  (
 -- ----------------------------
 -- Records of tr_stock_price
 -- ----------------------------
-INSERT INTO `tr_stock_price` VALUES (1, 1, '2025-04-21', 2025, 4, 1, 1, 100000, 16000, 1600000000, NULL, 0, 0.00, 0.00, 0.00, 100000.00, 16000.00, 1600000000.00, 0.00, '2025-04-21 15:07:06', 4);
-INSERT INTO `tr_stock_price` VALUES (2, 1, '2025-04-21', 2025, 4, 1, NULL, 0, 0, 0, 2, 50000, 16800.00, 840000000.00, 800000000.00, 50000.00, 16000.00, 800000000.00, 40000000.00, '2025-04-21 15:07:06', 4);
-INSERT INTO `tr_stock_price` VALUES (3, 1, '2025-04-21', 2025, 4, 1, NULL, 0, 0, 0, 2, 30000, 16500.00, 495000000.00, 480000000.00, 20000.00, 16000.00, 320000000.00, 15000000.00, '2025-04-21 15:07:06', 4);
-INSERT INTO `tr_stock_price` VALUES (1, 1, '2025-04-21', 2025, 4, 7, 1, 15000, 12100, 181500000, NULL, 0, 0.00, 0.00, 0.00, 15000.00, 12100.00, 181500000.00, 0.00, '2025-04-21 15:07:06', 4);
 
 -- ----------------------------
 -- View structure for v_auth_group_role

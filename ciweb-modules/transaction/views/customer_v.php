@@ -21,7 +21,7 @@
             <div class="panel panel-default"> 
                 <div class="panel-heading ui-draggable-handle">                                
                     <div class="panel-title-box">
-                        <h3>Data - Customer</h3>
+                        <h3>List Customer</h3>
                     </div>
                     <ul class="panel-controls">
                         <button id="btn_add" class="btn btn-info" style="width:140px;margin-left:10px;">Add New Data</button>                        

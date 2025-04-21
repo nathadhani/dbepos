@@ -88,7 +88,7 @@ class Cb_balance extends Bks_Controller {
             $bulan2 = $bulan + 1;
         }        
 
-        $mcb = $this->db->query("SELECT x.id AS cb_id FROM m_cb x ORDER BY id ASC");
+        $mcb = $this->db->query("SELECT x.id AS cb_id FROM m_cb x WHERE store_id = $store_id ORDER BY id ASC");
         if(count($mcb) > 0){
             /** Delete Reccord */
             /***************************************************************************************************************** */
@@ -311,10 +311,10 @@ class Cb_balance extends Bks_Controller {
             $html_table = '<table cellspacing="0" cellpadding="0" width="100%">';
             $html_table .= '<tr>';
                 $html_table .= '<td width="20%" class="first second">List</td>';
-                $html_table .= '<td width="50%" class="first second">Keterangan</td>';
-                $html_table .= '<td width="10%" class="first second">Masuk</td>';
-                $html_table .= '<td width="10%" class="first second">Keluar</td>';
-                $html_table .= '<td width="10%" class="first second">Saldo</td>';
+                $html_table .= '<td width="41%" class="first second">Keterangan</td>';
+                $html_table .= '<td width="13%" class="first second">Masuk</td>';
+                $html_table .= '<td width="13%" class="first second">Keluar</td>';
+                $html_table .= '<td width="13%" class="first second">Saldo</td>';
             $html_table .= '</tr>';             
             foreach($data_header as $r){
                 $no++;
@@ -324,7 +324,7 @@ class Cb_balance extends Bks_Controller {
                 $html_table .= '</tr>';  
                 
                 $cb_id = $r->cb_id;
-                $saldo = $r->cbs_saldo;
+                $saldo = (int) $r->cbs_saldo;
                 $data_detail = $this->db->query("SELECT cb_pos_name, SUM(amount_in) AS amount_in, SUM(amount_out) AS amount_out
                                                 FROM v_tr_cb_detail
                                                 WHERE store_id = $this->store_id
@@ -336,16 +336,16 @@ class Cb_balance extends Bks_Controller {
                     $total_in = 0;
                     $total_out = 0;                                            
                     foreach($data_detail as $d){
-                        $saldo = $saldo + $d->amount_in - $d->amount_out;
-                        $total_in = $total_in + $d->amount_in;
-                        $total_out = $total_out + $d->amount_out;
+                        $saldo = ($saldo + (int) $d->amount_in) - (int) $d->amount_out;
+                        $total_in = $total_in + (int) $d->amount_in;
+                        $total_out = $total_out + (int) $d->amount_out;
                         $pdf->SetFont('', '', 9);
                         $html_table .= '<tr>';  
                             $html_table .= '<td></td>';
                             $html_table .= '<td> - ' . $d->cb_pos_name . '</td>';
                             $html_table .= '<td>' .  ( (int) $d->amount_in > 0 ? number_format($d->amount_in, "0", ".", ",") : '-' ). '</td>';
                             $html_table .= '<td>' .  ( (int) $d->amount_out > 0 ? number_format($d->amount_out, "0", ".", ",") : '-' ). '</td>';
-                            $html_table .= '<td>' .  ( (int) $saldo > 0 ? number_format($saldo, "0", ".", ",") : '-' ). '</td>';
+                            $html_table .= '<td>' .  ( (int) $saldo <> 0 ? number_format($saldo, "0", ".", ",") : '-' ). '</td>';
                         $html_table .= '</tr>'; 
                     }
                     $html_table .= '<tr>';  
@@ -353,7 +353,7 @@ class Cb_balance extends Bks_Controller {
                         $html_table .= '<td class="first" style="text-align:center;font-weight:bold;"> Total </td>';
                         $html_table .= '<td class="first">' .  ( (int) $total_in > 0 ? number_format($total_in, "0", ".", ",") : '-' ). '</td>';
                         $html_table .= '<td class="first">' .  ( (int) $total_out > 0 ? number_format($total_out, "0", ".", ",") : '-' ). '</td>';
-                        $html_table .= '<td class="first">' .  ( (int) $saldo > 0 ? number_format($saldo, "0", ".", ",") : '-' ). '</td>';
+                        $html_table .= '<td class="first">' .  ( (int) $saldo <> 0 ? number_format($saldo, "0", ".", ",") : '-' ). '</td>';
                     $html_table .= '</tr>'; 
                 }
 
@@ -367,7 +367,7 @@ class Cb_balance extends Bks_Controller {
             $pdf->writeHTML($html, true, false, true, false, '');
 
             $pdf->Ln(4);
-            $pdf->Cell(01, 01, 'Createdby,                       Spv,', 0, 1, 'L');
+            $pdf->Cell(01, 01, 'Created by,                       Checked by,', 0, 1, 'L');
         }
 
         ob_start();
@@ -440,10 +440,10 @@ class Cb_balance extends Bks_Controller {
             $html_table = '<table cellspacing="0" cellpadding="0" width="100%">';
             $html_table .= '<tr>';
                 $html_table .= '<td width="20%" class="first second">List</td>';
-                $html_table .= '<td width="50%" class="first second">Keterangan</td>';
-                $html_table .= '<td width="10%" class="first second">Masuk</td>';
-                $html_table .= '<td width="10%" class="first second">Keluar</td>';
-                $html_table .= '<td width="10%" class="first second">Saldo</td>';
+                $html_table .= '<td width="41%" class="first second">Keterangan</td>';
+                $html_table .= '<td width="13%" class="first second">Masuk</td>';
+                $html_table .= '<td width="13%" class="first second">Keluar</td>';
+                $html_table .= '<td width="13%" class="first second">Saldo</td>';
             $html_table .= '</tr>';             
             foreach($data_header as $r){
                 $no++;
@@ -453,7 +453,7 @@ class Cb_balance extends Bks_Controller {
                 $html_table .= '</tr>';  
                 
                 $cb_id = $r->cb_id;
-                $saldo = $r->cbs_saldo;
+                $saldo = (int) $r->cbs_saldo;
                 $data_detail = $this->db->query("SELECT cb_pos_name, description, amount_in, amount_out 
                                                 FROM v_tr_cb_detail
                                                 WHERE store_id = $this->store_id
@@ -464,9 +464,9 @@ class Cb_balance extends Bks_Controller {
                     $total_in = 0;
                     $total_out = 0;                                            
                     foreach($data_detail as $d){
-                        $saldo = $saldo + $d->amount_in - $d->amount_out;
-                        $total_in = $total_in + $d->amount_in;
-                        $total_out = $total_out + $d->amount_out;
+                        $saldo = ($saldo + (int) $d->amount_in) - (int) $d->amount_out;
+                        $total_in = $total_in + (int) $d->amount_in;
+                        $total_out = $total_out + (int) $d->amount_out;
                         $pdf->SetFont('', '', 9);
                         $html_table .= '<tr>';  
                             $html_table .= '<td></td>';
@@ -477,7 +477,7 @@ class Cb_balance extends Bks_Controller {
                             }                            
                             $html_table .= '<td>' .  ( (int) $d->amount_in > 0 ? number_format($d->amount_in, "0", ".", ",") : '-' ). '</td>';
                             $html_table .= '<td>' .  ( (int) $d->amount_out > 0 ? number_format($d->amount_out, "0", ".", ",") : '-' ). '</td>';
-                            $html_table .= '<td>' .  ( (int) $saldo > 0 ? number_format($saldo, "0", ".", ",") : '-' ). '</td>';
+                            $html_table .= '<td>' .  ( (int) $saldo <> 0 ? number_format($saldo, "0", ".", ",") : '-' ). '</td>';
                         $html_table .= '</tr>'; 
                     }
                     $html_table .= '<tr>';  
@@ -485,7 +485,7 @@ class Cb_balance extends Bks_Controller {
                         $html_table .= '<td class="first" style="text-align:center;font-weight:bold;"> Total </td>';
                         $html_table .= '<td class="first">' .  ( (int) $total_in > 0 ? number_format($total_in, "0", ".", ",") : '-' ). '</td>';
                         $html_table .= '<td class="first">' .  ( (int) $total_out > 0 ? number_format($total_out, "0", ".", ",") : '-' ). '</td>';
-                        $html_table .= '<td class="first">' .  ( (int) $saldo > 0 ? number_format($saldo, "0", ".", ",") : '-' ). '</td>';
+                        $html_table .= '<td class="first">' .  ( (int) $saldo <> 0 ? number_format($saldo, "0", ".", ",") : '-' ). '</td>';
                     $html_table .= '</tr>'; 
                 }
 
@@ -499,7 +499,7 @@ class Cb_balance extends Bks_Controller {
             $pdf->writeHTML($html, true, false, true, false, '');
 
             $pdf->Ln(4);
-            $pdf->Cell(01, 01, 'Createdby,                       Spv,', 0, 1, 'L');
+            $pdf->Cell(01, 01, 'Created by,                       Checked by,', 0, 1, 'L');
         }
 
         ob_start();

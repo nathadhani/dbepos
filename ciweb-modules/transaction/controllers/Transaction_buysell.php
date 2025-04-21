@@ -398,51 +398,61 @@ class Transaction_buysell extends Bks_Controller {
         $this->libauth->check(__METHOD__);                
         $postData = $this->input->post();
         $header_id = $postData['header_id'];
-        $payment_type = $postData['modal_payment_type'];
-        $cashierby = $postData['cashierby'];
-        $postData['payment_type'] = $postData['modal_payment_type'];
-        $postData['amount'] = $postData['modal_payment_amount'];
-        if (strpos($postData['modal_payment_amount'], ',') !== false) {
-            $postData['amount'] = str_replace(',','.',$postData['modal_payment_amount']);
-        }
-        $postData['status'] = '1';      
-        
-        unset($postData['modal_payment_type']);
-        unset($postData['modal_payment_amount']);
-        unset($postData['cashierby']);
-
-        $get_tr_payment = $this->db->query("SELECT id,header_id FROM tr_payment WHERE header_id = $header_id AND payment_type = $payment_type LIMIT 1")->result();
-        if(count($get_tr_payment) == 0){
-            $this->db->trans_begin();
-            $this->Bksmdl->table = 'tr_payment';
-            $response = $this->Bksmdl->insert($postData);
-            if ($this->db->trans_status() === FALSE) {
-                $this->db->trans_rollback();
-                $err = $this->db->error();
-                $json['msg'] = $err['code'] . '<br>' . $err['message'];
-                echo json_encode($json);
-            } else {
-                /** update tr_header */
-                $this->db->where(array('id' => $header_id));
-                $this->db->update('tr_header', array('status' => 4, 'cashierby' => $cashierby, 'updated' => date('Y-m-d H:i:s', time()), 'updatedby' => $this->userId) );
-
-                /** insert cash_bank */
-                $get_tr_header = $this->db->query("SELECT id, store_id, tr_date FROM tr_header WHERE id = $header_id LIMIT 1")->result();
-                if(isset($get_tr_header) && $get_tr_header[0]->store_id != null && $get_tr_header[0]->store_id != ''){
-                    $data['store_id'] = $get_tr_header[0]->store_id;
-                    $data['tr_date'] = $get_tr_header[0]->tr_date;
-                    $data['buysell_id'] = $get_tr_header[0]->id;
-                    $this->Bksmdl->generate_payment_cb($data);
+        $tr_id = $postData['tr_id'];
+        $cb_id = $postData['cb_id'];
+        $get_pos = $this->db->query("SELECT id FROM m_cb_pos WHERE cb_id = $cb_id AND buysell_tr_id = $tr_id LIMIT 1")->result();
+        if(count($get_pos) > 0 && $get_pos[0]->id != null && $get_pos[0]->id != ''){
+            $postData['cb_pos_id'] = $get_pos[0]->id;
+            $payment_type = $postData['modal_payment_type'];
+            $cashierby = $postData['cashierby'];
+            $postData['payment_type'] = $postData['modal_payment_type'];
+            $postData['amount'] = $postData['modal_payment_amount'];
+            if (strpos($postData['modal_payment_amount'], ',') !== false) {
+                $postData['amount'] = str_replace(',','.',$postData['modal_payment_amount']);
+            }
+            $postData['status'] = '1';      
+            
+            unset($postData['tr_id']);
+            unset($postData['modal_payment_type']);
+            unset($postData['modal_payment_amount']);
+            unset($postData['cashierby']);
+    
+            $get_tr_payment = $this->db->query("SELECT id,header_id FROM tr_payment WHERE header_id = $header_id AND payment_type = $payment_type LIMIT 1")->result();
+            if(count($get_tr_payment) == 0){
+                $this->db->trans_begin();
+                $this->Bksmdl->table = 'tr_payment';
+                $response = $this->Bksmdl->insert($postData);
+                if ($this->db->trans_status() === FALSE) {
+                    $this->db->trans_rollback();
+                    $err = $this->db->error();
+                    $json['msg'] = $err['code'] . '<br>' . $err['message'];
+                    echo json_encode($json);
+                } else {
+                    /** update tr_header */
+                    $this->db->where(array('id' => $header_id));
+                    $this->db->update('tr_header', array('status' => 4, 'cashierby' => $cashierby, 'updated' => date('Y-m-d H:i:s', time()), 'updatedby' => $this->userId) );
+    
+                    /** insert cash_bank */
+                    $get_tr_header = $this->db->query("SELECT id, store_id, tr_date FROM tr_header WHERE id = $header_id LIMIT 1")->result();
+                    if(isset($get_tr_header) && $get_tr_header[0]->store_id != null && $get_tr_header[0]->store_id != ''){
+                        $data['store_id'] = $get_tr_header[0]->store_id;
+                        $data['tr_date'] = $get_tr_header[0]->tr_date;
+                        $data['buysell_id'] = $get_tr_header[0]->id;
+                        $this->Bksmdl->generate_payment_cb($data);
+                    }
+    
+                    $this->db->trans_commit();
+                    $json['msg'] = '1';
+                    echo json_encode($json);
                 }
-
-                $this->db->trans_commit();
-                $json['msg'] = '1';
-                echo json_encode($json);
+            } else {
+                $id = $get_tr_payment[0]->id;
+                $this->db->where(array('id' => $id));
+                $this->db->update('tr_payment', $postData );
             }
         } else {
-            $id = $get_tr_payment[0]->id;
-            $this->db->where(array('id' => $id));
-            $this->db->update('tr_payment', $postData );
+            $json['msg'] = 'Purpose id not found';
+            echo json_encode($json);
         }
     }
 

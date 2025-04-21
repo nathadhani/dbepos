@@ -217,7 +217,7 @@
                         <div class="col-md-2">
                             <div class="form-group">
                                 <div class="col-lg-12">
-                                    <label for=modal_payment_type style="display:block">Type</label>
+                                    <label for=modal_payment_type style="display:block">Payment Type</label>
                                     <!-- Jika Search Tidak berfungsi, remove modal tabindex='-1' -->
                                     <select id="modal_payment_type"
                                             name="modal_payment_type"
@@ -234,10 +234,10 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <div class="col-lg-12">
-                                    <label for=cb_id style="display:block">Source</label>
+                                    <label for=cb_id style="display:block">Payment Source</label>
                                     <!-- Jika Search Tidak berfungsi, remove modal tabindex='-1' -->
                                     <select class='form-control select2' name="cb_id" id="cb_id" disabled="true">
                                         <option value=""></option>
@@ -245,18 +245,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <div class="col-lg-12">
-                                    <label for=cb_pos_id style="display:block">Purpose</label>
-                                    <!-- Jika Search Tidak berfungsi, remove modal tabindex='-1' -->
-                                    <select class='form-control select2' name="cb_pos_id" id="cb_pos_id" disabled="true">
-                                        <option value=""></option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <div class="col-lg-12">
                                     <label for=modal_payment_amount style="display:block">Payment Value</label>
@@ -286,9 +275,9 @@
                             <thead>
                                 <tr style="background:#f1f5f9;">
                                     <td style='vertical-align: middle;text-align:center;'>#</td>
-                                    <th style='vertical-align:middle;text-align:left;'>Type</th>
-                                    <th style='vertical-align:middle;text-align:left;'>Source</th>
-                                    <th style='vertical-align:middle;text-align:left;'>Purpose</th>
+                                    <th style='vertical-align:middle;text-align:left;'>Payment Type</th>
+                                    <th style='vertical-align:middle;text-align:left;'>Payment Source</th>
+                                    <th style='vertical-align:middle;text-align:left;'>Description</th>
                                     <th style='vertical-align:middle;text-align:left;'>Payment Value</th>
                                 </tr>
                             </thead>
