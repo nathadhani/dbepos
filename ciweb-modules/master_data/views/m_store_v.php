@@ -36,33 +36,36 @@
                                 </div>
                             </div><!-- /.form-group -->
                             <div class="form-group row">
+                                <label for="store_email" class="control-label col-lg-4">Store ID PJK</label>
+                                <div class="col-lg-8">
+                                <input type="text" id="store_id_pjk" name="store_id_pjk" placeholder="Store ID Pjk..." class="form-control">
+                                </div>
+                            </div><!-- /.form-group -->
+                            <div class="form-group row">
+                                <label class="control-label col-lg-4">Status</label>
+                                <div>
+                                    <div class="input-group col-lg-3">
+                                        <span class="input-group-addon">
+                                            <input type="checkbox" name="status" id="status" class="icheckbox_minimal-grey checked"" checked/>
+                                        </span>
+                                        <span class="form-control">Active</span>
+                                    </div>
+                                </div>
+                            </div><!-- /.form-group -->                                                                                                          
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group row">
                                 <label for="menuorder" class="control-label col-lg-4">API Method</label>
                                 <div class="col-lg-8">
                                 <input type="number" id="api_method" name="api_method" placeholder="API Method..." class="form-control">
                                 </div>
-                            </div><!-- /.form-group -->
+                            </div><!-- /.form-group -->   
                             <div class="form-group row">
-                                <label for="menuorder" class="control-label col-lg-4">API Angkasa Pura</label>
+                                <label for="menuorder" class="control-label col-lg-4">API Location</label>
                                 <div class="col-lg-8">
-                                <input type="text" id="api_angkasapura" name="api_angkasapura" placeholder="API Angkasa Pura..." class="form-control">
+                                <input type="text" id="api_angkasapura" name="api_angkasapura" placeholder="API Location Angkasa Pura..." class="form-control">
                                 </div>
-                            </div><!-- /.form-group -->                                                        
-                        </div>
-                        <div class="col-lg-6">         
-                            <div class="form-group row" id="ap_tr_id-container">
-                                <label for="ap_tr_id" class="control-label col-lg-4">AP Trx List</label>
-                                <div class="col-lg-8">
-                                    <select name="ap_tr_id[]"
-                                            data-ajax="true" 
-                                            data-placeholder="Pilih..."
-                                            data-url="master_data/m_trxlist/gettrxlistbuysell/" 
-                                            data-value="" 
-                                            data-limit="100"
-                                            multiple
-                                            id="ap_tr_id" placeholder="Trx Name" class='form-control select2'>
-                                    </select>
-                                </div>
-                            </div>                          
+                            </div><!-- /.form-group -->                                                       
                             <div class="form-group row">
                                 <label for="menuorder" class="control-label col-lg-4">API Username</label>
                                 <div class="col-lg-8">
@@ -86,25 +89,27 @@
                                 <div class="col-lg-8">
                                 <input type="text" id="api_store_name" name="api_store_name" placeholder="API Store Name..." class="form-control">
                                 </div>
-                            </div><!-- /.form-group -->                            
-                            <div class="form-group row">
-                                <label class="control-label col-lg-4">Status</label>
-                                <div>
-                                    <div class="input-group col-lg-8">
-                                        <span class="input-group-addon">
-                                            <input type="checkbox" name="status" id="status" class="icheckbox_minimal-grey checked" checked/>
-                                        </span>
-                                        <span class="form-control">Active</span>
-                                    </div>
+                            </div><!-- /.form-group --> 
+                            <div class="form-group row" id="ap_tr_id-container">
+                                <label for="ap_tr_id" class="control-label col-lg-4">AP Transasction List</label>
+                                <div class="col-lg-8">
+                                    <select name="ap_tr_id[]"
+                                            data-ajax="true" 
+                                            data-placeholder="Pilih..."
+                                            data-url="master_data/m_trxlist/gettrxlistbuysell/" 
+                                            data-value="" 
+                                            data-limit="100"
+                                            multiple
+                                            id="ap_tr_id" placeholder="Trx Name" class='form-control select2'>
+                                    </select>
                                 </div>
-                            </div><!-- /.form-group -->                           
+                            </div>                                                     
                         </div>
                     </div>
                 </div>
                 <div class="panel-footer">
-                    <button type="submit" class="btn btn-info" style="width:100px;">Submit</button>
-                    <button type="reset" class="btn btn-default" style="width:100px;">Reset</button>
-                    <button id="btn-get-store-ap" class="btn btn-danger pull-right" style="width:130px;">Get Store (API)</button>
+                    <button type="submit" class="btn btn-info" style="width:120px;">Submit</button>
+                    <button type="reset" class="btn btn-info" style="width:120px;">Reset</button>
                 </div>
             </div>
         </form>
@@ -130,7 +135,6 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Store Name</th>
                                 <th>Store Address</th>
                                 <th>API Store Id</th>
                                 <th>Api AP</th>
@@ -141,7 +145,6 @@
                         <thead id="searchid">
                             <tr>
                                 <td><button class="clrs btn btn-sm btn-info btn-line">Clear</button></td>
-                                <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>

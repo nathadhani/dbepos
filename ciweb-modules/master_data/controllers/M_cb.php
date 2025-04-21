@@ -6,7 +6,7 @@ class M_cb extends Bks_Controller {
         $config = array('modules' => 'master_data', 'jsfiles' => array('m_cb'));
         parent::__construct($config);
         $this->Bksmdl->table = 'm_cb';
-        $this->auth = $this->session->userdata( 'auth' );        
+        $this->auth = $this->session->userdata( 'auth' );     
         $this->store_id = $this->auth['store_id'];
     }
     
@@ -39,8 +39,7 @@ class M_cb extends Bks_Controller {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
-        $postData['store_id'] = $this->store_id;
-        $postData['cb_code'] = $this->generate_code($this->store_id, $postData['tr_id']);
+        $postData['cb_code'] = $this->generate_code($postData['store_id'], $postData['tr_id']);
         $postData['status'] = cekStatus($postData);
 
         $this->db->trans_begin();
@@ -61,7 +60,6 @@ class M_cb extends Bks_Controller {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
-        $postData['store_id'] = $this->store_id;
         $postData['status'] = cekStatus($postData);
         $id = $postData['id'];
         unset($postData['id']);
@@ -103,7 +101,7 @@ class M_cb extends Bks_Controller {
     function getdata() {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
-        $this->Bksmdl->table = 'm_cb';
+        $this->Bksmdl->table = 'v_m_cb';
         $cpData = $this->Bksmdl->getDataTable();
         $this->Bksmdl->outputToJson($cpData);
     }
@@ -114,7 +112,7 @@ class M_cb extends Bks_Controller {
         $this->Bksmdl->table = 'm_cb';
         $this->Bksmdl->searchable = array('cb_code','cb_name', 'id');
         $this->Bksmdl->select2fields = array('id' => 'id', 'text' => "cb_name");
-        $result['results'] = $this->Bksmdl->getSelect2(array('status' => '1'));
+        $result['results'] = $this->Bksmdl->getSelect2(array('status' => '1', 'store_id' => $this->store_id));
         $result['more'] = true;
         echo json_encode($result);
     }
@@ -126,7 +124,7 @@ class M_cb extends Bks_Controller {
         $payment_type_id = $postData['payment_type_id'];
         if($payment_type_id != null && $payment_type_id != ''){
             $menus = $this->db->order_by('id', 'ASC')
-                    ->get_where('m_cb', array('status' => '1', 'payment_type_id' => $payment_type_id))->result();        
+                    ->get_where('m_cb', array('status' => '1', 'payment_type_id' => $payment_type_id, 'store_id' => $this->store_id))->result();        
             if (count($menus) > 0){
                 $option ="<option selected value=''>Pilih...</option>";
                 foreach($menus as $row){
@@ -135,6 +133,17 @@ class M_cb extends Bks_Controller {
                 echo $option;
             }            
         }
+    }
+
+    function getmcbpurpose() {
+        checkIfNotAjax();
+        $this->libauth->check(__METHOD__);
+        $this->Bksmdl->table = 'v_m_cb';
+        $this->Bksmdl->searchable = array('cb_code','cb_name', 'id','store_address');
+        $this->Bksmdl->select2fields = array('id' => 'id', 'text' => "concat(store_address,' [ ', cb_name ,' ]')");
+        $result['results'] = $this->Bksmdl->getSelect2(array('status' => '1'));
+        $result['more'] = true;
+        echo json_encode($result);
     }
 
 }

@@ -4,7 +4,10 @@ $("#mainForm").submit(function (e) {
     $(':submit', this).attr('disabled', true);
 }).on('reset', function (e) {
     $("#ftitle").html('Add');
+    $("#cb_id").html('').sel2dma();
     $("#cb_pos_name").val('').focus();
+    $("#cb_pos_in_out").val('');
+    $("#buysell_tr_id").html('').sel2dma();
     $("#status").iCheck('check');
     $(':submit').removeAttr('disabled');
 });
@@ -61,14 +64,11 @@ var t = $('#mainTable table').DataTable({
     },
     columns: [
         {data: "#", className: "dt-body-center", width: "5%", orderable: false, searchable: false},
-        {data: 'cb_pos_code', width: "8%"},
-        {data: 'cb_pos_name', width: "10%"},
-        {data: 'created', orderable: false, width: "10%", render: function (data, type, row, meta) {
-                return data;
-            }},
-        {data: 'updated', orderable: false, width: "10%", render: function (data, type, row, meta) {
-            return data;
-        }},
+        {data: 'store_address'},
+        {data: 'cb_name'},
+        {data: 'cb_pos_name'},
+        {data: 'cb_pos_in_out', width: "5%"},
+        {data: 'buysell_tr_id_name'},
         {data: 'status', className: "dt-body-center", width: "5%", render: function (data, type, row, meta) {
                 var act = (data == '1') ? '<span class="label label-success"><i class="fa fa-check"></i></span>' : '<span class="label label-danger"><i class="fa fa-times"></i></span>';
                 return act;
@@ -77,6 +77,8 @@ var t = $('#mainTable table').DataTable({
                 return '<a title="Edit" href="#"><i class="fa fa-edit"></i></a>';
             }
         },
+        {data: 'cb_id', visible: false},
+        {data: 'buysell_tr_id', visible: false},
     ],
     order: [[1, 'asc']]
 });
@@ -85,10 +87,10 @@ $('#mainTable').selectDTBks(t, 'master_data/m_cb_pos/delete');
 
 // Setup - add a text input to each header cell
 $('#searchid td').each(function () {
-    if ($(this).index() != 0 && $(this).index() < 4) {
+    if ($(this).index() != 0 && $(this).index() < 5) {
         $(this).html('<input style="width:100%" type="text" placeholder="Search" data-id="' + $(this).index() + '" />');
     }
-    if ($(this).index() == 6) {
+    if ($(this).index() == 4) {
         $(this).html('<select style="width:100%" type="text"><option value="">-</option><option value="1">Active</option><option value="0">Not Active</option><select/>');
     }
 });
@@ -96,7 +98,7 @@ $('#searchid input').keyup(function () {
     t.columns($(this).data('id')).search(this.value).draw();
 });
 $('#searchid select').change(function () {
-    t.columns(6).search(this.value).draw();
+    t.columns(4).search(this.value).draw();
 });
 $(".clrs").click(function () {
     $('#searchid input').val('');
@@ -115,7 +117,18 @@ $('#mainTable').on('click', 'a[title^=Edit]', function (e) {
     var elm = $(this).closest("tr");
     var d = t.row(elm).data();
     $("#ftitle").html('Edit');
+    if (d.cb_id != null) {
+        $("#cb_id").html('<option value="' + d.cb_id + '">' + d.store_address + ' [ ' + d.cb_name + ' ]' + '</option>').sel2dma();
+    } else {
+        $("#cb_id").html('').sel2dma();
+    }
     $("#cb_pos_name").val(d.cb_pos_name).focus();
+    $("#cb_pos_in_out").val(d.cb_pos_in_out);
+    if (d.buysell_tr_id != null) {
+        $("#buysell_tr_id").html('<option value="' + d.buysell_tr_id + '">' + d.buysell_tr_id_name + '</option>').sel2dma();
+    } else {
+        $("#buysell_tr_id").html('').sel2dma();
+    }
     $("#status").iCheck(d.status == 1 ? 'check' : 'uncheck');
     $("body").data("id", d.id);
 });

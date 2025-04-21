@@ -11,18 +11,61 @@
                 <div class="panel-body">                                                                        
                     <div class="row">
                         <div class="col-lg-6">
+                            <div class="form-group row">                                
+                                <label for="tr_id" class="control-label col-lg-4">Source Name</label>
+                                <div class="col-lg-8">
+                                    <select id="cb_id"
+                                            name="cb_id"
+                                            data-ajax="true"
+                                            data-placeholder="Pilih..."
+                                            data-url="master_data/m_cb/getmcbpurpose/"
+                                            data-value=""
+                                            data-limit="100"                                          
+                                            placeholder="Pilih..."
+                                            class='form-control select2'
+                                            require
+                                    >
+                                    </select>
+                                </div>
+                            </div>
                             <div class="form-group row">
-                                <label for="payment_type_name" class="control-label col-lg-4">Trx Post Name</label>
+                                <label for="payment_type_name" class="control-label col-lg-4">Purpose Name</label>
                                 <div class="col-lg-8">
                                     <input type="text" id="cb_pos_name" name="cb_pos_name" placeholder="Nama..." data-validation="required" class="form-control">
                                 </div>
-                            </div><!-- /.form-group -->                            
+                            </div><!-- /.form-group -->                                                        
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group row">
+                                <label for="cb_pos_in_out" class="control-label col-lg-4">I/O</label>
+                                <div class="col-lg-8">
+                                    <select id="cb_pos_in_out" name="cb_pos_in_out" placeholder="Pilih In Out" class="form-control">
+                                        <option value="" selected="">Pilih...</option>
+                                        <option value="I">In</option>
+                                        <option value="O">Out</option>
+                                    </select>
+                                </div>
+                            </div><!-- /.form-group -->
+                            <div class="form-group row">                                
+                                <label for="buysell_tr_id" class="control-label col-lg-4">Buy/Sell</label>
+                                <div class="col-lg-8">
+                                    <select name="buysell_tr_id"
+                                            data-ajax="true" 
+                                            data-placeholder="-- Pilih --"
+                                            data-url="master_data/m_trxlist/gettrxlistbuysell/" 
+                                            data-value="" 
+                                            data-limit="100"                                                
+                                            id="buysell_tr_id" placeholder="Trx"
+                                            class='form-control select2'
+                                            width="100%"
+                                            >
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
                                 <label class="control-label col-lg-4">Status</label>
                                 <div>
-                                    <div class="input-group col-lg-8">
+                                    <div class="input-group col-lg-3">
                                         <span class="input-group-addon">
                                             <input type="checkbox" name="status" id="status" class="icheckbox_minimal-grey checked" checked/>
                                         </span>
@@ -46,7 +89,7 @@
     <div class="col-md-12">
         <div class="panel panel-default">
             <div class="panel-heading ui-draggable-handle">                                
-                <h3 class="panel-title"><i class="fa fa-table"></i> Data Table</h3>
+                <h3 class="panel-title"><i class="fa fa-table"></i> Data Table - Cash Bank Purpose</h3>
                 <ul class="panel-controls">
                     <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
                 </ul>                                
@@ -61,10 +104,11 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Trx Post Code</th>
-                                <th>Trx Post Name</th>
-                                <th>Created</th>
-                                <th>Updated</th>
+                                <th>Store</th>
+                                <th>Source Name</th>
+                                <th>Purpose Name</th>
+                                <th>I/O</th>
+                                <th>Buy/Sell</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>

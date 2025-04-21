@@ -3,7 +3,7 @@
         <div class="panel panel-default">
             <div class="panel-heading ui-draggable-handle">                                
                 <div class="panel-title-box">
-                    <h3>Stock - In Average Price</h3>
+                    <h3>Stock - In Exchange Rate Average</h3>
                 </div>
                 <ul class="panel-controls">
                     <button id="btn-excel" class="btn btn-info" style="width:140px;margin-left:5px;">Export to Xlsx</button>
@@ -64,22 +64,22 @@
                                     <th rowspan="2" style="vertical-align:middle;text-align:center;">Date</th>
                                     <th colspan="4" style="vertical-align:middle;text-align:center;">Buy</th>
                                     <th colspan="4" style="vertical-align:middle;text-align:center;">Sell</th>
-                                    <th colspan="3" style="vertical-align:middle;text-align:center;">Balance Stock</th>
+                                    <th colspan="3" style="vertical-align:middle;text-align:center;">Ending Balance</th>
                                     <th rowspan="2" style="vertical-align:middle;text-align:center;">Gross Profit</th>
                                 </tr>
                                 <tr>
-                                    <th style="vertical-align:middle;text-align:center;">Trx.No</th>
+                                    <th style="vertical-align:middle;text-align:center;">Number</th>
                                     <th style="vertical-align:middle;text-align:center;">Amount</th>                                
-                                    <th style="vertical-align:middle;text-align:center;">Price</th>
+                                    <th style="vertical-align:middle;text-align:center;">Exchange Rate</th>
                                     <th style="vertical-align:middle;text-align:center;">Equivalent</th>
 
-                                    <th style="vertical-align:middle;text-align:center;">Trx.No</th>
+                                    <th style="vertical-align:middle;text-align:center;">Number</th>
                                     <th style="vertical-align:middle;text-align:center;">Amount</th>                                
-                                    <th style="vertical-align:middle;text-align:center;">Price</th>
+                                    <th style="vertical-align:middle;text-align:center;">Exchange Rate</th>
                                     <th style="vertical-align:middle;text-align:center;">Equivalent</th>
 
                                     <th style="vertical-align:middle;text-align:center;">Amount</th>                                
-                                    <th style="vertical-align:middle;text-align:center;">Avg.Price</th>
+                                    <th style="vertical-align:middle;text-align:center;">Exchange Rate Average</th>
                                     <th style="vertical-align:middle;text-align:center;">Equivalent</th>
                                 </tr>
                             </thead>

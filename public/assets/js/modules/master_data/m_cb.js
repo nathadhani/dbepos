@@ -5,7 +5,9 @@
         $(':submit', this).attr('disabled', true);
     }).on('reset', function (e) {
         $("#ftitle").html('Add');
+        $("#store_id").html('').sel2dma();
         $("#tr_id").html('').sel2dma();
+        $("#payment_type_id").html('').sel2dma();
         $("#cb_name").val('').focus();
         $("#description").val('');
         $("#status").iCheck('check');
@@ -64,24 +66,25 @@
         },
         columns: [
             {data: "#", className: "dt-body-center", width: "5%", orderable: false, searchable: false},
-            {data: 'cb_code', width: "8%"},
-            {data: 'cb_name', width: "10%"},
-            {data: 'description', width: "20%"},
-            {data: 'created', orderable: false, width: "10%", render: function (data, type, row, meta) {
-                    return data;
-                }},
-            {data: 'updated', orderable: false, width: "10%", render: function (data, type, row, meta) {
+            {data: 'store_address'},
+            {data: 'transaction_name'},
+            {data: 'payment_type_name'},
+            {data: 'cb_name', orderable: false, width: "10%", render: function (data, type, row, meta) {
                 return data;
-            }},
+            }},            
+            {data: 'description'},            
             {data: 'status', className: "dt-body-center", width: "5%", render: function (data, type, row, meta) {
-                    var act = (data == '1') ? '<span class="label label-success"><i class="fa fa-check"></i></span>' : '<span class="label label-danger"><i class="fa fa-times"></i></span>';
-                    return act;
-                }},
+                var act = (data == '1') ? '<span class="label label-success"><i class="fa fa-check"></i></span>' : '<span class="label label-danger"><i class="fa fa-times"></i></span>';
+                return act;
+            }},
             {data: 'id', className: "dt-body-center", orderable: false, width: "5%", render: function (data, type, row, meta) {
                     return '<a title="Edit" href="#"><i class="fa fa-edit"></i></a>';
                 }
             },
-            {data: 'tr_id', visible: false},
+            {data: 'store_id', visible: false},
+            {data: 'tr_id', visible: false},            
+            {data: 'payment_type_id', visible: false},
+            {data: 'cb_code', visible: false},            
         ],
         order: [[1, 'asc']]
     });
@@ -90,10 +93,10 @@
 
     // Setup - add a text input to each header cell
     $('#searchid td').each(function () {
-        if ($(this).index() != 0 && $(this).index() < 4) {
+        if ($(this).index() != 0 && $(this).index() < 5) {
             $(this).html('<input style="width:100%" type="text" placeholder="Search" data-id="' + $(this).index() + '" />');
         }
-        if ($(this).index() == 6) {
+        if ($(this).index() == 4) {
             $(this).html('<select style="width:100%" type="text"><option value="">-</option><option value="1">Active</option><option value="0">Not Active</option><select/>');
         }
     });
@@ -101,7 +104,7 @@
         t.columns($(this).data('id')).search(this.value).draw();
     });
     $('#searchid select').change(function () {
-        t.columns(6).search(this.value).draw();
+        t.columns(4).search(this.value).draw();
     });
     $(".clrs").click(function () {
         $('#searchid input').val('');
@@ -120,10 +123,21 @@
         var elm = $(this).closest("tr");
         var d = t.row(elm).data();
         $("#ftitle").html('Edit');
+
+        if (d.store_id != null) {
+            $("#store_id").html('<option value="' + d.store_id + '">' + d.store_address + '</option>').sel2dma();
+        } else {
+            $("#store_id").html('').sel2dma();
+        }
         if (d.tr_id != null) {
-            $("#tr_id").html('<option value="' + d.tr_id + '">' + d.transaction_name + ' [' + d.tr_id + ']' + '</option>').sel2dma();
+            $("#tr_id").html('<option value="' + d.tr_id + '">' + d.transaction_name + '</option>').sel2dma();
         } else {
             $("#tr_id").html('').sel2dma();
+        }
+        if (d.payment_type_id != null) {
+            $("#payment_type_id").html('<option value="' + d.payment_type_id + '">' + d.payment_type_name + '</option>').sel2dma();
+        } else {
+            $("#payment_type_id").html('').sel2dma();
         }
         $("#cb_name").val(d.cb_name).focus();
         $("#description").val(d.description);

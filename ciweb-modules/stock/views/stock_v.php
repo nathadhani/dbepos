@@ -76,7 +76,7 @@
                                                     <th style="vertical-align:middle;text-align:center;">Buy</th>                          
                                                     <th style="vertical-align:middle;text-align:center;">Sell</th>
                                                     <th style="vertical-align:middle;text-align:center;">Task</th>
-                                                    <th style="vertical-align:middle;text-align:center;">Balance</th>
+                                                    <th style="vertical-align:middle;text-align:center;">Ending Balance</th>
                                                 </tr>
                                             </thead>
                                             <thead id="searchid1">
@@ -103,7 +103,7 @@
                                                     <th rowspan="2" style="vertical-align:middle;text-align:center;">Currency</th>
                                                     <th rowspan="2" style="vertical-align:middle;text-align:center;">Nominal</th>
                                                     <th colspan="5" style="vertical-align:middle;text-align:center;">In Sheet</th>
-                                                    <th rowspan="2" style="vertical-align:middle;text-align:center;">Balance Amount</th>
+                                                    <th rowspan="2" style="vertical-align:middle;text-align:center;">Ending Balance Amount</th>
                                                 </tr>
                                                 <tr>
                                                     <th style="vertical-align:middle;text-align:center;">Beginning</th>                                   

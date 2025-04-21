@@ -1,7 +1,7 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : mySQL
+ Source Server         : MYSQL
  Source Server Type    : MySQL
  Source Server Version : 80030
  Source Host           : localhost:3306
@@ -11,7 +11,7 @@
  Target Server Version : 80030
  File Encoding         : 65001
 
- Date: 21/04/2025 02:47:03
+ Date: 21/04/2025 16:36:39
 */
 
 SET NAMES utf8mb4;
@@ -456,6 +456,24 @@ INSERT INTO `auth_group_role` VALUES (891, 2, 'Stock', 'generate_tr_stock_pull',
 INSERT INTO `auth_group_role` VALUES (892, 2, 'Stock', 'generate_tr_stock_price', '', 1, '2025-04-18 17:53:35', 1, NULL, NULL);
 INSERT INTO `auth_group_role` VALUES (893, 3, 'Summary_buysell_by_date', 'closing_trxdate', '', 1, '2025-04-18 18:10:23', 1, NULL, NULL);
 INSERT INTO `auth_group_role` VALUES (894, 4, 'Summary_buysell_by_date', 'closing_trxdate', '', 1, '2025-04-18 18:10:32', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (895, 1, 'M_cb', 'index', '', 1, '2025-04-21 12:49:09', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (896, 1, 'M_cb', 'generate_code', '', 1, '2025-04-21 12:49:09', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (897, 1, 'M_cb', 'insert', '', 1, '2025-04-21 12:49:09', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (898, 1, 'M_cb', 'update', '', 1, '2025-04-21 12:49:09', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (899, 1, 'M_cb', 'delete', '', 1, '2025-04-21 12:49:09', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (900, 1, 'M_cb', 'getdata', '', 1, '2025-04-21 12:49:09', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (901, 1, 'M_cb', 'getmcb', '', 1, '2025-04-21 12:49:09', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (902, 1, 'M_cb', 'getmcbpayment', '', 1, '2025-04-21 12:49:09', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (903, 1, 'M_cb_pos', 'index', '', 1, '2025-04-21 12:49:09', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (904, 1, 'M_cb_pos', 'generate_code', '', 1, '2025-04-21 12:49:09', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (905, 1, 'M_cb_pos', 'insert', '', 1, '2025-04-21 12:49:09', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (906, 1, 'M_cb_pos', 'update', '', 1, '2025-04-21 12:49:09', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (907, 1, 'M_cb_pos', 'delete', '', 1, '2025-04-21 12:49:09', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (908, 1, 'M_cb_pos', 'getdata', '', 1, '2025-04-21 12:49:09', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (909, 1, 'M_cb_pos', 'getmcbpos', '', 1, '2025-04-21 12:49:09', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (910, 1, 'M_cb_pos', 'getmcbpospayment', '', 1, '2025-04-21 12:49:09', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (911, 1, 'M_payment_type', 'getpaymenttype', '', 1, '2025-04-21 13:32:38', 1, NULL, NULL);
+INSERT INTO `auth_group_role` VALUES (912, 1, 'M_cb', 'getmcbpurpose', '', 1, '2025-04-21 14:31:34', 1, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for auth_listmethod
@@ -475,236 +493,238 @@ CREATE TABLE `auth_listmethod`  (
 -- ----------------------------
 -- Records of auth_listmethod
 -- ----------------------------
-INSERT INTO `auth_listmethod` VALUES (1, 'Api_ap', 'ap_login', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\api\\controllers\\Api_ap.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (2, 'Api_ap', 'ap_post_api', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\api\\controllers\\Api_ap.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (3, 'Api_ap', 'ap_input_trx', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\api\\controllers\\Api_ap.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (4, 'Api_ap', 'ap_adjustment_trx', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\api\\controllers\\Api_ap.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (5, 'Api_ap', 'ap_get_trx', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\api\\controllers\\Api_ap.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (6, 'Api_ap', 'ap_get_store', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\api\\controllers\\Api_ap.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (7, 'Api_ap', 'excelcellColor', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\api\\controllers\\Api_ap.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (8, 'Api_ap_adjustment', 'index', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\api\\controllers\\Api_ap_adjustment.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (9, 'Api_ap_adjustment', 'getdata', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\api\\controllers\\Api_ap_adjustment.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (10, 'Api_ap_get', 'index', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\api\\controllers\\Api_ap_get.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (11, 'Api_ap_get', 'excel', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\api\\controllers\\Api_ap_get.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (12, 'Api_ap_input', 'index', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\api\\controllers\\Api_ap_input.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (13, 'Api_ap_input', 'getdata', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\api\\controllers\\Api_ap_input.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (14, 'Cb_balance', 'index', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\cb\\controllers\\Cb_balance.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (15, 'Cb_balance', 'getdata', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\cb\\controllers\\Cb_balance.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (16, 'Cb_balance', 'generate_cb_balance', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\cb\\controllers\\Cb_balance.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (17, 'Cb_balance', 'exportpdf_rekap', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\cb\\controllers\\Cb_balance.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (18, 'Cb_balance', 'exportpdf_detail', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\cb\\controllers\\Cb_balance.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (19, 'Cb_list', 'index', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\cb\\controllers\\Cb_list.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (20, 'Cb_list', 'generate_cb_buysell', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\cb\\controllers\\Cb_list.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (21, 'Cb_list', 'getdata', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\cb\\controllers\\Cb_list.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (22, 'Cb_list', 'excelcellColor', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\cb\\controllers\\Cb_list.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (23, 'Cb_list', 'excel', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\cb\\controllers\\Cb_list.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (24, 'Cb_list_new', 'index', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\cb\\controllers\\Cb_list_new.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (25, 'Cb_list_new', 'insert', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\cb\\controllers\\Cb_list_new.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (26, 'Cb_list_new', 'delete_detail', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\cb\\controllers\\Cb_list_new.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (27, 'Cb_list_new', 'show_header', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\cb\\controllers\\Cb_list_new.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (28, 'Cb_list_new', 'show_detail', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\cb\\controllers\\Cb_list_new.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (29, 'Cb_list_new', 'cancel_trx', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\cb\\controllers\\Cb_list_new.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (30, 'Cb_list_new', 'add_file', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\cb\\controllers\\Cb_list_new.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (31, 'Dashboard_buysell', 'index', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\dashboard\\controllers\\Dashboard_buysell.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (32, 'Dashboard_buysell', 'getlastupdated', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\dashboard\\controllers\\Dashboard_buysell.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (33, 'Dashboard_buysell', 'getdatatable1', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\dashboard\\controllers\\Dashboard_buysell.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (34, 'Dashboard_buysell', 'getchart1', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\dashboard\\controllers\\Dashboard_buysell.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (35, 'Dashboard_buysell', 'getdatatable2', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\dashboard\\controllers\\Dashboard_buysell.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (36, 'Dashboard_buysell', 'getchart2', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\dashboard\\controllers\\Dashboard_buysell.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (37, 'Export_data', 'index', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\export\\controllers\\Export_data.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (38, 'Export_data', 'excelcellColor', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\export\\controllers\\Export_data.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (39, 'Export_data', 'export_data', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\export\\controllers\\Export_data.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (40, 'Home', 'index', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\home\\controllers\\Home.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (41, 'M_cb', 'index', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_cb.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (42, 'M_cb', 'generate_code', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_cb.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (43, 'M_cb', 'insert', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_cb.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (44, 'M_cb', 'update', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_cb.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (45, 'M_cb', 'delete', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_cb.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (46, 'M_cb', 'getdata', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_cb.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (47, 'M_cb', 'getmcb', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_cb.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (48, 'M_cb', 'getmcbpayment', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_cb.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (49, 'M_cb_pos', 'index', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_cb_pos.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (50, 'M_cb_pos', 'generate_code', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_cb_pos.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (51, 'M_cb_pos', 'insert', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_cb_pos.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (52, 'M_cb_pos', 'update', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_cb_pos.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (53, 'M_cb_pos', 'delete', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_cb_pos.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (54, 'M_cb_pos', 'getdata', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_cb_pos.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (55, 'M_cb_pos', 'getmcbpos', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_cb_pos.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (56, 'M_cb_pos', 'getmcbpospayment', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_cb_pos.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (57, 'M_currency', 'index', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_currency.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (58, 'M_currency', 'insert', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_currency.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (59, 'M_currency', 'update', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_currency.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (60, 'M_currency', 'delete', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_currency.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (61, 'M_currency', 'getdata', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_currency.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (62, 'M_currency', 'getcurrencybyid', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_currency.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (63, 'M_currency', 'getcurrency', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_currency.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (64, 'M_currency', 'getcurrencytrx', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_currency.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (65, 'M_customer_act_on', 'index', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_customer_act_on.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (66, 'M_customer_act_on', 'insert', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_customer_act_on.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (67, 'M_customer_act_on', 'update', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_customer_act_on.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (68, 'M_customer_act_on', 'delete', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_customer_act_on.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (69, 'M_customer_act_on', 'getdata', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_customer_act_on.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (70, 'M_customer_act_on', 'getacton', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_customer_act_on.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (71, 'M_customer_data', 'index', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_customer_data.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (72, 'M_customer_data', 'insert', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_customer_data.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (73, 'M_customer_data', 'update', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_customer_data.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (74, 'M_customer_data', 'delete', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_customer_data.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (75, 'M_customer_data', 'getdata', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_customer_data.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (76, 'M_customer_data', 'getidentitas', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_customer_data.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (77, 'M_customer_job', 'index', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_customer_job.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (78, 'M_customer_job', 'insert', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_customer_job.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (79, 'M_customer_job', 'update', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_customer_job.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (80, 'M_customer_job', 'delete', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_customer_job.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (81, 'M_customer_job', 'getdata', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_customer_job.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (82, 'M_customer_job', 'getjob', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_customer_job.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (83, 'M_customer_type', 'index', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_customer_type.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (84, 'M_customer_type', 'insert', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_customer_type.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (85, 'M_customer_type', 'update', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_customer_type.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (86, 'M_customer_type', 'delete', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_customer_type.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (87, 'M_customer_type', 'getdata', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_customer_type.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (88, 'M_customer_type', 'gettype', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_customer_type.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (89, 'M_exchange_rate', 'index', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_exchange_rate.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (90, 'M_exchange_rate', 'insert', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_exchange_rate.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (91, 'M_exchange_rate', 'update', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_exchange_rate.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (92, 'M_exchange_rate', 'delete', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_exchange_rate.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (93, 'M_exchange_rate', 'getdata', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_exchange_rate.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (94, 'M_exchange_rate', 'exportpdf', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_exchange_rate.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (95, 'M_nationality', 'index', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_nationality.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (96, 'M_nationality', 'insert', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_nationality.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (97, 'M_nationality', 'update', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_nationality.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (98, 'M_nationality', 'delete', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_nationality.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (99, 'M_nationality', 'getdata', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_nationality.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (100, 'M_nationality', 'getnationality', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_nationality.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (101, 'M_payment_type', 'index', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_payment_type.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (102, 'M_payment_type', 'insert', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_payment_type.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (103, 'M_payment_type', 'update', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_payment_type.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (104, 'M_payment_type', 'delete', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_payment_type.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (105, 'M_payment_type', 'getdata', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_payment_type.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (106, 'M_payment_type', 'getpaymenttype', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_payment_type.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (107, 'M_store', 'index', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_store.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (108, 'M_store', 'insert', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_store.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (109, 'M_store', 'update', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_store.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (110, 'M_store', 'delete', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_store.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (111, 'M_store', 'getdata', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_store.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (112, 'M_store', 'getstore', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_store.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (113, 'M_store', 'getregion', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_store.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (114, 'M_trxdate', 'index', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_trxdate.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (115, 'M_trxdate', 'insert', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_trxdate.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (116, 'M_trxdate', 'update', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_trxdate.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (117, 'M_trxdate', 'delete', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_trxdate.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (118, 'M_trxdate', 'getdata', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_trxdate.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (119, 'M_trxlist', 'index', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_trxlist.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (120, 'M_trxlist', 'insert', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_trxlist.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (121, 'M_trxlist', 'update', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_trxlist.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (122, 'M_trxlist', 'delete', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_trxlist.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (123, 'M_trxlist', 'getdata', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_trxlist.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (124, 'M_trxlist', 'gettrxlistbuysell', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_trxlist.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (125, 'M_trxlist', 'gettrxlistcashbank', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\M_trxlist.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (126, 'Store', 'index', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\Store.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (127, 'Store', 'getdata', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\master_data\\controllers\\Store.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (128, 'Group_menu', 'index', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\menu\\controllers\\Group_menu.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (129, 'Group_menu', 'insert', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\menu\\controllers\\Group_menu.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (130, 'Group_menu', 'update', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\menu\\controllers\\Group_menu.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (131, 'Group_menu', 'delete', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\menu\\controllers\\Group_menu.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (132, 'Group_menu', 'getdatamenu', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\menu\\controllers\\Group_menu.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (133, 'Group_menu', 'getmenu', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\menu\\controllers\\Group_menu.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (134, 'Menu', 'index', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\menu\\controllers\\Menu.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (135, 'Menu', 'insert', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\menu\\controllers\\Menu.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (136, 'Menu', 'update', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\menu\\controllers\\Menu.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (137, 'Menu', 'delete', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\menu\\controllers\\Menu.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (138, 'Menu', 'getdata', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\menu\\controllers\\Menu.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (139, 'Ppatk_dttot', 'index', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\ppatk\\controllers\\Ppatk_dttot.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (140, 'Ppatk_dttot', 'insert', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\ppatk\\controllers\\Ppatk_dttot.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (141, 'Ppatk_dttot', 'update', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\ppatk\\controllers\\Ppatk_dttot.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (142, 'Ppatk_dttot', 'delete', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\ppatk\\controllers\\Ppatk_dttot.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (143, 'Ppatk_dttot', 'getdata', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\ppatk\\controllers\\Ppatk_dttot.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (144, 'Stock', 'index', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\stock\\controllers\\Stock.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (145, 'Stock', 'getdata1', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\stock\\controllers\\Stock.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (146, 'Stock', 'getdata2', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\stock\\controllers\\Stock.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (147, 'Stock', 'generate_tr_stock_pull', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\stock\\controllers\\Stock.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (148, 'Stock', 'generate_tr_stock_price', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\stock\\controllers\\Stock.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (149, 'Stock_price', 'index', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\stock\\controllers\\Stock_price.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (150, 'Stock_price', 'getcurrencystock', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\stock\\controllers\\Stock_price.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (151, 'Stock_price', 'getdata', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\stock\\controllers\\Stock_price.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (152, 'Stock_price', 'excel', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\stock\\controllers\\Stock_price.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (153, 'Summary_buysell_by_date', 'index', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\summary\\controllers\\Summary_buysell_by_date.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (154, 'Summary_buysell_by_date', 'closing_trxdate', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\summary\\controllers\\Summary_buysell_by_date.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (155, 'Summary_buysell_by_date', 'dbquery', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\summary\\controllers\\Summary_buysell_by_date.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (156, 'Summary_buysell_by_date', 'getdata', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\summary\\controllers\\Summary_buysell_by_date.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (157, 'Summary_buysell_by_date', 'exportpdf', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\summary\\controllers\\Summary_buysell_by_date.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (158, 'Summary_buysell_by_date', 'excelcellColor', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\summary\\controllers\\Summary_buysell_by_date.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (159, 'Summary_buysell_by_date', 'excel', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\summary\\controllers\\Summary_buysell_by_date.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (160, 'Summary_buysell_by_month', 'index', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\summary\\controllers\\Summary_buysell_by_month.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (161, 'Summary_buysell_by_month', 'dbquery', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\summary\\controllers\\Summary_buysell_by_month.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (162, 'Summary_buysell_by_month', 'getdata', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\summary\\controllers\\Summary_buysell_by_month.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (163, 'Summary_buysell_by_month', 'exportpdf', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\summary\\controllers\\Summary_buysell_by_month.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (164, 'Summary_buysell_by_month', 'excelcellColor', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\summary\\controllers\\Summary_buysell_by_month.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (165, 'Summary_buysell_by_month', 'excel', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\summary\\controllers\\Summary_buysell_by_month.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (166, 'Summary_buysell_by_year', 'index', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\summary\\controllers\\Summary_buysell_by_year.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (167, 'Summary_buysell_by_year', 'dbquery', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\summary\\controllers\\Summary_buysell_by_year.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (168, 'Summary_buysell_by_year', 'getdata', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\summary\\controllers\\Summary_buysell_by_year.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (169, 'Summary_buysell_by_year', 'exportpdf', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\summary\\controllers\\Summary_buysell_by_year.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (170, 'Summary_buysell_by_year', 'excelcellColor', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\summary\\controllers\\Summary_buysell_by_year.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (171, 'Summary_buysell_by_year', 'excel', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\summary\\controllers\\Summary_buysell_by_year.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (172, 'Customer', 'index', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\transaction\\controllers\\Customer.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (173, 'Customer', 'getdata', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\transaction\\controllers\\Customer.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (174, 'Customer_form', 'index', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\transaction\\controllers\\Customer_form.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (175, 'Customer_form', 'generate_code', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\transaction\\controllers\\Customer_form.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (176, 'Customer_form', 'insert', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\transaction\\controllers\\Customer_form.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (177, 'Customer_form', 'update', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\transaction\\controllers\\Customer_form.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (178, 'Customer_form', 'delete', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\transaction\\controllers\\Customer_form.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (179, 'Customer_form', 'getcustomerbyid', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\transaction\\controllers\\Customer_form.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (180, 'Customer_form', 'ceknikdttot', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\transaction\\controllers\\Customer_form.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (181, 'Customer_form', 'add_foto', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\transaction\\controllers\\Customer_form.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (182, 'Transaction_buysell', 'index', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\transaction\\controllers\\Transaction_buysell.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (183, 'Transaction_buysell', 'indexs', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\transaction\\controllers\\Transaction_buysell.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (184, 'Transaction_buysell', 'cekclosingtrx', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\transaction\\controllers\\Transaction_buysell.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (185, 'Transaction_buysell', 'generate_code_confirm', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\transaction\\controllers\\Transaction_buysell.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (186, 'Transaction_buysell', 'update_header', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\transaction\\controllers\\Transaction_buysell.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (187, 'Transaction_buysell', 'insert_detail', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\transaction\\controllers\\Transaction_buysell.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (188, 'Transaction_buysell', 'delete_detail', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\transaction\\controllers\\Transaction_buysell.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (189, 'Transaction_buysell', 'show_header', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\transaction\\controllers\\Transaction_buysell.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (190, 'Transaction_buysell', 'show_detail', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\transaction\\controllers\\Transaction_buysell.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (191, 'Transaction_buysell', 'getstockbyid', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\transaction\\controllers\\Transaction_buysell.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (192, 'Transaction_buysell', 'getratebyid', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\transaction\\controllers\\Transaction_buysell.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (193, 'Transaction_buysell', 'getshowid', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\transaction\\controllers\\Transaction_buysell.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (194, 'Transaction_buysell', 'getthreshold', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\transaction\\controllers\\Transaction_buysell.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (195, 'Transaction_buysell', 'confirm_task', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\transaction\\controllers\\Transaction_buysell.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (196, 'Transaction_buysell', 'cancel_trx', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\transaction\\controllers\\Transaction_buysell.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (197, 'Transaction_buysell', 'insert_payment', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\transaction\\controllers\\Transaction_buysell.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (198, 'Transaction_buysell', 'show_detail_payment', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\transaction\\controllers\\Transaction_buysell.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (199, 'Transaction_buysell', 'delete_detail_payment', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\transaction\\controllers\\Transaction_buysell.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (200, 'Transaction_buysell', 'update_payment_cashierby', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\transaction\\controllers\\Transaction_buysell.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (201, 'Transaction_buysell', 'printnota', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\transaction\\controllers\\Transaction_buysell.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (202, 'Transaction_buysell_list', 'index', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\transaction\\controllers\\Transaction_buysell_list.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (203, 'Transaction_buysell_list', 'getdata', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\transaction\\controllers\\Transaction_buysell_list.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (204, 'Transaction_buysell_list', 'excel', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\transaction\\controllers\\Transaction_buysell_list.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (205, 'Transaction_buysell_task', 'index', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\transaction\\controllers\\Transaction_buysell_task.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (206, 'Transaction_buysell_task', 'getdata', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\transaction\\controllers\\Transaction_buysell_task.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (207, 'Change_pass', 'index', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\user\\controllers\\Change_pass.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (208, 'Change_pass', 'update', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\user\\controllers\\Change_pass.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (209, 'Group', 'index', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\user\\controllers\\Group.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (210, 'Group', 'insert', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\user\\controllers\\Group.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (211, 'Group', 'update', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\user\\controllers\\Group.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (212, 'Group', 'delete', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\user\\controllers\\Group.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (213, 'Group', 'getdata', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\user\\controllers\\Group.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (214, 'Level', 'index', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\user\\controllers\\Level.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (215, 'Level', 'insert', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\user\\controllers\\Level.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (216, 'Level', 'update', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\user\\controllers\\Level.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (217, 'Level', 'delete', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\user\\controllers\\Level.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (218, 'Level', 'getdata', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\user\\controllers\\Level.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (219, 'User', 'index', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\user\\controllers\\User.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (220, 'User', 'insert', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\user\\controllers\\User.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (221, 'User', 'update', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\user\\controllers\\User.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (222, 'User', 'delete', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\user\\controllers\\User.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (223, 'User', 'getdata', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\user\\controllers\\User.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (224, 'User', 'getusergroup', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\user\\controllers\\User.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (225, 'User', 'getuserlevel', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\user\\controllers\\User.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (226, 'User', 'getdatauser', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\user\\controllers\\User.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (227, 'User', 'getdatacashier', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\user\\controllers\\User.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (228, 'User', 'getcreatedby', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\user\\controllers\\User.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (229, 'User', 'getuserbyid', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\user\\controllers\\User.php', '2025-04-18 18:09:46', 1);
-INSERT INTO `auth_listmethod` VALUES (230, 'User', 'getcountuserbystoreid', '', 'E:\\Server-DB\\Server\\Apache24\\htdocs\\php5\\dbepos\\ciweb-modules\\user\\controllers\\User.php', '2025-04-18 18:09:46', 1);
+INSERT INTO `auth_listmethod` VALUES (1, 'Api_ap', 'ap_login', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\api\\controllers\\Api_ap.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (2, 'Api_ap', 'ap_post_api', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\api\\controllers\\Api_ap.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (3, 'Api_ap', 'ap_input_trx', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\api\\controllers\\Api_ap.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (4, 'Api_ap', 'ap_adjustment_trx', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\api\\controllers\\Api_ap.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (5, 'Api_ap', 'ap_get_trx', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\api\\controllers\\Api_ap.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (6, 'Api_ap', 'ap_get_store', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\api\\controllers\\Api_ap.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (7, 'Api_ap', 'excelcellColor', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\api\\controllers\\Api_ap.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (8, 'Api_ap_adjustment', 'index', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\api\\controllers\\Api_ap_adjustment.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (9, 'Api_ap_adjustment', 'getdata', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\api\\controllers\\Api_ap_adjustment.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (10, 'Api_ap_get', 'index', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\api\\controllers\\Api_ap_get.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (11, 'Api_ap_get', 'excel', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\api\\controllers\\Api_ap_get.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (12, 'Api_ap_input', 'index', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\api\\controllers\\Api_ap_input.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (13, 'Api_ap_input', 'getdata', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\api\\controllers\\Api_ap_input.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (14, 'Cb_balance', 'index', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\cb\\controllers\\Cb_balance.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (15, 'Cb_balance', 'getdata', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\cb\\controllers\\Cb_balance.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (16, 'Cb_balance', 'generate_cb_balance', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\cb\\controllers\\Cb_balance.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (17, 'Cb_balance', 'exportpdf_rekap', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\cb\\controllers\\Cb_balance.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (18, 'Cb_balance', 'exportpdf_detail', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\cb\\controllers\\Cb_balance.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (19, 'Cb_list', 'index', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\cb\\controllers\\Cb_list.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (20, 'Cb_list', 'generate_cb_buysell', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\cb\\controllers\\Cb_list.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (21, 'Cb_list', 'getdata', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\cb\\controllers\\Cb_list.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (22, 'Cb_list', 'excelcellColor', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\cb\\controllers\\Cb_list.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (23, 'Cb_list', 'excel', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\cb\\controllers\\Cb_list.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (24, 'Cb_list_new', 'index', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\cb\\controllers\\Cb_list_new.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (25, 'Cb_list_new', 'insert', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\cb\\controllers\\Cb_list_new.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (26, 'Cb_list_new', 'delete_detail', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\cb\\controllers\\Cb_list_new.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (27, 'Cb_list_new', 'show_header', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\cb\\controllers\\Cb_list_new.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (28, 'Cb_list_new', 'show_detail', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\cb\\controllers\\Cb_list_new.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (29, 'Cb_list_new', 'cancel_trx', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\cb\\controllers\\Cb_list_new.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (30, 'Cb_list_new', 'add_file', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\cb\\controllers\\Cb_list_new.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (31, 'Dashboard_buysell', 'index', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\dashboard\\controllers\\Dashboard_buysell.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (32, 'Dashboard_buysell', 'getlastupdated', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\dashboard\\controllers\\Dashboard_buysell.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (33, 'Dashboard_buysell', 'getdatatable1', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\dashboard\\controllers\\Dashboard_buysell.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (34, 'Dashboard_buysell', 'getchart1', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\dashboard\\controllers\\Dashboard_buysell.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (35, 'Dashboard_buysell', 'getdatatable2', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\dashboard\\controllers\\Dashboard_buysell.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (36, 'Dashboard_buysell', 'getchart2', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\dashboard\\controllers\\Dashboard_buysell.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (37, 'Export_data', 'index', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\export\\controllers\\Export_data.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (38, 'Export_data', 'excelcellColor', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\export\\controllers\\Export_data.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (39, 'Export_data', 'export_data', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\export\\controllers\\Export_data.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (40, 'Home', 'index', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\home\\controllers\\Home.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (41, 'M_cb', 'index', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_cb.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (42, 'M_cb', 'generate_code', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_cb.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (43, 'M_cb', 'insert', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_cb.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (44, 'M_cb', 'update', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_cb.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (45, 'M_cb', 'delete', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_cb.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (46, 'M_cb', 'getdata', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_cb.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (47, 'M_cb', 'getmcb', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_cb.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (48, 'M_cb', 'getmcbpayment', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_cb.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (49, 'M_cb', 'getmcbpurpose', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_cb.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (50, 'M_cb_pos', 'index', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_cb_pos.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (51, 'M_cb_pos', 'generate_code', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_cb_pos.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (52, 'M_cb_pos', 'insert', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_cb_pos.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (53, 'M_cb_pos', 'update', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_cb_pos.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (54, 'M_cb_pos', 'delete', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_cb_pos.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (55, 'M_cb_pos', 'getdata', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_cb_pos.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (56, 'M_cb_pos', 'getmcbpos', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_cb_pos.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (57, 'M_cb_pos', 'getmcbpospayment', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_cb_pos.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (58, 'M_currency', 'index', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_currency.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (59, 'M_currency', 'insert', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_currency.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (60, 'M_currency', 'update', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_currency.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (61, 'M_currency', 'delete', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_currency.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (62, 'M_currency', 'getdata', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_currency.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (63, 'M_currency', 'getcurrencybyid', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_currency.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (64, 'M_currency', 'getcurrency', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_currency.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (65, 'M_currency', 'getcurrencytrx', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_currency.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (66, 'M_customer_act_on', 'index', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_customer_act_on.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (67, 'M_customer_act_on', 'insert', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_customer_act_on.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (68, 'M_customer_act_on', 'update', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_customer_act_on.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (69, 'M_customer_act_on', 'delete', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_customer_act_on.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (70, 'M_customer_act_on', 'getdata', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_customer_act_on.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (71, 'M_customer_act_on', 'getacton', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_customer_act_on.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (72, 'M_customer_data', 'index', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_customer_data.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (73, 'M_customer_data', 'insert', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_customer_data.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (74, 'M_customer_data', 'update', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_customer_data.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (75, 'M_customer_data', 'delete', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_customer_data.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (76, 'M_customer_data', 'getdata', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_customer_data.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (77, 'M_customer_data', 'getidentitas', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_customer_data.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (78, 'M_customer_job', 'index', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_customer_job.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (79, 'M_customer_job', 'insert', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_customer_job.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (80, 'M_customer_job', 'update', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_customer_job.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (81, 'M_customer_job', 'delete', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_customer_job.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (82, 'M_customer_job', 'getdata', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_customer_job.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (83, 'M_customer_job', 'getjob', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_customer_job.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (84, 'M_customer_type', 'index', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_customer_type.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (85, 'M_customer_type', 'insert', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_customer_type.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (86, 'M_customer_type', 'update', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_customer_type.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (87, 'M_customer_type', 'delete', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_customer_type.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (88, 'M_customer_type', 'getdata', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_customer_type.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (89, 'M_customer_type', 'gettype', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_customer_type.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (90, 'M_exchange_rate', 'index', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_exchange_rate.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (91, 'M_exchange_rate', 'insert', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_exchange_rate.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (92, 'M_exchange_rate', 'update', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_exchange_rate.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (93, 'M_exchange_rate', 'delete', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_exchange_rate.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (94, 'M_exchange_rate', 'getdata', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_exchange_rate.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (95, 'M_exchange_rate', 'exportpdf', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_exchange_rate.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (96, 'M_nationality', 'index', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_nationality.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (97, 'M_nationality', 'insert', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_nationality.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (98, 'M_nationality', 'update', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_nationality.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (99, 'M_nationality', 'delete', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_nationality.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (100, 'M_nationality', 'getdata', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_nationality.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (101, 'M_nationality', 'getnationality', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_nationality.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (102, 'M_payment_type', 'index', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_payment_type.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (103, 'M_payment_type', 'insert', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_payment_type.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (104, 'M_payment_type', 'update', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_payment_type.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (105, 'M_payment_type', 'delete', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_payment_type.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (106, 'M_payment_type', 'getdata', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_payment_type.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (107, 'M_payment_type', 'getpaymenttype', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_payment_type.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (108, 'M_store', 'index', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_store.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (109, 'M_store', 'insert', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_store.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (110, 'M_store', 'update', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_store.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (111, 'M_store', 'delete', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_store.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (112, 'M_store', 'getdata', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_store.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (113, 'M_store', 'getstore', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_store.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (114, 'M_store', 'getregion', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_store.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (115, 'M_trxdate', 'index', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_trxdate.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (116, 'M_trxdate', 'insert', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_trxdate.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (117, 'M_trxdate', 'update', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_trxdate.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (118, 'M_trxdate', 'delete', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_trxdate.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (119, 'M_trxdate', 'getdata', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_trxdate.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (120, 'M_trxlist', 'index', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_trxlist.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (121, 'M_trxlist', 'insert', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_trxlist.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (122, 'M_trxlist', 'update', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_trxlist.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (123, 'M_trxlist', 'delete', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_trxlist.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (124, 'M_trxlist', 'getdata', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_trxlist.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (125, 'M_trxlist', 'gettrxlist', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_trxlist.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (126, 'M_trxlist', 'gettrxlistbuysell', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_trxlist.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (127, 'M_trxlist', 'gettrxlistcashbank', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\M_trxlist.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (128, 'Store', 'index', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\Store.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (129, 'Store', 'getdata', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\master_data\\controllers\\Store.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (130, 'Group_menu', 'index', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\menu\\controllers\\Group_menu.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (131, 'Group_menu', 'insert', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\menu\\controllers\\Group_menu.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (132, 'Group_menu', 'update', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\menu\\controllers\\Group_menu.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (133, 'Group_menu', 'delete', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\menu\\controllers\\Group_menu.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (134, 'Group_menu', 'getdatamenu', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\menu\\controllers\\Group_menu.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (135, 'Group_menu', 'getmenu', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\menu\\controllers\\Group_menu.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (136, 'Menu', 'index', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\menu\\controllers\\Menu.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (137, 'Menu', 'insert', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\menu\\controllers\\Menu.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (138, 'Menu', 'update', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\menu\\controllers\\Menu.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (139, 'Menu', 'delete', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\menu\\controllers\\Menu.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (140, 'Menu', 'getdata', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\menu\\controllers\\Menu.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (141, 'Ppatk_dttot', 'index', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\ppatk\\controllers\\Ppatk_dttot.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (142, 'Ppatk_dttot', 'insert', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\ppatk\\controllers\\Ppatk_dttot.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (143, 'Ppatk_dttot', 'update', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\ppatk\\controllers\\Ppatk_dttot.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (144, 'Ppatk_dttot', 'delete', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\ppatk\\controllers\\Ppatk_dttot.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (145, 'Ppatk_dttot', 'getdata', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\ppatk\\controllers\\Ppatk_dttot.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (146, 'Stock', 'index', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\stock\\controllers\\Stock.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (147, 'Stock', 'getdata1', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\stock\\controllers\\Stock.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (148, 'Stock', 'getdata2', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\stock\\controllers\\Stock.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (149, 'Stock', 'generate_tr_stock_pull', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\stock\\controllers\\Stock.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (150, 'Stock', 'generate_tr_stock_price', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\stock\\controllers\\Stock.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (151, 'Stock_price', 'index', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\stock\\controllers\\Stock_price.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (152, 'Stock_price', 'getcurrencystock', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\stock\\controllers\\Stock_price.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (153, 'Stock_price', 'getdata', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\stock\\controllers\\Stock_price.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (154, 'Stock_price', 'excel', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\stock\\controllers\\Stock_price.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (155, 'Summary_buysell_by_date', 'index', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\summary\\controllers\\Summary_buysell_by_date.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (156, 'Summary_buysell_by_date', 'closing_trxdate', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\summary\\controllers\\Summary_buysell_by_date.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (157, 'Summary_buysell_by_date', 'dbquery', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\summary\\controllers\\Summary_buysell_by_date.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (158, 'Summary_buysell_by_date', 'getdata', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\summary\\controllers\\Summary_buysell_by_date.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (159, 'Summary_buysell_by_date', 'exportpdf', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\summary\\controllers\\Summary_buysell_by_date.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (160, 'Summary_buysell_by_date', 'excelcellColor', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\summary\\controllers\\Summary_buysell_by_date.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (161, 'Summary_buysell_by_date', 'excel', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\summary\\controllers\\Summary_buysell_by_date.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (162, 'Summary_buysell_by_month', 'index', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\summary\\controllers\\Summary_buysell_by_month.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (163, 'Summary_buysell_by_month', 'dbquery', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\summary\\controllers\\Summary_buysell_by_month.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (164, 'Summary_buysell_by_month', 'getdata', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\summary\\controllers\\Summary_buysell_by_month.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (165, 'Summary_buysell_by_month', 'exportpdf', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\summary\\controllers\\Summary_buysell_by_month.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (166, 'Summary_buysell_by_month', 'excelcellColor', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\summary\\controllers\\Summary_buysell_by_month.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (167, 'Summary_buysell_by_month', 'excel', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\summary\\controllers\\Summary_buysell_by_month.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (168, 'Summary_buysell_by_year', 'index', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\summary\\controllers\\Summary_buysell_by_year.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (169, 'Summary_buysell_by_year', 'dbquery', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\summary\\controllers\\Summary_buysell_by_year.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (170, 'Summary_buysell_by_year', 'getdata', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\summary\\controllers\\Summary_buysell_by_year.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (171, 'Summary_buysell_by_year', 'exportpdf', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\summary\\controllers\\Summary_buysell_by_year.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (172, 'Summary_buysell_by_year', 'excelcellColor', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\summary\\controllers\\Summary_buysell_by_year.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (173, 'Summary_buysell_by_year', 'excel', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\summary\\controllers\\Summary_buysell_by_year.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (174, 'Customer', 'index', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\transaction\\controllers\\Customer.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (175, 'Customer', 'getdata', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\transaction\\controllers\\Customer.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (176, 'Customer_form', 'index', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\transaction\\controllers\\Customer_form.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (177, 'Customer_form', 'generate_code', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\transaction\\controllers\\Customer_form.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (178, 'Customer_form', 'insert', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\transaction\\controllers\\Customer_form.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (179, 'Customer_form', 'update', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\transaction\\controllers\\Customer_form.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (180, 'Customer_form', 'delete', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\transaction\\controllers\\Customer_form.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (181, 'Customer_form', 'getcustomerbyid', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\transaction\\controllers\\Customer_form.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (182, 'Customer_form', 'ceknikdttot', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\transaction\\controllers\\Customer_form.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (183, 'Customer_form', 'add_foto', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\transaction\\controllers\\Customer_form.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (184, 'Transaction_buysell', 'index', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\transaction\\controllers\\Transaction_buysell.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (185, 'Transaction_buysell', 'indexs', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\transaction\\controllers\\Transaction_buysell.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (186, 'Transaction_buysell', 'cekclosingtrx', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\transaction\\controllers\\Transaction_buysell.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (187, 'Transaction_buysell', 'generate_code_confirm', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\transaction\\controllers\\Transaction_buysell.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (188, 'Transaction_buysell', 'update_header', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\transaction\\controllers\\Transaction_buysell.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (189, 'Transaction_buysell', 'insert_detail', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\transaction\\controllers\\Transaction_buysell.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (190, 'Transaction_buysell', 'delete_detail', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\transaction\\controllers\\Transaction_buysell.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (191, 'Transaction_buysell', 'show_header', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\transaction\\controllers\\Transaction_buysell.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (192, 'Transaction_buysell', 'show_detail', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\transaction\\controllers\\Transaction_buysell.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (193, 'Transaction_buysell', 'getstockbyid', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\transaction\\controllers\\Transaction_buysell.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (194, 'Transaction_buysell', 'getratebyid', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\transaction\\controllers\\Transaction_buysell.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (195, 'Transaction_buysell', 'getshowid', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\transaction\\controllers\\Transaction_buysell.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (196, 'Transaction_buysell', 'getthreshold', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\transaction\\controllers\\Transaction_buysell.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (197, 'Transaction_buysell', 'confirm_task', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\transaction\\controllers\\Transaction_buysell.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (198, 'Transaction_buysell', 'cancel_trx', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\transaction\\controllers\\Transaction_buysell.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (199, 'Transaction_buysell', 'insert_payment', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\transaction\\controllers\\Transaction_buysell.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (200, 'Transaction_buysell', 'show_detail_payment', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\transaction\\controllers\\Transaction_buysell.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (201, 'Transaction_buysell', 'delete_detail_payment', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\transaction\\controllers\\Transaction_buysell.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (202, 'Transaction_buysell', 'update_payment_cashierby', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\transaction\\controllers\\Transaction_buysell.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (203, 'Transaction_buysell', 'printnota', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\transaction\\controllers\\Transaction_buysell.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (204, 'Transaction_buysell_list', 'index', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\transaction\\controllers\\Transaction_buysell_list.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (205, 'Transaction_buysell_list', 'getdata', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\transaction\\controllers\\Transaction_buysell_list.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (206, 'Transaction_buysell_list', 'excel', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\transaction\\controllers\\Transaction_buysell_list.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (207, 'Transaction_buysell_task', 'index', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\transaction\\controllers\\Transaction_buysell_task.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (208, 'Transaction_buysell_task', 'getdata', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\transaction\\controllers\\Transaction_buysell_task.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (209, 'Change_pass', 'index', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\user\\controllers\\Change_pass.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (210, 'Change_pass', 'update', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\user\\controllers\\Change_pass.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (211, 'Group', 'index', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\user\\controllers\\Group.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (212, 'Group', 'insert', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\user\\controllers\\Group.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (213, 'Group', 'update', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\user\\controllers\\Group.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (214, 'Group', 'delete', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\user\\controllers\\Group.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (215, 'Group', 'getdata', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\user\\controllers\\Group.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (216, 'Level', 'index', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\user\\controllers\\Level.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (217, 'Level', 'insert', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\user\\controllers\\Level.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (218, 'Level', 'update', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\user\\controllers\\Level.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (219, 'Level', 'delete', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\user\\controllers\\Level.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (220, 'Level', 'getdata', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\user\\controllers\\Level.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (221, 'User', 'index', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\user\\controllers\\User.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (222, 'User', 'insert', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\user\\controllers\\User.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (223, 'User', 'update', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\user\\controllers\\User.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (224, 'User', 'delete', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\user\\controllers\\User.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (225, 'User', 'getdata', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\user\\controllers\\User.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (226, 'User', 'getusergroup', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\user\\controllers\\User.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (227, 'User', 'getuserlevel', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\user\\controllers\\User.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (228, 'User', 'getdatauser', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\user\\controllers\\User.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (229, 'User', 'getdatacashier', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\user\\controllers\\User.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (230, 'User', 'getcreatedby', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\user\\controllers\\User.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (231, 'User', 'getuserbyid', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\user\\controllers\\User.php', '2025-04-21 14:30:55', 1);
+INSERT INTO `auth_listmethod` VALUES (232, 'User', 'getcountuserbystoreid', '', 'E:\\server\\Apache24\\htdocs\\dbepos\\ciweb-modules\\user\\controllers\\User.php', '2025-04-21 14:30:55', 1);
 
 -- ----------------------------
 -- Table structure for auth_menu
@@ -746,14 +766,14 @@ INSERT INTO `auth_menu` VALUES (20, 'Currency', 'fa fa-minus-square-o', 'master_
 INSERT INTO `auth_menu` VALUES (22, 'Ppatk - DTTOT', 'fa fa-minus-square-o', 'ppatk/ppatk_dttot', 1, '2024-04-01 10:00:00', NULL, '2025-03-03 11:08:35', 1);
 INSERT INTO `auth_menu` VALUES (23, 'Customer - Act On', 'fa fa-minus-square-o', 'master_data/m_customer_act_on', 1, '2024-04-01 10:00:00', NULL, '2025-03-04 09:51:28', 1);
 INSERT INTO `auth_menu` VALUES (24, 'Setting - List Transaction', 'fa fa-minus-square-o', 'master_data/m_trxlist', 1, '2024-04-01 10:00:00', NULL, '2025-04-18 11:33:34', 1);
-INSERT INTO `auth_menu` VALUES (26, 'Setting Trx Date', 'fa fa-minus-square-o', 'master_data/m_trxdate', 1, '2024-04-01 10:00:00', NULL, '2025-02-26 13:08:45', 1);
+INSERT INTO `auth_menu` VALUES (26, 'Setting - List Transaction Date', 'fa fa-minus-square-o', 'master_data/m_trxdate', 1, '2024-04-01 10:00:00', NULL, '2025-04-21 12:46:48', 1);
 INSERT INTO `auth_menu` VALUES (30, 'Buy/Sell - Summary by Date', 'fa fa-minus-square-o', 'summary\\summary_buysell_by_date', 1, '2024-04-01 10:00:00', NULL, '2025-04-18 11:30:06', 1);
 INSERT INTO `auth_menu` VALUES (31, 'Buy/Sell - Summary by Month', 'fa fa-minus-square-o', 'summary\\summary_buysell_by_month', 1, '2024-04-01 10:00:00', NULL, '2025-04-18 11:30:14', 1);
 INSERT INTO `auth_menu` VALUES (32, 'Buy/Sell - Summary by Year', 'fa fa-minus-square-o', 'summary\\summary_buysell_by_year', 1, '2024-04-01 10:00:00', NULL, '2025-04-18 11:30:23', 1);
-INSERT INTO `auth_menu` VALUES (34, 'Store', 'fa fa-minus-square-o', 'master_data/m_store', 1, '2024-04-01 10:00:00', NULL, NULL, NULL);
+INSERT INTO `auth_menu` VALUES (34, 'Setting - Store', 'fa fa-minus-square-o', 'master_data/m_store', 1, '2024-04-01 10:00:00', NULL, '2025-04-21 12:46:28', 1);
 INSERT INTO `auth_menu` VALUES (36, 'Payment Type', 'fa fa-minus-square-o', 'master_data/m_payment_type', 1, '2024-04-01 10:00:00', NULL, NULL, NULL);
-INSERT INTO `auth_menu` VALUES (39, 'Stock', 'fa fa-minus-square-o', 'stock/stock', 1, '2024-04-19 12:21:31', 1, '2025-04-18 11:26:58', 1);
-INSERT INTO `auth_menu` VALUES (40, 'Stock by Currency', 'fa fa-minus-square-o', 'stock/stock_price', 1, '2024-04-19 12:21:59', 1, '2025-04-18 11:27:10', 1);
+INSERT INTO `auth_menu` VALUES (39, 'Stock In Total & Sheet', 'fa fa-minus-square-o', 'stock/stock', 1, '2024-04-19 12:21:31', 1, '2025-04-21 15:23:17', 1);
+INSERT INTO `auth_menu` VALUES (40, 'Stock In Exchange Rate Average', 'fa fa-minus-square-o', 'stock/stock_price', 1, '2024-04-19 12:21:59', 1, '2025-04-21 15:23:08', 1);
 INSERT INTO `auth_menu` VALUES (44, 'Buy/Sell', 'fa fa-minus-square-o', '#', 1, '2025-02-26 15:57:48', 1, '2025-04-18 11:29:44', 1);
 INSERT INTO `auth_menu` VALUES (45, 'Ppatk', 'fa fa-minus-square-o', '#', 1, '2025-03-03 10:34:44', 1, '2025-03-03 11:02:21', 1);
 INSERT INTO `auth_menu` VALUES (46, 'Customer', 'fa fa-minus-square-o', '#', 1, '2025-03-03 11:12:35', 1, NULL, NULL);
@@ -761,11 +781,11 @@ INSERT INTO `auth_menu` VALUES (50, 'Change Password', 'fa fa-minus-square-o', '
 INSERT INTO `auth_menu` VALUES (52, 'Cash/Bank', 'fa fa-minus-square-o', '#', 1, '2025-03-21 16:30:49', 1, '2025-04-18 11:30:45', 1);
 INSERT INTO `auth_menu` VALUES (53, 'Cash/Bank - List Transaction', 'fa fa-minus-square-o', 'cb/cb_list', 1, '2025-03-21 16:31:13', 1, '2025-04-18 11:33:07', 1);
 INSERT INTO `auth_menu` VALUES (54, 'Cash/Bank - Balance', 'fa fa-minus-square-o', 'cb/cb_balance', 1, '2025-03-21 16:31:49', 1, '2025-04-18 11:31:05', 1);
-INSERT INTO `auth_menu` VALUES (56, 'Cash/Bank - Source', 'fa fa-minus-square-o', 'master_data/m_cb', 1, '2025-03-22 08:24:46', 1, '2025-04-18 11:32:41', 1);
-INSERT INTO `auth_menu` VALUES (57, 'Cash/Bank - Purpose', 'fa fa-minus-square-o', 'master_data/m_cb_pos', 1, '2025-03-22 08:25:15', 1, '2025-04-18 11:32:48', 1);
+INSERT INTO `auth_menu` VALUES (56, 'Setting - Cash Bank Source', 'fa fa-minus-square-o', 'master_data/m_cb', 1, '2025-03-22 08:24:46', 1, '2025-04-21 12:48:42', 1);
+INSERT INTO `auth_menu` VALUES (57, 'Setting - Cash Bank Purpose', 'fa fa-minus-square-o', 'master_data/m_cb_pos', 1, '2025-03-22 08:25:15', 1, '2025-04-21 12:48:32', 1);
 INSERT INTO `auth_menu` VALUES (58, 'Export Data', 'fa fa-minus-square-o', 'export\\export_data', 1, '2025-04-14 09:08:49', 1, '2025-04-14 09:29:23', 1);
 INSERT INTO `auth_menu` VALUES (59, 'Buy/Sell - List Transaction', 'fa fa-minus-square-o', 'transaction/transaction_buysell_list', 1, '2025-04-18 17:39:56', 1, NULL, NULL);
-INSERT INTO `auth_menu` VALUES (60, 'Trx Setting', 'fa fa-minus-square-o', '#', 1, '2025-04-19 06:36:15', 1, NULL, NULL);
+INSERT INTO `auth_menu` VALUES (60, 'Transaction Setting', 'fa fa-minus-square-o', '#', 1, '2025-04-19 06:36:15', 1, '2025-04-21 12:46:59', 1);
 
 -- ----------------------------
 -- Table structure for auth_menu_group
@@ -797,9 +817,9 @@ INSERT INTO `auth_menu_group` VALUES (6, 1, 5, 9, 6, 1, '2024-04-01 10:00:00', N
 INSERT INTO `auth_menu_group` VALUES (7, 1, 6, 1, 7, 1, '2024-04-01 10:00:00', NULL, '2025-02-23 20:49:35', 1);
 INSERT INTO `auth_menu_group` VALUES (8, 1, 7, 6, 8, 1, '2024-04-01 10:00:00', NULL, '2025-02-23 20:49:44', 1);
 INSERT INTO `auth_menu_group` VALUES (9, 1, 8, 6, 9, 1, '2024-04-01 10:00:00', NULL, '2025-02-23 20:49:50', 1);
-INSERT INTO `auth_menu_group` VALUES (11, 1, 26, 60, 16, 1, '2024-04-01 10:00:00', NULL, '2025-04-19 06:38:03', 1);
+INSERT INTO `auth_menu_group` VALUES (11, 1, 26, 60, 15, 1, '2024-04-01 10:00:00', NULL, '2025-04-21 12:47:55', 1);
 INSERT INTO `auth_menu_group` VALUES (14, 1, 34, 60, 13, 1, '2024-04-01 10:00:00', NULL, '2025-04-19 06:37:42', 1);
-INSERT INTO `auth_menu_group` VALUES (15, 1, 24, 60, 15, 1, '2024-04-01 10:00:00', NULL, '2025-04-19 06:37:52', 1);
+INSERT INTO `auth_menu_group` VALUES (15, 1, 24, 60, 14, 1, '2024-04-01 10:00:00', NULL, '2025-04-21 12:47:50', 1);
 INSERT INTO `auth_menu_group` VALUES (16, 1, 10, 6, 10, 1, '2025-02-23 20:58:08', 1, NULL, NULL);
 INSERT INTO `auth_menu_group` VALUES (18, 3, 14, 44, 2, 1, '2025-02-26 12:48:39', 1, '2025-03-28 07:42:19', 1);
 INSERT INTO `auth_menu_group` VALUES (22, 3, 30, 44, 4, 1, '2025-02-26 12:50:51', 1, '2025-03-28 07:55:02', 1);
@@ -837,6 +857,8 @@ INSERT INTO `auth_menu_group` VALUES (117, 3, 23, 46, 13, 1, '2025-04-16 09:31:1
 INSERT INTO `auth_menu_group` VALUES (118, 3, 59, 44, 3, 1, '2025-04-18 17:41:30', 1, NULL, NULL);
 INSERT INTO `auth_menu_group` VALUES (119, 4, 59, 0, 1, 1, '2025-04-18 17:41:58', 1, NULL, NULL);
 INSERT INTO `auth_menu_group` VALUES (120, 1, 60, 0, 12, 1, '2025-04-19 06:37:33', 1, NULL, NULL);
+INSERT INTO `auth_menu_group` VALUES (121, 1, 56, 60, 16, 1, '2025-04-21 12:47:44', 1, '2025-04-21 12:47:59', 1);
+INSERT INTO `auth_menu_group` VALUES (122, 1, 57, 60, 17, 1, '2025-04-21 12:48:14', 1, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for auth_usergroup
@@ -917,9 +939,9 @@ CREATE TABLE `auth_users`  (
 -- Records of auth_users
 -- ----------------------------
 INSERT INTO `auth_users` VALUES (1, 'Developer', '8989', 'f794bdbef7990b5112e526b5cd4ea67f4a35af21', NULL, 1, 1, 0, NULL, NULL, NULL, NULL, 1, '2025-02-23 13:58:46', NULL, NULL, NULL, NULL);
-INSERT INTO `auth_users` VALUES (2, 'Konsolidasi', 'konsolidasi', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 2, 1, 0, '1,2,3,4', '', '', NULL, 1, '2025-02-23 13:58:46', NULL, '2025-03-07 12:10:06', 1, '2025-04-19 07:00:30');
-INSERT INTO `auth_users` VALUES (3, 'Admin', 'admin', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 3, 1, 1, NULL, '', '', NULL, 1, '2025-02-23 13:58:46', NULL, '2025-03-07 12:10:19', 1, '2025-04-19 06:28:11');
-INSERT INTO `auth_users` VALUES (4, 'Counter', 'konter', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 4, 2, 1, NULL, '', '', NULL, 1, '2025-02-23 13:58:46', NULL, '2025-03-07 12:10:34', 1, '2025-04-19 06:50:31');
+INSERT INTO `auth_users` VALUES (2, 'Konsolidasi', 'konsolidasi', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 2, 1, 0, '1,2,3,4', '', '', NULL, 1, '2025-02-23 13:58:46', NULL, '2025-03-07 12:10:06', 1, '2025-04-21 15:32:01');
+INSERT INTO `auth_users` VALUES (3, 'Admin', 'admin', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 3, 1, 1, NULL, '', '', NULL, 1, '2025-02-23 13:58:46', NULL, '2025-03-07 12:10:19', 1, '2025-04-21 15:23:35');
+INSERT INTO `auth_users` VALUES (4, 'Counter', 'konter', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 4, 2, 1, NULL, '', '', NULL, 1, '2025-02-23 13:58:46', NULL, '2025-03-07 12:10:34', 1, '2025-04-21 16:22:30');
 INSERT INTO `auth_users` VALUES (5, 'Cashier', 'kasir', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 5, 2, 1, NULL, '', '', NULL, 1, '2025-03-06 13:05:41', 1, '2025-03-07 12:10:24', 1, '2025-04-19 06:58:51');
 INSERT INTO `auth_users` VALUES (6, 'Angkasa Pura 1', 'ap1', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 6, 2, 0, '3,4', '', '', NULL, 1, '2025-03-06 13:06:45', 1, '2025-03-07 12:10:12', 1, '2025-04-19 06:59:41');
 INSERT INTO `auth_users` VALUES (7, 'Angkasa Pura 2', 'ap2', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 6, 2, 0, '1,2', '', '', NULL, 1, '2025-03-06 13:06:45', 1, '2025-03-07 12:10:12', 1, '2025-04-04 16:05:44');
@@ -962,10 +984,10 @@ CREATE TABLE `m_cb`  (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `store_id` bigint NOT NULL,
   `tr_id` smallint NOT NULL,
+  `payment_type_id` bigint NULL DEFAULT NULL,
   `cb_code` varchar(8) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `cb_name` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `description` varchar(150) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  `payment_type_id` bigint NULL DEFAULT NULL,
   `status` smallint NOT NULL,
   `created` datetime NULL DEFAULT NULL,
   `updated` datetime NULL DEFAULT NULL,
@@ -977,8 +999,14 @@ CREATE TABLE `m_cb`  (
 -- ----------------------------
 -- Records of m_cb
 -- ----------------------------
-INSERT INTO `m_cb` VALUES (1, 1, 3, '01030001', 'Kas', '', 1, 1, '2025-03-08 22:28:04', '2025-03-22 09:12:01', 1, 3);
-INSERT INTO `m_cb` VALUES (2, 1, 4, '01040001', 'Bank', ' ', 2, 1, '2025-03-08 22:28:04', '2025-04-05 11:14:45', 1, 3);
+INSERT INTO `m_cb` VALUES (1, 1, 3, 1, '01030001', 'Cash', '', 1, '2025-03-08 22:28:04', '2025-04-21 13:38:25', 1, 1);
+INSERT INTO `m_cb` VALUES (2, 1, 4, 2, '01040001', 'Bank', ' ', 1, '2025-03-08 22:28:04', '2025-04-05 11:14:45', 1, 3);
+INSERT INTO `m_cb` VALUES (4, 2, 3, 1, '02030001', 'Cash', '', 1, '2025-04-21 13:39:26', NULL, 1, NULL);
+INSERT INTO `m_cb` VALUES (5, 2, 4, 2, '02040001', 'Bank', '', 1, '2025-04-21 13:39:36', NULL, 1, NULL);
+INSERT INTO `m_cb` VALUES (6, 3, 3, 1, '03030001', 'Cash', '', 1, '2025-04-21 13:39:56', NULL, 1, NULL);
+INSERT INTO `m_cb` VALUES (7, 3, 4, 2, '03040001', 'Bank', '', 1, '2025-04-21 13:40:15', NULL, 1, NULL);
+INSERT INTO `m_cb` VALUES (8, 4, 3, 1, '04030001', 'Cash', '', 1, '2025-04-21 13:40:34', NULL, 1, NULL);
+INSERT INTO `m_cb` VALUES (9, 4, 4, 2, '04040001', 'Bank', '', 1, '2025-04-21 13:40:42', NULL, 1, NULL);
 
 -- ----------------------------
 -- Table structure for m_cb_pos
@@ -1003,9 +1031,9 @@ CREATE TABLE `m_cb_pos`  (
 -- Records of m_cb_pos
 -- ----------------------------
 INSERT INTO `m_cb_pos` VALUES (1, 1, 'MP0001', 'Modal Kas', 'I', NULL, 1, '2025-03-08 22:28:04', '2025-03-25 13:27:21', 3, 3);
-INSERT INTO `m_cb_pos` VALUES (2, 1, 'MP0002', 'Pembelian Valas', 'O', 1, 1, '2025-03-08 22:28:04', NULL, 3, NULL);
+INSERT INTO `m_cb_pos` VALUES (2, 1, 'MP0002', 'Pembelian Valas', 'O', 1, 1, '2025-03-08 22:28:04', '2025-04-21 14:46:39', 3, 1);
 INSERT INTO `m_cb_pos` VALUES (3, 1, 'MP0003', 'Penerimaan Kas', 'I', NULL, 1, '2025-03-08 22:28:04', NULL, 3, NULL);
-INSERT INTO `m_cb_pos` VALUES (4, 1, 'MP0004', 'Pengeluaran Kas', 'O', NULL, 1, '2025-03-08 22:28:04', NULL, 3, NULL);
+INSERT INTO `m_cb_pos` VALUES (4, 1, 'MP0004', 'Pengeluaran Kas', 'O', NULL, 1, '2025-03-08 22:28:04', '2025-04-21 14:36:42', 3, 1);
 INSERT INTO `m_cb_pos` VALUES (5, 1, 'MP0005', 'Penjualan Valas', 'I', 2, 1, '2025-03-08 22:28:04', NULL, 3, NULL);
 INSERT INTO `m_cb_pos` VALUES (6, 1, 'MP0006', 'Setor Ke Pusat', 'O', NULL, 1, '2025-03-08 22:28:04', NULL, 3, NULL);
 INSERT INTO `m_cb_pos` VALUES (7, 1, 'MP0007', 'Terima Dari Pusat', 'I', NULL, 1, '2025-03-08 22:28:04', NULL, 3, NULL);
@@ -1688,8 +1716,8 @@ CREATE TABLE `m_transaction_date`  (
 -- ----------------------------
 -- Records of m_transaction_date
 -- ----------------------------
-INSERT INTO `m_transaction_date` VALUES (2, 1, 2, '2025-04-18', 1, '2025-03-05 16:03:58', '2025-04-18 18:54:43', 1, NULL);
-INSERT INTO `m_transaction_date` VALUES (3, 1, 1, '2025-04-18', 1, '2025-03-05 16:06:33', '2025-04-19 06:44:45', 1, 1);
+INSERT INTO `m_transaction_date` VALUES (2, 1, 2, '2025-04-21', 1, '2025-03-05 16:03:58', '2025-04-21 15:05:31', 1, NULL);
+INSERT INTO `m_transaction_date` VALUES (3, 1, 1, '2025-04-21', 1, '2025-03-05 16:06:33', '2025-04-21 15:05:31', 1, NULL);
 INSERT INTO `m_transaction_date` VALUES (4, 1, 4, '2025-04-19', 1, '2025-04-19 06:44:25', '2025-04-19 06:44:53', 1, 1);
 INSERT INTO `m_transaction_date` VALUES (5, 1, 3, '2025-04-19', 1, '2025-04-19 06:44:34', '2025-04-19 06:45:07', 1, 1);
 INSERT INTO `m_transaction_date` VALUES (6, 2, 1, '2025-04-19', 1, '2025-04-19 06:45:50', NULL, 1, NULL);
@@ -2355,6 +2383,10 @@ CREATE TABLE `tr_detail`  (
 -- ----------------------------
 -- Records of tr_detail
 -- ----------------------------
+INSERT INTO `tr_detail` VALUES (1, 1, 1, 100, 1000, 16000.00, 3, '2025-04-21 15:05:52', '2025-04-21 15:06:11', 4, 4);
+INSERT INTO `tr_detail` VALUES (2, 1, 7, 1, 15000, 12100.00, 3, '2025-04-21 15:06:00', '2025-04-21 15:06:11', 4, 4);
+INSERT INTO `tr_detail` VALUES (3, 2, 1, 100, 500, 16800.00, 3, '2025-04-21 15:06:38', '2025-04-21 15:07:01', 4, 4);
+INSERT INTO `tr_detail` VALUES (4, 2, 1, 100, 300, 16500.00, 3, '2025-04-21 15:06:57', '2025-04-21 15:07:01', 4, 4);
 
 -- ----------------------------
 -- Table structure for tr_header
@@ -2383,6 +2415,8 @@ CREATE TABLE `tr_header`  (
 -- ----------------------------
 -- Records of tr_header
 -- ----------------------------
+INSERT INTO `tr_header` VALUES (1, 1, 1, '2025-04-21', '25042101010001', 2, NULL, NULL, NULL, NULL, 3, '2025-04-21 15:05:52', '2025-04-21 15:06:11', 4, 4, NULL);
+INSERT INTO `tr_header` VALUES (2, 1, 2, '2025-04-21', '25042101020001', 1, NULL, NULL, NULL, NULL, 3, '2025-04-21 15:06:38', '2025-04-21 15:07:01', 4, 4, NULL);
 
 -- ----------------------------
 -- Table structure for tr_log_api
@@ -2453,6 +2487,10 @@ CREATE TABLE `tr_stock`  (
 -- ----------------------------
 -- Records of tr_stock
 -- ----------------------------
+INSERT INTO `tr_stock` VALUES (5, 1, 1, 2025, 4, 100, 0, 1, '2025-04-21 15:07:06', 4, NULL, NULL);
+INSERT INTO `tr_stock` VALUES (6, 1, 1, 2025, 5, 100, 200, 1, '2025-04-21 15:07:06', 4, '2025-04-21 15:07:06', 4);
+INSERT INTO `tr_stock` VALUES (7, 7, 1, 2025, 4, 1, 0, 1, '2025-04-21 15:07:06', 4, NULL, NULL);
+INSERT INTO `tr_stock` VALUES (8, 7, 1, 2025, 5, 1, 15000, 1, '2025-04-21 15:07:06', 4, '2025-04-21 15:07:06', 4);
 
 -- ----------------------------
 -- Table structure for tr_stock_price
@@ -2485,6 +2523,10 @@ CREATE TABLE `tr_stock_price`  (
 -- ----------------------------
 -- Records of tr_stock_price
 -- ----------------------------
+INSERT INTO `tr_stock_price` VALUES (1, 1, '2025-04-21', 2025, 4, 1, 1, 100000, 16000, 1600000000, NULL, 0, 0.00, 0.00, 0.00, 100000.00, 16000.00, 1600000000.00, 0.00, '2025-04-21 15:07:06', 4);
+INSERT INTO `tr_stock_price` VALUES (2, 1, '2025-04-21', 2025, 4, 1, NULL, 0, 0, 0, 2, 50000, 16800.00, 840000000.00, 800000000.00, 50000.00, 16000.00, 800000000.00, 40000000.00, '2025-04-21 15:07:06', 4);
+INSERT INTO `tr_stock_price` VALUES (3, 1, '2025-04-21', 2025, 4, 1, NULL, 0, 0, 0, 2, 30000, 16500.00, 495000000.00, 480000000.00, 20000.00, 16000.00, 320000000.00, 15000000.00, '2025-04-21 15:07:06', 4);
+INSERT INTO `tr_stock_price` VALUES (1, 1, '2025-04-21', 2025, 4, 7, 1, 15000, 12100, 181500000, NULL, 0, 0.00, 0.00, 0.00, 15000.00, 12100.00, 181500000.00, 0.00, '2025-04-21 15:07:06', 4);
 
 -- ----------------------------
 -- View structure for v_auth_group_role
@@ -2521,6 +2563,18 @@ CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_auth_store_object` AS 
 -- ----------------------------
 DROP VIEW IF EXISTS `v_auth_users`;
 CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_auth_users` AS select `auth_users`.`id` AS `id`,`auth_users`.`fullname` AS `fullname`,`auth_users`.`username` AS `username`,`auth_users`.`password` AS `password`,`auth_users`.`usergroup_id` AS `usergroup_id`,`auth_usergroup`.`usergroupname` AS `usergroupname`,`auth_users`.`userlevel_id` AS `userlevel_id`,`auth_userlevel`.`userlevelname` AS `userlevelname`,`auth_users`.`store_id` AS `store_id`,`m_store`.`store_name` AS `store_name`,`m_store`.`store_address` AS `store_address`,`m_store`.`api_method` AS `api_method`,`m_store`.`api_angkasapura` AS `api_angkasapura`,`m_store`.`api_username` AS `api_username`,`m_store`.`api_password` AS `api_password`,(select `m_store`.`ap_tr_id` from `m_store` where ((`m_store`.`id` = `auth_users`.`store_id_multiple`) and (`auth_users`.`usergroup_id` = 6)) limit 1) AS `ap_tr_id`,`auth_users`.`store_id_multiple` AS `store_id_multiple`,(select concat('[',group_concat('{"id":"',`v_auth_store_object`.`store_id`,'","store_address":"',`v_auth_store_object`.`store_address`,'"}' separator ','),']') from `v_auth_store_object` where (`v_auth_store_object`.`user_id` = `auth_users`.`id`)) AS `store_id_multiple_object`,`auth_users`.`email` AS `email`,`auth_users`.`celluler` AS `celluler`,`auth_users`.`chgpass` AS `chgpass`,`auth_users`.`status` AS `status`,`auth_users`.`created` AS `created`,`auth_users`.`updated` AS `updated`,`auth_users`.`createdby` AS `createdby`,`auth_users`.`updatedby` AS `updatedby`,`auth_users`.`lastlog` AS `lastlog` from (((`auth_users` left join `auth_usergroup` on((`auth_users`.`usergroup_id` = `auth_usergroup`.`id`))) left join `auth_userlevel` on((`auth_users`.`userlevel_id` = `auth_userlevel`.`id`))) left join `m_store` on((`auth_users`.`store_id` = `m_store`.`id`)));
+
+-- ----------------------------
+-- View structure for v_m_cb
+-- ----------------------------
+DROP VIEW IF EXISTS `v_m_cb`;
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_m_cb` AS select `m_cb`.`id` AS `id`,`m_cb`.`store_id` AS `store_id`,`m_store`.`store_address` AS `store_address`,`m_cb`.`tr_id` AS `tr_id`,`m_transaction`.`transaction_name` AS `transaction_name`,`m_cb`.`payment_type_id` AS `payment_type_id`,`m_payment_type`.`payment_type_name` AS `payment_type_name`,`m_cb`.`cb_code` AS `cb_code`,`m_cb`.`cb_name` AS `cb_name`,`m_cb`.`description` AS `description`,`m_cb`.`status` AS `status`,`m_cb`.`created` AS `created`,`m_cb`.`updated` AS `updated`,`m_cb`.`createdby` AS `createdby`,`m_cb`.`updatedby` AS `updatedby` from (((`m_cb` join `m_store` on((`m_cb`.`store_id` = `m_store`.`id`))) join `m_transaction` on((`m_cb`.`tr_id` = `m_transaction`.`id`))) join `m_payment_type` on((`m_cb`.`payment_type_id` = `m_payment_type`.`id`)));
+
+-- ----------------------------
+-- View structure for v_m_cb_pos
+-- ----------------------------
+DROP VIEW IF EXISTS `v_m_cb_pos`;
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_m_cb_pos` AS select `m_cb_pos`.`id` AS `id`,`m_store`.`store_address` AS `store_address`,`m_transaction`.`transaction_name` AS `transaction_name`,`m_cb_pos`.`cb_id` AS `cb_id`,`m_cb`.`cb_name` AS `cb_name`,`m_cb_pos`.`cb_pos_code` AS `cb_pos_code`,`m_cb_pos`.`cb_pos_name` AS `cb_pos_name`,`m_cb_pos`.`cb_pos_in_out` AS `cb_pos_in_out`,`m_cb_pos`.`buysell_tr_id` AS `buysell_tr_id`,`m_transaction2`.`transaction_name` AS `buysell_tr_id_name`,`m_cb_pos`.`status` AS `status`,`m_cb_pos`.`created` AS `created`,`m_cb_pos`.`updated` AS `updated`,`m_cb_pos`.`createdby` AS `createdby`,`m_cb_pos`.`updatedby` AS `updatedby` from ((((`m_cb_pos` join `m_cb` on((`m_cb_pos`.`cb_id` = `m_cb`.`id`))) join `m_store` on((`m_cb`.`store_id` = `m_store`.`id`))) join `m_transaction` on((`m_cb`.`tr_id` = `m_transaction`.`id`))) left join `m_transaction` `m_transaction2` on((`m_cb_pos`.`buysell_tr_id` = `m_transaction2`.`id`)));
 
 -- ----------------------------
 -- View structure for v_m_customer

@@ -10,6 +10,7 @@
         $("#store_address").val();
         $("#store_email").val();
         $("#store_permit_number").val();
+        $("#store_id_pjk").val();
 
         $("#api_method").val();
         $("#api_angkasapura").val();        
@@ -77,6 +78,7 @@
         $("#store_address").val(d.store_address);
         $("#store_email").val(d.store_email);
         $("#store_permit_number").val(d.store_permit_number);
+        $("#store_id_pjk").val(d.store_id_pjk);
 
         $("#api_method").val(d.api_method);
         $("#api_angkasapura").val(d.api_angkasapura);        
@@ -116,11 +118,7 @@
             type: 'POST'
         },
         columns: [
-            {data: "#", width: "5%", orderable: false, searchable: false},
-            {data: 'store_name', render: function (data, type, row, meta) {
-                    return data;
-                }
-            },
+            {data: "#", width: "5%", orderable: false, searchable: false},           
             {data: 'store_address'},
             {data: 'api_store_id'},
             {data: 'api_angkasapura'},
@@ -132,8 +130,10 @@
                     return '<a title="Edit" href="#"><i class="fa fa-edit"></i></a>';
                 }
             },            
+            {data: 'store_name', visible: false},
             {data: 'store_email', visible: false},
             {data: 'store_permit_number', visible: false},
+            {data: 'store_id_pjk', visible: false},
             {data: 'api_method', visible: false},
             {data: 'api_angkasapura', visible: false},
             {data: 'api_username', visible: false},
@@ -168,31 +168,6 @@
         $('#searchid select').val('');
         t.search('')
         t.columns().search('').draw();
-    });
-
-    $("#btn-get-store-ap").on('click', function (e) {
-        e.preventDefault();
-        alertify.confirm("Are you sure Get Store Angkasapura ?", function (x) {
-            if (x) {                       
-                $.ajax({
-                    url: baseUrl + 'api/api_ap/ap_post_api',
-                    type: 'POST',
-                    data: {'method' : 'getstore', 'store_id' : '1'},
-                    datatype: 'json',
-                    success: function(data) {    
-                        if(data.length > 0) {
-                            $('#mainTable table').DataTable().ajax.reload();
-                            alertify.success('Get Store Success!');
-                        }                       
-                    },
-                    error: function(xhr){
-                        alertify.error(xhr.responseText);
-                    }
-                });
-            } else {
-                return;
-            }             
-        });                             
-    });
+    });    
 })(jQuery);
 

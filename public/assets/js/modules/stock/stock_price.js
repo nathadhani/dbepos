@@ -138,11 +138,28 @@ function fethdata(){
             {data: 'created', visible: false},
         ],            
         fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+            // if (iDisplayIndex >= 2 && iDisplayIndex <= 5 ) {
+                for (i=2; i<=5; i++) {
+                    $(nRow).find('td:eq('+i+')').css('color','#0000FF');
+                    // $(nRow).find('td:eq('+i+')').css('font-weight','bold');
+                }
+            // }
+            // if (iDisplayIndex >= 2 && iDisplayIndex <= 5 ) {
+                for (i=6; i<=9; i++) {
+                    $(nRow).find('td:eq('+i+')').css('color','#FF0000');
+                    // $(nRow).find('td:eq('+i+')').css('font-weight','bold');
+                }
+            // }            
             if (Number(aData.profit) > 0) {
                 $(nRow).find('td:eq(13)').css('color','#000');
-                $(nRow).find('td:eq(13)').css('background-color','#adff00');
-                $(nRow).find('td:eq(13)').css('font-weight','bold');
-            }                    
+                // $(nRow).find('td:eq(13)').css('background-color','#adff00');
+                // $(nRow).find('td:eq(13)').css('font-weight','bold');
+            }   
+            if (Number(aData.profit) < 0) {
+                $(nRow).find('td:eq(13)').css('color','#FF0000');
+                // $(nRow).find('td:eq(13)').css('background-color','#adff00');
+                // $(nRow).find('td:eq(13)').css('font-weight','bold');
+            }                             
         },  
         order: [[1, 'asc']]
     });

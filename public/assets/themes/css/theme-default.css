@@ -3948,8 +3948,6 @@ background: #1caf9a !important;
 
 .login-container .login-box {
   width: 270px;
-  /* margin: 10px auto; */
-  /* padding-top: 80px; */  
   position: absolute;
   top: 50%;
   left: 50%;
@@ -3967,8 +3965,7 @@ background: #1caf9a !important;
 .login-container .login-box .login-body {
   width: 100%;
   float: left;    
-  background: rgba(240,240,240, 50%);
-  /* background-color: #FAFAFA; */
+  background: rgba(240,240,240);
   padding: 20px;
   -moz-border-radius: 0px;
   -webkit-border-radius: 0px;

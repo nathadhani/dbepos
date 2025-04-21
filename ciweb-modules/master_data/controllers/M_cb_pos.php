@@ -98,7 +98,7 @@ class M_cb_pos extends Bks_Controller {
     function getdata() {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
-        $this->Bksmdl->table = 'm_cb_pos';
+        $this->Bksmdl->table = 'v_m_cb_pos';
         $cpData = $this->Bksmdl->getDataTable();
         $this->Bksmdl->outputToJson($cpData);
     }
