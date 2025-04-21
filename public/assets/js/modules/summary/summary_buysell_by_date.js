@@ -7,6 +7,7 @@ $("#btn-submit").on('click', function (e) {
         bksfn.errMsg('Store Belum Dipilih!');            
     } else {
         fethdata();
+        $("#btn-closing").show();
     }        
 });
 
@@ -63,7 +64,6 @@ function fethdata(){
                 });                
                 $("#totalbuy").html(formatRupiah(totalbuy));
                 $("#totalsell").html(formatRupiah(totalsell));
-                $("#btn-closing").show();
                 $("#btn-pdf").show();
                 $("#btn-excel").show();
             }else{

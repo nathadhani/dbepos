@@ -11,7 +11,7 @@
  Target Server Version : 80030
  File Encoding         : 65001
 
- Date: 19/04/2025 07:07:09
+ Date: 21/04/2025 02:47:03
 */
 
 SET NAMES utf8mb4;
@@ -33,7 +33,7 @@ CREATE TABLE `auth_group_role`  (
   `updated` datetime NULL DEFAULT NULL,
   `updatedby` bigint NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 887 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 895 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of auth_group_role
@@ -470,7 +470,7 @@ CREATE TABLE `auth_listmethod`  (
   `created` datetime NULL DEFAULT NULL,
   `createdby` bigint NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 232 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 231 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of auth_listmethod
@@ -721,7 +721,7 @@ CREATE TABLE `auth_menu`  (
   `updated` datetime NULL DEFAULT NULL,
   `updatedby` bigint NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 59 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 61 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of auth_menu
@@ -783,7 +783,7 @@ CREATE TABLE `auth_menu_group`  (
   `updated` datetime NULL DEFAULT NULL,
   `updatedby` bigint NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 118 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 121 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of auth_menu_group
@@ -1618,7 +1618,8 @@ CREATE TABLE `m_store`  (
   `store_name` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `store_address` longtext CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `store_email` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  `store_permit_number` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `store_permit_number` varchar(35) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `store_id_pjk` varchar(15) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `api_method` smallint NULL DEFAULT NULL,
   `api_angkasapura` varchar(5) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `api_username` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
@@ -1638,10 +1639,10 @@ CREATE TABLE `m_store`  (
 -- ----------------------------
 -- Records of m_store
 -- ----------------------------
-INSERT INTO `m_store` VALUES (1, 'PT. INDONESIA CENTRAL VALUTAMAS', 'Terminal 2F - Shopping Arcade Dep Soekarno Hatta', 'indocev@gmail.com', '1234567991000', 1, 'AP2', 'api.indocev.cgk', 'api.indocev.cgk', '53e92e8d102d983ea54d1990e4cd16d4', 'Indocev Money Changer T2F #Shopping Arcade Dep', '1', 5, 1, '2024-03-17 00:00:00', '2025-04-19 06:38:28', 1, 1);
-INSERT INTO `m_store` VALUES (2, 'PT. INDONESIA CENTRAL VALUTAMAS', 'Terminal 3 - Arrival Internatioanl Soekarno Hatta', 'indocev@gmail.com', '', 0, 'AP2', 'api.indocev.cgk', 'api.indocev.cgk', '00d8c2a3c5242f301ed4034c33802c2b', 'Indocev Money Changer T3 #Arr Intl', '1', 5, 1, '2024-03-17 00:00:00', '2025-04-06 15:18:22', 1, 1);
-INSERT INTO `m_store` VALUES (3, 'PT. INDONESIA CENTRAL VALUTAMAS', 'Terminal 2 SV-21-6 - Departure Juanda Surabaya', 'indocev@gmail.com', NULL, 0, 'AP1', 'api.indocev.sub', 'api.indocev.sub', 'e9c2a6e6a7b9300338cccb7fdb011f61', 'Money Changer (Departure Int-SV-22-7)', '1', 5, 1, '2024-03-21 13:29:04', '2025-03-05 16:09:14', 1, 1);
-INSERT INTO `m_store` VALUES (4, 'PT. INDONESIA CENTRAL VALUTAMAS', 'Terminal 2 SV-21-7 - Arrival Juanda Surabaya', 'indocev@gmail.com', '', 0, 'AP1', 'api.indocev.sub', 'api.indocev.sub', '496b1f88ef3e2b6fc8b27b4b04bc5751', 'Money Changer (Arrival Int-SV-21-6)', '1', 5, 1, '2024-03-21 13:29:04', '2025-03-07 10:08:17', 1, 1);
+INSERT INTO `m_store` VALUES (1, 'PT. INDONESIA CENTRAL VALUTAMAS', 'Terminal 2F - Shopping Arcade Dep Soekarno Hatta', 'indocev@gmail.com', '1234567991000', NULL, 1, 'AP2', 'api.indocev.cgk', 'api.indocev.cgk', '53e92e8d102d983ea54d1990e4cd16d4', 'Indocev Money Changer T2F #Shopping Arcade Dep', '1', 5, 1, '2024-03-17 00:00:00', '2025-04-19 06:38:28', 1, 1);
+INSERT INTO `m_store` VALUES (2, 'PT. INDONESIA CENTRAL VALUTAMAS', 'Terminal 3 - Arrival Internatioanl Soekarno Hatta', 'indocev@gmail.com', '', NULL, 0, 'AP2', 'api.indocev.cgk', 'api.indocev.cgk', '00d8c2a3c5242f301ed4034c33802c2b', 'Indocev Money Changer T3 #Arr Intl', '1', 5, 1, '2024-03-17 00:00:00', '2025-04-06 15:18:22', 1, 1);
+INSERT INTO `m_store` VALUES (3, 'PT. INDONESIA CENTRAL VALUTAMAS', 'Terminal 2 SV-21-6 - Departure Juanda Surabaya', 'indocev@gmail.com', NULL, NULL, 0, 'AP1', 'api.indocev.sub', 'api.indocev.sub', 'e9c2a6e6a7b9300338cccb7fdb011f61', 'Money Changer (Departure Int-SV-22-7)', '1', 5, 1, '2024-03-21 13:29:04', '2025-03-05 16:09:14', 1, 1);
+INSERT INTO `m_store` VALUES (4, 'PT. INDONESIA CENTRAL VALUTAMAS', 'Terminal 2 SV-21-7 - Arrival Juanda Surabaya', 'indocev@gmail.com', '', NULL, 0, 'AP1', 'api.indocev.sub', 'api.indocev.sub', '496b1f88ef3e2b6fc8b27b4b04bc5751', 'Money Changer (Arrival Int-SV-21-6)', '1', 5, 1, '2024-03-21 13:29:04', '2025-03-07 10:08:17', 1, 1);
 
 -- ----------------------------
 -- Table structure for m_transaction
@@ -1682,7 +1683,7 @@ CREATE TABLE `m_transaction_date`  (
   `createdby` bigint NULL DEFAULT NULL,
   `updatedby` bigint NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of m_transaction_date
@@ -2274,7 +2275,7 @@ CREATE TABLE `tr_cb_detail`  (
   `createdby` smallint NULL DEFAULT NULL,
   `updatedby` smallint NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of tr_cb_detail
@@ -2300,7 +2301,7 @@ CREATE TABLE `tr_cb_header`  (
   `createdby` smallint NULL DEFAULT NULL,
   `updatedby` smallint NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of tr_cb_header
@@ -2326,7 +2327,7 @@ CREATE TABLE `tr_cb_saldo`  (
   `createdby` smallint NULL DEFAULT NULL,
   `updatedby` smallint NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 121 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of tr_cb_saldo
@@ -2349,7 +2350,7 @@ CREATE TABLE `tr_detail`  (
   `createdby` bigint NOT NULL,
   `updatedby` bigint NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of tr_detail
@@ -2377,7 +2378,7 @@ CREATE TABLE `tr_header`  (
   `updatedby` bigint NULL DEFAULT NULL,
   `cashierby` bigint NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of tr_header
@@ -2423,7 +2424,7 @@ CREATE TABLE `tr_payment`  (
   `createdby` bigint NOT NULL,
   `updatedby` bigint NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of tr_payment
@@ -2447,7 +2448,7 @@ CREATE TABLE `tr_stock`  (
   `updated` datetime NULL DEFAULT NULL,
   `updatedby` bigint NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 29 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of tr_stock
@@ -2543,7 +2544,7 @@ CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_m_store1` AS select `t
 -- View structure for v_m_store2
 -- ----------------------------
 DROP VIEW IF EXISTS `v_m_store2`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_m_store2` AS select `m_store`.`id` AS `id`,`m_store`.`store_name` AS `store_name`,`m_store`.`store_address` AS `store_address`,`m_store`.`store_email` AS `store_email`,`m_store`.`store_permit_number` AS `store_permit_number`,`m_store`.`api_method` AS `api_method`,`m_store`.`api_angkasapura` AS `api_angkasapura`,`m_store`.`api_username` AS `api_username`,`m_store`.`api_password` AS `api_password`,`m_store`.`api_store_id` AS `api_store_id`,`m_store`.`api_store_name` AS `api_store_name`,`m_store`.`ap_tr_id` AS `ap_tr_id`,(select concat('[',group_concat('{"id":"',`v_m_store1`.`tr_id`,'","tr_name":"',`v_m_store1`.`tr_name`,'"}' separator ','),']') from `v_m_store1` where ((`v_m_store1`.`store_id` = `m_store`.`id`) and (`v_m_store1`.`tr_id` = `m_store`.`ap_tr_id`)) group by `v_m_store1`.`store_id`,`v_m_store1`.`tr_id`,`v_m_store1`.`tr_name`) AS `tr_id_object`,`m_store`.`user_limits` AS `user_limits`,`m_store`.`status` AS `STATUS`,`m_store`.`created` AS `created`,`m_store`.`updated` AS `updated`,`m_store`.`createdby` AS `createdby`,`m_store`.`updatedby` AS `updatedby`,`usr1`.`fullname` AS `createdby_name`,`usr2`.`fullname` AS `updatedby_name` from ((`m_store` left join `auth_users` `usr1` on((`m_store`.`createdby` = `usr1`.`id`))) left join `auth_users` `usr2` on((`m_store`.`updatedby` = `usr2`.`id`)));
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_m_store2` AS select `m_store`.`id` AS `id`,`m_store`.`store_name` AS `store_name`,`m_store`.`store_address` AS `store_address`,`m_store`.`store_email` AS `store_email`,`m_store`.`store_permit_number` AS `store_permit_number`,`m_store`.`store_id_pjk` AS `store_id_pjk`,`m_store`.`api_method` AS `api_method`,`m_store`.`api_angkasapura` AS `api_angkasapura`,`m_store`.`api_username` AS `api_username`,`m_store`.`api_password` AS `api_password`,`m_store`.`api_store_id` AS `api_store_id`,`m_store`.`api_store_name` AS `api_store_name`,`m_store`.`ap_tr_id` AS `ap_tr_id`,(select concat('[',group_concat('{"id":"',`v_m_store1`.`tr_id`,'","tr_name":"',`v_m_store1`.`tr_name`,'"}' separator ','),']') from `v_m_store1` where ((`v_m_store1`.`store_id` = `m_store`.`id`) and (`v_m_store1`.`tr_id` = `m_store`.`ap_tr_id`)) group by `v_m_store1`.`store_id`,`v_m_store1`.`tr_id`,`v_m_store1`.`tr_name`) AS `tr_id_object`,`m_store`.`user_limits` AS `user_limits`,`m_store`.`status` AS `STATUS`,`m_store`.`created` AS `created`,`m_store`.`updated` AS `updated`,`m_store`.`createdby` AS `createdby`,`m_store`.`updatedby` AS `updatedby`,`usr1`.`fullname` AS `createdby_name`,`usr2`.`fullname` AS `updatedby_name` from ((`m_store` left join `auth_users` `usr1` on((`m_store`.`createdby` = `usr1`.`id`))) left join `auth_users` `usr2` on((`m_store`.`updatedby` = `usr2`.`id`)));
 
 -- ----------------------------
 -- View structure for v_m_transaction_date
