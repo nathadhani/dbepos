@@ -19,40 +19,147 @@ class Cb_balance extends Bks_Controller {
         $this->template->build('cb/cb_balance_v', $data);
     }
     
-    function getdata() {
+    function getdata1() {
         checkIfNotAjax();
-        $this->libauth->check(__METHOD__);
+        // $this->libauth->check(__METHOD__);
         $postData = $this->input->post();        
         $store_id  = $postData['store_id'];    
-        $tanggal1 = revDate($postData['period']);
+        $endDate = revDate($postData['period']);
 
-        $query = $this->db->query("SELECT v_tr_cb_saldo.cb_name,
-                                        (
-                                            SELECT cbs_saldo FROM  v_tr_cb_saldo x
+        $query = $this->db->query("SELECT m_cb.cb_name,
+                                        COALESCE((
+                                            SELECT cbs_saldo FROM  tr_cb_saldo x
                                             WHERE x.store_id = $store_id
-                                            and x.cbs_date < '$tanggal1'
-                                            and x.cb_id = v_tr_cb_saldo.cb_id
+                                            and x.cbs_date < '$endDate'
+                                            and x.cb_id = tr_cb_saldo.cb_id
                                             ORDER BY x.cbs_date DESC, x.id DESC
                                             limit 1					
-                                        ) AS beginning_saldo,
+                                        ),0) AS beginning_saldo,
                                         
-                                        SUM(v_tr_cb_saldo.cbs_in) AS cbs_in,
-                                        SUM(v_tr_cb_saldo.cbs_out) AS cbs_out,
+                                        COALESCE((                                        
+                                            SELECT SUM(COALESCE(v_tr_cb_detail.amount_in,0)) FROM v_tr_cb_detail
+                                            WHERE v_tr_cb_detail.store_id =  tr_cb_saldo.store_id
+                                            AND v_tr_cb_detail.cb_id = tr_cb_saldo.cb_id
+                                            AND v_tr_cb_detail.tr_date = '$endDate'
+                                            AND v_tr_cb_detail.status IN (3,4)                                            
+                                        ),0) AS cbs_in,
+
+                                        (                                        
+                                            SELECT SUM(COALESCE(v_tr_cb_detail.amount_out,0)) FROM v_tr_cb_detail
+                                            WHERE v_tr_cb_detail.store_id =  tr_cb_saldo.store_id
+                                            AND v_tr_cb_detail.cb_id = tr_cb_saldo.cb_id
+                                            AND v_tr_cb_detail.tr_date = '$endDate'
+                                            AND v_tr_cb_detail.status IN (3,4)                                       
+                                        ) AS cbs_out,
 
                                         (
-                                            SELECT cbs_saldo FROM  v_tr_cb_saldo x
-                                            WHERE x.store_id = $store_id
-                                            and x.cbs_date = '$tanggal1'
-                                            and x.cb_id = v_tr_cb_saldo.cb_id
-                                            ORDER BY x.cbs_date DESC, x.id DESC
-                                            limit 1					
+                                            COALESCE((
+                                                SELECT COALESCE(cbs_saldo,0) FROM  tr_cb_saldo x
+                                                WHERE x.store_id = $store_id
+                                                and x.cbs_date < '$endDate'
+                                                and x.cb_id = tr_cb_saldo.cb_id
+                                                ORDER BY x.cbs_date DESC, x.id DESC
+                                                limit 1
+                                            ),0) + 
+                                            COALESCE((                                        
+                                                SELECT SUM(COALESCE(v_tr_cb_detail.amount_in,0)) FROM v_tr_cb_detail
+                                                WHERE v_tr_cb_detail.store_id =  tr_cb_saldo.store_id
+                                                AND v_tr_cb_detail.cb_id = tr_cb_saldo.cb_id
+                                                AND v_tr_cb_detail.tr_date = '$endDate'   
+                                                AND v_tr_cb_detail.status IN (3,4)                                         
+                                            ),0) -
+                                            COALESCE((                                        
+                                                SELECT SUM(COALESCE(v_tr_cb_detail.amount_out,0)) FROM v_tr_cb_detail
+                                                WHERE v_tr_cb_detail.store_id =  tr_cb_saldo.store_id
+                                                AND v_tr_cb_detail.cb_id = tr_cb_saldo.cb_id
+                                                AND v_tr_cb_detail.tr_date = '$endDate'    
+                                                AND v_tr_cb_detail.status IN (3,4)                                        
+                                            ),0)
                                         ) AS last_saldo
                                         
-                                    FROM v_tr_cb_saldo
-                                    WHERE v_tr_cb_saldo.store_id = $store_id
-                                    AND v_tr_cb_saldo.cbs_date = '$tanggal1'
-                                    GROUP BY v_tr_cb_saldo.cb_id
-                                    ORDER BY v_tr_cb_saldo.cb_id ASC")->result();
+                                    FROM tr_cb_saldo
+                                    JOIN m_cb ON tr_cb_saldo.cb_id = m_cb.id
+                                    WHERE tr_cb_saldo.store_id = $store_id
+                                    AND tr_cb_saldo.cbs_date = '$endDate'
+                                    GROUP BY tr_cb_saldo.cb_id
+                                    ORDER BY tr_cb_saldo.cb_id ASC")->result();
+
+        // echo $this->db->last_query();exit;                            
+        echo json_encode($query, true);
+    }
+
+    function getdata2() {
+        checkIfNotAjax();
+        // $this->libauth->check(__METHOD__);
+        $postData = $this->input->post();        
+        $store_id  = $postData['store_id'];    
+        $tahun = (int) SUBSTR(revDate($postData['period']),0,4);
+        $bulan = (int) SUBSTR(revDate($postData['period']),5,2);
+        $startDate = $tahun.'-'.sprintf("%02d", $bulan).'-01';
+        $endDate = revDate($postData['period']);
+
+        $query = $this->db->query("SELECT m_cb.cb_name,
+                                        COALESCE((
+                                            SELECT cbs_saldo FROM  tr_cb_saldo x
+                                            WHERE x.store_id = $store_id
+                                            and x.cbs_date < '$startDate'
+                                            and x.cb_id = tr_cb_saldo.cb_id
+                                            ORDER BY x.cbs_date DESC, x.id DESC
+                                            limit 1					
+                                        ),0) AS beginning_saldo,
+                                        
+                                        COALESCE((                                        
+                                            SELECT SUM(COALESCE(v_tr_cb_detail.amount_in,0)) FROM v_tr_cb_detail
+                                            WHERE v_tr_cb_detail.store_id =  tr_cb_saldo.store_id
+                                            AND v_tr_cb_detail.cb_id = tr_cb_saldo.cb_id
+                                            AND v_tr_cb_detail.tr_date >= '$startDate'
+                                            AND v_tr_cb_detail.tr_date <= '$endDate'
+                                            AND v_tr_cb_detail.status IN (3,4)                                            
+                                        ),0) AS cbs_in,
+
+                                        (                                        
+                                            SELECT SUM(COALESCE(v_tr_cb_detail.amount_out,0)) FROM v_tr_cb_detail
+                                            WHERE v_tr_cb_detail.store_id =  tr_cb_saldo.store_id
+                                            AND v_tr_cb_detail.cb_id = tr_cb_saldo.cb_id
+                                            AND v_tr_cb_detail.tr_date >= '$startDate'
+                                            AND v_tr_cb_detail.tr_date <= '$endDate'
+                                            AND v_tr_cb_detail.status IN (3,4)                                       
+                                        ) AS cbs_out,
+
+                                        (
+                                            COALESCE((
+                                                SELECT COALESCE(cbs_saldo,0) FROM  tr_cb_saldo x
+                                                WHERE x.store_id = $store_id
+                                                and x.cbs_date < '$startDate'
+                                                and x.cb_id = tr_cb_saldo.cb_id
+                                                ORDER BY x.cbs_date DESC, x.id DESC
+                                                limit 1
+                                            ),0) + 
+                                            COALESCE((                                        
+                                                SELECT SUM(COALESCE(v_tr_cb_detail.amount_in,0)) FROM v_tr_cb_detail
+                                                WHERE v_tr_cb_detail.store_id =  tr_cb_saldo.store_id
+                                                AND v_tr_cb_detail.cb_id = tr_cb_saldo.cb_id
+                                                AND v_tr_cb_detail.tr_date >= '$startDate'
+                                                AND v_tr_cb_detail.tr_date <= '$endDate'   
+                                                AND v_tr_cb_detail.status IN (3,4)                                         
+                                            ),0) -
+                                            COALESCE((                                        
+                                                SELECT SUM(COALESCE(v_tr_cb_detail.amount_out,0)) FROM v_tr_cb_detail
+                                                WHERE v_tr_cb_detail.store_id =  tr_cb_saldo.store_id
+                                                AND v_tr_cb_detail.cb_id = tr_cb_saldo.cb_id
+                                                AND v_tr_cb_detail.tr_date >= '$startDate'
+                                                AND v_tr_cb_detail.tr_date <= '$endDate'    
+                                                AND v_tr_cb_detail.status IN (3,4)                                        
+                                            ),0)
+                                        ) AS last_saldo
+                                        
+                                    FROM tr_cb_saldo
+                                    JOIN m_cb ON tr_cb_saldo.cb_id = m_cb.id
+                                    WHERE tr_cb_saldo.store_id = $store_id
+                                    AND tr_cb_saldo.cbs_date >= '$startDate'
+                                    AND tr_cb_saldo.cbs_date <= '$endDate'
+                                    GROUP BY tr_cb_saldo.cb_id
+                                    ORDER BY tr_cb_saldo.cb_id ASC")->result();
 
         // echo $this->db->last_query();exit;                            
         echo json_encode($query, true);
@@ -66,189 +173,71 @@ class Cb_balance extends Bks_Controller {
 
         $tahun = (int) date('Y');
         $bulan = (int) date('m');
+        $startDate = $tahun.'-'.sprintf("%02d", $bulan).'-01';
+        $endDate = date('Y-m-t', strtotime($startDate));
+
         if(isset($postData['period'])){
             $tahun = (int) SUBSTR(revDate($postData['period']),0,4);
             $bulan = (int) SUBSTR(revDate($postData['period']),5,2);
+            $startDate = $tahun.'-'.sprintf("%02d", $bulan).'-01';
+            $endDate = date('Y-m-t', strtotime($startDate));            
         }
-        $tgl1 = $tahun.'-'.sprintf("%02d", $bulan).'-01';
-        
-        if($bulan == 1){
-            $tahun1 = $tahun - 1;
-            $bulan1 = 12;
-        }else{
-            $tahun1 = $tahun;
-            $bulan1 = $bulan - 1;
-        }
-        
-        if($bulan == 12){
-            $tahun2 = $tahun + 1;
-            $bulan2 = 1;
-        } else {
-            $tahun2 = $tahun;
-            $bulan2 = $bulan + 1;
-        }        
 
-        $mcb = $this->db->query("SELECT x.id AS cb_id FROM m_cb x WHERE store_id = $store_id ORDER BY id ASC");
+        $mcb = $this->db->query("SELECT id AS cb_id FROM m_cb WHERE store_id = $store_id AND status = 1 ORDER BY id ASC");
         if(count($mcb) > 0){
-            /** Delete Reccord */
-            /***************************************************************************************************************** */
-            $where = array(
+            $start = new DateTime($startDate);
+            $end = new DateTime($endDate);
+            for($date = $start; $date <= $end; $date->modify('+1 day')){
+                $tr_date = $date->format('Y-m-d');
+                echo $tr_date . '<br>';
+                $this->db->delete('tr_cb_saldo', array('store_id' => $store_id, 'cbs_date' => $tr_date));
+                foreach($mcb->result_array() as $row) {                    
+                    $cb_id = $row['cb_id'];
+                    /*Insert*/
+                    $data = array(
                         'store_id' => $store_id,
-                        'cbs_year' => $tahun,
-                        'cbs_month' => $bulan
+                        'cb_id' => $cb_id,
+                        'cbs_date' =>  $tr_date,
+                        'cbs_saldo' => 0,
+                        'created' => date('Y-m-d H:i:s', time()),
+                        'createdby' => $this->auth['id']
                     );
-            
-            $this->db->trans_begin();
-            $this->db->delete('tr_cb_saldo', $where);            
-            // echo $this->db->last_query();exit;
-            foreach($mcb->result_array() as $row) {
-                $id = 0;
-                $cb_id = $row['cb_id'];                
-
-                /** Get Beginning */
-                /***************************************************************************************************************** */
-                $select_max_date = $this->db->query("SELECT MAX(cbs_date) AS max_date
-                                                     FROM tr_cb_saldo 
-                                                     WHERE store_id = $store_id 
-                                                     AND cb_id = $cb_id 
-                                                     AND YEAR(cbs_date) = $tahun1 
-                                                     AND MONTH(cbs_date) = $bulan1")->result();                
-                $cbs_in = 0;
-                $last_cbs_in = 0;
-                $last_saldo = 0;
-                if(count($select_max_date) > 0) {
-                    $max_date = $select_max_date[0]->max_date;
-                    if($max_date !== null) {
-                        $select_max_id = $this->db->query("SELECT MAX(id) AS max_id
-                                                     FROM tr_cb_saldo 
-                                                     WHERE store_id = $store_id 
-                                                     AND cb_id = $cb_id 
-                                                     AND cbs_date = '$max_date'")->result();                    
-                        if(count($select_max_id) > 0) {
-                            $max_id = $select_max_id[0]->max_id;
-                            if($max_id !== null) {
-                                $select_last_saldo = $this->db->query("SELECT cbs_saldo
+                    if(count($data) > 0){                                        
+                        $response = $this->db->insert('tr_cb_saldo', $data);
+                        $id = $this->db->insert_id();
+                    }
+                    /**Updated*/
+                    $saldo = 0;
+                    $last_saldo = $this->db->query("SELECT cbs_saldo
                                                         FROM tr_cb_saldo 
                                                         WHERE store_id = $store_id 
                                                         AND cb_id = $cb_id 
-                                                        AND cbs_date = '$max_date'
-                                                        AND id = $max_id")->result();
-                                if(count($select_last_saldo) > 0) {
-                                    if($select_last_saldo[0]->cbs_saldo > 0) {
-                                        $id++;
-                                        $data = array(        
-                                            'store_id' => $store_id,
-                                            'cb_id' => $cb_id,
-                                            'cbs_date' => $tgl1,
-                                            'cbs_year' => $tahun,
-                                            'cbs_month' => $bulan,
-                                            'cbs_in' => 0,
-                                            'cbs_out' => 0,
-                                            'cbs_saldo' => 0,
-                                            'created' => date('Y-m-d H:i:s', time()),
-                                            'createdby' => $this->auth['id']
-                                        );
-                                        if(count($data) > 0){                                        
-                                            $response = $this->db->insert('tr_cbs_saldo', $data);
-                                            /***************************************************************************************************************** */
-                                            /*Update last saldo*/
-                                            $last_saldo = $select_last_saldo[0]->cbs_saldo;                                            
-                                            $data = array('cbs_saldo' => $last_saldo);
-                                            if(count($data) > 0){
-                                                $where = array('id' => $id, 'cb_id' => $cb_id);
-                                                $this->db->update('tr_cb_saldo', $data, $where);                
-                                            }
-                                        }
-                                    }
-                                }
-                            }                            
+                                                        AND cbs_date < '$tr_date'
+                                                        ORDER BY cbs_date DESC
+                                                        LIMIT 1")->result();
+                    if(count($last_saldo) > 0) {
+                        if($last_saldo[0]->cbs_saldo > 0) {
+                            $saldo = (int) $last_saldo[0]->cbs_saldo;
+                            $data = array('cbs_saldo' => $saldo);
+                            $where = array('id' => $id, 'cb_id' => $cb_id);
+                            $this->db->update('tr_cb_saldo', $data, $where);
                         }
                     }
-                }
-
-                /** Get Transaction */
-                /***************************************************************************************************************** */
-                $tanggal_awal = date($tgl1,time());
-                $tanggal_akhir = date('Y-m-t',mktime(0, 0, 0, $bulan + 1, 0, $tahun));
-                $maxday = date('d', strtotime($tanggal_akhir));
-                for ($tgl = 1; $tgl <= $maxday; $tgl++) {
-                    $tr_date = $tahun.'-'.sprintf("%02d", $bulan).'-'. sprintf("%02d", $tgl);
-                    /***************************************************************************************************************** */
-                    $trxcb = $this->db->select('tr_date, cb_id, 
-                                                  SUM(amount_in) AS amount_in,
-                                                  SUM(amount_out) AS amount_out
-                                                ')
+                    $transaction_cb = $this->db->select('SUM(COALESCE(amount_in,0)) AS amount_in, SUM(COALESCE(amount_out,0)) AS amount_out')
                                     ->where(array('store_id' => $store_id, 'tr_date' => $tr_date, 'cb_id' => $cb_id))
                                     ->where_in('status', ['3','4'])
                                     ->group_by('tr_date, cb_id')
-                                    ->get('v_tr_cb_detail');
-                    if($trxcb->num_rows()){
-                        foreach($trxcb->result_array() as $row) {                                                        
-                            $data = array(                                
-                                'store_id' => $store_id,   
-                                'cb_id' => $cb_id,   
-                                'cbs_date' => $row['tr_date'],
-                                'cbs_year' => $tahun,
-                                'cbs_month' => $bulan,
-                                'cbs_in' => $row['amount_in'],                              
-                                'cbs_out' => $row['amount_out'],
-                                'cbs_saldo' => 0,
-                                'created' => date('Y-m-d H:i:s', time()),
-                                'createdby' => $this->auth['id']
-                            );
-                            if(count($data) > 0){
-                                $response = $this->db->insert('tr_cb_saldo', $data);
-                                $id = $this->db->insert_id();
-                                /***************************************************************************************************************** */
-                                /*Update last saldo*/
-                                $last_saldo = $last_saldo + $row['amount_in'] - $row['amount_out'];
-                                $data = array('cbs_saldo' => $last_saldo);
-                                if(count($data) > 0){
-                                    $where = array('id' => $id, 'cb_id' => $cb_id);
-                                    $this->db->update('tr_cb_saldo', $data, $where);
-                                }
-                            }
-                        }     
-                    } else {
-                        $data = array(                                
-                            'store_id' => $store_id,   
-                            'cb_id' => $cb_id,   
-                            'cbs_date' => $tr_date,
-                            'cbs_year' => $tahun,
-                            'cbs_month' => $bulan,
-                            'cbs_in' => 0,                              
-                            'cbs_out' => 0,
-                            'cbs_saldo' => 0,
-                            'created' => date('Y-m-d H:i:s', time()),
-                            'createdby' => $this->auth['id']
-                        );
-                        if(count($data) > 0){
-                            $response = $this->db->insert('tr_cb_saldo', $data);
-                            $id = $this->db->insert_id();
-                            /***************************************************************************************************************** */
-                            /*Update last saldo*/
-                            $last_saldo = $last_saldo;
-                            $data = array('cbs_saldo' => $last_saldo);
-                            if(count($data) > 0){
-                                $where = array('id' => $id, 'cb_id' => $cb_id);
-                                $this->db->update('tr_cb_saldo', $data, $where);
-                            }
-                        }
-                    }                                        
-                }
-                if ($this->db->trans_status() === FALSE) {
-                    $this->db->trans_rollback();
-                    $err = $this->db->error();
-                    $json['msg'] = $err['code'] . '<br>' . $err['message'];
-                    echo json_encode($json);
-                } else {
-                    $this->db->trans_commit();
-                    $json['msg'] = '1';
-                    $json['result'] = 'calculate done';
-                    echo json_encode($json);
+                                    ->get('v_tr_cb_detail')->result();
+                    if(count($transaction_cb) > 0){
+                        $saldo = ( $saldo + (int) $transaction_cb[0]->amount_in ) - (int) $transaction_cb[0]->amount_out;
+                        $data = array('cbs_saldo' => $saldo);
+                        $where = array('id' => $id, 'cb_id' => $cb_id);
+                        $this->db->update('tr_cb_saldo', $data, $where);
+                    }
                 }
             }
-        }             
+            $this->db->delete('tr_cb_saldo', array('store_id' => $store_id, 'cbs_saldo' => 0));
+        }
 
     }
 
@@ -283,25 +272,27 @@ class Cb_balance extends Bks_Controller {
         $html_header = strtoupper(trim($profil_usaha[0]->store_name));
         if(!is_array($postData['store_id'])){
             $html_header .= '<br>' . trim($profil_usaha[0]->store_address) . '</br>';
-            $html_header .= '<br>' . 'Saldo Kas Bank  Periode : ' . revDate($this->tr_date) . '</br><br></br><br></br>';
+            $html_header .= '<br>' . 'Rekap Saldo Kas Bank  Periode : ' . revDate($this->tr_date) . '</br><br></br><br></br>';
         } else {
-            $html_header .= '<br>' . 'Konsolidasi Saldo Kas Bank  Periode : ' . revDate($this->tr_date) . '</br><br></br><br></br>';
+            $html_header .= '<br>' . 'Rekap Saldo Kas Bank  Periode : ' . revDate($this->tr_date) . '</br><br></br><br></br>';
         }
         
         // Add Content Body
-        $data_header = $this->db->query("SELECT cb_id, cb_code, cb_name, 
-                                        (
-                                            SELECT cbs_saldo FROM v_tr_cb_saldo X
-                                            WHERE x.cb_id = v_tr_cb_saldo.cb_id
+        $data_header = $this->db->query("SELECT tr_cb_saldo.cb_id, m_cb.cb_code, m_cb.cb_name, 
+                                        COALESCE((
+                                            SELECT cbs_saldo FROM tr_cb_saldo X
+                                            WHERE x.store_id = $this->store_id
                                             AND x.cbs_date < '$this->tr_date'
+                                            AND x.cb_id = tr_cb_saldo.cb_id
                                             ORDER BY x.id DESC
                                             LIMIT 1
-                                        ) AS cbs_saldo 
-                                        FROM v_tr_cb_saldo 
-                                        WHERE store_id = $this->store_id 
-                                        AND cbs_date = '$this->tr_date' 
-                                        GROUP BY cb_id, cb_code,cb_name
-                                        ORDER BY cb_id ASC")->result();
+                                        ),0) AS cbs_saldo 
+                                        FROM tr_cb_saldo
+                                        JOIN m_cb ON tr_cb_saldo.cb_id = m_cb.id
+                                        WHERE tr_cb_saldo.store_id = $this->store_id 
+                                        AND tr_cb_saldo.cbs_date = '$this->tr_date' 
+                                        GROUP BY tr_cb_saldo.cb_id, m_cb.cb_code, m_cb.cb_name
+                                        ORDER BY tr_cb_saldo.cb_id ASC")->result();
         if(count($data_header) > 0) {
             $no = 0;
             $pageno = 0;
@@ -325,7 +316,7 @@ class Cb_balance extends Bks_Controller {
                 
                 $cb_id = $r->cb_id;
                 $saldo = (int) $r->cbs_saldo;
-                $data_detail = $this->db->query("SELECT cb_pos_name, SUM(amount_in) AS amount_in, SUM(amount_out) AS amount_out
+                $data_detail = $this->db->query("SELECT cb_pos_name, SUM(COALESCE(amount_in,0)) AS amount_in, SUM(COALESCE(amount_out,0)) AS amount_out
                                                 FROM v_tr_cb_detail
                                                 WHERE store_id = $this->store_id
                                                 AND tr_date = '$this->tr_date'
@@ -412,25 +403,27 @@ class Cb_balance extends Bks_Controller {
         $html_header = strtoupper(trim($profil_usaha[0]->store_name));
         if(!is_array($postData['store_id'])){
             $html_header .= '<br>' . trim($profil_usaha[0]->store_address) . '</br>';
-            $html_header .= '<br>' . 'Saldo Kas Bank  Periode : ' . revDate($this->tr_date) . '</br><br></br><br></br>';
+            $html_header .= '<br>' . 'Saldo Kas Bank Periode : ' . revDate($this->tr_date) . '</br><br></br><br></br>';
         } else {
-            $html_header .= '<br>' . 'Konsolidasi Saldo Kas Bank  Periode : ' . revDate($this->tr_date) . '</br><br></br><br></br>';
+            $html_header .= '<br>' . 'Saldo Kas Bank Periode : ' . revDate($this->tr_date) . '</br><br></br><br></br>';
         }
         
         // Add Content Body
-        $data_header = $this->db->query("SELECT cb_id, cb_code, cb_name, 
-                                        (
-                                            SELECT cbs_saldo FROM v_tr_cb_saldo X
-                                            WHERE x.cb_id = v_tr_cb_saldo.cb_id
+        $data_header = $this->db->query("SELECT tr_cb_saldo.cb_id, m_cb.cb_code, m_cb.cb_name, 
+                                        COALESCE((
+                                            SELECT cbs_saldo FROM tr_cb_saldo X
+                                            WHERE x.store_id = $this->store_id
                                             AND x.cbs_date < '$this->tr_date'
+                                            AND x.cb_id = tr_cb_saldo.cb_id
                                             ORDER BY x.id DESC
                                             LIMIT 1
-                                        ) AS cbs_saldo 
-                                        FROM v_tr_cb_saldo 
-                                        WHERE store_id = $this->store_id 
-                                        AND cbs_date = '$this->tr_date' 
-                                        GROUP BY cb_id, cb_code,cb_name
-                                        ORDER BY cb_id ASC")->result();
+                                        ),0) AS cbs_saldo
+                                        FROM tr_cb_saldo
+                                        JOIN m_cb ON tr_cb_saldo.cb_id = m_cb.id
+                                        WHERE tr_cb_saldo.store_id = $this->store_id 
+                                        AND tr_cb_saldo.cbs_date = '$this->tr_date' 
+                                        GROUP BY tr_cb_saldo.cb_id, m_cb.cb_code, m_cb.cb_name
+                                        ORDER BY tr_cb_saldo.cb_id ASC")->result();
         if(count($data_header) > 0) {
             $no = 0;
             $pageno = 0;
@@ -454,7 +447,7 @@ class Cb_balance extends Bks_Controller {
                 
                 $cb_id = $r->cb_id;
                 $saldo = (int) $r->cbs_saldo;
-                $data_detail = $this->db->query("SELECT cb_pos_name, description, amount_in, amount_out 
+                $data_detail = $this->db->query("SELECT cb_pos_name, description, COALESCE(amount_in,0) AS amount_in, COALESCE(amount_out,0) AS amount_out
                                                 FROM v_tr_cb_detail
                                                 WHERE store_id = $this->store_id
                                                 AND tr_date = '$this->tr_date'

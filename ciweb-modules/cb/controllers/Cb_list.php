@@ -26,7 +26,7 @@ class Cb_list extends Bks_Controller {
         
         $store_id  = $postData['store_id'];    
         $startDate = revDate($postData['period1']);
-        $endDate = revDate($postData['period2']) + 1;
+        $endDate = date('Y-m-t', strtotime($startDate));
 
         $start = new DateTime($startDate);
         $end = new DateTime($endDate);

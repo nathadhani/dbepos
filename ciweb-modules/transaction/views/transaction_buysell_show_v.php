@@ -85,11 +85,7 @@
                                 <tbody>                                                
                                 </tbody>
                             </table>
-                            <span>
-                                <div class="col-md-12">
-                                    <span id="total_transaction_terbilang" class="pull-right"></span>
-                                </div>
-                            </span>                            
+                            <span id="total_transaction_terbilang" class="pull-right" style="margin-top:-15x;"></span>                       
                         </div>
                     </div>
                     <!--.end row -->

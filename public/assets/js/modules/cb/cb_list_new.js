@@ -260,12 +260,17 @@ function show_detail(){
                 dataType: 'json',
                 success: function (data) {
                     if (data !== '[]' && data.length > 0){
-                        var totalamount_inx = 0;
-                        var totalamount_outx = 0;
+                        var amountx = 0;
+                        var totalamounx = 0;
                         var rows = '';
                         $.each(data, function (i, d) {      
-                            totalamount_inx += Number(d.amount_in);
-                            totalamount_outx += Number(d.amount_out);
+                            if(Number(d.amount_in) > 0){
+                                amountx = Number(d.amount_in);
+                            }
+                            if(Number(d.amount_out) > 0){
+                                amountx = Number(d.amount_out);
+                            }
+                            totalamounx += amountx;
                             if(Number(d.status) === 3){
                                 rows =`<tr id="` + counter + `">
                                             <td width="5%" style="text-align:center;vertical-align:middle">
@@ -282,10 +287,7 @@ function show_detail(){
                                                 ` + d.description.trim() + `
                                             </td>
                                             <td width="15%" style='text-align:left;'>
-                                                ` + (isDecimal(d.amount_in) ? formatDecimal(d.amount_in,2) : formatRupiah(d.amount_in) ) + `
-                                            </td>
-                                            <td width="15%" style='text-align:left;'>
-                                                ` + (isDecimal(d.amount_out) ? formatDecimal(d.amount_out,2) : formatRupiah(d.amount_out) ) + `
+                                                ` + (isDecimal(amountx) ? formatDecimal(amountx,2) : formatRupiah(amountx) ) + `
                                             </td>
                                         </tr>`                        
                             } else {
@@ -303,10 +305,7 @@ function show_detail(){
                                                 ` + d.description.trim() + `
                                             </td>
                                             <td width="15%" style='text-align:left;'>
-                                                ` + (isDecimal(d.amount_in) ? formatDecimal(d.amount_in,2) : formatRupiah(d.amount_in) ) + `
-                                            </td>
-                                            <td width="15%" style='text-align:left;'>
-                                                ` + (isDecimal(d.amount_out) ? formatDecimal(d.amount_out,2) : formatRupiah(d.amount_out) ) + `
+                                                ` + (isDecimal(amountx) ? formatDecimal(amountx,2) : formatRupiah(amountx) ) + `
                                             </td>
                                         </tr>`                        
                             }                    
@@ -317,17 +316,15 @@ function show_detail(){
                             }                               
                         });
                         var rowsx =`<tr>
-                                        <td colspan="4" style='vertical-align:middle;text-align:center;background-color:#e3e4e6;font-weight:bold;font-size:14px;'>
+                                        <td colspan="4" style='vertical-align:middle;text-align:center;background-color:#FFFFFF;font-weight:bold;font-size:14px;'>
                                             Total
                                         </td>
                                         <td style='text-align:left;font-weight:bold;font-size:15px;'>
-                                            Rp. ` + formatRupiah(totalamount_inx) + `
+                                            ` + formatRupiah(totalamounx) + `
                                         </td>
-                                        <td style='text-align:left;font-weight:bold;font-size:15px;'>
-                                            Rp. ` + formatRupiah(totalamount_outx) + `
-                                        </td>                         
                                     </tr>`   
                         $('#table-detail tbody').append(rowsx); 
+                        $("#total_transaction_terbilang").html('Say : ' + bksfn.terBilang(totalamounx) + ' Rupiah');
                         $('#cb_id').prop('disabled', true);
                         $('#cb_pos_id').prop('disabled', true);
                     }else{

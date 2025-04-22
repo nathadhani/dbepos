@@ -6,14 +6,7 @@
                     <h3>Cash / Bank - Balance</h3>
                 </div>
                 <ul class="panel-controls">
-                    <div class="dropdown">
-                        <button class="dropbtn" style="width:80px;">Action <i class="fa fa-caret-down" aria-hidden="true"></i></button>
-                        <div class="dropdown-content">
-                            <a href="#" id="btn-calculate">Calculate</a>
-                            <a href="#" id="btn-pdf-rekap">Balance Summary</a>
-                            <a href="#" id="btn-pdf-detail">Balance Detail</a>                            
-                        </div>
-                    </div>
+                    <button id="btn-calculate" class="btn btn-info" style="width:120px;">Calculate</button>                    
                 </ul>
             </div>
             <div class="panel-body">
@@ -49,26 +42,59 @@
                             </div>
                         </div>                            
                     </div>
-                </div>                            
-                
+                </div>
+
                 <br>
-                <div class="row table-responsive">
-                    <div class="col-md-12">
-                        <table class="table table-bordered table-condensed table-hover" width="100%" id="mainTable">
-                            <thead>
-                                <tr>
-                                    <th style="vertical-align:middle;text-align:center;">#</th>                                    
-                                    <th style="vertical-align:middle;text-align:center;">List</th>
-                                    <th style="vertical-align:middle;text-align:center;">Beginning Balance</th>
-                                    <th style="vertical-align:middle;text-align:center;">In</th>
-                                    <th style="vertical-align:middle;text-align:center;">Out</th>
-                                    <th style="vertical-align:middle;text-align:center;">Ending Balance</th>
-                                    <!-- <th style="vertical-align:middle;text-align:center;">Action</th> -->
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                    </div>                    
+                <div class="row">
+                    <div class="col-md-12">                      
+                        <div class="panel panel-default tabs">                            
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li class="active"><a href="#tab-first" role="tab" data-toggle="tab">Daily</a></li>
+                                <li><a href="#tab-second" role="tab" data-toggle="tab">MTD</a></li>
+                            </ul>
+                            <div class="panel-body tab-content">
+                                <div class="tab-pane active" id="tab-first">
+                                    <div class="row table-responsive">
+                                        <table class="table table-bordered table-condensed table-hover" width="100%" id="mainTable1">
+                                            <thead>
+                                                <tr>
+                                                    <th style="vertical-align:middle;text-align:center;">#</th>                                    
+                                                    <th style="vertical-align:middle;text-align:center;">List</th>
+                                                    <th style="vertical-align:middle;text-align:center;">Beginning</th>
+                                                    <th style="vertical-align:middle;text-align:center;">In</th>
+                                                    <th style="vertical-align:middle;text-align:center;">Out</th>
+                                                    <th style="vertical-align:middle;text-align:center;">Ending Daily</th>
+                                                </tr>
+                                                <tr>
+                                                    
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                        <button id="btn-pdf1" class="btn btn-info btn-sm" style="width:120px;">Export PDF Daily</button>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="tab-second">
+                                    <div class="row table-responsive">
+                                        <table class="table table-bordered table-condensed table-hover" width="100%" id="mainTable2">
+                                            <thead>
+                                                <tr>
+                                                    <th style="vertical-align:middle;text-align:center;">#</th>                                    
+                                                    <th style="vertical-align:middle;text-align:center;">List</th>
+                                                    <th style="vertical-align:middle;text-align:center;">Beginning</th>
+                                                    <th style="vertical-align:middle;text-align:center;">In</th>
+                                                    <th style="vertical-align:middle;text-align:center;">Out</th>
+                                                    <th style="vertical-align:middle;text-align:center;">Ending MTD</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                        <button id="btn-pdf2" class="btn btn-info btn-sm" style="width:120px;">Export PDF MTD</button>
+                                    </div>        
+                                </div>    
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

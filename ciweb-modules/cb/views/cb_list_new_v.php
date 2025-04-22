@@ -13,20 +13,20 @@
         $file_url = base_url($file);        
     }
 ?>
-<div class="page-content-wrap">    
-    <form id="mainForm" method="post" class="form-horizontal" autocomplete="off" enctype="multipart/form-data">
-        <div class="row">   
-            <div class="col-md-12">
-                <div class="panel panel-default">                
-                    <div class="panel-heading ui-draggable-handle">
-                        <div class="panel-title-box">
-                            <h3>Cash / Bank - <strong id="ftitle"></strong></h3>
-                        </div>
-                        <ul class="panel-controls">
-                            <button id="btn-cancel" class="btn btn-danger" style="width:120px;margin-left:5px;">Cancel</button>
-                        </ul>
-                    </div>                    
-                    <div class="panel-body"> 
+<div class="page-content-wrap">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">                
+                <div class="panel-heading ui-draggable-handle">
+                    <div class="panel-title-box">
+                        <h3>Cash / Bank - <strong id="ftitle"></strong></h3>
+                    </div>
+                    <ul class="panel-controls">
+                        <button id="btn-cancel" class="btn btn-danger" style="width:120px;margin-left:5px;">Cancel</button>
+                    </ul>
+                </div>                    
+                <div class="panel-body"> 
+                    <form id="mainForm" method="post" class="form-horizontal" autocomplete="off" enctype="multipart/form-data">
                         <div class="row input-edit">
                             <div class="col-md-6">
                                 <span class="span_text_fixed_85px">Store</span> : <span id="store_address"></span><br>
@@ -119,15 +119,16 @@
                                             <th style='vertical-align:middle;text-align:left;'>Source</th>
                                             <th style='vertical-align:middle;text-align:left;'>Purpose</th>
                                             <th style='vertical-align:middle;text-align:left;'>Description</th>                                                    
-                                            <th style='vertical-align:middle;text-align:left;'>Value In</th>
-                                            <th style='vertical-align:middle;text-align:left;'>Value Out</th>
+                                            <th style='vertical-align:middle;text-align:left;'>Value</th>
                                         </tr>
                                     </thead>
                                     <tbody>                                                
                                     </tbody>
-                                </table>                                        
+                                </table>
+                                <span id="total_transaction_terbilang" class="pull-right" style="margin-top:-15x;"></span>
                             </div>
                         </div>
+
                         <div class="row input-file">
                             <div class="col-md-3">
                                 <a class="file-input-wrapper btn btn-info btn-sm">
@@ -145,13 +146,13 @@
                             <?php 
                                 }
                             ?>
-                        </div>                     
-                    </div>              
-                    <!--.end panel-body -->                    
-                </div>                
-            </div>
-        </div>        
-    </form>    
+                        </div>
+                    </form>                       
+                </div>              
+                <!--.end panel-body -->                    
+            </div>                
+        </div>
+    </div>             
 </div>
 
 <div class="modal fade" id="ModalCancel" role="dialog" aria-hidden="true">

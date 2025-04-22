@@ -223,7 +223,7 @@ function show_detail(statusTrx){
                                         Total
                                     </td>
                                     <td style='text-align:left;font-weight:bold;font-size:15px;'>
-                                        Rp. ` + formatRupiah(totalpricex) + `
+                                        ` + formatRupiah(totalpricex) + `
                                     </td>                         
                                 </tr>`
                     $('#table-detail tbody').append(rowsx);

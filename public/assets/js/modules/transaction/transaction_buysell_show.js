@@ -176,7 +176,7 @@ function show_detail($header_id){
                                     <td colspan="6" style='vertical-align:middle;text-align:center;background-color:#FFFFFF;font-weight:bold;font-size:14px;'>
                                     Total </td>
                                     <td style='text-align:left;font-weight:bold;font-size:15px;'>
-                                        Rp. ` + formatRupiah(totalpricex) + `
+                                        ` + formatRupiah(totalpricex) + `
                                     </td>                         
                                 </tr>`   
                         $('#table-detail tbody').append(rowsx);     
