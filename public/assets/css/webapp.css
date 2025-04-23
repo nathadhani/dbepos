@@ -63,26 +63,6 @@ nav i.fa-plus-square {
     }
 }
 
-/*
-.x-navigation > li.xn-logo > a:first-child {
-    background: #fff !important
-}
-
-.page-container {
-    background: #fff;
-}
-
-.x-navigation li > ul li > a:hover { 
-    background: #2F3785 !important;
-}
-
-.x-navigation li > ul li > a:hover, .x-navigation li > a:hover { 
-    background: #2F3785 !important;
-}
-.x-navigation li.active > a {
-    background: #2F3785 !important;
-}*/
-
 .x-navigation > li.xn-logo > a:first-child {    
     background-color: rgba(4,84,152);
 }
@@ -130,17 +110,6 @@ nav i.fa-plus-square {
 .input-group-addon a {
     color: #555;
 }
-
-/* .btn-info {
-    color:#000;
-    background-color:#e8e8e8;
-    border-color:#ccc
-}
-
-.btn-info:hover{
-    color:#000;
-    font-weight: 600;
-} */
 
 .clrbg-green {
     background: #5CB85C;

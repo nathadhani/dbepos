@@ -11,20 +11,17 @@
                     <h3>Cash / Bank - List Transaction</h3>
                 </div>
                 <ul class="panel-controls">
-                    <div class="dropdown">
-                        <button class="dropbtn" style="width:80px;">Action <i class="fa fa-caret-down" aria-hidden="true"></i></button>
-                        <div class="dropdown-content">
-                            <?php         
-                                if(in_array($usergroup_id, array('5'))) {
-                            ?>
-                                <a href="#" id="btn-new">New Transaction</a>
-                                <a href="#" id="btn-generate-buysell">Generate Buy / Sell</a>
-                            <?php 
-                                } 
-                            ?>
-                            <a href="#" id="btn-excel">Export to Xlsx</a>
-                        </div>
-                    </div>
+                    <?php         
+                        if(in_array($usergroup_id, ['3','5'])) {
+                    ?>
+                        <button id="btn-new" class="btn btn-info" style="width:140px; margin-left:10px;">New Transaction</button>
+                        <button id="btn-generate-buysell" class="btn btn-info" style="width:160px; margin-left:10px;">Generate Buy / Sell</button>
+                        <button id="btn-excel" class="btn btn-info" style="width:140px; margin-left:10px;">Export Xlsx</button>
+                    <?php 
+                        } else {
+                    ?>
+                        <button id="btn-excel" class="btn btn-info" style="width:140px; margin-left:10px;">Export Xlsx</button>
+                    <?php } ?>                        
                 </ul>
             </div>
             <div class="panel-body">

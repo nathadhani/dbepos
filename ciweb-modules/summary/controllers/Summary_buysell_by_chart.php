@@ -20,8 +20,12 @@ class Summary_buysell_by_chart extends Bks_Controller {
     function getlastupdated(){
         checkIfNotAjax();
         // $this->libauth->check(__METHOD__);
-        $postData = $this->input->post();
-        $store_id = $postData['store_id'];    
+        $postData = $this->input->post();        
+        if(isset($postData['store_id'])){
+            $store_id  = $postData['store_id'];
+        } else {
+            $store_id = $this->auth['store_id'];
+        }
         $query = $this->db->query("SELECT MAX(created) AS lastupdated FROM tr_header WHERE store_id = $store_id")->result();        
         echo json_encode($query, true);
     }
@@ -30,7 +34,11 @@ class Summary_buysell_by_chart extends Bks_Controller {
         checkIfNotAjax();
         // $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
-        $store_id = $postData['store_id'];
+        if(isset($postData['store_id'])){
+            $store_id  = $postData['store_id'];
+        } else {
+            $store_id = $this->auth['store_id'];
+        }
         $tahun = intval($postData['period']);    
         $query = $this->db->query("SELECT MONTH(tr_header.tr_date) AS tr_month,
                                         SUM(IF((tr_detail.status IN ( 1, 3, 4 ) AND ( tr_header.tr_id = 1 )),((tr_detail.nominal * tr_detail.sheet) * tr_detail.price ),0)) AS buy_equivalent,
@@ -48,7 +56,11 @@ class Summary_buysell_by_chart extends Bks_Controller {
         checkIfNotAjax();
         // $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
-        $store_id = $postData['store_id'];
+        if(isset($postData['store_id'])){
+            $store_id  = $postData['store_id'];
+        } else {
+            $store_id = $this->auth['store_id'];
+        }
         $tahun = intval($postData['period']);
         $query = $this->db->query("SELECT MONTH(tr_header.tr_date) AS tr_month,
                                         SUM(IF((tr_detail.status IN ( 1, 3, 4 ) AND ( tr_header.tr_id = 1 )),((tr_detail.nominal * tr_detail.sheet) * tr_detail.price ),0)) AS buy_equivalent,
@@ -66,7 +78,11 @@ class Summary_buysell_by_chart extends Bks_Controller {
         checkIfNotAjax();
         // $this->libauth->check(__METHOD__);
         $postData = $this->input->post();        
-        $store_id = $postData['store_id'];
+        if(isset($postData['store_id'])){
+            $store_id  = $postData['store_id'];
+        } else {
+            $store_id = $this->auth['store_id'];
+        }
         $tahun = intval($postData['period']);
         $query = $this->db->query("SELECT 
                                     tr_detail.currency_id,
@@ -88,7 +104,11 @@ class Summary_buysell_by_chart extends Bks_Controller {
         checkIfNotAjax();
         // $this->libauth->check(__METHOD__);
         $postData = $this->input->post();        
-        $store_id = $postData['store_id'];
+        if(isset($postData['store_id'])){
+            $store_id  = $postData['store_id'];
+        } else {
+            $store_id = $this->auth['store_id'];
+        }
         $tahun = intval($postData['period']);
 
         $query = $this->db->query("SELECT 

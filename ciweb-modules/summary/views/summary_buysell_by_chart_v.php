@@ -1,7 +1,15 @@
 <?php
-    $auth = $this->session->userdata('auth');    
-    if($auth['usergroup_id'] !== '1'){
+    $auth = $this->session->userdata('auth');
+    $usergroup_id = $auth['usergroup_id'];
+    $store_id = $auth['store_id']; 
+    $api_method = $auth['api_method'];
 ?>
+<script type="text/javascript">
+    var userId = <?php echo $auth['id'];?>;
+    var usergroupId = <?php echo $auth['usergroup_id'];?>;
+    var Apimethod = <?php echo ($auth['api_method'] == null ? 0 : $auth['api_method']) ;?>;
+    var ApiAP = "<?php echo $auth['api_angkasapura'];?>";    
+</script>
 <div class="page-content-wrap">
     <div class="row">
         <div class="col-md-12">
@@ -14,24 +22,26 @@
                 </div>                               
                 <div class="panel-body">
                     <div class="row">
-                        <div class="col-md-8">
-                            <div class="form-group">                                
-                                <div class="col-lg-12">
-                                    <label for="store_id" style="display:block">Store</label>
-                                    <select name="store_id"
-                                            data-ajax="true" 
-                                            data-placeholder="-- Pilih --"
-                                            data-url="master_data/m_store/getregion/" 
-                                            data-value="" 
-                                            data-limit="100"                                                
-                                            id="store_id" placeholder="Region"
-                                            class='form-control select2'
-                                            width="100%"
-                                            >
-                                    </select>                                
+                        <?php if(in_array($usergroup_id, ['2','6'])) { ?>
+                            <div class="col-md-8">
+                                <div class="form-group">                                
+                                    <div class="col-lg-12">
+                                        <label for="store_id" style="display:block">Store</label>
+                                        <select name="store_id"
+                                                data-ajax="true" 
+                                                data-placeholder="-- Pilih --"
+                                                data-url="master_data/m_store/getregion/" 
+                                                data-value="" 
+                                                data-limit="100"                                                
+                                                id="store_id" placeholder="Region"
+                                                class='form-control select2'
+                                                width="100%"
+                                                >
+                                        </select>                                
+                                    </div>
                                 </div>
                             </div>
-                        </div>                        
+                        <?php } ?>                        
                         <div class="col-md-4">
                             <div class="form-group">
                                 <div class="col-lg-8">
@@ -153,6 +163,3 @@
         </div>
     </div>                   
 </div>
-<?php
-    }
-?>

@@ -405,7 +405,7 @@ body.page-container-boxed .page-container {
   top: 15px;
 }
 .x-navigation > li > ul > li > a {
-  padding-left: 25px;
+  padding-left: 50px;
 }
 .x-navigation > li > ul > li > a:hover {
   padding-left: 30px;

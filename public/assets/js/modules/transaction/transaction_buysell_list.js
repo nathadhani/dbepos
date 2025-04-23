@@ -4,13 +4,19 @@
 
     $("#btn-submit").on('click', function (e) {
         e.preventDefault();
-        if($('#store_id').val() === null || $('#store_id').val() === ''){
-            bksfn.errMsg('Store Belum Dipilih!');
+        if(usergroupId === 2 || usergroupId === 6){
+            if($('#store_id').val() === null || $('#store_id').val() === ''){
+                bksfn.errMsg('Store Belum Dipilih!');
+            } else {
+                $("#btn-api-get-trx").show();
+                $("#btn-excel").show();
+                fethdata();
+            }            
         } else {
             $("#btn-api-get-trx").show();
             $("#btn-excel").show();
             fethdata();
-        }        
+        }
     });
     
     $("#btn-api-get-trx").on('click', function (e) {
@@ -53,17 +59,15 @@
         } else {
             alertify.confirm("export xlsx ?", function (e) {    
                 if (e) {
-                    var url = "transaction/transaction_buysell_list/excel/"+$('#store_id').val()+"/"+$('#tr_date1').val()+"/"+$('#tr_date2').val();
+                    var url = "transaction/transaction_buysell_list/excel/";
                     $.ajax({
                         url: url,
                         type: 'POST',
-                        data: {},
+                        data:  {'store_id' : $("#store_id").val(), 'period1' : $('#tr_date1').val(), 'period2' : $('#tr_date2').val()},
+                        dataType: 'json',
                         beforeSend: function(){
                             $(".ajax-loader").height($(document).height());
                             $('.ajax-loader').css("visibility", "visible");
-                        },
-                        success: function() {
-                            window.open(url,'_self'); 
                         },
                         complete: function(){
                             $('.ajax-loader').css("visibility", "hidden");
@@ -72,7 +76,7 @@
                         var $a = $("<a>");
                             $a.attr("href",data.file);
                             $("body").append($a);
-                            $a.attr("download","transaction list buy sell.xlsx");
+                            $a.attr("download","Transaction List Buy Sell Period " + $("#tr_date1").val() + ' s-d '+ $("#tr_date2").val() + ".xlsx");
                             $a[0].click();
                             $a.remove();
                     });                                    
@@ -97,10 +101,10 @@
                 //     $(".ajax-loader").height($(document).height());
                 //     $('.ajax-loader').css("visibility", "visible");
                 // },
-                data: function(d) {
-                    d.store_id = $('#store_id').val(),
-                    d.periode1 = $('#tr_date1').val(),
-                    d.periode2 = $('#tr_date2').val()
+                data: function(d) {                   
+                    d.store_id = $("#store_id").val(),
+                    d.period1 = $('#tr_date1').val(),
+                    d.period2 = $('#tr_date2').val()
                 },
                 complete: function(){
                     // $('.ajax-loader').css("visibility", "hidden");

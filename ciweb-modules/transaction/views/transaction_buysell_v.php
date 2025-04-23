@@ -134,11 +134,11 @@
                         </div>                       
 
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <span id="total_transaction_terbilang"></span><br>
                                 Created / by : <span id="created_by"></span>
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-md-6">
                                 <span class="pull-right">
                                     <button id="btn-confirm" class="btn btn-success" style="width:120px;margin-left:5px;">Confirm</button>
                                     <button id="btn-cancel" class="btn btn-danger" style="width:120px;margin-left:5px;">Cancel</button>

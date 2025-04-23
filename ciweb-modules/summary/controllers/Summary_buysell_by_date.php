@@ -26,12 +26,19 @@ class Summary_buysell_by_date extends Bks_Controller {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
-        $store_id = $postData['store_id'];
+
+        if(isset($postData['store_id'])){
+            $this->store_id = $postData['store_id'];
+        } else {
+            $this->store_id = $this->auth['store_id'];
+        }
+
         if(isset($postData['tr_date'])){
             $tr_date = revDate($postData['tr_date']);
         } else {                        
             $tr_date = date('Y-m-d', strtotime('-1 day', strtotime(date('Y-m-d'))));
         }
+
         $this->db->trans_begin();
         if ($this->db->trans_status() === FALSE) {
             $this->db->trans_rollback();
@@ -116,7 +123,11 @@ class Summary_buysell_by_date extends Bks_Controller {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
-        $this->store_id = ( is_array($postData['store_id']) ? implode(',', $postData['store_id']) : $postData['store_id']);
+        if(isset($postData['store_id'])){
+            $this->store_id = $postData['store_id'];
+        } else {
+            $this->store_id = $this->auth['store_id'];
+        }
         $this->tr_date = revDate($postData['period']);        
         echo json_encode($this->dbquery()->result(), true);
         // echo $this->db->last_query();exit;
@@ -127,7 +138,11 @@ class Summary_buysell_by_date extends Bks_Controller {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
-        $this->store_id = ( is_array($postData['store_id']) ? implode(',', $postData['store_id']) : $postData['store_id']);
+        if(isset($postData['store_id'])){
+            $this->store_id = $postData['store_id'];
+        } else {
+            $this->store_id = $this->auth['store_id'];
+        }
         $this->tr_date = revDate($postData['period']);        
 
         $profil_usaha = $this->Bksmdl->getprofilusaha($this->store_id);
@@ -164,10 +179,8 @@ class Summary_buysell_by_date extends Bks_Controller {
         $html_header = strtoupper(trim($profil_usaha[0]->store_name));
         if(!is_array($postData['store_id'])){
             $html_header .= '<br>' . trim($profil_usaha[0]->store_address) . '</br>';
-            $html_header .= '<br>' . 'Rekap Transaksi Beli dan Jual Periode : ' . revDate($this->tr_date) . '</br><br></br><br></br>';
-        } else {
-            $html_header .= '<br>' . 'Konsolidasi Rekap Transaksi Beli dan Jual Periode : ' . revDate($this->tr_date) . '</br><br></br><br></br>';
         }
+        $html_header .= '<br>' . 'Rekap Transaksi Beli dan Jual Tanggal ' . revDate($this->tr_date) . '</br><br></br><br></br>';
         
         // Add Content Body
         $data_content = $this->dbquery()->result();
@@ -262,7 +275,11 @@ class Summary_buysell_by_date extends Bks_Controller {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
-        $this->store_id = ( is_array($postData['store_id']) ? implode(',', $postData['store_id']) : $postData['store_id']) ;
+        if(isset($postData['store_id'])){
+            $this->store_id = $postData['store_id'];
+        } else {
+            $this->store_id = $this->auth['store_id'];
+        }
         $this->tr_date = revDate($postData['period']);        
 
         $profil_usaha = $this->Bksmdl->getprofilusaha($this->store_id);
@@ -289,15 +306,14 @@ class Summary_buysell_by_date extends Bks_Controller {
         $this->excel->setActiveSheetIndex(0)->setCellValue('A1', strtoupper(trim($profil_usaha[0]->store_name))); 
         if(!is_array($postData['store_id'])){
             $this->excel->setActiveSheetIndex(0)->setCellValue('A2', strtoupper(trim($profil_usaha[0]->store_address))); 
-            $this->excel->setActiveSheetIndex(0)->setCellValue('A3', 'Rekap Transaksi Beli dan Jual Periode ' . revDate($this->tr_date)); 
+            $this->excel->setActiveSheetIndex(0)->setCellValue('A3', 'Rekap Transaksi Beli dan Jual Tanggal ' . revDate($this->tr_date)); 
             $this->excel->setActiveSheetIndex(0)->getStyle('A1:A3')->getFont()->setBold(TRUE);
             $this->excel->setActiveSheetIndex(0)->getStyle('A1:A3')->getFont()->setSize(11);
             $this->excel->setActiveSheetIndex(0)->mergeCells('A1:K1');
             $this->excel->setActiveSheetIndex(0)->mergeCells('A2:K2');
-            $this->excel->setActiveSheetIndex(0)->mergeCells('A3:K3');    
-
+            $this->excel->setActiveSheetIndex(0)->mergeCells('A3:K3');
         } else {
-            $this->excel->setActiveSheetIndex(0)->setCellValue('A2', 'Konsolidasi Rekap Transaksi Beli dan Jual Periode ' . revDate($this->tr_date)); 
+            $this->excel->setActiveSheetIndex(0)->setCellValue('A2', 'Rekap Transaksi Beli dan Jual Tanggal ' . revDate($this->tr_date)); 
             $this->excel->setActiveSheetIndex(0)->getStyle('A1:A2')->getFont()->setBold(TRUE);
             $this->excel->setActiveSheetIndex(0)->getStyle('A1:A2')->getFont()->setSize(11);
             $this->excel->setActiveSheetIndex(0)->mergeCells('A1:K1');

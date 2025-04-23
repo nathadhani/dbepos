@@ -260,7 +260,7 @@
 
                 <div class="row">
                     <div class="col-md-12">
-                        <span id="terbilang_modal_payment_amount"></span>
+                        <span id="terbilang_modal_payment_amount" class="pull-right"></span>
                     </div>
                 </div>
                 <!--.end row -->

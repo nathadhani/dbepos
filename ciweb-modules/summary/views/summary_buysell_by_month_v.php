@@ -1,3 +1,15 @@
+<?php
+    $auth = $this->session->userdata('auth');
+    $usergroup_id = $auth['usergroup_id'];
+    $store_id = $auth['store_id']; 
+    $api_method = $auth['api_method'];
+?>
+<script type="text/javascript">
+    var userId = <?php echo $auth['id'];?>;
+    var usergroupId = <?php echo $auth['usergroup_id'];?>;
+    var Apimethod = <?php echo ($auth['api_method'] == null ? 0 : $auth['api_method']) ;?>;
+    var ApiAP = "<?php echo $auth['api_angkasapura'];?>";    
+</script>
 <div class="row">
     <div class="col-md-12">
         <div class="panel panel-default">
@@ -6,27 +18,17 @@
                     <h3>Summary Buy / Sell - by Month</h3>
                 </div>
                 <ul class="panel-controls">
-                    <button id="btn-pdf" class="btn btn-info" style="margin-left:5px;">pdf</button>
-                    <button id="btn-excel" class="btn btn-info" style="margin-left:5px;">Xlsx</button>                    
+                    <button id="btn-pdf" class="btn btn-info" style="width:140px; margin-left:10px;">Export PDF</button>
+                    <button id="btn-excel" class="btn btn-info" style="width:140px; margin-left:10px;">Export Xlsx</button>                    
                 </ul>
             </div>
             <div class="panel-body">
                 <div class="row">
-                    <div class="col-md-8">
-                        <div class="form-group">                                
-                            <div class="col-lg-12">
-                                <label for="store_id" style="display:block">Store</label>
-                                <?php if( $auth['usergroup_id'] == '2'){ ?>
-                                    <select name="store_id[]"
-                                            data-ajax="true" 
-                                            data-placeholder="-- Pilih --"
-                                            data-url="master_data/m_store/getstore/" 
-                                            data-value="" 
-                                            data-limit="9"
-                                            multiple
-                                            id="store_id" placeholder="Store" class='form-control select2'>
-                                    </select>
-                                <?php } else { ?>    
+                    <?php if(in_array($usergroup_id, ['2','6'])) { ?>
+                        <div class="col-md-8">
+                            <div class="form-group">                                
+                                <div class="col-lg-12">
+                                    <label for="store_id" style="display:block">Store</label>
                                     <select name="store_id"
                                             data-ajax="true" 
                                             data-placeholder="-- Pilih --"
@@ -38,10 +40,10 @@
                                             width="100%"
                                             >
                                     </select>
-                                <?php } ?>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    <?php } ?>
                     <div class="col-md-2">
                         <div class="form-group">
                             <div class="col-lg-12">
@@ -75,7 +77,7 @@
                                 <th rowspan="2" style="vertical-align:middle;text-align:center;">Beginning Amount</th>
                                 <th colspan="2" style="vertical-align:middle;text-align:center;">Buy</th>
                                 <th colspan="2" style="vertical-align:middle;text-align:center;">Sell</th>
-                                <th rowspan="2" style="vertical-align:middle;text-align:center;">End Amount</th>
+                                <th rowspan="2" style="vertical-align:middle;text-align:center;">Ending Amount</th>
                                 <th rowspan="2" style="vertical-align:middle;text-align:center;">Description</th>
                             </tr>
                             <tr>

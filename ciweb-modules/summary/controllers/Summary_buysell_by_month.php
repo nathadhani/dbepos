@@ -166,10 +166,8 @@ class Summary_buysell_by_month extends Bks_Controller {
         $html_header = strtoupper(trim($profil_usaha[0]->store_name));
         if(!is_array($postData['store_id'])){
             $html_header .= '<br>' . trim($profil_usaha[0]->store_address) . '</br>';
-            $html_header .= '<br>' . 'Rekap Transaksi Beli dan Jual Periode : ' . namabulan(sprintf("%02d", $this->tr_month)) . ' ' . sprintf("%04d", $this->tr_year) . '</br><br></br><br></br>';
-        } else {
-            $html_header .= '<br>' . 'Konsolidasi Rekap Transaksi Beli dan Jual Periode : ' . namabulan(sprintf("%02d", $this->tr_month)) . ' ' . sprintf("%04d", $this->tr_year) . '</br><br></br><br></br>';
         }       
+        $html_header .= '<br>' . 'Rekap Transaksi Beli dan Jual Bulan ' . namabulan(sprintf("%02d", $this->tr_month)) . ' Tahun  ' . sprintf("%04d", $this->tr_year) . '</br><br></br><br></br>';
         
         // Add Content Body
         $data_content = $this->dbquery()->result();
@@ -291,15 +289,14 @@ class Summary_buysell_by_month extends Bks_Controller {
         $this->excel->setActiveSheetIndex(0)->setCellValue('A1', strtoupper(trim($profil_usaha[0]->store_name))); 
         if(!is_array($postData['store_id'])){
             $this->excel->setActiveSheetIndex(0)->setCellValue('A2', strtoupper(trim($profil_usaha[0]->store_address))); 
-            $this->excel->setActiveSheetIndex(0)->setCellValue('A3', 'Rekap Transaksi Beli dan Jual Periode ' . namabulan(sprintf("%02d", $this->tr_month)) . ' ' . sprintf("%04d", $this->tr_year)); 
+            $this->excel->setActiveSheetIndex(0)->setCellValue('A3', 'Rekap Transaksi Beli dan Jual Bulan ' . namabulan(sprintf("%02d", $this->tr_month)) . ' Tahun ' . sprintf("%04d", $this->tr_year)); 
             $this->excel->setActiveSheetIndex(0)->getStyle('A1:A3')->getFont()->setBold(TRUE);
             $this->excel->setActiveSheetIndex(0)->getStyle('A1:A3')->getFont()->setSize(11);
             $this->excel->setActiveSheetIndex(0)->mergeCells('A1:K1');
             $this->excel->setActiveSheetIndex(0)->mergeCells('A2:K2');
-            $this->excel->setActiveSheetIndex(0)->mergeCells('A3:K3');    
-
+            $this->excel->setActiveSheetIndex(0)->mergeCells('A3:K3');
         } else {
-            $this->excel->setActiveSheetIndex(0)->setCellValue('A2', 'Konsolidasi Rekap Transaksi Beli dan Jual Periode ' . namabulan(sprintf("%02d", $this->tr_month)) . ' ' . sprintf("%04d", $this->tr_year)); 
+            $this->excel->setActiveSheetIndex(0)->setCellValue('A2', 'Rekap Transaksi Beli dan Jual Bulan ' . namabulan(sprintf("%02d", $this->tr_month)) . ' Tahun ' . sprintf("%04d", $this->tr_year)); 
             $this->excel->setActiveSheetIndex(0)->getStyle('A1:A2')->getFont()->setBold(TRUE);
             $this->excel->setActiveSheetIndex(0)->getStyle('A1:A2')->getFont()->setSize(11);
             $this->excel->setActiveSheetIndex(0)->mergeCells('A1:K1');

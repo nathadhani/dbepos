@@ -3,9 +3,15 @@ var title_tahun = $("#period").val();
 
 $("#btn-submit").on('click', function (e) {
     e.preventDefault();
-    if($('#store_id').val() === null || $('#store_id').val() === ''){
-        bksfn.errMsg('Store Belum Dipilih!');
-    } else {        
+    if(usergroupId === 2 || usergroupId === 6){
+        if($('#store_id').val() === null || $('#store_id').val() === ''){
+            bksfn.errMsg('Store Belum Dipilih!');
+        } else {        
+            storeId = $("#store_id").val();
+            title_tahun = $('#period').val();
+            loaddata();
+        }
+    } else {
         storeId = $("#store_id").val();
         title_tahun = $('#period').val();
         loaddata();
@@ -123,107 +129,99 @@ function getdatatable2(){
 }
 
 function getchart1(){
-    if( typeof(storeId) !== 'undefined') {
-        if(storeId !== null && storeId !== '') {
-            var datasource = [];
-            $("#chart1").empty();
-            $("#title-chart1").html(title_tahun);
-            $.ajax({
-                url: baseUrl + 'summary/summary_buysell_by_chart/getchart1',
-                type: 'POST',
-                data: {'store_id' : storeId, 'period' : $('#period').val()},
-                dataType: 'json',
-                success: function (data) {
-                    if (data !== '[]' && data.length > 0){
-                        var d = (data)[0];
-                        $.each(data, function (i, d) {
-                            var xbuy_equivalent = (d.buy_equivalent === null || isNaN(d.buy_equivalent) ? 0 : Number(d.buy_equivalent));
-                            var xsell_equivalent = (d.sell_equivalent === null ||  isNaN(d.sell_equivalent) ? 0 : Number(d.sell_equivalent));
-                            if(xbuy_equivalent > 0 || xsell_equivalent > 0){
-                                var obj = {};
-                                obj["tr_month"] = d.tr_month;
-                                obj["month"] = getsortbulan(Number(d.tr_month));
-                                obj["buy"] = xbuy_equivalent.toFixed(3);
-                                obj["sell"] = xsell_equivalent.toFixed(3);
-                                datasource.push(obj);
-                            }
-                        });
-                        if(datasource.length > 0){
-                            console.log(datasource);
-                            Morris.Line({
-                                element: 'chart1',
-                                data : datasource,
-                                xkey: 'month',
-                                ykeys: ['buy','sell'],
-                                labels: ['Buy','Sell'],
-                                parseTime: false,
-                                hideHover: true,
-                                gridTextSize: '10px',
-                                lineColors: ['#0000FF', '#FF0000'],
-                                gridLineColor: '#E5E5E5'
-                              });     
-                        }                        
+    var datasource = [];
+    $("#chart1").empty();
+    $("#title-chart1").html(title_tahun);
+    $.ajax({
+        url: baseUrl + 'summary/summary_buysell_by_chart/getchart1',
+        type: 'POST',
+        data: {'store_id' : storeId, 'period' : $('#period').val()},
+        dataType: 'json',
+        success: function (data) {
+            if (data !== '[]' && data.length > 0){
+                var d = (data)[0];
+                $.each(data, function (i, d) {
+                    var xbuy_equivalent = (d.buy_equivalent === null || isNaN(d.buy_equivalent) ? 0 : Number(d.buy_equivalent));
+                    var xsell_equivalent = (d.sell_equivalent === null ||  isNaN(d.sell_equivalent) ? 0 : Number(d.sell_equivalent));
+                    if(xbuy_equivalent > 0 || xsell_equivalent > 0){
+                        var obj = {};
+                        obj["tr_month"] = d.tr_month;
+                        obj["month"] = getsortbulan(Number(d.tr_month));
+                        obj["buy"] = xbuy_equivalent.toFixed(3);
+                        obj["sell"] = xsell_equivalent.toFixed(3);
+                        datasource.push(obj);
                     }
-                },
-                error: function(xhr){
-                    alertify.error(xhr.responseText);
-                }
-            });
+                });
+                if(datasource.length > 0){
+                    console.log(datasource);
+                    Morris.Line({
+                        element: 'chart1',
+                        data : datasource,
+                        xkey: 'month',
+                        ykeys: ['buy','sell'],
+                        labels: ['Buy','Sell'],
+                        parseTime: false,
+                        hideHover: true,
+                        gridTextSize: '10px',
+                        lineColors: ['#0000FF', '#FF0000'],
+                        gridLineColor: '#E5E5E5'
+                        });     
+                }                        
+            }
+        },
+        error: function(xhr){
+            alertify.error(xhr.responseText);
         }
-    }        
+    });       
 }
 
 function getchart2(){
-    if( typeof(storeId) !== 'undefined') {
-        if(storeId !== null && storeId !== '') {
-            var datasource = [];
-            $("#chart2").empty();
-            $("#title-chart2").html(title_tahun);
-            $.ajax({
-                url: baseUrl + 'summary/summary_buysell_by_chart/getchart2',
-                type: 'POST',
-                data: {'store_id' : storeId, 'period' : $('#period').val()},
-                dataType: 'json',
-                success: function (data) {
-                    if (data !== '[]' && data.length > 0){
-                        var d = (data)[0];
-                        let xurut = 1;
-                        $.each(data, function (i, d) {
-                            var xbuy_equivalent = (d.buy_equivalent === null || isNaN(d.buy_equivalent) ? 0 : Number(d.buy_equivalent));
-                            var xsell_equivalent = (d.sell_equivalent === null ||  isNaN(d.sell_equivalent) ? 0 : Number(d.sell_equivalent));
-                            if(xbuy_equivalent > 0 || xsell_equivalent > 0){
-                                var obj = {};
-                                obj["currency_id"] = d.currency_id;
-                                obj["currency_code"] = xurut.toString()+'. '+d.currency_code.trim();
-                                obj["buy"] = xbuy_equivalent.toFixed(3);
-                                obj["sell"] = xsell_equivalent.toFixed(3);
-                                datasource.push(obj);
-                                xurut++;
-                            }    
-                        });
-                        if(datasource.length > 0){
-                            console.log(datasource);
-                            Morris.Bar({
-                                element: 'chart2',                                        
-                                data : datasource,
-                                xkey: 'currency_code',
-                                ykeys: ['buy', 'sell'],
-                                labels: ['Buy', 'Sell'],
-                                barColors: ['#0000FF', '#FF0000'],
-                                gridTextSize: '10px',
-                                hideHover: true,
-                                resize: true,
-                                gridLineColor: '#E5E5E5'
-                            });
-                        }                        
-                    }
-                },
-                error: function(xhr){
-                    alertify.error(xhr.responseText);
-                }
-            });
+    var datasource = [];
+    $("#chart2").empty();
+    $("#title-chart2").html(title_tahun);
+    $.ajax({
+        url: baseUrl + 'summary/summary_buysell_by_chart/getchart2',
+        type: 'POST',
+        data: {'store_id' : storeId, 'period' : $('#period').val()},
+        dataType: 'json',
+        success: function (data) {
+            if (data !== '[]' && data.length > 0){
+                var d = (data)[0];
+                let xurut = 1;
+                $.each(data, function (i, d) {
+                    var xbuy_equivalent = (d.buy_equivalent === null || isNaN(d.buy_equivalent) ? 0 : Number(d.buy_equivalent));
+                    var xsell_equivalent = (d.sell_equivalent === null ||  isNaN(d.sell_equivalent) ? 0 : Number(d.sell_equivalent));
+                    if(xbuy_equivalent > 0 || xsell_equivalent > 0){
+                        var obj = {};
+                        obj["currency_id"] = d.currency_id;
+                        obj["currency_code"] = xurut.toString()+'. '+d.currency_code.trim();
+                        obj["buy"] = xbuy_equivalent.toFixed(3);
+                        obj["sell"] = xsell_equivalent.toFixed(3);
+                        datasource.push(obj);
+                        xurut++;
+                    }    
+                });
+                if(datasource.length > 0){
+                    console.log(datasource);
+                    Morris.Bar({
+                        element: 'chart2',                                        
+                        data : datasource,
+                        xkey: 'currency_code',
+                        ykeys: ['buy', 'sell'],
+                        labels: ['Buy', 'Sell'],
+                        barColors: ['#0000FF', '#FF0000'],
+                        gridTextSize: '10px',
+                        hideHover: true,
+                        resize: true,
+                        gridLineColor: '#E5E5E5'
+                    });
+                }                        
+            }
+        },
+        error: function(xhr){
+            alertify.error(xhr.responseText);
         }
-    }        
+    });      
 }
 
 

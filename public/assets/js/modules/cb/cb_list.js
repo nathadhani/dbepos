@@ -63,14 +63,12 @@ $("#btn-excel").on('click', function (e) {
     }              
 });
 
-$(".dropdown").hide();
 $("#btn-excel").hide();
 $("#btn-submit").on('click', function (e) {
     e.preventDefault();
     if($('#store_id').val() === null || $('#store_id').val() === ''){
         bksfn.errMsg('Store Belum Dipilih!');
     } else {
-        $(".dropdown").show();
         $("#btn-excel").show();
         fethdata();
     }        

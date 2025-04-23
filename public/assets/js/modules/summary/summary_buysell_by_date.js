@@ -3,8 +3,13 @@ $("#btn-pdf").hide();
 $("#btn-excel").hide();
 $("#btn-submit").on('click', function (e) {
     e.preventDefault();
-    if($('#store_id').val() === null || $('#store_id').val() === ''){
-        bksfn.errMsg('Store Belum Dipilih!');            
+    if(usergroupId === 2 || usergroupId === 6){
+        if($('#store_id').val() === null || $('#store_id').val() === ''){
+            bksfn.errMsg('Store Belum Dipilih!');            
+        } else {
+            fethdata();
+            $("#btn-closing").show();
+        }
     } else {
         fethdata();
         $("#btn-closing").show();
@@ -153,19 +158,10 @@ $("#btn-closing").on('click', function (e) {
     if($('#store_id').val() === null || $('#store_id').val() === ''){
         bksfn.errMsg('Store Belum Dipilih!');
     } else {
-        $.ajax({
-            url: baseUrl + 'stock/stock/generate_tr_stock_pull',
-            type: 'POST',
-            beforeSend: function(){
-                $(".ajax-loader").height($(document).height());
-                $('.ajax-loader').css("visibility", "visible");
-            },
-            data: {'store_id' : $('#store_id').val(), 'tr_date' : $('#period').val()},
-            datatype: 'json',
-            success: function(data){
-                alertify.success('Calculate stock in total and sheet done.!');
+        alertify.confirm("closing transaction period " + $('#period').val() + " ?", function (e) {    
+            if (e) {
                 $.ajax({
-                    url: baseUrl + 'stock/stock_price/generate_tr_stock_price',
+                    url: baseUrl + 'stock/stock/generate_tr_stock_pull',
                     type: 'POST',
                     beforeSend: function(){
                         $(".ajax-loader").height($(document).height());
@@ -174,9 +170,9 @@ $("#btn-closing").on('click', function (e) {
                     data: {'store_id' : $('#store_id').val(), 'tr_date' : $('#period').val()},
                     datatype: 'json',
                     success: function(data){
-                        alertify.success('Calculate stock in exchange rate average done.!');
+                        alertify.success('Calculate stock in total and sheet done.!');
                         $.ajax({
-                            url: baseUrl + 'summary/summary_buysell_by_date/closing_trxdate',
+                            url: baseUrl + 'stock/stock_price/generate_tr_stock_price',
                             type: 'POST',
                             beforeSend: function(){
                                 $(".ajax-loader").height($(document).height());
@@ -185,14 +181,35 @@ $("#btn-closing").on('click', function (e) {
                             data: {'store_id' : $('#store_id').val(), 'tr_date' : $('#period').val()},
                             datatype: 'json',
                             success: function(data){
-                                alertify.success('Closing transaction buy / sell done.!');
+                                alertify.success('Calculate stock in exchange rate average done.!');
+                                $.ajax({
+                                    url: baseUrl + 'summary/summary_buysell_by_date/closing_trxdate',
+                                    type: 'POST',
+                                    beforeSend: function(){
+                                        $(".ajax-loader").height($(document).height());
+                                        $('.ajax-loader').css("visibility", "visible");
+                                    },
+                                    data: {'store_id' : $('#store_id').val(), 'tr_date' : $('#period').val()},
+                                    datatype: 'json',
+                                    success: function(data){
+                                        alertify.success('Closing transaction buy / sell done.!');
+                                    },
+                                    complete: function(){
+                                        $('.ajax-loader').css("visibility", "hidden");
+                                    },
+                                    error: function(xhr){
+                                        $('.ajax-loader').css("visibility", "hidden");
+                                        alertify.error("error losing transaction buy / sell.!");
+                                        StringtoFile(xhr.response.text(), 'error');
+                                    }
+                                });
                             },
                             complete: function(){
                                 $('.ajax-loader').css("visibility", "hidden");
                             },
                             error: function(xhr){
                                 $('.ajax-loader').css("visibility", "hidden");
-                                alertify.error("error losing transaction buy / sell.!");
+                                alertify.error("error calculate stock in exchange rate average.!");
                                 StringtoFile(xhr.response.text(), 'error');
                             }
                         });
@@ -202,19 +219,11 @@ $("#btn-closing").on('click', function (e) {
                     },
                     error: function(xhr){
                         $('.ajax-loader').css("visibility", "hidden");
-                        alertify.error("error calculate stock in exchange rate average.!");
+                        alertify.error("error calculate stock in total and sheet.!");
                         StringtoFile(xhr.response.text(), 'error');
                     }
                 });
-            },
-            complete: function(){
-                $('.ajax-loader').css("visibility", "hidden");
-            },
-            error: function(xhr){
-                $('.ajax-loader').css("visibility", "hidden");
-                alertify.error("error calculate stock in total and sheet.!");
-                StringtoFile(xhr.response.text(), 'error');
-            }
-        });                        
+            }    
+        });                      
     }
 });

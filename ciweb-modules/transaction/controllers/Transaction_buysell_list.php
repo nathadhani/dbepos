@@ -22,9 +22,13 @@ class Transaction_buysell_list extends Bks_Controller {
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
         
-        $store_id  = $postData['store_id'];    
-        $tanggal1 = revDate($postData['periode1']);
-        $tanggal2 = revDate($postData['periode2']);
+        if(isset($postData['store_id'])){
+            $store_id  = $postData['store_id'];
+        } else {
+            $store_id = $this->auth['store_id'];
+        }
+        $tanggal1 = revDate($postData['period1']);
+        $tanggal2 = revDate($postData['period2']);
 
         $this->Bksmdl->table = 'v_tr_header';
 
@@ -44,12 +48,27 @@ class Transaction_buysell_list extends Bks_Controller {
         $this->Bksmdl->outputToJson($cpData);
     }
 
+    function excelcellColor($cells,$color){    
+        $this->excel->getActiveSheet(0)->getStyle($cells)->getFill()->applyFromArray(array(
+            'type' => PHPExcel_Style_Fill::FILL_SOLID,
+            'startcolor' => array(
+                 'rgb' => $color
+            )
+        ));
+    }
+
     function excel(){
         $this->libauth->check(__METHOD__);
-        $store_id = $this->uri->segment(4);
-        $tanggal1 = revDate($this->uri->segment(5));
-        $tanggal2 = revDate($this->uri->segment(6));
+        $postData = $this->input->post();
+        
+        if(isset($postData['store_id'])){
+            $store_id = $postData['store_id'];
+        } else {
+            $store_id = $this->auth['store_id'];
+        }
         $ap_tr_id = $this->auth['ap_tr_id'];
+        $this->tr_date1 = revDate($postData['period1']);
+        $this->tr_date2 = revDate($postData['period2']);        
         
         $query = "SELECT
                     (
@@ -87,14 +106,14 @@ class Transaction_buysell_list extends Bks_Controller {
         if( $ap_tr_id !== null && strlen($ap_tr_id) > 0){
             $query .= " WHERE tr_header.store_id = $store_id
                     AND tr_header.tr_id IN ($ap_tr_id)
-                    AND tr_header.tr_date >= '$tanggal1'
-                    AND tr_header.tr_date <= '$tanggal2'
+                    AND tr_header.tr_date >= '$this->tr_date1'
+                    AND tr_header.tr_date <= '$this->tr_date2'
                     AND tr_detail.status IN (2,3,4)                    
                     ORDER BY tr_header.tr_date ASC, tr_header.tr_id ASC, tr_header.tr_number ASC, tr_detail.currency_id ASC, tr_detail.nominal ASC, tr_detail.sheet ASC";
         } else {
             $query .= " WHERE tr_header.store_id = $store_id
-                    AND tr_header.tr_date >= '$tanggal1'
-                    AND tr_header.tr_date <= '$tanggal2'
+                    AND tr_header.tr_date >= '$this->tr_date1'
+                    AND tr_header.tr_date <= '$this->tr_date2'
                     AND tr_detail.status IN (2,3,4)
                     ORDER BY tr_header.tr_date ASC, tr_header.tr_id ASC, tr_header.tr_number ASC, tr_detail.currency_id ASC, tr_detail.nominal ASC, tr_detail.sheet ASC";
         }
@@ -123,30 +142,27 @@ class Transaction_buysell_list extends Bks_Controller {
         $col = 0;
 
         // title column
-        $judul = array('Trx',                            
-                        'Date',
-                        'Number',
-                        'Status',                        
-                        'Currency',
-                        'Nominal',
-                        'Sheet',
-                        'Amount',
-                        'Exchange Rate',
-                        'Equivalent',
-                        'Store Name',
-                        'Store Address',
-                        'Description',
-                        'Created',
-                        'Updated',
-                        'Created by Name',
-                        'Updated by Name');
+        $this->excel->setActiveSheetIndex(0)->setCellValue('A1', "Transaction"); 
+        $this->excel->setActiveSheetIndex(0)->setCellValue('B1', "Date"); 
+        $this->excel->setActiveSheetIndex(0)->setCellValue('C1', "Number"); 
+        $this->excel->setActiveSheetIndex(0)->setCellValue('D1', "Status"); 
+        $this->excel->setActiveSheetIndex(0)->setCellValue('E1', "Currency"); 
+        $this->excel->setActiveSheetIndex(0)->setCellValue('F1', "Nominal"); 
+        $this->excel->setActiveSheetIndex(0)->setCellValue('G1', "Sheet"); 
+        $this->excel->setActiveSheetIndex(0)->setCellValue('H1', "Amount"); 
+        $this->excel->setActiveSheetIndex(0)->setCellValue('I1', "Exchange Rate"); 
+        $this->excel->setActiveSheetIndex(0)->setCellValue('J1', "Equivalent"); 
+        $this->excel->setActiveSheetIndex(0)->setCellValue('K1', "Store Name"); 
+        $this->excel->setActiveSheetIndex(0)->setCellValue('L1', "Store Address"); 
+        $this->excel->setActiveSheetIndex(0)->setCellValue('M1', "Description"); 
+        $this->excel->setActiveSheetIndex(0)->setCellValue('N1', "Created"); 
+        $this->excel->setActiveSheetIndex(0)->setCellValue('O1', "Updated"); 
+        $this->excel->setActiveSheetIndex(0)->setCellValue('P1', "Created by Name"); 
+        $this->excel->setActiveSheetIndex(0)->setCellValue('Q1', "Updated by Name"); 
 
-
-        foreach ($fields as $key => $field) {
-            $this->excel->getActiveSheet()->setCellValueByColumnAndRow($col, 1, $judul[$key]);
-            $this->excel->getActiveSheet()->getStyleByColumnAndRow($col, 1)->applyFromArray($title);
-            $col++;
-        }
+        $this->excelcellColor('A1:Q1', 'FFFF00');
+        $this->excel->setActiveSheetIndex(0)->getStyle('A1:Q1')->getFont()->setBold(TRUE);
+        $this->excel->setActiveSheetIndex(0)->getStyle('A1:Q1')->getFont()->setSize(11);
 
         // Fetching the table data
         $row = 2;
@@ -179,18 +195,17 @@ class Transaction_buysell_list extends Bks_Controller {
         $this->excel->setActiveSheetIndex(0);        
 
         // Sending headers to force the user to download the file
-        $filename = 'Transaction Period ' . revDate($tanggal1) . ' sd ' .  revDate($tanggal2);
-        header("Pragma: public");
-        header("Expires: 0");
-        header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-        header("Content-Type: application/force-download");
-        header("Content-Type: application/octet-stream");
-        header("Content-Type: application/download");;
-        header("Content-Disposition: attachment;filename=$filename.xlsx");
-        header("Content-Transfer-Encoding: binary ");
+        ob_start();
         $objWriter = new PHPExcel_Writer_Excel2007($this->excel); 
-        $objWriter->setOffice2003Compatibility(true);
+        // $objWriter->setOffice2003Compatibility(true);
         $objWriter->save('php://output');
+        $xlsData = ob_get_contents();
+        ob_end_clean();
+        $response =  array(
+            'op' => 'ok',
+            'file' => "data:application/vnd.ms-excel;base64,".base64_encode($xlsData)
+        );
+        die(json_encode($response));
     }
 
 }

@@ -19,7 +19,7 @@
                 </div>
                 <ul class="panel-controls">
                     <?php
-                        if(!in_array($usergroup_id, array('6'))) {
+                        if(!in_array($usergroup_id, ['6'])) {
                             if($api_method === '1') {
                     ?>
                         <button id="btn-api-get-trx" class="btn btn-info" style="width:160px;margin-left:10px;">Get Data from ECSys</button>
@@ -27,26 +27,16 @@
                             }
                         }
                     ?>
-                    <button id="btn-excel" class="btn btn-info" style="width:140px;margin-left:10px;">Export to Xlsx</button>
+                    <button id="btn-excel" class="btn btn-info" style="width:140px; margin-left:10px;">Export Xlsx</button>
                 </ul>
             </div>
             <div class="panel-body">
                 <div class="row">
-                    <div class="col-md-7">
-                        <div class="form-group">                                
-                            <div class="col-lg-12">
-                                <label for="store_id" style="display:block">Store</label>
-                                <?php if( $auth['usergroup_id'] == '2'){ ?>
-                                    <select name="store_id[]"
-                                            data-ajax="true" 
-                                            data-placeholder="-- Pilih --"
-                                            data-url="master_data/m_store/getstore/" 
-                                            data-value="" 
-                                            data-limit="9"
-                                            multiple
-                                            id="store_id" placeholder="Store" class='form-control select2'>
-                                    </select>
-                                <?php } else { ?>    
+                    <?php if(in_array($usergroup_id, ['2','6'])) { ?>
+                        <div class="col-md-7">
+                            <div class="form-group">                                
+                                <div class="col-lg-12">
+                                    <label for="store_id" style="display:block">Store</label>
                                     <select name="store_id"
                                             data-ajax="true" 
                                             data-placeholder="-- Pilih --"
@@ -57,11 +47,11 @@
                                             class='form-control select2'
                                             width="100%"
                                             >
-                                    </select>
-                                <?php } ?>
+                                    </select>                                    
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    <?php } ?>
                     <div class="col-md-5">
                         <div class="form-group">
                             <div class="col-lg-12">

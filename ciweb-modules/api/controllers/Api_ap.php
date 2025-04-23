@@ -41,11 +41,6 @@ class Api_ap extends Bks_Controller {
         if(isset($postData['id'])){
             $id = $postData['id'];
         }
-
-        $company_id = null;
-        if(isset($postData['company_id'])){
-            $company_id = $postData['company_id'];
-        }
         
         $store_id = null;
         if(isset($postData['store_id'])){
@@ -89,7 +84,7 @@ class Api_ap extends Bks_Controller {
                     $this->ap_get_trx($url, $token, $store_id, $tr_date1, $tr_date2, $method);
 
                 } else if($method === 'getstore'){
-                    $this->ap_get_store($company_id, $resp_login);
+                    $this->ap_get_store($store_id, $resp_login);
                 }
             } else {
                 echo "empty token";
@@ -626,7 +621,7 @@ class Api_ap extends Bks_Controller {
         }        
     }
 
-    public function ap_get_store($company_id, $resArr){
+    public function ap_get_store($store_id, $resArr){
         $this->db->trans_begin();
         if(isset($resArr['user']['store']) && $resArr['user']['store'] !== null){
             foreach ($resArr['user']['store'] as $key => $item) {
@@ -634,7 +629,7 @@ class Api_ap extends Bks_Controller {
                 $cek_h = $this->db->query("SELECT * FROM m_store WHERE api_store_id = '$api_store_id' ")->result();
                 if( !isset($cek_h[0]->api_store_id) ){
                     $data = array(
-                                'company_id' => $company_id,
+                                'store_id' => $store_id,
                                 'api_store_id' => $api_store_id,
                                 'api_store_name' => $item['store_name'],
                                 'status' => 1,
