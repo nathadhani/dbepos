@@ -8,7 +8,7 @@
             <div class="panel panel-default"> 
                 <div class="panel-heading ui-draggable-handle">                                
                     <div class="panel-title-box">
-                        <h3>Buy / Sell - Dashboard</h3>
+                        <h3>Buy / Sell - Summary by Chart</h3>
                     </div>
                     <span class="pull-right" id="lastupdated"></span>
                 </div>                               

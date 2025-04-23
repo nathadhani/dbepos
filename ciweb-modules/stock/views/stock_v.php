@@ -15,29 +15,17 @@
                         <div class="form-group">                                
                             <div class="col-lg-12">
                                 <label for="store_id" style="display:block">Store</label>
-                                <?php if( $auth['usergroup_id'] == '2'){ ?>
-                                    <select name="store_id[]"
-                                            data-ajax="true" 
-                                            data-placeholder="-- Pilih --"
-                                            data-url="master_data/m_store/getstore/" 
-                                            data-value="" 
-                                            data-limit="9"
-                                            multiple
-                                            id="store_id" placeholder="Store" class='form-control select2'>
-                                    </select>
-                                <?php } else { ?>    
-                                    <select name="store_id"
-                                            data-ajax="true" 
-                                            data-placeholder="-- Pilih --"
-                                            data-url="master_data/m_store/getregion/" 
-                                            data-value="" 
-                                            data-limit="100"                                                
-                                            id="store_id" placeholder="Store"
-                                            class='form-control select2'
-                                            width="100%"
-                                            >
-                                    </select>
-                                <?php } ?>
+                                <select name="store_id"
+                                        data-ajax="true" 
+                                        data-placeholder="-- Pilih --"
+                                        data-url="master_data/m_store/getregion/" 
+                                        data-value="" 
+                                        data-limit="100"                                                
+                                        id="store_id" placeholder="Store"
+                                        class='form-control select2'
+                                        width="100%"
+                                        >
+                                </select>
                             </div>
                         </div>
                     </div>

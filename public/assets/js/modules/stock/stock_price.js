@@ -1,3 +1,32 @@
+$("#btn-stock-calculate").on('click', function (e) {
+    e.preventDefault();
+    if($('#store_id').val() === null || $('#store_id').val() === ''){
+        bksfn.errMsg('Store Belum Dipilih!');
+    } else {
+        $.ajax({
+            url: baseUrl + 'stock/stock_price/generate_tr_stock_price',
+            type: 'POST',
+            beforeSend: function(){
+                $(".ajax-loader").height($(document).height());
+                $('.ajax-loader').css("visibility", "visible");
+            },
+            data: {'store_id' : $('#store_id').val(), 'period' : $('#period').val()},
+            datatype: 'json',
+            success: function(data){
+                alertify.success('Calculate stock in exchange rate average done.!');
+            },
+            complete: function(){
+                $('.ajax-loader').css("visibility", "hidden");
+            },
+            error: function(xhr){
+                $('.ajax-loader').css("visibility", "hidden");
+                alertify.error("error calculate stock in exchange rate average.!");
+                StringtoFile(xhr.response.text(), 'error');
+            }
+        });                                
+    }
+});
+
 $('#store_id').on('change',function(e){
     e.preventDefault()
     if($(this).val() != null && $(this).val() != ''){

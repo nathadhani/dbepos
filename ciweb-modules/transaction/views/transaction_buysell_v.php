@@ -12,7 +12,7 @@
                         <div class="row">                            
                             <div class="col-md-2">
                                 <label for=tr_id style="display:block">
-                                    <span id="ftitle">New</span> - <span id="trx_name"></span>                                            
+                                    <span id="ftitle">New</span><span id="trx_name"></span>                                            
                                 </label>
                                 <select name="tr_id"
                                         data-ajax="true" 
@@ -66,7 +66,7 @@
                                             <th style='vertical-align:middle;text-align:left;'>Amount</th>
                                             <th style='vertical-align:middle;text-align:left;'>Exchange Rate</th>
                                             <th style='vertical-align:middle;text-align:left;'>Equivalent</th>
-                                            <th id="act-title" style='vertical-align:middle;text-align:center;' width="50px">Action</th>
+                                            <th id="act-title" style='vertical-align:middle;text-align:left;' width="50px;">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>       
@@ -124,25 +124,26 @@
                                             <th style='vertical-align: middle;text-align:left;'>Amount</th>
                                             <th style='vertical-align: middle;text-align:left;'>Exchange Rate</th>
                                             <th style='vertical-align: middle;text-align:left;'>Equivalent</th>
+                                            <th style='vertical-align: middle;text-align:left;'>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>                                                
                                     </tbody>
                                 </table>               
                             </div>
-                            <span>
-                                <div class="col-md-7">
-                                    Created / by : <span id="created_by"></span>
-                                </div>                                                     
-                                <div class="col-md-5">
-                                    <span id="total_transaction_terbilang" class="pull-right"></span>
-                                </div>
-                            </span>
                         </div>                       
 
                         <div class="row">
-                            <button id="btn-confirm" class="btn btn-success" style="width:120px;margin-left:5px;">Confirm</button>
-                            <button id="btn-cancel" class="btn btn-danger" style="width:120px;margin-left:5px;">Cancel</button>
+                            <div class="col-md-4">
+                                <span id="total_transaction_terbilang"></span><br>
+                                Created / by : <span id="created_by"></span>
+                            </div>
+                            <div class="col-md-8">
+                                <span class="pull-right">
+                                    <button id="btn-confirm" class="btn btn-success" style="width:120px;margin-left:5px;">Confirm</button>
+                                    <button id="btn-cancel" class="btn btn-danger" style="width:120px;margin-left:5px;">Cancel</button>
+                                </span>
+                            </div>                                                     
                         </div>                    
                     </div>
                     <!--.end panel-body -->

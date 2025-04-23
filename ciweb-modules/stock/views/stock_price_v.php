@@ -6,6 +6,7 @@
                     <h3>Stock - In Exchange Rate Average</h3>
                 </div>
                 <ul class="panel-controls">
+                    <button id="btn-stock-calculate" class="btn btn-info" style="width:140px;">Calculate</button>
                     <button id="btn-excel" class="btn btn-info" style="width:140px;margin-left:5px;">Export to Xlsx</button>
                 </ul>
             </div>

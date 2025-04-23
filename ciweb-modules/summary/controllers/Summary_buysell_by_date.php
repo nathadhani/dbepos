@@ -235,7 +235,7 @@ class Summary_buysell_by_date extends Bks_Controller {
             $pdf->writeHTML($html, true, false, true, false, '');
 
             $pdf->Ln(4);
-            $pdf->Cell(01, 01, 'Createdby,                       Spv,', 0, 1, 'L');
+            $pdf->Cell(01, 01, 'Created by,                       Checked by,', 0, 1, 'L');
         }
 
         ob_start();

@@ -237,7 +237,7 @@ class Summary_buysell_by_month extends Bks_Controller {
             $pdf->writeHTML($html, true, false, true, false, '');
 
             $pdf->Ln(4);
-            $pdf->Cell(01, 01, 'Createdby,                       Spv,', 0, 1, 'L');
+            $pdf->Cell(01, 01, 'Created by,                       Checked by,', 0, 1, 'L');
         }                
         ob_start();
         $pdf_output = $pdf->Output('Summary Buy and Sell Period ' . namabulan(sprintf("%02d", $this->tr_month)) . ' ' . sprintf("%04d", $this->tr_year) .'.pdf','S');

@@ -21,7 +21,7 @@ class Cb_balance extends Bks_Controller {
     
     function getdata1() {
         checkIfNotAjax();
-        // $this->libauth->check(__METHOD__);
+        $this->libauth->check(__METHOD__);
         $postData = $this->input->post();        
         $store_id  = $postData['store_id'];    
         $endDate = revDate($postData['period']);
@@ -90,7 +90,7 @@ class Cb_balance extends Bks_Controller {
 
     function getdata2() {
         checkIfNotAjax();
-        // $this->libauth->check(__METHOD__);
+        $this->libauth->check(__METHOD__);
         $postData = $this->input->post();        
         $store_id  = $postData['store_id'];    
         $tahun = (int) SUBSTR(revDate($postData['period']),0,4);

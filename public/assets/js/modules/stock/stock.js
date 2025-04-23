@@ -13,28 +13,7 @@ $("#btn-stock-calculate").on('click', function (e) {
             data: {'store_id' : $('#store_id').val(), 'periode' : $('#periode').val()},
             datatype: 'json',
             success: function(data){
-                alertify.success('Calculate stock in total and sheet done.!');
-                $.ajax({
-                    url: baseUrl + 'stock/stock/generate_tr_stock_price',
-                    type: 'POST',
-                    beforeSend: function(){
-                        $(".ajax-loader").height($(document).height());
-                        $('.ajax-loader').css("visibility", "visible");
-                    },
-                    data: {'store_id' : $('#store_id').val(), 'period' : $('#period').val()},
-                    datatype: 'json',
-                    success: function(data){
-                        alertify.success('Calculate stock by currency done.!');
-                    },
-                    complete: function(){
-                        $('.ajax-loader').css("visibility", "hidden");
-                    },
-                    error: function(xhr){
-                        $('.ajax-loader').css("visibility", "hidden");
-                        alertify.error("error calculate stock by currency.!");
-                        StringtoFile(xhr.response.text(), 'error');
-                    }
-                });
+                alertify.success('Calculate stock in total and sheet done.!');                
             },
             complete: function(){
                 $('.ajax-loader').css("visibility", "hidden");

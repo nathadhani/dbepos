@@ -1,9 +1,9 @@
 <?php
 
-class Dashboard_buysell extends Bks_Controller {
+class Summary_buysell_by_chart extends Bks_Controller {
 
     function __construct() {        
-        $config = array('modules' => 'dashboard', 'jsfiles' => array('dashboard_buysell'));
+        $config = array('modules' => 'summary', 'jsfiles' => array('summary_buysell_by_chart'));
         parent::__construct($config);
         $this->auth = $this->session->userdata('auth');
         $this->userid = $this->auth['id'];
@@ -11,10 +11,10 @@ class Dashboard_buysell extends Bks_Controller {
     
     Public function index() {
         $this->libauth->check(__METHOD__);
-        $this->template->title('Dashboard');
+        $this->template->title('Summary');
         $this->template->set('tsmall', 'Chart');
         $this->template->set('icon', 'fa fa-chart');
-        $this->template->build('dashboard/dashboard_buysell_v');
+        $this->template->build('summary/summary_buysell_by_chart_v');
     }    
 
     function getlastupdated(){

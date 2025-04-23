@@ -8,10 +8,10 @@ $('#tr_id').on('change',function(e){
     if($(this).val() != null && $(this).val() != ''){
         xtr_id = $("#tr_id").val();
         if(xtr_id === '1'){
-            $("#trx_name").html('<span style="color:blue;font-weight:800;font-size:14px;">Buy / Beli</span>');
+            $("#trx_name").html(' - <span style="color:blue;font-weight:800;font-size:14px;">Buy/Beli</span>');
         }
         if(xtr_id === '2'){
-            $("#trx_name").html('<span style="color:red;font-weight:800;font-size:14px;">Sell / Jual</span>');
+            $("#trx_name").html(' - <span style="color:red;font-weight:800;font-size:14px;">Sell/Jual</span>');
         }
         $('#tr_id').prop('disabled', true);
         $('#currency_id').focus();
@@ -90,10 +90,10 @@ function show_header(){
 
                             xtr_id = d.tr_id;
                             if(xtr_id === '1'){
-                                $("#trx_name").html('<span style="color:blue;font-weight:bold;font-size:16px;">Buy / Beli </span>');
+                                $("#trx_name").html(' - <span style="color:blue;font-weight:bold;font-size:16px;">Buy/Beli </span>');
                             }
                             if(xtr_id === '2'){
-                                $("#trx_name").html('<span style="color:red;font-weight:bold;font-size:16px;">Sell / Jual </span>');
+                                $("#trx_name").html(' - <span style="color:red;font-weight:bold;font-size:16px;">Sell/Jual </span>');
                             }                    
                             $('#tr_id').prop('disabled', true);
                         } else {
@@ -168,10 +168,7 @@ function show_detail(statusTrx){
                                             ` + counter + `
                                         </td>
                                         <td width="27%" style="vertical-align: middle;color:black">
-                                            ` + d.currency_code + ' - ' + d.currency_name +`
-                                            <a style="cursor:pointer;font-weight:400;color:red;" title="hapus" onClick="delete_line_detail(` + d.id + `)"> 
-                                                <i>remove</i>
-                                            </a>
+                                            ` + d.currency_code + ' - ' + d.currency_name +`                                            
                                         </td>
                                         <td width="10%" style='text-align:left;'>
                                             ` + formatRupiah(d.nominal) + `
@@ -185,8 +182,13 @@ function show_detail(statusTrx){
                                         <td width="15%" style='text-align:left;'>
                                             ` + (isDecimal(d.price) ? formatDecimal(d.price,2) : formatRupiah(d.price) ) + `
                                         </td>
-                                        <td width="25%" style='text-align:left;'>
+                                        <td width="15%" style='text-align:left;'>
                                             ` + formatRupiah(d.subtotal) + `
+                                        </td>
+                                        <td width="10%" style="vertical-align: middle;color:black">
+                                            <a style="cursor:pointer;font-weight:400;color:red;" title="hapus" onClick="delete_line_detail(` + d.id + `)"> 
+                                                <i>remove</i>
+                                            </a>
                                         </td>                         
                                     </tr>`
                             $('#table-detail tbody').append(rows);
@@ -227,7 +229,7 @@ function show_detail(statusTrx){
                                     </td>                         
                                 </tr>`
                     $('#table-detail tbody').append(rowsx);
-                    $("#total_transaction_terbilang").html('Say : ' + bksfn.terBilang(totalpricex) + ' Rupiah');
+                    $("#total_transaction_terbilang").html('Total : ' + bksfn.terBilang(totalpricex) + ' Rupiah');
                     if(statusTrx === '1') {
                         $("#btn-confirm").show();
                         $("#btn-cancel").show();

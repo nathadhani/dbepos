@@ -25,7 +25,7 @@ function getdatatable1(){
     $("#table1").tableHeadFixer();
     $("#title-table1").html(title_tahun);
     $.ajax({
-        url: baseUrl + 'dashboard/dashboard_buysell/getdatatable1',
+        url: baseUrl + 'summary/summary_buysell_by_chart/getdatatable1',
         type: 'POST',
         data: {'store_id' : storeId, 'period' : $('#period').val()},
         dataType: 'json',
@@ -76,7 +76,7 @@ function getdatatable2(){
     $("#table2").tableHeadFixer();
     $("#title-table2").html(title_tahun);
     $.ajax({
-        url: baseUrl + 'dashboard/dashboard_buysell/getdatatable2',
+        url: baseUrl + 'summary/summary_buysell_by_chart/getdatatable2',
         type: 'POST',
         data: {'store_id' : storeId, 'period' : $('#period').val()},
         dataType: 'json',
@@ -129,7 +129,7 @@ function getchart1(){
             $("#chart1").empty();
             $("#title-chart1").html(title_tahun);
             $.ajax({
-                url: baseUrl + 'dashboard/dashboard_buysell/getchart1',
+                url: baseUrl + 'summary/summary_buysell_by_chart/getchart1',
                 type: 'POST',
                 data: {'store_id' : storeId, 'period' : $('#period').val()},
                 dataType: 'json',
@@ -180,7 +180,7 @@ function getchart2(){
             $("#chart2").empty();
             $("#title-chart2").html(title_tahun);
             $.ajax({
-                url: baseUrl + 'dashboard/dashboard_buysell/getchart2',
+                url: baseUrl + 'summary/summary_buysell_by_chart/getchart2',
                 type: 'POST',
                 data: {'store_id' : storeId, 'period' : $('#period').val()},
                 dataType: 'json',
@@ -230,7 +230,7 @@ function getchart2(){
 function getlastupdated(){
     $("#lastupdated").html('');
     $.ajax({
-        url: baseUrl + 'dashboard/dashboard_buysell/getlastupdated',
+        url: baseUrl + 'summary/summary_buysell_by_chart/getlastupdated',
         type: 'POST',
         data: {'store_id' : storeId},
         dataType: 'json',

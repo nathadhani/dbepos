@@ -165,7 +165,7 @@ $("#btn-closing").on('click', function (e) {
             success: function(data){
                 alertify.success('Calculate stock in total and sheet done.!');
                 $.ajax({
-                    url: baseUrl + 'stock/stock/generate_tr_stock_price',
+                    url: baseUrl + 'stock/stock_price/generate_tr_stock_price',
                     type: 'POST',
                     beforeSend: function(){
                         $(".ajax-loader").height($(document).height());
@@ -174,7 +174,7 @@ $("#btn-closing").on('click', function (e) {
                     data: {'store_id' : $('#store_id').val(), 'tr_date' : $('#period').val()},
                     datatype: 'json',
                     success: function(data){
-                        alertify.success('Calculate stock by currency done.!');
+                        alertify.success('Calculate stock in exchange rate average done.!');
                         $.ajax({
                             url: baseUrl + 'summary/summary_buysell_by_date/closing_trxdate',
                             type: 'POST',
@@ -202,7 +202,7 @@ $("#btn-closing").on('click', function (e) {
                     },
                     error: function(xhr){
                         $('.ajax-loader').css("visibility", "hidden");
-                        alertify.error("error calculate stock by currency.!");
+                        alertify.error("error calculate stock in exchange rate average.!");
                         StringtoFile(xhr.response.text(), 'error');
                     }
                 });

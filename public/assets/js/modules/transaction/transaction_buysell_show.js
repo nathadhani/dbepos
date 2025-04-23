@@ -25,10 +25,10 @@ function show_header($id){
                         var d = JSON.parse(data)[0];
                         xtr_id = d.tr_id;
                         if(xtr_id === '1'){
-                            $("#trx_name").html('<span style="color:blue;font-weight:bold;font-size:16px;">Buy / Beli</span>');
+                            $("#trx_name").html('<span style="color:blue;font-weight:bold;font-size:16px;">Buy/Beli</span>');
                         }
                         if(xtr_id === '2'){
-                            $("#trx_name").html('<span style="color:red;font-weight:bold;font-size:16px;">Sell / Jual</span>');
+                            $("#trx_name").html('<span style="color:red;font-weight:bold;font-size:16px;">Sell/Jual</span>');
                         }
 
                         $("body").data("id", d.id);
@@ -180,7 +180,7 @@ function show_detail($header_id){
                                     </td>                         
                                 </tr>`   
                         $('#table-detail tbody').append(rowsx);     
-                        $("#total_transaction_terbilang").html('Say : ' + bksfn.terBilang(totalpricex) + ' Rupiah');
+                        $("#total_transaction_terbilang").html('Total : ' + bksfn.terBilang(totalpricex) + ' Rupiah');
                         $("#modal_total_value").val(formatRupiah(totalpricex));
                     }else{
                         var url = "transaction/customer/index/";
@@ -242,7 +242,7 @@ function show_detail_payment($header_id){
                                 </td>                         
                             </tr>`   
                 $('#table-modal-payment tbody').append(rowsx); 
-                $("#total_payment_terbilang").html('Say Total : ' + bksfn.terBilang(totalpaymentx) + ' Rupiah');
+                $("#total_payment_terbilang").html('Total : ' + bksfn.terBilang(totalpaymentx) + ' Rupiah');
                 $("#modal_remaining_payment_value").val(formatRupiah( formatRupiahtoNumber($("#modal_total_value").val()) - (totalpaymentx) ));
             }else{
                 return false;
