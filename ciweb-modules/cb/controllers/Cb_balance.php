@@ -22,14 +22,19 @@ class Cb_balance extends Bks_Controller {
     function getdata1() {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
-        $postData = $this->input->post();        
-        $store_id  = $postData['store_id'];    
+        $postData = $this->input->post();      
+
+        if(isset($postData['store_id'])){
+            $this->store_id = $postData['store_id'];
+        } else {
+            $this->store_id = $this->auth['store_id'];
+        }    
         $endDate = revDate($postData['period']);
 
         $query = $this->db->query("SELECT m_cb.cb_name,
                                         COALESCE((
                                             SELECT cbs_saldo FROM  tr_cb_saldo x
-                                            WHERE x.store_id = $store_id
+                                            WHERE x.store_id = $this->store_id
                                             and x.cbs_date < '$endDate'
                                             and x.cb_id = tr_cb_saldo.cb_id
                                             ORDER BY x.cbs_date DESC, x.id DESC
@@ -55,7 +60,7 @@ class Cb_balance extends Bks_Controller {
                                         (
                                             COALESCE((
                                                 SELECT COALESCE(cbs_saldo,0) FROM  tr_cb_saldo x
-                                                WHERE x.store_id = $store_id
+                                                WHERE x.store_id = $this->store_id
                                                 and x.cbs_date < '$endDate'
                                                 and x.cb_id = tr_cb_saldo.cb_id
                                                 ORDER BY x.cbs_date DESC, x.id DESC
@@ -79,7 +84,7 @@ class Cb_balance extends Bks_Controller {
                                         
                                     FROM tr_cb_saldo
                                     JOIN m_cb ON tr_cb_saldo.cb_id = m_cb.id
-                                    WHERE tr_cb_saldo.store_id = $store_id
+                                    WHERE tr_cb_saldo.store_id = $this->store_id
                                     AND tr_cb_saldo.cbs_date = '$endDate'
                                     GROUP BY tr_cb_saldo.cb_id
                                     ORDER BY tr_cb_saldo.cb_id ASC")->result();
@@ -92,7 +97,12 @@ class Cb_balance extends Bks_Controller {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();        
-        $store_id  = $postData['store_id'];    
+
+        if(isset($postData['store_id'])){
+            $this->store_id = $postData['store_id'];
+        } else {
+            $this->store_id = $this->auth['store_id'];
+        }    
         $tahun = (int) SUBSTR(revDate($postData['period']),0,4);
         $bulan = (int) SUBSTR(revDate($postData['period']),5,2);
         $startDate = $tahun.'-'.sprintf("%02d", $bulan).'-01';
@@ -101,7 +111,7 @@ class Cb_balance extends Bks_Controller {
         $query = $this->db->query("SELECT m_cb.cb_name,
                                         COALESCE((
                                             SELECT cbs_saldo FROM  tr_cb_saldo x
-                                            WHERE x.store_id = $store_id
+                                            WHERE x.store_id = $this->store_id
                                             and x.cbs_date < '$startDate'
                                             and x.cb_id = tr_cb_saldo.cb_id
                                             ORDER BY x.cbs_date DESC, x.id DESC
@@ -129,7 +139,7 @@ class Cb_balance extends Bks_Controller {
                                         (
                                             COALESCE((
                                                 SELECT COALESCE(cbs_saldo,0) FROM  tr_cb_saldo x
-                                                WHERE x.store_id = $store_id
+                                                WHERE x.store_id = $this->store_id
                                                 and x.cbs_date < '$startDate'
                                                 and x.cb_id = tr_cb_saldo.cb_id
                                                 ORDER BY x.cbs_date DESC, x.id DESC
@@ -155,7 +165,7 @@ class Cb_balance extends Bks_Controller {
                                         
                                     FROM tr_cb_saldo
                                     JOIN m_cb ON tr_cb_saldo.cb_id = m_cb.id
-                                    WHERE tr_cb_saldo.store_id = $store_id
+                                    WHERE tr_cb_saldo.store_id = $this->store_id
                                     AND tr_cb_saldo.cbs_date >= '$startDate'
                                     AND tr_cb_saldo.cbs_date <= '$endDate'
                                     GROUP BY tr_cb_saldo.cb_id
@@ -169,7 +179,12 @@ class Cb_balance extends Bks_Controller {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();        
-        $store_id = $postData['store_id'];
+        
+        if(isset($postData['store_id'])){
+            $this->store_id = $postData['store_id'];
+        } else {
+            $this->store_id = $this->auth['store_id'];
+        }
 
         $tahun = (int) date('Y');
         $bulan = (int) date('m');
@@ -183,19 +198,19 @@ class Cb_balance extends Bks_Controller {
             $endDate = date('Y-m-t', strtotime($startDate));            
         }
 
-        $mcb = $this->db->query("SELECT id AS cb_id FROM m_cb WHERE store_id = $store_id AND status = 1 ORDER BY id ASC");
+        $mcb = $this->db->query("SELECT id AS cb_id FROM m_cb WHERE store_id = $this->store_id AND status = 1 ORDER BY id ASC");
         if(count($mcb) > 0){
             $start = new DateTime($startDate);
             $end = new DateTime($endDate);
             for($date = $start; $date <= $end; $date->modify('+1 day')){
                 $tr_date = $date->format('Y-m-d');
                 echo $tr_date . '<br>';
-                $this->db->delete('tr_cb_saldo', array('store_id' => $store_id, 'cbs_date' => $tr_date));
+                $this->db->delete('tr_cb_saldo', array('store_id' => $this->store_id, 'cbs_date' => $tr_date));
                 foreach($mcb->result_array() as $row) {                    
                     $cb_id = $row['cb_id'];
                     /*Insert*/
                     $data = array(
-                        'store_id' => $store_id,
+                        'store_id' => $this->store_id,
                         'cb_id' => $cb_id,
                         'cbs_date' =>  $tr_date,
                         'cbs_saldo' => 0,
@@ -210,7 +225,7 @@ class Cb_balance extends Bks_Controller {
                     $saldo = 0;
                     $last_saldo = $this->db->query("SELECT cbs_saldo
                                                         FROM tr_cb_saldo 
-                                                        WHERE store_id = $store_id 
+                                                        WHERE store_id = $this->store_id 
                                                         AND cb_id = $cb_id 
                                                         AND cbs_date < '$tr_date'
                                                         ORDER BY cbs_date DESC
@@ -224,7 +239,7 @@ class Cb_balance extends Bks_Controller {
                         }
                     }
                     $transaction_cb = $this->db->select('SUM(COALESCE(amount_in,0)) AS amount_in, SUM(COALESCE(amount_out,0)) AS amount_out')
-                                    ->where(array('store_id' => $store_id, 'tr_date' => $tr_date, 'cb_id' => $cb_id))
+                                    ->where(array('store_id' => $this->store_id, 'tr_date' => $tr_date, 'cb_id' => $cb_id))
                                     ->where_in('status', ['3','4'])
                                     ->group_by('tr_date, cb_id')
                                     ->get('v_tr_cb_detail')->result();
@@ -236,7 +251,7 @@ class Cb_balance extends Bks_Controller {
                     }
                 }
             }
-            $this->db->delete('tr_cb_saldo', array('store_id' => $store_id, 'cbs_saldo' => 0));
+            $this->db->delete('tr_cb_saldo', array('store_id' => $this->store_id, 'cbs_saldo' => 0));
         }
 
     }
@@ -244,9 +259,14 @@ class Cb_balance extends Bks_Controller {
     function exportpdf_rekap()
     {   
         checkIfNotAjax();
-        $this->libauth->check(__METHOD__);
+        // $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
-        $this->store_id = ( is_array($postData['store_id']) ? implode(',', $postData['store_id']) : $postData['store_id']);
+
+        if(isset($postData['store_id'])){
+            $this->store_id = $postData['store_id'];
+        } else {
+            $this->store_id = $this->auth['store_id'];
+        }
         $this->tr_date = revDate($postData['period']);        
 
         $profil_usaha = $this->Bksmdl->getprofilusaha($this->store_id);
@@ -270,12 +290,8 @@ class Cb_balance extends Bks_Controller {
 
         // Add Title        
         $html_header = strtoupper(trim($profil_usaha[0]->store_name));
-        if(!is_array($postData['store_id'])){
-            $html_header .= '<br>' . trim($profil_usaha[0]->store_address) . '</br>';
-            $html_header .= '<br>' . 'Rekap Saldo Kas Bank  Periode : ' . revDate($this->tr_date) . '</br><br></br><br></br>';
-        } else {
-            $html_header .= '<br>' . 'Rekap Saldo Kas Bank  Periode : ' . revDate($this->tr_date) . '</br><br></br><br></br>';
-        }
+        $html_header .= '<br>' . trim($profil_usaha[0]->store_address) . '</br>';
+        $html_header .= '<br>' . 'Rekap Saldo Kas Bank  Periode : ' . revDate($this->tr_date) . '</br><br></br><br></br>';
         
         // Add Content Body
         $data_header = $this->db->query("SELECT tr_cb_saldo.cb_id, m_cb.cb_code, m_cb.cb_name, 
@@ -375,9 +391,14 @@ class Cb_balance extends Bks_Controller {
     function exportpdf_detail()
     {   
         checkIfNotAjax();
-        $this->libauth->check(__METHOD__);
+        // $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
-        $this->store_id = ( is_array($postData['store_id']) ? implode(',', $postData['store_id']) : $postData['store_id']);
+        
+        if(isset($postData['store_id'])){
+            $this->store_id = $postData['store_id'];
+        } else {
+            $this->store_id = $this->auth['store_id'];
+        }
         $this->tr_date = revDate($postData['period']);        
 
         $profil_usaha = $this->Bksmdl->getprofilusaha($this->store_id);
@@ -400,13 +421,10 @@ class Cb_balance extends Bks_Controller {
                 </style>';
 
         // Add Title        
-        $html_header = strtoupper(trim($profil_usaha[0]->store_name));
-        if(!is_array($postData['store_id'])){
-            $html_header .= '<br>' . trim($profil_usaha[0]->store_address) . '</br>';
-            $html_header .= '<br>' . 'Saldo Kas Bank Periode : ' . revDate($this->tr_date) . '</br><br></br><br></br>';
-        } else {
-            $html_header .= '<br>' . 'Saldo Kas Bank Periode : ' . revDate($this->tr_date) . '</br><br></br><br></br>';
-        }
+        $html_header = strtoupper(trim($profil_usaha[0]->store_name));        
+        $html_header .= '<br>' . trim($profil_usaha[0]->store_address) . '</br>';
+        $html_header .= '<br>' . 'Saldo Kas Bank Periode : ' . revDate($this->tr_date) . '</br><br></br><br></br>';
+    
         
         // Add Content Body
         $data_header = $this->db->query("SELECT tr_cb_saldo.cb_id, m_cb.cb_code, m_cb.cb_name, 

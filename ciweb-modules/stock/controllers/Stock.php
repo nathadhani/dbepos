@@ -25,9 +25,12 @@ class Stock extends Bks_Controller {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();    
+        
         if(isset($postData['store_id'])){
-            $this->store_id = ( is_array($postData['store_id']) ? implode(',', $postData['store_id']) : $postData['store_id']);
-        }        
+            $this->store_id = $postData['store_id'];
+        } else {
+            $this->store_id = $this->auth['store_id'];
+        }
         $tahun = date('Y');
         $bulan = date('m');
         if(isset($postData['period'])){
@@ -56,8 +59,11 @@ class Stock extends Bks_Controller {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();    
+        
         if(isset($postData['store_id'])){
-            $this->store_id = ( is_array($postData['store_id']) ? implode(',', $postData['store_id']) : $postData['store_id']);
+            $this->store_id = $postData['store_id'];
+        } else {
+            $this->store_id = $this->auth['store_id'];
         }
         $tahun = date('Y');
         $bulan = date('m');
@@ -87,7 +93,12 @@ class Stock extends Bks_Controller {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();     
-        $store_id = $postData['store_id'];
+
+        if(isset($postData['store_id'])){
+            $this->store_id = $postData['store_id'];
+        } else {
+            $this->store_id = $this->auth['store_id'];
+        }
 
         $tahun = (int) date('Y');
         $bulan = (int) date('m');
@@ -112,15 +123,15 @@ class Stock extends Bks_Controller {
                                     SELECT currency_id, nominal 
                                     FROM v_tr_detail 
                                     WHERE status IN (3,4)
-                                    AND store_id = $store_id
+                                    AND store_id = $this->store_id
                                     AND tr_id = 1
                                     GROUP BY currency_id, nominal                                    
-                                    ORDER BY currency_id,nominal ASC                                    
+                                    ORDER BY currency_id,nominal ASC                          
                                     ");
         if(count($select) > 0){
             /******************************************************************************************************/
             $where = array(
-                    'store_id' => $store_id,
+                    'store_id' => $this->store_id,
                     'stock_year' => $tahun,
                     'stock_month' => $bulan
             );            
@@ -128,7 +139,7 @@ class Stock extends Bks_Controller {
 
             /******************************************************************************************************/
             $where = array(
-                    'store_id' => $store_id,
+                    'store_id' => $this->store_id,
                     'stock_year' => $tahun2,
                     'stock_month' => $bulan2
             );            
@@ -138,7 +149,7 @@ class Stock extends Bks_Controller {
             foreach($select->result_array() as $row) {
                 $currency_id = $row['currency_id'];
                 $nominal = $row['nominal'];
-                $this->Bksmdl->generate_tr_stock($store_id, $tahun, $bulan, $currency_id, $nominal);
+                $this->Bksmdl->generate_tr_stock($this->store_id, $tahun, $bulan, $currency_id, $nominal);
             }
         }
         if ($this->db->trans_status() === FALSE) {

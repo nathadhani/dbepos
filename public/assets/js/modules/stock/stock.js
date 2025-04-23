@@ -1,7 +1,31 @@
 $("#btn-stock-calculate").on('click', function (e) {
     e.preventDefault();
-    if($('#store_id').val() === null || $('#store_id').val() === ''){
-        bksfn.errMsg('Store Belum Dipilih!');
+    if(usergroupId === 2 || usergroupId === 6){
+        if($('#store_id').val() === null || $('#store_id').val() === ''){
+            bksfn.errMsg('Store Belum Dipilih!');
+        } else {
+            $.ajax({
+                url: baseUrl + 'stock/stock/generate_tr_stock_pull',
+                type: 'POST',
+                beforeSend: function(){
+                    $(".ajax-loader").height($(document).height());
+                    $('.ajax-loader').css("visibility", "visible");
+                },
+                data: {'store_id' : $('#store_id').val(), 'periode' : $('#periode').val()},
+                datatype: 'json',
+                success: function(data){
+                    alertify.success('Calculate stock in total and sheet done.!');                
+                },
+                complete: function(){
+                    $('.ajax-loader').css("visibility", "hidden");
+                },
+                error: function(xhr){
+                    $('.ajax-loader').css("visibility", "hidden");
+                    alertify.error("error calculate stock in total and sheet.!");
+                    StringtoFile(xhr.response.text(), 'error');
+                }
+            });                        
+        }
     } else {
         $.ajax({
             url: baseUrl + 'stock/stock/generate_tr_stock_pull',
@@ -23,14 +47,19 @@ $("#btn-stock-calculate").on('click', function (e) {
                 alertify.error("error calculate stock in total and sheet.!");
                 StringtoFile(xhr.response.text(), 'error');
             }
-        });                        
+        });
     }
 });
 
 $("#btn-submit").on('click', function (e) {
     e.preventDefault();
-    if($('#store_id').val() === null || $('#store_id').val() === ''){
-        bksfn.errMsg('Store Belum Dipilih!');            
+    if(usergroupId === 2 || usergroupId === 6){
+        if($('#store_id').val() === null || $('#store_id').val() === ''){
+            bksfn.errMsg('Store Belum Dipilih!');            
+        } else {
+            fethdata1();
+            fethdata2();
+        }
     } else {
         fethdata1();
         fethdata2();

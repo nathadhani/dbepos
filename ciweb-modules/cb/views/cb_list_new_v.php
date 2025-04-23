@@ -97,7 +97,7 @@
                                         <div class="input-group">
                                             <input type="text" onkeypress="validasiAngka(event)" autofocuse="" id="amount" name="amount" class="form-control" style='text-align:right;'>
                                             <span class="input-group-addon">
-                                                <button id="btn-add" class="btn btn-success" style="width:90px;">Add</button>
+                                                <button id="btn-add" class="btn btn-info" style="width:90px;">Add</button>
                                             </span>    
                                         </div>                                    
                                     </div>

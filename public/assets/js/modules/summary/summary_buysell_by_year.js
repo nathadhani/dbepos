@@ -2,8 +2,12 @@ $("#btn-pdf").hide();
 $("#btn-excel").hide();
 $("#btn-submit").on('click', function (e) {
     e.preventDefault();
-    if($('#store_id').val() === null || $('#store_id').val() === ''){
-        bksfn.errMsg('Store Belum Dipilih!');            
+    if(usergroupId === 2 || usergroupId === 6){
+        if($('#store_id').val() === null || $('#store_id').val() === ''){
+            bksfn.errMsg('Store Belum Dipilih!');            
+        } else {
+            fethdata();
+        }
     } else {
         fethdata();
     }        
@@ -77,8 +81,41 @@ function fethdata(){
 
 $("#btn-pdf").on('click', function (e) {
     e.preventDefault();    
-    if($('#store_id').val() === null || $('#store_id').val() === ''){
-        bksfn.errMsg('Store Belum Dipilih!');
+    if(usergroupId === 2 || usergroupId === 6){
+        if($('#store_id').val() === null || $('#store_id').val() === ''){
+            bksfn.errMsg('Store Belum Dipilih!');
+        } else {
+            alertify.confirm("export pdf ?", function (e) {    
+                if (e) {                
+                    var url = "summary/summary_buysell_by_year/exportpdf/";
+                    $.ajax({
+                        url: url,
+                        type: 'POST',
+                        data: {'store_id' : $("#store_id").val(), 'period' : $('#period').val()},
+                        dataType: 'json',            
+                        success: function(resp){
+                            const pdfBase64 = resp.pdf;
+                            setTimeout(() => {
+                                                const pdfWindow = window.open();
+                                                pdfWindow.document.write(`<iframe width="100%" height="100%" src="data:application/pdf;base64,${pdfBase64}"></iframe>`);
+                                            }, 100);
+                        },
+                        error: function(xhr){
+                            alertify.error("error can't print");
+                            StringtoFile(xhr.responseText, 'error');
+                        }
+                    });
+                    // done(function(data){
+                    //     var $a = $("<a>");
+                    //         $a.attr("href",data.file);
+                    //         $("body").append($a);
+                    //         $a.attr("download","Summary Buy Sell by month " + $("#period").val() + ".pdf");
+                    //         $a[0].click();
+                    //         $a.remove();
+                    // });
+                }    
+            });
+        }
     } else {
         alertify.confirm("export pdf ?", function (e) {    
             if (e) {                
@@ -115,8 +152,36 @@ $("#btn-pdf").on('click', function (e) {
 
 $("#btn-excel").on('click', function (e) {
     e.preventDefault();
-    if($('#store_id').val() === null || $('#store_id').val() === ''){
-        bksfn.errMsg('Store Belum Dipilih!');
+    if(usergroupId === 2 || usergroupId === 6){
+        if($('#store_id').val() === null || $('#store_id').val() === ''){
+            bksfn.errMsg('Store Belum Dipilih!');
+        } else {
+            alertify.confirm("export xlsx ?", function (e) {    
+                if (e) {
+                    var url = "summary/summary_buysell_by_year/excel/";
+                    $.ajax({
+                        url: url,
+                        type: 'POST',
+                        data: {'store_id' : $("#store_id").val(), 'period' : $('#period').val()},
+                        dataType: 'json',
+                        beforeSend: function(){
+                            $(".ajax-loader").height($(document).height());
+                            $('.ajax-loader').css("visibility", "visible");
+                        },
+                        complete: function(){
+                            $('.ajax-loader').css("visibility", "hidden");
+                        }
+                    }).done(function(data){
+                        var $a = $("<a>");
+                            $a.attr("href",data.file);
+                            $("body").append($a);
+                            $a.attr("download","Summary Buy Sell Period " + $("#period").val() + ".xlsx");
+                            $a[0].click();
+                            $a.remove();
+                    });                                    
+                }    
+            });
+        }
     } else {
         alertify.confirm("export xlsx ?", function (e) {    
             if (e) {

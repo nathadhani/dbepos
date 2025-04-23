@@ -84,8 +84,33 @@ function fethdata(){
 
 $("#btn-pdf").on('click', function (e) {
     e.preventDefault();    
-    if($('#store_id').val() === null || $('#store_id').val() === ''){
-        bksfn.errMsg('Store Belum Dipilih!');
+    if(usergroupId === 2 || usergroupId === 6){
+        if($('#store_id').val() === null || $('#store_id').val() === ''){
+            bksfn.errMsg('Store Belum Dipilih!');
+        } else {
+            alertify.confirm("export pdf ?", function (e) {    
+                if (e) {                
+                    var url = "summary/summary_buysell_by_date/exportpdf/";
+                    $.ajax({
+                        url: url,
+                        type: 'POST',
+                        data: {'store_id' : $("#store_id").val(), 'period' : $('#period').val()},
+                        dataType: 'json',            
+                        success: function(resp){
+                            const pdfBase64 = resp.pdf;
+                            setTimeout(() => {
+                                                const pdfWindow = window.open();
+                                                pdfWindow.document.write(`<iframe width="100%" height="100%" src="data:application/pdf;base64,${pdfBase64}"></iframe>`);
+                                            }, 100);
+                        },
+                        error: function(xhr){
+                            alertify.error("error can't print");
+                            StringtoFile(xhr.responseText, 'error');
+                        }
+                    });
+                }    
+            });
+        }
     } else {
         alertify.confirm("export pdf ?", function (e) {    
             if (e) {                
@@ -107,14 +132,6 @@ $("#btn-pdf").on('click', function (e) {
                         StringtoFile(xhr.responseText, 'error');
                     }
                 });
-                // done(function(data){
-                //     var $a = $("<a>");
-                //         $a.attr("href",data.file);
-                //         $("body").append($a);
-                //         $a.attr("download","Summary Buy Sell by date " + $("#period").val() + ".pdf");
-                //         $a[0].click();
-                //         $a.remove();
-                // });
             }    
         });
     }
@@ -122,8 +139,36 @@ $("#btn-pdf").on('click', function (e) {
 
 $("#btn-excel").on('click', function (e) {
     e.preventDefault();
-    if($('#store_id').val() === null || $('#store_id').val() === ''){
-        bksfn.errMsg('Store Belum Dipilih!');
+    if(usergroupId === 2 || usergroupId === 6){
+        if($('#store_id').val() === null || $('#store_id').val() === ''){
+            bksfn.errMsg('Store Belum Dipilih!');
+        } else {
+            alertify.confirm("export xlsx ?", function (e) {    
+                if (e) {
+                    var url = "summary/summary_buysell_by_date/excel/";
+                    $.ajax({
+                        url: url,
+                        type: 'POST',
+                        data: {'store_id' : $("#store_id").val(), 'period' : $('#period').val()},
+                        dataType: 'json',
+                        beforeSend: function(){
+                            $(".ajax-loader").height($(document).height());
+                            $('.ajax-loader').css("visibility", "visible");
+                        },
+                        complete: function(){
+                            $('.ajax-loader').css("visibility", "hidden");
+                        }
+                    }).done(function(data){
+                        var $a = $("<a>");
+                            $a.attr("href",data.file);
+                            $("body").append($a);
+                            $a.attr("download","Summary Buy Sell Period " + $("#period").val() + ".xlsx");
+                            $a[0].click();
+                            $a.remove();
+                    });                                    
+                }    
+            });
+        }
     } else {
         alertify.confirm("export xlsx ?", function (e) {    
             if (e) {
@@ -155,8 +200,78 @@ $("#btn-excel").on('click', function (e) {
 
 $("#btn-closing").on('click', function (e) {
     e.preventDefault();
-    if($('#store_id').val() === null || $('#store_id').val() === ''){
-        bksfn.errMsg('Store Belum Dipilih!');
+    if(usergroupId === 2 || usergroupId === 6){
+        if($('#store_id').val() === null || $('#store_id').val() === ''){
+            bksfn.errMsg('Store Belum Dipilih!');
+        } else {
+            alertify.confirm("closing transaction period " + $('#period').val() + " ?", function (e) {    
+                if (e) {
+                    $.ajax({
+                        url: baseUrl + 'stock/stock/generate_tr_stock_pull',
+                        type: 'POST',
+                        beforeSend: function(){
+                            $(".ajax-loader").height($(document).height());
+                            $('.ajax-loader').css("visibility", "visible");
+                        },
+                        data: {'store_id' : $('#store_id').val(), 'tr_date' : $('#period').val()},
+                        datatype: 'json',
+                        success: function(data){
+                            alertify.success('Calculate stock in total and sheet done.!');
+                            $.ajax({
+                                url: baseUrl + 'stock/stock_price/generate_tr_stock_price',
+                                type: 'POST',
+                                beforeSend: function(){
+                                    $(".ajax-loader").height($(document).height());
+                                    $('.ajax-loader').css("visibility", "visible");
+                                },
+                                data: {'store_id' : $('#store_id').val(), 'tr_date' : $('#period').val()},
+                                datatype: 'json',
+                                success: function(data){
+                                    alertify.success('Calculate stock in exchange rate average done.!');
+                                    $.ajax({
+                                        url: baseUrl + 'summary/summary_buysell_by_date/closing_trxdate',
+                                        type: 'POST',
+                                        beforeSend: function(){
+                                            $(".ajax-loader").height($(document).height());
+                                            $('.ajax-loader').css("visibility", "visible");
+                                        },
+                                        data: {'store_id' : $('#store_id').val(), 'tr_date' : $('#period').val()},
+                                        datatype: 'json',
+                                        success: function(data){
+                                            alertify.success('Closing transaction buy / sell done.!');
+                                        },
+                                        complete: function(){
+                                            $('.ajax-loader').css("visibility", "hidden");
+                                        },
+                                        error: function(xhr){
+                                            $('.ajax-loader').css("visibility", "hidden");
+                                            alertify.error("error losing transaction buy / sell.!");
+                                            StringtoFile(xhr.response.text(), 'error');
+                                        }
+                                    });
+                                },
+                                complete: function(){
+                                    $('.ajax-loader').css("visibility", "hidden");
+                                },
+                                error: function(xhr){
+                                    $('.ajax-loader').css("visibility", "hidden");
+                                    alertify.error("error calculate stock in exchange rate average.!");
+                                    StringtoFile(xhr.response.text(), 'error');
+                                }
+                            });
+                        },
+                        complete: function(){
+                            $('.ajax-loader').css("visibility", "hidden");
+                        },
+                        error: function(xhr){
+                            $('.ajax-loader').css("visibility", "hidden");
+                            alertify.error("error calculate stock in total and sheet.!");
+                            StringtoFile(xhr.response.text(), 'error');
+                        }
+                    });
+                }    
+            });                      
+        }
     } else {
         alertify.confirm("closing transaction period " + $('#period').val() + " ?", function (e) {    
             if (e) {
@@ -224,6 +339,6 @@ $("#btn-closing").on('click', function (e) {
                     }
                 });
             }    
-        });                      
+        });
     }
 });

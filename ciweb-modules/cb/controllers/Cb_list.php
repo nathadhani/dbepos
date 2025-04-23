@@ -24,7 +24,12 @@ class Cb_list extends Bks_Controller {
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
         
-        $store_id  = $postData['store_id'];    
+        if(isset($postData['store_id'])){
+            $this->store_id = $postData['store_id'];
+        } else {
+            $this->store_id = $this->auth['store_id'];
+        }    
+
         $startDate = revDate($postData['period1']);
         $endDate = date('Y-m-t', strtotime($startDate));
 
@@ -33,7 +38,7 @@ class Cb_list extends Bks_Controller {
         for($date = $start; $date <= $end; $date->modify('+1 day')){
             $tr_date = $date->format('Y-m-d');
             echo $tr_date . '<br>';
-            $data['store_id'] = $store_id;
+            $data['store_id'] = $this->store_id;
             $data['tr_date'] = $tr_date;
             $data['buysell_id'] = null;        
             $this->Bksmdl->generate_payment_cb($data);
@@ -45,14 +50,18 @@ class Cb_list extends Bks_Controller {
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
         
-        $store_id  = $postData['store_id'];    
+        if(isset($postData['store_id'])){
+            $this->store_id = $postData['store_id'];
+        } else {
+            $this->store_id = $this->auth['store_id'];
+        }    
         $tanggal1 = revDate($postData['periode1']);
         $tanggal2 = revDate($postData['periode2']);
 
         $this->Bksmdl->table = 'v_tr_cb_header';
 
         $where[0]['field'] = 'store_id';
-        $where[0]['data']  = $store_id;
+        $where[0]['data']  = $this->store_id;
         $where[0]['sql']   = 'where';
        
         $where2 = "tr_date >= '". $tanggal1 ."' AND tr_date <= '". $tanggal2 ."'";
@@ -82,7 +91,12 @@ class Cb_list extends Bks_Controller {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
-        $this->store_id = ( is_array($postData['store_id']) ? implode(',', $postData['store_id']) : $postData['store_id']) ;
+        
+        if(isset($postData['store_id'])){
+            $this->store_id = $postData['store_id'];
+        } else {
+            $this->store_id = $this->auth['store_id'];
+        }
         $this->tr_date1 = revDate($postData['period1']);        
         $this->tr_date2 = revDate($postData['period2']);        
 
@@ -146,74 +160,54 @@ class Cb_list extends Bks_Controller {
         $this->excel->getActiveSheet()->setTitle("temp");
         
         // title column
-        $this->excel->setActiveSheetIndex(0)->setCellValue('A1', strtoupper(trim($profil_usaha[0]->store_name))); 
-        if(!is_array($postData['store_id'])){
-            $this->excel->setActiveSheetIndex(0)->setCellValue('A2', strtoupper(trim($profil_usaha[0]->store_address))); 
-            $this->excel->setActiveSheetIndex(0)->setCellValue('A3', 'Transaction Cash Bank Period ' . revDate($this->tr_date1) . ' s/d ' . revDate($this->tr_date2));
-            $this->excel->setActiveSheetIndex(0)->getStyle('A1:A3')->getFont()->setBold(TRUE);
-            $this->excel->setActiveSheetIndex(0)->getStyle('A1:A3')->getFont()->setSize(11);
-            $this->excel->setActiveSheetIndex(0)->mergeCells('A1:O1');
-            $this->excel->setActiveSheetIndex(0)->mergeCells('A2:O2');
-            $this->excel->setActiveSheetIndex(0)->mergeCells('A3:O3');    
-
-        } else {
-            $this->excel->setActiveSheetIndex(0)->setCellValue('A2', 'Transaction Cash / Bank Period ' . revDate($this->tr_date1) . ' s/d ' . revDate($this->tr_date2));
-            $this->excel->setActiveSheetIndex(0)->getStyle('A1:A2')->getFont()->setBold(TRUE);
-            $this->excel->setActiveSheetIndex(0)->getStyle('A1:A2')->getFont()->setSize(11);
-            $this->excel->setActiveSheetIndex(0)->mergeCells('A1:O1');
-            $this->excel->setActiveSheetIndex(0)->mergeCells('A2:O2');    
-        }
-
-        $this->excel->setActiveSheetIndex(0)->setCellValue('A5', "#"); 
-        $this->excel->setActiveSheetIndex(0)->setCellValue('B5', "Source");         
-        $this->excel->setActiveSheetIndex(0)->setCellValue('C5', "Purpose"); 
-        $this->excel->setActiveSheetIndex(0)->setCellValue('D5', "Date"); 
-        $this->excel->setActiveSheetIndex(0)->setCellValue('E5', "Number"); 
-        $this->excel->setActiveSheetIndex(0)->setCellValue('F5', "Description"); 
-        $this->excel->setActiveSheetIndex(0)->setCellValue('G5', "Value In"); 
-        $this->excel->setActiveSheetIndex(0)->setCellValue('H5', "Value Out");
-        $this->excel->setActiveSheetIndex(0)->setCellValue('I5', "Status"); 
-        $this->excel->setActiveSheetIndex(0)->setCellValue('J5', "Created"); 
-        $this->excel->setActiveSheetIndex(0)->setCellValue('K5', "Updated");
-        $this->excel->setActiveSheetIndex(0)->setCellValue('L5', "Created by"); 
-        $this->excel->setActiveSheetIndex(0)->setCellValue('M5', "Updated by");         
-        $this->excel->setActiveSheetIndex(0)->setCellValue('N5', "Store Name");
-        $this->excel->setActiveSheetIndex(0)->setCellValue('O5', "Store Address");
+        $this->excel->setActiveSheetIndex(0)->setCellValue('A1', "Source");         
+        $this->excel->setActiveSheetIndex(0)->setCellValue('B1', "Purpose"); 
+        $this->excel->setActiveSheetIndex(0)->setCellValue('C1', "Date"); 
+        $this->excel->setActiveSheetIndex(0)->setCellValue('D1', "Number"); 
+        $this->excel->setActiveSheetIndex(0)->setCellValue('E1', "Description"); 
+        $this->excel->setActiveSheetIndex(0)->setCellValue('F1', "Value In"); 
+        $this->excel->setActiveSheetIndex(0)->setCellValue('G1', "Value Out");
+        $this->excel->setActiveSheetIndex(0)->setCellValue('H1', "Status"); 
+        $this->excel->setActiveSheetIndex(0)->setCellValue('I1', "Created"); 
+        $this->excel->setActiveSheetIndex(0)->setCellValue('J1', "Updated");
+        $this->excel->setActiveSheetIndex(0)->setCellValue('K1', "Created by"); 
+        $this->excel->setActiveSheetIndex(0)->setCellValue('L1', "Updated by");         
+        $this->excel->setActiveSheetIndex(0)->setCellValue('M1', "Store Name");
+        $this->excel->setActiveSheetIndex(0)->setCellValue('N1', "Store Address");
 
 
-        $this->excelcellColor('A5:O5', '337AB7');
-        $this->excel->setActiveSheetIndex(0)->getStyle('A5:O5')->getFont()->setBold(TRUE);
-        $this->excel->setActiveSheetIndex(0)->getStyle('A5:O5')->getFont()->setSize(11);
+        $this->excelcellColor('A1:N1', '337AB7');
+        $this->excel->setActiveSheetIndex(0)->getStyle('A5:N5')->getFont()->setBold(TRUE);
+        $this->excel->setActiveSheetIndex(0)->getStyle('A5:N5')->getFont()->setSize(11);
 
         // Fetching the table data
-        $row = 6; $no = 1;
+        $row = 2;
         foreach ($this->db->query($query)->result_array() as $data) {            
-            $this->excel->setActiveSheetIndex(0)->setCellValue('A'.$row, $no);
-            $this->excel->setActiveSheetIndex(0)->setCellValue('B'.$row, $data['cb_name']);
-            $this->excel->setActiveSheetIndex(0)->setCellValue('C'.$row, $data['cb_pos_name']);
-            $this->excel->setActiveSheetIndex(0)->setCellValue('D'.$row, revDate($data['tr_date']));
-            $this->excel->setActiveSheetIndex(0)->setCellValue('E'.$row, "'".$data['tr_number']);
-            $this->excel->setActiveSheetIndex(0)->setCellValue('F'.$row, ucwords(strtolower(trim($data['description']))) );
-            $this->excel->setActiveSheetIndex(0)->setCellValue('G'.$row, $data['amount_in']);
-            $this->excel->setActiveSheetIndex(0)->setCellValue('H'.$row, $data['amount_out']);
-            $this->excel->setActiveSheetIndex(0)->setCellValue('I'.$row, $data['status_name']);
-            $this->excel->setActiveSheetIndex(0)->setCellValue('J'.$row, $data['created']);
-            $this->excel->setActiveSheetIndex(0)->setCellValue('K'.$row, $data['updated']);
-            $this->excel->setActiveSheetIndex(0)->setCellValue('L'.$row, $data['createdby_name']);
-            $this->excel->setActiveSheetIndex(0)->setCellValue('M'.$row, $data['updatedby_name']);
-            $this->excel->setActiveSheetIndex(0)->setCellValue('N'.$row, $data['store_name']);
-            $this->excel->setActiveSheetIndex(0)->setCellValue('O'.$row, $data['store_address']);
+            $this->excel->setActiveSheetIndex(0)->setCellValue('A'.$row, $data['cb_name']);
+            $this->excel->setActiveSheetIndex(0)->setCellValue('B'.$row, $data['cb_pos_name']);
+            $this->excel->setActiveSheetIndex(0)->setCellValue('C'.$row, revDate($data['tr_date']));
+            $this->excel->setActiveSheetIndex(0)->setCellValue('D'.$row, "'".$data['tr_number']);
+            $this->excel->setActiveSheetIndex(0)->setCellValue('E'.$row, ucwords(strtolower(trim($data['description']))) );
+            $this->excel->setActiveSheetIndex(0)->setCellValue('F'.$row, $data['amount_in']);
+            $this->excel->setActiveSheetIndex(0)->setCellValue('G'.$row, $data['amount_out']);
+            $this->excel->setActiveSheetIndex(0)->setCellValue('H'.$row, $data['status_name']);
+            $this->excel->setActiveSheetIndex(0)->setCellValue('I'.$row, $data['created']);
+            $this->excel->setActiveSheetIndex(0)->setCellValue('J'.$row, $data['updated']);
+            $this->excel->setActiveSheetIndex(0)->setCellValue('K'.$row, $data['createdby_name']);
+            $this->excel->setActiveSheetIndex(0)->setCellValue('L'.$row, $data['updatedby_name']);
+            $this->excel->setActiveSheetIndex(0)->setCellValue('M'.$row, $data['store_name']);
+            $this->excel->setActiveSheetIndex(0)->setCellValue('N'.$row, $data['store_address']);
 
 
-            $this->excel->setActiveSheetIndex(0)->getStyle('G'.$row.':'.'H'.$row)->getNumberFormat()->setFormatCode('_(* #,##0_);_(* (#,##0);_(* "-"??_);_(@_)'); // Number Format
+            $this->excel->setActiveSheetIndex(0)->getStyle('F'.$row.':'.'F'.$row)->getNumberFormat()->setFormatCode('_(* #,##0_);_(* (#,##0);_(* "-"??_);_(@_)'); // Number Format
             
-            $this->excel->setActiveSheetIndex(0)->getStyle('A'.$row.':'.'O'.$row)->getAlignment()->applyFromArray(
+            $this->excel->setActiveSheetIndex(0)->getStyle('A'.$row.':'.'N'.$row)->getAlignment()->applyFromArray(
                                                                                         array('vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER,)
                                                                                     );
-            $row++; $no++;
+            $row++;
         }
 
-        foreach (range('A', 'P') as $columnID) {
+        foreach (range('A', 'O') as $columnID) {
             $this->excel->getActiveSheet()->getColumnDimension($columnID)->setAutoSize(true);
         }
         $this->excel->setActiveSheetIndex(0);        

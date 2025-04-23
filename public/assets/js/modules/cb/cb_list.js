@@ -5,8 +5,30 @@ $("#btn-new").on('click', function (e) {
 
 $("#btn-generate-buysell").on('click', function (e) {
     e.preventDefault();
-    if($('#store_id').val() === null || $('#store_id').val() === ''){
-        bksfn.errMsg('Store Belum Dipilih!');
+    if(usergroupId === 2 || usergroupId === 6){
+        if($('#store_id').val() === null || $('#store_id').val() === ''){
+            bksfn.errMsg('Store Belum Dipilih!');
+        } else {
+            alertify.confirm("are you sure, Generate Buy / Sell transaction ?", function (x) {
+                if (x) {
+                    $.ajax({
+                        url: baseUrl + 'cb/cb_list/generate_cb_buysell',
+                        type: 'POST',
+                        data: {'store_id' : $('#store_id').val(), 'period1' : $("#tr_date1").val(), 'period2' : $("#tr_date2").val() },
+                        datatype: 'json',
+                        success: function() {
+                            alertify.success("Generate Buy / Sell Done!");
+                            $('#table-modal-new tbody').empty();
+                            history.go(0); // untuk memuat ulang halaman tanpa cache.
+                        },
+                        error: function(xhr){
+                            alertify.error("error");
+                            StringtoFile(xhr.responseText, 'error');
+                        }
+                    });
+                }
+            });
+        }
     } else {
         alertify.confirm("are you sure, Generate Buy / Sell transaction ?", function (x) {
             if (x) {
@@ -32,10 +54,38 @@ $("#btn-generate-buysell").on('click', function (e) {
 
 $("#btn-excel").on('click', function (e) {
     e.preventDefault();
-    if($('#store_id').val() === null || $('#store_id').val() === ''){
-        bksfn.errMsg('Store Belum Dipilih!');
+    if(usergroupId === 2 || usergroupId === 6){
+        if($('#store_id').val() === null || $('#store_id').val() === ''){
+            bksfn.errMsg('Store Belum Dipilih!');
+        } else {
+            alertify.confirm("export xlsx ?", function (e) {    
+                if (e) {
+                    var url = "cb/cb_list/excel/";
+                    $.ajax({
+                        url: url,
+                        type: 'POST',
+                        data: {'store_id' : $("#store_id").val(), 'period1' : $('#tr_date1').val(), 'period2' : $('#tr_date2').val()},
+                        dataType: 'json',
+                        beforeSend: function(){
+                            $(".ajax-loader").height($(document).height());
+                            $('.ajax-loader').css("visibility", "visible");
+                        },
+                        complete: function(){
+                            $('.ajax-loader').css("visibility", "hidden");
+                        }
+                    }).done(function(data){
+                        var $a = $("<a>");
+                            $a.attr("href",data.file);
+                            $("body").append($a);
+                            $a.attr("download","Transaction Cash Bank " + $("#tr_date1").val() + ' - ' + $("#tr_date2").val() + ".xlsx");
+                            $a[0].click();
+                            $a.remove();
+                    });                                    
+                }    
+            });
+        }
     } else {
-        alertify.confirm("export xlsx ?", function (e) {    
+        alertify.confirm("export xlsx ?", function (e) {
             if (e) {
                 var url = "cb/cb_list/excel/";
                 $.ajax({
@@ -63,17 +113,27 @@ $("#btn-excel").on('click', function (e) {
     }              
 });
 
+$("#btn-new").hide();
+$("#btn-generate-buysell").hide();
 $("#btn-excel").hide();
 $("#btn-submit").on('click', function (e) {
     e.preventDefault();
-    if($('#store_id').val() === null || $('#store_id').val() === ''){
-        bksfn.errMsg('Store Belum Dipilih!');
-    } else {
-        $("#btn-excel").show();
+    if(usergroupId === 2 || usergroupId === 6){
+        if($('#store_id').val() === null || $('#store_id').val() === ''){
+            bksfn.errMsg('Store Belum Dipilih!');
+        } else {
+            fethdata();
+            $("#btn-new").show();
+            $("#btn-excel").show();
+            $("#btn-generate-buysell").show();
+        }
+    } else {        
         fethdata();
+        $("#btn-new").show();
+        $("#btn-excel").show();
+        $("#btn-generate-buysell").show();
     }        
 });
-
 
 function fethdata(){
     var t = $('#mainTable table').DataTable({

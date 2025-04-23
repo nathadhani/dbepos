@@ -25,7 +25,13 @@ class Stock_price extends Bks_Controller {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
-        $this->store_id = ( is_array($postData['store_id']) ? implode(',', $postData['store_id']) : $postData['store_id']);
+        
+        if(isset($postData['store_id'])){
+            $this->store_id = $postData['store_id'];
+        } else {
+            $this->store_id = $this->auth['store_id'];
+        }
+
         $menus = $this->db->group_by('currency_id')
                           ->order_by('currency_id, currency_code, currency_name', 'ASC')
                           ->get_where('v_tr_stock_balance_price', array('store_id' => $this->store_id))->result();
@@ -42,7 +48,13 @@ class Stock_price extends Bks_Controller {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
-        $this->store_id = ( is_array($postData['store_id']) ? implode(',', $postData['store_id']) : $postData['store_id']);
+        
+        if(isset($postData['store_id'])){
+            $this->store_id = $postData['store_id'];
+        } else {
+            $this->store_id = $this->auth['store_id'];
+        }
+        
         $currency_id = $postData['currency_id'];
         $tahun = date('Y');
         $bulan = date('m');
@@ -76,7 +88,13 @@ class Stock_price extends Bks_Controller {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
-        $this->store_id = ( is_array($postData['store_id']) ? implode(',', $postData['store_id']) : $postData['store_id']);
+        
+        if(isset($postData['store_id'])){
+            $this->store_id = $postData['store_id'];
+        } else {
+            $this->store_id = $this->auth['store_id'];
+        }
+
         $tahun = date('Y');
         $bulan = date('m');
         if(isset($postData['period'])){
@@ -133,23 +151,15 @@ class Stock_price extends Bks_Controller {
         $col = 0;
         
         // title column
-        $this->excel->setActiveSheetIndex(0)->setCellValue('A1', strtoupper(trim($profil_usaha[0]->store_name))); 
-        if(!is_array($postData['store_id'])){
-            $this->excel->setActiveSheetIndex(0)->setCellValue('A2', strtoupper(trim($profil_usaha[0]->store_address))); 
-            $this->excel->setActiveSheetIndex(0)->setCellValue('A3', "Stock in averege price period " . namabulan($bulan) . ' - ' . $tahun); 
-            $this->excel->getActiveSheet()->getStyle('A1:A3')->getFont()->setBold(TRUE);
-            $this->excel->getActiveSheet()->getStyle('A1:A3')->getFont()->setSize(11);
-            $this->excel->getActiveSheet()->mergeCells('A1:K1');
-            $this->excel->getActiveSheet()->mergeCells('A2:K2');
-            $this->excel->getActiveSheet()->mergeCells('A3:K3');
-        } else {
-            $this->excel->setActiveSheetIndex(0)->setCellValue('A2', "Konsolidasi Stock in averege price period " . namabulan($bulan) . ' - ' . $tahun);
-            $this->excel->getActiveSheet()->getStyle('A1:A2')->getFont()->setBold(TRUE);
-            $this->excel->getActiveSheet()->getStyle('A1:A2')->getFont()->setSize(11);
-            $this->excel->getActiveSheet()->mergeCells('A1:K1');
-            $this->excel->getActiveSheet()->mergeCells('A2:K2');
-        }        
-
+        $this->excel->setActiveSheetIndex(0)->setCellValue('A1', strtoupper(trim($profil_usaha[0]->store_name)));        
+        $this->excel->setActiveSheetIndex(0)->setCellValue('A2', strtoupper(trim($profil_usaha[0]->store_address))); 
+        $this->excel->setActiveSheetIndex(0)->setCellValue('A3', "Stock in averege price period " . namabulan($bulan) . ' - ' . $tahun); 
+        $this->excel->getActiveSheet()->getStyle('A1:A3')->getFont()->setBold(TRUE);
+        $this->excel->getActiveSheet()->getStyle('A1:A3')->getFont()->setSize(11);
+        $this->excel->getActiveSheet()->mergeCells('A1:K1');
+        $this->excel->getActiveSheet()->mergeCells('A2:K2');
+        $this->excel->getActiveSheet()->mergeCells('A3:K3');
+        
         $judul = array('Currency',
                         'Date',                        
                         'Buy Number',
@@ -211,7 +221,12 @@ class Stock_price extends Bks_Controller {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();        
-        $store_id = $postData['store_id'];
+
+        if(isset($postData['store_id'])){
+            $this->store_id = $postData['store_id'];
+        } else {
+            $this->store_id = $this->auth['store_id'];
+        }
 
         $tahun = (int) date('Y');
         $bulan = (int) date('m');
@@ -245,13 +260,13 @@ class Stock_price extends Bks_Controller {
                                     SELECT x.currency_id 
                                     FROM v_tr_detail x
                                     WHERE x.status IN (3,4)
-                                    AND x.store_id = $store_id 
+                                    AND x.store_id = $this->store_id 
                                     GROUP BY x.currency_id
                                     ORDER BY currency_id ASC                                    
                                     ");
 
         // $mcurrency = $this->db->select('currency_id')
-        //                    ->where('store_id' => $store_id))
+        //                    ->where('store_id' => $this->store_id))
         //                    ->where_in('status', ['3','4'])
         //                    ->group_by('currency_id')
         //                    ->order_by('currency_id')
@@ -261,7 +276,7 @@ class Stock_price extends Bks_Controller {
             /** Delete Reccord */
             /***************************************************************************************************************** */
             $where = array(
-                    'store_id' => $store_id,
+                    'store_id' => $this->store_id,
                     'stock_year' => $tahun,
                     'stock_month' => $bulan
             );
@@ -275,7 +290,7 @@ class Stock_price extends Bks_Controller {
                 /***************************************************************************************************************** */
                 $select_max_date = $this->db->query("SELECT MAX(stock_date) AS max_date
                                                      FROM tr_stock_price 
-                                                     WHERE store_id = $store_id 
+                                                     WHERE store_id = $this->store_id 
                                                      AND currency_id = $currency_id 
                                                      AND YEAR(stock_date) = $tahun1 
                                                      AND MONTH(stock_date) = $bulan1")->result();                
@@ -289,7 +304,7 @@ class Stock_price extends Bks_Controller {
                     if($max_date !== null) {
                         $select_max_id = $this->db->query("SELECT MAX(id) AS max_id
                                                      FROM tr_stock_price 
-                                                     WHERE store_id = $store_id 
+                                                     WHERE store_id = $this->store_id 
                                                      AND currency_id = $currency_id 
                                                      AND stock_date = '$max_date'")->result();                    
                         if(count($select_max_id) > 0) {
@@ -299,7 +314,7 @@ class Stock_price extends Bks_Controller {
                                                                         stock_last_price,
                                                                         stock_last_total
                                                         FROM tr_stock_price 
-                                                        WHERE store_id = $store_id 
+                                                        WHERE store_id = $this->store_id 
                                                         AND currency_id = $currency_id 
                                                         AND stock_date = '$max_date'
                                                         AND id = $max_id")->result();
@@ -308,7 +323,7 @@ class Stock_price extends Bks_Controller {
                                         $id++;
                                         $data = array(            
                                             'id' => $id,                                            
-                                            'store_id' => $store_id,
+                                            'store_id' => $this->store_id,
                                             'stock_date' => $tgl1,
                                             'stock_year' => $tahun,
                                             'stock_month' => $bulan,
@@ -354,7 +369,7 @@ class Stock_price extends Bks_Controller {
                     /***************************************************************************************************************** */
                     /*Get Transaction Buy*/
                     $trxbuy = $this->db->select('tr_date, currency_id, header_id, nominal, SUM(sheet) AS sheet, price')
-                                    ->where(array('store_id' => $store_id, 'tr_date' => $tr_date, 'tr_id' => 1, 'currency_id' => $currency_id))
+                                    ->where(array('store_id' => $this->store_id, 'tr_date' => $tr_date, 'tr_id' => 1, 'currency_id' => $currency_id))
                                     ->where_in('status', ['3','4'])
                                     ->group_by('tr_date, currency_id, header_id, price')
                                     ->get('v_tr_detail');
@@ -364,7 +379,7 @@ class Stock_price extends Bks_Controller {
                             $id++;
                             $data = array(                  
                                 'id' => $id,                                
-                                'store_id' => $store_id,
+                                'store_id' => $this->store_id,
                                 'stock_date' => $row['tr_date'],
                                 'stock_year' => $tahun,
                                 'stock_month' => $bulan,
@@ -399,7 +414,7 @@ class Stock_price extends Bks_Controller {
                     /***************************************************************************************************************** */
                     /*Get Transaction Sell*/
                     $trxsell = $this->db->select('tr_date, currency_id, header_id, nominal, SUM(sheet) AS sheet, price')
-                                    ->where(array('store_id' => $store_id, 'tr_date' => $tr_date, 'tr_id' => 2, 'currency_id' => $currency_id))
+                                    ->where(array('store_id' => $this->store_id, 'tr_date' => $tr_date, 'tr_id' => 2, 'currency_id' => $currency_id))
                                     ->where_in('status', ['3','4'])
                                     ->group_by('tr_date, currency_id, header_id, price')
                                     ->get('v_tr_detail');
@@ -408,7 +423,7 @@ class Stock_price extends Bks_Controller {
                             $id++;
                             $data = array(               
                                 'id' => $id,                                
-                                'store_id' => $store_id,   
+                                'store_id' => $this->store_id,   
                                 'stock_date' => $row['tr_date'],
                                 'stock_year' => $tahun,
                                 'stock_month' => $bulan,

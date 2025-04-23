@@ -7,6 +7,7 @@
 <script type="text/javascript">
     var userId = <?php echo $auth['id'];?>;
     var usergroupId = <?php echo $auth['usergroup_id'];?>;
+    var storeId = <?php echo $auth['store_id'];?>;
     var Apimethod = <?php echo ($auth['api_method'] == null ? 0 : $auth['api_method']) ;?>;
     var ApiAP = "<?php echo $auth['api_angkasapura'];?>";
 </script>

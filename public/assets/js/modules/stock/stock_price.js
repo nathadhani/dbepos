@@ -1,7 +1,31 @@
 $("#btn-stock-calculate").on('click', function (e) {
     e.preventDefault();
-    if($('#store_id').val() === null || $('#store_id').val() === ''){
-        bksfn.errMsg('Store Belum Dipilih!');
+    if(usergroupId === 2 || usergroupId === 6){
+        if($('#store_id').val() === null || $('#store_id').val() === ''){
+            bksfn.errMsg('Store Belum Dipilih!');
+        } else {
+            $.ajax({
+                url: baseUrl + 'stock/stock_price/generate_tr_stock_price',
+                type: 'POST',
+                beforeSend: function(){
+                    $(".ajax-loader").height($(document).height());
+                    $('.ajax-loader').css("visibility", "visible");
+                },
+                data: {'store_id' : $('#store_id').val(), 'period' : $('#period').val()},
+                datatype: 'json',
+                success: function(data){
+                    alertify.success('Calculate stock in exchange rate average done.!');
+                },
+                complete: function(){
+                    $('.ajax-loader').css("visibility", "hidden");
+                },
+                error: function(xhr){
+                    $('.ajax-loader').css("visibility", "hidden");
+                    alertify.error("error calculate stock in exchange rate average.!");
+                    StringtoFile(xhr.response.text(), 'error');
+                }
+            });                                
+        }
     } else {
         $.ajax({
             url: baseUrl + 'stock/stock_price/generate_tr_stock_price',
@@ -23,10 +47,27 @@ $("#btn-stock-calculate").on('click', function (e) {
                 alertify.error("error calculate stock in exchange rate average.!");
                 StringtoFile(xhr.response.text(), 'error');
             }
-        });                                
+        });
     }
 });
 
+if(storeId !== null && storeId !== '' && storeId !== 0){
+    $('#currency_id').html('').sel2dma();
+    $('#currency_id').prop('disabled', false);
+    $('#currency_id').focus()
+    $.ajax({
+        url : baseUrl +  'stock/stock_price/getcurrencystock',
+        type: 'POST',
+        data: {'store_id' : storeId},
+        datatype: 'json',
+        success: function(data){
+            $('#currency_id').html(data);
+        },
+        error: function(){
+            alert("can't get store");  
+        }
+    });
+}
 $('#store_id').on('change',function(e){
     e.preventDefault()
     if($(this).val() != null && $(this).val() != ''){
@@ -50,21 +91,58 @@ $('#store_id').on('change',function(e){
 
 $("#btn-submit").on('click', function (e) {
     e.preventDefault();
-    if($('#store_id').val() === null || $('#store_id').val() === ''){
-        bksfn.errMsg('Store Belum Dipilih!');    
-    } else if($('#currency_id').val() === null || $('#currency_id').val() === ''){
-        bksfn.errMsg('Matauang Belum Dipilih!');            
+    if(usergroupId === 2 || usergroupId === 6){
+        if($('#store_id').val() === null || $('#store_id').val() === ''){
+            bksfn.errMsg('Store Belum Dipilih!');    
+        } else if($('#currency_id').val() === null || $('#currency_id').val() === ''){
+            bksfn.errMsg('Matauang Belum Dipilih!');            
+        } else {
+            $("#btn-excel").hide();
+            fethdata();
+        }
     } else {
-        $("#btn-excel").hide();
-        fethdata();
+        if($('#currency_id').val() === null || $('#currency_id').val() === ''){
+            bksfn.errMsg('Matauang Belum Dipilih!');            
+        } else {
+            $("#btn-excel").hide();
+            fethdata();
+        }
     }
 });
 
 $("#btn-excel").hide();
 $("#btn-excel").on('click', function (e) {
     e.preventDefault();
-    if($('#store_id').val() === null || $('#store_id').val() === ''){
-        bksfn.errMsg('Store Belum Dipilih!');            
+    if(usergroupId === 2 || usergroupId === 6){
+        if($('#store_id').val() === null || $('#store_id').val() === ''){
+            bksfn.errMsg('Store Belum Dipilih!');            
+        } else {
+            alertify.confirm("export xlsx ?", function (e) {
+                if (e) {
+                    var url = "stock/stock_price/excel/";
+                    $.ajax({
+                        url: url,
+                        type: 'POST',
+                        data: {'store_id' : $("#store_id").val(), 'period' : $('#period').val()},
+                        dataType: 'json',
+                        beforeSend: function(){
+                            $(".ajax-loader").height($(document).height());
+                            $('.ajax-loader').css("visibility", "visible");
+                        },
+                        complete: function(){
+                            $('.ajax-loader').css("visibility", "hidden");
+                        }
+                    }).done(function(data){
+                        var $a = $("<a>");
+                            $a.attr("href",data.file);
+                            $("body").append($a);
+                            $a.attr("download","stock in average price "+$('#period').val()+".xlsx");
+                            $a[0].click();
+                            $a.remove();
+                    });                                    
+                }    
+            });
+        }
     } else {
         alertify.confirm("export xlsx ?", function (e) {
             if (e) {
