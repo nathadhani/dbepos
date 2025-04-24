@@ -49,44 +49,6 @@ $("#btn-stock-calculate").on('click', function (e) {
             }
         });
     }
-});
-
-if(storeId !== null && storeId !== '' && storeId !== 0){
-    $('#currency_id').html('').sel2dma();
-    $('#currency_id').prop('disabled', false);
-    $('#currency_id').focus()
-    $.ajax({
-        url : baseUrl +  'stock/stock_price/getcurrencystock',
-        type: 'POST',
-        data: {'store_id' : storeId},
-        datatype: 'json',
-        success: function(data){
-            $('#currency_id').html(data);
-        },
-        error: function(){
-            alert("can't get store");  
-        }
-    });
-}
-$('#store_id').on('change',function(e){
-    e.preventDefault()
-    if($(this).val() != null && $(this).val() != ''){
-        $('#currency_id').html('').sel2dma();
-        $('#currency_id').prop('disabled', false);
-        $('#currency_id').focus()
-        $.ajax({
-            url : baseUrl +  'stock/stock_price/getcurrencystock',
-            type: 'POST',
-            data: {'store_id' : $(this).val()},
-            datatype: 'json',
-            success: function(data){
-                $('#currency_id').html(data);
-            },
-            error: function(){
-                alert("can't get store");  
-            }
-        });
-    }
 }); 
 
 $("#btn-submit").on('click', function (e) {
@@ -94,19 +56,13 @@ $("#btn-submit").on('click', function (e) {
     if(usergroupId === 2 || usergroupId === 6){
         if($('#store_id').val() === null || $('#store_id').val() === ''){
             bksfn.errMsg('Store Belum Dipilih!');    
-        } else if($('#currency_id').val() === null || $('#currency_id').val() === ''){
-            bksfn.errMsg('Matauang Belum Dipilih!');            
         } else {
             $("#btn-excel").hide();
             fethdata();
         }
     } else {
-        if($('#currency_id').val() === null || $('#currency_id').val() === ''){
-            bksfn.errMsg('Matauang Belum Dipilih!');            
-        } else {
-            $("#btn-excel").hide();
-            fethdata();
-        }
+        $("#btn-excel").hide();
+        fethdata();
     }
 });
 
@@ -173,7 +129,8 @@ $("#btn-excel").on('click', function (e) {
 });
 
 //--- Datatables
-function fethdata(){        
+function fethdata(){
+    gettotal();      
     var t = $('#mainTable table').DataTable({
         retrieve: true,
         serverSide: true,
@@ -186,15 +143,17 @@ function fethdata(){
             type: 'POST',
             data: function(d) {                   
                 d.store_id = $('#store_id').val(),
-                d.currency_id = $('#currency_id').val(),
                 d.period = $('#period').val()
             },                
             complete: function(){
-                $("#btn-excel").show();
+                $("#btn-excel").show();                
             }
         },
         columns: [
             {data: "#", className: "dt-body-center" , width: "5%", orderable: false, searchable: false},      
+            {data: 'currency_code',  width: "5%", render: function (data, type, row, meta) {
+                return data;
+            }},
             {data: 'stock_date',  width: "7%", render: function (data, type, row, meta) {
                 return bksfn.revDate(data);
             }},
@@ -246,24 +205,24 @@ function fethdata(){
         ],            
         fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
             // if (iDisplayIndex >= 2 && iDisplayIndex <= 5 ) {
-                for (i=2; i<=5; i++) {
+                for (i=3; i<=6; i++) {
                     $(nRow).find('td:eq('+i+')').css('color','#0000FF');
                     // $(nRow).find('td:eq('+i+')').css('font-weight','bold');
                 }
             // }
             // if (iDisplayIndex >= 2 && iDisplayIndex <= 5 ) {
-                for (i=6; i<=9; i++) {
+                for (i=7; i<=10; i++) {
                     $(nRow).find('td:eq('+i+')').css('color','#FF0000');
                     // $(nRow).find('td:eq('+i+')').css('font-weight','bold');
                 }
             // }            
             if (Number(aData.profit) > 0) {
-                $(nRow).find('td:eq(13)').css('color','#000');
+                $(nRow).find('td:eq(14)').css('color','#000');
                 // $(nRow).find('td:eq(13)').css('background-color','#adff00');
                 // $(nRow).find('td:eq(13)').css('font-weight','bold');
             }   
             if (Number(aData.profit) < 0) {
-                $(nRow).find('td:eq(13)').css('color','#FF0000');
+                $(nRow).find('td:eq(14)').css('color','#FF0000');
                 // $(nRow).find('td:eq(13)').css('background-color','#adff00');
                 // $(nRow).find('td:eq(13)').css('font-weight','bold');
             }                             
@@ -274,10 +233,10 @@ function fethdata(){
 
     // Setup - add a text input to each header cell
     $('#searchid td').each(function () {
-        if ($(this).index() != 0 && ( $(this).index() <= 1 ) ) {
+        if ($(this).index() != 0 && ( $(this).index() <= 2 ) ) {
             $(this).html('<input style="width:100%" type="text" placeholder="Search" data-id="' + $(this).index() + '" />');
         }
-        if ($(this).index() == 1) {
+        if ($(this).index() == 2) {
             var index = parseInt($(this).index()) + 1;
             $(this).html('<input class="dpM1" style="width:100%; border: solid 1px #ccc; padding: 4px;" type="text" placeholder="Search" data-id="' + index + '" />');
             $(".dpM1").datepicker({
@@ -291,7 +250,7 @@ function fethdata(){
         t.columns($(this).data('id')).search(this.value).draw();
     });
     $('#searchid .dpM1').change(function () {
-        t.columns(1).search(this.value).draw();
+        t.columns(2).search(this.value).draw();
     });
     $(".clrs").click(function () {
         $('#searchid input').val('');
@@ -310,5 +269,38 @@ function fethdata(){
         }
         var elm = $(this).closest("tr");
         var d = t.row(elm).data();
+    });
+}
+
+function gettotal(){
+    $("#totalbuy").html('');
+    $("#totalsell").html('');
+    $("#totalstock").html('');
+    $("#totalprofit").html('');
+    $.ajax({
+        url: baseUrl + 'stock/stock_price/gettotal',
+        type: 'POST',
+        data: {'store_id' : $("#store_id").val(), 'period' : $('#period').val()},
+        datatype: 'json',
+        success: function(data){
+            try {
+                if (data !== '[]' && data.length > 0){
+                    var d = JSON.parse(data)[0];
+                    $("#totalbuy").html(formatRupiah(d.totalbuy));
+                    $("#totalsell").html(formatRupiah(d.totalsell));
+                    $("#totalstock").html(formatRupiah(d.totalstock));
+                    $("#totalprofit").html(formatRupiah(d.totalprofit));
+                } else {
+                    return 'data empty';
+                }  
+            } catch (e) {
+                alertify.error("Error parsing JSON"+e);
+                console.error('Error parsing JSON:', e);
+            }       
+        },
+        error: function(xhr){                        
+            alertify.error("error");
+            StringtoFile(xhr.responseText, 'error');
+        }
     });
 }

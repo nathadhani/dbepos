@@ -43,28 +43,7 @@
                                 <span class="span_text_fixed_85px">Purpose</span> : <span id="customer_purpose"></span><br>
                             <?php } ?>
                             <span class="span_text_fixed_85px">Status</span> : <span id="ftitle"></span> <span id="description_header"></span>
-                        </div>
-                        <?php if( $auth['usergroup_id'] != '6'){ ?>
-                            <div class="col-md-2">
-                                <ul class="panel-controls">                            
-                                    <div class="dropdown">
-                                        <button class="dropbtn" style="width:80px;">Action <i class="fa fa-caret-down" aria-hidden="true"></i></button>
-                                        <div class="dropdown-content">
-                                            <a href="#" id="btn-payment">Payment</a>
-                                            <a href="#" id="btn-cancel">Cancel</a>
-                                            <a href="#" id="btn-pdf">Print</a>
-                                            <?php                                        
-                                                if($api_method === '1') {              
-                                            ?>
-                                                <a href="#" id="btn-submit">Submit to ECSys</a>
-                                            <?php                                            
-                                                }
-                                            ?>
-                                        </div>
-                                    </div>                        
-                                </ul>
-                            </div>
-                        <?php } ?>
+                        </div>                        
                     </div>
                     <!--.end row -->
 
@@ -84,9 +63,27 @@
                                 </thead>
                                 <tbody>                                                
                                 </tbody>
-                            </table>
-                            <span id="total_transaction_terbilang" style="margin-top:-15x;"></span>                       
+                            </table>                                              
                         </div>
+                    </div>
+                    <!--.end row -->
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <span id="total_transaction_terbilang" style="margin-top:-15x;"></span>     
+                        </div>
+                        <?php if( $auth['usergroup_id'] != '6'){ ?>
+                            <div class="col-md-6">
+                                <ul class="panel-controls">
+                                    <button id="btn-cancel" class="btn btn-info" style="width:120px;margin-left:10px;">Cancel</button>
+                                    <button id="btn-payment" class="btn btn-info" style="width:120px;margin-left:10px;">Payment</button>
+                                    <button id="btn-pdf" class="btn btn-info" style="width:120px;margin-left:10px;">Print</button>
+                                    <?php if($api_method === '1') { ?>
+                                        <button id="btn-submit" class="btn btn-info" style="width:140px;margin-left:10px;">Submit to ECSys</button>
+                                    <?php } ?>
+                                </ul>
+                            </div>
+                        <?php } ?>
                     </div>
                     <!--.end row -->
 

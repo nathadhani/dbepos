@@ -1,7 +1,6 @@
 var xtr_id = 0;
 var xcashierby = 0;
 var xcashierby_name = '';
-$(".dropbtn").hide();
 $("#btn-submit").hide();
 $("#btn-cancel").hide();
 $("#btn-pdf").hide();
@@ -40,7 +39,6 @@ function show_header($id){
                             $("#description_header").html(' - ' + d.description);
                         }                        
                     
-                        $(".dropbtn").hide();
                         $("#btn-payment").hide();
                         $("#btn-submit").hide();
                         $("#btn-cancel").hide();
@@ -48,21 +46,18 @@ function show_header($id){
                         if(Number(d.createdby) === Number(userId)){
                             switch(Number(d.status)) {
                                 case 1:     
-                                    $(".dropbtn").hide();
                                     $("#btn-payment").hide();           
                                     $("#btn-submit").hide();
                                     $("#btn-cancel").show();
                                     $("#btn-pdf").hide();
                                     break;
                                 case 2:
-                                    $(".dropbtn").show();
                                     $("#btn-payment").hide();
                                     $("#btn-submit").hide();
                                     $("#btn-cancel").show();
                                     $("#btn-pdf").show();
                                     break;
                                 case 3:
-                                    $(".dropbtn").show();
                                     if(Number(Apimethod) === 1){                                            
                                         $("#btn-submit").show();
                                     }
@@ -71,7 +66,6 @@ function show_header($id){
                                     $("#btn-pdf").show();              
                                     break;
                                 case 4:
-                                    $(".dropbtn").show();
                                     if(Number(Apimethod) === 1){                                          
                                         $("#btn-submit").show();
                                     }
@@ -80,14 +74,12 @@ function show_header($id){
                                     $("#btn-pdf").show();              
                                     break;
                                 case 9:
-                                    $(".dropbtn").show();
                                     $("#btn-payment").hide();
                                     $("#btn-submit").hide();
                                     $("#btn-cancel").show();
                                     $("#btn-pdf").show();                                           
                                     break;
                                 default:
-                                    $(".dropbtn").hide();
                                     $("#btn-payment").hide();
                                     $("#btn-submit").hide();
                                     $("#btn-cancel").hide();

@@ -168,7 +168,7 @@ $("#btn-calculate").on('click', function (e) {
             bksfn.errMsg('Store Belum Dipilih!');
         } else {
             $.ajax({
-                url: baseUrl + 'cb/cb_balance/generate_cb_balance',
+                url: baseUrl + 'cb/cb_balance/calculate_cb_saldo',
                 type: 'POST',
                 beforeSend: function(){
                     $(".ajax-loader").height($(document).height());
@@ -191,7 +191,7 @@ $("#btn-calculate").on('click', function (e) {
         }
     } else {
         $.ajax({
-            url: baseUrl + 'cb/cb_balance/generate_cb_balance',
+            url: baseUrl + 'cb/cb_balance/calculate_cb_saldo',
             type: 'POST',
             beforeSend: function(){
                 $(".ajax-loader").height($(document).height());
@@ -222,28 +222,8 @@ $("#btn-pdf1").on('click', function (e) {
         } else {
             alertify.confirm("export to pdf ?", function (e) {    
                 if (e) {          
-                    // Rekap      
-                    // var url = "cb/cb_balance/exportpdf_rekap/";
-                    // $.ajax({
-                    //     url: url,
-                    //     type: 'POST',
-                    //     data: {'store_id' : $("#store_id").val(), 'period' : $('#period').val()},
-                    //     dataType: 'json',            
-                    //     success: function(resp){
-                    //         const pdfBase64 = resp.pdf;
-                    //         setTimeout(() => {
-                    //                             const pdfWindow = window.open();
-                    //                             pdfWindow.document.write(`<iframe width="100%" height="100%" src="data:application/pdf;base64,${pdfBase64}"></iframe>`);
-                    //                         }, 100);                                                                
-                    //     },
-                    //     error: function(xhr){
-                    //         alertify.error("error can't print");
-                    //         StringtoFile(xhr.responseText, 'error');
-                    //     }
-                    // });
-                    
-                    // Detail
-                    var url = "cb/cb_balance/exportpdf_detail/";
+                    /**Rekap*/       
+                    var url = "cb/cb_balance/exportpdf_rekap_daily/";
                     $.ajax({
                         url: url,
                         type: 'POST',
@@ -254,7 +234,7 @@ $("#btn-pdf1").on('click', function (e) {
                             setTimeout(() => {
                                                 const pdfWindow = window.open();
                                                 pdfWindow.document.write(`<iframe width="100%" height="100%" src="data:application/pdf;base64,${pdfBase64}"></iframe>`);
-                                            }, 100);
+                                            }, 100);                                                                
                         },
                         error: function(xhr){
                             alertify.error("error can't print");
@@ -267,28 +247,8 @@ $("#btn-pdf1").on('click', function (e) {
     } else {
         alertify.confirm("export to pdf ?", function (e) {    
             if (e) {          
-                // Rekap      
-                // var url = "cb/cb_balance/exportpdf_rekap/";
-                // $.ajax({
-                //     url: url,
-                //     type: 'POST',
-                //     data: {'store_id' : $("#store_id").val(), 'period' : $('#period').val()},
-                //     dataType: 'json',            
-                //     success: function(resp){
-                //         const pdfBase64 = resp.pdf;
-                //         setTimeout(() => {
-                //                             const pdfWindow = window.open();
-                //                             pdfWindow.document.write(`<iframe width="100%" height="100%" src="data:application/pdf;base64,${pdfBase64}"></iframe>`);
-                //                         }, 100);                                                                
-                //     },
-                //     error: function(xhr){
-                //         alertify.error("error can't print");
-                //         StringtoFile(xhr.responseText, 'error');
-                //     }
-                // });
-                
-                // Detail
-                var url = "cb/cb_balance/exportpdf_detail/";
+                /**Rekap*/      
+                var url = "cb/cb_balance/exportpdf_rekap_daily/";
                 $.ajax({
                     url: url,
                     type: 'POST',
@@ -299,7 +259,64 @@ $("#btn-pdf1").on('click', function (e) {
                         setTimeout(() => {
                                             const pdfWindow = window.open();
                                             pdfWindow.document.write(`<iframe width="100%" height="100%" src="data:application/pdf;base64,${pdfBase64}"></iframe>`);
-                                        }, 100);
+                                        }, 100);                                                                
+                    },
+                    error: function(xhr){
+                        alertify.error("error can't print");
+                        StringtoFile(xhr.responseText, 'error');
+                    }
+                });
+            }    
+        });
+    }
+});
+
+$("#btn-pdf2").on('click', function (e) {
+    e.preventDefault();
+    if(usergroupId === 2 || usergroupId === 6){
+        if($('#store_id').val() === null || $('#store_id').val() === ''){
+            bksfn.errMsg('Store Belum Dipilih!');
+        } else {
+            alertify.confirm("export to pdf ?", function (e) {    
+                if (e) {          
+                    /**Rekap*/       
+                    var url = "cb/cb_balance/exportpdf_rekap_mtd/";
+                    $.ajax({
+                        url: url,
+                        type: 'POST',
+                        data: {'store_id' : $("#store_id").val(), 'period' : $('#period').val()},
+                        dataType: 'json',            
+                        success: function(resp){
+                            const pdfBase64 = resp.pdf;
+                            setTimeout(() => {
+                                                const pdfWindow = window.open();
+                                                pdfWindow.document.write(`<iframe width="100%" height="100%" src="data:application/pdf;base64,${pdfBase64}"></iframe>`);
+                                            }, 100);                                                                
+                        },
+                        error: function(xhr){
+                            alertify.error("error can't print");
+                            StringtoFile(xhr.responseText, 'error');
+                        }
+                    });
+                }    
+            });
+        }
+    } else {
+        alertify.confirm("export to pdf ?", function (e) {    
+            if (e) {          
+                /**Rekap*/      
+                var url = "cb/cb_balance/exportpdf_rekap_mtd/";
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: {'store_id' : $("#store_id").val(), 'period' : $('#period').val()},
+                    dataType: 'json',            
+                    success: function(resp){
+                        const pdfBase64 = resp.pdf;
+                        setTimeout(() => {
+                                            const pdfWindow = window.open();
+                                            pdfWindow.document.write(`<iframe width="100%" height="100%" src="data:application/pdf;base64,${pdfBase64}"></iframe>`);
+                                        }, 100);                                                                
                     },
                     error: function(xhr){
                         alertify.error("error can't print");

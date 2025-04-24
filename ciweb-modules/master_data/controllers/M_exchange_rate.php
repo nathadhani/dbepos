@@ -6,7 +6,8 @@ class M_exchange_rate extends Bks_Controller {
         $config = array('modules' => 'master_data', 'jsfiles' => array('m_exchange_rate'));
         parent::__construct($config);
         $this->Bksmdl->table = 'm_exchange_rate';
-        $this->auth = $this->session->userdata( 'auth' );        
+        $this->auth = $this->session->userdata( 'auth' );
+        $this->store_id = $this->auth['store_id'];    
     }
     
     function index() {
@@ -19,7 +20,13 @@ class M_exchange_rate extends Bks_Controller {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
-        $store_id = $postData['store_id'];
+        
+        if(isset($postData['store_id'])){
+            $this->store_id = $postData['store_id'];
+        } else {
+            $this->store_id = $this->auth['store_id'];
+        }
+
         $tr_date = revDate($postData['tr_date']);
         $tr_datex = date('Y-m-d', strtotime("-1 day", strtotime($postData['tr_date'])));        
 
@@ -33,7 +40,7 @@ class M_exchange_rate extends Bks_Controller {
                                  WHERE status = 1
                                  AND NOT EXISTS
                                 ( SELECT 1 FROM m_exchange_rate AS p 
-                                  WHERE p.store_id = $store_id
+                                  WHERE p.store_id = $this->store_id
                                   AND p.exchange_rate_date = '$tr_date'
                                   AND p.currency_id = m_currency.id
                                 )
@@ -43,7 +50,7 @@ class M_exchange_rate extends Bks_Controller {
         if(count($hsl) > 0){       
             foreach ($hsl as $key => $val) {
                 $data = [                    
-                    'store_id' => $store_id,
+                    'store_id' => $this->store_id,
                     'currency_id' => $val->id,
                     'exchange_rate_date' => $tr_date,
                     'status' => 1,
@@ -68,14 +75,14 @@ class M_exchange_rate extends Bks_Controller {
                                             price_sell_bot,
                                             price_sell_top            
                                     FROM m_exchange_rate
-                                    WHERE store_id = $store_id
+                                    WHERE store_id = $this->store_id
                                     AND exchange_rate_date = '$tr_datex'                                    
                                     AND status = 1
                                     AND ( exchange_rate_buy > 0 OR  exchange_rate_sell > 0 ) 
                                     AND EXISTS
                                     ( 
                                         SELECT id FROM m_exchange_rate AS p 
-                                        WHERE p.store_id = $store_id                                        
+                                        WHERE p.store_id = $this->store_id                                        
                                         AND p.exchange_rate_date = '$tr_date'
                                         AND p.currency_id = m_exchange_rate.currency_id 
                                     )
@@ -95,7 +102,7 @@ class M_exchange_rate extends Bks_Controller {
                         'price_sell_bot' => ($val->price_sell_bot == null ? 0 : $val->price_sell_bot),
                         'price_sell_top' => ($val->price_sell_top == null ? 0 : $val->price_sell_top)
                     ];
-                    $where = array('store_id' => $store_id, 'exchange_rate_date' => $tr_date, 'currency_id' => $val->currency_id);
+                    $where = array('store_id' => $this->store_id, 'exchange_rate_date' => $tr_date, 'currency_id' => $val->currency_id);
                     $this->db->where($where);
                     $this->db->update('m_exchange_rate',$data_upd);                    
                     // echo $this->db->last_query(); exit;
@@ -133,7 +140,11 @@ class M_exchange_rate extends Bks_Controller {
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
 
-        $store_id = $postData['store_id'];
+        if(isset($postData['store_id'])){
+            $this->store_id = $postData['store_id'];
+        } else {
+            $this->store_id = $this->auth['store_id'];
+        }
         $tr_datex = date('Y-m-d', strtotime("-1 day", strtotime($postData['exchange_rate_date'])));
 
         $postData['status'] = cekStatus($postData);
@@ -144,7 +155,7 @@ class M_exchange_rate extends Bks_Controller {
         $postData['difference_buy'] = 0;
         $cek = $this->db->query("SELECT exchange_rate_buy 
                                  FROM m_exchange_rate 
-                                 WHERE store_id = $store_id 
+                                 WHERE store_id = $this->store_id 
                                  AND exchange_rate_date = '$tr_datex' 
                                  AND currency_id = $currency_id")->row();
         if(isset($cek)){
@@ -159,7 +170,7 @@ class M_exchange_rate extends Bks_Controller {
         $postData['difference_sell'] = 0;
         $cek = $this->db->query("SELECT exchange_rate_sell 
                                  FROM m_exchange_rate 
-                                 WHERE store_id = $store_id
+                                 WHERE store_id = $this->store_id
                                  AND exchange_rate_date = '$tr_datex' 
                                  AND currency_id = $currency_id")->row();
         if(isset($cek)){
@@ -215,12 +226,18 @@ class M_exchange_rate extends Bks_Controller {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
-        $store_id = $postData['store_id'];
+        
+        if(isset($postData['store_id'])){
+            $this->store_id = $postData['store_id'];
+        } else {
+            $this->store_id = $this->auth['store_id'];
+        }
+
         $tr_date = revDate($postData['tr_date']);
-        $this->Bksmdl->table = 'v_m_exchange_rate';               
+        $this->Bksmdl->table = 'v_m_exchange_rate';
 
         $where[0]['field'] = 'store_id';
-        $where[0]['data']  = $store_id;
+        $where[0]['data']  = $this->store_id;
         $where[0]['sql']   = 'where';
 
         $where[1]['field'] = 'exchange_rate_date';
@@ -236,10 +253,16 @@ class M_exchange_rate extends Bks_Controller {
         checkIfNotAjax();
         // $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
-        $store_id = $postData['store_id'];
+        
+        if(isset($postData['store_id'])){
+            $this->store_id = $postData['store_id'];
+        } else {
+            $this->store_id = $this->auth['store_id'];
+        }
+
         $tr_date = revDate($postData['tr_date']);
 
-        $profil_usaha = $this->Bksmdl->getprofilusaha($store_id);
+        $profil_usaha = $this->Bksmdl->getprofilusaha($this->store_id);
 
         // Call Pdf libraries
         $pdf = new Pdf();
@@ -276,7 +299,7 @@ class M_exchange_rate extends Bks_Controller {
         $html_header = '<h3> KERTAS KERJA PENETAPAN KURS'  . '</h3></br><br></br>';
         $html_header .= 'Kantor  : ' . strtoupper(trim($profil_usaha[0]->store_name)). '<br>';
         $html_header .= 'Alamat  :' . trim($profil_usaha[0]->store_address) . '<br>';
-        $data_jam = $this->db->query("SELECT TIME(created) AS jam FROM m_exchange_rate WHERE m_exchange_rate.store_id = $store_id AND m_exchange_rate.exchange_rate_date = '$tr_date' LIMIT 1")->result();
+        $data_jam = $this->db->query("SELECT TIME(created) AS jam FROM m_exchange_rate WHERE m_exchange_rate.store_id = $this->store_id AND m_exchange_rate.exchange_rate_date = '$tr_date' LIMIT 1")->result();
         $html_header .= 'Tanggal : ' . revDate($tr_date) . ' Jam : ' . $data_jam[0]->jam . '<br><br></br>';
 
         
@@ -289,7 +312,7 @@ class M_exchange_rate extends Bks_Controller {
                                         source_rate
                                         FROM m_exchange_rate
                                         JOIN m_currency ON m_exchange_rate.currency_id = m_currency.id
-                                        WHERE m_exchange_rate.store_id = $store_id
+                                        WHERE m_exchange_rate.store_id = $this->store_id
                                         AND m_exchange_rate.exchange_rate_date = '$tr_date'
                                         ORDER BY m_currency.id ASC")->result();
         if(count($data_rate) > 0) {

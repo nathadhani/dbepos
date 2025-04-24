@@ -1,3 +1,16 @@
+<?php
+    $auth = $this->session->userdata('auth');
+    $usergroup_id = $auth['usergroup_id'];
+    $store_id = $auth['store_id'];
+    $api_method = $auth['api_method'];
+?>
+<script type="text/javascript">
+    var userId = <?php echo $auth['id'];?>;
+    var usergroupId = <?php echo $auth['usergroup_id'];?>;
+    var storeId = <?php echo $auth['store_id'];?>;
+    var Apimethod = <?php echo ($auth['api_method'] == null ? 0 : $auth['api_method']) ;?>;
+    var ApiAP = "<?php echo $auth['api_angkasapura'];?>";
+</script>
 <div class="row">
     <div class="col-md-12">
         <div class="panel panel-default">
@@ -8,30 +21,34 @@
                     </h3>
                 </div>
                 <ul class="panel-controls">
-                    <button id="btn-generate" class="btn btn-info" style="width:120px;">Generate Data</button>
+                    <?php if(in_array($usergroup_id, ['3'])) { ?>
+                        <button id="btn-generate" class="btn btn-info" style="width:120px;">Generate Data</button>
+                    <?php } ?>
                     <button id="btn-export-pdf" class="btn btn-info" style="width:120px;margin-left:5px;">Export Pdf</button>
                 </ul>
             </div>         
             <div class="panel-body">
-                <div class="row">                                        
-                    <div class="col-md-8">
-                        <div class="form-group">                                
-                            <div class="col-lg-12">
-                                <label for="store_id" style="display:block">Store</label>
-                                <select name="store_id"
-                                        data-ajax="true" 
-                                        data-placeholder="-- Pilih --"
-                                        data-url="master_data/m_store/getregion/" 
-                                        data-value="" 
-                                        data-limit="100"                                                
-                                        id="store_id" placeholder="Region"
-                                        class='form-control select2'
-                                        width="100%"
-                                        >
-                                </select>
+                <div class="row">       
+                    <?php if(in_array($usergroup_id, ['2','6'])) { ?>                                 
+                        <div class="col-md-8">
+                            <div class="form-group">                                
+                                <div class="col-lg-12">
+                                    <label for="store_id" style="display:block">Store</label>
+                                    <select name="store_id"
+                                            data-ajax="true" 
+                                            data-placeholder="-- Pilih --"
+                                            data-url="master_data/m_store/getregion/" 
+                                            data-value="" 
+                                            data-limit="100"                                                
+                                            id="store_id" placeholder="Region"
+                                            class='form-control select2'
+                                            width="100%"
+                                            >
+                                    </select>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    <?php } ?>
                     <div class="col-md-2">
                         <div class="form-group">
                             <div class="col-lg-12">
@@ -62,7 +79,7 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Curr</th>
+                                <th>Currency</th>
                                 <th>Description</th>
                                 <th>Date</th>
                                 <th>Buy</th>

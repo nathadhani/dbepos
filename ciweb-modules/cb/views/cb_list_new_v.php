@@ -19,10 +19,10 @@
             <div class="panel panel-default">                
                 <div class="panel-heading ui-draggable-handle">
                     <div class="panel-title-box">
-                        <h3>Cash / Bank - <strong id="ftitle"></strong></h3>
+                        <h3>Cash/Bank - <strong id="ftitle"></strong></h3>
                     </div>
                     <ul class="panel-controls">
-                        <button id="btn-cancel" class="btn btn-danger" style="width:120px;margin-left:5px;">Cancel</button>
+                        <button id="btn-cancel" class="btn btn-info" style="width:120px;margin-left:5px;">Cancel</button>
                     </ul>
                 </div>                    
                 <div class="panel-body"> 

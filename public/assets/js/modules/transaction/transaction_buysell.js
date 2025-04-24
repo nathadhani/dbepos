@@ -506,7 +506,6 @@ function back_to_page_show($id){
     });    
 }
 
-
 function getratebyid(){
     if ( $("#currency_id").val() !== null || $("#currency_id").val() !== '' ){
         $("#price").val(0);

@@ -15,7 +15,7 @@
         <div class="panel panel-default">
             <div class="panel-heading ui-draggable-handle">                               
                 <div class="panel-title-box">
-                    <h3>Cash / Bank - List Transaction</h3>
+                    <h3>Cash/Bank - List Transaction</h3>
                 </div>
                 <ul class="panel-controls">
                     <?php         

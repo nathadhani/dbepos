@@ -68,11 +68,15 @@ var t = $('#mainTable table').DataTable({
         {data: 'cb_name'},
         {data: 'cb_pos_name'},
         {data: 'cb_pos_in_out', width: "5%"},
+        {data: 'cb_biaya', className: "dt-body-center", width: "5%", render: function (data, type, row, meta) {
+            var act = (data == '1') ? '<span class="label label-success"><i class="fa fa-check"></i></span>' : '<span class="label label-danger"><i class="fa fa-times"></i></span>';
+            return act;
+        }},
         {data: 'buysell_tr_id_name'},
         {data: 'status', className: "dt-body-center", width: "5%", render: function (data, type, row, meta) {
-                var act = (data == '1') ? '<span class="label label-success"><i class="fa fa-check"></i></span>' : '<span class="label label-danger"><i class="fa fa-times"></i></span>';
-                return act;
-            }},
+            var act = (data == '1') ? '<span class="label label-success"><i class="fa fa-check"></i></span>' : '<span class="label label-danger"><i class="fa fa-times"></i></span>';
+            return act;
+        }},
         {data: 'id', className: "dt-body-center", orderable: false, width: "5%", render: function (data, type, row, meta) {
                 return '<a title="Edit" href="#"><i class="fa fa-edit"></i></a>';
             }
@@ -90,7 +94,7 @@ $('#searchid td').each(function () {
     if ($(this).index() != 0 && $(this).index() < 5) {
         $(this).html('<input style="width:100%" type="text" placeholder="Search" data-id="' + $(this).index() + '" />');
     }
-    if ($(this).index() == 4) {
+    if ($(this).index() == 7) {
         $(this).html('<select style="width:100%" type="text"><option value="">-</option><option value="1">Active</option><option value="0">Not Active</option><select/>');
     }
 });
@@ -98,7 +102,7 @@ $('#searchid input').keyup(function () {
     t.columns($(this).data('id')).search(this.value).draw();
 });
 $('#searchid select').change(function () {
-    t.columns(4).search(this.value).draw();
+    t.columns(7).search(this.value).draw();
 });
 $(".clrs").click(function () {
     $('#searchid input').val('');
@@ -124,6 +128,9 @@ $('#mainTable').on('click', 'a[title^=Edit]', function (e) {
     }
     $("#cb_pos_name").val(d.cb_pos_name).focus();
     $("#cb_pos_in_out").val(d.cb_pos_in_out);
+    if (d.cb_biaya != null) {
+        $("#cb_biaya").val(d.cb_biaya);
+    }
     if (d.buysell_tr_id != null) {
         $("#buysell_tr_id").html('<option value="' + d.buysell_tr_id + '">' + d.buysell_tr_id_name + '</option>').sel2dma();
     } else {

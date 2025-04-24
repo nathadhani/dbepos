@@ -19,11 +19,11 @@ class Stock_price extends Bks_Controller {
         $this->template->set('icon', 'fa fa-list');
         $data['auth'] = $this->auth;
         $this->template->build('stock/stock_price_v', $data);
-    }
+    }    
 
-    function getcurrencystock() {
+    function gettotal() {
         checkIfNotAjax();
-        $this->libauth->check(__METHOD__);
+        // $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
         
         if(isset($postData['store_id'])){
@@ -31,17 +31,24 @@ class Stock_price extends Bks_Controller {
         } else {
             $this->store_id = $this->auth['store_id'];
         }
-
-        $menus = $this->db->group_by('currency_id')
-                          ->order_by('currency_id, currency_code, currency_name', 'ASC')
-                          ->get_where('v_tr_stock_balance_price', array('store_id' => $this->store_id))->result();
-        if (count($menus) > 0){
-            $option ="<option selected value=''>Pilih...</option>";
-            foreach($menus as $row){
-                $option.="<option value='".$row->currency_id."'>".$row->currency_code . " - " . $row->currency_name ."</option>";
-            }
-            echo $option;
+        
+        $tahun = date('Y');
+        $bulan = date('m');
+        if(isset($postData['period'])){
+            $tahun = intval(SUBSTR($postData['period'],3,4));
+            $bulan = intval(SUBSTR($postData['period'],0,2));
         }
+
+        $query = $this->db->query("SELECT SUM(buy_total) AS totalbuy,
+                                          SUM(sell_total) AS totalsell,
+                                          SUM(stock_last_total) AS totalstock,
+                                          SUM(profit) AS totalprofit
+                                FROM tr_stock_price
+                                WHERE store_id = $this->store_id 
+                                AND stock_year = $tahun
+                                AND stock_month = $bulan")->result();
+        // echo $this->db->last_query();exit;                            
+        echo json_encode($query, true);
     }
     
     function getdata() {
@@ -55,7 +62,6 @@ class Stock_price extends Bks_Controller {
             $this->store_id = $this->auth['store_id'];
         }
         
-        $currency_id = $postData['currency_id'];
         $tahun = date('Y');
         $bulan = date('m');
         if(isset($postData['period'])){
@@ -74,10 +80,6 @@ class Stock_price extends Bks_Controller {
         $where[2]['field'] = 'stock_month';
         $where[2]['data']  = $bulan;
         $where[2]['sql']   = 'where';
-
-        $where[3]['field'] = 'currency_id';
-        $where[3]['data']  = $currency_id;
-        $where[3]['sql']   = 'where';
 
         $this->Bksmdl->table = 'v_tr_stock_balance_price';
         $cpData = $this->Bksmdl->getDataTable($where);

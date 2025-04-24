@@ -15,10 +15,10 @@
         <div class="panel panel-default">
             <div class="panel-heading ui-draggable-handle">                                
                 <div class="panel-title-box">
-                    <h3>Cash / Bank - Balance</h3>
+                    <h3>Cash/Bank - Balance</h3>
                 </div>
                 <ul class="panel-controls">
-                    <button id="btn-calculate" class="btn btn-info" style="width:120px;">Calculate</button>                    
+                    <button id="btn-calculate" class="btn btn-info" style="width:120px;">Calculate</button>
                 </ul>
             </div>
             <div class="panel-body">

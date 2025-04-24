@@ -175,7 +175,7 @@ class Cb_balance extends Bks_Controller {
         echo json_encode($query, true);
     }
 
-    function generate_cb_balance(){
+    function calculate_cb_saldo(){
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();        
@@ -256,7 +256,7 @@ class Cb_balance extends Bks_Controller {
 
     }
 
-    function exportpdf_rekap()
+    function exportpdf_rekap_daily()
     {   
         checkIfNotAjax();
         // $this->libauth->check(__METHOD__);
@@ -291,7 +291,7 @@ class Cb_balance extends Bks_Controller {
         // Add Title        
         $html_header = strtoupper(trim($profil_usaha[0]->store_name));
         $html_header .= '<br>' . trim($profil_usaha[0]->store_address) . '</br>';
-        $html_header .= '<br>' . 'Rekap Saldo Kas Bank  Periode : ' . revDate($this->tr_date) . '</br><br></br><br></br>';
+        $html_header .= '<br>' . 'Saldo Kas Bank Tanggal : ' . revDate($this->tr_date) . '</br><br></br><br></br>';
         
         // Add Content Body
         $data_header = $this->db->query("SELECT tr_cb_saldo.cb_id, m_cb.cb_code, m_cb.cb_name, 
@@ -315,10 +315,11 @@ class Cb_balance extends Bks_Controller {
 
             $pdf->SetFont('', 'B', 9);
             $saldo = 0;
+            $saldo_total = 0;
             $html_table = '<table cellspacing="0" cellpadding="0" width="100%">';
             $html_table .= '<tr>';
-                $html_table .= '<td width="20%" class="first second">List</td>';
-                $html_table .= '<td width="41%" class="first second">Keterangan</td>';
+                $html_table .= '<td width="10%" class="first second">List</td>';
+                $html_table .= '<td width="51%" class="first second">Keterangan</td>';
                 $html_table .= '<td width="13%" class="first second">Masuk</td>';
                 $html_table .= '<td width="13%" class="first second">Keluar</td>';
                 $html_table .= '<td width="13%" class="first second">Saldo</td>';
@@ -326,12 +327,12 @@ class Cb_balance extends Bks_Controller {
             foreach($data_header as $r){
                 $no++;
                 $html_table .= '<tr>';  
-                    $html_table .= '<td colspan="4" class="first"> ' . $no  . '. '. $r->cb_code . ' - ' . $r->cb_name . '</td>';
+                    $html_table .= '<td colspan="4" class="first"> ' . $no  . '. '. $r->cb_name . '</td>';
                     $html_table .= '<td class="first">' .  ( (int) $r->cbs_saldo > 0 ? number_format($r->cbs_saldo, "0", ".", ",") : '-' ). '</td>';
                 $html_table .= '</tr>';  
                 
                 $cb_id = $r->cb_id;
-                $saldo = (int) $r->cbs_saldo;
+                $saldo = (int) $r->cbs_saldo;                
                 $data_detail = $this->db->query("SELECT cb_pos_name, SUM(COALESCE(amount_in,0)) AS amount_in, SUM(COALESCE(amount_out,0)) AS amount_out
                                                 FROM v_tr_cb_detail
                                                 WHERE store_id = $this->store_id
@@ -339,9 +340,9 @@ class Cb_balance extends Bks_Controller {
                                                 AND cb_id = $cb_id
                                                 AND status IN (3,4)
                                                 GROUP BY cb_pos_name")->result();
-                if(count($data_detail) > 0) {    
+                if(count($data_detail) > 0) {  
                     $total_in = 0;
-                    $total_out = 0;                                            
+                    $total_out = 0;  
                     foreach($data_detail as $d){
                         $saldo = ($saldo + (int) $d->amount_in) - (int) $d->amount_out;
                         $total_in = $total_in + (int) $d->amount_in;
@@ -349,7 +350,7 @@ class Cb_balance extends Bks_Controller {
                         $pdf->SetFont('', '', 9);
                         $html_table .= '<tr>';  
                             $html_table .= '<td></td>';
-                            $html_table .= '<td> - ' . $d->cb_pos_name . '</td>';
+                            $html_table .= '<td>' . $d->cb_pos_name . '</td>';
                             $html_table .= '<td>' .  ( (int) $d->amount_in > 0 ? number_format($d->amount_in, "0", ".", ",") : '-' ). '</td>';
                             $html_table .= '<td>' .  ( (int) $d->amount_out > 0 ? number_format($d->amount_out, "0", ".", ",") : '-' ). '</td>';
                             $html_table .= '<td>' .  ( (int) $saldo <> 0 ? number_format($saldo, "0", ".", ",") : '-' ). '</td>';
@@ -361,31 +362,229 @@ class Cb_balance extends Bks_Controller {
                         $html_table .= '<td class="first">' .  ( (int) $total_in > 0 ? number_format($total_in, "0", ".", ",") : '-' ). '</td>';
                         $html_table .= '<td class="first">' .  ( (int) $total_out > 0 ? number_format($total_out, "0", ".", ",") : '-' ). '</td>';
                         $html_table .= '<td class="first">' .  ( (int) $saldo <> 0 ? number_format($saldo, "0", ".", ",") : '-' ). '</td>';
-                    $html_table .= '</tr>'; 
+                    $html_table .= '</tr>';                    
                 }
-
+                $saldo_total = $saldo_total + $saldo;
                 $pdf->Ln(4);
-            }
+            }            
             $html_table .= '</table>';
 
-            $html = $style. $html_header . $html_table;
+            $pdf->Ln(6);
+            $html_footer = '<br>';
+            
+            /********************************************************************************************************************************************/
+            $biaya = 0;
+            $data_biaya = $this->db->query("SELECT  SUM(COALESCE(amount_out,0)) AS totalcost
+                                                FROM v_tr_cb_detail
+                                                WHERE store_id = $this->store_id
+                                                AND tr_date = '$this->tr_date'
+                                                AND cb_biaya = 1")->result();
+            if(count($data_biaya) > 0) {
+                $biaya = (int) $data_biaya[0]->totalcost;
+                $html_footer .= '<br>';
+                $html_footer .= '<span> Total Biaya : ' . ( $biaya <> 0 ? number_format($biaya, "0", ".", ",") : '-' ) . '<span>';
+            }
+            /********************************************************************************************************************************************/
+
+            /********************************************************************************************************************************************/
+            $data_profit = $this->db->query("SELECT  SUM(COALESCE(profit,0)) AS gross_profit
+                                                FROM tr_stock_price
+                                                WHERE store_id = $this->store_id
+                                                AND stock_date = '$this->tr_date'")->result();
+            if(count($data_profit) > 0) {
+                $profit = (int) $data_profit[0]->gross_profit - $biaya;
+                $html_footer .= '<br>';
+                $html_footer .= '<span> Total Rugi/Laba : ' . (  $profit <> 0 ? number_format($profit, "0", ".", ",") : '-' ) . '<span>';
+            }
+            /********************************************************************************************************************************************/
+
+            /********************************************************************************************************************************************/
+            $html_footer .= '<br>';
+            $html_footer .= '<span> Saldo Akhir Kas Bank : ' . ( (int) $saldo_total > 0 ? number_format($saldo_total, "0", ".", ",") : '-' ) . '<span>';
+            /********************************************************************************************************************************************/
+
+            $html = $style. $html_header . $html_table . $html_footer;
             $pdf->SetX(10); // Mengatur posisi top menjadi 10 mm dari kiri halaman
             $pdf->SetY(10); // Mengatur posisi top menjadi 10 mm dari atas halaman
             $pdf->writeHTML($html, true, false, true, false, '');
 
             $pdf->Ln(4);
-            $pdf->Cell(01, 01, 'Created by,                       Checked by,', 0, 1, 'L');
+            $pdf->Cell(01, 01, 'Dibuat Oleh,                       Diperiksa Oleh,', 0, 1, 'L');
         }
 
         ob_start();
         $pdf_output = $pdf->Output('Saldo Kas Bank  Periode ' . revDate($this->tr_date).'.pdf','S');
         ob_end_clean();
         echo json_encode(['pdf' => base64_encode($pdf_output)]); // Display Pdf in new tab
-        // $response =  array(
-        //     'op' => 'ok',
-        //     'file' => "data:application/pdf;base64,".base64_encode($pdf_output)
-        // );
-        // die(json_encode($response)); // download pdf
+    }
+
+    function exportpdf_rekap_mtd()
+    {   
+        checkIfNotAjax();
+        // $this->libauth->check(__METHOD__);
+        $postData = $this->input->post();
+
+        if(isset($postData['store_id'])){
+            $this->store_id = $postData['store_id'];
+        } else {
+            $this->store_id = $this->auth['store_id'];
+        }    
+        $tahun = (int) SUBSTR(revDate($postData['period']),0,4);
+        $bulan = (int) SUBSTR(revDate($postData['period']),5,2);
+        $startDate = $tahun.'-'.sprintf("%02d", $bulan).'-01';
+        $endDate = revDate($postData['period']);
+
+        $profil_usaha = $this->Bksmdl->getprofilusaha($this->store_id);
+
+        // Call Pdf libraries
+        $pdf = new Pdf();
+        
+        // Call before the addPage() method
+        $pdf->SetPrintHeader(false);
+        $pdf->SetPrintFooter(false);
+
+        // set font
+        $pdf->SetFont('times', '', 12);
+        $pdf->AddPage('P', 'A4');
+        
+        $style = '
+                <style>                    
+                    .first {border-top:1px solid #333;}
+                    .second {border-bottom:1px solid #333;}
+                </style>';
+
+        // Add Title        
+        $html_header = strtoupper(trim($profil_usaha[0]->store_name));
+        $html_header .= '<br>' . trim($profil_usaha[0]->store_address) . '</br>';
+        $html_header .= '<br>' . 'Saldo Kas Bank Tanggal : ' . revDate($startDate) . ' s/d ' . revDate($endDate) . '</br><br></br><br></br>';
+        
+        // Add Content Body
+        $data_header = $this->db->query("SELECT tr_cb_saldo.cb_id, m_cb.cb_code, m_cb.cb_name, 
+                                        COALESCE((
+                                            SELECT cbs_saldo FROM tr_cb_saldo X
+                                            WHERE x.store_id = $this->store_id
+                                            AND x.cbs_date < '$startDate'
+                                            AND x.cb_id = tr_cb_saldo.cb_id
+                                            ORDER BY x.id DESC
+                                            LIMIT 1
+                                        ),0) AS cbs_saldo 
+                                        FROM tr_cb_saldo
+                                        JOIN m_cb ON tr_cb_saldo.cb_id = m_cb.id
+                                        WHERE tr_cb_saldo.store_id = $this->store_id
+                                        AND tr_cb_saldo.cbs_date >= '$startDate' 
+                                        AND tr_cb_saldo.cbs_date <= '$endDate' 
+                                        GROUP BY tr_cb_saldo.cb_id, m_cb.cb_code, m_cb.cb_name
+                                        ORDER BY tr_cb_saldo.cb_id ASC")->result();
+        if(count($data_header) > 0) {
+            $no = 0;
+            $pageno = 0;
+
+            $pdf->SetFont('', 'B', 9);
+            $saldo = 0;
+            $saldo_total = 0;
+            $html_table = '<table cellspacing="0" cellpadding="0" width="100%">';
+            $html_table .= '<tr>';
+                $html_table .= '<td width="10%" class="first second">List</td>';
+                $html_table .= '<td width="51%" class="first second">Keterangan</td>';
+                $html_table .= '<td width="13%" class="first second">Masuk</td>';
+                $html_table .= '<td width="13%" class="first second">Keluar</td>';
+                $html_table .= '<td width="13%" class="first second">Saldo</td>';
+            $html_table .= '</tr>';             
+            foreach($data_header as $r){
+                $no++;
+                $html_table .= '<tr>';  
+                    $html_table .= '<td colspan="4" class="first"> ' . $no  . '. '. $r->cb_name . '</td>';
+                    $html_table .= '<td class="first">' .  ( (int) $r->cbs_saldo > 0 ? number_format($r->cbs_saldo, "0", ".", ",") : '-' ). '</td>';
+                $html_table .= '</tr>';  
+                
+                $cb_id = $r->cb_id;
+                $saldo = (int) $r->cbs_saldo;
+                $data_detail = $this->db->query("SELECT cb_pos_name, SUM(COALESCE(amount_in,0)) AS amount_in, SUM(COALESCE(amount_out,0)) AS amount_out
+                                                FROM v_tr_cb_detail
+                                                WHERE store_id = $this->store_id
+                                                AND tr_date >= '$startDate'
+                                                AND tr_date <= '$endDate'
+                                                AND cb_id = $cb_id
+                                                AND status IN (3,4)
+                                                GROUP BY cb_pos_name")->result();
+                if(count($data_detail) > 0) {    
+                    $total_in = 0;
+                    $total_out = 0;                                            
+                    foreach($data_detail as $d){
+                        $saldo = ($saldo + (int) $d->amount_in) - (int) $d->amount_out;
+                        $total_in = $total_in + (int) $d->amount_in;
+                        $total_out = $total_out + (int) $d->amount_out;                        
+                        $pdf->SetFont('', '', 9);
+                        $html_table .= '<tr>';  
+                            $html_table .= '<td></td>';
+                            $html_table .= '<td>' . $d->cb_pos_name . '</td>';
+                            $html_table .= '<td>' .  ( (int) $d->amount_in > 0 ? number_format($d->amount_in, "0", ".", ",") : '-' ). '</td>';
+                            $html_table .= '<td>' .  ( (int) $d->amount_out > 0 ? number_format($d->amount_out, "0", ".", ",") : '-' ). '</td>';
+                            $html_table .= '<td>' .  ( (int) $saldo <> 0 ? number_format($saldo, "0", ".", ",") : '-' ). '</td>';
+                        $html_table .= '</tr>'; 
+                    }
+                    $html_table .= '<tr>';  
+                        $html_table .= '<td></td>';
+                        $html_table .= '<td class="first" style="text-align:center;font-weight:bold;"> Total </td>';
+                        $html_table .= '<td class="first">' .  ( (int) $total_in > 0 ? number_format($total_in, "0", ".", ",") : '-' ). '</td>';
+                        $html_table .= '<td class="first">' .  ( (int) $total_out > 0 ? number_format($total_out, "0", ".", ",") : '-' ). '</td>';
+                        $html_table .= '<td class="first">' .  ( (int) $saldo <> 0 ? number_format($saldo, "0", ".", ",") : '-' ). '</td>';
+                    $html_table .= '</tr>';
+                }
+                $saldo_total = ($saldo_total + $saldo);
+                $pdf->Ln(4);
+            }
+            $html_table .= '</table>';
+
+            $pdf->Ln(6);
+            $html_footer = '<br>';                   
+            
+            /********************************************************************************************************************************************/
+            $biaya = 0;
+            $data_biaya = $this->db->query("SELECT  SUM(COALESCE(amount_out,0)) AS totalcost
+                                                FROM v_tr_cb_detail
+                                                WHERE store_id = $this->store_id
+                                                AND tr_date >= '$startDate'
+                                                AND tr_date <= '$endDate'
+                                                AND cb_biaya = 1")->result();
+            if(count($data_biaya) > 0) {
+                $biaya = (int) $data_biaya[0]->totalcost;
+                $html_footer .= '<br>';
+                $html_footer .= '<span> Total Biaya : ' . ( $biaya <> 0 ? number_format($biaya, "0", ".", ",") : '-' ) . '<span>';
+            }
+            /********************************************************************************************************************************************/
+
+            /********************************************************************************************************************************************/
+            $data_profit = $this->db->query("SELECT  SUM(COALESCE(profit,0)) AS gross_profit
+                                                FROM tr_stock_price
+                                                WHERE store_id = $this->store_id
+                                                AND stock_date >= '$startDate'
+                                                AND stock_date <= '$endDate'")->result();
+            if(count($data_profit) > 0) {
+                $profit = (int) $data_profit[0]->gross_profit - $biaya;
+                $html_footer .= '<br>';
+                $html_footer .= '<span> Total Rugi/Laba : ' . ( $profit <> 0 ? number_format($profit, "0", ".", ",") : '-' ) . '<span>';
+            }
+            /********************************************************************************************************************************************/
+
+            /********************************************************************************************************************************************/
+            $html_footer .= '<br>';
+            $html_footer .= '<span> Saldo Akhir Kas Bank : ' . ( (int) $saldo_total <> 0 ? number_format($saldo_total, "0", ".", ",") : '-' ) . '<span>'; 
+            /********************************************************************************************************************************************/
+
+            $html = $style. $html_header . $html_table . $html_footer;
+            $pdf->SetX(10); // Mengatur posisi top menjadi 10 mm dari kiri halaman
+            $pdf->SetY(10); // Mengatur posisi top menjadi 10 mm dari atas halaman
+            $pdf->writeHTML($html, true, false, true, false, '');
+
+            $pdf->Ln(4);
+            $pdf->Cell(01, 01, 'Dibuat Oleh,                       Diperiksa Oleh,', 0, 1, 'L');
+        }
+
+        ob_start();
+        $pdf_output = $pdf->Output('Saldo Kas Bank Period ' . revDate($startDate) . ' - ' . revDate($endDate) .'.pdf','S');
+        ob_end_clean();
+        echo json_encode(['pdf' => base64_encode($pdf_output)]); // Display Pdf in new tab
     }
 
     function exportpdf_detail()
@@ -517,11 +716,6 @@ class Cb_balance extends Bks_Controller {
         $pdf_output = $pdf->Output('Saldo Kas Bank  Periode ' . revDate($this->tr_date).'.pdf','S');
         ob_end_clean();
         echo json_encode(['pdf' => base64_encode($pdf_output)]); // Display Pdf in new tab
-        // $response =  array(
-        //     'op' => 'ok',
-        //     'file' => "data:application/pdf;base64,".base64_encode($pdf_output)
-        // );
-        // die(json_encode($response)); // download pdf
     }
 
 

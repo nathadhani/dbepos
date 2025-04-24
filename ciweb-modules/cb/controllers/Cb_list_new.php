@@ -179,18 +179,15 @@ class Cb_list_new extends Bks_Controller {
             $config['overwrite'] = TRUE;
             $config['max_size'] = 15360; // 15MB
             $this->load->library('upload',$config);
-            $this->upload->initialize($config);            
+            $this->upload->initialize($config);
             $filex = $config['upload_path'] . $config['file_name'];
             if (!$this->upload->do_upload('upload_file')) {
                 $error = array('error' => $this->upload->display_errors());
                 echo $error["error"];
-            } else {                
+            } else {
                 echo 'File has been uploaded';
             }
-        }       
+        }
     }
-
-    
-
 
 }

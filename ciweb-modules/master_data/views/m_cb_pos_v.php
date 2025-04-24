@@ -39,10 +39,20 @@
                             <div class="form-group row">
                                 <label for="cb_pos_in_out" class="control-label col-lg-4">I/O</label>
                                 <div class="col-lg-8">
-                                    <select id="cb_pos_in_out" name="cb_pos_in_out" placeholder="Pilih In Out" class="form-control">
+                                    <select id="cb_pos_in_out" name="cb_pos_in_out" placeholder="Pilih In/Out" class="form-control">
                                         <option value="" selected="">Pilih...</option>
                                         <option value="I">In</option>
                                         <option value="O">Out</option>
+                                    </select>
+                                </div>
+                            </div><!-- /.form-group -->
+                            <div class="form-group row">
+                                <label for="cb_biaya" class="control-label col-lg-4">Cost</label>
+                                <div class="col-lg-8">
+                                    <select id="cb_biaya" name="cb_biaya" placeholder="Pilih Yes/No" class="form-control">
+                                        <option value="" selected="">Pilih...</option>
+                                        <option value="1">Yes</option>
+                                        <option value="0">No</option>
                                     </select>
                                 </div>
                             </div><!-- /.form-group -->
@@ -108,6 +118,7 @@
                                 <th>Source Name</th>
                                 <th>Purpose Name</th>
                                 <th>I/O</th>
+                                <th>Cost</th>
                                 <th>Buy/Sell</th>
                                 <th>Status</th>
                                 <th>Action</th>
@@ -116,6 +127,9 @@
                         <thead id="searchid">
                             <tr>
                                 <td><button class="clrs btn btn-sm btn-info btn-line">Clear</button></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
