@@ -58,7 +58,8 @@
                         </div>                            
                     </div>
                 </div>               
-
+                
+                <br>
                 <div class="row">
                     <div class="col-md-3">
                         <h5>Total Buy Rp. <span id="totalbuy" style='text-align:left;font-weight:600;'></span></h5>
