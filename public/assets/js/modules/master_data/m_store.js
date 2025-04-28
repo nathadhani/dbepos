@@ -119,9 +119,7 @@
         },
         columns: [
             {data: "#", width: "5%", orderable: false, searchable: false},           
-            {data: 'store_address'},
-            {data: 'api_store_id'},
-            {data: 'api_angkasapura'},
+            {data: 'store_address'},           
             {data: 'status', className: "dt-body-center", width: "5%", render: function (data, type, row, meta) {
                 var act = (data == '1') ? '<span class="label label-success"><i class="fa fa-check"></i></span>' : '<span class="label label-danger"><i class="fa fa-times"></i></span>';
                 return act;
@@ -140,6 +138,8 @@
             {data: 'api_password', visible: false},
             {data: 'api_store_name', visible: false},
             {data: 'ap_tr_id', visible: false},
+            {data: 'api_store_id', visible: false},
+            {data: 'api_angkasapura', visible: false},
             {data: 'tr_id_object', visible: false},
             {data: 'user_limits', visible: false},
         ],
@@ -150,10 +150,10 @@
 
     // Setup - add a text input to each header cell
     $('#searchid td').each(function () {
-        if ($(this).index() != 0 && $(this).index() <= 3) {
+        if ($(this).index() != 0 && $(this).index() <= 1) {
             $(this).html('<input style="width:100%" type="text" placeholder="Search" data-id="' + $(this).index() + '" />');
         }
-        if ($(this).index() == 5) {
+        if ($(this).index() == 2) {
             $(this).html('<select style="width:100%" type="text"><option value="">-</option><option value="1">Active</option><option value="0">Not Active</option><select/>');
         }
     });
@@ -161,7 +161,7 @@
         t.columns($(this).data('id')).search(this.value).draw();
     });
     $('#searchid select').change(function () {
-        t.columns(5).search(this.value).draw();
+        t.columns(2).search(this.value).draw();
     });
     $(".clrs").click(function () {
         $('#searchid input').val('');

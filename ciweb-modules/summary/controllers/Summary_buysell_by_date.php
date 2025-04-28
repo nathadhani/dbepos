@@ -2,13 +2,14 @@
 
 class Summary_buysell_by_date extends Bks_Controller {
     
-    public $store_id, $tr_date, $query;
+    public $userId, $store_id, $tr_date, $query;
 
     function __construct() {
         $config = array('modules' => 'summary', 'jsfiles' => array('summary_buysell_by_date'));
         parent::__construct($config);        
         $this->auth = $this->session->userdata( 'auth' );        
-        $this->store_id = 0;
+        $this->userId = $this->auth['id'];
+        $this->store_id = $this->auth['store_id'];
         $this->query = '';
         $this->tr_date = date('Y-m-d');        
     }
@@ -46,8 +47,8 @@ class Summary_buysell_by_date extends Bks_Controller {
             $json['msg'] = $err['code'] . '<br>' . $err['message'];
             echo json_encode($json);
         } else {
-            $this->db->where_in(tr_id,['1','2']);
-            $this->db->where(array('store_id' => $store_id));
+            $this->db->where_in('tr_id',['1','2']);
+            $this->db->where(array('store_id' => $this->store_id));
             $this->db->update('m_transaction_date', array('tr_date' => $tr_date, 'status' => 1, 'updated' => date('Y-m-d H:i:s', time()), 'updatedby' => $this->userId) );
             $this->db->trans_commit();
             $json['msg'] = '1';

@@ -338,7 +338,7 @@ $("#price").keyup(function(e) {
     e.preventDefault();
     if($(this).val() != null && $(this).val() != ''){
         $(this).val($(this).val());
-        $("#terbilang_price").html('<i>Exchange Rate</i> : ' + bksfn.terBilang( $(this).val() ));
+        $("#terbilang_price").html('<i>Exchange Rate</i> : ' + (isDecimal($(this).val()) ? formatDecimal($(this).val(),2) : formatRupiah($(this).val())));
         subtotal_input();
     }
 });
@@ -532,7 +532,7 @@ function getratebyid(){
                             if(Number(xrate_today_top) > 0){
                                 $("#price_top").val(xrate_today_top);
                             }
-                            $("#terbilang_price").html('<i>Exchange Rate</i> : ' + bksfn.terBilang( Number(xrate_today) ));
+                            $("#terbilang_price").html('<i>Exchange Rate</i> : ' + (isDecimal(xrate_today) ? formatDecimal(xrate_today,2) : formatRupiah(xrate_today)));
                         }                 
                     }
                 }    

@@ -42,16 +42,13 @@
                         </div>
 
                         <div class="row form_detail_input">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <label for="">Stock Available : Nominal ( </label> <span id="stock_nominal"></span> )
                                 <label for="">Sheet</label> ( <span id="stock_sheet"></span> )
                                 <label for="">Amount</label> ( <span id="stock_amount"></span> )
                                 <a href="#" id="btn-stock" title="Stock" style="margin-left:2px;">
                                     <i class="fa fa-eye"></i>
                                 </a>
-                            </div>
-                            <div class="col-md-6">
-                                <span id="terbilang_price" class="pull-right"></span>
                             </div>
                         </div>
 
@@ -96,6 +93,7 @@
                                             </td> 
                                             <td width="15%">
                                                 <input type="text" onkeypress="validasiAngka(event)" autofocuse="" id="price" name="price" class="form-control" style='text-align:right;'>
+                                                <span id="terbilang_price"></span>
                                                 <input type="hidden" id="price_asli" style='text-align:right;'>
                                                 <input type="hidden" id="price_bot" style='text-align:right;'>
                                                 <input type="hidden" id="price_top" style='text-align:right;'>

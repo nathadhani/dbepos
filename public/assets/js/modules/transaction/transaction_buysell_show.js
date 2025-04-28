@@ -300,7 +300,7 @@ $("#modal_payment_type").on("change", function(e) {
     e.preventDefault();
     if( formatRupiahtoNumber($("#modal_remaining_payment_value").val()) > 0) {
         $("#modal_payment_amount").val( formatRupiahtoNumber($("#modal_remaining_payment_value").val()) );
-        $("#terbilang_modal_payment_amount").html('<i>Payment Value</i> : ' + bksfn.terBilang( $("#modal_payment_amount").val( )));
+        $("#terbilang_modal_payment_amount").html('<i>format Rp.</i>' + (isDecimal($("#modal_payment_amount").val( )) ? formatDecimal($("#modal_payment_amount").val( ),2) : formatRupiah($("#modal_payment_amount").val( ))) );
 
         $('#cb_id').html('').sel2dma();
         $('#cb_id').prop('disabled', false);
@@ -347,7 +347,7 @@ $("#modal_payment_amount").keyup(function(e) {
     e.preventDefault();
     $(this).val($(this).val());
     if( Number($(this).val()) > 0 ){
-        $("#terbilang_modal_payment_amount").html('<i>Payment Value</i> : ' + bksfn.terBilang($(this).val()));
+        $("#terbilang_modal_payment_amount").html('<i>format Rp.</i> : ' + (isDecimal($(this).val()) ? formatDecimal($(this).val(),2) : formatRupiah($(this).val()) ));
     }
 }); 
 $("#btn-modal-add-row-payment").on('click', function (e) {

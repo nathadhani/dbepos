@@ -243,7 +243,10 @@
                                 <div class="col-lg-12">
                                     <label for=modal_payment_amount style="display:block">Payment Value</label>
                                     <div class="input-group">
-                                        <input type="text" onkeypress="validasiAngka(event)" autofocuse="" id="modal_payment_amount" name="modal_payment_amount" class="form-control" style='text-align:right;'>
+                                        <div class="col-md-12">
+                                            <input type="text" onkeypress="validasiAngka(event)" autofocuse="" id="modal_payment_amount" name="modal_payment_amount" class="form-control" style='margin-left:-10px;'>
+                                            <br><span id="terbilang_modal_payment_amount" style="text-align:left;margin-left:-10px;"></span>
+                                        </div>
                                         <span class="input-group-addon">
                                             <button id="btn-modal-add-row-payment" class="btn btn-success" style="width:90px;">Add</button>
                                         </span>    
@@ -252,13 +255,6 @@
                             </div>
                         </div>
                     </form>                                       
-                </div>
-                <!--.end row -->
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <span id="terbilang_modal_payment_amount" class="pull-right"></span>
-                    </div>
                 </div>
                 <!--.end row -->
                 

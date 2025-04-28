@@ -136,8 +136,6 @@
                             <tr>
                                 <th>#</th>
                                 <th>Store Address</th>
-                                <th>API Store Id</th>
-                                <th>Api AP</th>
                                 <th>Status</th>
                                 <th>Action</th>                                
                             </tr>
@@ -145,9 +143,6 @@
                         <thead id="searchid">
                             <tr>
                                 <td><button class="clrs btn btn-sm btn-info btn-line">Clear</button></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
