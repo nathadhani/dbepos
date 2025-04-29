@@ -400,7 +400,7 @@ class Cb_balance extends Bks_Controller {
 
             /********************************************************************************************************************************************/
             $html_footer .= '<br>';
-            $html_footer .= '<span> Saldo Akhir Kas Bank : ' . ( (int) $saldo_total > 0 ? number_format($saldo_total, "0", ".", ",") : '-' ) . '<span>';
+            $html_footer .= '<span> Saldo Akhir Kas Bank : ' . ( (int) $saldo_total <> 0 ? number_format($saldo_total, "0", ".", ",") : '-' ) . '<span>';
             /********************************************************************************************************************************************/
 
             $html = $style. $html_header . $html_table . $html_footer;

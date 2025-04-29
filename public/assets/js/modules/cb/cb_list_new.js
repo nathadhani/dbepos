@@ -38,7 +38,7 @@ $("#amount").keyup(function(e) {
     e.preventDefault();
     $(this).val($(this).val());
     if( Number($(this).val()) > 0 ){
-        $("#terbilang_amount").html('<i>Value</i> : ' + bksfn.terBilang($(this).val()));
+        $("#terbilang_amount").html('<i>Value</i> : ' + (isDecimal($(this).val()) ? formatDecimal($(this).val(),2) : formatRupiah($(this).val())) );
     }
 });
 
@@ -70,6 +70,11 @@ $("#btn-add").on('click', function (e) {
             StringtoFile(xhr.responseText, 'error');
         });
     }
+});
+
+$("#btn-new").on('click', function (e) {
+    e.preventDefault();
+    call_page_cb_new();
 });
 
 $("#btn-cancel").on('click', function (e) {

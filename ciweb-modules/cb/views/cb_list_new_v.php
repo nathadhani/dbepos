@@ -22,6 +22,7 @@
                         <h3>Cash/Bank - <strong id="ftitle"></strong></h3>
                     </div>
                     <ul class="panel-controls">
+                        <button id="btn-new" class="btn btn-info" style="width:140px; margin-left:10px;">New Transaction</button>
                         <button id="btn-cancel" class="btn btn-info" style="width:120px;margin-left:5px;">Cancel</button>
                     </ul>
                 </div>                    

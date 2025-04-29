@@ -17,26 +17,11 @@ class M_cb_pos extends Bks_Controller {
         $this->template->set('icon', 'fa fa-navicon');
         $this->template->build('master_data/m_cb_pos_v');
     }
-
-    function generate_code() {
-        $this->libauth->check(__METHOD__);
-        $Number = 1;
-        $poscode = 'MP';
-        $sql = $this->db->query("SELECT max(right(cb_pos_code,4)) as id 
-                                 FROM m_cb_pos ")->result();
-        if (count($sql) > 0) {
-            foreach ($sql as $data) {
-                $Number = intval($data->id) + 1;
-            }
-        }
-        return $poscode . sprintf("%04d", $Number);
-    }
     
     function insert() {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
-        $postData['cb_pos_code'] = $this->generate_code();
         $postData['status'] = cekStatus($postData);
 
         $this->db->trans_begin();
