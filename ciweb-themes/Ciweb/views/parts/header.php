@@ -33,7 +33,7 @@
         <script type="text/javascript">var baseUrl = '<?php echo base_url(); ?>';</script>
         <script type="text/javascript" src="assets/themes/js/plugins/jquery/jquery.min.js"></script>
     </head>
-    <body oncontextmenu="return true">
+    <body oncontextmenu="return false">
         <!-- START PAGE CONTAINER -->
         <!-- <div class="page-container page-navigation-top-fixed"> -->
         <div class="page-container page-navigation-top">

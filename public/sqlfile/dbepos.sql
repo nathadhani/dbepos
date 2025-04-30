@@ -11,7 +11,7 @@
  Target Server Version : 80030
  File Encoding         : 65001
 
- Date: 29/04/2025 16:51:25
+ Date: 30/04/2025 21:09:52
 */
 
 SET NAMES utf8mb4;
@@ -518,7 +518,7 @@ CREATE TABLE `auth_listmethod`  (
   `created` datetime NULL DEFAULT NULL,
   `createdby` bigint NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 234 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 235 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of auth_listmethod
@@ -993,8 +993,8 @@ CREATE TABLE `auth_users`  (
 INSERT INTO `auth_users` VALUES (1, 'Developer', '8989', 'f794bdbef7990b5112e526b5cd4ea67f4a35af21', NULL, 1, 1, 0, NULL, NULL, NULL, NULL, 1, '2025-02-23 13:58:46', NULL, NULL, NULL, NULL);
 INSERT INTO `auth_users` VALUES (2, 'Konsolidasi', 'konsolidasi', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 2, 1, 0, '1,2,3,4', '', '', NULL, 1, '2025-02-23 13:58:46', NULL, '2025-03-07 12:10:06', 1, '2025-04-25 13:48:11');
 INSERT INTO `auth_users` VALUES (3, 'Admin', 'admin', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 3, 1, 1, NULL, '', '', NULL, 1, '2025-02-23 13:58:46', NULL, '2025-03-07 12:10:19', 1, '2025-04-28 14:14:33');
-INSERT INTO `auth_users` VALUES (4, 'Counter', 'konter', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 4, 2, 1, NULL, '', '', NULL, 1, '2025-02-23 13:58:46', NULL, '2025-03-07 12:10:34', 1, '2025-04-29 14:19:20');
-INSERT INTO `auth_users` VALUES (5, 'Cashier', 'kasir', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 5, 2, 1, NULL, '', '', NULL, 1, '2025-03-06 13:05:41', 1, '2025-03-07 12:10:24', 1, '2025-04-29 14:21:10');
+INSERT INTO `auth_users` VALUES (4, 'Counter', 'konter', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 4, 2, 1, NULL, '', '', NULL, 1, '2025-02-23 13:58:46', NULL, '2025-03-07 12:10:34', 1, '2025-04-30 13:27:15');
+INSERT INTO `auth_users` VALUES (5, 'Cashier', 'kasir', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 5, 2, 1, NULL, '', '', NULL, 1, '2025-03-06 13:05:41', 1, '2025-03-07 12:10:24', 1, '2025-04-30 13:26:20');
 INSERT INTO `auth_users` VALUES (6, 'Angkasa Pura 1', 'ap1', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 6, 2, 0, '3,4', '', '', NULL, 1, '2025-03-06 13:06:45', 1, '2025-03-07 12:10:12', 1, '2025-04-22 19:55:05');
 INSERT INTO `auth_users` VALUES (7, 'Angkasa Pura 2', 'ap2', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123', 6, 2, 0, '1,2', '', '', NULL, 1, '2025-03-06 13:06:45', 1, '2025-03-07 12:10:12', 1, '2025-04-23 16:05:51');
 
@@ -1053,12 +1053,12 @@ CREATE TABLE `m_cb`  (
 -- ----------------------------
 INSERT INTO `m_cb` VALUES (1, 1, 3, 1, '01030001', 'Cash', '', 1, '2025-03-08 22:28:04', NULL, NULL, NULL);
 INSERT INTO `m_cb` VALUES (2, 1, 4, 2, '01040001', 'Bank', ' ', 1, '2025-03-08 22:28:04', NULL, NULL, NULL);
-INSERT INTO `m_cb` VALUES (4, 2, 3, 1, '02030001', 'Cash', '', 1, '2025-03-08 22:28:04', NULL, NULL, NULL);
-INSERT INTO `m_cb` VALUES (5, 2, 4, 2, '02040001', 'Bank', '', 1, '2025-03-08 22:28:04', NULL, NULL, NULL);
-INSERT INTO `m_cb` VALUES (6, 3, 3, 1, '03030001', 'Cash', '', 1, '2025-03-08 22:28:04', NULL, NULL, NULL);
-INSERT INTO `m_cb` VALUES (7, 3, 4, 2, '03040001', 'Bank', '', 1, '2025-03-08 22:28:04', NULL, NULL, NULL);
-INSERT INTO `m_cb` VALUES (8, 4, 3, 1, '04030001', 'Cash', '', 1, '2025-03-08 22:28:04', NULL, NULL, NULL);
-INSERT INTO `m_cb` VALUES (9, 4, 4, 2, '04040001', 'Bank', '', 1, '2025-03-08 22:28:04', NULL, NULL, NULL);
+INSERT INTO `m_cb` VALUES (3, 2, 3, 1, '02030001', 'Cash', '', 1, '2025-03-08 22:28:04', NULL, NULL, NULL);
+INSERT INTO `m_cb` VALUES (4, 2, 4, 2, '02040001', 'Bank', '', 1, '2025-03-08 22:28:04', NULL, NULL, NULL);
+INSERT INTO `m_cb` VALUES (5, 3, 3, 1, '03030001', 'Cash', '', 1, '2025-03-08 22:28:04', NULL, NULL, NULL);
+INSERT INTO `m_cb` VALUES (6, 3, 4, 2, '03040001', 'Bank', '', 1, '2025-03-08 22:28:04', NULL, NULL, NULL);
+INSERT INTO `m_cb` VALUES (7, 4, 3, 1, '04030001', 'Cash', '', 1, '2025-03-08 22:28:04', NULL, NULL, NULL);
+INSERT INTO `m_cb` VALUES (8, 4, 4, 2, '04040001', 'Bank', '', 1, '2025-03-08 22:28:04', NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for m_cb_pos
@@ -1185,13 +1185,11 @@ CREATE TABLE `m_customer`  (
   `createdby` bigint NULL DEFAULT NULL,
   `updatedby` bigint NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of m_customer
 -- ----------------------------
-INSERT INTO `m_customer` VALUES (1, 1, '250416010001', '0878125410001', '', 'Dian Sastro', '', 'Jakarta Selatan', '', '', '', '', '', NULL, 0, 8, NULL, NULL, '', '', NULL, '', NULL, NULL, '', 1, '2025-04-16 09:06:33', NULL, 4, NULL);
-INSERT INTO `m_customer` VALUES (2, 1, '250416010002', '0813215410025', '', 'Cintya', '', 'Jakarta Pusat', '', '', '', '', '', NULL, 0, 1, NULL, NULL, '', '', NULL, '', NULL, NULL, '', 1, '2025-04-16 15:58:22', NULL, 4, NULL);
 
 -- ----------------------------
 -- Table structure for m_customer_act_on
@@ -1805,8 +1803,8 @@ CREATE TABLE `m_transaction_date`  (
 -- ----------------------------
 -- Records of m_transaction_date
 -- ----------------------------
-INSERT INTO `m_transaction_date` VALUES (2, 1, 2, '2025-04-28', 1, '2025-03-05 16:03:58', '2025-04-28 14:50:27', 1, 4);
-INSERT INTO `m_transaction_date` VALUES (3, 1, 1, '2025-04-28', 1, '2025-03-05 16:06:33', '2025-04-28 14:50:27', 1, 4);
+INSERT INTO `m_transaction_date` VALUES (2, 1, 2, '2025-04-30', 1, '2025-03-05 16:03:58', '2025-04-30 13:22:42', 1, 4);
+INSERT INTO `m_transaction_date` VALUES (3, 1, 1, '2025-04-30', 1, '2025-03-05 16:06:33', '2025-04-30 13:22:42', 1, 4);
 INSERT INTO `m_transaction_date` VALUES (4, 1, 4, '2025-04-19', 1, '2025-04-19 06:44:25', '2025-04-19 06:44:53', 1, 1);
 INSERT INTO `m_transaction_date` VALUES (5, 1, 3, '2025-04-19', 1, '2025-04-19 06:44:34', '2025-04-19 06:45:07', 1, 1);
 INSERT INTO `m_transaction_date` VALUES (6, 2, 1, '2025-04-19', 1, '2025-04-19 06:45:50', NULL, 1, NULL);
@@ -1834,7 +1832,7 @@ CREATE TABLE `ppatk_dttot`  (
   `createdby` bigint NULL DEFAULT NULL,
   `updatedby` bigint NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 537 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 538 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ppatk_dttot
@@ -2392,12 +2390,11 @@ CREATE TABLE `tr_cb_detail`  (
   `createdby` smallint NULL DEFAULT NULL,
   `updatedby` smallint NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of tr_cb_detail
 -- ----------------------------
-INSERT INTO `tr_cb_detail` VALUES (1, 1, 'Awal Kas', 500000000.00, 3, '2025-04-29 14:24:01', NULL, 5, NULL);
 
 -- ----------------------------
 -- Table structure for tr_cb_header
@@ -2419,12 +2416,11 @@ CREATE TABLE `tr_cb_header`  (
   `createdby` smallint NULL DEFAULT NULL,
   `updatedby` smallint NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of tr_cb_header
 -- ----------------------------
-INSERT INTO `tr_cb_header` VALUES (1, 1, 1, 1, '2025-04-29', '2504290101010001', NULL, NULL, NULL, 3, '2025-04-29 14:24:01', NULL, 5, NULL);
 
 -- ----------------------------
 -- Table structure for tr_cb_saldo
@@ -2442,7 +2438,7 @@ CREATE TABLE `tr_cb_saldo`  (
   `createdby` smallint NULL DEFAULT NULL,
   `updatedby` smallint NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 61 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of tr_cb_saldo
@@ -2465,13 +2461,11 @@ CREATE TABLE `tr_detail`  (
   `createdby` bigint NOT NULL,
   `updatedby` bigint NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of tr_detail
 -- ----------------------------
-INSERT INTO `tr_detail` VALUES (1, 1, 1, 100, 1000, 16200.00, 3, '2025-04-29 14:20:14', '2025-04-29 14:20:52', 4, 4);
-INSERT INTO `tr_detail` VALUES (2, 1, 7, 100, 50, 12100.00, 3, '2025-04-29 14:20:37', '2025-04-29 14:20:52', 4, 4);
 
 -- ----------------------------
 -- Table structure for tr_header
@@ -2495,12 +2489,11 @@ CREATE TABLE `tr_header`  (
   `updatedby` bigint NULL DEFAULT NULL,
   `cashierby` bigint NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of tr_header
 -- ----------------------------
-INSERT INTO `tr_header` VALUES (1, 1, 1, '2025-04-29', '25042901010001', 2, NULL, NULL, NULL, NULL, 3, '2025-04-29 14:20:14', '2025-04-29 14:20:52', 4, 4, NULL);
 
 -- ----------------------------
 -- Table structure for tr_log_api
@@ -2542,7 +2535,7 @@ CREATE TABLE `tr_payment`  (
   `createdby` bigint NOT NULL,
   `updatedby` bigint NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of tr_payment
@@ -2566,15 +2559,11 @@ CREATE TABLE `tr_stock`  (
   `updated` datetime NULL DEFAULT NULL,
   `updatedby` bigint NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of tr_stock
 -- ----------------------------
-INSERT INTO `tr_stock` VALUES (1, 1, 1, 2025, 4, 100, 0, 1, '2025-04-29 14:20:52', 4, NULL, NULL);
-INSERT INTO `tr_stock` VALUES (2, 1, 1, 2025, 5, 100, 1000, 1, '2025-04-29 14:20:52', 4, '2025-04-29 14:20:52', 4);
-INSERT INTO `tr_stock` VALUES (3, 7, 1, 2025, 4, 100, 0, 1, '2025-04-29 14:20:52', 4, NULL, NULL);
-INSERT INTO `tr_stock` VALUES (4, 7, 1, 2025, 5, 100, 50, 1, '2025-04-29 14:20:52', 4, '2025-04-29 14:20:52', 4);
 
 -- ----------------------------
 -- Table structure for tr_stock_price
