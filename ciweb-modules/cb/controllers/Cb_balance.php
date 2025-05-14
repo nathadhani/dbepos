@@ -296,7 +296,7 @@ class Cb_balance extends Bks_Controller {
         // Add Content Body
         $data_header = $this->db->query("SELECT tr_cb_saldo.cb_id, m_cb.cb_code, m_cb.cb_name, 
                                         COALESCE((
-                                            SELECT cbs_saldo FROM tr_cb_saldo X
+                                            SELECT cbs_saldo FROM tr_cb_saldo x
                                             WHERE x.store_id = $this->store_id
                                             AND x.cbs_date < '$this->tr_date'
                                             AND x.cb_id = tr_cb_saldo.cb_id
@@ -461,7 +461,7 @@ class Cb_balance extends Bks_Controller {
         // Add Content Body
         $data_header = $this->db->query("SELECT tr_cb_saldo.cb_id, m_cb.cb_code, m_cb.cb_name, 
                                         COALESCE((
-                                            SELECT cbs_saldo FROM tr_cb_saldo X
+                                            SELECT cbs_saldo FROM tr_cb_saldo x
                                             WHERE x.store_id = $this->store_id
                                             AND x.cbs_date < '$startDate'
                                             AND x.cb_id = tr_cb_saldo.cb_id

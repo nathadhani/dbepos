@@ -271,11 +271,14 @@ class Export_data extends Bks_Controller {
                     SUM(IF(tr_header.tr_id = 2 AND tr_detail.status IN (3,4,9), (tr_detail.nominal * tr_detail.sheet),0)) AS sell_amount,
                     SUM(IF(tr_header.tr_id = 2 AND tr_detail.status IN (3,4,9), (tr_detail.nominal * tr_detail.sheet) * tr_detail.price,0)) AS sell_equivalent,
 
-                    m_currency.currency_name
+                    m_currency.currency_name,
+                    m_store.store_name,
+                    m_store.store_address
 
                     FROM tr_detail
                     JOIN tr_header ON tr_detail.header_id = tr_header.id
                     JOIN m_currency ON tr_detail.currency_id = m_currency.id
+                    JOIN m_store ON tr_header.store_id = m_store.id
                     WHERE tr_header.store_id =  $store_id
                     AND year(tr_header.tr_date) = $year
                     AND tr_detail.status IN (3,4,9)
@@ -299,9 +302,12 @@ class Export_data extends Bks_Controller {
             $this->excel->setActiveSheetIndex(0)->setCellValue('G1', "Sell - Equivalent"); 
             $this->excel->setActiveSheetIndex(0)->setCellValue('H1', "Description");
 
-            $this->excelcellColor('A1:H1', '337AB7');
-            $this->excel->setActiveSheetIndex(0)->getStyle('A1:H1')->getFont()->setBold(TRUE);
-            $this->excel->setActiveSheetIndex(0)->getStyle('A1:H1')->getFont()->setSize(11);
+            $this->excel->setActiveSheetIndex(0)->setCellValue('I1', "Store Name");
+            $this->excel->setActiveSheetIndex(0)->setCellValue('J1', "Store Address");
+
+            $this->excelcellColor('A1:J1', '337AB7');
+            $this->excel->setActiveSheetIndex(0)->getStyle('A1:J1')->getFont()->setBold(TRUE);
+            $this->excel->setActiveSheetIndex(0)->getStyle('A1:J1')->getFont()->setSize(11);
 
             $row = 1;
             foreach ($this->db->query($query)->result_array() as $data) {
@@ -314,11 +320,14 @@ class Export_data extends Bks_Controller {
                 $this->excel->setActiveSheetIndex(0)->setCellValue('F'.$row, $data['sell_amount']);
                 $this->excel->setActiveSheetIndex(0)->setCellValue('G'.$row, $data['sell_equivalent']);
                 $this->excel->setActiveSheetIndex(0)->setCellValue('H'.$row, $data['currency_name']);
-                $this->excel->setActiveSheetIndex(0)->getStyle('A'.$row.':'.'I'.$row)->getAlignment()->applyFromArray(
+                $this->excel->setActiveSheetIndex(0)->setCellValue('I'.$row, $data['store_name']);
+                $this->excel->setActiveSheetIndex(0)->setCellValue('J'.$row, $data['store_address']);
+                
+                $this->excel->setActiveSheetIndex(0)->getStyle('A'.$row.':'.'J'.$row)->getAlignment()->applyFromArray(
                                                                                             array('vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER,)                                                                                  );
                 
             }
-            foreach (range('A', 'I') as $columnID) {
+            foreach (range('A', 'J') as $columnID) {
                 $this->excel->getActiveSheet(0)->getColumnDimension($columnID)->setAutoSize(true);
             }
             $this->excel->setActiveSheetIndex(0);
@@ -327,46 +336,83 @@ class Export_data extends Bks_Controller {
         /** Export - Data Summary Transaction By Job Customer */
         /************************************************************************************************************************************************************/
         if($export_id == '4'){
-            $query = "SELECT
-                    year(tr_header.tr_date) AS tr_year,
-                    month(tr_header.tr_date) AS tr_month,
+            $query = "select
+                        year(tr_header.tr_date) as tr_year,
+                        month(tr_header.tr_date) as tr_month,
 
-                    m_customer_job.customer_job_name,
+                        m_customer_job.customer_job_name,
 
-                    COUNT(
-                            IF(tr_header.tr_id = 1 
-                               AND tr_header.status IN (3,4,9) 
-                               AND m_customer.job_id = m_customer_job.id
-                               , tr_header.customer_id, 0)
-                        ) AS buy_count,                  
-                    SUM(IF(tr_header.tr_id = 1 AND tr_detail.status IN (3,4,9), (tr_detail.nominal * tr_detail.sheet) * tr_detail.price,0)) AS buy_equivalent,
+                        (select count( distinct b.customer_id) from tr_header as b
+                                left join m_customer as c
+                                on b.customer_id = c.id
+                                left join m_customer_job as d
+                                on c.job_id = d.id
+                                where b.store_id = tr_header.store_id
+                                and year(b.tr_date) = year(tr_header.tr_date)
+                                and month(b.tr_date) = month(tr_header.tr_date)
+                                and b.tr_id = 1
+                                and b.status in (3,4,9)
+                                and d.id = c.job_id) as buy_count,
+                                
+                        (select sum( (a.nominal * a.sheet) * a.price) from tr_detail as a
+                                join tr_header as b on a.header_id = b.id
+                                left join m_customer as c
+                                on b.customer_id = c.id
+                                left join m_customer_job as d
+                                on c.job_id = d.id
+                                where b.store_id = tr_header.store_id
+                                and year(b.tr_date) = year(tr_header.tr_date)
+                                and month(b.tr_date) = month(tr_header.tr_date)
+                                and b.tr_id = 1
+                                and b.status in (3,4,9)
+                                and d.id = c.job_id) as buy_equivalent,		   
 
-                    COUNT(
-                            IF(tr_header.tr_id = 2
-                               AND tr_header.status IN (3,4,9) 
-                               AND m_customer.job_id = m_customer_job.id
-                               , tr_header.customer_id, 0)
-                        ) AS sell_count, 
-                    SUM(IF(tr_header.tr_id = 2 AND tr_detail.status IN (3,4,9), (tr_detail.nominal * tr_detail.sheet) * tr_detail.price,0)) AS sell_equivalent,
+                        (select count( distinct b.customer_id) from tr_header as b
+                                left join m_customer as c
+                                on b.customer_id = c.id
+                                left join m_customer_job as d
+                                on c.job_id = d.id
+                                where b.store_id = tr_header.store_id
+                                and year(b.tr_date) = year(tr_header.tr_date)
+                                and month(b.tr_date) = month(tr_header.tr_date)
+                                and b.tr_id = 2
+                                and b.status in (3,4,9)
+                                and d.id = c.job_id) as sell_count,
+                                
+                        (select sum( (a.nominal * a.sheet) * a.price) from tr_detail as a
+                                join tr_header as b on a.header_id = b.id
+                                left join m_customer as c
+                                on b.customer_id = c.id
+                                left join m_customer_job as d
+                                on c.job_id = d.id
+                                where b.store_id = tr_header.store_id
+                                and year(b.tr_date) = year(tr_header.tr_date)
+                                and month(b.tr_date) = month(tr_header.tr_date)
+                                and b.tr_id = 2
+                                and b.status in (3,4,9)
+                                and d.id = c.job_id) as sell_equivalent,
+                                
+                        (
+                            select 
+                            case 
+                                when m_customer_job.risk_category = 1 then 'biasa'
+                                when m_customer_job.risk_category = 2 then 'sedang'
+                                when m_customer_job.risk_category = 3 then 'pep'
+                            end
+                        ) as risk_category,
 
-                    (
-                        SELECT 
-                        CASE 
-                            WHEN m_customer_job.risk_category = 1 THEN 'Biasa'
-                            WHEN m_customer_job.risk_category = 2 THEN 'Sedang'
-                            WHEN m_customer_job.risk_category = 3 THEN 'Pep'
-                        END
-                    ) as risk_category
+                        m_store.store_name,
+                        m_store.store_address
 
-                    FROM tr_header
-                    JOIN tr_detail ON tr_detail.header_id = tr_header.id
-                    JOIN m_customer ON tr_header.customer_id = m_customer.id
-					JOIN m_customer_job ON m_customer.job_id = m_customer_job.id
-                    WHERE tr_header.store_id =  $store_id
-                    AND year(tr_header.tr_date) = $year
-                    AND tr_header.status IN (3,4,9)
-                    GROUP BY year(tr_header.tr_date), month(tr_header.tr_date), m_customer_job.customer_job_name
-                    ORDER BY tr_header.customer_id ASC";
+                        from tr_header
+                        join m_customer on tr_header.customer_id = m_customer.id
+                        join m_customer_job on m_customer.job_id = m_customer_job.id
+                        join m_store on tr_header.store_id = m_store.id
+                        where tr_header.store_id =  $store_id
+                        and year(tr_header.tr_date) = $year
+                        and tr_header.status in (3,4,9)
+                        group by year(tr_header.tr_date), month(tr_header.tr_date), m_customer_job.customer_job_name
+                        order by m_customer_job.customer_job_name asc";
          
             if (!$this->db->query($query))
             return false;
@@ -386,11 +432,14 @@ class Export_data extends Bks_Controller {
             $this->excel->setActiveSheetIndex(0)->setCellValue('F1', "Sell - Count");
             $this->excel->setActiveSheetIndex(0)->setCellValue('G1', "Sell - Equivalent"); 
 
-            $this->excel->setActiveSheetIndex(0)->setCellValue('H1', "Description");
+            $this->excel->setActiveSheetIndex(0)->setCellValue('H1', "Risk Category");
 
-            $this->excelcellColor('A1:H1', '337AB7');
-            $this->excel->setActiveSheetIndex(0)->getStyle('A1:H1')->getFont()->setBold(TRUE);
-            $this->excel->setActiveSheetIndex(0)->getStyle('A1:H1')->getFont()->setSize(11);
+            $this->excel->setActiveSheetIndex(0)->setCellValue('I1', "Store Name");
+            $this->excel->setActiveSheetIndex(0)->setCellValue('J1', "Store Address");
+
+            $this->excelcellColor('A1:J1', '337AB7');
+            $this->excel->setActiveSheetIndex(0)->getStyle('A1:J1')->getFont()->setBold(TRUE);
+            $this->excel->setActiveSheetIndex(0)->getStyle('A1:J1')->getFont()->setSize(11);
 
             $row = 1;
             foreach ($this->db->query($query)->result_array() as $data) {
@@ -406,11 +455,14 @@ class Export_data extends Bks_Controller {
                 $this->excel->setActiveSheetIndex(0)->setCellValue('G'.$row, $data['sell_equivalent']);
                 
                 $this->excel->setActiveSheetIndex(0)->setCellValue('H'.$row, $data['risk_category']);
-                $this->excel->setActiveSheetIndex(0)->getStyle('A'.$row.':'.'H'.$row)->getAlignment()->applyFromArray(
+                $this->excel->setActiveSheetIndex(0)->setCellValue('I'.$row, $data['store_name']);
+                $this->excel->setActiveSheetIndex(0)->setCellValue('J'.$row, $data['store_address']);
+
+                $this->excel->setActiveSheetIndex(0)->getStyle('A'.$row.':'.'J'.$row)->getAlignment()->applyFromArray(
                                                                                             array('vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER,)                                                                                  );
                 
             }
-            foreach (range('A', 'H') as $columnID) {
+            foreach (range('A', 'J') as $columnID) {
                 $this->excel->getActiveSheet(0)->getColumnDimension($columnID)->setAutoSize(true);
             }
             $this->excel->setActiveSheetIndex(0);

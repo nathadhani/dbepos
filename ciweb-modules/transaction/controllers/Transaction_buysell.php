@@ -253,28 +253,30 @@ class Transaction_buysell extends Bks_Controller {
         checkIfNotAjax();
         $this->libauth->check(__METHOD__);
         $postData = $this->input->post();
-        $currency_id = $postData['currency_id'];
-        $tr_date  = Date('Y-m-d');
-        $tr_id = $postData['tr_id'];  
-        if($tr_id == '1'){
-            $query = $this->db->query("SELECT exchange_rate_buy AS rate_today, 
-                                              price_buy_bot AS rate_today_bot, 
-                                              price_buy_top AS rate_today_top
-                                              FROM m_exchange_rate
-                                    WHERE store_id = $this->store_id
-                                    AND currency_id = $currency_id
-                                    AND exchange_rate_date = '$tr_date' LIMIT 1")->result();
-            echo json_encode($query, true);
-        } else {
-            $query = $this->db->query("SELECT exchange_rate_sell AS rate_today,
-                                              price_sell_bot AS rate_today_bot,
-                                              price_sell_top AS rate_today_top 
-                                              FROM m_exchange_rate
-                                    WHERE store_id = $this->store_id
-                                    AND currency_id = $currency_id
-                                    AND exchange_rate_date = '$tr_date' LIMIT 1")->result();
-            echo json_encode($query, true);
-        }        
+        if(isset($postData['currency_id']) && $postData['currency_id'] != null && $postData['currency_id'] != ''){
+            $currency_id = $postData['currency_id'];
+            $tr_date  = Date('Y-m-d');
+            $tr_id = $postData['tr_id'];  
+            if($tr_id == '1'){
+                $query = $this->db->query("SELECT exchange_rate_buy AS rate_today, 
+                                                  price_buy_bot AS rate_today_bot, 
+                                                  price_buy_top AS rate_today_top
+                                                  FROM m_exchange_rate
+                                        WHERE store_id = $this->store_id
+                                        AND currency_id = $currency_id
+                                        AND exchange_rate_date = '$tr_date' LIMIT 1")->result();
+                echo json_encode($query, true);
+            } else {
+                $query = $this->db->query("SELECT exchange_rate_sell AS rate_today,
+                                                  price_sell_bot AS rate_today_bot,
+                                                  price_sell_top AS rate_today_top 
+                                                  FROM m_exchange_rate
+                                        WHERE store_id = $this->store_id
+                                        AND currency_id = $currency_id
+                                        AND exchange_rate_date = '$tr_date' LIMIT 1")->result();
+                echo json_encode($query, true);
+            }
+        }                
     }    
     
     function getshowid(){

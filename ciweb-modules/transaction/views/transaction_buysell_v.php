@@ -3,16 +3,16 @@
     var customerId = <?php echo $this->uri->segment(4);?>;
     var id_header = <?php echo $this->uri->segment(5);?>;
 </script>
-<div class="page-content-wrap">    
+<div class="page-content-wrap">
     <div class="row">
         <form id="mainForm" class="form-horizontal" autocomplete="off">
             <div class="col-md-12">
-                <div class="panel panel-default">                                 
+                <div class="panel panel-default">
                     <div class="panel-body">
-                        <div class="row">                            
+                        <div class="row">
                             <div class="col-md-2">
                                 <label for=tr_id style="display:block">
-                                    <span id="ftitle">New</span><span id="trx_name"></span>                                            
+                                    Select Transaction
                                 </label>
                                 <select name="tr_id"
                                         data-ajax="true" 
@@ -27,9 +27,9 @@
                                 <label for=tr_date style="display:block">Date</label>
                                 <input type="text" id="tr_date" name="tr_date" placeholder="Tanggal..." class="form-control dp" data-date-format="DD MMMM YYYY" value="<?=date('d-m-Y');?>">
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-md-6">
                                 <label for="customer_name" style="display:block">
-                                    Customer Name / address / cct on
+                                    Customer Name / address / act on
                                     <a href="#" id="btn-customer-act-on" title="Attachment Customer" style="margin-left:2px;">
                                         <i class="fa fa-paperclip"></i>
                                     </a>
@@ -39,19 +39,12 @@
                                     <span id="customer_address"></span>                                            
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="row form_detail_input">
-                            <div class="col-md-12">
-                                <label for="">Stock Available : Nominal ( </label> <span id="stock_nominal"></span> )
-                                <label for="">Sheet</label> ( <span id="stock_sheet"></span> )
-                                <label for="">Amount</label> ( <span id="stock_amount"></span> )
-                                <a href="#" id="btn-stock" title="Stock" style="margin-left:2px;">
-                                    <i class="fa fa-eye"></i>
-                                </a>
+                            <div class="col-md-2">
+                                <span id="trx_name"></span> ( <span id="ftitle">New</span> )
                             </div>
                         </div>
 
+                        <br>
                         <div class="row form_detail_input">
                             <div class="col-md-12 table-responsive">                        
                                 <table class="table table-bordered table-condensed" cellspacing="0" width="100%">
@@ -68,10 +61,10 @@
                                     </thead>
                                     <tbody>       
                                         <tr>
-                                            <td width="30%">                                                    
+                                            <td width="30%">
                                                 <select id="currency_id"
                                                         name="currency_id"
-                                                        data-ajax="true" 
+                                                        data-ajax="true"
                                                         data-placeholder="-- Pilih Mata Uang --"
                                                         data-url="master_data/m_currency/getcurrency/"
                                                         data-value=""
@@ -92,19 +85,32 @@
                                                 <span id="total_amount"></span>
                                             </td> 
                                             <td width="15%">
-                                                <input type="text" onkeypress="validasiAngka(event)" autofocuse="" id="price" name="price" class="form-control" style='text-align:right;'>
-                                                <span id="terbilang_price"></span>
-                                                <input type="hidden" id="price_asli" style='text-align:right;'>
-                                                <input type="hidden" id="price_bot" style='text-align:right;'>
-                                                <input type="hidden" id="price_top" style='text-align:right;'>
+                                                <input type="text" onkeypress="validasiAngka(event)" autofocuse="" id="price" name="price" class="form-control" style='text-align:right;'>                                                
                                             </td>
                                             <td width="15%">
                                                 <input type="text" autofocuse="" id="subtotal" name="subtotal" class="form-control" style='text-align:right;' value="0" readonly>
                                             </td>                                                                
                                             <td width="10%" style='text-align:center'>
-                                                <button id="btn-add-row-detail" class="btn btn-info" style="width:90px;">Add</button>
+                                                <button id="btn-add-row-detail" class="btn btn-info btn-sm" style="width:90px;">Add</button>
                                             </td>                
-                                        </tr>                                         
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4">
+                                                <label for="">Stock Available : Nominal ( </label> <span id="stock_nominal"></span> )
+                                                <label for="">Sheet</label> ( <span id="stock_sheet"></span> )
+                                                <label for="">Amount</label> ( <span id="stock_amount"></span> )
+                                                <a href="#" id="btn-stock" title="Stock" style="margin-left:2px;">
+                                                    <i class="fa fa-eye"></i>
+                                                </a>
+                                                <button id="btn-clear-row-detail" class="btn btn-info btn-sm" style="width:90px;margin-left:10px;">Clear</button>
+                                            </td>
+                                            <td colspan="3">
+                                                <span id="terbilang_price"></span> 
+                                                <input type="hidden" id="price_asli" style='text-align:right;'>
+                                                <input type="hidden" id="price_bot" style='text-align:right;'>
+                                                <input type="hidden" id="price_top" style='text-align:right;'>
+                                            </td>
+                                        </tr>
                                     </tbody>                                       
                                 </table>
                             </div>
@@ -230,11 +236,13 @@
                                 <th style="vertical-align:middle;text-align:center;">Sheet</th>
                                 <th style="vertical-align:middle;text-align:center;">Amount</th>
                                 <th style="vertical-align:middle;text-align:center;">Description</th>
+                                <th style="vertical-align:middle;text-align:center;">Action</th>
                             </tr>
                         </thead>
                         <thead id="searchid">
                             <tr>
                                 <td><button class="clrs btn btn-info btn-sm btn-line">Clear</button></td>
+                                <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>

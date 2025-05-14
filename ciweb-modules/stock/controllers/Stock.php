@@ -84,6 +84,10 @@ class Stock extends Bks_Controller {
         $where[2]['data']  = $bulan;
         $where[2]['sql']   = 'where';
 
+        $where[3]['field'] = 'last_stock_sheet > 0';
+        $where[3]['data']  = null;
+        $where[3]['sql']   = 'where';
+
         $this->Bksmdl->table = 'v_tr_stock_balance_sheet';
         $cpData = $this->Bksmdl->getDataTable($where);
         $this->Bksmdl->outputToJson($cpData);

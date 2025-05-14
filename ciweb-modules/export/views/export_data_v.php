@@ -13,7 +13,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">                                
                                     <div class="col-lg-12">
-                                        <label for="export_id" style="display:block">Select List</label>                                        
+                                        <label for="export_id" style="display:block">Select Data</label>                                        
                                         <select id="export_id" name="export_id" placeholder="Pilih" class="form-control">
                                             <option value="" selected="">Pilih...</option>
                                             <option value="1">Data Customer</option>

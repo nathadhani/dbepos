@@ -8,10 +8,10 @@ $('#tr_id').on('change',function(e){
     if($(this).val() != null && $(this).val() != ''){
         xtr_id = $("#tr_id").val();
         if(xtr_id === '1'){
-            $("#trx_name").html(' - <span style="color:blue;font-weight:800;font-size:14px;">Buy/Beli</span>');
+            $("#trx_name").html('<span style="color:blue;font-weight:600;font-size:28px;">Buy / Beli </span>');
         }
         if(xtr_id === '2'){
-            $("#trx_name").html(' - <span style="color:red;font-weight:800;font-size:14px;">Sell/Jual</span>');
+            $("#trx_name").html('<span style="color:red;font-weight:600;font-size:28px;">Sell / Jual </span>');
         }
         $('#tr_id').prop('disabled', true);
         $('#currency_id').focus();
@@ -37,7 +37,7 @@ function reset_form_input(){
     $("#stock_sheet").html('');
     $("#stock_amount").html('');
 
-    $("#terbilang_price").html('');    
+    $("#terbilang_price").html('');
 }
 
 function show_customer($id){
@@ -90,10 +90,10 @@ function show_header(){
 
                             xtr_id = d.tr_id;
                             if(xtr_id === '1'){
-                                $("#trx_name").html(' - <span style="color:blue;font-weight:bold;font-size:16px;">Buy/Beli </span>');
+                                $("#trx_name").html('<span style="color:blue;font-weight:600;font-size:28px;">Buy / Beli </span>');
                             }
                             if(xtr_id === '2'){
-                                $("#trx_name").html(' - <span style="color:red;font-weight:bold;font-size:16px;">Sell/Jual </span>');
+                                $("#trx_name").html('<span style="color:red;font-weight:600;font-size:28px;">Sell / Jual </span>');
                             }                    
                             $('#tr_id').prop('disabled', true);
                         } else {
@@ -268,37 +268,42 @@ function delete_line_detail(id){
     }       
 }
 
-function add_item(){    
-    $.post('transaction/transaction_buysell/insert_detail', $("#mainForm").serialize() + "&header_id=" + id_header + "&customer_id=" + customerId + "&tr_id=" + xtr_id + "&tr_date=" + $("#tr_date").val() + "&customer_id=" + customerId , function (obj) {
-        if (obj.msg == 1) {            
-            reset_form_input();
-            if(id_header == null || id_header == ''){
-                id_header = obj.id_header;            
-                url = call_page_task_buysell(customerId, id_header);
-                if(url !== ''){
-                    $.ajax({
-                        url: url,
-                        type: 'POST',
-                        success: function() {
-                            window.open(url,'_self'); 
-                        },
-                        error: function(){
-                            alertify.error("can't open page.!");
-                        }
-                    });    
-                }
+function add_item(){
+    if( formatRupiahtoNumber($("#subtotal").val()) > 0){
+        $.post('transaction/transaction_buysell/insert_detail', $("#mainForm").serialize() + "&header_id=" + id_header + "&customer_id=" + customerId + "&tr_id=" + xtr_id + "&tr_date=" + $("#tr_date").val() + "&customer_id=" + customerId , function (obj) {
+            if (obj.msg == 1) {            
+                reset_form_input();
+                if(id_header == null || id_header == ''){
+                    id_header = obj.id_header;            
+                    url = call_page_task_buysell(customerId, id_header);
+                    if(url !== ''){
+                        $.ajax({
+                            url: url,
+                            type: 'POST',
+                            success: function() {
+                                window.open(url,'_self'); 
+                            },
+                            error: function(){
+                                alertify.error("can't open page.!");
+                            }
+                        });    
+                    }
+                } else {
+                    show_header();
+                }            
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                alertify.success("Insert Data Item Success");                        
             } else {
-                show_header();
-            }            
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            alertify.success("Insert Data Item Success");                        
-        } else {
-            bksfn.errMsg(obj.msg);
-        }
-    }, "json").fail(function (xhr) {        
-        alertify.error("error");
-        StringtoFile(xhr.responseText, 'error');
-    });    
+                bksfn.errMsg(obj.msg);
+            }
+        }, "json").fail(function (xhr) {        
+            alertify.error("error");
+            StringtoFile(xhr.responseText, 'error');
+        });
+    } else {
+        alertify.alert('Nilai Equivalent kosong!');
+        return false;
+    }
 }
 
 $('#currency_id').on('change',function(){
@@ -306,6 +311,7 @@ $('#currency_id').on('change',function(){
         getratebyid();        
     } else {
         $('#price').val('');
+        $('#subtotal').val('');
     }
 });
 
@@ -314,11 +320,12 @@ $("#nominal").keyup(function(e) {
     $(this).val($(this).val());    
     if($(this).val() != null && $(this).val() != ''){
         $(this).val($(this).val());
-        subtotal_input();
         getstockbyid();
         getratebyid();
+        subtotal_input();
     } else {
         $('#price').val('');
+        $('#subtotal').val('');
     }
 });
 
@@ -326,11 +333,12 @@ $("#sheet").keyup(function(e) {
     e.preventDefault();
     if($(this).val() != null && $(this).val() != ''){
         $(this).val($(this).val());
-        subtotal_input();
         getstockbyid();
         getratebyid();
+        subtotal_input();
     } else {
         $('#price').val('');
+        $('#subtotal').val('');
     }
 });    
 
@@ -338,20 +346,27 @@ $("#price").keyup(function(e) {
     e.preventDefault();
     if($(this).val() != null && $(this).val() != ''){
         $(this).val($(this).val());
-        $("#terbilang_price").html('<i>Exchange Rate</i> : ' + (isDecimal($(this).val()) ? formatDecimal($(this).val(),2) : formatRupiah($(this).val())));
+        $("#terbilang_price").html((isDecimal($(this).val()) ? formatDecimal($(this).val(),2) : formatRupiah($(this).val())));
         subtotal_input();
+    } else {
+        $("#terbilang_price").html('');
     }
 });
 
 function subtotal_input() {
     var xtotal_amount = (($('#nominal').val() * $('#sheet').val()));
-    var xtotal  = Math.round((xtotal_amount * $('#price').val()));
     $('#total_amount').html(formatRupiah(xtotal_amount.toString()));
-    $('#subtotal').val(formatRupiah(xtotal.toString()));
+
+    $('#subtotal').val('');
+    $("#terbilang_price").html('');
+    if(Number($('#price').val()) > 0 && $('#price').val() !== '') {
+        var xtotal  = Math.round((xtotal_amount * $('#price').val()));
+        $('#subtotal').val(formatRupiah(xtotal.toString()));
+    }
 }
 
 $("#btn-add-row-detail").on('click', function (e) {
-    e.preventDefault();
+    e.preventDefault();    
     if ( $("#tr_id").val() === null || $("#tr_id").val() === '' ){
         bksfn.errMsg("Transaksi Beli / Jual belum di pilih!");
         $("#currency_id").focus();
@@ -383,7 +398,7 @@ $("#btn-add-row-detail").on('click', function (e) {
             subtotal_input();
         } else {
             getstockbyid();
-            if(xtr_id == 1){ // Trx Buy                        
+            if(xtr_id == 1){ // Trx Buy
                 add_item();
             }
             if(xtr_id == 2){ // Trx Sell
@@ -393,21 +408,26 @@ $("#btn-add-row-detail").on('click', function (e) {
                         alertify.alert('Stok kurang, hanya tersedia ' + sisa_stock_sheet + ' lembar !');
                         $("#sheet").val(sisa_stock_sheet);
                         subtotal_input();
-                        return false;                                                                                                                                                            
+                        return false;
                     }
                     if( sisa_stock_sheet >= sheet_input ){
-                        add_item();                                            
+                        add_item();
                     }
                 } else {
                     alertify.alert('Stok kosong!');
                     return false;
-                }                    
+                }
             }
-        }                                    
-    }    
+        }
+    }
 });
 
-function getstockbyid(){
+$("#btn-clear-row-detail").on('click', function (e) {
+    e.preventDefault();
+    reset_form_input();
+});
+
+function getstockbyid(){    
     if($("#currency_id").val() !== null && $("#currency_id").val() !== ''){
         if($("#nominal").val() !== null && $("#nominal").val() !== ''){
             if(Number($("#currency_id").val()) > 0 && Number($("#currency_id").val()) > 0){
@@ -426,7 +446,15 @@ function getstockbyid(){
                                     $("#stock_nominal").html(formatRupiah(d.nominal));
                                     $("#stock_sheet").html(formatRupiah(sisa_stock_sheet));
                                     $("#stock_amount").html(formatRupiah(sisa_stock_amount));
+                                    $("#sheet").val(sisa_stock_sheet);
+                                    subtotal_input();
                                 }
+                            } else {
+                                sisa_stock_sheet = 0;
+                                sisa_stock_amount = 0;                         
+                                $("#stock_nominal").html('');
+                                $("#stock_sheet").html('');
+                                $("#stock_amount").html('');
                             }
                         }
                     },
@@ -532,7 +560,7 @@ function getratebyid(){
                             if(Number(xrate_today_top) > 0){
                                 $("#price_top").val(xrate_today_top);
                             }
-                            $("#terbilang_price").html('<i>Exchange Rate</i> : ' + (isDecimal(xrate_today) ? formatDecimal(xrate_today,2) : formatRupiah(xrate_today)));
+                            $("#terbilang_price").html((isDecimal(xrate_today) ? formatDecimal(xrate_today,2) : formatRupiah(xrate_today)));
                         }                 
                     }
                 }    
@@ -804,7 +832,9 @@ $("#btn-stock").on('click', function (e) {
             {data: 'currency_name',  width: "67%", render: function (data, type, row, meta) {
                 return data
             }},
-            {data: 'id', visible: false},            
+            {data: 'id', className: "dt-body-center", orderable: false, width: "10%", render: function (data, type, row, meta) {
+                return '<a title="Select" href="#"><i class="fa fa-edit"></i></a>';                                                
+            }},
             {data: 'currency_name', visible: false},
             {data: 'created', visible: false},
             {data: 'updated', visible: false},
@@ -827,7 +857,25 @@ $("#btn-stock").on('click', function (e) {
         $('#searchid select').val('');
         t.search('')
         t.columns().search('').draw();
-    });    
+    });
+
+    $('#mainTableStock').on('click', 'a[title^=Select]', function (e) {
+        e.preventDefault();
+        var elm = $(this).closest("tr");
+        var d = t.row(elm).data();
+
+        if (d.currency_id != null) {
+            $("#currency_id").html('<option value="' + d.currency_id + '">' + d.currency_code + ' - ' + d.currency_name + '</option>').sel2dma();
+        } else {
+            $("#currency_id").html('').sel2dma();
+        }
+        $("#nominal").val(d.nominal);
+        getstockbyid();        
+        getratebyid();
+        subtotal_input();        
+        $("#ModalStock").modal('hide');
+        $("#price").focus();
+    });
 });
 
 $("#btn-modal-stock-close").on('click', function (e) {
